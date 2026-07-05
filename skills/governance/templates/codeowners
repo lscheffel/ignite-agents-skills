@@ -1,0 +1,26 @@
+# CODEOWNERS
+
+# Padrão
+* @org/core-team
+
+# Áreas específicas
+/docs/ @org/docs-team
+/src/infrastructure/ @org/infra-team
+/src/domain/ @org/domain-experts
+/src/api/ @org/backend-team
+/src/web/ @org/frontend-team
+
+# Arquivos críticos
+/package.json @org/tech-lead
+/Dockerfile @org/devops-team
+/.github/workflows/ @org/devops-team
+
+# Padrões para equipes
+# Use @equipe para notificar toda a equipe
+# Use @equipe/@indivíduo para notificar indivíduo específico
+
+# Exemplo de branch protection
+# Configure no GitHub: Settings > Branches > Add rule
+# - Require pull request reviews before merging
+# - Require status checks to pass before merging
+# - Require branches to be up to date before merging

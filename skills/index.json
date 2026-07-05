@@ -2,12 +2,20 @@
   "skills": [
     {
       "name": "writing-plans",
+      "version": "2.0.0",
+      "tags": ["planning", "implementation", "tasks"],
+      "related_skills": ["planning", "ddd"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/implementation-plan.md",
+        "templates/task-card.md"
       ]
     },
     {
       "name": "adr-generator",
+      "version": "2.0.0",
+      "tags": ["architecture", "decisions", "documentation"],
+      "related_skills": ["documentation", "architecture-review"],
       "files": [
         "SKILL.md",
         "templates/adr.md"
@@ -15,71 +23,158 @@
     },
     {
       "name": "architecture-review",
+      "version": "2.0.0",
+      "tags": ["architecture", "solid", "review", "code-smells"],
+      "related_skills": ["ddd", "adr-generator"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/architecture-review-report.md",
+        "templates/tech-debt-item.md"
       ]
     },
     {
       "name": "ddd",
+      "version": "2.0.0",
+      "tags": ["domain-driven-design", "modeling", "aggregates", "events"],
+      "related_skills": ["architecture-review", "testing"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/entity.ts",
+        "templates/value-object.ts",
+        "templates/aggregate-root.ts",
+        "templates/domain-event.ts",
+        "templates/repository.ts",
+        "templates/domain-service.ts"
       ]
     },
     {
       "name": "repo-bootstrap",
+      "version": "2.0.0",
+      "tags": ["repository", "scaffolding", "boilerplate", "governance"],
+      "related_skills": ["governance", "documentation", "git"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/README.md",
+        "templates/CONTRIBUTING.md",
+        "templates/SECURITY.md",
+        "templates/ci.yml",
+        "templates/AGENTS.md"
       ]
     },
     {
       "name": "documentation",
+      "version": "2.0.0",
+      "tags": ["documentation", "docs", "readme", "api-docs", "architecture"],
+      "related_skills": ["adr-generator", "repo-bootstrap"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/readme.md",
+        "templates/api-doc.md",
+        "templates/architecture-doc.md"
       ]
     },
     {
       "name": "governance",
+      "version": "2.0.0",
+      "tags": ["governance", "branching", "code-review", "process", "team"],
+      "related_skills": ["git", "release", "repo-bootstrap"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/pull-request-template.md",
+        "templates/issue-template.md",
+        "templates/codeowners"
       ]
     },
     {
       "name": "planning",
+      "version": "2.0.0",
+      "tags": ["planning", "project-management", "backlog", "estimation", "roadmap"],
+      "related_skills": ["writing-plans", "governance"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/epic-card.md",
+        "templates/feature-card.md",
+        "templates/task-card.md"
       ]
     },
     {
       "name": "testing",
+      "version": "2.0.0",
+      "tags": ["testing", "unit-tests", "integration", "e2e", "coverage", "tdd"],
+      "related_skills": ["ddd", "governance"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/unit-test.ts",
+        "templates/integration-test.ts",
+        "templates/e2e-test.ts",
+        "templates/test-plan.md"
       ]
     },
     {
       "name": "prompt-engineering",
+      "version": "2.0.0",
+      "tags": ["prompts", "llm", "ai", "techniques", "agents"],
+      "related_skills": ["vibe-coding"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/prompt-simple.md",
+        "templates/prompt-complex.md",
+        "templates/prompt-evaluation.md"
       ]
     },
     {
       "name": "git",
+      "version": "2.0.0",
+      "tags": ["version-control", "commits", "branching", "conventional-commits", "workflow"],
+      "related_skills": ["governance", "release"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/commit-message.md",
+        "templates/branch-naming.md",
+        "templates/pr-description.md"
       ]
     },
     {
       "name": "release",
+      "version": "2.0.0",
+      "tags": ["release", "versioning", "changelog", "deploy", "rollback"],
+      "related_skills": ["git", "governance"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/changelog-entry.md",
+        "templates/release-checklist.md",
+        "templates/rollback-plan.md"
       ]
     },
     {
       "name": "vibe-coding",
+      "version": "2.0.0",
+      "tags": ["ai-assisted", "pair-programming", "intent-driven"],
+      "related_skills": ["prompt-engineering", "testing"],
       "files": [
-        "SKILL.md"
+        "SKILL.md",
+        "templates/vibe-session.md"
       ]
     }
   ],
-  "version": "1.0.0",
-  "description": "Registro centralizado de skills para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages."
+  "version": "2.0.0",
+  "schema_version": "2.0.0",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages.",
+  "validation": {
+    "min_lines_per_skill": 150,
+    "required_sections": [
+      "Quando Usar",
+      "Workflow",
+      "Anti-patterns",
+      "Checklists",
+      "Edge Cases"
+    ],
+    "required_fields": [
+      "name",
+      "description",
+      "version",
+      "tags",
+      "related_skills"
+    ]
+  }
 }
