@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| *Nenhuma ADR ativa* | | | |
+| [ADR-007](./ADR-007.md) | Skill para Geração de AGENTS.md Adaptativo | ⏸️ Proposto | 2026-07-05 |
 
 ---
 
