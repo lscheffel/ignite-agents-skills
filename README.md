@@ -4,27 +4,30 @@ Registro centralizado de skills para agentes compatíveis com o padrão [Agent S
 
 Hospedado como GitHub Pages, este repositório serve como registry remoto para múltiplos projetos que usam **Kilo**, **OpenCode** e outros agentes compatíveis.
 
+> **Nota de compatibilidade (Kilo Code):** o mecanismo `skills.urls` do Kilo busca `{url}/index.json` e resolve cada arquivo em `{url}/{skill-name}/{file}`, onde `file` é **relativo à pasta da própria skill** (ex.: `"SKILL.md"`, não `"skills/nome/SKILL.md"`). Por isso o manifesto canônico é `skills/index.json` (paths relativos), e a URL configurada no Kilo deve apontar para a pasta `skills/`, não para `.well-known/skills/`. Uma tentativa anterior de seguir a convenção `.well-known/` usava paths completos no `files`, o que quebra a resolução do Kilo (duplicação de path) — por isso foi removida.
+
 ## Estrutura
 
 ```
 .
-├── .well-known/
-│   └── skills/
-│       └── index.json        # Registry de skills
-└── skills/
-    ├── adr-generator/
-    ├── architecture-review/
-    ├── ddd/
-    ├── documentation/
-    ├── git/
-    ├── governance/
-    ├── planning/
-    ├── prompt-engineering/
-    ├── release/
-    ├── repo-bootstrap/
-    ├── testing/
-    ├── vibe-coding/
-    └── writing-plans/
+├── LICENSE
+├── skills/
+│   ├── index.json            # Registry de skills (fonte única)
+│   ├── adr-generator/
+│   ├── architecture-review/
+│   ├── ddd/
+│   ├── documentation/
+│   ├── git/
+│   ├── governance/
+│   ├── planning/
+│   ├── prompt-engineering/
+│   ├── release/
+│   ├── repo-bootstrap/
+│   ├── testing/
+│   ├── vibe-coding/
+│   └── writing-plans/
+└── scripts/
+    └── validate-index.sh     # Valida index.json contra arquivos reais
 ```
 
 ## Categorias
@@ -43,45 +46,60 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 
 1. Habilite GitHub Pages em **Settings → Pages**
 2. Source: **Deploy from a branch**
-3. Branch: `main` (ou `master`)
+3. Branch: `main` (ou `master`) — repositório precisa ser **público** (Pages privado exige plano pago do GitHub, e o Kilo faz fetch simples, sem autenticação)
 4. Após deploy, o registry estará disponível em:
 
 ```
-https://<usuario>.github.io/ignite-agents-skills/.well-known/skills/
+https://<usuario>.github.io/ignite-agents-skills/skills/
+```
+
+Confirme que está no ar antes de configurar o Kilo:
+
+```
+curl -I https://<usuario>.github.io/ignite-agents-skills/skills/index.json
 ```
 
 ## Configuração no Kilo
 
-Adicione a URL do registry no seu `kilo.json` ou via TUI:
+No Kilo Code (VS Code): **Kilo Settings → Comportamento do Agente → Habilidades → URLs de Habilidades**, adicione:
+
+```
+https://<usuario>.github.io/ignite-agents-skills/skills/
+```
+
+(com a barra final). Se preferir configurar via arquivo, use `skills.urls` no seu `kilo.json`:
 
 ```json
 {
-  "skillRegistryUrls": [
-    "https://<usuario>.github.io/ignite-agents-skills/.well-known/skills/"
-  ]
+  "skills": {
+    "urls": [
+      "https://<usuario>.github.io/ignite-agents-skills/skills/"
+    ]
+  }
 }
 ```
 
-O Kilo consultará o `index.json`, baixará apenas os arquivos das skills solicitadas e injetará no contexto do agente.
+O Kilo busca `{url}/index.json`, e para cada skill listada baixa os arquivos de `{url}/{skill-name}/{file}`. Por isso `files` no `index.json` **deve ser relativo à pasta da skill** — nunca inclua o prefixo `skills/nome-da-skill/`.
 
 ## Como Adicionar uma Nova Skill
 
 1. Crie o diretório: `skills/nova-skill/`
 2. Adicione o `SKILL.md` com frontmatter `name` e `description`
 3. Adicione arquivos auxiliares se necessário
-4. Registre no `index.json`:
+4. Registre no `skills/index.json` — **paths relativos à pasta da skill**:
 
 ```json
 {
   "name": "nova-skill",
   "files": [
-    "skills/nova-skill/SKILL.md",
-    "skills/nova-skill/templates/example.md"
+    "SKILL.md",
+    "templates/example.md"
   ]
 }
 ```
 
-5. Commit e push
+5. Rode `scripts/validate-index.sh` localmente para confirmar que os paths resolvem
+6. Commit e push
 
 ## Padrão de Skill
 
@@ -96,4 +114,4 @@ description: Descrição curta para o agente decidir quando usar.
 
 ## Licença
 
-MIT
+MIT — ver [LICENSE](./LICENSE).

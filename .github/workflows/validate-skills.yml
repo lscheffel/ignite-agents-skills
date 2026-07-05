@@ -1,0 +1,21 @@
+name: Validate skills registry
+
+on:
+  push:
+    paths:
+      - "skills/**"
+      - "scripts/validate-index.sh"
+  pull_request:
+    paths:
+      - "skills/**"
+      - "scripts/validate-index.sh"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate skills/index.json against real files
+        run: |
+          chmod +x scripts/validate-index.sh
+          ./scripts/validate-index.sh
