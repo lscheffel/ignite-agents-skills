@@ -165,7 +165,51 @@ git push origin master
   - Valida `index.json` contra arquivos reais
   - Valida qualidade Ultra-High Quality Grade de cada skill
 - **sync-and-deploy.yml**: Sincroniza `index.json` e faz deploy para GitHub Pages
-- **sync-pages.yml**: Workflow adicional para sincronização
+
+### Ciclo de Vida de uma ADR
+
+Uma ADR segue um ciclo completo de 4 etapas:
+
+```
+ADR criada → Implementação → Arquivamento → Deploy gh-pages
+```
+
+#### Etapa 1: Criação
+- Sempre criar ADR + BP + TODO simultaneamente (via `adr-generator`)
+- Status inicial: "Proposto"
+
+#### Etapa 2: Implementação
+- Seguir o BP e executar as tarefas do TODO
+- Validar cada tarefa com o comando especificado
+- Ao concluir todas as tarefas sem débitos, atualizar status para "Implementado"
+
+#### Etapa 3: Arquivamento (obrigatório após implementação completa)
+- **Regra:** Toda ADR com status "Implementado" e sem débitos pendentes **deve** ser arquivada
+- Executar: `./scripts/archive-adrs.sh`
+- O script move ADR + BP + TODO para `docs/adr/archive/`
+- Atualizar `docs/adr/INDEX.md` movendo a entrada para a seção "Archived ADRs"
+- **Checklist de arquivamento:**
+  - [ ] Status da ADR é "Implementado"
+  - [ ] TODO tem 0 tarefas pendentes (`[ ]`)
+  - [ ] Todos os comandos de validação passam
+  - [ ] `archive-adrs.sh` executado com sucesso
+  - [ ] INDEX.md atualizado
+
+#### Etapa 4: Deploy gh-pages (obrigatório após arquivamento)
+- **Regra:** Sempre que uma ADR é arquivada (etapa 3 concluída), a branch `gh-pages` deve ser atualizada
+- A branch `gh-pages` reflete as skills e fluxos atuais, disponibilizando o repo para consumidores via GitHub Pages
+- Processo:
+  ```bash
+  # Após merge no master
+  git checkout gh-pages
+  git merge master
+  git push origin gh-pages
+  git checkout master
+  ```
+- **Checklist de deploy:**
+  - [ ] ADR arquivada com sucesso
+  - [ ] Branch `gh-pages` atualizada com `master`
+  - [ ] GitHub Pages reflete o estado atual
 
 ## Skills Recomendadas
 

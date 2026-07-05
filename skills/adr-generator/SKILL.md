@@ -41,22 +41,39 @@ graph TD
 
 ## Workflow
 
-### Fase 1: Criar ADR Completo
+### Fase 1: Criar ADR Completo + BP + TODO
 
-1. Crie arquivo em `docs/adr/ADR-XXX.md`:
+Ao criar uma nova ADR, **sempre** gere os três arquivos em conjunto:
+
+1. Crie o ADR em `docs/adr/ADR-XXX.md`:
    ```bash
    cp templates/adr.md docs/adr/ADR-00X.md
    ```
-2. Preencha contexto:
-   - Problema
-   - Motivação
-   - Restrições
-3. Liste alternativas:
-   - Alternativa A: prós/contras
-   - Alternativa B: prós/contras
-4. Defina decisão
-5. Documente consequências
-6. **Checkpoint**: ADR aprovado e linkado em README
+2. Crie o Blueprint (BP) em `docs/adr/ADR-XXX-BP.md`:
+   ```bash
+   cp templates/adr-bp.md docs/adr/ADR-00X-BP.md
+   ```
+3. Crie o TODO em `docs/adr/ADR-XXX-TODO.md`:
+   ```bash
+   cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md
+   ```
+
+> **Regra obrigatória:** Uma ADR nunca existe isoladamente. Sempre que uma ADR é criada, seu BP e TODO devem ser gerados simultaneamente. O BP define as fases de implementação, e o TODO lista as tarefas verificáveis.
+
+4. Preencha o ADR:
+   - Contexto: Problema, Motivação, Restrições
+   - Alternativas: A/B com prós/contras
+   - Decisão justificada
+   - Consequências positivas e negativas
+5. Preencha o BP:
+   - Fases de implementação com dependências
+   - Critérios de aceitação por fase
+   - Sequenciamento lógico
+6. Preencha o TODO:
+   - Tarefas granulares numeradas
+   - Cada tarefa verificável por comando
+   - Status inicial: `[ ]`
+7. **Checkpoint**: ADR + BP + TODO criados e linkados entre si
 
 ### Fase 2: Revisar ADR Existente
 
@@ -137,9 +154,46 @@ Template para Architecture Decision Record.
 cp templates/adr.md docs/adr/ADR-00X.md
 ```
 
+### adr-bp.md
+Localização: `templates/adr-bp.md`
+
+Template para Blueprint de Implementação do ADR. Define fases, dependências e critérios de aceitação.
+
+**Uso:**
+```bash
+cp templates/adr-bp.md docs/adr/ADR-00X-BP.md
+```
+
+### adr-todo.md
+Localização: `templates/adr-todo.md`
+
+Template para lista de tarefas verificáveis do ADR. Cada tarefa deve ter um comando de validação.
+
+**Uso:**
+```bash
+cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md
+```
+
 ## Anti-patterns
 
 ### 🔴 Crítico
+
+#### ADR sem Blueprint e TODO
+**O que é:** Criar ADR sem gerar simultaneamente seu BP e TODO.
+**Por que é ruim:** ADR fica sem plano de implementação e sem tarefas verificáveis — quebra o ciclo ADR→Blueprint→TODO→Implementation.
+**Como evitar:** Sempre crie os 3 arquivos juntos: `ADR-XXX.md`, `ADR-XXX-BP.md`, `ADR-XXX-TODO.md`.
+**Exemplo:**
+```
+# ❌ ERRADO
+mkdir -p docs/adr
+cp templates/adr.md docs/adr/ADR-009.md
+# (esqueceu BP e TODO)
+
+# ✅ CORRETO
+cp templates/adr.md docs/adr/ADR-009.md
+cp templates/adr-bp.md docs/adr/ADR-009-BP.md
+cp templates/adr-todo.md docs/adr/ADR-009-TODO.md
+```
 
 #### ADR Retrospectivo
 **O que é:** Criar ADR após decisão já implementada.
@@ -218,6 +272,9 @@ Aceito
 - [ ] Consequências documentadas
 - [ ] Data incluída
 - [ ] Stakeholders identificados
+- [ ] **Blueprint (BP) criado em `ADR-XXX-BP.md`**
+- [ ] **TODO criado em `ADR-XXX-TODO.md`**
+- [ ] **BP e TODO linkados no ADR**
 
 ### Checklist de Review
 - [ ] Contexto ainda relevante?

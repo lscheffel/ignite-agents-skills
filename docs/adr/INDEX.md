@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| *Nenhuma ADR ativa* | | | |
+| [ADR-009](./ADR-009.md) | Resolução de Débitos da Auditoria v2.1.0 | ⏸️ Proposto | 2026-07-05 |
 
 ---
 
