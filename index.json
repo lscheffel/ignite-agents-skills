@@ -1,0 +1,85 @@
+{
+  "skills": [
+    {
+      "name": "writing-plans",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "adr-generator",
+      "files": [
+        "SKILL.md",
+        "templates/adr.md"
+      ]
+    },
+    {
+      "name": "architecture-review",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "ddd",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "repo-bootstrap",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "documentation",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "governance",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "planning",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "testing",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "prompt-engineering",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "git",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "release",
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "vibe-coding",
+      "files": [
+        "SKILL.md"
+      ]
+    }
+  ],
+  "version": "1.0.0",
+  "description": "Registro centralizado de skills para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages."
+}
