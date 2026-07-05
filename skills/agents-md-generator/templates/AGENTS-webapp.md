@@ -223,7 +223,7 @@ const routes = [
 
 #### Props Drilling
 **O que é:** Passar props através de muitos componentes.
-**Por que é ruim:** Acoplamento,难 de refactor.
+**Por que é ruim:** Acoplamento, difícil de refatorar.
 **Como evitar:** Usar Context ou state management.
 
 #### Não Usar Memoização

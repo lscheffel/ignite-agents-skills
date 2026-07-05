@@ -53,7 +53,7 @@ graph TD
     L --> M
     M --> N1[Rollback testado]
     M --> N2[CI/CD pipeline]
-    N1 --> O[Sنقem no commit]
+    N1 --> O[Sigma no commit]
     N2 --> O
 ```
 
@@ -236,7 +236,7 @@ USING gin(name gin_trgm_ops);
    ```
 2. Aplique otimizações:
    - Adicione índices faltantes
-   - Use覆盖索covers para queries de leitura
+   - Use covering index para queries de leitura
    - Considere particionamento para tabelas grandes
 3. Configure connection pooling:
    ```yaml

@@ -57,7 +57,7 @@ for adr_file in "$ADR_DIR"/ADR-*.md; do
     fi
 
     # Move associated files (BP, TODO, implementation-plan)
-    for suffix in "-BP.md" "-TODO.md" "-implementation-plan.md"; do
+    for suffix in "-BP.md" "-TODO.md" "-implementation-plan.md" "-execution-contract.md" "-execution-report.md" "-change-plan.md"; do
       assoc_file="$ADR_DIR/ADR-${adr_num}${suffix}"
       if [ -f "$assoc_file" ]; then
         echo "   └─ + $(basename "$assoc_file")"

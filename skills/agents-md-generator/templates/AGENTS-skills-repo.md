@@ -38,7 +38,7 @@ skills/
 - Usar 2 espaços para indentação
 - Manter linhas com máx. 80 caracteres
 - Usar code blocks com linguagem especificada
-- Incluir空行 entre seções
+- Incluir linhas vazias entre seções
 
 ### Naming
 

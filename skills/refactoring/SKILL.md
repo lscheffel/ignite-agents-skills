@@ -213,7 +213,7 @@ function calculateTotal(items) {
 
 #### Big Bang Refactoring
 **O que é:** Refatorar sistema inteiro de uma vez.
-**Por que é ruim:** Alto risco,难以 review, merge conflicts, regressões difíceis de localizar.
+**Por que é ruim:** Alto risco, difícil de review, merge conflicts, regressões difíceis de localizar.
 **Como evitar:** Refatorar incrementalmente, módulo por módulo.
 **Exemplo:**
 ```typescript
@@ -228,7 +228,7 @@ function calculateTotal(items) {
 
 #### Não Commitar Incrementalmente
 **O que é:** Acumular muitas mudanças sem commit intermediário.
-**Por que é ruim:** Diff gigante impossível de review,难以 reverter mudanças pontuais.
+**Por que é ruim:** Diff gigante impossível de review, difícil de reverter mudanças pontuais.
 **Como evitar:** Commite a cada refatoração segura (testes passando).
 **Exemplo:**
 ```bash
@@ -302,7 +302,7 @@ grep -r "legacyCalculate" src/
 ### Código Sem Testes e Sem Dono
 **Situação:** Código crítico sem testes e sem ninguém que conheça detalhes.
 **Solução:** Adicione testes exploratórios (caracterização) antes de refatorar.
-**Exceção:** Se código pode ser substituído por biblioteca externa,avalie替换.
+**Exceção:** Se código pode ser substituído por biblioteca externa, avalie substituir.
 
 ```typescript
 // Teste de caracterização - documentar comportamento atual

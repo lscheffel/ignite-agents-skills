@@ -150,7 +150,7 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 
 ## Status da Implementação
 
-**v2.1.0 — Skills Ultra-High Quality Grade**
+**v2.0.3 — Skills Ultra-High Quality Grade**
 
 | Métrica | Status |
 |---------|--------|

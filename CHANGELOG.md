@@ -33,6 +33,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
   - Testes de caracterização, strangler fig, branch by abstraction
   - 3 templates: refactoring-catalog, legacy-migration, test-before-refactor
   - Anti-patterns: sem testes, refatorar + behavior, big bang
+- Skill `agents-md-generator` — geração e manutenção de AGENTS.md adaptativo (ADR-007)
+  - Detecção automática de contexto do projeto
+  - 7 templates: AGENTS-base, AGENTS-api, AGENTS-cli, AGENTS-crm, AGENTS-library, AGENTS-skills-repo, AGENTS-webapp
+  - 3 examples: before-after, context-detection, customization
+  - 2 checklists: maintenance, validation
+  - Anti-patterns: template genérico, sem versionamento, sem validação
 - CI com `validate-skill.sh` no pipeline GitHub Actions
 - Checklists para release (pre-release, post-release)
 - Peer review marcado como condicional para equipes solo
