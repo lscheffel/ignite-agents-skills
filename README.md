@@ -23,6 +23,7 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 │   ├── prompt-engineering/
 │   ├── release/
 │   ├── repo-bootstrap/
+│   ├── skill-audit-bulletin/
 │   ├── testing/
 │   ├── vibe-coding/
 │   └── writing-plans/
@@ -41,6 +42,7 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 | Quality | `testing`, `architecture-review` |
 | AI | `prompt-engineering`, `vibe-coding` |
 | Tools | `git`, `release` |
+| Audit | `skill-audit-bulletin` |
 
 ## Publicação (GitHub Pages)
 
@@ -112,24 +114,36 @@ description: Descrição curta para o agente decidir quando usar.
 ---
 ```
 
+### Ultra-High Quality Grade
+
+Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
+
+- **Decision Trees** — Mermaid graphs para decisão automática
+- **Workflows** — Passos executáveis com critérios de aceitação
+- **Anti-patterns** — Indicadores de severidade (🔴 crítico, 🟡 alerta, 🟢 suave)
+- **Checklists** — Verificação de qualidade antes/depois
+- **Edge Cases** — Cobertura de cenários excepcionais
+- **Templates** — 37 templates disponíveis em `skills/*/templates/`
+- **Examples** — 13 exemplos em `skills/*/examples/`
+
+## Status da Implementação
+
+**v2.0.1 — Skills Ultra-High Quality Grade**
+
+| Métrica | Status |
+|---------|--------|
+| Skills refatoradas | 15/15 ✅ |
+| Templates criados | 37 ✅ |
+| Examples criados | 13 ✅ |
+| Validação automática | ✅ |
+| GitHub Pages | ✅ |
+
 ## Decisões Arquiteturais
 
 Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
 
 - [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/ADR-001.md)
-- [ADR-002: Refatoração de Skills para Ultra-High Quality Grade](./docs/adr/ADR-002.md) ✅
-
-## Status da Implementação
-
-**v2.0.0 — Skills Ultra-High Quality Grade**
-
-| Métrica | Status |
-|---------|--------|
-| Skills refatoradas | 14/14 ✅ |
-| Templates criados | 31 ✅ |
-| Examples criados | 14 ✅ |
-| Validação automática | ✅ |
-| GitHub Pages | ✅ |
+- [ADR-002: Padrão de Skill Ultra-High Quality Grade](./docs/adr/ADR-002.md)
 
 ## Licença
 
