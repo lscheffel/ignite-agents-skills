@@ -179,6 +179,7 @@ Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/a
 - [ADR-005: Introdução da Skill implementation](./docs/adr/archive/ADR-005.md) ✅
 - [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/archive/ADR-006.md) ✅
 - [ADR-007: Skill para Geração de AGENTS.md Adaptativo](./docs/adr/archive/ADR-007.md) ✅
+- [ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais](./docs/adr/ADR-008.md) ✅
 
 > 📦 ADRs implementadas são movidas para `docs/adr/archive/` como referência. Veja [docs/adr/INDEX.md](./docs/adr/INDEX.md) para o índice completo.
 

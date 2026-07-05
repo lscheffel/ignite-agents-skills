@@ -1,6 +1,6 @@
 # TODO: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais
 
-> ADR-008 | Início: 2026-07-05 | Conclusão: — | Status: 🔄 EM ANDAMENTO
+> ADR-008 | Início: 2026-07-05 | Conclusão: 2026-07-05 | Status: ✅ CONCLUÍDO (9/9 débitos)
 
 ---
 
@@ -227,14 +227,16 @@
 
 ## Resumo Geral
 
-| Fase | Tarefas | Horas Est. | Status |
-|------|---------|------------|--------|
-| Fase 1: Bugs de CI e Links | 10 | ~1h | ⬜ |
-| Fase 2: Automação e Governança | 17 | ~3-4h | ⬜ |
-| Fase 3: Completude e Dogfooding | 11 | ~4-6h | ⬜ |
-| Fase 4: Validação | 9 | ~30min | ⬜ |
-| **Total** | **47** | **~8-11h** | **⬜ 0%** |
+| Fase | Tarefas | Horas Est. | Status | Commit |
+|------|---------|------------|--------|--------|
+| Fase 1: Bugs de CI e Links | 10 | ~1h | ✅ Concluído | `b14c224` |
+| Fase 2: Automação e Governança | 17 | ~3-4h | ✅ Concluído | `7203f89` |
+| Fase 3: Exemplos | 7 | ~2h | ✅ Concluído | `cb081b2` |
+| Fase 3: Dogfooding audit | 4 | ~1h | ✅ Concluído | `608d2f8` |
+| Fase 4: Validação | 9 | ~30min | ✅ Concluído | — |
+| **Total** | **47** | **~6-8h** | **✅ 100% (9/9 débitos)** | |
 
 ---
 
 *Documento gerado em 2026-07-05. Referência: ADR-008.*
+*Implementação concluída em 2026-07-05.*

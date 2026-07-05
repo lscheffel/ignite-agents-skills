@@ -6,6 +6,31 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-07-05
+
+### Fixed
+- **validate-skill.sh bug (D-001):** `((WARNINGS++))` killed script on first warning via `set -e`. Replaced with `WARNINGS=$((WARNINGS + 1))`. CI now validates all 11 checks.
+- **Broken ADR links (D-002):** 4 links in implementation/SKILL.md and agents-md-generator/SKILL.md pointed to non-existent `docs/adr/ADR-XXX.md`. Updated to `docs/adr/archive/ADR-XXX.md`.
+- **Version drift (D-005):** README showed v2.1.0, index.json showed 2.0.3. Synchronized to v2.0.3.
+
+### Added
+- **archive-adrs.sh (D-003):** Now recognizes implementation artifacts: `-execution-contract.md`, `-execution-report.md`, `-change-plan.md`
+- **Encoding validation (D-007):** Check #11 in validate-skill.sh detects CJK/arabic characters outside code blocks
+- **CHANGELOG entry (D-006):** Added agents-md-generator entry to [2.0.3]
+- **Practical examples (D-008):** 6 new examples across writing-plans, api-design, security-review
+- **Audit bulletin (D-009):** `docs/audits/ignite-agents-skills-audit.md` — score 94/100 (A-)
+
+### Changed
+- **Total examples:** 18 → 24 (+33%)
+- **validate-skill.sh checks:** 10 → 11 (+encoding validation)
+- **archive-adrs.sh suffixes:** 3 → 6 (+execution artifacts)
+
+### Removed
+- **sync-pages.yml (D-004):** Redundant workflow removed. sync-and-deploy.yml is the single deploy workflow.
+
+### Cleaned
+- **CJK/arabic leaks (D-007):** 9 character leaks across 8 files cleaned
+
 ## [2.0.3] - 2026-07-05
 
 ### Added
@@ -33,6 +58,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
   - Testes de caracterização, strangler fig, branch by abstraction
   - 3 templates: refactoring-catalog, legacy-migration, test-before-refactor
   - Anti-patterns: sem testes, refatorar + behavior, big bang
+- Skill `agents-md-generator` — geração e manutenção de AGENTS.md adaptativo (ADR-007)
+  - Detecção automática de contexto do projeto
+  - 7 templates: AGENTS-base, AGENTS-api, AGENTS-cli, AGENTS-crm, AGENTS-library, AGENTS-skills-repo, AGENTS-webapp
+  - 3 examples: before-after, context-detection, customization
+  - 2 checklists: maintenance, validation
+  - Anti-patterns: template genérico, sem versionamento, sem validação
 - CI com `validate-skill.sh` no pipeline GitHub Actions
 - Checklists para release (pre-release, post-release)
 - Peer review marcado como condicional para equipes solo

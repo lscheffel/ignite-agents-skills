@@ -74,7 +74,7 @@ Contém **22 skills** categorizadas em Architecture, Documentation, Governance, 
 - Usar 2 espaços para indentação
 - Manter linhas com máx. 80 caracteres
 - Usar code blocks com linguagem especificada
-- Incluir空行 entre seções
+- Incluir linhas vazias entre seções
 - Usar tabelas Markdown para dados estruturados
 
 ### Naming

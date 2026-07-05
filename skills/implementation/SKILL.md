@@ -398,9 +398,9 @@ Executar após concluir toda a implementação. Valida tarefas, build, qualidade
 
 ## Referências
 
-- [ADR-005: Introdução da Skill implementation](../../docs/adr/ADR-005.md)
-- [ADR-005-BP: Blueprint detalhado](../../docs/adr/ADR-005-BP.md)
-- [ADR-002: Ultra-High Quality Grade](../../docs/adr/ADR-002.md)
+- [ADR-005: Introdução da Skill implementation](../../docs/adr/archive/ADR-005.md)
+- [ADR-005-BP: Blueprint detalhado](../../docs/adr/archive/ADR-005-BP.md)
+- [ADR-002: Ultra-High Quality Grade](../../docs/adr/archive/ADR-002.md)
 - [Skill adr-generator](../adr-generator/SKILL.md)
 - [Skill writing-plans](../writing-plans/SKILL.md)
 - [Skill testing](../testing/SKILL.md)

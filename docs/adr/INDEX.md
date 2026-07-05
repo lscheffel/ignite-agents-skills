@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| [ADR-008](./ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | 🟢 Proposto | 2026-07-05 |
+| *Nenhuma ADR ativa* | | | |
 
 ---
 
@@ -33,6 +33,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-005](./archive/ADR-005.md) | Introdução da Skill `implementation` para Execução Governada de Mudanças | ✅ Implementado | 2026-07-05 |
 | [ADR-006](./archive/ADR-006.md) | Workflow CI para Auto-sync do Index e Deploy GitHub Pages | ✅ Implementado | 2026-07-05 |
 | [ADR-007](./archive/ADR-007.md) | Skill para Geração de AGENTS.md Adaptativo | ✅ Implementado | 2026-07-05 |
+| [ADR-008](./ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | ✅ Implementado | 2026-07-05 |
 
 ---
 

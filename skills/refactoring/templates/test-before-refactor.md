@@ -113,7 +113,7 @@ describe('{module-name} - Integration', () => {
 | Métrica | Antes | Depois | Meta |
 |---------|-------|--------|------|
 | Cobertura de linhas | {before}% | {after}% | >= 80% |
-| Cobertura de分支 | {before}% | {after}% | >= 70% |
+| Cobertura de branches | {before}% | {after}% | >= 70% |
 | Número de testes | {before} | {after} | - |
 
 ## Referências

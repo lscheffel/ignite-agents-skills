@@ -15,13 +15,13 @@ echo "======================================"
 # Função para erro
 error() {
     echo "❌ ERRO: $1"
-    ((ERRORS++))
+    ERRORS=$((ERRORS + 1))
 }
 
 # Função para warning
 warn() {
     echo "⚠️  WARNING: $1"
-    ((WARNINGS++))
+    WARNINGS=$((WARNINGS + 1))
 }
 
 # Função para success
@@ -126,6 +126,17 @@ if grep -q "Checkpoint" "$SKILL_DIR/SKILL.md" 2>/dev/null; then
     success "Checkpoints nos workflows presentes"
 else
     error "Checkpoints nos workflows ausentes"
+fi
+
+# 11. Verificar encoding (CJK/árabe fora de code blocks)
+if [[ -f "$SKILL_DIR/SKILL.md" ]]; then
+    # Remove code blocks antes de verificar
+    non_code=$(sed '/^```/,/^```/d' "$SKILL_DIR/SKILL.md")
+    if echo "$non_code" | grep -qP '[\x{4E00}-\x{9FFF}\x{0600}-\x{06FF}]' 2>/dev/null; then
+        warn "Caracteres CJK/árabe detectados fora de code blocks (verificar encoding)"
+    else
+        success "Encoding limpo (sem caracteres CJK/árabe)"
+    fi
 fi
 
 # Resumo
