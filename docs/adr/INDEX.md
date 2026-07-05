@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| *Nenhuma ADR ativa* | | | |
+| [ADR-008](./ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | 🟢 Proposto | 2026-07-05 |
 
 ---
 
