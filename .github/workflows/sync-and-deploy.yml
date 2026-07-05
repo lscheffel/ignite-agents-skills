@@ -68,6 +68,7 @@ jobs:
           cd gh-pages
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git merge master --strategy=ours --no-edit
+          git fetch origin master
+          git merge origin/master --strategy=ours --no-edit
           git push origin gh-pages
           echo "✅ gh-pages updated with latest changes"
