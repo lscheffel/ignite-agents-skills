@@ -211,6 +211,34 @@ ADR criada → Implementação → Arquivamento → Deploy gh-pages
   - [ ] Branch `gh-pages` atualizada com `master`
   - [ ] GitHub Pages reflete o estado atual
 
+### Branch Protection e SemVer
+
+#### Regra de Branch para Implementação de ADR
+**Regra obrigatória:** Sempre que uma skill de implementação de ADR for invocada (feat, fix, refactor, etc), deve-se:
+
+1. **Criar branch de trabalho adequada:**
+   - `feature/` para novas funcionalidades
+   - `fix/` para correções
+   - `docs/` para documentação
+   - `adr-XXX/` para implementação de ADR específica
+
+2. **Fluxo obrigatório:**
+   ```
+   Branch de trabalho → Implementação → Validação 100% → Merge → gh-pages sync → Tag SemVer
+   ```
+
+3. **SemVer para tags (NUNCA reaproveitar):**
+   - Sempre criar nova tag após modificação
+   - Tags seguem `vMAJOR.MINOR.PATCH`
+   - Releases são feitas após merge na master
+   - Se tag já existe, incrementar versão ou usar outro número
+
+#### Skills Afetadas
+- `adr-generator` — deve instruir criação de branch antes de gerar ADR
+- `implementation` — deve validar que branch não é master
+- `governance` — deve documentar fluxo completo com SemVer
+- `git` — deve mencionar SemVer como padrão obrigatório
+
 ## Skills Recomendadas
 
 - `git` — para commits e branches (Conventional Commits)

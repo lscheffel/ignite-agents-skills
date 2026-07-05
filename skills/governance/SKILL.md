@@ -20,9 +20,22 @@ Define diretrizes de governança para projetos e equipes.
 - Precisa criar processo de revisão e aprovação
 
 ### Não use quando:
+
 - Projeto pessoal sem colaboração
 - Repositório somente leitura
 - Projeto sem CI/CD
+
+### Modos de Colaboração
+
+#### Solo + Agentes (recomendado para projetos individuais com IA)
+- **Operador solo** trabalha com **time de agentes de IA** como colaboradores
+- Branch protection ainda se aplica: agentes devem trabalhar em branches isoladas
+- SemVer obrigatório: cada mudança significativa gera nova tag
+- Processo:
+  ```
+  Branch de trabalho → Implementação → Validação 100% → Merge → gh-pages sync → Tag SemVer
+  ```
+- Skills relacionadas: `implementation`, `adr-generator`, `agent-orchestration`
 
 ### Skills relacionadas:
 - `git` — para padrões de commits e branches

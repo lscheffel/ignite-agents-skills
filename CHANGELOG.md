@@ -6,6 +6,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+- **ADR-009:** Resolução de Débitos da Auditoria v2.1.0
+  - Validação de version sync em validate-index.sh
+  - Seção "Solo + Agentes" em governance/SKILL.md
+  - Exemplo Python/Flask em api-design/examples/
+- **ADR-010:** Branch Protection e SemVer para Tags — Emergencial
+  - Regra obrigatória de branch de trabalho para implementação de ADR
+  - SemVer obrigatório: nunca reaproveitar tags
+
 ## [2.1.0] - 2026-07-05
 
 ### Fixed
