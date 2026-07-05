@@ -3,7 +3,7 @@ name: adr-generator
 description: Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos.
 version: 2.0.0
 tags: [architecture, decisions, adr, documentation]
-related_skills: [documentation, architecture-review]
+related_skills: [documentation, architecture-review, implementation]
 ---
 
 # ADR Generator

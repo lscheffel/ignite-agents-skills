@@ -4,7 +4,7 @@
       "name": "writing-plans",
       "version": "2.0.0",
       "tags": ["planning", "implementation", "tasks"],
-      "related_skills": ["planning", "ddd"],
+      "related_skills": ["planning", "ddd", "implementation"],
       "files": [
         "SKILL.md",
         "templates/implementation-plan.md",
@@ -15,7 +15,7 @@
       "name": "adr-generator",
       "version": "2.0.0",
       "tags": ["architecture", "decisions", "documentation"],
-      "related_skills": ["documentation", "architecture-review"],
+      "related_skills": ["documentation", "architecture-review", "implementation"],
       "files": [
         "SKILL.md",
         "templates/adr.md"
@@ -36,7 +36,7 @@
       "name": "ddd",
       "version": "2.0.0",
       "tags": ["domain-driven-design", "modeling", "aggregates", "events"],
-      "related_skills": ["architecture-review", "testing"],
+      "related_skills": ["architecture-review", "testing", "implementation"],
       "files": [
         "SKILL.md",
         "templates/entity.ts",
@@ -65,7 +65,7 @@
       "name": "documentation",
       "version": "2.0.0",
       "tags": ["documentation", "docs", "readme", "api-docs", "architecture"],
-      "related_skills": ["adr-generator", "repo-bootstrap"],
+      "related_skills": ["adr-generator", "repo-bootstrap", "implementation"],
       "files": [
         "SKILL.md",
         "templates/readme.md",
@@ -77,7 +77,7 @@
       "name": "governance",
       "version": "2.0.0",
       "tags": ["governance", "branching", "code-review", "process", "team"],
-      "related_skills": ["git", "release", "repo-bootstrap"],
+      "related_skills": ["git", "release", "repo-bootstrap", "implementation"],
       "files": [
         "SKILL.md",
         "templates/pull-request-template.md",
@@ -89,7 +89,7 @@
       "name": "planning",
       "version": "2.0.0",
       "tags": ["planning", "project-management", "backlog", "estimation", "roadmap"],
-      "related_skills": ["writing-plans", "governance"],
+      "related_skills": ["writing-plans", "governance", "implementation"],
       "files": [
         "SKILL.md",
         "templates/epic-card.md",
@@ -101,7 +101,7 @@
       "name": "testing",
       "version": "2.0.0",
       "tags": ["testing", "unit-tests", "integration", "e2e", "coverage", "tdd"],
-      "related_skills": ["ddd", "governance"],
+      "related_skills": ["ddd", "governance", "implementation"],
       "files": [
         "SKILL.md",
         "templates/unit-test.ts",
@@ -126,7 +126,7 @@
       "name": "git",
       "version": "2.0.0",
       "tags": ["version-control", "commits", "branching", "conventional-commits", "workflow"],
-      "related_skills": ["governance", "release"],
+      "related_skills": ["governance", "release", "implementation"],
       "files": [
         "SKILL.md",
         "templates/commit-message.md",
@@ -138,7 +138,7 @@
       "name": "release",
       "version": "2.0.0",
       "tags": ["release", "versioning", "changelog", "deploy", "rollback"],
-      "related_skills": ["git", "governance"],
+      "related_skills": ["git", "governance", "implementation"],
       "files": [
         "SKILL.md",
         "templates/changelog-entry.md",
@@ -165,11 +165,25 @@
         "SKILL.md",
         "templates/audit-bulletin.md"
       ]
+    },
+    {
+      "name": "implementation",
+      "version": "2.0.0",
+      "tags": ["implementation", "execution", "artifact-driven", "sdlc", "governance"],
+      "related_skills": ["adr-generator", "writing-plans", "planning", "testing", "git", "documentation", "governance", "release", "architecture-review-kilo", "ddd"],
+      "files": [
+        "SKILL.md",
+        "templates/execution-contract.md",
+        "templates/execution-report.md",
+        "templates/change-plan.md",
+        "templates/rollback-report.md",
+        "templates/task-progress.md"
+      ]
     }
   ],
-  "version": "2.0.1",
+  "version": "2.0.2",
   "schema_version": "2.0.0",
-  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (14 skills)",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (15 skills)",
   "validation": {
     "min_lines_per_skill": 150,
     "required_sections": [

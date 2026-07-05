@@ -3,7 +3,7 @@ name: release
 description: Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico.
 version: 2.0.0
 tags: [release, versioning, changelog, deploy, rollback]
-related_skills: [git, governance]
+related_skills: [git, governance, implementation]
 ---
 
 # Release

@@ -3,7 +3,7 @@ name: testing
 description: Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas. Use quando escrever testes, revisar cobertura ou definir estratégia de testes.
 version: 2.0.0
 tags: [testing, unit-tests, integration, e2e, coverage, tdd]
-related_skills: [ddd, governance]
+related_skills: [ddd, governance, implementation]
 ---
 
 # Testing

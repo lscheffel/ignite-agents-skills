@@ -3,7 +3,7 @@ name: ddd
 description: Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados. Use quando modelar domínios ricos, refatorar entidades anêmicas ou estruturar contextos delimitados.
 version: 2.0.0
 tags: [ddd, domain-driven-design, modeling, aggregates, events]
-related_skills: [architecture-review, testing]
+related_skills: [architecture-review, testing, implementation]
 ---
 
 # Domain-Driven Design (DDD)

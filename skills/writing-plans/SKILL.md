@@ -3,7 +3,7 @@ name: writing-plans
 description: Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação, dependências e sequenciamento. Use quando o usuário pedir um plano de implementação, roadmap técnico, ou quebra de tarefas.
 version: 2.0.0
 tags: [planning, implementation, roadmap, tasks, breakdown]
-related_skills: [planning, ddd]
+related_skills: [planning, ddd, implementation]
 ---
 
 # Writing Plans

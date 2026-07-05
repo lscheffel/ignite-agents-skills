@@ -3,7 +3,7 @@ name: planning
 description: Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização. Use quando planejar projeto, roadmap, estimativas ou breakdown de trabalho.
 version: 2.0.0
 tags: [planning, project-management, backlog, estimation, roadmap]
-related_skills: [writing-plans, governance]
+related_skills: [writing-plans, governance, implementation]
 ---
 
 # Planning

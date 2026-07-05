@@ -3,7 +3,7 @@ name: git
 description: Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas. Use quando fazer commits, criar branches, resolver conflitos ou ensinar Git.
 version: 2.0.0
 tags: [version-control, commits, branching, conventional-commits, workflow]
-related_skills: [governance, release, repo-bootstrap]
+related_skills: [governance, release, repo-bootstrap, implementation]
 ---
 
 # Git
