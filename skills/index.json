@@ -98,6 +98,8 @@
       ],
       "files": [
         "SKILL.md",
+        "examples/error-handling-contract.md",
+        "examples/rest-crud-spec.md",
         "templates/api-versioning.md",
         "templates/endpoint-spec.md",
         "templates/error-contract.md"
@@ -456,6 +458,8 @@
       ],
       "files": [
         "SKILL.md",
+        "examples/crypto-validation.md",
+        "examples/dependency-audit.md",
         "templates/security-checklist.md",
         "templates/threat-model.md",
         "templates/vulnerability-report.md"
@@ -546,12 +550,14 @@
       ],
       "files": [
         "SKILL.md",
+        "examples/api-migration-plan.md",
+        "examples/feature-breakdown.md",
         "templates/implementation-plan.md",
         "templates/task-card.md"
       ]
     }
   ],
-  "version": "2.1.0",
+  "version": "2.0.3",
   "schema_version": "2.0.0",
   "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (22 skills)",
   "validation": {
