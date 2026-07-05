@@ -101,6 +101,7 @@
       "files": [
         "SKILL.md",
         "examples/error-handling-contract.md",
+        "examples/python-flask-rest.md",
         "examples/rest-crud-spec.md",
         "templates/api-versioning.md",
         "templates/endpoint-spec.md",
