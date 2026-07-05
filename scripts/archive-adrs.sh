@@ -40,10 +40,10 @@ for adr_file in "$ADR_DIR"/ADR-*.md; do
 
   # Check if status is "Implementado"
   # Handle both single-line and multi-line status formats
-  status_line=$(grep -A1 "^## Status" "$adr_file" | tail -1 | xargs)
+  status_line=$(grep -A1 "^## Status" "$adr_file" | tail -1 | xargs 2>/dev/null || true)
   
   # Also check if "Implementado" appears anywhere in the status section
-  status_block=$(sed -n '/^## Status$/,/^## [^S]/{p}' "$adr_file" | tr '\n' ' ')
+  status_block=$(sed -n '/^## Status$/,/^## [^S]/{p}' "$adr_file" | tr '\n' ' ' 2>/dev/null || true)
   
   if [[ "$status_block" == *"Implementado"* ]] || [[ "$status_line" == *"Implementado"* ]]; then
     # Extract ADR number for finding related files

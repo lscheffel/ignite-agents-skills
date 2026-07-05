@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| [ADR-007](./ADR-007.md) | Skill para Geração de AGENTS.md Adaptativo | ⏸️ Proposto | 2026-07-05 |
+| *Nenhuma ADR ativa* | | | |
 
 ---
 
@@ -32,6 +32,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-004](./archive/ADR-004.md) | Implementação das Recomendações da Ultra-Auditoria v2.0.2 | ✅ Implementado | 2026-07-05 |
 | [ADR-005](./archive/ADR-005.md) | Introdução da Skill `implementation` para Execução Governada de Mudanças | ✅ Implementado | 2026-07-05 |
 | [ADR-006](./archive/ADR-006.md) | Workflow CI para Auto-sync do Index e Deploy GitHub Pages | ✅ Implementado | 2026-07-05 |
+| [ADR-007](./archive/ADR-007.md) | Skill para Geração de AGENTS.md Adaptativo | ✅ Implementado | 2026-07-05 |
 
 ---
 

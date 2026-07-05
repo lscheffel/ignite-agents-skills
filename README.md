@@ -147,14 +147,14 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 
 ## Status da Implementação
 
-**v2.0.3 — Skills Ultra-High Quality Grade**
+**v2.1.0 — Skills Ultra-High Quality Grade**
 
 | Métrica | Status |
 |---------|--------|
-| Skills total | 21 ✅ |
-| Skills refatoradas | 21/21 ✅ |
-| Templates criados | 63 ✅ |
-| Examples criados | 15 ✅ |
+| Skills total | 22 ✅ |
+| Skills refatoradas | 22/22 ✅ |
+| Templates criados | 70 ✅ |
+| Examples criados | 18 ✅ |
 | Validação automática | ✅ |
 | CI pipeline | ✅ (`validate-skill.sh` + `validate-index.sh`) |
 | Auto-sync index.json | ✅ (`sync-and-deploy.yml`) |
@@ -175,6 +175,7 @@ Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/a
 - [ADR-004: Implementação das Recomendações da Ultra-Auditoria](./docs/adr/archive/ADR-004.md) ✅
 - [ADR-005: Introdução da Skill implementation](./docs/adr/archive/ADR-005.md) ✅
 - [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/archive/ADR-006.md) ✅
+- [ADR-007: Skill para Geração de AGENTS.md Adaptativo](./docs/adr/archive/ADR-007.md) ✅
 
 > 📦 ADRs implementadas são movidas para `docs/adr/archive/` como referência. Veja [docs/adr/INDEX.md](./docs/adr/INDEX.md) para o índice completo.
 
