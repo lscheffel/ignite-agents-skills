@@ -23,6 +23,8 @@ Realiza planejamento estratégico e tático de projetos.
 - Tarefa imediata (< 1 hora)
 - Bug fix simples
 - Protótipo sem planejamento
+- **Precisa de plano de implementação tático a partir de uma spec → use `writing-plans`**
+- **Precisa de tasks com critérios de aceitação e dependências → use `writing-plans`**
 
 ### Skills relacionadas:
 - `writing-plans` — para planos de implementação

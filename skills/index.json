@@ -15,14 +15,14 @@
       "name": "adr-generator",
       "version": "2.0.0",
       "tags": ["architecture", "decisions", "documentation"],
-      "related_skills": ["documentation", "architecture-review", "implementation"],
+      "related_skills": ["documentation", "architecture-review-kilo", "implementation"],
       "files": [
         "SKILL.md",
         "templates/adr.md"
       ]
     },
     {
-      "name": "architecture-review",
+      "name": "architecture-review-kilo",
       "version": "2.0.0",
       "tags": ["architecture", "solid", "review", "code-smells"],
       "related_skills": ["ddd", "adr-generator"],
@@ -36,7 +36,7 @@
       "name": "ddd",
       "version": "2.0.0",
       "tags": ["domain-driven-design", "modeling", "aggregates", "events"],
-      "related_skills": ["architecture-review", "testing", "implementation"],
+      "related_skills": ["architecture-review-kilo", "testing", "implementation"],
       "files": [
         "SKILL.md",
         "templates/entity.ts",
@@ -51,7 +51,7 @@
       "name": "repo-bootstrap",
       "version": "2.0.0",
       "tags": ["repository", "scaffolding", "boilerplate", "governance"],
-      "related_skills": ["governance", "documentation", "git"],
+      "related_skills": ["governance", "documentation", "git", "skill-audit-bulletin"],
       "files": [
         "SKILL.md",
         "templates/README.md",
@@ -77,7 +77,7 @@
       "name": "governance",
       "version": "2.0.0",
       "tags": ["governance", "branching", "code-review", "process", "team"],
-      "related_skills": ["git", "release", "repo-bootstrap", "implementation"],
+      "related_skills": ["git", "release", "repo-bootstrap", "implementation", "skill-audit-bulletin"],
       "files": [
         "SKILL.md",
         "templates/pull-request-template.md",
@@ -160,7 +160,7 @@
       "name": "skill-audit-bulletin",
       "version": "2.0.0",
       "tags": ["audit", "quality", "review", "validation", "skills"],
-      "related_skills": ["architecture-review", "documentation"],
+      "related_skills": ["architecture-review-kilo", "documentation"],
       "files": [
         "SKILL.md",
         "templates/audit-bulletin.md"
@@ -179,11 +179,83 @@
         "templates/rollback-report.md",
         "templates/task-progress.md"
       ]
+    },
+    {
+      "name": "security-review",
+      "version": "2.0.0",
+      "tags": ["security", "vulnerabilities", "secrets", "cryptography", "dependencies"],
+      "related_skills": ["governance", "architecture-review-kilo", "testing"],
+      "files": [
+        "SKILL.md",
+        "templates/security-checklist.md",
+        "templates/threat-model.md",
+        "templates/vulnerability-report.md"
+      ]
+    },
+    {
+      "name": "agent-orchestration",
+      "version": "2.0.0",
+      "tags": ["orchestration", "agents", "multi-agent", "coordination"],
+      "related_skills": ["prompt-engineering", "vibe-coding", "governance"],
+      "files": [
+        "SKILL.md",
+        "templates/agent-role-card.md",
+        "templates/handoff-protocol.md",
+        "templates/routing-decision.md"
+      ]
+    },
+    {
+      "name": "data-modeling",
+      "version": "2.0.0",
+      "tags": ["data-modeling", "database", "schema", "sql", "migrations"],
+      "related_skills": ["ddd", "testing", "architecture-review-kilo"],
+      "files": [
+        "SKILL.md",
+        "templates/schema.sql",
+        "templates/migration.md",
+        "templates/index-strategy.md"
+      ]
+    },
+    {
+      "name": "api-design",
+      "version": "2.0.0",
+      "tags": ["api", "rest", "graphql", "endpoints", "versioning"],
+      "related_skills": ["documentation", "testing", "governance"],
+      "files": [
+        "SKILL.md",
+        "templates/endpoint-spec.md",
+        "templates/error-contract.md",
+        "templates/api-versioning.md"
+      ]
+    },
+    {
+      "name": "observability",
+      "version": "2.0.0",
+      "tags": ["observability", "logging", "metrics", "tracing", "alerting"],
+      "related_skills": ["testing", "release", "governance"],
+      "files": [
+        "SKILL.md",
+        "templates/logging-spec.md",
+        "templates/metrics-sla.md",
+        "templates/alert-rules.md"
+      ]
+    },
+    {
+      "name": "refactoring",
+      "version": "2.0.0",
+      "tags": ["refactoring", "code-quality", "legacy", "strangler-fig", "testing"],
+      "related_skills": ["architecture-review-kilo", "ddd", "testing"],
+      "files": [
+        "SKILL.md",
+        "templates/refactoring-catalog.md",
+        "templates/legacy-migration.md",
+        "templates/test-before-refactor.md"
+      ]
     }
   ],
-  "version": "2.0.2",
+  "version": "2.0.3",
   "schema_version": "2.0.0",
-  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (15 skills)",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (21 skills)",
   "validation": {
     "min_lines_per_skill": 150,
     "required_sections": [

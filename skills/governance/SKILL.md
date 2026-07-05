@@ -3,7 +3,7 @@ name: governance
 description: Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs. Use quando definir processos de equipe, implementar governance-as-code ou padronizar workflows de desenvolvimento.
 version: 2.0.0
 tags: [governance, branching, code-review, process, team]
-related_skills: [git, release, repo-bootstrap, implementation]
+related_skills: [git, release, repo-bootstrap, implementation, skill-audit-bulletin]
 ---
 
 # Governance

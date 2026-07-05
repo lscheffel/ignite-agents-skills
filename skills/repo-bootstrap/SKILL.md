@@ -3,7 +3,7 @@ name: repo-bootstrap
 description: Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, estrutura de docs/ e exemplos de CI/CD. Use quando iniciar um novo repositório ou padronizar estrutura de projeto.
 version: 2.0.0
 tags: [repository, scaffolding, boilerplate, governance, ci-cd]
-related_skills: [governance, documentation, git]
+related_skills: [governance, documentation, git, skill-audit-bulletin]
 ---
 
 # Repo Bootstrap

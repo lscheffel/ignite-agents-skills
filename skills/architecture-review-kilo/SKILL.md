@@ -1,5 +1,5 @@
 ---
-name: architecture-review
+name: architecture-review-kilo
 description: Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais. Use quando o usuário pedir revisão de arquitetura, análise de estrutura, ou avaliação de design.
 version: 2.0.0
 tags: [architecture, solid, review, clean-architecture, code-smells]

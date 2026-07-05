@@ -23,6 +23,8 @@ Gera planos de implementação estruturados e executáveis.
 - Tarefa é imediata (< 1 hora)
 - Protótipo rápido sem planejamento
 - Bug fix simples
+- **Precisa de roadmap estratégico ou priorização de portfólio → use `planning`**
+- **Precisa de estimativa de esforço para iniciativa inteira → use `planning`**
 
 ### Skills relacionadas:
 - `planning` — para priorização e estimativas

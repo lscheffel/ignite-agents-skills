@@ -12,37 +12,50 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 .
 ├── LICENSE
 ├── skills/
-│   ├── index.json            # Registry de skills (fonte única)
+│   ├── index.json              # Registry de skills (fonte única)
 │   ├── adr-generator/
-│   ├── architecture-review/
+│   ├── agent-orchestration/
+│   ├── api-design/
+│   ├── architecture-review-kilo/
+│   ├── data-modeling/
 │   ├── ddd/
 │   ├── documentation/
 │   ├── git/
 │   ├── governance/
+│   ├── implementation/
+│   ├── observability/
 │   ├── planning/
 │   ├── prompt-engineering/
+│   ├── refactoring/
 │   ├── release/
 │   ├── repo-bootstrap/
-│   ├── implementation/
+│   ├── security-review/
 │   ├── skill-audit-bulletin/
 │   ├── testing/
 │   ├── vibe-coding/
 │   └── writing-plans/
 └── scripts/
-    └── validate-index.sh     # Valida index.json contra arquivos reais
+    ├── validate-index.sh       # Valida index.json contra arquivos reais
+    └── validate-skill.sh       # Valida qualidade Ultra-High Quality Grade
 ```
 
 ## Categorias
 
 | Categoria | Skills |
 |-----------|--------|
-| Architecture | `architecture-review`, `ddd` |
+| Architecture | `architecture-review-kilo`, `ddd` |
 | Documentation | `documentation`, `adr-generator` |
 | Governance | `governance`, `repo-bootstrap` |
 | Planning | `planning`, `writing-plans` |
 | Implementation | `implementation` |
-| Quality | `testing`, `architecture-review` |
+| Quality | `testing`, `architecture-review-kilo` |
+| Security | `security-review` |
 | AI | `prompt-engineering`, `vibe-coding` |
+| Orchestration | `agent-orchestration` |
+| Data | `data-modeling` |
+| API | `api-design` |
+| Operations | `observability` |
+| Code Quality | `refactoring` |
 | Tools | `git`, `release` |
 | Audit | `skill-audit-bulletin` |
 
@@ -103,7 +116,8 @@ O Kilo busca `{url}/index.json`, e para cada skill listada baixa os arquivos de 
 ```
 
 5. Rode `scripts/validate-index.sh` localmente para confirmar que os paths resolvem
-6. Commit e push
+6. Rode `bash scripts/validate-skill.sh skills/nova-skill` para validar qualidade
+7. Commit e push
 
 ## Padrão de Skill
 
@@ -125,22 +139,23 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 - **Anti-patterns** — Indicadores de severidade (🔴 crítico, 🟡 alerta, 🟢 suave)
 - **Checklists** — Verificação de qualidade antes/depois
 - **Edge Cases** — Cobertura de cenários excepcionais
-- **Templates** — 45 templates disponíveis em `skills/*/templates/`
+- **Templates** — 63 templates disponíveis em `skills/*/templates/`
 - **Examples** — 15 exemplos em `skills/*/examples/`
 
 ## Status da Implementação
 
-**v2.0.2 — Skills Ultra-High Quality Grade**
+**v2.0.3 — Skills Ultra-High Quality Grade**
 
 | Métrica | Status |
 |---------|--------|
-| Skills total | 15 ✅ |
-| Skills refatoradas | 14/14 ✅ |
-| Templates criados | 45 ✅ |
+| Skills total | 21 ✅ |
+| Skills refatoradas | 21/21 ✅ |
+| Templates criados | 63 ✅ |
 | Examples criados | 15 ✅ |
 | Validação automática | ✅ |
+| CI pipeline | ✅ (`validate-skill.sh` + `validate-index.sh`) |
 | GitHub Pages | ✅ |
-| SDLC completo | ✅ (com `implementation`) |
+| SDLC completo | ✅ |
 
 ## Decisões Arquiteturais
 

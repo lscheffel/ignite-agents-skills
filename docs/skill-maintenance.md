@@ -147,7 +147,10 @@ Use formato consistente:
 2. Verifique ≥150 linhas
 3. Confirme todos os checklists marcados
 
-### Peer Review
+### Peer Review (para equipes com >1 mantenedor)
+
+> **Nota:** O processo abaixo aplica quando houver mais de um mantenedor no
+> repositório. Para operador solo, o processo de Auto-review é suficiente.
 
 1. Abra PR com mudanças
 2. Solicite review de 1 maintainer

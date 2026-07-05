@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - "skills/**"
-      - "scripts/validate-index.sh"
+      - "scripts/**"
   pull_request:
     paths:
       - "skills/**"
-      - "scripts/validate-index.sh"
+      - "scripts/**"
 
 jobs:
   validate:
@@ -19,3 +19,20 @@ jobs:
         run: |
           chmod +x scripts/validate-index.sh
           ./scripts/validate-index.sh
+      - name: Validate skill quality (Ultra-High Quality Grade)
+        run: |
+          chmod +x scripts/validate-skill.sh
+          ERRORS=0
+          for skill_dir in skills/*/; do
+            if [ -f "$skill_dir/SKILL.md" ]; then
+              echo "🔍 Validating: $skill_dir"
+              if ! ./scripts/validate-skill.sh "$skill_dir"; then
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          if [ $ERRORS -gt 0 ]; then
+            echo "❌ $ERRORS skill(s) failed quality validation"
+            exit 1
+          fi
+          echo "✅ All skills passed quality validation"

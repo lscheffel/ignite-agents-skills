@@ -3,7 +3,7 @@ name: skill-audit-bulletin
 description: Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final. Use quando revisar skills, validar registry ou decidir adoção.
 version: 2.0.0
 tags: [audit, quality, review, validation, skills]
-related_skills: [architecture-review, documentation]
+related_skills: [architecture-review-kilo, documentation]
 ---
 
 # Skill Audit Bulletin
@@ -25,7 +25,7 @@ Audita skills existentes avaliando qualidade, completude, acionabilidade e risco
 - Apenas leitura (sem decisão)
 
 ### Skills relacionadas:
-- `architecture-review` — para revisão de código
+- `architecture-review-kilo` — para revisão de código
 - `documentation` — para padrões de documentação
 
 ## Decision Tree
@@ -242,5 +242,5 @@ Score 45/100 → "REFATORAR"
 
 ## Referências
 
-- `architecture-review` — para revisão de código
+- `architecture-review-kilo` — para revisão de código
 - `documentation` — para padrões
