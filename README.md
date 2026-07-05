@@ -166,7 +166,7 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
 
 **Active:**
-- [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/ADR-006.md) ✅ Aceito
+- *Nenhuma ADR ativa*
 
 **Arquivadas (Cold Storage):**
 - [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/archive/ADR-001.md) ✅
@@ -174,6 +174,7 @@ Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/a
 - [ADR-003: Retrospectiva da Implementação](./docs/adr/archive/ADR-003.md) ✅
 - [ADR-004: Implementação das Recomendações da Ultra-Auditoria](./docs/adr/archive/ADR-004.md) ✅
 - [ADR-005: Introdução da Skill implementation](./docs/adr/archive/ADR-005.md) ✅
+- [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/archive/ADR-006.md) ✅
 
 > 📦 ADRs implementadas são movidas para `docs/adr/archive/` como referência. Veja [docs/adr/INDEX.md](./docs/adr/INDEX.md) para o índice completo.
 

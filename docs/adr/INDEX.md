@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| [ADR-006](./ADR-006.md) | *A definir* | ⏸️ Proposto | 2026-07-05 |
+| *Nenhuma ADR ativa* | | | |
 
 ---
 
@@ -31,6 +31,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-003](./archive/ADR-003.md) | Retrospectiva da Implementação Ultra-High Quality Grade | ✅ Implementado | 2026-07-05 |
 | [ADR-004](./archive/ADR-004.md) | Implementação das Recomendações da Ultra-Auditoria v2.0.2 | ✅ Implementado | 2026-07-05 |
 | [ADR-005](./archive/ADR-005.md) | Introdução da Skill `implementation` para Execução Governada de Mudanças | ✅ Implementado | 2026-07-05 |
+| [ADR-006](./archive/ADR-006.md) | Workflow CI para Auto-sync do Index e Deploy GitHub Pages | ✅ Implementado | 2026-07-05 |
 
 ---
 
