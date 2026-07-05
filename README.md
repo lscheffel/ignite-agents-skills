@@ -11,10 +11,12 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 ```
 .
 ├── LICENSE
+├── USAGE.md                          # Guia completo de uso das skills
 ├── skills/
-│   ├── index.json              # Registry de skills (fonte única)
+│   ├── index.json                    # Registry de skills (fonte única)
 │   ├── adr-generator/
 │   ├── agent-orchestration/
+│   ├── agents-md-generator/          # 🆕 Skill para AGENTS.md adaptativo
 │   ├── api-design/
 │   ├── architecture-review-kilo/
 │   ├── data-modeling/
@@ -35,20 +37,21 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 │   ├── vibe-coding/
 │   └── writing-plans/
 ├── scripts/
-│   ├── archive-adrs.sh         # Arquiva ADRs implementadas
-│   ├── sync-index.sh           # Auto-gera index.json
-│   ├── validate-index.sh       # Valida index.json contra arquivos reais
-│   └── validate-skill.sh       # Valida qualidade Ultra-High Quality Grade
+│   ├── archive-adrs.sh               # Arquiva ADRs implementadas
+│   ├── sync-index.sh                 # Auto-gera index.json
+│   ├── validate-index.sh             # Valida index.json contra arquivos reais
+│   └── validate-skill.sh             # Valida qualidade Ultra-High Quality Grade
 └── docs/
     └── adr/
-        ├── INDEX.md            # Índice de ADRs (active + archived)
-        ├── ADR-006.md          # ADR ativa
-        └── archive/            # Cold storage (ADRs implementadas)
+        ├── INDEX.md                  # Índice de ADRs (active + archived)
+        └── archive/                  # Cold storage (ADRs implementadas)
             ├── ADR-001.md
             ├── ADR-002.md
             ├── ADR-003.md
             ├── ADR-004.md
-            └── ADR-005.md
+            ├── ADR-005.md
+            ├── ADR-006.md
+            └── ADR-007.md
 ```
 
 ## Categorias
@@ -57,7 +60,7 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 |-----------|--------|
 | Architecture | `architecture-review-kilo`, `ddd` |
 | Documentation | `documentation`, `adr-generator` |
-| Governance | `governance`, `repo-bootstrap` |
+| Governance | `governance`, `repo-bootstrap`, `agents-md-generator` |
 | Planning | `planning`, `writing-plans` |
 | Implementation | `implementation` |
 | Quality | `testing`, `architecture-review-kilo` |
@@ -142,8 +145,8 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 - **Anti-patterns** — Indicadores de severidade (🔴 crítico, 🟡 alerta, 🟢 suave)
 - **Checklists** — Verificação de qualidade antes/depois
 - **Edge Cases** — Cobertura de cenários excepcionais
-- **Templates** — 63 templates disponíveis em `skills/*/templates/`
-- **Examples** — 15 exemplos em `skills/*/examples/`
+- **Templates** — 70 templates disponíveis em `skills/*/templates/`
+- **Examples** — 18 exemplos em `skills/*/examples/`
 
 ## Status da Implementação
 
