@@ -34,9 +34,21 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 │   ├── testing/
 │   ├── vibe-coding/
 │   └── writing-plans/
-└── scripts/
-    ├── validate-index.sh       # Valida index.json contra arquivos reais
-    └── validate-skill.sh       # Valida qualidade Ultra-High Quality Grade
+├── scripts/
+│   ├── archive-adrs.sh         # Arquiva ADRs implementadas
+│   ├── sync-index.sh           # Auto-gera index.json
+│   ├── validate-index.sh       # Valida index.json contra arquivos reais
+│   └── validate-skill.sh       # Valida qualidade Ultra-High Quality Grade
+└── docs/
+    └── adr/
+        ├── INDEX.md            # Índice de ADRs (active + archived)
+        ├── ADR-006.md          # ADR ativa
+        └── archive/            # Cold storage (ADRs implementadas)
+            ├── ADR-001.md
+            ├── ADR-002.md
+            ├── ADR-003.md
+            ├── ADR-004.md
+            └── ADR-005.md
 ```
 
 ## Categorias
@@ -161,11 +173,17 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 
 Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
 
-- [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/ADR-001.md)
-- [ADR-002: Padrão de Skill Ultra-High Quality Grade](./docs/adr/ADR-002.md)
-- [ADR-003: Retrospectiva da Implementação](./docs/adr/ADR-003.md)
-- [ADR-004: Implementação das Recomendações da Ultra-Auditoria](./docs/adr/ADR-004.md)
-- [ADR-005: Introdução da Skill implementation](./docs/adr/ADR-005.md)
+**Active:**
+- [ADR-006: *A definir*](./docs/adr/ADR-006.md) ⏸️ Proposto
+
+**Arquivadas (Cold Storage):**
+- [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/archive/ADR-001.md) ✅
+- [ADR-002: Padrão de Skill Ultra-High Quality Grade](./docs/adr/archive/ADR-002.md) ✅
+- [ADR-003: Retrospectiva da Implementação](./docs/adr/archive/ADR-003.md) ✅
+- [ADR-004: Implementação das Recomendações da Ultra-Auditoria](./docs/adr/archive/ADR-004.md) ✅
+- [ADR-005: Introdução da Skill implementation](./docs/adr/archive/ADR-005.md) ✅
+
+> 📦 ADRs implementadas são movidas para `docs/adr/archive/` como referência. Veja [docs/adr/INDEX.md](./docs/adr/INDEX.md) para o índice completo.
 
 ## Licença
 
