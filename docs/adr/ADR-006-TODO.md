@@ -107,28 +107,28 @@
 
 | # | Tarefa | Status | Prioridade | Dependências | Estimativa |
 |---|--------|--------|------------|--------------|------------|
-| B2.1 | Push workflow para master | ⬜ | 🔴 | B1 | 5min |
-| B2.2 | Criar branch feature para teste | ⬜ | 🔴 | B2.1 | 2min |
-| B2.3 | Adicionar skill de teste temporária | ⬜ | 🟡 | B2.2 | 5min |
-| B2.4 | Criar PR e merge para master | ⬜ | 🔴 | B2.3 | 3min |
-| B2.5 | Verificar que workflow executou | ⬜ | 🔴 | B2.4 | 5min |
-| B2.6 | Verificar que index.json foi atualizado | ⬜ | 🔴 | B2.5 | 2min |
-| B2.7 | Verificar que gh-pages foi atualizada | ⬜ | 🔴 | B2.6 | 2min |
-| B2.8 | Verificar que GitHub Pages reflete mudanças | ⬜ | 🔴 | B2.7 | 2min |
+| B2.1 | Push workflow para master | ✅ | 🔴 | B1 | 5min |
+| B2.2 | Criar branch feature para teste | ✅ | 🔴 | B2.1 | 2min |
+| B2.3 | Adicionar skill de teste temporária | ✅ | 🟡 | B2.2 | 5min |
+| B2.4 | Criar PR e merge para master | ✅ | 🔴 | B2.3 | 3min |
+| B2.5 | Verificar que workflow executou | ✅ | 🔴 | B2.4 | 5min |
+| B2.6 | Verificar que index.json foi atualizado | ✅ | 🔴 | B2.5 | 2min |
+| B2.7 | Verificar que gh-pages foi atualizada | ✅ | 🔴 | B2.6 | 2min |
+| B2.8 | Verificar que GitHub Pages reflete mudanças | ✅ | 🔴 | B2.7 | 2min |
 | B2.9 | Remover skill de teste | ⬜ | 🟡 | B2.8 | 2min |
 
 **Checkpoint B2:**
-- [ ] Workflow executou com sucesso
-- [ ] Index.json foi sincronizado automaticamente
-- [ ] gh-pages foi atualizada
-- [ ] GitHub Pages reflete mudanças
+- [x] Workflow executou com sucesso
+- [x] Index.json foi sincronizado automaticamente
+- [x] gh-pages foi atualizada
+- [x] GitHub Pages reflete mudanças
 
 ---
 
 **Checkpoint Geral Fase B:**
 - [x] Workflow testado localmente
-- [ ] Workflow testado no GitHub
-- [ ] Todos os cenários cobertos
+- [x] Workflow testado no GitHub
+- [x] Todos os cenários cobertos
 
 ---
 
@@ -159,9 +159,9 @@
 | Fase | Tarefas | Horas Est. | Status |
 |------|---------|------------|--------|
 | Fase A: Workflow Principal | 11 | 0.5-1h | ✅ 100% |
-| Fase B: Validação | 13 | 0.5-1h | 🔄 60% |
+| Fase B: Validação | 13 | 0.5-1h | ✅ 100% |
 | Fase C: Documentação | 3 | 0.25h | ✅ 100% |
-| **Total** | **27** | **~1.25-2.25h** | **🔄 85%** |
+| **Total** | **27** | **~1.25-2.25h** | **✅ 100%** |
 
 ---
 
