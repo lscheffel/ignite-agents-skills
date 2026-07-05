@@ -2,6 +2,8 @@
 
 > Contrato obrigatório que valida se todos os artefatos necessários estão presentes antes da execução.
 
+> **Status:** Implementado
+
 ---
 
 ## Identificação
