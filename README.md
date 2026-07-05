@@ -112,6 +112,12 @@ description: Descrição curta para o agente decidir quando usar.
 ---
 ```
 
+## Decisões Arquiteturais
+
+Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
+
+- [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/ADR-001.md)
+
 ## Licença
 
 MIT — ver [LICENSE](./LICENSE).
