@@ -16,13 +16,13 @@
         "implementation"
       ],
       "files": [
-        "examples/database-choice.md",
         "SKILL.md",
+        "examples/database-choice.md",
         "templates/adr-bp.md",
         "templates/adr-emergency.md",
-        "templates/adr.md",
         "templates/adr-simple.md",
-        "templates/adr-todo.md"
+        "templates/adr-todo.md",
+        "templates/adr.md"
       ]
     },
     {
@@ -41,11 +41,11 @@
         "governance"
       ],
       "files": [
+        "SKILL.md",
         "checklists/post-execution.md",
         "checklists/pre-flight.md",
         "examples/fan-out-fan-in.md",
         "examples/multi-agent-decomposition.md",
-        "SKILL.md",
         "templates/agent-role-card.md",
         "templates/handoff-protocol.md",
         "templates/routing-decision.md"
@@ -69,12 +69,12 @@
         "skill-audit-bulletin"
       ],
       "files": [
+        "SKILL.md",
         "checklists/maintenance.md",
         "checklists/validation.md",
         "examples/before-after.md",
         "examples/context-detection.md",
         "examples/customization.md",
-        "SKILL.md",
         "templates/AGENTS-api.md",
         "templates/AGENTS-base.md",
         "templates/AGENTS-cli.md",
@@ -101,10 +101,10 @@
         "governance"
       ],
       "files": [
+        "SKILL.md",
         "examples/error-handling-contract.md",
         "examples/python-flask-rest.md",
         "examples/rest-crud-spec.md",
-        "SKILL.md",
         "templates/api-versioning.md",
         "templates/endpoint-spec.md",
         "templates/error-contract.md"
@@ -126,8 +126,8 @@
         "adr-generator"
       ],
       "files": [
-        "examples/god-class-refactor.md",
         "SKILL.md",
+        "examples/god-class-refactor.md",
         "templates/architecture-review-report.md",
         "templates/tech-debt-item.md"
       ]
@@ -149,8 +149,8 @@
         "architecture-review-kilo"
       ],
       "files": [
-        "checklists/schema-review.md",
         "SKILL.md",
+        "checklists/schema-review.md",
         "templates/index-strategy.md",
         "templates/migration.md",
         "templates/schema.sql"
@@ -173,8 +173,8 @@
         "implementation"
       ],
       "files": [
-        "examples/order-modeling.md",
         "SKILL.md",
+        "examples/order-modeling.md",
         "templates/aggregate-root.ts",
         "templates/domain-event.ts",
         "templates/domain-service.ts",
@@ -200,8 +200,8 @@
         "implementation"
       ],
       "files": [
-        "examples/readme-example.md",
         "SKILL.md",
+        "examples/readme-example.md",
         "templates/api-doc.md",
         "templates/architecture-doc.md",
         "templates/readme.md"
@@ -248,8 +248,8 @@
         "implementation"
       ],
       "files": [
-        "examples/feature-workflow.md",
         "SKILL.md",
+        "examples/feature-workflow.md",
         "templates/branch-naming.md",
         "templates/commit-message.md",
         "templates/pr-description.md"
@@ -274,8 +274,8 @@
         "skill-audit-bulletin"
       ],
       "files": [
-        "examples/branch-protection.md",
         "SKILL.md",
+        "examples/branch-protection.md",
         "templates/codeowners",
         "templates/issue-template.md",
         "templates/pull-request-template.md"
@@ -305,11 +305,11 @@
         "ddd"
       ],
       "files": [
+        "SKILL.md",
         "checklists/post-execution.md",
         "checklists/pre-execution.md",
         "examples/complex-change.md",
         "examples/simple-change.md",
-        "SKILL.md",
         "templates/change-plan.md",
         "templates/execution-contract.md",
         "templates/execution-report.md",
@@ -334,11 +334,11 @@
         "governance"
       ],
       "files": [
+        "SKILL.md",
         "checklists/observability-implementation.md",
         "examples/express-logging.ts",
         "examples/prometheus-metrics.ts",
         "examples/tracing-setup.ts",
-        "SKILL.md",
         "templates/alert-rules.md",
         "templates/logging-spec.md",
         "templates/metrics-sla.md"
@@ -361,8 +361,8 @@
         "implementation"
       ],
       "files": [
-        "examples/social-login-plan.md",
         "SKILL.md",
+        "examples/social-login-plan.md",
         "templates/epic-card.md",
         "templates/feature-card.md",
         "templates/task-card.md"
@@ -383,8 +383,8 @@
         "vibe-coding"
       ],
       "files": [
-        "examples/refactoring-prompt.md",
         "SKILL.md",
+        "examples/refactoring-prompt.md",
         "templates/prompt-complex.md",
         "templates/prompt-evaluation.md",
         "templates/prompt-simple.md"
@@ -407,9 +407,9 @@
         "testing"
       ],
       "files": [
+        "SKILL.md",
         "examples/extract-method.ts",
         "examples/strangler-fig.ts",
-        "SKILL.md",
         "templates/legacy-migration.md",
         "templates/refactoring-catalog.md",
         "templates/test-before-refactor.md"
@@ -432,10 +432,10 @@
         "implementation"
       ],
       "files": [
+        "SKILL.md",
         "checklists/post-release.md",
         "checklists/pre-release.md",
         "examples/release-process.md",
-        "SKILL.md",
         "templates/changelog-entry.md",
         "templates/release-checklist.md",
         "templates/rollback-plan.md"
@@ -459,13 +459,13 @@
         "skill-audit-bulletin"
       ],
       "files": [
-        "examples/bootstrap-example.md",
         "SKILL.md",
+        "examples/bootstrap-example.md",
         "templates/AGENTS.md",
-        "templates/ci.yml",
         "templates/CONTRIBUTING.md",
         "templates/README.md",
-        "templates/SECURITY.md"
+        "templates/SECURITY.md",
+        "templates/ci.yml"
       ]
     },
     {
@@ -485,9 +485,9 @@
         "testing"
       ],
       "files": [
+        "SKILL.md",
         "examples/crypto-validation.md",
         "examples/dependency-audit.md",
-        "SKILL.md",
         "templates/security-checklist.md",
         "templates/threat-model.md",
         "templates/vulnerability-report.md"
@@ -509,8 +509,8 @@
         "documentation"
       ],
       "files": [
-        "examples/git-audit.md",
         "SKILL.md",
+        "examples/git-audit.md",
         "templates/audit-bulletin.md"
       ]
     },
@@ -532,8 +532,8 @@
         "implementation"
       ],
       "files": [
-        "examples/order-testing.md",
         "SKILL.md",
+        "examples/order-testing.md",
         "templates/e2e-test.ts",
         "templates/integration-test.ts",
         "templates/test-plan.md",
@@ -555,8 +555,8 @@
         "testing"
       ],
       "files": [
-        "examples/session-example.md",
         "SKILL.md",
+        "examples/session-example.md",
         "templates/vibe-session.md"
       ]
     },
@@ -577,9 +577,9 @@
         "implementation"
       ],
       "files": [
+        "SKILL.md",
         "examples/api-migration-plan.md",
         "examples/feature-breakdown.md",
-        "SKILL.md",
         "templates/implementation-plan.md",
         "templates/task-card.md"
       ]
