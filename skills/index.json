@@ -18,6 +18,8 @@
       "files": [
         "SKILL.md",
         "examples/database-choice.md",
+        "templates/adr-bp.md",
+        "templates/adr-todo.md",
         "templates/adr.md"
       ]
     },
