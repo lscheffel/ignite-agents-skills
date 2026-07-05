@@ -16,7 +16,7 @@
 
 | ADR | Título | Status | Data |
 |-----|--------|--------|------|
-| [ADR-009](./ADR-009.md) | Resolução de Débitos da Auditoria v2.1.0 | ⏸️ Proposto | 2026-07-05 |
+| *Nenhuma ADR ativa* | | | |
 
 ---
 
@@ -34,6 +34,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-006](./archive/ADR-006.md) | Workflow CI para Auto-sync do Index e Deploy GitHub Pages | ✅ Implementado | 2026-07-05 |
 | [ADR-007](./archive/ADR-007.md) | Skill para Geração de AGENTS.md Adaptativo | ✅ Implementado | 2026-07-05 |
 | [ADR-008](./archive/ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | ✅ Implementado | 2026-07-05 |
+| [ADR-009](./archive/ADR-009.md) | Resolução de Débitos da Auditoria v2.1.0 | ✅ Implementado | 2026-07-05 |
 | [ADR-010](./archive/ADR-010.md) | Branch Protection e SemVer para Tags — Emergencial | ✅ Implementado | 2026-07-05 |
 
 ---
