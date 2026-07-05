@@ -1,7 +1,7 @@
 ---
 name: documentation
 description: Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code. Use quando criar documentação, revisar docs, ou padronizar material técnico.
-version: 2.0.0
+version: 2.0.1
 tags: [documentation, docs, readme, api-docs, architecture]
 related_skills: [adr-generator, repo-bootstrap, implementation]
 ---
