@@ -117,6 +117,19 @@ description: Descrição curta para o agente decidir quando usar.
 Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
 
 - [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/ADR-001.md)
+- [ADR-002: Refatoração de Skills para Ultra-High Quality Grade](./docs/adr/ADR-002.md) ✅
+
+## Status da Implementação
+
+**v2.0.0 — Skills Ultra-High Quality Grade**
+
+| Métrica | Status |
+|---------|--------|
+| Skills refatoradas | 14/14 ✅ |
+| Templates criados | 31 ✅ |
+| Examples criados | 14 ✅ |
+| Validação automática | ✅ |
+| GitHub Pages | ✅ |
 
 ## Licença
 
