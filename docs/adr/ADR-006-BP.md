@@ -1,6 +1,6 @@
 # Blueprint: Workflow CI para Auto-sync do Index e Deploy GitHub Pages
 
-> ADR-006 | Versão 1.0 | 2026-07-05 | **Status: PENDENTE**
+> ADR-006 | Versão 1.0 | 2026-07-05 | **Status: ✅ IMPLEMENTADO**
 
 ---
 

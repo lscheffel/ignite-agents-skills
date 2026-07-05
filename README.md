@@ -115,21 +115,12 @@ O Kilo busca `{url}/index.json`, e para cada skill listada baixa os arquivos de 
 1. Crie o diretório: `skills/nova-skill/`
 2. Adicione o `SKILL.md` com frontmatter `name` e `description`
 3. Adicione arquivos auxiliares se necessário
-4. Registre no `skills/index.json` — **paths relativos à pasta da skill**:
-
-```json
-{
-  "name": "nova-skill",
-  "files": [
-    "SKILL.md",
-    "templates/example.md"
-  ]
-}
-```
-
+4. O `skills/index.json` é sincronizado **automaticamente** via workflow de CI/CD
 5. Rode `scripts/validate-index.sh` localmente para confirmar que os paths resolvem
 6. Rode `bash scripts/validate-skill.sh skills/nova-skill` para validar qualidade
-7. Commit e push
+7. Commit e push para `master`
+
+**Nota:** O workflow `sync-and-deploy.yml` sincroniza automaticamente o index.json e faz deploy para GitHub Pages quando há alterações na pasta `skills/`.
 
 ## Padrão de Skill
 
@@ -166,6 +157,7 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 | Examples criados | 15 ✅ |
 | Validação automática | ✅ |
 | CI pipeline | ✅ (`validate-skill.sh` + `validate-index.sh`) |
+| Auto-sync index.json | ✅ (`sync-and-deploy.yml`) |
 | GitHub Pages | ✅ |
 | SDLC completo | ✅ |
 
@@ -174,7 +166,7 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
 
 **Active:**
-- [ADR-006: *A definir*](./docs/adr/ADR-006.md) ⏸️ Proposto
+- [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/ADR-006.md) ✅ Aceito
 
 **Arquivadas (Cold Storage):**
 - [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/archive/ADR-001.md) ✅

@@ -52,12 +52,24 @@ bash scripts/validate-skill.sh skills/{skill-name}
 
 ### 6. Registrar no index.json
 
-Adicione a nova skill ao `skills/index.json` com:
-- name
-- version
-- tags
-- related_skills
-- files (paths relativos)
+O index.json é sincronizado **automaticamente** via workflow de CI/CD quando você faz push para a branch `master` com alterações na pasta `skills/`.
+
+**Processo Automático (recomendado):**
+1. Faça push das alterações para `master`
+2. O workflow `sync-and-deploy.yml` executa automaticamente:
+   - Sincroniza `skills/index.json` usando `sync-index.sh`
+   - Valida o index usando `validate-index.sh`
+   - Commita alterações no `index.json` (se houver)
+   - Deploya para `gh-pages` via merge
+
+**Processo Manual (apenas para testes locais):**
+```bash
+# Sincronizar index.json
+./scripts/sync-index.sh
+
+# Validar index.json
+./scripts/validate-index.sh
+```
 
 ---
 

@@ -1,96 +1,304 @@
 {
   "skills": [
     {
-      "name": "writing-plans",
-      "version": "2.0.0",
-      "tags": ["planning", "implementation", "tasks"],
-      "related_skills": ["planning", "ddd", "implementation"],
-      "files": [
-        "SKILL.md",
-        "templates/implementation-plan.md",
-        "templates/task-card.md"
-      ]
-    },
-    {
       "name": "adr-generator",
       "version": "2.0.0",
-      "tags": ["architecture", "decisions", "documentation"],
-      "related_skills": ["documentation", "architecture-review-kilo", "implementation"],
+      "description": "Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos.",
+      "tags": [
+        "architecture",
+        "decisions",
+        "adr",
+        "documentation"
+      ],
+      "related_skills": [
+        "documentation",
+        "architecture-review-kilo",
+        "implementation"
+      ],
       "files": [
+        "examples/database-choice.md",
         "SKILL.md",
         "templates/adr.md"
       ]
     },
     {
+      "name": "agent-orchestration",
+      "version": "2.0.0",
+      "description": "Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in e coordenação multi-agente. Use quando precisar coordenar vários agentes, definir papéis, gerenciar handoffs ou otimizar execução paralela.",
+      "tags": [
+        "orchestration",
+        "agents",
+        "multi-agent",
+        "coordination"
+      ],
+      "related_skills": [
+        "prompt-engineering",
+        "vibe-coding",
+        "governance"
+      ],
+      "files": [
+        "checklists/post-execution.md",
+        "checklists/pre-flight.md",
+        "examples/fan-out-fan-in.md",
+        "examples/multi-agent-decomposition.md",
+        "SKILL.md",
+        "templates/agent-role-card.md",
+        "templates/handoff-protocol.md",
+        "templates/routing-decision.md"
+      ]
+    },
+    {
+      "name": "api-design",
+      "version": "2.0.0",
+      "description": "Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência. Use quando projetar novas APIs, revisar contratos existentes ou padronizar práticas de design de interface.",
+      "tags": [
+        "api",
+        "rest",
+        "graphql",
+        "endpoints",
+        "versioning"
+      ],
+      "related_skills": [
+        "documentation",
+        "testing",
+        "governance"
+      ],
+      "files": [
+        "SKILL.md",
+        "templates/api-versioning.md",
+        "templates/endpoint-spec.md",
+        "templates/error-contract.md"
+      ]
+    },
+    {
       "name": "architecture-review-kilo",
       "version": "2.0.0",
-      "tags": ["architecture", "solid", "review", "code-smells"],
-      "related_skills": ["ddd", "adr-generator"],
+      "description": "Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais. Use quando o usuário pedir revisão de arquitetura, análise de estrutura, ou avaliação de design.",
+      "tags": [
+        "architecture",
+        "solid",
+        "review",
+        "clean-architecture",
+        "code-smells"
+      ],
+      "related_skills": [
+        "ddd",
+        "adr-generator"
+      ],
       "files": [
+        "examples/god-class-refactor.md",
         "SKILL.md",
         "templates/architecture-review-report.md",
         "templates/tech-debt-item.md"
       ]
     },
     {
-      "name": "ddd",
+      "name": "data-modeling",
       "version": "2.0.0",
-      "tags": ["domain-driven-design", "modeling", "aggregates", "events"],
-      "related_skills": ["architecture-review-kilo", "testing", "implementation"],
+      "description": "Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance. Use quando criar bancos de dados, projetar schemas, otimizar queries ou gerenciar migrações.",
+      "tags": [
+        "data-modeling",
+        "database",
+        "schema",
+        "sql",
+        "migrations"
+      ],
+      "related_skills": [
+        "ddd",
+        "testing",
+        "architecture-review-kilo"
+      ],
       "files": [
+        "checklists/schema-review.md",
         "SKILL.md",
-        "templates/entity.ts",
-        "templates/value-object.ts",
-        "templates/aggregate-root.ts",
-        "templates/domain-event.ts",
-        "templates/repository.ts",
-        "templates/domain-service.ts"
+        "templates/index-strategy.md",
+        "templates/migration.md",
+        "templates/schema.sql"
       ]
     },
     {
-      "name": "repo-bootstrap",
+      "name": "ddd",
       "version": "2.0.0",
-      "tags": ["repository", "scaffolding", "boilerplate", "governance"],
-      "related_skills": ["governance", "documentation", "git", "skill-audit-bulletin"],
+      "description": "Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados. Use quando modelar domínios ricos, refatorar entidades anêmicas ou estruturar contextos delimitados.",
+      "tags": [
+        "ddd",
+        "domain-driven-design",
+        "modeling",
+        "aggregates",
+        "events"
+      ],
+      "related_skills": [
+        "architecture-review-kilo",
+        "testing",
+        "implementation"
+      ],
       "files": [
+        "examples/order-modeling.md",
         "SKILL.md",
-        "templates/README.md",
-        "templates/CONTRIBUTING.md",
-        "templates/SECURITY.md",
-        "templates/ci.yml",
-        "templates/AGENTS.md"
+        "templates/aggregate-root.ts",
+        "templates/domain-event.ts",
+        "templates/domain-service.ts",
+        "templates/entity.ts",
+        "templates/repository.ts",
+        "templates/value-object.ts"
       ]
     },
     {
       "name": "documentation",
       "version": "2.0.0",
-      "tags": ["documentation", "docs", "readme", "api-docs", "architecture"],
-      "related_skills": ["adr-generator", "repo-bootstrap", "implementation"],
+      "description": "Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code. Use quando criar documentação, revisar docs, ou padronizar material técnico.",
+      "tags": [
+        "documentation",
+        "docs",
+        "readme",
+        "api-docs",
+        "architecture"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "repo-bootstrap",
+        "implementation"
+      ],
       "files": [
+        "examples/readme-example.md",
         "SKILL.md",
-        "templates/readme.md",
         "templates/api-doc.md",
-        "templates/architecture-doc.md"
+        "templates/architecture-doc.md",
+        "templates/readme.md"
+      ]
+    },
+    {
+      "name": "git",
+      "version": "2.0.0",
+      "description": "Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas. Use quando fazer commits, criar branches, resolver conflitos ou ensinar Git.",
+      "tags": [
+        "version-control",
+        "commits",
+        "branching",
+        "conventional-commits",
+        "workflow"
+      ],
+      "related_skills": [
+        "governance",
+        "release",
+        "repo-bootstrap",
+        "implementation"
+      ],
+      "files": [
+        "examples/feature-workflow.md",
+        "SKILL.md",
+        "templates/branch-naming.md",
+        "templates/commit-message.md",
+        "templates/pr-description.md"
       ]
     },
     {
       "name": "governance",
       "version": "2.0.0",
-      "tags": ["governance", "branching", "code-review", "process", "team"],
-      "related_skills": ["git", "release", "repo-bootstrap", "implementation", "skill-audit-bulletin"],
+      "description": "Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs. Use quando definir processos de equipe, implementar governance-as-code ou padronizar workflows de desenvolvimento.",
+      "tags": [
+        "governance",
+        "branching",
+        "code-review",
+        "process",
+        "team"
+      ],
+      "related_skills": [
+        "git",
+        "release",
+        "repo-bootstrap",
+        "implementation",
+        "skill-audit-bulletin"
+      ],
       "files": [
+        "examples/branch-protection.md",
         "SKILL.md",
-        "templates/pull-request-template.md",
+        "templates/codeowners",
         "templates/issue-template.md",
-        "templates/codeowners"
+        "templates/pull-request-template.md"
+      ]
+    },
+    {
+      "name": "implementation",
+      "version": "2.0.0",
+      "description": "Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada.",
+      "tags": [
+        "implementation",
+        "execution",
+        "artifact-driven",
+        "sdlc",
+        "governance"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "writing-plans",
+        "planning",
+        "testing",
+        "git",
+        "documentation",
+        "governance",
+        "release",
+        "architecture-review-kilo",
+        "ddd"
+      ],
+      "files": [
+        "checklists/post-execution.md",
+        "checklists/pre-execution.md",
+        "examples/complex-change.md",
+        "examples/simple-change.md",
+        "SKILL.md",
+        "templates/change-plan.md",
+        "templates/execution-contract.md",
+        "templates/execution-report.md",
+        "templates/rollback-report.md",
+        "templates/task-progress.md"
+      ]
+    },
+    {
+      "name": "observability",
+      "version": "2.0.0",
+      "description": "Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting. Use quando configurar monitoramento, investigar incidentes ou implementar observabilidade em microsserviços.",
+      "tags": [
+        "observability",
+        "logging",
+        "metrics",
+        "tracing",
+        "alerting"
+      ],
+      "related_skills": [
+        "testing",
+        "release",
+        "governance"
+      ],
+      "files": [
+        "checklists/observability-implementation.md",
+        "examples/express-logging.ts",
+        "examples/prometheus-metrics.ts",
+        "examples/tracing-setup.ts",
+        "SKILL.md",
+        "templates/alert-rules.md",
+        "templates/logging-spec.md",
+        "templates/metrics-sla.md"
       ]
     },
     {
       "name": "planning",
       "version": "2.0.0",
-      "tags": ["planning", "project-management", "backlog", "estimation", "roadmap"],
-      "related_skills": ["writing-plans", "governance", "implementation"],
+      "description": "Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização. Use quando planejar projeto, roadmap, estimativas ou breakdown de trabalho.",
+      "tags": [
+        "planning",
+        "project-management",
+        "backlog",
+        "estimation",
+        "roadmap"
+      ],
+      "related_skills": [
+        "writing-plans",
+        "governance",
+        "implementation"
+      ],
       "files": [
+        "examples/social-login-plan.md",
         "SKILL.md",
         "templates/epic-card.md",
         "templates/feature-card.md",
@@ -98,48 +306,72 @@
       ]
     },
     {
-      "name": "testing",
-      "version": "2.0.0",
-      "tags": ["testing", "unit-tests", "integration", "e2e", "coverage", "tdd"],
-      "related_skills": ["ddd", "governance", "implementation"],
-      "files": [
-        "SKILL.md",
-        "templates/unit-test.ts",
-        "templates/integration-test.ts",
-        "templates/e2e-test.ts",
-        "templates/test-plan.md"
-      ]
-    },
-    {
       "name": "prompt-engineering",
       "version": "2.0.0",
-      "tags": ["prompts", "llm", "ai", "techniques", "agents"],
-      "related_skills": ["vibe-coding"],
+      "description": "Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas. Use quando criar prompts para agentes de IA, otimizar interações ou treinar equipes em IA.",
+      "tags": [
+        "prompts",
+        "llm",
+        "ai",
+        "techniques",
+        "agents"
+      ],
+      "related_skills": [
+        "vibe-coding"
+      ],
       "files": [
+        "examples/refactoring-prompt.md",
         "SKILL.md",
-        "templates/prompt-simple.md",
         "templates/prompt-complex.md",
-        "templates/prompt-evaluation.md"
+        "templates/prompt-evaluation.md",
+        "templates/prompt-simple.md"
       ]
     },
     {
-      "name": "git",
+      "name": "refactoring",
       "version": "2.0.0",
-      "tags": ["version-control", "commits", "branching", "conventional-commits", "workflow"],
-      "related_skills": ["governance", "release", "implementation"],
+      "description": "Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado. Use quando refatorar código, melhorar estrutura existente ou migrar sistemas legados.",
+      "tags": [
+        "refactoring",
+        "code-quality",
+        "legacy",
+        "strangler-fig",
+        "testing"
+      ],
+      "related_skills": [
+        "architecture-review-kilo",
+        "ddd",
+        "testing"
+      ],
       "files": [
+        "examples/extract-method.ts",
+        "examples/strangler-fig.ts",
         "SKILL.md",
-        "templates/commit-message.md",
-        "templates/branch-naming.md",
-        "templates/pr-description.md"
+        "templates/legacy-migration.md",
+        "templates/refactoring-catalog.md",
+        "templates/test-before-refactor.md"
       ]
     },
     {
       "name": "release",
       "version": "2.0.0",
-      "tags": ["release", "versioning", "changelog", "deploy", "rollback"],
-      "related_skills": ["git", "governance", "implementation"],
+      "description": "Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico.",
+      "tags": [
+        "release",
+        "versioning",
+        "changelog",
+        "deploy",
+        "rollback"
+      ],
+      "related_skills": [
+        "git",
+        "governance",
+        "implementation"
+      ],
       "files": [
+        "checklists/post-release.md",
+        "checklists/pre-release.md",
+        "examples/release-process.md",
         "SKILL.md",
         "templates/changelog-entry.md",
         "templates/release-checklist.md",
@@ -147,44 +379,48 @@
       ]
     },
     {
-      "name": "vibe-coding",
+      "name": "repo-bootstrap",
       "version": "2.0.0",
-      "tags": ["ai-assisted", "pair-programming", "intent-driven"],
-      "related_skills": ["prompt-engineering", "testing"],
+      "description": "Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, estrutura de docs/ e exemplos de CI/CD. Use quando iniciar um novo repositório ou padronizar estrutura de projeto.",
+      "tags": [
+        "repository",
+        "scaffolding",
+        "boilerplate",
+        "governance",
+        "ci-cd"
+      ],
+      "related_skills": [
+        "governance",
+        "documentation",
+        "git",
+        "skill-audit-bulletin"
+      ],
       "files": [
+        "examples/bootstrap-example.md",
         "SKILL.md",
-        "templates/vibe-session.md"
-      ]
-    },
-    {
-      "name": "skill-audit-bulletin",
-      "version": "2.0.0",
-      "tags": ["audit", "quality", "review", "validation", "skills"],
-      "related_skills": ["architecture-review-kilo", "documentation"],
-      "files": [
-        "SKILL.md",
-        "templates/audit-bulletin.md"
-      ]
-    },
-    {
-      "name": "implementation",
-      "version": "2.0.0",
-      "tags": ["implementation", "execution", "artifact-driven", "sdlc", "governance"],
-      "related_skills": ["adr-generator", "writing-plans", "planning", "testing", "git", "documentation", "governance", "release", "architecture-review-kilo", "ddd"],
-      "files": [
-        "SKILL.md",
-        "templates/execution-contract.md",
-        "templates/execution-report.md",
-        "templates/change-plan.md",
-        "templates/rollback-report.md",
-        "templates/task-progress.md"
+        "templates/AGENTS.md",
+        "templates/ci.yml",
+        "templates/CONTRIBUTING.md",
+        "templates/README.md",
+        "templates/SECURITY.md"
       ]
     },
     {
       "name": "security-review",
       "version": "2.0.0",
-      "tags": ["security", "vulnerabilities", "secrets", "cryptography", "dependencies"],
-      "related_skills": ["governance", "architecture-review-kilo", "testing"],
+      "description": "Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras. Use quando revisar código por segurança, auditar dependências ou validar práticas de criptografia.",
+      "tags": [
+        "security",
+        "vulnerabilities",
+        "secrets",
+        "cryptography",
+        "dependencies"
+      ],
+      "related_skills": [
+        "governance",
+        "architecture-review-kilo",
+        "testing"
+      ],
       "files": [
         "SKILL.md",
         "templates/security-checklist.md",
@@ -193,63 +429,92 @@
       ]
     },
     {
-      "name": "agent-orchestration",
+      "name": "skill-audit-bulletin",
       "version": "2.0.0",
-      "tags": ["orchestration", "agents", "multi-agent", "coordination"],
-      "related_skills": ["prompt-engineering", "vibe-coding", "governance"],
+      "description": "Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final. Use quando revisar skills, validar registry ou decidir adoção.",
+      "tags": [
+        "audit",
+        "quality",
+        "review",
+        "validation",
+        "skills"
+      ],
+      "related_skills": [
+        "architecture-review-kilo",
+        "documentation"
+      ],
       "files": [
+        "examples/git-audit.md",
         "SKILL.md",
-        "templates/agent-role-card.md",
-        "templates/handoff-protocol.md",
-        "templates/routing-decision.md"
+        "templates/audit-bulletin.md"
       ]
     },
     {
-      "name": "data-modeling",
+      "name": "testing",
       "version": "2.0.0",
-      "tags": ["data-modeling", "database", "schema", "sql", "migrations"],
-      "related_skills": ["ddd", "testing", "architecture-review-kilo"],
+      "description": "Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas. Use quando escrever testes, revisar cobertura ou definir estratégia de testes.",
+      "tags": [
+        "testing",
+        "unit-tests",
+        "integration",
+        "e2e",
+        "coverage",
+        "tdd"
+      ],
+      "related_skills": [
+        "ddd",
+        "governance",
+        "implementation"
+      ],
       "files": [
+        "examples/order-testing.md",
         "SKILL.md",
-        "templates/schema.sql",
-        "templates/migration.md",
-        "templates/index-strategy.md"
+        "templates/e2e-test.ts",
+        "templates/integration-test.ts",
+        "templates/test-plan.md",
+        "templates/unit-test.ts"
       ]
     },
     {
-      "name": "api-design",
+      "name": "vibe-coding",
       "version": "2.0.0",
-      "tags": ["api", "rest", "graphql", "endpoints", "versioning"],
-      "related_skills": ["documentation", "testing", "governance"],
+      "description": "Modalidade de desenvolvimento onde o desenvolvedor guia o agente de IA com intenção e direção, não comandos detalhados. Foca em resultado, velocidade e fluxo contínuo. Use quando o usuário mencionar vibe coding, pair programming com IA, ou desenvolvimento assistido por IA.",
+      "tags": [
+        "ai-assisted",
+        "pair-programming",
+        "intent-driven",
+        "agents"
+      ],
+      "related_skills": [
+        "prompt-engineering",
+        "testing"
+      ],
       "files": [
+        "examples/session-example.md",
         "SKILL.md",
-        "templates/endpoint-spec.md",
-        "templates/error-contract.md",
-        "templates/api-versioning.md"
+        "templates/vibe-session.md"
       ]
     },
     {
-      "name": "observability",
+      "name": "writing-plans",
       "version": "2.0.0",
-      "tags": ["observability", "logging", "metrics", "tracing", "alerting"],
-      "related_skills": ["testing", "release", "governance"],
+      "description": "Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação, dependências e sequenciamento. Use quando o usuário pedir um plano de implementação, roadmap técnico, ou quebra de tarefas.",
+      "tags": [
+        "planning",
+        "implementation",
+        "roadmap",
+        "tasks",
+        "breakdown"
+      ],
+      "related_skills": [
+        "planning",
+        "ddd",
+        "implementation"
+      ],
       "files": [
         "SKILL.md",
-        "templates/logging-spec.md",
-        "templates/metrics-sla.md",
-        "templates/alert-rules.md"
-      ]
-    },
-    {
-      "name": "refactoring",
-      "version": "2.0.0",
-      "tags": ["refactoring", "code-quality", "legacy", "strangler-fig", "testing"],
-      "related_skills": ["architecture-review-kilo", "ddd", "testing"],
-      "files": [
-        "SKILL.md",
-        "templates/refactoring-catalog.md",
-        "templates/legacy-migration.md",
-        "templates/test-before-refactor.md"
+        "templates/implementation-plan.md",
+        "templates/task-card.md"
       ]
     }
   ],
