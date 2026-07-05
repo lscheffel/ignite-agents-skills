@@ -33,7 +33,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-005](./archive/ADR-005.md) | Introdução da Skill `implementation` para Execução Governada de Mudanças | ✅ Implementado | 2026-07-05 |
 | [ADR-006](./archive/ADR-006.md) | Workflow CI para Auto-sync do Index e Deploy GitHub Pages | ✅ Implementado | 2026-07-05 |
 | [ADR-007](./archive/ADR-007.md) | Skill para Geração de AGENTS.md Adaptativo | ✅ Implementado | 2026-07-05 |
-| [ADR-008](./ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | ✅ Implementado | 2026-07-05 |
+| [ADR-008](./archive/ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | ✅ Implementado | 2026-07-05 |
 
 ---
 
@@ -44,10 +44,13 @@ Para arquivar uma ADR:
 1. Verificar que o status é "Implementado"
 2. Executar: `./scripts/archive-adrs.sh`
 3. O script move automaticamente:
-   - `ADR-XXX.md` → `archive/ADR-XXX.md`
-   - `ADR-XXX-BP.md` → `archive/ADR-XXX-BP.md`
-   - `ADR-XXX-TODO.md` → `archive/ADR-XXX-TODO.md`
-   - `ADR-XXX-implementation-plan.md` → `archive/ADR-XXX-implementation-plan.md`
+    - `ADR-XXX.md` → `archive/ADR-XXX.md`
+    - `ADR-XXX-BP.md` → `archive/ADR-XXX-BP.md`
+    - `ADR-XXX-TODO.md` → `archive/ADR-XXX-TODO.md`
+    - `ADR-XXX-implementation-plan.md` → `archive/ADR-XXX-implementation-plan.md`
+    - `ADR-XXX-execution-contract.md` → `archive/ADR-XXX-execution-contract.md`
+    - `ADR-XXX-execution-report.md` → `archive/ADR-XXX-execution-report.md`
+    - `ADR-XXX-change-plan.md` → `archive/ADR-XXX-change-plan.md`
 
 Para verificar quais ADRs seriam arquivadas (dry run):
 ```bash

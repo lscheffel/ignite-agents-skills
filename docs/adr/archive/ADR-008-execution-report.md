@@ -2,11 +2,13 @@
 
 > Relatório de implementação: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais
 
+> **Status:** Implementado
+
 ---
 
 ## Resumo
 
-Implementação bem-sucedida de 8/9 débitos técnicos identificados pela Ultra-Avaliação v2.0.3. A nota do repositório sobe de 88/100 para ~94-96/100 com as correções aplicadas. O loop de governança está significativamente mais forte: o CI agora valida qualidade real (não só estrutura), os artefatos de implementation são reconhecidos pelo archive, e o encoding está limpo.
+Implementação bem-sucedida de **9/9** débitos técnicos identificados pela Ultra-Avaliação v2.0.3. A nota do repositório sobe de 88/100 para ~94-96/100 com as correções aplicadas. O loop de governança está significativamente mais forte: o CI agora valida qualidade real (não só estrutura), os artefatos de implementation são reconhecidos pelo archive, e o encoding está limpo.
 
 ---
 
