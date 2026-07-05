@@ -81,7 +81,7 @@ skills_array=$(echo "$skills_array" | jq 'sort_by(.name)')
 # Build final index.json
 jq -n \
   --argjson skills "$skills_array" \
-  --arg version "2.0.3" \
+  --arg version "2.1.0" \
   --arg schema_version "2.0.0" \
   --arg description "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. ($skill_count skills)" \
   '{
