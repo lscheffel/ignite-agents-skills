@@ -18,7 +18,7 @@ Implementação bem-sucedida de 8/9 débitos técnicos identificados pela Ultra-
 | Branch | `fix/adr-008-debt-corrections` |
 | Data de início | 2026-07-05 |
 | Data de término | 2026-07-05 |
-| Status | ✅ CONCLUÍDO (8/9 débitos) |
+| Status | ✅ CONCLUÍDO (9/9 débitos) |
 
 ---
 
@@ -34,7 +34,7 @@ Implementação bem-sucedida de 8/9 débitos técnicos identificados pela Ultra-
 | D-006 | CHANGELOG sem entry agents-md-generator | 🟡 Médio | ✅ Corrigido | `7203f89` |
 | D-007 | Vazamentos CJK/árabe (9 pontos) | 🟡 Médio | ✅ Corrigido | `7203f89` |
 | D-008 | Skills com 0-1 exemplos | 🟢 Baixo | ✅ Corrigido | `cb081b2` |
-| D-009 | Dogfooding skill-audit-bulletin | 🟢 Baixo | ⏸️ Adiado | — |
+| D-009 | Dogfooding skill-audit-bulletin | 🟢 Baixo | ✅ Corrigido | `608d2f8` |
 
 ---
 
@@ -76,8 +76,9 @@ Implementação bem-sucedida de 8/9 débitos técnicos identificados pela Ultra-
 | 1 | `b14c224` | fix: correct validate-skill.sh bug and broken ADR links (F1.1, F1.2) | 3 |
 | 2 | `7203f89` | fix: automation, governance and encoding corrections (F2.1-F2.5) | 14 |
 | 3 | `cb081b2` | docs: add practical examples for 3 skills (F3.1) | 6 |
+| 4 | `608d2f8` | docs: complete D-009 dogfooding and add execution contract | 2 |
 
-**Total:** 3 commits, 23 arquivos modificados/criados/removidos
+**Total:** 4 commits, 25 arquivos modificados/criados/removidos
 
 ---
 
