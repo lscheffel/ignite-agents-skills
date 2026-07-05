@@ -79,9 +79,11 @@ done
 skills_array=$(echo "$skills_array" | jq 'sort_by(.name)')
 
 # Build final index.json
+# Read version from README.md (format: **vX.Y.Z)
+index_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1)
 jq -n \
   --argjson skills "$skills_array" \
-  --arg version "2.1.0" \
+  --arg version "$index_version" \
   --arg schema_version "2.0.0" \
   --arg description "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. ($skill_count skills)" \
   '{

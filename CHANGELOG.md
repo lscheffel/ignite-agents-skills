@@ -7,6 +7,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 ## [Unreleased]
 
 ### Added
+- **ADR-011:** Documentation Reconciliation Skill
+  - Skill `documentation-reconciliation` — auditoria e reconciliação documental
+  - Templates: audit-report.md, reconciliation-checklist.md
+  - Workflow: 8 fases de auditoria e reconciliação
 - **ADR-009:** Resolução de Débitos da Auditoria v2.1.0
   - Validação de version sync em validate-index.sh
   - Seção "Solo + Agentes" em governance/SKILL.md

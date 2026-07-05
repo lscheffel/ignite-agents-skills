@@ -145,18 +145,18 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 - **Anti-patterns** — Indicadores de severidade (🔴 crítico, 🟡 alerta, 🟢 suave)
 - **Checklists** — Verificação de qualidade antes/depois
 - **Edge Cases** — Cobertura de cenários excepcionais
-- **Templates** — 70 templates disponíveis em `skills/*/templates/`
+- **Templates** — 72 templates disponíveis em `skills/*/templates/`
 - **Examples** — 18 exemplos em `skills/*/examples/`
 
 ## Status da Implementação
 
-**v2.1.0 — Skills Ultra-High Quality Grade**
+**v2.2.0 — Skills Ultra-High Quality Grade**
 
 | Métrica | Status |
 |---------|--------|
-| Skills total | 22 ✅ |
-| Skills refatoradas | 22/22 ✅ |
-| Templates criados | 70 ✅ |
+| Skills total | 23 ✅ |
+| Skills refatoradas | 23/23 ✅ |
+| Templates criados | 72 ✅ |
 | Examples criados | 18 ✅ |
 | Validação automática | ✅ |
 | CI pipeline | ✅ (`validate-skill.sh` + `validate-index.sh`) |
