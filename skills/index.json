@@ -169,7 +169,7 @@
   ],
   "version": "2.0.1",
   "schema_version": "2.0.0",
-  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (15 skills)",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (14 skills)",
   "validation": {
     "min_lines_per_skill": 150,
     "required_sections": [
