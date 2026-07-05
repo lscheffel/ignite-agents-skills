@@ -155,6 +155,16 @@
         "SKILL.md",
         "templates/vibe-session.md"
       ]
+    },
+    {
+      "name": "skill-audit-bulletin",
+      "version": "2.0.0",
+      "tags": ["audit", "quality", "review", "validation", "skills"],
+      "related_skills": ["architecture-review", "documentation"],
+      "files": [
+        "SKILL.md",
+        "templates/audit-bulletin.md"
+      ]
     }
   ],
   "version": "2.0.0",
