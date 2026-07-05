@@ -69,6 +69,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin master
-          git merge origin/master --strategy=ours --no-edit
+          git merge origin/master --strategy=ours --allow-unrelated-histories --no-edit
           git push origin gh-pages
           echo "✅ gh-pages updated with latest changes"
