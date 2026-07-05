@@ -198,7 +198,7 @@ Agente A gera JSON válido → Agente B valida com schema → prossegue
 ```
 # ❌ ERRADO
 Tarefa: "Extraia o nome do JSON"
-Modelo: Claude Opus 3 (custo alto)
+Modelo: Claude Sonnet 4 (custo alto)
 
 # ✅ CORRETO
 Tarefa: "Extraia o nome do JSON"

@@ -67,6 +67,17 @@ for i in $(seq 0 $((count - 1))); do
 done
 
 echo
+# 5. Verificar consistência de versão README ↔ index.json
+index_version=$(jq -r '.version' "$INDEX_JSON")
+readme_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1)
+if [ "$index_version" != "$readme_version" ]; then
+  echo "FALHA: Versão em index.json ($index_version) não bate com README.md ($readme_version)"
+  errors=$((errors + 1))
+else
+  echo "OK: Versão consistente ($index_version)"
+fi
+
+echo
 if [ "$errors" -eq 0 ]; then
   echo "OK: todas as $count skills validadas sem erros."
   exit 0
