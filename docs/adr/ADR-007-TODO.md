@@ -1,55 +1,55 @@
 # ADR-007: Skill para Geração de AGENTS.md Adaptativo - TODO
 
-## Status: 🟡 Em Progresso
+## Status: 🔄 Em Execução
 
 ## Fases de Implementação
 
-### Fase 1: Fundação (0%)
-- [ ] Criar estrutura de diretórios da skill
-- [ ] Definir frontmatter padrão
-- [ ] Implementar detecção básica de contexto
-- [ ] Criar template base do AGENTS.md
+### Fase 1: Fundação (100%)
+- [x] T1: Criar estrutura de diretórios da skill ✅
+- [x] T2: Definir frontmatter padrão ✅
+- [x] T3: Implementar detecção básica de contexto ✅
+- [x] T4: Criar template base do AGENTS.md ✅
 
-### Fase 2: Detecção de Contexto (0%)
-- [ ] Implementar detecção de tipo de projeto (CRM, API, WebApp, etc.)
-- [ ] Implementar detecção de tecnologias (linguagens, frameworks)
-- [ ] Implementar detecção de padrões arquiteturais
-- [ ] Implementar detecção de governança existente
+### Fase 2: Detecção de Contexto (100%)
+- [x] T5: Implementar detecção de tipo de projeto (CRM, API, WebApp, etc.) ✅
+- [x] T6: Implementar detecção de tecnologias (linguagens, frameworks) ✅
+- [x] T7: Implementar detecção de padrões arquiteturais ✅
+- [x] T8: Implementar detecção de governança existente ✅
 
-### Fase 3: Geração de Templates (0%)
-- [ ] Criar template para repositórios de skills
-- [ ] Criar template para projetos CRM
-- [ ] Criar template para projetos de API
-- [ ] Criar template para webapps
-- [ ] Criar template para bibliotecas
-- [ ] Criar template para CLIs
+### Fase 3: Geração de Templates (100%)
+- [x] T9: Criar template para repositórios de skills ✅
+- [x] T10: Criar template para projetos CRM ✅
+- [x] T11: Criar template para projetos de API ✅
+- [x] T12: Criar template para webapps ✅
+- [x] T13: Criar template para bibliotecas ✅
+- [x] T14: Criar template para CLIs ✅
 
-### Fase 4: Geração do AGENTS.md (0%)
-- [ ] Implementar lógica de seleção de template
-- [ ] Implementar preenchimento automático de placeholders
-- [ ] Implementar seção de visão geral adaptativa
-- [ ] Implementar seção de estrutura do projeto
-- [ ] Implementar seção de padrões de código
-- [ ] Implementar seção de comandos importantes
-- [ ] Implementar seção de governança
-- [ ] Implementar seção de skills recomendadas
-- [ ] Implementar seção de anti-patterns
-- [ ] Implementar seção de edge cases
+### Fase 4: Geração do AGENTS.md (100%)
+- [x] T15: Implementar lógica de seleção de template ✅
+- [x] T16: Implementar preenchimento automático de placeholders ✅
+- [x] T17: Implementar seção de visão geral adaptativa ✅
+- [x] T18: Implementar seção de estrutura do projeto ✅
+- [x] T19: Implementar seção de padrões de código ✅
+- [x] T20: Implementar seção de comandos importantes ✅
+- [x] T21: Implementar seção de governança ✅
+- [x] T22: Implementar seção de skills recomendadas ✅
+- [x] T23: Implementar seção de anti-patterns ✅
+- [x] T24: Implementar seção de edge cases ✅
 
-### Fase 5: Manutenção e Validação (0%)
-- [ ] Implementar detecção de mudanças no projeto
-- [ ] Implementar sugestões de atualização
-- [ ] Implementar validação do AGENTS.md
-- [ ] Criar checklists de validação
-- [ ] Integrar com scripts existentes
+### Fase 5: Manutenção e Validação (100%)
+- [x] T25: Implementar detecção de mudanças no projeto ✅
+- [x] T26: Implementar sugestões de atualização ✅
+- [x] T27: Implementar validação do AGENTS.md ✅
+- [x] T28: Criar checklists de validação ✅
+- [x] T29: Integrar com scripts existentes ✅
 
-### Fase 6: Documentação e Exemplos (0%)
-- [ ] Criar documentação completa da skill
-- [ ] Criar exemplos de antes e depois
-- [ ] Criar exemplos de detecção de contexto
-- [ ] Criar guia de uso
+### Fase 6: Documentação e Exemplos (100%)
+- [x] T30: Criar documentação completa da skill ✅
+- [x] T31: Criar exemplos de antes e depois ✅
+- [x] T32: Criar exemplos de detecção de contexto ✅
+- [x] T33: Criar guia de uso ✅
 
-## Progresso Geral: 0%
+## Progresso Geral: 100%
 
 ## Próximos Passos
 
