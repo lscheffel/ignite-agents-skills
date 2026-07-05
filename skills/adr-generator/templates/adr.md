@@ -4,32 +4,64 @@
 {{status}}
 
 ## Contexto
-Descreva o problema, motivação, restrições e requisitos que levaram a esta decisão.
+
+### Diagnóstico
+
+| Capacidade | Status | Evidence |
+|------------|--------|----------|
+| {{capability_1}} | {{status_1}} | {{evidence_1}} |
+| {{capability_2}} | {{status_2}} | {{evidence_2}} |
+
+### Consequências da Lacuna
+
+- {{consequence_1}}
+- {{consequence_2}}
 
 ## Decisão
-Descreva a solução escolhida de forma clara e objetiva.
+
+{{decision}}
+
+### Arquitetura da Solução
+
+```
+{{contexto}} → {{ação}} → {{resultado}}
+```
+
+### Detalhes da Implementação
+
+**Trigger:** {{trigger}}
+
+**Jobs:**
+{{jobs}}
 
 ## Alternativas Consideradas
-- **Alternativa A**: descrição
-  - Prós: ...
-  - Contras: ...
 
-- **Alternativa B**: descrição
-  - Prós: ...
-  - Contras: ...
+### Alternativa A: {{alt_a_title}}
+- **Prós**: {{alt_a_pros}}
+- **Contras**: {{alt_a_cons}}
+
+### Alternativa B: {{alt_b_title}}
+- **Prós**: {{alt_b_pros}}
+- **Contras**: {{alt_b_cons}}
+
+### Alternativa C: {{alt_c_title}} (Escolhida)
+- **Prós**: {{alt_c_pros}}
+- **Contras**: {{alt_c_cons}}
 
 ## Consequências
+
 ### Positivas
-- Consequência 1
-- Consequência 2
+- {{positive_1}}
+- {{positive_2}}
 
 ### Negativas
-- Custo 1
-- Custo 2
+- {{negative_1}}
+- {{negative_2}}
 
 ### Riscos
-- Risco 1 e mitigações
+- **Risco**: {{risk}}
+  - **Mitigação**: {{mitigation}}
 
 ## Referências
-- Link para discussão
-- ADRs relacionados (ex: ADR-012)
+- {{reference_1}}
+- {{reference_2}}

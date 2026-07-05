@@ -174,6 +174,26 @@ Template para lista de tarefas verificáveis do ADR. Cada tarefa deve ter um com
 cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md
 ```
 
+### adr-emergency.md
+Localização: `templates/adr-emergency.md`
+
+Template para ADR emergencial (implementação imediata sem BP/TODO). Use para correções críticas.
+
+**Uso:**
+```bash
+cp templates/adr-emergency.md docs/adr/ADR-00X.md
+```
+
+### adr-simple.md
+Localização: `templates/adr-simple.md`
+
+Template para ADR simples (sem necessidade de BP/TODO). Use para decisões menores.
+
+**Uso:**
+```bash
+cp templates/adr-simple.md docs/adr/ADR-00X.md
+```
+
 ## Anti-patterns
 
 ### 🔴 Crítico
