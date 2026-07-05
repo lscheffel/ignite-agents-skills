@@ -144,6 +144,7 @@ Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/a
 
 - [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/ADR-001.md)
 - [ADR-002: Padrão de Skill Ultra-High Quality Grade](./docs/adr/ADR-002.md)
+- [ADR-003: Retrospectiva da Implementação](./docs/adr/ADR-003.md)
 
 ## Licença
 
