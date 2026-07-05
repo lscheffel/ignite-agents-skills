@@ -15,13 +15,13 @@ echo "======================================"
 # Função para erro
 error() {
     echo "❌ ERRO: $1"
-    ((ERRORS++))
+    ERRORS=$((ERRORS + 1))
 }
 
 # Função para warning
 warn() {
     echo "⚠️  WARNING: $1"
-    ((WARNINGS++))
+    WARNINGS=$((WARNINGS + 1))
 }
 
 # Função para success

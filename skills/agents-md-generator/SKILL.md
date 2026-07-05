@@ -289,4 +289,4 @@ AGENTS.md gerado com sucesso.
 - [repo-bootstrap](../repo-bootstrap/SKILL.md) — para estrutura inicial
 - [governance](../governance/SKILL.md) — para processos
 - [documentation](../documentation/SKILL.md) — para padrões
-- [ADR-007](../../docs/adr/ADR-007.md) — decisão arquitetural
+- [ADR-007](../../docs/adr/archive/ADR-007.md) — decisão arquitetural
