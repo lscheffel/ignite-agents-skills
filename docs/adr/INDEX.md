@@ -37,6 +37,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-009](./archive/ADR-009.md) | Resolução de Débitos da Auditoria v2.1.0 | ✅ Implementado | 2026-07-05 |
 | [ADR-010](./archive/ADR-010.md) | Branch Protection e SemVer para Tags — Emergencial | ✅ Implementado | 2026-07-05 |
 | [ADR-011](./archive/ADR-011.md) | Documentation Reconciliation Skill | ✅ Implementado | 2026-07-05 |
+| [ADR-012](./archive/ADR-012.md) | Dynamic HTML Pages — Rendering de Skills em GitHub Pages | ✅ Implementado | 2026-07-05 |
 
 ---
 

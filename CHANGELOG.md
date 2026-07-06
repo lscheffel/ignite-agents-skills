@@ -7,6 +7,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 ## [Unreleased]
 
 ### Added
+- **ADR-012:** Dynamic HTML Pages — Rendering de Skills em GitHub Pages
+  - `pages/build.py` — conversor Markdown→HTML puro (zero deps, ~850 linhas)
+  - 127 páginas HTML geradas: 23 skills + 72 templates + 18 examples + checklists + README + USAGE
+  - Tema escuro profissional (charcoal #1a1a2e, laranja #ff6b2b, branco)
+  - Nav sticky com breadcrumbs, busca em tempo real, responsivo
+  - Título fancy com gradiente laranja→branco
+  - Google Fonts Inter para tipografia premium
+  - CI workflow consolidado (`sync-and-deploy.yml`): sync index + build pages + deploy gh-pages
+  - Root `index.html` redireciona para `pages/index.html`
 - **ADR-011:** Documentation Reconciliation Skill
   - Skill `documentation-reconciliation` — auditoria e reconciliação documental
   - Templates: audit-report.md, reconciliation-checklist.md
