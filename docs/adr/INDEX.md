@@ -36,6 +36,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-008](./archive/ADR-008.md) | Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais | ✅ Implementado | 2026-07-05 |
 | [ADR-009](./archive/ADR-009.md) | Resolução de Débitos da Auditoria v2.1.0 | ✅ Implementado | 2026-07-05 |
 | [ADR-010](./archive/ADR-010.md) | Branch Protection e SemVer para Tags — Emergencial | ✅ Implementado | 2026-07-05 |
+| [ADR-011](./archive/ADR-011.md) | Documentation Reconciliation Skill | ✅ Implementado | 2026-07-05 |
 
 ---
 
