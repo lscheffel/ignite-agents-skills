@@ -40,6 +40,7 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-012](./archive/ADR-012.md) | Dynamic HTML Pages — Rendering de Skills em GitHub Pages | ✅ Implementado | 2026-07-05 |
 | [ADR-013](./archive/ADR-013.md) | Expansão do Build.py para Incluir ADRs e Referências | ✅ Implementado | 2026-07-05 |
 | [ADR-014](./archive/ADR-014.md) | Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages | ✅ Implementado | 2026-07-06 |
+| [ADR-015](./archive/ADR-015.md) | Fix Caminhos Relativos Depth-Aware no Build.py | ✅ Implementado | 2026-07-06 |
 
 ---
 

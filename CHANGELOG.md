@@ -7,10 +7,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 ## [Unreleased]
 
 ### Added
-- **ADR-014:** Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages
-  - Substituído `git merge --strategy=ours` por full sync
-  - gh-pages agora espelha master 100%
-  - Todos os links ADR funcionais
+- **ADR-015:** Fix Caminhos Relativos Depth-Aware no Build.py
+  - `convert_inline_md()` e `convert_md_to_html()` agora aceitam parâmetro `depth`
+  - `get_page_template()` calcula nav prefix baseado na profundidade
+  - Corrigidos links ADR, skill e nav em todas as páginas HTML
 
 ## [2.3.1] - 2026-07-05
 
