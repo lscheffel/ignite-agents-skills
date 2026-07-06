@@ -737,7 +737,8 @@ def generate_skill_page(skill, skill_dir):
         return
 
     md_content = skill_md.read_text(encoding="utf-8")
-    body_html = convert_md_to_html(md_content, depth=2)
+    # depth=3 because page is at pages/skills/name/index.html (3 levels from pages/ root)
+    body_html = convert_md_to_html(md_content, depth=3)
 
     # Build file lists for templates and examples
     templates = sorted((skill_dir / "templates").glob("*")) if (skill_dir / "templates").exists() else []
@@ -784,7 +785,8 @@ def generate_skill_page(skill, skill_dir):
 def generate_file_page(skill_name, md_path, category, skill):
     """Generate an HTML page for a template/example/checklist .md file."""
     md_content = md_path.read_text(encoding="utf-8")
-    body_html = convert_md_to_html(md_content, depth=3)
+    # depth=4 because page is at pages/skills/name/category/file.html (4 levels from pages/ root)
+    body_html = convert_md_to_html(md_content, depth=4)
 
     breadcrumb = (
         f'<a href="../../../index.html">Skills</a> &rsaquo; '
