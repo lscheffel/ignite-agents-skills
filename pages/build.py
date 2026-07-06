@@ -50,10 +50,16 @@ def convert_inline_md(text, depth=1):
     
     Args:
         text: Markdown text to convert
-        depth: Directory depth from pages/ root (1 for readme.html, 2 for skills/name/index.html)
+        depth: Directory depth from pages/ root
+               1 = pages/readme.html (use adr/, skills/)
+               2 = pages/skills/name/index.html (use ../../adr/, ../../skills/)
+               3 = pages/skills/name/category/file.html (use ../../../adr/)
     """
     # Calculate prefix for relative paths
-    prefix = "../" * depth
+    # depth=1 means page is at pages/XXX.html, so links are adr/, skills/ (no prefix)
+    # depth=2 means page is at pages/skills/name/index.html, so links need ../../
+    # depth=3 means page is at pages/skills/name/category/file.html, so links need ../../../
+    prefix = "../" * (depth - 1) if depth > 1 else ""
     
     # Images ![alt](url)
     text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img src="\2" alt="\1" style="max-width:100%;border-radius:8px;">', text)
