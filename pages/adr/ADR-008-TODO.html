@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-008-TODO.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-008-TODO.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="todo-ultra-avaliao-v203--correo-de-dbitos-estruturais">TODO: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais</h1>
+<blockquote>ADR-008 | Início: 2026-07-05 | Conclusão: 2026-07-05 | Status: ✅ CONCLUÍDO (9/9 débitos)</blockquote>
+<hr>
+<h2 id="legenda">Legenda</h2>
+<ul>
+<li>⬜ Pendente</li>
+<li>🔄 Em Andamento</li>
+<li>✅ Concluído</li>
+<li>❌ Bloqueado</li>
+<li>⏸️ Pausado</li>
+</ul>
+<p><strong>Prioridade:</strong> 🔴 Alta | 🟡 Média | 🟢 Baixa</p>
+<hr>
+<h2 id="fase-1-bugs-de-ci-e-links-mortos-1h">Fase 1: Bugs de CI e Links Mortos (~1h)</h2>
+<h3 id="f11-corrigir-warnings-em-validate-skillsh-d-001">F1.1: Corrigir <code>((WARNINGS++))</code> em validate-skill.sh [D-001]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F1.1.1</td><td>Substituir <code>((ERRORS++))</code> por <code>ERRORS=$((ERRORS + 1))</code> na linha 18</td><td>✅</td><td>🔴</td><td>—</td><td>2min</td></tr><tr><td>F1.1.2</td><td>Substituir <code>((WARNINGS++))</code> por <code>WARNINGS=$((WARNINGS + 1))</code> na linha 24</td><td>✅</td><td>🔴</td><td>—</td><td>2min</td></tr><tr><td>F1.1.3</td><td>Testar com skill que gera warning (ex: writing-plans sem examples/)</td><td>✅</td><td>🔴</td><td>F1.1.1, F1.1.2</td><td>5min</td></tr><tr><td>F1.1.4</td><td>Verificar que resumo é impresso e exit code = 0</td><td>✅</td><td>🔴</td><td>F1.1.3</td><td>3min</td></tr><tr><td>F1.1.5</td><td>Rodar em todas as 22 skills e verificar que nenhuma morre</td><td>✅</td><td>🟡</td><td>F1.1.4</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint F1.1:</strong></p>
+<ul>
+<li>[x] <code>((ERRORS++))</code> → <code>ERRORS=$((ERRORS + 1))</code></li>
+<li>[x] <code>((WARNINGS++))</code> → <code>WARNINGS=$((WARNINGS + 1))</code></li>
+<li>[x] Script roda todos os 10 checks mesmo com warnings</li>
+<li>[x] Exit code = 0 com warnings, 1 com errors</li>
+</ul>
+<hr>
+<h3 id="f12-corrigir-links-quebrados-para-adrs-arquivadas-d-002">F1.2: Corrigir links quebrados para ADRs arquivadas [D-002]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F1.2.1</td><td>Corrigir link ADR-005 em implementation/SKILL.md L401</td><td>✅</td><td>🔴</td><td>—</td><td>1min</td></tr><tr><td>F1.2.2</td><td>Corrigir link ADR-005-BP em implementation/SKILL.md L402</td><td>✅</td><td>🔴</td><td>—</td><td>1min</td></tr><tr><td>F1.2.3</td><td>Corrigir link ADR-002 em implementation/SKILL.md L403</td><td>✅</td><td>🔴</td><td>—</td><td>1min</td></tr><tr><td>F1.2.4</td><td>Corrigir link ADR-007 em agents-md-generator/SKILL.md L292</td><td>✅</td><td>🔴</td><td>—</td><td>1min</td></tr><tr><td>F1.2.5</td><td>Verificar que zero links apontam para path sem archive/</td><td>✅</td><td>🔴</td><td>F1.2.1-F1.2.4</td><td>3min</td></tr></table></div>
+<p><strong>Checkpoint F1.2:</strong></p>
+<ul>
+<li>[x] Todos os 4 links corrigidos para <code>../../docs/adr/archive/ADR-XXX.md</code></li>
+<li>[x] <code>grep -rn '../../docs/adr/ADR-' skills/ | grep -v archive</code> retorna ZERO</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase 1:</strong></p>
+<ul>
+<li>[x] F1.1 e F1.2 concluídas</li>
+<li>[x] <code>validate-skill.sh</code> funciona corretamente</li>
+<li>[x] Zero links quebrados</li>
+</ul>
+<hr>
+<h2 id="fase-2-automao-e-governana-3-4h">Fase 2: Automação e Governança (~3-4h)</h2>
+<h3 id="f21-atualizar-archive-adrssh-d-003">F2.1: Atualizar archive-adrs.sh [D-003]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F2.1.1</td><td>Adicionar <code>-execution-contract.md</code> ao array de sufixos (linha 60)</td><td>✅</td><td>🟡</td><td>F1.1</td><td>2min</td></tr><tr><td>F2.1.2</td><td>Adicionar <code>-execution-report.md</code> ao array de sufixos</td><td>✅</td><td>🟡</td><td>F2.1.1</td><td>1min</td></tr><tr><td>F2.1.3</td><td>Adicionar <code>-change-plan.md</code> ao array de sufixos</td><td>✅</td><td>🟡</td><td>F2.1.2</td><td>1min</td></tr><tr><td>F2.1.4</td><td>Mover ADR-007-change-plan.md para archive/</td><td>✅</td><td>🟡</td><td>F2.1.3</td><td>1min</td></tr><tr><td>F2.1.5</td><td>Mover ADR-007-execution-contract.md para archive/</td><td>✅</td><td>🟡</td><td>F2.1.4</td><td>1min</td></tr><tr><td>F2.1.6</td><td>Mover ADR-007-execution-report.md para archive/</td><td>✅</td><td>🟡</td><td>F2.1.5</td><td>1min</td></tr><tr><td>F2.1.7</td><td>Verificar que docs/adr/ só tem INDEX.md e archive/</td><td>✅</td><td>🟡</td><td>F2.1.6</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint F2.1:</strong></p>
+<ul>
+<li>[x] Script reconhece 6 sufixos</li>
+<li>[x] 3 arquivos órfãos movidos para archive/</li>
+<li>[x] <code>ls docs/adr/</code> mostra só <code>INDEX.md archive/</code></li>
+</ul>
+<hr>
+<h3 id="f22-remover-sync-pagesyml-d-004">F2.2: Remover sync-pages.yml [D-004]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F2.2.1</td><td>Deletar <code>.github/workflows/sync-pages.yml</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.2.2</td><td>Verificar que nenhum arquivo referencia sync-pages</td><td>✅</td><td>🟡</td><td>F2.2.1</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint F2.2:</strong></p>
+<ul>
+<li>[x] <code>sync-pages.yml</code> não existe</li>
+<li>[x] Zero referências a <code>sync-pages</code> no repo</li>
+</ul>
+<hr>
+<h3 id="f23-sincronizar-verso-d-005">F2.3: Sincronizar versão [D-005]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F2.3.1</td><td>Corrigir README L153: <code>v2.1.0</code> → <code>v2.0.3</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.3.2</td><td>Verificar que index.json já diz <code>2.0.3</code> (sem mudança)</td><td>✅</td><td>🟢</td><td>—</td><td>1min</td></tr><tr><td>F2.3.3</td><td>Verificar que CHANGELOG já tem entry <code>[2.0.3]</code> (sem mudança)</td><td>✅</td><td>🟢</td><td>—</td><td>1min</td></tr></table></div>
+<p><strong>Checkpoint F2.3:</strong></p>
+<ul>
+<li>[x] README, index.json, CHANGELOG todos dizem <code>2.0.3</code></li>
+</ul>
+<hr>
+<h3 id="f24-adicionar-agents-md-generator-ao-changelog-d-006">F2.4: Adicionar agents-md-generator ao CHANGELOG [D-006]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F2.4.1</td><td>Adicionar entrada na seção Added de [2.0.3]</td><td>✅</td><td>🟡</td><td>F2.3</td><td>5min</td></tr><tr><td>F2.4.2</td><td>Verificar que entrada menciona ADR-007, 7 templates, 3 examples</td><td>✅</td><td>🟢</td><td>F2.4.1</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint F2.4:</strong></p>
+<ul>
+<li>[x] CHANGELOG tem entrada para agents-md-generator dentro de [2.0.3]</li>
+</ul>
+<hr>
+<h3 id="f25-validao-encoding--limpar-vazamentos-d-007">F2.5: Validação encoding + limpar vazamentos [D-007]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F2.5.1</td><td>Adicionar check #11 (encoding) em validate-skill.sh</td><td>✅</td><td>🟡</td><td>F1.1</td><td>5min</td></tr><tr><td>F2.5.2</td><td>Corrigir AGENTS.md L77: <code>空行</code> → <code>linhas vazias</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.3</td><td>Corrigir AGENTS-skills-repo.md L41: <code>空行</code> → <code>linhas vazias</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.4</td><td>Corrigir test-before-refactor.md L116: <code>分支</code> → <code>branches</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.5</td><td>Corrigir refactoring/SKILL.md L216: <code>难以</code> → <code>difícil de</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.6</td><td>Corrigir refactoring/SKILL.md L231: <code>难以</code> → <code>difícil de</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.7</td><td>Corrigir refactoring/SKILL.md L305: <code>替换</code> → <code>substituir</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.8</td><td>Corrigir data-modeling/SKILL.md L56: Mermaid corrompido</td><td>✅</td><td>🟡</td><td>—</td><td>2min</td></tr><tr><td>F2.5.9</td><td>Corrigir data-modeling/SKILL.md L239: <code>覆盖索covers</code> → <code>covering index</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.10</td><td>Corrigir AGENTS-webapp.md L226: <code>难 de refactor</code> → <code>difícil de refatorar</code></td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F2.5.11</td><td>Verificar zero vazamentos com grep</td><td>✅</td><td>🟡</td><td>F2.5.2-F2.5.10</td><td>3min</td></tr></table></div>
+<p><strong>Checkpoint F2.5:</strong></p>
+<ul>
+<li>[x] Check #11 existe em validate-skill.sh</li>
+<li>[x] 9/9 vazamentos corrigidos</li>
+<li>[x] <code>grep -rnP</code> retorna ZERO</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase 2:</strong></p>
+<ul>
+<li>[x] F2.1-F2.5 concluídas</li>
+<li>[x] archive-adrs.sh completo</li>
+<li>[x] sync-pages.yml removido</li>
+<li>[x] Versão consistente</li>
+<li>[x] CHANGELOG atualizado</li>
+<li>[x] Encoding limpo</li>
+</ul>
+<hr>
+<h2 id="fase-3-completude-e-dogfooding-4-6h">Fase 3: Completude e Dogfooding (~4-6h)</h2>
+<h3 id="f31-adicionar-exemplos-prticos-d-008">F3.1: Adicionar exemplos práticos [D-008]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F3.1.1</td><td>Criar writing-plans/examples/api-migration-plan.md</td><td>✅</td><td>🟢</td><td>Fase 2</td><td>30min</td></tr><tr><td>F3.1.2</td><td>Criar writing-plans/examples/feature-breakdown.md</td><td>✅</td><td>🟢</td><td>F3.1.1</td><td>30min</td></tr><tr><td>F3.1.3</td><td>Criar api-design/examples/rest-crud-spec.md</td><td>✅</td><td>🟢</td><td>Fase 2</td><td>30min</td></tr><tr><td>F3.1.4</td><td>Criar api-design/examples/error-handling-contract.md</td><td>✅</td><td>🟢</td><td>F3.1.3</td><td>30min</td></tr><tr><td>F3.1.5</td><td>Criar security-review/examples/dependency-audit.md</td><td>✅</td><td>🟢</td><td>Fase 2</td><td>30min</td></tr><tr><td>F3.1.6</td><td>Criar security-review/examples/crypto-validation.md</td><td>✅</td><td>🟢</td><td>F3.1.5</td><td>30min</td></tr><tr><td>F3.1.7</td><td>Verificar que cada exemplo tem ≥30 linhas</td><td>✅</td><td>🟢</td><td>F3.1.1-F3.1.6</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint F3.1:</strong></p>
+<ul>
+<li>[x] writing-plans: ≥2 exemplos</li>
+<li>[x] api-design: ≥2 exemplos</li>
+<li>[x] security-review: ≥2 exemplos</li>
+<li>[x] Cada exemplo ≥30 linhas</li>
+</ul>
+<hr>
+<h3 id="f32-executar-skill-audit-bulletin-no-repo-d-009">F3.2: Executar skill-audit-bulletin no repo [D-009]</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F3.2.1</td><td>Criar diretório <code>docs/audits/</code></td><td>✅</td><td>🟢</td><td>Fase 2</td><td>1min</td></tr><tr><td>F3.2.2</td><td>Gerar audit bulletin seguindo template</td><td>✅</td><td>🟢</td><td>F3.2.1</td><td>2h</td></tr><tr><td>F3.2.3</td><td>Cobrir ≥5 skills críticas</td><td>✅</td><td>🟢</td><td>F3.2.2</td><td>—</td></tr><tr><td>F3.2.4</td><td>Verificar score ≥ 90/100</td><td>✅</td><td>🟢</td><td>F3.2.3</td><td>10min</td></tr></table></div>
+<p><strong>Checkpoint F3.2:</strong></p>
+<ul>
+<li>[x] <code>docs/audits/</code> existe</li>
+<li>[x] Audit bulletin gerado</li>
+<li>[x] Score ≥ 90/100</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase 3:</strong></p>
+<ul>
+<li>[x] F3.1 e F3.2 concluídas</li>
+<li>[x] Exemplos criados para 3 skills</li>
+<li>[x] Audit bulletin existe</li>
+</ul>
+<hr>
+<h2 id="fase-4-validao-final">Fase 4: Validação Final</h2>
+<h3 id="f41-validao-cruzada-completa">F4.1: Validação cruzada completa</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>F4.1.1</td><td>Executar <code>validate-index.sh</code> — 22/22 skills, 0 erros</td><td>✅</td><td>🔴</td><td>Todas</td><td>3min</td></tr><tr><td>F4.1.2</td><td>Executar <code>validate-skill.sh</code> em todas as 22 skills</td><td>✅</td><td>🔴</td><td>F4.1.1</td><td>10min</td></tr><tr><td>F4.1.3</td><td>Verificar zero links quebrados</td><td>✅</td><td>🔴</td><td>F4.1.2</td><td>2min</td></tr><tr><td>F4.1.4</td><td>Verificar zero vazamentos CJK/árabe</td><td>✅</td><td>🔴</td><td>F4.1.3</td><td>2min</td></tr><tr><td>F4.1.5</td><td>Verificar versão consistente</td><td>✅</td><td>🔴</td><td>F4.1.4</td><td>1min</td></tr><tr><td>F4.1.6</td><td>Verificar sync-pages.yml removido</td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F4.1.7</td><td>Verificar archive-adrs.sh com 6 sufixos</td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr><tr><td>F4.1.8</td><td>Verificar exemplos existem</td><td>✅</td><td>🟡</td><td>—</td><td>2min</td></tr><tr><td>F4.1.9</td><td>Verificar audit bulletin existe</td><td>✅</td><td>🟡</td><td>—</td><td>1min</td></tr></table></div>
+<p><strong>Checkpoint F4.1:</strong></p>
+<ul>
+<li>[x] validate-index.sh passa</li>
+<li>[x] validate-skill.sh passa para todas as 22 skills</li>
+<li>[x] Zero links quebrados</li>
+<li>[x] Zero vazamentos</li>
+<li>[x] Versão consistente</li>
+<li>[x] sync-pages.yml removido</li>
+<li>[x] archive-adrs.sh completo</li>
+<li>[x] Exemplos criados</li>
+<li>[x] Audit bulletin existe</li>
+</ul>
+<hr>
+<h2 id="resumo-geral">Resumo Geral</h2>
+<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Horas Est.</th><th>Status</th><th>Commit</th></tr><tr><td>Fase 1: Bugs de CI e Links</td><td>10</td><td>~1h</td><td>✅ Concluído</td><td><code>b14c224</code></td></tr><tr><td>Fase 2: Automação e Governança</td><td>17</td><td>~3-4h</td><td>✅ Concluído</td><td><code>7203f89</code></td></tr><tr><td>Fase 3: Exemplos</td><td>7</td><td>~2h</td><td>✅ Concluído</td><td><code>cb081b2</code></td></tr><tr><td>Fase 3: Dogfooding audit</td><td>4</td><td>~1h</td><td>✅ Concluído</td><td><code>608d2f8</code></td></tr><tr><td>Fase 4: Validação</td><td>9</td><td>~30min</td><td>✅ Concluído</td><td>—</td></tr><tr><td><strong>Total</strong></td><td><strong>47</strong></td><td><strong>~6-8h</strong></td><td><strong>✅ 100% (9/9 débitos)</strong></td><td></td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-008.</em> <em>Implementação concluída em 2026-07-05.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -32,7 +32,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILLS_DIR = ROOT / "skills"
 INDEX_JSON = SKILLS_DIR / "index.json"
 PAGES_DIR = ROOT / "pages"
-THEME_VERSION = "2.2.0"
+DOCS_DIR = ROOT / "docs"
+ADR_ARCHIVE_DIR = DOCS_DIR / "adr" / "archive"
+THEME_VERSION = "2.3.0"
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -47,8 +49,20 @@ def convert_inline_md(text):
     """Convert inline markdown: bold, italic, code, links, images."""
     # Images ![alt](url)
     text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img src="\2" alt="\1" style="max-width:100%;border-radius:8px;">', text)
-    # Links [text](url)
-    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', text)
+    # Links [text](url) - convert ADR paths to HTML
+    def convert_link(match):
+        link_text = match.group(1)
+        link_url = match.group(2)
+        # Convert ADR markdown links to HTML pages
+        if 'docs/adr/archive/ADR-' in link_url and link_url.endswith('.md'):
+            adr_name = link_url.split('/')[-1].replace('.md', '.html')
+            return f'<a href="../../../adr/{adr_name}">{link_text}</a>'
+        elif 'docs/adr/ADR-' in link_url and link_url.endswith('.md'):
+            adr_name = link_url.split('/')[-1].replace('.md', '.html')
+            return f'<a href="../../../adr/{adr_name}">{link_text}</a>'
+        else:
+            return f'<a href="{link_url}">{link_text}</a>'
+    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', convert_link, text)
     # Inline code `code`
     text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
     # Bold **text**
@@ -662,10 +676,10 @@ def get_page_template(title, body_html, breadcrumb="", nav_active=""):
   <div class="content">
     {body_html}
   </div>
-  <footer>
-    <p><strong>ignite-agents-skills</strong> v{THEME_VERSION} &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
-    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
-  </footer>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v{THEME_VERSION} &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
 </body>
 </html>"""
 
@@ -760,6 +774,78 @@ def generate_doc_page(md_path, title, nav_active):
     print(f"  ✓ {out_name}")
 
 
+def generate_adr_page(md_path, adr_name):
+    """Generate an HTML page for an ADR .md file."""
+    if not md_path.exists():
+        return
+    md_content = md_path.read_text(encoding="utf-8")
+    body_html = convert_md_to_html(md_content)
+    breadcrumb = f'<a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; {adr_name}'
+    title = f"ADR — {adr_name}"
+    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active="adr")
+    out = PAGES_DIR / "adr" / f"{adr_name}"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page, encoding="utf-8")
+    print(f"  ✓ adr/{adr_name}")
+
+
+def generate_adr_index(adrs):
+    """Generate the ADR index page."""
+    cards_html = ""
+    for adr in sorted(adrs, key=lambda x: x["name"]):
+        cards_html += f"""
+    <div class="card">
+      <div class="card-title"><a href="{adr['name']}">{adr['name']}</a></div>
+      <div class="card-desc">{md_escape(adr.get('title', ''))}</div>
+    </div>"""
+
+    body = f"""
+    <h1 class="fancy-title">ADRs <span class="ver">Archive</span></h1>
+    <p class="fancy-sub">Architecture Decision Records arquivadas (implementadas).</p>
+
+    <h2 id="adrs">ADRs Disponíveis</h2>
+    <div class="card-grid">
+      {cards_html}
+    </div>
+
+    <footer style="margin-top:3rem">
+      <p><strong>ignite-agents-skills</strong> &mdash; <a href="../index.html">Voltar para Skills</a></p>
+    </footer>
+  """
+
+    css = get_css()
+    page = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADRs — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>{css}</style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../index.html">Skills</a>
+      <a href="../readme.html">README</a>
+      <a href="../usage.html">USAGE</a>
+      <a href="index.html" class="active">ADRs</a>
+    </div>
+  </nav>
+  <div class="content content-full">
+    {body}
+  </div>
+</body>
+</html>"""
+
+    out = PAGES_DIR / "adr" / "index.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page, encoding="utf-8")
+    print(f"  ✓ adr/index.html")
+
+
 def generate_index(skills_data):
     """Generate the main pages/index.html listing all skills."""
     skills = skills_data["skills"]
@@ -790,10 +876,10 @@ def generate_index(skills_data):
       {cards_html}
     </div>
 
-    <footer style="margin-top:3rem">
-      <p><strong>ignite-agents-skills</strong> v{THEME_VERSION} &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
-      <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
-    </footer>
+<footer style="margin-top:3rem">
+       <p><strong>ignite-agents-skills</strong> v{THEME_VERSION} &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+       <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+     </footer>
 
     <script>
     const searchInput = document.getElementById('search');
@@ -876,6 +962,17 @@ def main():
     print("\n📖 Generating doc pages...")
     generate_doc_page(ROOT / "README.md", "README", "readme")
     generate_doc_page(ROOT / "USAGE.md", "USAGE", "usage")
+
+    # Generate ADR pages
+    print("\n📋 Generating ADR pages...")
+    adr_files = sorted(ADR_ARCHIVE_DIR.glob("ADR-*.md")) if ADR_ARCHIVE_DIR.exists() else []
+    adrs = []
+    for adr_file in adr_files:
+        adr_name = adr_file.stem + ".html"
+        adrs.append({"name": adr_name, "title": adr_file.stem})
+        generate_adr_page(adr_file, adr_name)
+    if adrs:
+        generate_adr_index(adrs)
 
     # Generate skill pages + sub-pages
     for s in sorted(skills, key=lambda x: x["name"]):

@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-004-BP.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-004-BP.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="blueprint-implementao-das-recomendaes-da-ultra-auditoria-v202">Blueprint: Implementação das Recomendações da Ultra-Auditoria v2.0.2</h1>
+<blockquote>ADR-004 | Versão 1.0 | 2026-07-05 | <strong>Status: PENDENTE</strong></blockquote>
+<hr>
+<h2 id="1-viso-geral">1. Visão Geral</h2>
+<h3 id="objetivo">Objetivo</h3>
+<p>Implementar as 7 correções de débito técnico + 6 novas skills recomendadas pela Ultra-Auditoria, elevando o pacote de 14 para 20 skills "Ultra-High Quality Grade" e fechando lacunas estruturais do SDLC.</p>
+<h3 id="mtricas-de-sucesso">Métricas de Sucesso</h3>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Status</th></tr><tr><td>Total de skills</td><td>14</td><td>20</td><td>⬜</td></tr><tr><td>CI valida qualidade (não só estrutura)</td><td>Não</td><td>Sim</td><td>⬜</td></tr><tr><td>CHANGELOG reflete v2.0.x</td><td>Não</td><td>Sim</td><td>⬜</td></tr><tr><td>Grafo <code>related_skills</code> conexo</td><td>Não</td><td>Sim</td><td>⬜</td></tr><tr><td>Skills com <code>security-review</code></td><td>0</td><td>1</td><td>⬜</td></tr><tr><td>Skills com <code>agent-orchestration</code></td><td>0</td><td>1</td><td>⬜</td></tr><tr><td>Skills com <code>data-modeling</code></td><td>0</td><td>1</td><td>⬜</td></tr><tr><td>Skills com <code>api-design</code></td><td>0</td><td>1</td><td>⬜</td></tr><tr><td>Skills com <code>observability</code></td><td>0</td><td>1</td><td>⬜</td></tr><tr><td>Skills com <code>refactoring</code></td><td>0</td><td>1</td><td>⬜</td></tr></table></div>
+<hr>
+<h2 id="2-fase-a-correo-de-dbitos-tcnicos">2. Fase A: Correção de Débitos Técnicos</h2>
+<h3 id="a1-adicionar-validate-skillsh-ao-pipeline-ci">A1: Adicionar <code>validate-skill.sh</code> ao pipeline CI</h3>
+<p><strong>Arquivo:</strong> <code>.github/workflows/validate-skills.yml</code></p>
+<p><strong>Mudança:</strong> Adicionar step que executa <code>validate-skill.sh</code> em todas as skills, além do <code>validate-index.sh</code> já existente.</p>
+<p><strong>Estrutura proposta do workflow:</strong></p>
+<pre data-lang="yaml"><code>steps:
+  - uses: actions/checkout@v4
+  - name: Validate skills/index.json against real files
+    run: |
+      chmod +x scripts/validate-index.sh
+      ./scripts/validate-index.sh
+  - name: Validate skill quality (Ultra-High Quality Grade)
+    run: |
+      chmod +x scripts/validate-skill.sh
+      ERRORS=0
+      for skill_dir in skills/*/; do
+        if ! ./scripts/validate-skill.sh &quot;$skill_dir&quot;; then
+          ERRORS=$((ERRORS + 1))
+        fi
+      done
+      if [ $ERRORS -gt 0 ]; then
+        echo &quot;❌ $ERRORS skill(s) failed quality validation&quot;
+        exit 1
+      fi
+      echo &quot;✅ All skills passed quality validation&quot;</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Workflow executa <code>validate-skill.sh</code> em todas as skills</li>
+<li>[ ] Pipeline falha se qualquer skill tiver erro</li>
+<li>[ ] Warnings são reportados mas não bloqueiam</li>
+<li>[ ] Trigger continua respondendo a <code>skills/<strong></code> e <code>scripts/</strong></code></li>
+</ul>
+<hr>
+<h3 id="a2-escrever-changelog-para-v200v202">A2: Escrever CHANGELOG para v2.0.0→v2.0.2</h3>
+<p><strong>Arquivo:</strong> <code>CHANGELOG.md</code></p>
+<p><strong>Estrutura proposta:</strong></p>
+<pre data-lang="markdown"><code>## [2.0.2] - 2026-07-05
+
+### Added
+- Skill `skill-audit-bulletin` — audita skills existentes com rubrica de 8 eixos ponderados
+- Refatoração de 13 skills existentes para padrão Ultra-High Quality Grade
+- 40 templates reutilizáveis (`.md`, `.yml`, `.ts`)
+- 13 examples com cenários antes/depois
+- Decision trees em Mermaid para todas as 14 skills
+- Workflows numerados com checkpoints
+- Anti-patterns com severidade 🔴🟡🟢
+
+### Changed
+- Média de linhas por skill: 67 → ~280 (+318%)
+- Skills com templates externos: 1/14 → 14/14
+- Skills com decision trees: 0/14 → 14/14
+
+## [2.0.1] - 2026-07-05
+
+### Fixed
+- Ambiguidade de fonte única no registry (3 index.json conflitantes)
+- README instruía paths que quebravam resolução do Kilo
+- Adicionado LICENSE (MIT)
+
+### Added
+- Registry inicial com 13 skills categorizadas
+- `scripts/validate-index.sh`: valida index.json contra arquivos reais
+- `.github/workflows/validate-skills.yml`: CI para validação de registry</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Entrada <code>[2.0.2]</code> documenta refatoração e skill-audit-bulletin</li>
+<li>[ ] Entrada <code>[2.0.1]</code> movida de <code>[Unreleased]</code></li>
+<li>[ ] Formato Keep a Changelog mantido</li>
+<li>[ ] Seção <code>[Unreleased]</code> vazia ou com novas skills planejadas</li>
+</ul>
+<hr>
+<h3 id="a3-resolver-coliso-architecture-review">A3: Resolver colisão <code>architecture-review</code></h3>
+<p><strong>Arquivo:</strong> <code>skills/architecture-review/SKILL.md</code>, <code>skills/index.json</code>, todos os <code>related_skills</code></p>
+<p><strong>Decisão:</strong> Renomear <code>architecture-review</code> → <code>architecture-review-kilo</code> neste repo.</p>
+<p><strong>Estrutura proposta:</strong></p>
+<ol>
+<li>Renomear pasta <code>skills/architecture-review/</code> → <code>skills/architecture-review-kilo/</code></li>
+<li>Atualizar frontmatter em <code>SKILL.md</code>: <code>name: architecture-review-kilo</code></li>
+<li>Atualizar <code>index.json</code>: chave <code>name</code> e <code>files</code></li>
+<li>Buscar todas as referências em outros SKILL.md e atualizar:</li>
+</ol>
+<ul>
+<li><code>adr-generator/SKILL.md</code> → <code>related_skills: [documentation, architecture-review-kilo]</code></li>
+<li><code>ddd/SKILL.md</code> → <code>related_skills: [architecture-review-kilo, testing]</code></li>
+<li><code>skill-audit-bulletin/SKILL.md</code> → <code>related_skills: [architecture-review-kilo, documentation]</code></li>
+</ul>
+<ol>
+<li>Criar ADR-004 (esta) documentando a decisão</li>
+</ol>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Pasta renomeada</li>
+<li>[ ] Frontmatter atualizado</li>
+<li>[ ] <code>index.json</code> reflete novo nome</li>
+<li>[ ] Nenhum <code>related_skills</code> apontando para nome inexistente</li>
+<li>[ ] ADR documenta a decisão</li>
+</ul>
+<hr>
+<h3 id="a4-resolver-sobreposio-planning-vs-writing-plans">A4: Resolver sobreposição <code>planning</code> vs <code>writing-plans</code></h3>
+<p><strong>Arquivos:</strong> <code>skills/planning/SKILL.md</code>, <code>skills/writing-plans/SKILL.md</code></p>
+<p><strong>Mudança:</strong> Reescrever seção "Não use quando" de ambas para mencionar explicitamente a outra.</p>
+<p><strong><code>planning/SKILL.md</code> — "Não use quando" atualizado:</strong></p>
+<pre data-lang="markdown"><code>### Não use quando:
+- Tarefa imediata (&lt; 1 hora)
+- Bug fix simples
+- Protótipo sem planejamento
+- **Precisa de plano de implementação tático a partir de uma spec → use `writing-plans`**
+- **Precisa de tasks com critérios de aceitação e dependências → use `writing-plans`**</code></pre>
+<p><strong><code>writing-plans/SKILL.md</code> — "Não use quando" atualizado:</strong></p>
+<pre data-lang="markdown"><code>### Não use quando:
+- Tarefa é imediata (&lt; 1 hora)
+- Protótipo rápido sem planejamento
+- Bug fix simples
+- **Precisa de roadmap estratégico ou priorização de portfólio → use `planning`**
+- **Precisa de estimativa de esforço para iniciativa inteira → use `planning`**</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>planning</code> menciona <code>writing-plans</code> na seção "Não use quando"</li>
+<li>[ ] <code>writing-plans</code> menciona <code>planning</code> na seção "Não use quando"</li>
+<li>[ ] Decision trees de ambas incluem a desambiguação</li>
+<li>[ ] <code>related_skills</code> mantêm referência cruzada</li>
+</ul>
+<hr>
+<h3 id="a5-adicionar-skill-audit-bulletin-ao-grafo-de-relatedskills">A5: Adicionar <code>skill-audit-bulletin</code> ao grafo de <code>related_skills</code></h3>
+<p><strong>Arquivos:</strong> <code>skills/governance/SKILL.md</code>, <code>skills/repo-bootstrap/SKILL.md</code>, <code>skills/index.json</code></p>
+<p><strong>Mudança:</strong> Adicionar <code>skill-audit-bulletin</code> nos <code>related_skills</code> de <code>governance</code> e <code>repo-bootstrap</code>.</p>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>governance/SKILL.md</code> frontmatter inclui <code>skill-audit-bulletin</code></li>
+<li>[ ] <code>repo-bootstrap/SKILL.md</code> frontmatter inclui <code>skill-audit-bulletin</code></li>
+<li>[ ] <code>index.json</code> reflete os novos <code>related_skills</code></li>
+</ul>
+<hr>
+<h3 id="a6-resolver-pasta-checklists-fantasma">A6: Resolver pasta <code>checklists/</code> fantasma</h3>
+<p><strong>Arquivo:</strong> <code>templates/skill-template.md</code>, <code>docs/skill-maintenance.md</code>, <code>docs/adr/ADR-002.md</code>, <code>docs/adr/ADR-002-BP.md</code></p>
+<p><strong>Decisão:</strong> Criar pelo menos 1 exemplo real de <code>checklists/</code> na skill <code>release</code> (a mais natural para checklists).</p>
+<p><strong>Estrutura proposta:</strong></p>
+<pre><code>skills/release/checklists/
+├── pre-release.md
+└── post-release.md</code></pre>
+<p>Se não for viável criar examples reais, remover toda menção a <code>checklists/</code> como subpasta obrigatória.</p>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>skills/release/checklists/</code> existe com ≥1 arquivo real</li>
+<li>[ ] OU todas as menções a <code>checklists/</code> como obrigatório são removidas</li>
+<li>[ ] <code>templates/skill-template.md</code> não lista <code>checklists/</code> como obrigatório</li>
+</ul>
+<hr>
+<h3 id="a7-marcar-processo-de-peer-review-como-condicional">A7: Marcar processo de Peer Review como condicional</h3>
+<p><strong>Arquivo:</strong> <code>docs/skill-maintenance.md</code></p>
+<p><strong>Mudança:</strong> Adicionar nota na seção "Peer Review":</p>
+<pre data-lang="markdown"><code>### Peer Review (para equipes com &gt;1 mantenedor)
+
+&gt; **Nota:** O processo abaixo aplica quando houver mais de um mantenedor no
+&gt; repositório. Para operador solo, o processo de Auto-review é suficiente.
+
+1. Abra PR com mudanças
+2. Solicite review de 1 maintainer
+3. Execute skill com agente real
+4. Merge após aprovação</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Seção "Peer Review" tem nota explícita sobre ser condicional</li>
+<li>[ ] Seção "Auto-review" é apresentada como processo atual para solo</li>
+<li>[ ] Não remove a seção de Peer Review</li>
+</ul>
+<hr>
+<h2 id="3-fase-b-skills-novas-6-skills">3. Fase B: Skills Novas (6 skills)</h2>
+<p>Cada skill segue o padrão Ultra-High Quality Grade:</p>
+<ul>
+<li>SKILL.md ≥150 linhas</li>
+<li>Decision tree em Mermaid</li>
+<li>≥3 workflows numerados com checkpoints</li>
+<li>≥3 anti-patterns com severidade 🔴🟡🟢</li>
+<li>Seções obrigatórias: Quando Usar, Workflow, Anti-patterns, Checklists, Edge Cases</li>
+<li>≥1 template em arquivo separado</li>
+<li>Cross-references para skills relacionadas</li>
+<li><code>validate-skill.sh</code> passa com 0 erros</li>
+</ul>
+<h3 id="b1-security-review-prioridade-1">B1: <code>security-review</code> (Prioridade #1)</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>skills/security-review/SKILL.md</code></li>
+<li><code>skills/security-review/templates/security-checklist.md</code></li>
+<li><code>skills/security-review/templates/threat-model.md</code></li>
+<li><code>skills/security-review/templates/vulnerability-report.md</code></li>
+<li><code>skills/index.json</code> (atualizar)</li>
+</ul>
+<p><strong>Decision tree:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Código para revisar] --&gt;|Contém segredos/creds?| B[Secret Scanning]
+    A --&gt;|Interpola dados?| C[Injeção SQL/NoSQL/XSS]
+    A --&gt;|Usa criptografia?| D[Revisão de Criptografia]
+    A --&gt;|Tem dependências?| E[Dependency Audit]
+    A --&gt;|Expõe API?| F[Modelagem de Ameaça]
+    B --&gt; G[Remover e rotacionar]
+    C --&gt; H[Parametrizar queries]
+    D --&gt; I[Validar parâmetros KDF/nonce]
+    E --&gt; J[Atualizar/remover pacotes]
+    F --&gt; K[STRIDE simplificado]</code></pre>
+<p><strong>Workflows:</strong></p>
+<ol>
+<li>Secret scanning (comandos: <code>trufflehog</code>, <code>gitleaks</code>, <code>.env</code> review)</li>
+<li>Revisão de dependências (<code>npm audit</code>, <code>snyk</code>, CVE check)</li>
+<li>Validação de criptografia (AES-GCM nonce, scrypt params, timing attacks)</li>
+<li>Modelagem de ameaça leve (STRIDE simplificado)</li>
+<li>Relatório de vulnerabilidade (template estruturado)</li>
+</ol>
+<p><strong>Anti-patterns:</strong></p>
+<ul>
+<li>🔴 Nonce reuso em AES-GCM</li>
+<li>🔴 KDF com parâmetros fracos (scrypt N<16384)</li>
+<li>🔴 Timing attack em comparação de tokens</li>
+<li>🟡 Hardcoded secrets em testes</li>
+<li>🟡 <code>.env</code> commitado sem <code>.gitignore</code></li>
+</ul>
+<p><strong><code>related_skills</code>:</strong> <code>[governance, architecture-review-kilo, testing]</code></p>
+<hr>
+<h3 id="b2-agent-orchestration-prioridade-2">B2: <code>agent-orchestration</code> (Prioridade #2)</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>skills/agent-orchestration/SKILL.md</code></li>
+<li><code>skills/agent-orchestration/templates/agent-role-card.md</code></li>
+<li><code>skills/agent-orchestration/templates/handoff-protocol.md</code></li>
+<li><code>skills/agent-orchestration/templates/routing-decision.md</code></li>
+<li><code>skills/index.json</code> (atualizar)</li>
+</ul>
+<p><strong>Decision tree:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Tarefa complexa] --&gt;|Decomposta em sub-tarefas?| B[Múltiplos agentes]
+    A --&gt;|Tarefa unitária| C[Agente único]
+    B --&gt;|Sub-tarefas independentes| D[Paralelismo]
+    B --&gt;|Sub-tarefas sequenciais| E[Pipeline]
+    D --&gt; F[Fan-out/Fan-in]
+    E --&gt; G[Handoff de contexto]
+    F --&gt; H[Agregação de resultados]
+    G --&gt; I[Contrato de I/O]</code></pre>
+<p><strong>Workflows:</strong></p>
+<ol>
+<li>Decompor tarefa em papéis de agente (role card)</li>
+<li>Definir protocolo de handoff (contexto + contrato I/O)</li>
+<li>Roteamento de modelo por tarefa (custo/latência/capacidade)</li>
+<li>Orquestração paralela (fan-out/fan-in)</li>
+<li>Validação de contrato entre agentes</li>
+</ol>
+<p><strong>Anti-patterns:</strong></p>
+<ul>
+<li>🔴 Handoff sem contrato de I/O definido</li>
+<li>🔴 Usar modelo caro para tarefa simples (custo desnecessário)</li>
+<li>🟡 Contexto acumulado sem janela de descarte</li>
+<li>🟡 Sem fallback quando agente falha</li>
+<li>🟢 Agente único para tarefa paralelizável</li>
+</ul>
+<p><strong><code>related_skills</code>:</strong> <code>[prompt-engineering, vibe-coding, governance]</code></p>
+<hr>
+<h3 id="b3-data-modeling-prioridade-3">B3: <code>data-modeling</code> (Prioridade #3)</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>skills/data-modeling/SKILL.md</code></li>
+<li><code>skills/data-modeling/templates/schema.sql</code></li>
+<li><code>skills/data-modeling/templates/migration.md</code></li>
+<li><code>skills/data-modeling/templates/index-strategy.md</code></li>
+<li><code>skills/index.json</code> (atualizar)</li>
+</ul>
+<p><strong>Decision tree:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Modelar dados] --&gt;|Dados relacionais?| B[Schema SQL]
+    A --&gt;|Dados sem esquema?| C[NoSQL]
+    A --&gt;|Dados hierárquicos?| D[Document DB]
+    B --&gt;|Normalizar?| E[3NF/BCNF]
+    B --&gt;|Desnormalizar?| F[Performance-first]
+    E --&gt; G[Índices estratégicos]
+    F --&gt; G
+    G --&gt; H[Migrations versionadas]</code></pre>
+<p><strong>Workflows:</strong></p>
+<ol>
+<li>Analisar requisitos de dados (entidades, relacionamentos, volume)</li>
+<li>Definir schema relacional (normalização vs desnormalização)</li>
+<li>Estratégia de índice (B-tree, hash, composto, parcial)</li>
+<li>Migrations versionadas e reversíveis</li>
+<li>Validação de schema (constraints, tipos, nullable)</li>
+</ol>
+<p><strong>Anti-patterns:</strong></p>
+<ul>
+<li>🔴 Migration sem rollback testado</li>
+<li>🔴 Tabela sem PK definida</li>
+<li>🟡 Índice em coluna com baixa selectividade</li>
+<li>🟡 Normalização excessiva em tabela de leitura pesada</li>
+<li>🟢 Usar <code>SELECT *</code> em queries de produção</li>
+</ul>
+<p><strong><code>related_skills</code>:</strong> <code>[ddd, testing, architecture-review-kilo]</code></p>
+<hr>
+<h3 id="b4-api-design-prioridade-4">B4: <code>api-design</code> (Prioridade #4)</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>skills/api-design/SKILL.md</code></li>
+<li><code>skills/api-design/templates/endpoint-spec.md</code></li>
+<li><code>skills/api-design/templates/error-contract.md</code></li>
+<li><code>skills/api-design/templates/api-versioning.md</code></li>
+<li><code>skills/index.json</code> (atualizar)</li>
+</ul>
+<p><strong>Decision tree:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Expor dados/funcionalidade] --&gt;|REST| B[Endpoints CRUD]
+    A --&gt;|GraphQL| C[Schema + Resolvers]
+    A --&gt;|WebSocket| D[Eventos push]
+    B --&gt; E[Versionamento]
+    C --&gt; E
+    E --&gt; F[Formato de erro]
+    F --&gt; G[Paginação]
+    G --&gt; H[Idempotência]</code></pre>
+<p><strong>Workflows:</strong></p>
+<ol>
+<li>Definir contrato REST (recursos, métodos, status codes)</li>
+<li>Versionamento de API (URL path, header, query param)</li>
+<li>Formato de erro consistente (RFC 7807)</li>
+<li>Paginação (cursor vs offset)</li>
+<li>Idempotência em endpoints de escrita</li>
+</ol>
+<p><strong>Anti-patterns:</strong></p>
+<ul>
+<li>🔴 Endpoint sem tratamento de erro consistente</li>
+<li>🔴 PUT sem idempotência</li>
+<li>🟡 Usar POST para operações de leitura</li>
+<li>🟡 Versionamento quebrando clientes existentes</li>
+<li>🟢 Query params opcionais sem default</li>
+</ul>
+<p><strong><code>related_skills</code>:</strong> <code>[documentation, testing, governance]</code></p>
+<hr>
+<h3 id="b5-observability-prioridade-5">B5: <code>observability</code> (Prioridade #5)</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>skills/observability/SKILL.md</code></li>
+<li><code>skills/observability/templates/logging-spec.md</code></li>
+<li><code>skills/observability/templates/metrics-sla.md</code></li>
+<li><code>skills/observability/templates/alert-rules.md</code></li>
+<li><code>skills/index.json</code> (atualizar)</li>
+</ul>
+<p><strong>Decision tree:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Sistema em produção] --&gt;|O que aconteceu?| B[Logging]
+    A --&gt;|Como está?| C[Métricas]
+    A --&gt;|Por quê?| D[Tracing]
+    B --&gt; E[Logging estruturado]
+    C --&gt; F[SLAs/SLOs]
+    D --&gt; G[Distributed tracing]
+    E --&gt; H[Alertas]
+    F --&gt; H
+    G --&gt; H</code></pre>
+<p><strong>Workflows:</strong></p>
+<ol>
+<li>Definir logging estruturado (formato, níveis, campos obrigatórios)</li>
+<li>Definir métricas mínimas (RED: Rate, Errors, Duration)</li>
+<li>Configurar alertas (limiares, canais, escalação)</li>
+<li>Instrumentar com distributed tracing (OpenTelemetry)</li>
+<li>Definir SLAs/SLOs e error budgets</li>
+</ol>
+<p><strong>Anti-patterns:</strong></p>
+<ul>
+<li>🔴 Log com dados sensíveis (PII, tokens)</li>
+<li>🔴 Alerta sem ação definida (alert fatigue)</li>
+<li>🟡 Log sem contexto (request ID, user ID)</li>
+<li>🟡 Métricas sem dimensão temporal</li>
+<li>🟢 Console.log em produção</li>
+</ul>
+<p><strong><code>related_skills</code>:</strong> <code>[testing, release, governance]</code></p>
+<hr>
+<h3 id="b6-refactoring-prioridade-6">B6: <code>refactoring</code> (Prioridade #6)</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>skills/refactoring/SKILL.md</code></li>
+<li><code>skills/refactoring/templates/refactoring-catalog.md</code></li>
+<li><code>skills/refactoring/templates/legacy-migration.md</code></li>
+<li><code>skills/refactoring/templates/test-before-refactor.md</code></li>
+<li><code>skills/index.json</code> (atualizar)</li>
+</ul>
+<p><strong>Decision tree:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Código para refatorar] --&gt;|Tem testes?| B[Testes existentes]
+    A --&gt;|Sem testes| C[Adicionar testes primeiro]
+    B --&gt; D[Refatorar com safety net]
+    C --&gt; E[Characterization test]
+    E --&gt; D
+    D --&gt;|Mudança pequena| F[Extract Method/Class]
+    D --&gt;|Mudança grande| G[Strangler Fig]
+    D --&gt;|Dependência| H[Branch by Abstraction]</code></pre>
+<p><strong>Workflows:</strong></p>
+<ol>
+<li>Avaliar risco (cobertura de testes, complexidade ciclomática)</li>
+<li>Adicionar testes de caracterização (se sem cobertura)</li>
+<li>Aplicar refatoração segura (catálogo de refatorações)</li>
+<li>Validar com testes e revisão</li>
+<li>Documentar decisão (ADR se impactante)</li>
+</ol>
+<p><strong>Anti-patterns:</strong></p>
+<ul>
+<li>🔴 Refatorar sem testes (sem safety net)</li>
+<li>🔴 Refatorar + mudar behavior ao mesmo tempo</li>
+<li>🟡 Big bang refactoring (mudar tudo de uma vez)</li>
+<li>🟡 Não commitar incrementalmente</li>
+<li>🟢 Refatorar código que ninguém mantém</li>
+</ul>
+<p><strong><code>related_skills</code>:</strong> <code>[architecture-review-kilo, ddd, testing]</code></p>
+<hr>
+<h2 id="4-fase-c-validao-final">4. Fase C: Validação Final</h2>
+<h3 id="c1-validao-cruzada-completa">C1: Validação cruzada completa</h3>
+<p><strong>Arquivos:</strong> Todos os arquivos modificados/criados</p>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>validate-index.sh</code> passa: 20/20 skills, 0 erros</li>
+<li>[ ] <code>validate-skill.sh</code> passa para todas as 20 skills: 0 erros</li>
+<li>[ ] <code>index.json</code> tem 20 entradas, <code>version</code> = "2.0.2"</li>
+<li>[ ] Nenhum <code>related_skills</code> apontando para skill inexistente</li>
+<li>[ ] Todas as skills têm ≥150 linhas</li>
+<li>[ ] Grafo de <code>related_skills</code> é conexo</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code># Validar índice
+bash scripts/validate-index.sh
+
+# Validar todas as skills
+for skill_dir in skills/*/; do
+  bash scripts/validate-skill.sh &quot;$skill_dir&quot;
+done
+
+# Contar skills
+ls -d skills/*/ | wc -l
+# Deve retornar 20
+
+# Verificar grafo
+grep -h &quot;related_skills&quot; skills/*/SKILL.md | grep -o &#x27;`[a-z-]*`&#x27; | sort | uniq</code></pre>
+<hr>
+<h2 id="5-dependncias-e-sequenciamento">5. Dependências e Sequenciamento</h2>
+<pre><code>A1 (CI) ──────────┬──→ B1 (security-review)
+                  ├──→ B2 (agent-orchestration)
+                  ├──→ B3 (data-modeling)
+                  ├──→ B4 (api-design)
+                  ├──→ B5 (observability)
+                  └──→ B6 (refactoring)
+
+A2 (CHANGELOG) ──── independente
+A3 (colisão) ────── independente
+A4 (sobreposição) ─ independente
+A5 (grafo) ──────── independente
+A6 (checklists) ─── independente
+A7 (peer review) ── independente
+
+C1 (validação) ──── depende de A1-A7 + B1-B6</code></pre>
+<h3 id="ordem-de-execuo-recomendada">Ordem de Execução Recomendada</h3>
+<pre><code>Semana 1 (Fase A — todos paralelizáveis, ~3-4h total)
+  ├─── A1: CI com validate-skill.sh ──────────────┐
+  ├─── A2: CHANGELOG v2.0.x ─────────────────────┤
+  ├─── A3: Renomear architecture-review ──────────┤
+  ├─── A4: Desambiguar planning/writing-plans ───┤
+  ├─── A5: Adicionar skill-audit-bulletin ao grafo┤
+  ├─── A6: Resolver checklists/ fantasma ─────────┤
+  └─── A7: Marcar peer review como condicional ───┘
+                                                    │
+Semana 2-3 (Fase B — sequencial, cada uma valida contra A1)
+  ├─── B1: security-review ───────────────────────┐
+  ├─── B2: agent-orchestration ───────────────────┤
+  ├─── B3: data-modeling ─────────────────────────┤
+  ├─── B4: api-design ────────────────────────────┤
+  ├─── B5: observability ─────────────────────────┤
+  └─── B6: refactoring ───────────────────────────┘
+                                                    │
+Semana 3 (Fase C — validação final)
+  └─── C1: Validação cruzada completa ─────────────┘</code></pre>
+<hr>
+<h2 id="6-riscos-e-mitigaes">6. Riscos e Mitigações</h2>
+<div class="table-wrapper"><table><tr><th>Risco</th><th>Impacto</th><th>Probabilidade</th><th>Mitigação</th></tr><tr><td>Skills novas ficam "thin" para bater 150 linhas</td><td>Médio</td><td>Média</td><td>Usar <code>validate-skill.sh</code> como gate + revisão editorial</td></tr><tr><td>Renomear <code>architecture-review</code> quebra referências</td><td>Alto</td><td>Baixa</td><td>Buscar todas as ocorrências antes de renomear</td></tr><tr><td>CI com <code>validate-skill.sh</code> pode ser lento</td><td>Baixo</td><td>Baixa</td><td>Cache de dependências, matrix strategy</td></tr><tr><td><code>security-review</code> pode ficar genérica demais</td><td>Alto</td><td>Média</td><td>Foco em AES-GCM, scrypt, BIP39 (casos reais do Secure Notes)</td></tr><tr><td><code>agent-orchestration</code> pode conflitar com <code>prompt-engineering</code></td><td>Médio</td><td>Baixa</td><td>Definir fronteira clara: um é para prompts, outro para coordenação</td></tr><tr><td>Manutenção de 20 vs 14 skills</td><td>Médio</td><td>Alta</td><td><code>validate-skill.sh</code> + CHANGELOG discipline</td></tr></table></div>
+<hr>
+<h2 id="7-estimativas-detalhadas">7. Estimativas Detalhadas</h2>
+<div class="table-wrapper"><table><tr><th>Tarefa</th><th>Complexidade</th><th>Horas Est.</th><th>Dependências</th></tr><tr><td>A1: CI validate-skill.sh</td><td>S</td><td>30min</td><td>—</td></tr><tr><td>A2: CHANGELOG</td><td>S</td><td>20min</td><td>—</td></tr><tr><td>A3: Renomear architecture-review</td><td>M</td><td>30min</td><td>—</td></tr><tr><td>A4: Desambiguar planning/writing-plans</td><td>S</td><td>20min</td><td>—</td></tr><tr><td>A5: Adicionar skill-audit-bulletin ao grafo</td><td>S</td><td>10min</td><td>—</td></tr><tr><td>A6: Resolver checklists/</td><td>S</td><td>15min</td><td>—</td></tr><tr><td>A7: Peer review condicional</td><td>S</td><td>10min</td><td>—</td></tr><tr><td>B1: security-review</td><td>L</td><td>3-4h</td><td>A1</td></tr><tr><td>B2: agent-orchestration</td><td>L</td><td>3-4h</td><td>A1</td></tr><tr><td>B3: data-modeling</td><td>L</td><td>3-4h</td><td>A1</td></tr><tr><td>B4: api-design</td><td>M</td><td>2-3h</td><td>A1</td></tr><tr><td>B5: observability</td><td>M</td><td>2-3h</td><td>A1</td></tr><tr><td>B6: refactoring</td><td>M</td><td>2-3h</td><td>A1</td></tr><tr><td>C1: Validação cruzada</td><td>S</td><td>30min</td><td>A1-A7, B1-B6</td></tr><tr><td><strong>Total</strong></td><td></td><td><strong>~20-25h</strong></td><td></td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-004.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-006-BP.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-006-BP.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="blueprint-workflow-ci-para-auto-sync-do-index-e-deploy-github-pages">Blueprint: Workflow CI para Auto-sync do Index e Deploy GitHub Pages</h1>
+<blockquote>ADR-006 | Versão 1.0 | 2026-07-05 | <strong>Status: ✅ IMPLEMENTADO</strong></blockquote>
+<hr>
+<h2 id="1-viso-geral">1. Visão Geral</h2>
+<h3 id="objetivo">Objetivo</h3>
+<p>Criar um workflow de CI/CD que sincroniza automaticamente <code>skills/index.json</code> quando skills são adicionadas ou modificadas, e faz deploy para GitHub Pages via branch <code>gh-pages</code>.</p>
+<h3 id="mtricas-de-sucesso">Métricas de Sucesso</h3>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Status</th></tr><tr><td>Sync manual do index.json</td><td>Sim</td><td>Automático</td><td>⬜</td></tr><tr><td>Deploy manual para gh-pages</td><td>Sim</td><td>Automático</td><td>⬜</td></tr><tr><td>Index desatualizado</td><td>Frequente</td><td>Impossível</td><td>⬜</td></tr><tr><td>Intervenção manual necessária</td><td>Sim</td><td>Não</td><td>⬜</td></tr><tr><td>Tempo de deploy</td><td>~5min manual</td><td>~1min automático</td><td>⬜</td></tr></table></div>
+<hr>
+<h2 id="2-estrutura-de-artefatos">2. Estrutura de Artefatos</h2>
+<pre><code>.github/workflows/
+├── validate-skills.yml          # Existente (não modificado)
+└── sync-and-deploy.yml          # NOVO - workflow principal
+
+scripts/
+├── sync-index.sh                # Existente (não modificado)
+├── validate-index.sh            # Existente (não modificado)
+└── validate-skill.sh            # Existente (não modificado)</code></pre>
+<hr>
+<h2 id="3-decision-tree">3. Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Push para master] --&gt;|Mudanças em skills/?| B{Detectadas}
+    B --&gt;|Não| C[Nenhum workflow executado]
+    B --&gt;|Sim| D[Executar sync-index.sh]
+    D --&gt; E[Executar validate-index.sh]
+    E --&gt;|Falhou| F[❌ Workflow falha - index inválido]
+    E --&gt;|Passou| G{index.json mudou?}
+    G --&gt;|Não| H[Nenhum commit necessário]
+    G --&gt;|Sim| I[Commit + push para master]
+    I --&gt; J[Checkout gh-pages]
+    J --&gt; K[Merge master → gh-pages]
+    K --&gt;|Conflito| L[Strategy ours - master vence]
+    K --&gt;|Sucesso| M[Push gh-pages]
+    M --&gt; N[✅ GitHub Pages atualizada]</code></pre>
+<hr>
+<h2 id="4-conceitos-fundamentais">4. Conceitos Fundamentais</h2>
+<h3 id="41-trigger-path-filtering">4.1 Trigger Path Filtering</h3>
+<p>O workflow só é disparado quando há mudanças nos paths <code>skills/**</code>. Isso evita execuções desnecessárias quando apenas documentação ou outros arquivos são modificados.</p>
+<p><strong>Configuração:</strong></p>
+<pre data-lang="yaml"><code>on:
+  push:
+    paths:
+      - &#x27;skills/**&#x27;</code></pre>
+<h3 id="42-githubtoken-permissions">4.2 GITHUB_TOKEN Permissions</h3>
+<p>O token <code>GITHUB_TOKEN</code> fornecido automaticamente pelo GitHub Actions permite commits e pushes ao repositório. Para isso, o workflow precisa da permissão <code>contents: write</code>.</p>
+<p><strong>Configuração:</strong></p>
+<pre data-lang="yaml"><code>permissions:
+  contents: write</code></pre>
+<h3 id="43-strategy-ours-para-merge">4.3 Strategy: Ours para Merge</h3>
+<p>Quando há conflito entre <code>master</code> e <code>gh-pages</code>, a strategy <code>ours</code> assume que <code>master</code> é a fonte de verdade. Isso é correto porque <code>master</code> é a branch de desenvolvimento e <code>gh-pages</code> é apenas uma cópia para deploy.</p>
+<h3 id="44-idempotncia">4.4 Idempotência</h3>
+<p>O workflow é idempotente: se <code>index.json</code> já está sincronizado, nenhum commit é gerado. Se <code>gh-pages</code> já está atualizado, nenhum push é feito. Isso permite re-executar o workflow sem efeitos colaterais.</p>
+<hr>
+<h2 id="5-workflow">5. Workflow</h2>
+<h3 id="workflow-1-sync-and-deploy">Workflow 1: Sync and Deploy</h3>
+<p><strong>Objetivo:</strong> Sincronizar index e deployar para GitHub Pages.</p>
+<p><strong>Triggers:</strong></p>
+<ul>
+<li>Push para branch <code>master</code> com mudanças em <code>skills/**</code></li>
+</ul>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>Checkout repository com <code>fetch-depth: 0</code> e token <code>GITHUB_TOKEN</code></li>
+<li>Setup Node.js (para consistência, embora não seja estritamente necessário)</li>
+<li>Instalar <code>jq</code> (para <code>sync-index.sh</code> e <code>validate-index.sh</code>)</li>
+<li>Executar <code>./scripts/sync-index.sh</code></li>
+<li>Executar <code>./scripts/validate-index.sh</code></li>
+<li>Configurar git (user.name, user.email)</li>
+<li>Verificar se <code>index.json</code> mudou (<code>git diff --quiet skills/index.json</code>)</li>
+<li>Se mudou: <code>git add skills/index.json && git commit -m "chore: auto-sync index.json [skip ci]" && git push</code></li>
+<li>Checkout branch <code>gh-pages</code></li>
+<li>Merge <code>master</code> com strategy <code>ours</code></li>
+<li>Push para <code>gh-pages</code></li>
+</ol>
+<p><strong>Checkpoint:</strong> GitHub Pages reflete o estado atual das skills.</p>
+<hr>
+<h2 id="6-templates">6. Templates</h2>
+<h3 id="61-sync-and-deployyml">6.1 sync-and-deploy.yml</h3>
+<pre data-lang="yaml"><code>name: Sync Skills Index &amp; Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - &#x27;skills/**&#x27;
+
+permissions:
+  contents: write
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: &#x27;20&#x27;
+
+      - name: Install jq
+        run: sudo apt-get update &amp;&amp; sudo apt-get install -y jq
+
+      - name: Sync skills index
+        run: |
+          chmod +x scripts/sync-index.sh
+          ./scripts/sync-index.sh
+
+      - name: Validate skills index
+        run: |
+          chmod +x scripts/validate-index.sh
+          ./scripts/validate-index.sh
+
+      - name: Configure git
+        run: |
+          git config user.name &quot;github-actions[bot]&quot;
+          git config user.email &quot;github-actions[bot]@users.noreply.github.com&quot;
+
+      - name: Check for index changes
+        id: changes
+        run: |
+          if git diff --quiet skills/index.json; then
+            echo &quot;changed=false&quot; &gt;&gt; $GITHUB_OUTPUT
+          else
+            echo &quot;changed=true&quot; &gt;&gt; $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push index changes
+        if: steps.changes.outputs.changed == &#x27;true&#x27;
+        run: |
+          git add skills/index.json
+          git commit -m &quot;chore: auto-sync skills index.json [skip ci]&quot;
+          git push
+
+      - name: Checkout gh-pages branch
+        if: steps.changes.outputs.changed == &#x27;true&#x27;
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge master into gh-pages
+        if: steps.changes.outputs.changed == &#x27;true&#x27;
+        run: |
+          git config user.name &quot;github-actions[bot]&quot;
+          git config user.email &quot;github-actions[bot]@users.noreply.github.com&quot;
+          git merge master --strategy=ours --no-edit
+
+      - name: Push to gh-pages
+        if: steps.changes.outputs.changed == &#x27;true&#x27;
+        run: git push origin gh-pages</code></pre>
+<hr>
+<h2 id="7-anti-patterns">7. Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="deploy-sem-validao">Deploy sem validação</h4>
+<p><strong>O que é:</strong> Pular a etapa de validação do index antes de deployar. <strong>Por que é ruim:</strong> Index quebrado pode causar erros no GitHub Pages e no Kilo. <strong>Como evitar:</strong> Sempre executar <code>validate-index.sh</code> antes de commitar. <strong>Exemplo:</strong></p>
+<pre data-lang="bash"><code># ❌ ERRADO
+./scripts/sync-index.sh
+git add skills/index.json &amp;&amp; git commit &amp;&amp; git push
+
+# ✅ CORRETO
+./scripts/sync-index.sh
+./scripts/validate-index.sh  # Validar antes de commitar
+git add skills/index.json &amp;&amp; git commit &amp;&amp; git push</code></pre>
+<h4 id="usar-token-com-permisses-insuficientes">Usar token com permissões insuficientes</h4>
+<p><strong>O que é:</strong> Workflow sem <code>permissions: contents: write</code>. <strong>Por que é ruim:</strong> Commits e pushes falham silenciosamente. <strong>Como evitar:</strong> Sempre declarar permissões explícitas no workflow.</p>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="no-usar-skip-ci-no-commit-automtico">Não usar [skip ci] no commit automático</h4>
+<p><strong>O que é:</strong> Commit do index dispara outro run do workflow. <strong>Por que é ruim:</strong> Loop infinito de workflows. <strong>Como evitar:</strong> Incluir <code>[skip ci]</code> na mensagem de commit.</p>
+<h4 id="no-usar-strategy-ours-no-merge">Não usar strategy ours no merge</h4>
+<p><strong>O que é:</strong> Merge sem estratégia clara para conflitos. <strong>Por que é ruim:</strong> Pode causar conflitos não resolvidos. <strong>Como evitar:</strong> Usar <code>--strategy=ours</code> para garantir que master é fonte de verdade.</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="no-verificar-se-index-realmente-mudou">Não verificar se index realmente mudou</h4>
+<p><strong>O que é:</strong> Sempre commitar, mesmo sem mudanças. <strong>Por que é ruim:</strong> Commits vazios poluem histórico. <strong>Como evitar:</strong> Usar <code>git diff --quiet</code> antes de commitar.</p>
+<hr>
+<h2 id="8-checklists">8. Checklists</h2>
+<h3 id="checklist-de-pr-deploy">Checklist de Pré-Deploy</h3>
+<ul>
+<li>[ ] <code>sync-index.sh</code> executado com sucesso</li>
+<li>[ ] <code>validate-index.sh</code> retornou 0 erros</li>
+<li>[ ] <code>index.json</code> realmente mudou (não é commit vazio)</li>
+<li>[ ] Token <code>GITHUB_TOKEN</code> tem permissão <code>contents: write</code></li>
+<li>[ ] Branch <code>gh-pages</code> existe no repositório remoto</li>
+<li>[ ] <code>[skip ci]</code> incluído na mensagem de commit</li>
+</ul>
+<h3 id="checklist-de-ps-deploy">Checklist de Pós-Deploy</h3>
+<ul>
+<li>[ ] Commit do index.json aparece na branch <code>master</code></li>
+<li>[ ] Branch <code>gh-pages</code> contém o merge de master</li>
+<li>[ ] GitHub Pages reflete o estado atual das skills</li>
+<li>[ ] Nenhum workflow adicional foi disparado (skip ci funcionou)</li>
+</ul>
+<hr>
+<h2 id="9-edge-cases">9. Edge Cases</h2>
+<h3 id="branch-gh-pages-no-existe">Branch gh-pages não existe</h3>
+<p><strong>Situação:</strong> Primeira execução do workflow em repositório sem branch <code>gh-pages</code>. <strong>Solução:</strong> O workflow deve criar a branch <code>gh-pages</code> a partir de <code>master</code> antes do primeiro push. <strong>Exceção:</strong> Se o GitHub Pages já está configurado para usar outra branch.</p>
+<h3 id="conflito-entre-master-e-gh-pages">Conflito entre master e gh-pages</h3>
+<p><strong>Situação:</strong> Alterações manuais foram feitas diretamente na branch <code>gh-pages</code>. <strong>Solução:</strong> Strategy <code>ours</code> resolve automaticamente, assumindo que <code>master</code> é fonte de verdade. <strong>Exceção:</strong> Se <code>gh-pages</code> tem conteúdo único que não existe em <code>master</code>, esse conteúdo será preservado via <code>ours</code>.</p>
+<h3 id="sync-indexsh-falha">sync-index.sh falha</h3>
+<p><strong>Situação:</strong> O script encontra uma skill com SKILL.md malformado. <strong>Solução:</strong> Workflow falha na etapa de sync; nenhuma alteração é commitada. <strong>Exceção:</strong> Nenhuma — skill deve ser corrigida antes de ser mergeada.</p>
+<h3 id="mltiplos-push-rpidos-para-master">Múltiplos push rápidos para master</h3>
+<p><strong>Situação:</strong> Dois pushs ocorrem quase simultaneamente. <strong>Solução:</strong> O segundo workflow pode encontrar conflito de merge. Strategy <code>ours</code> resolve. <strong>Exceção:</strong> Se o conflito é em arquivos além de <code>index.json</code>, pode ser necessário intervention manual.</p>
+<hr>
+<h2 id="10-integrao-com-skills-existentes">10. Integração com Skills Existentes</h2>
+<h3 id="referncias-diretas">Referências Diretas</h3>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relação com o workflow</th></tr><tr><td><code>git</code></td><td>Workflow segue padrões de conventional commits</td></tr><tr><td><code>governance</code></td><td>Workflow respeita processos de review</td></tr><tr><td><code>documentation</code></td><td>Atualiza automaticamente o registry documentado</td></tr></table></div>
+<hr>
+<h2 id="11-estimativas">11. Estimativas</h2>
+<div class="table-wrapper"><table><tr><th>Componente</th><th>Linhas Est.</th><th>Templates</th><th>Examples</th></tr><tr><td>sync-and-deploy.yml</td><td>~80</td><td>1</td><td>—</td></tr><tr><td><strong>Total</strong></td><td><strong>~80</strong></td><td><strong>1</strong></td><td><strong>0</strong></td></tr></table></div>
+<hr>
+<h2 id="12-riscos-e-mitigaes">12. Riscos e Mitigações</h2>
+<div class="table-wrapper"><table><tr><th>Risco</th><th>Impacto</th><th>Probabilidade</th><th>Mitigação</th></tr><tr><td>Loop infinito de workflows</td><td>Alto</td><td>Baixa</td><td><code>[skip ci]</code> no commit automático</td></tr><tr><td>Conflitos de merge</td><td>Médio</td><td>Baixa</td><td>Strategy <code>ours</code></td></tr><tr><td>Token sem permissão</td><td>Alto</td><td>Baixa</td><td><code>permissions: contents: write</code> explícito</td></tr><tr><td>Index quebrado deployado</td><td>Alto</td><td>Baixa</td><td><code>validate-index.sh</code> antes de commitar</td></tr><tr><td>gh-pages não existe</td><td>Médio</td><td>Média</td><td>Criar branch no primeiro run</td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-006.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>
