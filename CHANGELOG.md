@@ -7,10 +7,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 ## [Unreleased]
 
 ### Added
-- **ADR-013:** Expansão do Build.py para Incluir ADRs e Referências
-  - `pages/build.py` agora gera HTML para todos os ADRs em `docs/adr/archive/`
-  - Links relativos convertidos automaticamente para `docs/adr/archive/ADR-XXX.md` → `adr/ADR-XXX.html`
-  - +38 páginas HTML (ADRs + BP + TODO + execution artifacts)
+- **ADR-014:** Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages
+  - Substituído `git merge --strategy=ours` por full sync
+  - gh-pages agora espelha master 100%
+  - Todos os links ADR funcionais
 
 ## [2.3.1] - 2026-07-05
 
