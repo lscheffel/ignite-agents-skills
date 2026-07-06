@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>adr-generator / templates / adr-simple — ignite-agents-skills</title>
+  <title>README — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -404,34 +404,135 @@
     <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
       <a href="../../index.html">Skills</a>
-      <a href="../../readme.html">README</a>
+      <a href="../../readme.html" class="active">README</a>
       <a href="../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-simple</div>
+    <div class="nav-breadcrumb">README</div>
   </nav>
   <div class="content">
-    <h1 id="adr-id-title">ADR-{{id}}: {{title}}</h1>
-<h2 id="status">Status</h2>
-<p>{{status}}</p>
-<h2 id="data">Data</h2>
-<p>{{date}}</p>
-<h2 id="contexto">Contexto</h2>
-<p>{{context}}</p>
-<h2 id="deciso">Decisão</h2>
-<p>{{decision}}</p>
-<h2 id="consequncias">Consequências</h2>
-<h3 id="positivas">Positivas</h3>
+    <h1 id="ignite-agents-skills">ignite-agents-skills</h1>
+<p>Registro centralizado de skills para agentes compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>.</p>
+<p>Hospedado como GitHub Pages, este repositório serve como registry remoto para múltiplos projetos que usam <strong>Kilo</strong>, <strong>OpenCode</strong> e outros agentes compatíveis.</p>
+<blockquote><strong>Nota de compatibilidade (Kilo Code):</strong> o mecanismo <code>skills.urls</code> do Kilo busca <code>{url}/index.json</code> e resolve cada arquivo em <code>{url}/{skill-name}/{file}</code>, onde <code>file</code> é <strong>relativo à pasta da própria skill</strong> (ex.: <code>"SKILL.md"</code>, não <code>"skills/nome/SKILL.md"</code>). Por isso o manifesto canônico é <code>skills/index.json</code> (paths relativos), e a URL configurada no Kilo deve apontar para a pasta <code>skills/</code>, não para <code>.well-known/skills/</code>. Uma tentativa anterior de seguir a convenção <code>.well-known/</code> usava paths completos no <code>files</code>, o que quebra a resolução do Kilo (duplicação de path) — por isso foi removida.</blockquote>
+<h2 id="estrutura">Estrutura</h2>
+<pre><code>.
+├── LICENSE
+├── USAGE.md                          # Guia completo de uso das skills
+├── skills/
+│   ├── index.json                    # Registry de skills (fonte única)
+│   ├── adr-generator/
+│   ├── agent-orchestration/
+│   ├── agents-md-generator/          # 🆕 Skill para AGENTS.md adaptativo
+│   ├── api-design/
+│   ├── architecture-review-kilo/
+│   ├── data-modeling/
+│   ├── ddd/
+│   ├── documentation/
+│   ├── git/
+│   ├── governance/
+│   ├── implementation/
+│   ├── observability/
+│   ├── planning/
+│   ├── prompt-engineering/
+│   ├── refactoring/
+│   ├── release/
+│   ├── repo-bootstrap/
+│   ├── security-review/
+│   ├── skill-audit-bulletin/
+│   ├── testing/
+│   ├── vibe-coding/
+│   └── writing-plans/
+├── scripts/
+│   ├── archive-adrs.sh               # Arquiva ADRs implementadas
+│   ├── sync-index.sh                 # Auto-gera index.json
+│   ├── validate-index.sh             # Valida index.json contra arquivos reais
+│   └── validate-skill.sh             # Valida qualidade Ultra-High Quality Grade
+└── docs/
+    └── adr/
+        ├── INDEX.md                  # Índice de ADRs (active + archived)
+        └── archive/                  # Cold storage (ADRs implementadas)
+            ├── ADR-001.md
+            ├── ADR-002.md
+            ├── ADR-003.md
+            ├── ADR-004.md
+            ├── ADR-005.md
+            ├── ADR-006.md
+            └── ADR-007.md</code></pre>
+<h2 id="categorias">Categorias</h2>
+<div class="table-wrapper"><table><tr><th>Categoria</th><th>Skills</th></tr><tr><td>Architecture</td><td><code>architecture-review-kilo</code>, <code>ddd</code></td></tr><tr><td>Documentation</td><td><code>documentation</code>, <code>adr-generator</code></td></tr><tr><td>Governance</td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-generator</code></td></tr><tr><td>Planning</td><td><code>planning</code>, <code>writing-plans</code></td></tr><tr><td>Implementation</td><td><code>implementation</code></td></tr><tr><td>Quality</td><td><code>testing</code>, <code>architecture-review-kilo</code></td></tr><tr><td>Security</td><td><code>security-review</code></td></tr><tr><td>AI</td><td><code>prompt-engineering</code>, <code>vibe-coding</code></td></tr><tr><td>Orchestration</td><td><code>agent-orchestration</code></td></tr><tr><td>Data</td><td><code>data-modeling</code></td></tr><tr><td>API</td><td><code>api-design</code></td></tr><tr><td>Operations</td><td><code>observability</code></td></tr><tr><td>Code Quality</td><td><code>refactoring</code></td></tr><tr><td>Tools</td><td><code>git</code>, <code>release</code></td></tr><tr><td>Audit</td><td><code>skill-audit-bulletin</code></td></tr></table></div>
+<h2 id="publicao-github-pages">Publicação (GitHub Pages)</h2>
+<ol>
+<li>Habilite GitHub Pages em <strong>Settings → Pages</strong></li>
+<li>Source: <strong>Deploy from a branch</strong></li>
+<li>Branch: <code>main</code> (ou <code>master</code>) — repositório precisa ser <strong>público</strong> (Pages privado exige plano pago do GitHub, e o Kilo faz fetch simples, sem autenticação)</li>
+<li>Após deploy, o registry estará disponível em:</li>
+</ol>
+<pre><code>https://&lt;usuario&gt;.github.io/ignite-agents-skills/skills/</code></pre>
+<p>Confirme que está no ar antes de configurar o Kilo:</p>
+<pre><code>curl -I https://&lt;usuario&gt;.github.io/ignite-agents-skills/skills/index.json</code></pre>
+<h2 id="configurao-no-kilo">Configuração no Kilo</h2>
+<p>No Kilo Code (VS Code): <strong>Kilo Settings → Comportamento do Agente → Habilidades → URLs de Habilidades</strong>, adicione:</p>
+<pre><code>https://&lt;usuario&gt;.github.io/ignite-agents-skills/skills/</code></pre>
+<p>(com a barra final). Se preferir configurar via arquivo, use <code>skills.urls</code> no seu <code>kilo.json</code>:</p>
+<pre data-lang="json"><code>{
+  &quot;skills&quot;: {
+    &quot;urls&quot;: [
+      &quot;https://&lt;usuario&gt;.github.io/ignite-agents-skills/skills/&quot;
+    ]
+  }
+}</code></pre>
+<p>O Kilo busca <code>{url}/index.json</code>, e para cada skill listada baixa os arquivos de <code>{url}/{skill-name}/{file}</code>. Por isso <code>files</code> no <code>index.json</code> <strong>deve ser relativo à pasta da skill</strong> — nunca inclua o prefixo <code>skills/nome-da-skill/</code>.</p>
+<h2 id="como-adicionar-uma-nova-skill">Como Adicionar uma Nova Skill</h2>
+<ol>
+<li>Crie o diretório: <code>skills/nova-skill/</code></li>
+<li>Adicione o <code>SKILL.md</code> com frontmatter <code>name</code> e <code>description</code></li>
+<li>Adicione arquivos auxiliares se necessário</li>
+<li>O <code>skills/index.json</code> é sincronizado <strong>automaticamente</strong> via workflow de CI/CD</li>
+<li>Rode <code>scripts/validate-index.sh</code> localmente para confirmar que os paths resolvem</li>
+<li>Rode <code>bash scripts/validate-skill.sh skills/nova-skill</code> para validar qualidade</li>
+<li>Commit e push para <code>master</code></li>
+</ol>
+<p><strong>Nota:</strong> O workflow <code>sync-and-deploy.yml</code> sincroniza automaticamente o index.json e faz deploy para GitHub Pages quando há alterações na pasta <code>skills/</code>.</p>
+<h2 id="padro-de-skill">Padrão de Skill</h2>
+<p>Cada <code>SKILL.md</code> deve conter:</p>
+<pre data-lang="yaml"><code>---
+name: nome-da-skill
+description: Descrição curta para o agente decidir quando usar.
+---</code></pre>
+<h3 id="ultra-high-quality-grade">Ultra-High Quality Grade</h3>
+<p>Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:</p>
 <ul>
-<li>{{positive_1}}</li>
+<li><strong>Decision Trees</strong> — Mermaid graphs para decisão automática</li>
+<li><strong>Workflows</strong> — Passos executáveis com critérios de aceitação</li>
+<li><strong>Anti-patterns</strong> — Indicadores de severidade (🔴 crítico, 🟡 alerta, 🟢 suave)</li>
+<li><strong>Checklists</strong> — Verificação de qualidade antes/depois</li>
+<li><strong>Edge Cases</strong> — Cobertura de cenários excepcionais</li>
+<li><strong>Templates</strong> — 72 templates disponíveis em <code>skills/*/templates/</code></li>
+<li><strong>Examples</strong> — 18 exemplos em <code>skills/*/examples/</code></li>
 </ul>
-<h3 id="negativas">Negativas</h3>
+<h2 id="status-da-implementao">Status da Implementação</h2>
+<p><strong>v2.2.0 — Skills Ultra-High Quality Grade</strong></p>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Status</th></tr><tr><td>Skills total</td><td>23 ✅</td></tr><tr><td>Skills refatoradas</td><td>23/23 ✅</td></tr><tr><td>Templates criados</td><td>72 ✅</td></tr><tr><td>Examples criados</td><td>18 ✅</td></tr><tr><td>Validação automática</td><td>✅</td></tr><tr><td>CI pipeline</td><td>✅ (<code>validate-skill.sh</code> + <code>validate-index.sh</code>)</td></tr><tr><td>Auto-sync index.json</td><td>✅ (<code>sync-and-deploy.yml</code>)</td></tr><tr><td>GitHub Pages</td><td>✅</td></tr><tr><td>SDLC completo</td><td>✅</td></tr></table></div>
+<h2 id="decises-arquiteturais">Decisões Arquiteturais</h2>
+<p>Decisões arquiteturais significativas são documentadas em <a href="./docs/adr/">docs/adr/</a>:</p>
+<p><strong>Active:</strong></p>
 <ul>
-<li>{{negative_1}}</li>
+<li><em>Nenhuma ADR ativa</em></li>
 </ul>
-<h2 id="referncias">Referências</h2>
+<p><strong>Arquivadas (Cold Storage):</strong></p>
 <ul>
-<li>{{reference}}</li>
+<li><a href="./docs/adr/archive/ADR-001.md">ADR-001: Consolidar registry de skills em único index.json</a> ✅</li>
+<li><a href="./docs/adr/archive/ADR-002.md">ADR-002: Padrão de Skill Ultra-High Quality Grade</a> ✅</li>
+<li><a href="./docs/adr/archive/ADR-003.md">ADR-003: Retrospectiva da Implementação</a> ✅</li>
+<li><a href="./docs/adr/archive/ADR-004.md">ADR-004: Implementação das Recomendações da Ultra-Auditoria</a> ✅</li>
+<li><a href="./docs/adr/archive/ADR-005.md">ADR-005: Introdução da Skill implementation</a> ✅</li>
+<li><a href="./docs/adr/archive/ADR-006.md">ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages</a> ✅</li>
+<li><a href="./docs/adr/archive/ADR-007.md">ADR-007: Skill para Geração de AGENTS.md Adaptativo</a> ✅</li>
+<li><a href="./docs/adr/ADR-008.md">ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais</a> ✅</li>
 </ul>
+<blockquote>📦 ADRs implementadas são movidas para <code>docs/adr/archive/</code> como referência. Veja <a href="./docs/adr/INDEX.md">docs/adr/INDEX.md</a> para o índice completo.</blockquote>
+<h2 id="licena">Licença</h2>
+<p>MIT — ver <a href="./LICENSE">LICENSE</a>.</p>
   </div>
   <footer>
     <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
