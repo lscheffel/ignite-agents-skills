@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USAGE — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html" class="active">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb">USAGE</div>
+  </nav>
+  <div class="content">
+    <h1 id="usagemd--guia-completo-de-uso-das-skills">USAGE.md — Guia Completo de Uso das Skills</h1>
+<blockquote>Guia abrangente de como usar cada skill do repositório <code>ignite-agents-skills</code>.</blockquote>
+<hr>
+<h2 id="ndice">Índice</h2>
+<ol>
+<li><a href="#visão-geral">Visão Geral</a></li>
+<li><a href="#como-configurar">Como Configurar</a></li>
+<li><a href="#skills-por-categoria">Skills por Categoria</a></li>
+<li><a href="#guia-de-uso-por-skill">Guia de Uso por Skill</a></li>
+<li><a href="#fluxos-de-trabalho-comuns">Fluxos de Trabalho Comuns</a></li>
+<li><a href="#anti-patterns-gerais">Anti-patterns Gerais</a></li>
+<li><a href="#referências">Referências</a></li>
+</ol>
+<hr>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>O repositório <code>ignite-agents-skills</code> contém <strong>22 skills</strong> para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>. Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.</p>
+<h3 id="total-de-skills-22">Total de Skills: 22</h3>
+<div class="table-wrapper"><table><tr><th>Categoria</th><th>Quantidade</th><th>Skills</th></tr><tr><td>Architecture</td><td>2</td><td><code>architecture-review-kilo</code>, <code>ddd</code></td></tr><tr><td>Documentation</td><td>2</td><td><code>documentation</code>, <code>adr-generator</code></td></tr><tr><td>Governance</td><td>3</td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-generator</code></td></tr><tr><td>Planning</td><td>2</td><td><code>planning</code>, <code>writing-plans</code></td></tr><tr><td>Implementation</td><td>1</td><td><code>implementation</code></td></tr><tr><td>Quality</td><td>1</td><td><code>testing</code></td></tr><tr><td>Security</td><td>1</td><td><code>security-review</code></td></tr><tr><td>AI</td><td>2</td><td><code>prompt-engineering</code>, <code>vibe-coding</code></td></tr><tr><td>Orchestration</td><td>1</td><td><code>agent-orchestration</code></td></tr><tr><td>Data</td><td>1</td><td><code>data-modeling</code></td></tr><tr><td>API</td><td>1</td><td><code>api-design</code></td></tr><tr><td>Operations</td><td>1</td><td><code>observability</code></td></tr><tr><td>Code Quality</td><td>1</td><td><code>refactoring</code></td></tr><tr><td>Tools</td><td>2</td><td><code>git</code>, <code>release</code></td></tr><tr><td>Audit</td><td>1</td><td><code>skill-audit-bulletin</code></td></tr></table></div>
+<hr>
+<h2 id="como-configurar">Como Configurar</h2>
+<h3 id="no-kilo-code-vs-code">No Kilo Code (VS Code)</h3>
+<ol>
+<li>Abra as configurações do Kilo</li>
+<li>Navegue até <strong>Comportamento do Agente → Habilidades → URLs de Habilidades</strong></li>
+<li>Adicione a URL do registry:</li>
+</ol>
+<pre><code>https://lscheffel.github.io/ignite-agents-skills/skills/</code></pre>
+<h3 id="via-arquivo-kilojson">Via arquivo <code>kilo.json</code></h3>
+<pre data-lang="json"><code>{
+  &quot;skills&quot;: {
+    &quot;urls&quot;: [
+      &quot;https://lscheffel.github.io/ignite-agents-skills/skills/&quot;
+    ]
+  }
+}</code></pre>
+<h3 id="via-cli">Via CLI</h3>
+<pre data-lang="bash"><code># Buscar skills disponíveis
+curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq &#x27;.skills[].name&#x27;</code></pre>
+<hr>
+<h2 id="skills-por-categoria">Skills por Categoria</h2>
+<h3 id="-architecture">🏗️ Architecture</h3>
+<h4 id="architecture-review-kilo"><code>architecture-review-kilo</code></h4>
+<p><strong>Descrição:</strong> Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Precisa de revisão de arquitetura</li>
+<li>Quer analisar estrutura de código</li>
+<li>Precisa avaliar design</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Revise a arquitetura deste projeto e identifique violações de SOLID</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>adr-generator</code></p>
+<hr>
+<h4 id="ddd"><code>ddd</code></h4>
+<p><strong>Descrição:</strong> Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Modelar domínios ricos</li>
+<li>Refatorar entidades anêmicas</li>
+<li>Estruturar contextos delimitados</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um Aggregate Root para o domínio de Pedidos seguindo DDD</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>testing</code>, <code>implementation</code></p>
+<hr>
+<h3 id="-documentation">📚 Documentation</h3>
+<h4 id="adr-generator"><code>adr-generator</code></h4>
+<p><strong>Descrição:</strong> Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Precisa documentar decisão arquitetural</li>
+<li>Quer registrar trade-offs técnicos</li>
+<li>Precisa criar ADR</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie uma ADR para documentar a decisão de usar PostgreSQL ao invés de MongoDB</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>documentation</code>, <code>architecture-review-kilo</code>, <code>implementation</code></p>
+<hr>
+<h4 id="documentation"><code>documentation</code></h4>
+<p><strong>Descrição:</strong> Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Criar documentação</li>
+<li>Revisar docs</li>
+<li>Padronizar material técnico</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um README completo para este projeto</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>repo-bootstrap</code>, <code>implementation</code></p>
+<hr>
+<h3 id="-governance">🏛️ Governance</h3>
+<h4 id="governance"><code>governance</code></h4>
+<p><strong>Descrição:</strong> Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Definir processos de equipe</li>
+<li>Implementar governance-as-code</li>
+<li>Padronizar workflows de desenvolvimento</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Configure branch protection e CODEOWNERS para este repositório</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>git</code>, <code>release</code>, <code>repo-bootstrap</code>, <code>implementation</code>, <code>skill-audit-bulletin</code></p>
+<hr>
+<h4 id="repo-bootstrap"><code>repo-bootstrap</code></h4>
+<p><strong>Descrição:</strong> Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Inicializar novo repositório</li>
+<li>Padronizar estrutura existente</li>
+<li>Criar template de projeto</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Gere a estrutura inicial para este novo repositório</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>documentation</code>, <code>git</code>, <code>skill-audit-bulletin</code></p>
+<hr>
+<h4 id="agents-md-generator"><code>agents-md-generator</code></h4>
+<p><strong>Descrição:</strong> Gera e mantém arquivos AGENTS.md adaptativos que se adaptam ao contexto do projeto. Detecta automaticamente tipo de projeto, tecnologias, padrões arquiteturais e governança.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Criar AGENTS.md para novo projeto</li>
+<li>Atualizar AGENTS.md existente</li>
+<li>Gerar documentação adaptativa</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Gere um AGENTS.md para este projeto CRM</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>repo-bootstrap</code>, <code>governance</code>, <code>documentation</code>, <code>skill-audit-bulletin</code></p>
+<hr>
+<h3 id="-planning">📋 Planning</h3>
+<h4 id="planning"><code>planning</code></h4>
+<p><strong>Descrição:</strong> Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Planejar projeto</li>
+<li>Criar roadmap</li>
+<li>Estimar esforço</li>
+<li>Decompor trabalho</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um roadmap para as próximas 3 features</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>writing-plans</code>, <code>governance</code>, <code>implementation</code></p>
+<hr>
+<h4 id="writing-plans"><code>writing-plans</code></h4>
+<p><strong>Descrição:</strong> Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Criar plano de implementação</li>
+<li>Quebrar feature em tarefas</li>
+<li>Criar roadmap técnico</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um plano de implementação para a feature de autenticação</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>planning</code>, <code>ddd</code>, <code>implementation</code></p>
+<hr>
+<h3 id="-implementation">⚙️ Implementation</h3>
+<h4 id="implementation"><code>implementation</code></h4>
+<p><strong>Descrição:</strong> Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Implementar ADR aprovada</li>
+<li>Executar mudanças governadas</li>
+<li>Precisa de rastreabilidade completa</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Implemente a ADR-005 seguindo o processo governado</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>writing-plans</code>, <code>planning</code>, <code>testing</code>, <code>git</code>, <code>documentation</code>, <code>governance</code>, <code>release</code>, <code>architecture-review-kilo</code>, <code>ddd</code></p>
+<hr>
+<h3 id="-quality">🧪 Quality</h3>
+<h4 id="testing"><code>testing</code></h4>
+<p><strong>Descrição:</strong> Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Escrever testes</li>
+<li>Revisar cobertura</li>
+<li>Definir estratégia de testes</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie testes unitários para o UserService</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>governance</code>, <code>implementation</code></p>
+<hr>
+<h3 id="-security">🔒 Security</h3>
+<h4 id="security-review"><code>security-review</code></h4>
+<p><strong>Descrição:</strong> Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Revisar código por segurança</li>
+<li>Auditar dependências</li>
+<li>Validar práticas de criptografia</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Revise este código vulnerabilidades de segurança</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>architecture-review-kilo</code>, <code>testing</code></p>
+<hr>
+<h3 id="-ai">🤖 AI</h3>
+<h4 id="prompt-engineering"><code>prompt-engineering</code></h4>
+<p><strong>Descrição:</strong> Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Criar prompts para agentes de IA</li>
+<li>Otimizar interações</li>
+<li>Treinar equipes em IA</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um prompt eficaze para refatoração de código legado</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>vibe-coding</code></p>
+<hr>
+<h4 id="vibe-coding"><code>vibe-coding</code></h4>
+<p><strong>Descrição:</strong> Modalidade de desenvolvimento onde o desenvolvedor guia o agente de IA com intenção e direção, não comandos detalhados. Foca em resultado, velocidade e fluxo contínuo.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Pair programming com IA</li>
+<li>Desenvolvimento assistido por IA</li>
+<li>Session de vibe coding</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Vamos fazer uma sessão de vibe coding para esta feature</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>prompt-engineering</code>, <code>testing</code></p>
+<hr>
+<h3 id="-orchestration">🔀 Orchestration</h3>
+<h4 id="agent-orchestration"><code>agent-orchestration</code></h4>
+<p><strong>Descrição:</strong> Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Coordenar vários agentes</li>
+<li>Definir papéis</li>
+<li>Gerenciar handoffs</li>
+<li>Otimizar execução paralela</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Orquestre 3 agentes para revisar documentação, testes e segurança</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>prompt-engineering</code>, <code>vibe-coding</code>, <code>governance</code></p>
+<hr>
+<h3 id="-data">📊 Data</h3>
+<h4 id="data-modeling"><code>data-modeling</code></h4>
+<p><strong>Descrição:</strong> Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Criar bancos de dados</li>
+<li>Projetar schemas</li>
+<li>Otimizar queries</li>
+<li>Gerenciar migrações</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um schema SQL para o domínio de usuários</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>testing</code>, <code>architecture-review-kilo</code></p>
+<hr>
+<h3 id="-api">🌐 API</h3>
+<h4 id="api-design"><code>api-design</code></h4>
+<p><strong>Descrição:</strong> Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Projetar novas APIs</li>
+<li>Revisar contratos existentes</li>
+<li>Padronizar práticas de design</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie a especificação REST para o endpoint de usuários</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>documentation</code>, <code>testing</code>, <code>governance</code></p>
+<hr>
+<h3 id="-operations">⚙️ Operations</h3>
+<h4 id="observability"><code>observability</code></h4>
+<p><strong>Descrição:</strong> Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Configurar monitoramento</li>
+<li>Investigar incidentes</li>
+<li>Implementar observabilidade</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Configure métricas Prometheus para esta API</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>testing</code>, <code>release</code>, <code>governance</code></p>
+<hr>
+<h3 id="-code-quality">🧹 Code Quality</h3>
+<h4 id="refactoring"><code>refactoring</code></h4>
+<p><strong>Descrição:</strong> Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Refatorar código</li>
+<li>Melhorar estrutura existente</li>
+<li>Migrar sistemas legados</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Refatore este código usando a técnica Strangler Fig</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>ddd</code>, <code>testing</code></p>
+<hr>
+<h3 id="-tools">🛠️ Tools</h3>
+<h4 id="git"><code>git</code></h4>
+<p><strong>Descrição:</strong> Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Fazer commits</li>
+<li>Criar branches</li>
+<li>Resolver conflitos</li>
+<li>Ensinar Git</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie um commit seguindo Conventional Commits</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>release</code>, <code>repo-bootstrap</code>, <code>implementation</code></p>
+<hr>
+<h4 id="release"><code>release</code></h4>
+<p><strong>Descrição:</strong> Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Preparar releases</li>
+<li>Publicar pacotes</li>
+<li>Gerenciar versionamento semântico</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Crie uma release v1.2.0 com changelog</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>git</code>, <code>governance</code>, <code>implementation</code></p>
+<hr>
+<h3 id="-audit">🔍 Audit</h3>
+<h4 id="skill-audit-bulletin"><code>skill-audit-bulletin</code></h4>
+<p><strong>Descrição:</strong> Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Revisar skills</li>
+<li>Validar registry</li>
+<li>Decidir adoção</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Audite a qualidade da skill governance</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>documentation</code></p>
+<hr>
+<h2 id="fluxos-de-trabalho-comuns">Fluxos de Trabalho Comuns</h2>
+<h3 id="fluxo-1-iniciar-novo-projeto">Fluxo 1: Iniciar Novo Projeto</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Iniciar Projeto] --&gt; B[repo-bootstrap]
+    B --&gt; C[governance]
+    C --&gt; D[agents-md-generator]
+    D --&gt; E[documentation]
+    E --&gt; F[Projeto Pronto]</code></pre>
+<ol>
+<li><strong>repo-bootstrap</strong> — Gerar estrutura inicial</li>
+<li><strong>governance</strong> — Configurar processos</li>
+<li><strong>agents-md-generator</strong> — Gerar AGENTS.md</li>
+<li><strong>documentation</strong> — Criar documentação</li>
+</ol>
+<hr>
+<h3 id="fluxo-2-implementar-nova-feature">Fluxo 2: Implementar Nova Feature</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Nova Feature] --&gt; B[planning]
+    B --&gt; C[writing-plans]
+    C --&gt; D[adr-generator]
+    D --&gt; E[implementation]
+    E --&gt; F[testing]
+    F --&gt; G[Feature Pronta]</code></pre>
+<ol>
+<li><strong>planning</strong> — Planejar a feature</li>
+<li><strong>writing-plans</strong> — Criar plano de implementação</li>
+<li><strong>adr-generator</strong> — Documentar decisões arquiteturais</li>
+<li><strong>implementation</strong> — Executar implementação</li>
+<li><strong>testing</strong> — Validar com testes</li>
+</ol>
+<hr>
+<h3 id="fluxo-3-reviso-de-cdigo">Fluxo 3: Revisão de Código</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[PR Aberto] --&gt; B[architecture-review-kilo]
+    B --&gt; C[security-review]
+    C --&gt; D[testing]
+    D --&gt; E[documentation]
+    E --&gt; F[Review Completo]</code></pre>
+<ol>
+<li><strong>architecture-review-kilo</strong> — Revisar arquitetura</li>
+<li><strong>security-review</strong> — Verificar segurança</li>
+<li><strong>testing</strong> — Validar testes</li>
+<li><strong>documentation</strong> — Verificar documentação</li>
+</ol>
+<hr>
+<h3 id="fluxo-4-migrao-de-legado">Fluxo 4: Migração de Legado</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Código Legado] --&gt; B[architecture-review-kilo]
+    B --&gt; C[refactoring]
+    C --&gt; D[ddd]
+    D --&gt; E[testing]
+    E --&gt; F[Código Moderno]</code></pre>
+<ol>
+<li><strong>architecture-review-kilo</strong> — Analisar arquitetura atual</li>
+<li><strong>refactoring</strong> — Planejar refatoração</li>
+<li><strong>ddd</strong> — Reestruturar domínio</li>
+<li><strong>testing</strong> — Validar com testes</li>
+</ol>
+<hr>
+<h3 id="fluxo-5-deploy-e-release">Fluxo 5: Deploy e Release</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Pronto para Deploy] --&gt; B[release]
+    B --&gt; C[git]
+    C --&gt; D[governance]
+    D --&gt; E[observability]
+    E --&gt; F[Deploy Concluído]</code></pre>
+<ol>
+<li><strong>release</strong> — Preparar release</li>
+<li><strong>git</strong> — Criar tags e branches</li>
+<li><strong>governance</strong> — Verificar processo</li>
+<li><strong>observability</strong> — Monitorar deploy</li>
+</ol>
+<hr>
+<h2 id="anti-patterns-gerais">Anti-patterns Gerais</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="usar-mltiplas-skills-para-a-mesma-tarefa">Usar múltiplas skills para a mesma tarefa</h4>
+<p><strong>O que é:</strong> Usar <code>adr-generator</code> + <code>documentation</code> + <code>repo-bootstrap</code> para criar documentação. <strong>Por que é ruim:</strong> Conflitos, redundância, inconsistência. <strong>Como evitar:</strong> Escolher a skill mais específica para a tarefa.</p>
+<h4 id="ignorar-dependncias-entre-skills">Ignorar dependências entre skills</h4>
+<p><strong>O que é:</strong> Usar <code>implementation</code> sem antes usar <code>adr-generator</code> e <code>writing-plans</code>. <strong>Por que é ruim:</strong> Falta de contexto, decisões não documentadas. <strong>Como evitar:</strong> Seguir o fluxo de trabalho recomendado.</p>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="no-validar-antes-de-usar">Não validar antes de usar</h4>
+<p><strong>O que é:</strong> Usar skills sem verificar se estão atualizadas. <strong>Por que é ruim:</strong> Padrões desatualizados, inconsistências. <strong>Como evitar:</strong> Verificar versão e changelog antes de usar.</p>
+<h4 id="no-documentar-decises">Não documentar decisões</h4>
+<p><strong>O que é:</strong> Tomar decisões arquiteturais sem criar ADR. <strong>Por que é ruim:</strong> Perda de contexto, dificuldade futura. <strong>Como evitar:</strong> Sempre criar ADR para decisões significativas.</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="no-usar-templates">Não usar templates</h4>
+<p><strong>O que é:</strong> Criar do zero quando existem templates. <strong>Por que é ruim:</strong> Mais trabalho, inconsistência. <strong>Como evitar:</strong> Usar templates disponíveis em cada skill.</p>
+<h4 id="no-revisar-output">Não revisar output</h4>
+<p><strong>O que é:</strong> Aceitar output sem verificar. <strong>Por que erros passam:</strong> Erros passam despercebidos. <strong>Como evitar:</strong> Sempre revisar antes de commitar.</p>
+<hr>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://agentskills.io">Agent Skills Standard</a></li>
+<li><a href="https://kilocode.ai">Kilo Code Documentation</a></li>
+<li><a href="https://pages.github.com/">GitHub Pages Setup</a></li>
+<li><a href="https://www.conventionalcommits.org/">Conventional Commits</a></li>
+<li><a href="https://semver.org/">Semantic Versioning</a></li>
+<li><a href="https://www.domainlanguage.com/ddd/">Domain-Driven Design</a></li>
+<li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture</a></li>
+</ul>
+<hr>
+<p><em>Última atualização: 2026-07-05</em> <em>Total de skills: 22</em> <em>Versão do registry: 2.0.3</em></p>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

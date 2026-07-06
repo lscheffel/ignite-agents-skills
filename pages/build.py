@@ -339,6 +339,41 @@ def get_css():
       font-size: 1.1rem;
       margin-bottom: 2rem;
     }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
     h2 {
       font-size: 1.5rem;
       font-weight: 700;
@@ -610,6 +645,8 @@ def get_page_template(title, body_html, breadcrumb="", nav_active=""):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{md_escape(title)} — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>{css}</style>
 </head>
 <body>
@@ -617,9 +654,8 @@ def get_page_template(title, body_html, breadcrumb="", nav_active=""):
     <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
       <a href="../../index.html"{ ' class="active"' if nav_active == "home" else ""}>Skills</a>
-      <a href="../../index.html#categories"{ ' class="active"' if nav_active == "cats" else ""}>Categorias</a>
-      <a href="../../README.md">README</a>
-      <a href="../../USAGE.md">USAGE</a>
+      <a href="../../readme.html"{ ' class="active"' if nav_active == "readme" else ""}>README</a>
+      <a href="../../usage.html"{ ' class="active"' if nav_active == "usage" else ""}>USAGE</a>
     </div>
     <div class="nav-breadcrumb">{breadcrumb}</div>
   </nav>
@@ -709,6 +745,21 @@ def generate_file_page(skill_name, md_path, category, skill):
     print(f"  ✓ {skill_name}/{category}/{md_path.stem}.html")
 
 
+def generate_doc_page(md_path, title, nav_active):
+    """Generate an HTML page for a root-level .md file (README, USAGE)."""
+    if not md_path.exists():
+        print(f"  ⚠ {md_path.name} not found, skipping")
+        return
+    md_content = md_path.read_text(encoding="utf-8")
+    body_html = convert_md_to_html(md_content)
+    breadcrumb = title
+    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active=nav_active)
+    out_name = f"{md_path.stem.lower()}.html"
+    out = PAGES_DIR / out_name
+    out.write_text(page, encoding="utf-8")
+    print(f"  ✓ {out_name}")
+
+
 def generate_index(skills_data):
     """Generate the main pages/index.html listing all skills."""
     skills = skills_data["skills"]
@@ -726,8 +777,8 @@ def generate_index(skills_data):
     </div>"""
 
     body = f"""
-    <h1><span class="accent">ignite</span>-agents-skills <span class="version-badge">v{THEME_VERSION}</span></h1>
-    <p class="subtitle">23 skills &middot; 72 templates &middot; 18 examples — Registry de skills ultra-high quality grade para agentes de IA.</p>
+    <h1 class="fancy-title">ignite-agents-skills <span class="ver">v{THEME_VERSION}</span></h1>
+    <p class="fancy-sub">Registro centralizado de <strong>23 skills</strong> ultra-high quality grade para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>.</p>
 
     <div class="search-wrapper">
       <span class="search-icon">&#128269;</span>
@@ -766,6 +817,8 @@ def generate_index(skills_data):
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ignite-agents-skills — Skill Registry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>{css}</style>
 </head>
 <body>
@@ -773,8 +826,8 @@ def generate_index(skills_data):
     <a href="../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
       <a href="index.html" class="active">Skills</a>
-      <a href="../README.md">README</a>
-      <a href="../USAGE.md">USAGE</a>
+      <a href="readme.html">README</a>
+      <a href="usage.html">USAGE</a>
     </div>
   </nav>
   <div class="content content-full">
@@ -818,6 +871,11 @@ def main():
     # Generate index
     print("📄 Generating index...")
     generate_index(data)
+
+    # Generate README and USAGE pages
+    print("\n📖 Generating doc pages...")
+    generate_doc_page(ROOT / "README.md", "README", "readme")
+    generate_doc_page(ROOT / "USAGE.md", "USAGE", "usage")
 
     # Generate skill pages + sub-pages
     for s in sorted(skills, key=lambda x: x["name"]):
