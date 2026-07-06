@@ -12,6 +12,14 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
   - Links relativos convertidos automaticamente para `docs/adr/archive/ADR-XXX.md` → `adr/ADR-XXX.html`
   - +38 páginas HTML (ADRs + BP + TODO + execution artifacts)
 
+## [2.3.1] - 2026-07-05
+
+### Added
+- **ADR-013:** Expansão do Build.py para Incluir ADRs e Referências
+  - `pages/build.py` agora gera HTML para todos os ADRs em `docs/adr/archive/`
+  - Links relativos convertidos automaticamente para `docs/adr/archive/ADR-XXX.md` → `adr/ADR-XXX.html`
+  - +38 páginas HTML (ADRs + BP + TODO + execution artifacts)
+
 ## [2.3.0] - 2026-07-05
 
 ### Added
@@ -151,7 +159,8 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 - `scripts/validate-index.sh`: valida `skills/index.json` contra os arquivos reais (paths, prefixo indevido `skills/`, e consistência com o frontmatter `name` de cada `SKILL.md`)
 - `.github/workflows/validate-skills.yml`: roda a validação acima em push/PR que tocam `skills/**`
 
-[Unreleased]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.3.1...HEAD
+[2.3.1]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.0.3...v2.1.0
