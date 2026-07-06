@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>governance — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; governance</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: governance description: Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs. Use quando definir processos de equipe, implementar governance-as-code ou padronizar workflows de desenvolvimento. version: 2.0.0 tags: [governance, branching, code-review, process, team] related_skills: [git, release, repo-bootstrap, implementation, skill-audit-bulletin] ---</p>
+<h1 id="governance">Governance</h1>
+<p>Define diretrizes de governança para projetos e equipes.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa definir processos de equipe</li>
+<li>Precisa configurar branch protection</li>
+<li>Precisa padronizar branching strategy</li>
+<li>Precisa configurar CODEOWNERS</li>
+<li>Precisa criar processo de revisão e aprovação</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Projeto pessoal sem colaboração</li>
+<li>Repositório somente leitura</li>
+<li>Projeto sem CI/CD</li>
+</ul>
+<h3 id="modos-de-colaborao">Modos de Colaboração</h3>
+<h4 id="solo--agentes-recomendado-para-projetos-individuais-com-ia">Solo + Agentes (recomendado para projetos individuais com IA)</h4>
+<ul>
+<li><strong>Operador solo</strong> trabalha com <strong>time de agentes de IA</strong> como colaboradores</li>
+<li>Branch protection ainda se aplica: agentes devem trabalhar em branches isoladas</li>
+<li>SemVer obrigatório: cada mudança significativa gera nova tag</li>
+<li>Processo:</li>
+</ul>
+<pre><code>  Branch de trabalho → Implementação → Validação 100% → Merge → gh-pages sync → Tag SemVer</code></pre>
+<ul>
+<li>Skills relacionadas: <code>implementation</code>, <code>adr-generator</code>, <code>agent-orchestration</code></li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>git</code> — para padrões de commits e branches</li>
+<li><code>release</code> — para versionamento semântico</li>
+<li><code>repo-bootstrap</code> — para arquivos de governança iniciais</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Preciso de governança?] --&gt;|Equipe pequena| B[Trunk-Based]
+    A --&gt;|Equipe grande| C[GitFlow]
+    A --&gt;|Open Source| D[GitHub Flow]
+    A --&gt;|Configurar| E[Branch Protection]
+    E --&gt;|Quem revisa| F[CODEOWNERS]
+    E --&gt;|Status checks| G[CI Required]
+    E --&gt;|Merge method| H[Squash vs Rebase]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-configurar-branch-protection">Fase 1: Configurar Branch Protection</h3>
+<ol>
+<li>Acesse Settings > Branches no GitHub/GitLab</li>
+<li>Adicione regra para <code>main</code>:</li>
+</ol>
+<pre><code>   Branch name pattern: main</code></pre>
+<ol>
+<li>Configure proteções:</li>
+</ol>
+<ul>
+<li>[x] Require pull request reviews before merging</li>
+<li>[x] Dismiss stale reviews when new commits are pushed</li>
+<li>[x] Require status checks to pass before merging</li>
+<li>[ ] Require branches to be up to date before merging</li>
+<li>[x] Include administrators</li>
+<li>[x] Allow force pushes (desmarque)</li>
+<li>[x] Allow deletions (desmarque)</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Crie branch de teste e tente push direto para main (deve falhar)</li>
+</ol>
+<h3 id="fase-2-configurar-codeowners">Fase 2: Configurar CODEOWNERS</h3>
+<ol>
+<li>Crie arquivo <code>.github/CODEOWNERS</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   mkdir -p .github
+   cp templates/codeowners .github/CODEOWNERS</code></pre>
+<ol>
+<li>Edite com equipes do projeto:</li>
+</ol>
+<pre><code>   * @minha-equipe/core
+   /src/domain/ @minha-equipe/domain</code></pre>
+<ol>
+<li>Commit e push:</li>
+</ol>
+<pre data-lang="bash"><code>   git add .github/CODEOWNERS
+   git commit -m &quot;docs(governance): add CODEOWNERS&quot;</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Crie PR e verifique se CODEOWNERS são notificados</li>
+</ol>
+<h3 id="fase-3-processo-de-pr-completo">Fase 3: Processo de PR Completo</h3>
+<ol>
+<li>Crie branch a partir de <code>main</code> ou <code>develop</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout -b feature/nova-funcionalidade</code></pre>
+<ol>
+<li>Faça commits pequenos e focados:</li>
+</ol>
+<pre data-lang="bash"><code>   git commit -m &quot;feat: add user validation&quot;</code></pre>
+<ol>
+<li>Abra PR com descrição completa:</li>
+</ol>
+<pre data-lang="bash"><code>   gh pr create --title &quot;feat: add user validation&quot; \
+     --body-file templates/pull-request-template.md</code></pre>
+<ol>
+<li>Aguarde CI verde:</li>
+</ol>
+<pre data-lang="bash"><code>   gh pr checks --watch</code></pre>
+<ol>
+<li>Responda aos reviews</li>
+<li><strong>Checkpoint</strong>: PR aprovado e CI verde</li>
+</ol>
+<h3 id="fase-4-release-management">Fase 4: Release Management</h3>
+<ol>
+<li>Atualize CHANGELOG.md</li>
+<li>Crie branch de release (se GitFlow):</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout -b release/v1.2.0</code></pre>
+<ol>
+<li>Bump versão em package.json</li>
+<li>Merge após aprovação</li>
+<li>Crie tag:</li>
+</ol>
+<pre data-lang="bash"><code>   git tag v1.2.0
+   git push --tags</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Release publicada e documentada</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="branching-strategy">Branching Strategy</h3>
+<h4 id="gitflow-recomendado-para-releases-agendadas">GitFlow (recomendado para releases agendadas)</h4>
+<ul>
+<li><code>main</code>: código em produção</li>
+<li><code>develop</code>: branch de integração</li>
+<li><code>feature/*</code>: novas features</li>
+<li><code>release/*</code>: preparação de release</li>
+<li><code>hotfix/*</code>: correções urgentes</li>
+</ul>
+<h4 id="trunk-based-recomendado-para-cicd-contnuo">Trunk-Based (recomendado para CI/CD contínuo)</h4>
+<ul>
+<li><code>main</code>: trunk sempre deployável</li>
+<li><code>feature/*</code>: branches curtas (< 1 dia)</li>
+<li>Commits pequenos e frequentes</li>
+</ul>
+<h4 id="github-flow-recomendado-para-open-source">GitHub Flow (recomendado para open source)</h4>
+<ul>
+<li><code>main</code>: branch principal</li>
+<li>Branches curtas</li>
+<li>PR obrigatório</li>
+<li>Deploy automático após merge</li>
+</ul>
+<h3 id="versionamento-semntico">Versionamento Semântico</h3>
+<p>Formato: <code>MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]</code></p>
+<ul>
+<li><strong>MAJOR</strong>: mudanças incompatíveis</li>
+<li><strong>MINOR</strong>: funcionalidades novas, retrocompatível</li>
+<li><strong>PATCH</strong>: correções, retrocompatível</li>
+</ul>
+<h3 id="processo-de-pr">Processo de PR</h3>
+<ol>
+<li>Feature branch a partir de <code>main</code> ou <code>develop</code></li>
+<li>Commits pequenos e focados</li>
+<li>Abre PR com descrição completa</li>
+<li>Pelo menos 1 aprovação (2 para mudanças arquiteturais)</li>
+<li>CI verde (lint, testes, build)</li>
+<li>Merge com squash ou rebase</li>
+</ol>
+<h2 id="templates">Templates</h2>
+<h3 id="pull-request-templatemd">pull-request-template.md</h3>
+<p>Localização: <code>templates/pull-request-template.md</code></p>
+<p>Template para descrição de Pull Request.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/pull-request-template.md .github/PULL_REQUEST_TEMPLATE.md</code></pre>
+<h3 id="issue-templatemd">issue-template.md</h3>
+<p>Localização: <code>templates/issue-template.md</code></p>
+<p>Template para criação de issues.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/issue-template.md .github/ISSUE_TEMPLATE.md</code></pre>
+<h3 id="codeowners">codeowners</h3>
+<p>Localização: <code>templates/codeowners</code></p>
+<p>Configuração de CODEOWNERS para revisão automática.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>mkdir -p .github
+cp templates/codeowners .github/CODEOWNERS</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="approve-sem-review">Approve sem Review</h4>
+<p><strong>O que é:</strong> Aprovar PR sem ler código ou sem entender mudanças. <strong>Por que é ruim:</strong> Bugs e problemas de arquitetura entram no codebase. <strong>Como evitar:</strong> Sempre leia diff completo, execute localmente. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+PR aberto às 14:00
+Aprovado às 14:05 sem comentários
+
+# ✅ CORRETO
+PR aberto às 14:00
+Review às 14:30 com 3 comentários
+Discussão e ajustes
+Aprovado às 15:30</code></pre>
+<h4 id="merge-com-ci-vermelho">Merge com CI Vermelho</h4>
+<p><strong>O que é:</strong> Merge de PR mesmo com CI falhando. <strong>Por que é ruim:</strong> Quebra main/develop, deploy falha. <strong>Como evitar:</strong> Nunca merge com CI vermelho, resolva primeiro. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+CI: failing
+git merge --no-ff feature/branch
+
+# ✅ CORRETO
+CI: failing
+# Investigar e corrigir
+CI: passing
+git merge --no-ff feature/branch</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="branch-sem-pr">Branch sem PR</h4>
+<p><strong>O que é:</strong> Trabalhar diretamente em main ou develop sem PR. <strong>Por que é ruim:</strong> Nenhuma revisão, histórico de decisões perdido. <strong>Como evitar:</strong> Sempre crie PR, mesmo para mudanças pequenas. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git checkout main
+git add .
+git commit -m &quot;fix: quick fix&quot;
+
+# ✅ CORRETO
+git checkout -b fix/quick-fix
+git add .
+git commit -m &quot;fix: quick fix&quot;
+gh pr create</code></pre>
+<h4 id="review-superficial">Review Superficial</h4>
+<p><strong>O que é:</strong> Review que só comenta formatação, não lógica. <strong>Por que é ruim:</strong> Problemas de arquitetura e bugs não são detectados. <strong>Como evitar:</strong> Use checklist de review, foque em lógica e segurança. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Missing semicolon&quot; (único comentário)
+
+# ✅ CORRETO
+&quot;Consider extracting this logic to a service for testability&quot;
+&quot;Missing null check for user.email&quot;
+&quot;Good use of early return pattern&quot;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="pr-sem-descrio">PR sem Descrição</h4>
+<p><strong>O que é:</strong> PR criado sem descrição ou com descrição genérica. <strong>Por que é ruim:</strong> Revisores não entendem contexto, demora review. <strong>Como evitar:</strong> Use template, preencha todos os campos. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Título: &quot;fix&quot;
+Descrição: &quot;fix bug&quot;
+
+# ✅ CORRETO
+Título: &quot;fix(auth): handle expired JWT token&quot;
+Descrição: &quot;Implementa renovação automática de token expirado...&quot;</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-pr">Checklist de PR</h3>
+<ul>
+<li>[ ] Título claro e descritivo</li>
+<li>[ ] Descrição explica o que e por que</li>
+<li>[ ] Screenshots incluídos (se UI)</li>
+<li>[ ] Checklist preenchido</li>
+<li>[ ] Testes adicionados</li>
+<li>[ ] Coverage mantido</li>
+<li>[ ] Lint passa</li>
+<li>[ ] Build passa</li>
+</ul>
+<h3 id="checklist-de-release">Checklist de Release</h3>
+<ul>
+<li>[ ] CHANGELOG.md atualizado</li>
+<li>[ ] Versão bumpada</li>
+<li>[ ] Todos os testes passam</li>
+<li>[ ] Documentação atualizada</li>
+<li>[ ] Tag criada</li>
+<li>[ ] Release publicada</li>
+</ul>
+<h3 id="checklist-de-onboarding">Checklist de Onboarding</h3>
+<ul>
+<li>[ ] Acesso ao repositório concedido</li>
+<li>[ ] CODEOWNERS configurado</li>
+<li>[ ] Branch protection explicada</li>
+<li>[ ] Processo de PR treinado</li>
+<li>[ ] CI/CD explicado</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="hotfix-em-produo">Hotfix em Produção</h3>
+<p><strong>Situação:</strong> Bug crítico precisa ser corrigido imediatamente. <strong>Solução:</strong> Use branch hotfix, merge direto para main e develop. <strong>Exceção:</strong> Se bug não é crítico, use processo normal.</p>
+<pre data-lang="bash"><code># Hotfix
+git checkout -b hotfix/critical-bug main
+# ... corrigir ...
+git commit -m &quot;fix: critical bug&quot;
+git checkout main
+git merge --no-ff hotfix/critical-bug
+git tag v1.2.1
+# Merge para develop também
+git checkout develop
+git merge --no-ff hotfix/critical-bug</code></pre>
+<h3 id="revert-de-release">Revert de Release</h3>
+<p><strong>Situação:</strong> Release quebrou produção, precisa reverter. <strong>Solução:</strong> Crie branch de revert com tag especial. <strong>Exceção:</strong> Se bug é pequeno, hotfix pode ser suficiente.</p>
+<pre data-lang="bash"><code># Revert
+git revert --no-commit v1.2.0
+git commit -m &quot;revert(release): v1.2.0 - breaks production&quot;
+git tag v1.2.0-rollback-20240115</code></pre>
+<h3 id="contributor-externo">Contributor Externo</h3>
+<p><strong>Situação:</strong> Pull Request de contribuinte externo. <strong>Solução:</strong> Review mais rigoroso, verificar segurança e licença. <strong>Exceção:</strong> Contribuinte já conhecido e confiável.</p>
+<pre data-lang="bash"><code># Checklist adicional para externos
+- [ ] Verificar histórico do contribuinte
+- [ ] Revisar dependências novas
+- [ ] Verificar licença de código incluído
+- [ ] Testes adicionais para mudanças externas</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://guides.github.com/introduction/flow/">GitHub Flow</a></li>
+<li><a href="https://semver.org/">Semantic Versioning</a></li>
+<li><code>git</code> — para padrões de commits</li>
+<li><code>release</code> — para processo de release</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/issue-template.html">issue-template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/pull-request-template.html">pull-request-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/branch-protection.html">branch-protection.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

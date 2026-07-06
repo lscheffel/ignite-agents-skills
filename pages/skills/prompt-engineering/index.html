@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prompt-engineering — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; prompt-engineering</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: prompt-engineering description: Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas. Use quando criar prompts para agentes de IA, otimizar interações ou treinar equipes em IA. version: 2.0.0 tags: [prompts, llm, ai, techniques, agents] related_skills: [vibe-coding] ---</p>
+<h1 id="prompt-engineering">Prompt Engineering</h1>
+<p>Diretrizes para engenharia de prompts eficazes.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Criando prompts para agentes de IA</li>
+<li>Otimizando interações com LLMs</li>
+<li>Treinando equipes em IA</li>
+<li>Padronizando prompts entre projetos</li>
+<li>Criando prompt para tarefa complexa</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Tarefa é simples (1-2 linhas)</li>
+<li>Prompt já existe e funciona</li>
+<li>Precisa de interação humana direta</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>vibe-coding</code> — para desenvolvimento guiado por IA</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Tipo de Prompt?] --&gt;|Simples| B[Zero-shot]
+    A --&gt;|Complexo| C[Few-shot]
+    A --&gt;|Múltiplas etapas| D[Chain-of-Thought]
+    A --&gt;|Formato específico| E[Constrained Output]
+    B --&gt;|1-2 frases| F[Direct Prompt]
+    C --&gt;|Exemplos| G[With Examples]
+    D --&gt;|Pensamento| H[Step by Step]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-criar-prompt-para-tarefa-simples">Fase 1: Criar Prompt para Tarefa Simples</h3>
+<ol>
+<li>Identifique a tarefa:</li>
+</ol>
+<pre><code>   &quot;Formatar JSON para tabela markdown&quot;</code></pre>
+<ol>
+<li>Crie prompt direto:</li>
+</ol>
+<pre><code>   Formate o seguinte JSON como tabela markdown:
+   {json aqui}</code></pre>
+<ol>
+<li>Teste o prompt:</li>
+</ol>
+<pre data-lang="bash"><code>   # Use ferramenta de teste
+   echo &quot;prompt&quot; | llm-prompt-test</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Prompt produz output correto</li>
+</ol>
+<h3 id="fase-2-criar-prompt-para-tarefa-complexa">Fase 2: Criar Prompt para Tarefa Complexa</h3>
+<ol>
+<li>Defina contexto (role):</li>
+</ol>
+<pre><code>   Você é um arquiteto de software sênior especializado em DDD.</code></pre>
+<ol>
+<li>Defina tarefa clara:</li>
+</ol>
+<pre><code>   Modele o domínio de um sistema de pedidos com:
+   - Entidades: Order, Product, User
+   - Value Objects: Money, Address
+   - Aggregates: Order com OrderItems</code></pre>
+<ol>
+<li>Defina formato de saída:</li>
+</ol>
+<pre><code>   Responda em formato:
+   - Entidades: lista
+   - Value Objects: lista
+   - Aggregates: lista com invariantes</code></pre>
+<ol>
+<li>Defina restrições:</li>
+</ol>
+<pre><code>   - Use TypeScript
+   - Não inclua framework
+   - Foque em domínio puro</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Prompt produz output estruturado</li>
+</ol>
+<h3 id="fase-3-otimizar-prompt">Fase 3: Otimizar Prompt</h3>
+<ol>
+<li>Adicione few-shot se necessário:</li>
+</ol>
+<pre><code>   Exemplo 1:
+   Input: Order com 2 items
+   Output: Aggregate com invariantes...
+   
+   Exemplo 2:
+   Input: User registration
+   Output: Entity com validação...
+   
+   Agora processe:
+   Input: {novo caso}</code></pre>
+<ol>
+<li>Adicione chain-of-thought:</li>
+</ol>
+<pre><code>   Pense passo a passo:
+   1. Primeiro, identifique as entidades
+   2. Depois, defina os value objects
+   3. Finalmente, estabeleça os aggregates</code></pre>
+<ol>
+<li>Adicione constrained output:</li>
+</ol>
+<pre><code>   Responda APENAS com código TypeScript.
+   Não inclua explicações.</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Output mais preciso e consistente</li>
+</ol>
+<h3 id="fase-4-avaliar-qualidade-de-prompt">Fase 4: Avaliar Qualidade de Prompt</h3>
+<ol>
+<li>Teste com múltiplos inputs:</li>
+</ol>
+<pre data-lang="bash"><code>   # Teste 1
+   echo &quot;input1&quot; | llm
+   
+   # Teste 2
+   echo &quot;input2&quot; | llm</code></pre>
+<ol>
+<li>Verifique consistência:</li>
+</ol>
+<ul>
+<li>Mesmo formato?</li>
+<li>Mesmo nível de detalhe?</li>
+</ul>
+<ol>
+<li>Meça latência e custo:</li>
+</ol>
+<ul>
+<li>Tokens usados</li>
+<li>Tempo de resposta</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Prompt validado com múltiplos testes</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="estrutura-de-prompt">Estrutura de Prompt</h3>
+<h4 id="1-contexto">1. Contexto</h4>
+<p>Quem é o agente, qual seu papel, qual o objetivo.</p>
+<pre><code>Você é um desenvolvedor sênior especializado em Node.js.
+Sua tarefa é refatorar código legado.</code></pre>
+<h4 id="2-tarefa">2. Tarefa</h4>
+<p>O que deve ser feito, de forma clara e específica.</p>
+<pre><code>Refatore a classe UserService para seguir Single Responsibility Principle.
+Extraia validação para UserValidator.</code></pre>
+<h4 id="3-formato-de-sada">3. Formato de Saída</h4>
+<p>Estrutura esperada da resposta.</p>
+<pre><code>Responda em formato:</code></pre>
+<p>// Antes {código}</p>
+<p>// Depois {código}</p>
+<pre><code></code></pre>
+<h4 id="4-restries">4. Restrições</h4>
+<p>O que NÃO fazer, limites e regras.</p>
+<pre><code>- Não altere comportamento
+- Mantenha compatibilidade
+- Use TypeScript</code></pre>
+<h3 id="tcnicas">Técnicas</h3>
+<h4 id="role-prompting">Role Prompting</h4>
+<pre><code>Você é um arquiteto de software sênior especializado em DDD...</code></pre>
+<h4 id="few-shot">Few-Shot</h4>
+<pre><code>Exemplo 1:
+Input: ...
+Output: ...
+
+Exemplo 2:
+Input: ...
+Output: ...
+
+Agora processe:
+Input: ...</code></pre>
+<h4 id="chain-of-thought">Chain-of-Thought</h4>
+<pre><code>Pense passo a passo:
+1. Primeiro, ...
+2. Depois, ...
+3. Finalmente, ...</code></pre>
+<h4 id="constrained-output">Constrained Output</h4>
+<pre><code>Responda APENAS com o código final.
+Não inclua explicações.</code></pre>
+<h2 id="templates">Templates</h2>
+<h3 id="prompt-simplemd">prompt-simple.md</h3>
+<p>Localização: <code>templates/prompt-simple.md</code></p>
+<p>Template para prompt simples.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cat templates/prompt-simple.md</code></pre>
+<h3 id="prompt-complexmd">prompt-complex.md</h3>
+<p>Localização: <code>templates/prompt-complex.md</code></p>
+<p>Template para prompt complexo com contexto.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cat templates/prompt-complex.md</code></pre>
+<h3 id="prompt-evaluationmd">prompt-evaluation.md</h3>
+<p>Localização: <code>templates/prompt-evaluation.md</code></p>
+<p>Template para avaliação de prompt.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cat templates/prompt-evaluation.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="prompt-vago">Prompt Vago</h4>
+<p><strong>O que é:</strong> Prompt sem contexto ou tarefa clara. <strong>Por que é ruim:</strong> Output imprevisível, precisa de múltiplas tentativas. <strong>Como evitar:</strong> Sempre inclua contexto, tarefa, formato e restrições. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Melhore o código&quot;
+
+# ✅ CORRETO
+&quot;Refatore o código para usar async/await em vez de callbacks.
+Use TypeScript.
+Mantenha o mesmo comportamento.</code></pre>
+<p>{código}</p>
+<pre data-lang="""><code></code></pre>
+<h4 id="mltiplas-tarefas-em-um-prompt">Múltiplas Tarefas em um Prompt</h4>
+<p><strong>O que é:</strong> Prompt que pede múltiplas coisas diferentes. <strong>Por que é ruim:</strong> Output misturado, difícil de validar. <strong>Como evitar:</strong> Um prompt, uma tarefa. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Modele o domínio, crie testes e documente a API&quot;
+
+# ✅ CORRETO
+&quot;Modele o domínio com DDD. Responda apenas com código TypeScript.&quot;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="instrues-contraditrias">Instruções Contraditórias</h4>
+<p><strong>O que é:</strong> Prompt com regras conflitantes. <strong>Por que é ruim:</strong> Agente fica confuso, output inconsistente. <strong>Como evitar:</strong> Revise prompt antes de enviar. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Use JavaScript&quot;
+&quot;Use TypeScript&quot;
+
+# ✅ CORRETO
+&quot;Use TypeScript&quot;</code></pre>
+<h4 id="falta-de-contexto">Falta de Contexto</h4>
+<p><strong>O que é:</strong> Prompt sem informações necessárias. <strong>Por que é ruim:</strong> Output genérico, não específico do projeto. <strong>Como evitar:</strong> Inclua contexto do projeto, stack, restrições. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Crie API de usuários&quot;
+
+# ✅ CORRETO
+&quot;Crie API REST de usuários usando Node.js + Express + TypeScript.
+Use Clean Architecture.
+Endpoints: GET /users, POST /users, GET /users/:id&quot;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="prompt-sem-formato-de-sada">Prompt sem Formato de Saída</h4>
+<p><strong>O que é:</strong> Prompt que não especifica formato esperado. <strong>Por que é ruim:</strong> Output pode não ser usável. <strong>Como evitar:</strong> Sempre especifique formato. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Liste os endpoints&quot;
+
+# ✅ CORRETO
+&quot;Liste os endpoints em formato JSON:
+{
+  &quot;endpoints&quot;: [
+    { &quot;method&quot;: &quot;GET&quot;, &quot;path&quot;: &quot;/users&quot; }
+  ]
+}&quot;</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-prompt">Checklist de Prompt</h3>
+<ul>
+<li>[ ] Contexto definido (role do agente)</li>
+<li>[ ] Tarefa clara e específica</li>
+<li>[ ] Formato de saída definido</li>
+<li>[ ] Restrições incluídas</li>
+<li>[ ] Exemplos fornecidos (se complexo)</li>
+<li>[ ] Chain-of-thought incluído (se necessário)</li>
+</ul>
+<h3 id="checklist-de-output">Checklist de Output</h3>
+<ul>
+<li>[ ] Formato correto</li>
+<li>[ ] Código compila</li>
+<li>[ ] Testes passam</li>
+<li>[ ] Documentação incluída</li>
+<li>[ ] Segurança verificada</li>
+</ul>
+<h3 id="checklist-de-constraint">Checklist de Constraint</h3>
+<ul>
+<li>[ ] Output é apenas código</li>
+<li>[ ] Não inclui explicações</li>
+<li>[ ] Formato JSON/TS especificado</li>
+<li>[ ] Tamanho máximo definido</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="prompt-para-cdigo-legado">Prompt para Código Legado</h3>
+<p><strong>Situação:</strong> Precisa de prompt para refatorar código antigo. <strong>Solução:</strong> Inclua contexto do legado, objetivo da refatoração. <strong>Exceção:</strong> Se código é crítico, peça mais cuidado.</p>
+<pre><code>&quot;Refatore este código JavaScript para TypeScript.
+Mantenha 100% de compatibilidade.
+Não altere comportamento externo.&quot;</code></pre>
+<h3 id="prompt-para-documentao-em-lngua-estrangeira">Prompt para Documentação em Língua Estrangeira</h3>
+<p><strong>Situação:</strong> Precisa de prompt para documentar em inglês. <strong>Solução:</strong> Especifique língua, inclua glossário. <strong>Exceção:</strong> Se equipe é multilíngue, peça tradução.</p>
+<pre><code>&quot;Documente em inglês americano.
+Termos técnicos: Order (Pedido), Item (Item)&quot;</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><code>vibe-coding</code> — para desenvolvimento guiado por IA</li>
+<li><a href="https://www.promptingguide.org/">Prompt Engineering Guide</a></li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/prompt-complex.html">prompt-complex.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/prompt-evaluation.html">prompt-evaluation.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/prompt-simple.html">prompt-simple.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/refactoring-prompt.html">refactoring-prompt.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>security-review / examples / crypto-validation — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">security-review</a> &rsaquo; examples &rsaquo; crypto-validation</div>
+  </nav>
+  <div class="content">
+    <h1 id="exemplo-validao-de-criptografia--aes-256-gcm">Exemplo: Validação de Criptografia — AES-256-GCM</h1>
+<h2 id="contexto">Contexto</h2>
+<p>Aplicação armazena dados sensíveis (tokens, credenciais) criptografados com AES-256-GCM. Precisa validar que a implementação está correta e segura.</p>
+<h2 id="checklist-de-validao">Checklist de Validação</h2>
+<h3 id="1-gerao-de-chave">1. Geração de Chave</h3>
+<pre data-lang="python"><code># ✅ CORRETO: Usar PBKDF2/scrypt/Argon2 para derivar chave de senha
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives import hashes
+
+kdf = PBKDF2HMAC(
+    algorithm=hashes.SHA256(),
+    length=32,
+    salt=salt,  # 16 bytes aleatórios
+    iterations=600_000,  # mínimo OWASP 2023
+)
+key = kdf.derive(password.encode())
+
+# ❌ ERRADO: Usar hash simples (MD5, SHA-256) como chave
+key = hashlib.sha256(password.encode()).digest()  # NÃO FAÇA ISSO</code></pre>
+<p><strong>Validação:</strong></p>
+<ul>
+<li>[ ] KDF usa PBKDF2 (≥600k iterações), scrypt (N≥16384), ou Argon2id</li>
+<li>[ ] Salt é aleatório e único por registro (≥16 bytes)</li>
+<li>[ ] Salt é armazenado junto com o ciphertext (não secreto)</li>
+</ul>
+<h3 id="2-nonceiv">2. Nonce/IV</h3>
+<pre data-lang="python"><code># ✅ CORRETO: Nonce aleatório de 12 bytes (96 bits) para GCM
+import os
+nonce = os.urandom(12)  # 96 bits = padrão para GCM
+
+# ❌ ERRADO: Reutilizar nonce com a mesma chave
+nonce = b&#x27;\x00&#x27; * 12  # NUNCA fazer isso
+nonce = bytes.fromhex(&#x27;000000000000000000000000&#x27;)  # NUNCA</code></pre>
+<p><strong>Validação:</strong></p>
+<ul>
+<li>[ ] Nonce tem 12 bytes (96 bits) para GCM</li>
+<li>[ ] Nonce é gerado aleatoriamente (<code>os.urandom(12)</code>)</li>
+<li>[ ] Nonce NÃO é derivado de counter sequencial (risco de colisão)</li>
+<li>[ ] Nunca reutilizar par (chave, nonce)</li>
+</ul>
+<h3 id="3-autenticao-aad">3. Autenticação (AAD)</h3>
+<pre data-lang="python"><code># ✅ CORRETO: Usar Additional Authenticated Data (AAD)
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+aesgcm = AESGCM(key)
+# AAD autentica metadados sem criptografá-los
+ciphertext = aesgcm.encrypt(nonce, plaintext, aad=user_id.encode())
+
+# ❌ ERRADO: Não usar AAD (perde autenticação de contexto)
+ciphertext = aesgcm.encrypt(nonce, plaintext, None)</code></pre>
+<p><strong>Validação:</strong></p>
+<ul>
+<li>[ ] AAD inclui identificador do registro (user_id, record_id)</li>
+<li>[ ] AAD é verificado na decriptação (se não bate, falha)</li>
+<li>[ ] AAD não contém dados sensíveis (é autenticado, não criptografado)</li>
+</ul>
+<h3 id="4-armazenamento">4. Armazenamento</h3>
+<pre data-lang="python"><code># ✅ CORRETO: Armazenar nonce + ciphertext + tag juntos
+import base64
+
+# Formato: base64(nonce || ciphertext || tag)
+encrypted = base64.b64encode(nonce + ciphertext).decode()
+
+# ✅ OU: Formato JSON estruturado
+encrypted_data = {
+    &quot;ciphertext&quot;: base64.b64encode(ciphertext).decode(),
+    &quot;nonce&quot;: base64.b64encode(nonce).decode(),
+    &quot;aad&quot;: user_id,
+    &quot;algorithm&quot;: &quot;AES-256-GCM&quot;,
+    &quot;version&quot;: 1
+}
+
+# ❌ ERRADO: Armazenar só o ciphertext
+encrypted = base64.b64encode(ciphertext).decode()  # nonce perdido!</code></pre>
+<p><strong>Validação:</strong></p>
+<ul>
+<li>[ ] Nonce é armazenado (não recalculado)</li>
+<li>[ ] Formato inclui todos os campos necessários para decriptação</li>
+<li>[ ] Nonce não é considerado segredo (pode ser armazenado em plaintext)</li>
+</ul>
+<h3 id="5-decriptao">5. Decriptação</h3>
+<pre data-lang="python"><code># ✅ CORRETO: Verificar autenticação antes de decriptar
+def decrypt(encrypted_data: dict, key: bytes) -&gt; bytes:
+    nonce = base64.b64decode(encrypted_data[&quot;nonce&quot;])
+    ciphertext = base64.b64decode(encrypted_data[&quot;ciphertext&quot;])
+    aad = encrypted_data.get(&quot;aad&quot;, &quot;&quot;).encode()
+
+    aesgcm = AESGCM(key)
+    try:
+        plaintext = aesgcm.decrypt(nonce, ciphertext, aad)
+        return plaintext
+    except Exception:
+        # NÃO expor detalhes do erro
+        raise ValueError(&quot;Dados inválidos ou corrompidos&quot;)
+
+# ❌ ERRADO: Expor detalhes do erro de criptografia
+except InvalidTag as e:
+    raise ValueError(f&quot;Tag inválida: {e}&quot;)  # NUNCA fazer isso</code></pre>
+<p><strong>Validação:</strong></p>
+<ul>
+<li>[ ] Erros de decriptação são genéricos (não expõem causa)</li>
+<li>[ ] AAD é verificado na decriptação</li>
+<li>[ ] Dados corrompidos causam falha (não output parcial)</li>
+</ul>
+<h2 id="resumo-da-auditoria">Resumo da Auditoria</h2>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Status</th><th>Observação</th></tr><tr><td>KDF correto</td><td>✅</td><td>PBKDF2 com 600k iterações</td></tr><tr><td>Nonce único</td><td>✅</td><td>os.urandom(12)</td></tr><tr><td>AAD utilizado</td><td>✅</td><td>user_id como AAD</td></tr><tr><td>Armazenamento correto</td><td>✅</td><td>nonce + ciphertext + tag</td></tr><tr><td>Decriptação segura</td><td>✅</td><td>Erros genéricos</td></tr></table></div>
+<h2 id="anti-patterns-encontrados">Anti-patterns Encontrados</h2>
+<div class="table-wrapper"><table><tr><th>Anti-pattern</th><th>Severidade</th><th>Encontrado?</th></tr><tr><td>Reutilização de nonce</td><td>🔴 Crítico</td><td>Não</td></tr><tr><td>Nonce fixo/predizível</td><td>🔴 Crítico</td><td>Não</td></tr><tr><td>Sem AAD</td><td>🟡 Médio</td><td>Não</td></tr><tr><td>Erros expõem detalhes</td><td>🟡 Médio</td><td>Não</td></tr><tr><td>Nonce como counter</td><td>🟡 Médio</td><td>Não</td></tr></table></div>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

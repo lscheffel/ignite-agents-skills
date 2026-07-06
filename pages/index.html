@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ignite-agents-skills — Skill Registry</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Skills</a>
+      <a href="../README.md">README</a>
+      <a href="../USAGE.md">USAGE</a>
+    </div>
+  </nav>
+  <div class="content content-full">
+    
+    <h1><span class="accent">ignite</span>-agents-skills <span class="version-badge">v2.2.0</span></h1>
+    <p class="subtitle">23 skills &middot; 72 templates &middot; 18 examples — Registry de skills ultra-high quality grade para agentes de IA.</p>
+
+    <div class="search-wrapper">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" id="search" placeholder="Buscar skill por nome, tag ou descrição..." autocomplete="off">
+    </div>
+
+    <h2 id="skills">Skills</h2>
+    <div class="card-grid" id="skill-grid">
+      
+    <div class="card">
+      <div class="card-title"><a href="skills/adr-generator/index.html">adr-generator</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos.</div>
+      <div class="tags"><span class="tag">architecture</span> <span class="tag">decisions</span> <span class="tag">adr</span> <span class="tag">documentation</span></div>
+      <div class="card-meta">7 files &middot; <a href="skills/adr-generator/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/agent-orchestration/index.html">agent-orchestration</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in e coordenação multi-agente. Use quando precisar coordenar vários agentes, definir papéis, gerenciar handoffs ou otimizar execução paralela.</div>
+      <div class="tags"><span class="tag">orchestration</span> <span class="tag">agents</span> <span class="tag">multi-agent</span> <span class="tag">coordination</span></div>
+      <div class="card-meta">8 files &middot; <a href="skills/agent-orchestration/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/agents-md-generator/index.html">agents-md-generator</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Gera e mantém arquivos AGENTS.md adaptativos que se adaptam ao contexto do projeto. Detecta automaticamente tipo de projeto, tecnologias, padrões arquiteturais e governança, gerando um AGENTS.md personalizado que serve como conciliador entre o estado atual do projeto e as regras de governança para agentes de IA.</div>
+      <div class="tags"><span class="tag">agents</span> <span class="tag">governance</span> <span class="tag">documentation</span> <span class="tag">adaptation</span></div>
+      <div class="card-meta">13 files &middot; <a href="skills/agents-md-generator/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/api-design/index.html">api-design</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência. Use quando projetar novas APIs, revisar contratos existentes ou padronizar práticas de design de interface.</div>
+      <div class="tags"><span class="tag">api</span> <span class="tag">rest</span> <span class="tag">graphql</span> <span class="tag">endpoints</span></div>
+      <div class="card-meta">7 files &middot; <a href="skills/api-design/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/architecture-review-kilo/index.html">architecture-review-kilo</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais. Use quando o usuário pedir revisão de arquitetura, análise de estrutura, ou avaliação de design.</div>
+      <div class="tags"><span class="tag">architecture</span> <span class="tag">solid</span> <span class="tag">review</span> <span class="tag">clean-architecture</span></div>
+      <div class="card-meta">4 files &middot; <a href="skills/architecture-review-kilo/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/data-modeling/index.html">data-modeling</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance. Use quando criar bancos de dados, projetar schemas, otimizar queries ou gerenciar migrações.</div>
+      <div class="tags"><span class="tag">data-modeling</span> <span class="tag">database</span> <span class="tag">schema</span> <span class="tag">sql</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/data-modeling/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/ddd/index.html">ddd</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados. Use quando modelar domínios ricos, refatorar entidades anêmicas ou estruturar contextos delimitados.</div>
+      <div class="tags"><span class="tag">ddd</span> <span class="tag">domain-driven-design</span> <span class="tag">modeling</span> <span class="tag">aggregates</span></div>
+      <div class="card-meta">8 files &middot; <a href="skills/ddd/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/documentation/index.html">documentation</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code. Use quando criar documentação, revisar docs, ou padronizar material técnico.</div>
+      <div class="tags"><span class="tag">documentation</span> <span class="tag">docs</span> <span class="tag">readme</span> <span class="tag">api-docs</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/documentation/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/documentation-reconciliation/index.html">documentation-reconciliation</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código</div>
+      <div class="tags"><span class="tag">documentation</span> <span class="tag">governance</span> <span class="tag">adr</span> <span class="tag">audit</span></div>
+      <div class="card-meta">3 files &middot; <a href="skills/documentation-reconciliation/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/git/index.html">git</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas. Use quando fazer commits, criar branches, resolver conflitos ou ensinar Git.</div>
+      <div class="tags"><span class="tag">version-control</span> <span class="tag">commits</span> <span class="tag">branching</span> <span class="tag">conventional-commits</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/git/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/governance/index.html">governance</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs. Use quando definir processos de equipe, implementar governance-as-code ou padronizar workflows de desenvolvimento.</div>
+      <div class="tags"><span class="tag">governance</span> <span class="tag">branching</span> <span class="tag">code-review</span> <span class="tag">process</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/governance/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/implementation/index.html">implementation</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada.</div>
+      <div class="tags"><span class="tag">implementation</span> <span class="tag">execution</span> <span class="tag">artifact-driven</span> <span class="tag">sdlc</span></div>
+      <div class="card-meta">10 files &middot; <a href="skills/implementation/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/observability/index.html">observability</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting. Use quando configurar monitoramento, investigar incidentes ou implementar observabilidade em microsserviços.</div>
+      <div class="tags"><span class="tag">observability</span> <span class="tag">logging</span> <span class="tag">metrics</span> <span class="tag">tracing</span></div>
+      <div class="card-meta">8 files &middot; <a href="skills/observability/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/planning/index.html">planning</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização. Use quando planejar projeto, roadmap, estimativas ou breakdown de trabalho.</div>
+      <div class="tags"><span class="tag">planning</span> <span class="tag">project-management</span> <span class="tag">backlog</span> <span class="tag">estimation</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/planning/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/prompt-engineering/index.html">prompt-engineering</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas. Use quando criar prompts para agentes de IA, otimizar interações ou treinar equipes em IA.</div>
+      <div class="tags"><span class="tag">prompts</span> <span class="tag">llm</span> <span class="tag">ai</span> <span class="tag">techniques</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/prompt-engineering/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/refactoring/index.html">refactoring</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado. Use quando refatorar código, melhorar estrutura existente ou migrar sistemas legados.</div>
+      <div class="tags"><span class="tag">refactoring</span> <span class="tag">code-quality</span> <span class="tag">legacy</span> <span class="tag">strangler-fig</span></div>
+      <div class="card-meta">6 files &middot; <a href="skills/refactoring/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/release/index.html">release</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico.</div>
+      <div class="tags"><span class="tag">release</span> <span class="tag">versioning</span> <span class="tag">changelog</span> <span class="tag">deploy</span></div>
+      <div class="card-meta">7 files &middot; <a href="skills/release/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/repo-bootstrap/index.html">repo-bootstrap</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, estrutura de docs/ e exemplos de CI/CD. Use quando iniciar um novo repositório ou padronizar estrutura de projeto.</div>
+      <div class="tags"><span class="tag">repository</span> <span class="tag">scaffolding</span> <span class="tag">boilerplate</span> <span class="tag">governance</span></div>
+      <div class="card-meta">7 files &middot; <a href="skills/repo-bootstrap/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/security-review/index.html">security-review</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras. Use quando revisar código por segurança, auditar dependências ou validar práticas de criptografia.</div>
+      <div class="tags"><span class="tag">security</span> <span class="tag">vulnerabilities</span> <span class="tag">secrets</span> <span class="tag">cryptography</span></div>
+      <div class="card-meta">6 files &middot; <a href="skills/security-review/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/skill-audit-bulletin/index.html">skill-audit-bulletin</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final. Use quando revisar skills, validar registry ou decidir adoção.</div>
+      <div class="tags"><span class="tag">audit</span> <span class="tag">quality</span> <span class="tag">review</span> <span class="tag">validation</span></div>
+      <div class="card-meta">3 files &middot; <a href="skills/skill-audit-bulletin/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/testing/index.html">testing</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas. Use quando escrever testes, revisar cobertura ou definir estratégia de testes.</div>
+      <div class="tags"><span class="tag">testing</span> <span class="tag">unit-tests</span> <span class="tag">integration</span> <span class="tag">e2e</span></div>
+      <div class="card-meta">6 files &middot; <a href="skills/testing/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/vibe-coding/index.html">vibe-coding</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Modalidade de desenvolvimento onde o desenvolvedor guia o agente de IA com intenção e direção, não comandos detalhados. Foca em resultado, velocidade e fluxo contínuo. Use quando o usuário mencionar vibe coding, pair programming com IA, ou desenvolvimento assistido por IA.</div>
+      <div class="tags"><span class="tag">ai-assisted</span> <span class="tag">pair-programming</span> <span class="tag">intent-driven</span> <span class="tag">agents</span></div>
+      <div class="card-meta">3 files &middot; <a href="skills/vibe-coding/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/writing-plans/index.html">writing-plans</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação, dependências e sequenciamento. Use quando o usuário pedir um plano de implementação, roadmap técnico, ou quebra de tarefas.</div>
+      <div class="tags"><span class="tag">planning</span> <span class="tag">implementation</span> <span class="tag">roadmap</span> <span class="tag">tasks</span></div>
+      <div class="card-meta">5 files &middot; <a href="skills/writing-plans/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    </div>
+
+    <footer style="margin-top:3rem">
+      <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+      <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+    </footer>
+
+    <script>
+    const searchInput = document.getElementById('search');
+    const grid = document.getElementById('skill-grid');
+    const cards = Array.from(grid.querySelectorAll('.card'));
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = !q || text.includes(q) ? '' : 'none';
+      });
+    });
+    </script>
+  </body>
+</html>
+  </div>
+</body>
+</html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data-modeling — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; data-modeling</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: data-modeling description: Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance. Use quando criar bancos de dados, projetar schemas, otimizar queries ou gerenciar migrações. version: 2.0.0 tags: [data-modeling, database, schema, sql, migrations] related_skills: [ddd, testing, architecture-review-kilo] ---</p>
+<h1 id="data-modeling">Data Modeling</h1>
+<p>Guia completo para modelagem de dados e design de schemas de banco de dados.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Criando novo banco de dados ou schema</li>
+<li>Projetando tabelas e relacionamentos</li>
+<li>Normalizando ou desnormalizando dados</li>
+<li>Criando e versionando migrações</li>
+<li>Definindo estratégias de índices</li>
+<li>Revisando performance de queries</li>
+<li>Trabalhando com dados geográficos ou temporais</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Apenas consultas simples em dados existentes</li>
+<li>Configuração de conexão de banco</li>
+<li>Administração de usuários e permissões</li>
+<li>Backup e restore de banco</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>ddd</code> — para mapear entidades de domínio para tabelas</li>
+<li><code>testing</code> — para testar integridade referencial</li>
+<li><code>architecture-review-kilo</code> — para revisar design do schema</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Modelar dados] --&gt;|Relacionais?| B{Tipo de dado}
+    A --&gt;|Não-relacionais| N[Document/KV Store]
+    B --&gt;|Estruturado com relações| C[Schema SQL]
+    B --&gt;|Documentos flexíveis| D[NoSQL Document]
+    B --&gt;|Chave-valor| E[Cache/Redis]
+    C --&gt; F{Normalizar?}
+    F --&gt;|Regras de negócio| G[3NF/BCNF]
+    F --&gt;|Performance de leitura| H[Desnormalização estratégica]
+    G --&gt; I{Índices?}
+    H --&gt; I
+    I --&gt; J[Analisar padrões de query]
+    J --&gt; K[Índices em colunas de filtro]
+    J --&gt; L[Índices compostos para JOINs]
+    K --&gt; M[Migrations versionadas]
+    L --&gt; M
+    M --&gt; N1[Rollback testado]
+    M --&gt; N2[CI/CD pipeline]
+    N1 --&gt; O[Sigma no commit]
+    N2 --&gt; O</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="normalizao">Normalização</h3>
+<p>Processo de organizar colunas e tabelas para minimizar redundância.</p>
+<h4 id="formas-normais">Formas Normais</h4>
+<div class="table-wrapper"><table><tr><th>Forma</th><th>Regra</th><th>Exemplo</th></tr><tr><td>1NF</td><td>Colunas atômicas, sem listas</td><td>Separar endereço em rua, cidade, CEP</td></tr><tr><td>2NF</td><td>1NF + dependência funcional total</td><td>Mover nome do produto para tabela separada</td></tr><tr><td>3NF</td><td>2NF + sem dependência transitiva</td><td>Mover cidade para tabela de cidades</td></tr><tr><td>BCNF</td><td>Determinante é superchave</td><td>Todo determinante é chave candidata</td></tr></table></div>
+<h3 id="tipos-de-chave">Tipos de Chave</h3>
+<pre data-lang="sql"><code>-- Chave Primária (PK)
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) NOT NULL UNIQUE
+);
+
+-- Chave Estrangeira (FK)
+CREATE TABLE orders (
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Chave Composta
+CREATE TABLE order_items (
+    order_id UUID REFERENCES orders(id),
+    product_id UUID REFERENCES products(id),
+    quantity INTEGER NOT NULL,
+    PRIMARY KEY (order_id, product_id)
+);</code></pre>
+<h3 id="tipos-de-dados">Tipos de Dados</h3>
+<pre data-lang="sql"><code>-- UUID para identificadores
+id UUID DEFAULT gen_random_uuid()
+
+-- TIMESTAMP para datas com timezone
+created_at TIMESTAMPTZ DEFAULT NOW()
+
+-- NUMERIC para valores monetários
+price NUMERIC(10,2) NOT NULL
+
+-- JSONB para dados flexíveis
+metadata JSONB DEFAULT &#x27;{}&#x27;
+
+-- ENUM para valores fixos
+status VARCHAR(20) CHECK (status IN (&#x27;active&#x27;, &#x27;inactive&#x27;, &#x27;pending&#x27;))</code></pre>
+<h3 id="ndices">Índices</h3>
+<pre data-lang="sql"><code>-- Índice simples
+CREATE INDEX idx_users_email ON users(email);
+
+-- Índice composto
+CREATE INDEX idx_orders_user_status ON orders(user_id, status);
+
+-- Índice parcial
+CREATE INDEX idx_orders_pending ON orders(created_at)
+WHERE status = &#x27;pending&#x27;;
+
+-- Índice para LIKE
+CREATE INDEX idx_products_name_gin ON products
+USING gin(name gin_trgm_ops);</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-analisar-requisitos-de-dados">Fase 1: Analisar Requisitos de Dados</h3>
+<ol>
+<li>Identifique entidades do domínio:</li>
+</ol>
+<ul>
+<li>Usuários, Pedidos, Produtos, Pagamentos</li>
+</ul>
+<ol>
+<li>Defina atributos de cada entidade:</li>
+</ol>
+<pre><code>   User: id, name, email, created_at
+   Order: id, user_id, status, total, created_at
+   Product: id, name, price, category_id</code></pre>
+<ol>
+<li>Mapeie relacionamentos:</li>
+</ol>
+<ul>
+<li>User 1:N Order</li>
+<li>Order N:M Product (via OrderItem)</li>
+<li>Product N:1 Category</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Entidades e relacionamentos documentados</li>
+</ol>
+<h3 id="fase-2-projetar-schema-sql">Fase 2: Projetar Schema SQL</h3>
+<ol>
+<li>Crie tabelas com tipos adequados:</li>
+</ol>
+<pre data-lang="sql"><code>   CREATE TABLE users (
+       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+       name VARCHAR(100) NOT NULL,
+       email VARCHAR(255) NOT NULL UNIQUE,
+       created_at TIMESTAMPTZ DEFAULT NOW()
+   );</code></pre>
+<ol>
+<li>Adicione chaves estrangeiras:</li>
+</ol>
+<pre data-lang="sql"><code>   ALTER TABLE orders ADD CONSTRAINT fk_orders_user
+       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;</code></pre>
+<ol>
+<li>Valide normalização (3NF mínimo):</li>
+</ol>
+<ul>
+<li>Sem colunas repetidas em mesma tabela</li>
+<li>Sem dependências transitivas</li>
+<li>Dados atômicos em cada coluna</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Schema válido e normalizado</li>
+</ol>
+<h3 id="fase-3-definir-estratgia-de-ndices">Fase 3: Definir Estratégia de Índices</h3>
+<ol>
+<li>Analise queries frequentes:</li>
+</ol>
+<pre data-lang="sql"><code>   -- Query de login
+   SELECT * FROM users WHERE email = ?;
+
+   -- Query de pedidos do usuário
+   SELECT * FROM orders WHERE user_id = ? AND status = &#x27;pending&#x27;;</code></pre>
+<ol>
+<li>Crie índices correspondentes:</li>
+</ol>
+<pre data-lang="sql"><code>   CREATE UNIQUE INDEX idx_users_email ON users(email);
+   CREATE INDEX idx_orders_user_status ON orders(user_id, status);</code></pre>
+<ol>
+<li>Verifique selectividade:</li>
+</ol>
+<ul>
+<li>Colunas com alta seleção (>30% de valores únicos) = bom índice</li>
+<li>Colunas com baixa seleção (ex: boolean) = índice ineficiente</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Índices cobrem queries frequentes</li>
+</ol>
+<h3 id="fase-4-criar-migraes-versionadas">Fase 4: Criar Migrações Versionadas</h3>
+<ol>
+<li>Crie pasta de migrações:</li>
+</ol>
+<pre><code>   migrations/
+   ├── 001_create_users.sql
+   ├── 002_create_orders.sql
+   ├── 003_add_order_items.sql
+   └── 004_create_indexes.sql</code></pre>
+<ol>
+<li>Implemente cada migração com rollback:</li>
+</ol>
+<pre data-lang="sql"><code>   -- 002_create_orders.sql
+   -- UP
+   CREATE TABLE orders (
+       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+       user_id UUID NOT NULL,
+       status VARCHAR(20) DEFAULT &#x27;pending&#x27;,
+       total NUMERIC(10,2) DEFAULT 0,
+       created_at TIMESTAMPTZ DEFAULT NOW()
+   );
+
+   -- DOWN
+   DROP TABLE IF EXISTS orders;</code></pre>
+<ol>
+<li>Teste rollback antes de commit:</li>
+</ol>
+<pre data-lang="bash"><code>   psql -f migrations/002_create_orders.sql
+   psql -c &quot;DROP TABLE IF EXISTS orders;&quot;</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Migrações versionadas e rollback testado</li>
+</ol>
+<h3 id="fase-5-otimizar-performance">Fase 5: Otimizar Performance</h3>
+<ol>
+<li>Analise queries lentas:</li>
+</ol>
+<pre data-lang="sql"><code>   EXPLAIN ANALYZE
+   SELECT * FROM orders o
+   JOIN users u ON o.user_id = u.id
+   WHERE o.status = &#x27;pending&#x27;;</code></pre>
+<ol>
+<li>Aplique otimizações:</li>
+</ol>
+<ul>
+<li>Adicione índices faltantes</li>
+<li>Use covering index para queries de leitura</li>
+<li>Considere particionamento para tabelas grandes</li>
+</ul>
+<ol>
+<li>Configure connection pooling:</li>
+</ol>
+<pre data-lang="yaml"><code>   database:
+     pool:
+       min: 5
+       max: 20
+       idle_timeout: 30s</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Queries com tempo < 100ms</li>
+</ol>
+<h3 id="fase-6-documentar-schema">Fase 6: Documentar Schema</h3>
+<ol>
+<li>Crie diagrama ER:</li>
+</ol>
+<pre data-lang="mermaid"><code>   erDiagram
+       USERS ||--o{ ORDERS : places
+       ORDERS ||--|{ ORDER_ITEMS : contains
+       PRODUCTS ||--|{ ORDER_ITEMS : includes
+       PRODUCTS }o--|| CATEGORIES : belongs_to</code></pre>
+<ol>
+<li>Adicione comentários nas tabelas:</li>
+</ol>
+<pre data-lang="sql"><code>   COMMENT ON TABLE users IS &#x27;Armazena dados dos usuários do sistema&#x27;;
+   COMMENT ON COLUMN users.email IS &#x27;Email único para login e notificações&#x27;;</code></pre>
+<ol>
+<li>Atualize documentação da API:</li>
+</ol>
+<ul>
+<li>Tipos de dados</li>
+<li>Relacionamentos</li>
+<li>Restrições</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Schema documentado e diagrama atualizado</li>
+</ol>
+<h3 id="fase-7-configurar-cicd-para-migraes">Fase 7: Configurar CI/CD para Migrações</h3>
+<ol>
+<li>Adicione pipeline de validação:</li>
+</ol>
+<pre data-lang="yaml"><code>   # .github/workflows/migrations.yml
+   steps:
+     - name: Validate migrations
+       run: |
+         for f in migrations/*.sql; do
+           psql -f &quot;$f&quot; --dry-run
+         done</code></pre>
+<ol>
+<li>Automatize testes:</li>
+</ol>
+<pre data-lang="bash"><code>   # Rodar migrações em banco de teste
+   migrate -path ./migrations -database $TEST_DB up
+   migrate -path ./migrations -database $TEST_DB down</code></pre>
+<ol>
+<li>Configure alertas:</li>
+</ol>
+<ul>
+<li>Migração sem rollback</li>
+<li>Query sem índice</li>
+<li>Tabela sem PK</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: CI/CD validando migrações automaticamente</li>
+</ol>
+<h2 id="templates">Templates</h2>
+<h3 id="schema-sql">Schema SQL</h3>
+<p>Localização: <code>templates/schema.sql</code></p>
+<p>Template para criação de schema SQL com boas práticas.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/schema.sql migrations/$(date +%Y%m%d)_create_schema.sql</code></pre>
+<h3 id="migrao">Migração</h3>
+<p>Localização: <code>templates/migration.md</code></p>
+<p>Template para documentação de migrações.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/migration.md migrations/$(date +%Y%m%d)_migration.md</code></pre>
+<h3 id="estratgia-de-ndices">Estratégia de Índices</h3>
+<p>Localização: <code>templates/index-strategy.md</code></p>
+<p>Template para planejamento de índices.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/index-strategy.md docs/index-strategy.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="migration-sem-rollback-testado">Migration sem Rollback Testado</h4>
+<p><strong>O que é:</strong> Migração criada sem testar se o rollback funciona. <strong>Por que é ruim:</strong> Impossível reverter em caso de erro em produção, pode causar perda de dados. <strong>Como evitar:</strong> Sempre testar UP e DOWN antes de commitar. <strong>Exemplo:</strong></p>
+<pre data-lang="sql"><code>-- ❌ ERRADO: Sem seção DOWN
+CREATE TABLE orders (
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL
+);
+
+-- ✅ CORRETO: Com UP e DOWN testados
+-- UP
+CREATE TABLE orders (
+    id UUID PRIMARY KEY,
+    user_id UUID NOT NULL
+);
+
+-- DOWN
+DROP TABLE IF EXISTS orders;</code></pre>
+<h4 id="tabela-sem-pk-definida">Tabela sem PK Definida</h4>
+<p><strong>O que é:</strong> Tabela criada sem chave primária. <strong>Por que é ruim:</strong> Impossível identificar registros de forma única, viola 1NF, causa problemas em réplicas e cache. <strong>Como evitar:</strong> Sempre definir PK, preferencialmente UUID. <strong>Exemplo:</strong></p>
+<pre data-lang="sql"><code>-- ❌ ERRADO: Sem PK
+CREATE TABLE logs (
+    message TEXT,
+    timestamp TIMESTAMP
+);
+
+-- ✅ CORRETO: Com PK
+CREATE TABLE logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    message TEXT NOT NULL,
+    timestamp TIMESTAMPTZ DEFAULT NOW()
+);</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="ndice-em-coluna-com-baixa-selectividade">Índice em Coluna com Baixa Selectividade</h4>
+<p><strong>O que é:</strong> Índice em coluna com poucos valores únicos (ex: boolean, status com 3 valores). <strong>Por que é ruim:</strong> O índice não melhora performance significativamente, apenas ocupa espaço. <strong>Como evitar:</strong> Usar índices compostos ou parciais para colunas de baixa selectividade. <strong>Exemplo:</strong></p>
+<pre data-lang="sql"><code>-- ❌ ERRADO: Índice em coluna boolean
+CREATE INDEX idx_users_active ON users(is_active);
+
+-- ✅ CORRETO: Índice parcial para valores específicos
+CREATE INDEX idx_users_active_pending ON users(email)
+WHERE is_active = true AND status = &#x27;pending&#x27;;</code></pre>
+<h4 id="normalizao-excessiva-em-tabela-de-leitura">Normalização Excessiva em Tabela de Leitura</h4>
+<p><strong>O que é:</strong> Normalizar além do necessário para tabelas de leitura frequente. <strong>Por que é ruim:</strong> JOINs excessivos degradam performance, queries ficam complexas. <strong>Como evitar:</strong> Desnormalizar estrategicamente para tabelas de leitura, usar views. <strong>Exemplo:</strong></p>
+<pre data-lang="sql"><code>-- ❌ ERRADO: Muitos JOINs para leitura
+SELECT o.*, u.name, u.email, p.name, p.price
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id;
+
+-- ✅ CORRETO: Tabela desnormalizada para leitura
+CREATE MATERIALIZED VIEW order_details AS
+SELECT o.id, u.name as user_name, u.email,
+       json_agg(json_build_object(&#x27;product&#x27;, p.name, &#x27;price&#x27;, p.price)) as items
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON o.id = oi.order_id
+JOIN products p ON oi.product_id = p.id
+GROUP BY o.id, u.name, u.email;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="select--em-produo">SELECT * em Produção</h4>
+<p><strong>O que é:</strong> Usar SELECT * em queries de produção. <strong>Por que é ruim:</strong> Retorna dados desnecessários, aumenta tráfego de rede, pode quebrar código se schema mudar. <strong>Como evitar:</strong> Selecionar apenas colunas necessárias. <strong>Exemplo:</strong></p>
+<pre data-lang="sql"><code>-- ❌ ERRADO
+SELECT * FROM users WHERE id = ?;
+
+-- ✅ CORRETO
+SELECT id, name, email FROM users WHERE id = ?;</code></pre>
+<h4 id="falta-de-comentrios-em-colunas">Falta de Comentários em Colunas</h4>
+<p><strong>O que é:</strong> Schema sem documentação de colunas. <strong>Por que é ruim:</strong> Dificulta manutenção, novos desenvolvedores não entendem propósito. <strong>Como evitar:</strong> Adicionar COMMENT em todas as colunas importantes. <strong>Exemplo:</strong></p>
+<pre data-lang="sql"><code>-- ❌ ERRADO: Sem comentários
+CREATE TABLE users (
+    metadata JSONB
+);
+
+-- ✅ CORRETO: Com comentários
+CREATE TABLE users (
+    metadata JSONB DEFAULT &#x27;{}&#x27;
+);
+COMMENT ON COLUMN users.metadata IS &#x27;Dados extras do usuário em formato JSON (preferences, settings)&#x27;;</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-schema-design">Checklist de Schema Design</h3>
+<ul>
+<li>[ ] Todas as tabelas têm PK definida</li>
+<li>[ ] Chaves estrangeiras estão configuradas com ON DELETE/UPDATE</li>
+<li>[ ] Colunas NOT NULL definidas corretamente</li>
+<li>[ ] Tipos de dados adequados (UUID para IDs, NUMERIC para moeda)</li>
+<li>[ ] Timestamps com timezone (TIMESTAMPTZ)</li>
+<li>[ ] Valores padrão definidos (DEFAULT)</li>
+<li>[ ] CHECK constraints para validação</li>
+</ul>
+<h3 id="checklist-de-migrao">Checklist de Migração</h3>
+<ul>
+<li>[ ] Migração tem seção UP e DOWN</li>
+<li>[ ] Rollback testado localmente</li>
+<li>[ ] Migração não quebra dados existentes</li>
+<li>[ ] Nomeclatura consistente (YYYYMMDD_descricao)</li>
+<li>[ ] Versão controlada (não usar IF NOT EXISTS sem DOWN)</li>
+<li>[ ] Comentários explicando mudanças complexas</li>
+</ul>
+<h3 id="checklist-de-ndices">Checklist de Índices</h3>
+<ul>
+<li>[ ] Índices cobrem queries frequentes</li>
+<li>[ ] Índices compostos seguem ordem de seletividade</li>
+<li>[ ] Índices parciais para queries com WHERE específicas</li>
+<li>[ ] Monitoramento de índices não utilizados</li>
+<li>[ ] Teste de performance antes e depois</li>
+</ul>
+<h3 id="checklist-de-performance">Checklist de Performance</h3>
+<ul>
+<li>[ ] Queries com tempo < 100ms</li>
+<li>[ ] Connection pooling configurado</li>
+<li>[ ] EXPLAIN ANALYZE roda sem seq scans em tabelas grandes</li>
+<li>[ ] Paginação implementada para listas</li>
+<li>[ ] Cache configurado para dados frequentes</li>
+</ul>
+<h3 id="checklist-de-documentao">Checklist de Documentação</h3>
+<ul>
+<li>[ ] Diagrama ER atualizado</li>
+<li>[ ] Comentários em tabelas e colunas</li>
+<li>[ ] README do schema documentado</li>
+<li>[ ] Exemplos de queries comuns</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="tabela-com-milhes-de-registros">Tabela com Milhões de Registros</h3>
+<p><strong>Situação:</strong> Tabela cresceu para milhões de registros e queries estão lentas. <strong>Solução:</strong> Particionar tabela por data ou chave de particionamento. <strong>Exceção:</strong> Se dados são acessados uniformemente, considere sharding.</p>
+<pre data-lang="sql"><code>-- Particionamento por data
+CREATE TABLE orders (
+    id UUID,
+    created_at TIMESTAMPTZ,
+    user_id UUID
+) PARTITION BY RANGE (created_at);
+
+CREATE TABLE orders_2024_q1 PARTITION OF orders
+    FOR VALUES FROM (&#x27;2024-01-01&#x27;) TO (&#x27;2024-04-01&#x27;);</code></pre>
+<h3 id="migrao-com-dados-existentes">Migração com Dados Existentes</h3>
+<p><strong>Situação:</strong> Precisa alterar schema mas tem milhões de registros. <strong>Solução:</strong> Usar migração em etapas, backfill em background. <strong>Exceção:</strong> Se downtime é aceitável, pode fazer migration direta.</p>
+<pre data-lang="sql"><code>-- Etapa 1: Adicionar coluna nullable
+ALTER TABLE users ADD COLUMN full_name VARCHAR(200);
+
+-- Etapa 2: Backfill em background
+UPDATE users SET full_name = name WHERE full_name IS NULL;
+
+-- Etapa 3: Tornar NOT NULL após backfill
+ALTER TABLE users ALTER COLUMN full_name SET NOT NULL;</code></pre>
+<h3 id="schema-multi-tenant">Schema Multi-Tenant</h3>
+<p><strong>Situação:</strong> Mesmo schema precisa servir múltiplos tenants. <strong>Solução:</strong> Coluna tenant_id com RLS (Row Level Security) ou schema separado por tenant. <strong>Exceção:</strong> Se tenants são poucos e isolamento não é crítico, usar coluna tenant_id simples.</p>
+<pre data-lang="sql"><code>-- RLS para multi-tenant
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY tenant_isolation ON orders
+    USING (tenant_id = current_setting(&#x27;app.tenant_id&#x27;)::uuid);</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL Documentation</a></li>
+<li><a href="https://use-the-index-luke.com/">Use The Index, Luke</a></li>
+<li><code>ddd</code> — para mapear entidades de domínio para schema</li>
+<li><code>testing</code> — para testar integridade referencial</li>
+<li><code>architecture-review-kilo</code> — para revisar design do schema</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/index-strategy.html">index-strategy.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/migration.html">migration.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/schema-review.html">schema-review.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

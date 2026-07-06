@@ -1,16 +1,19 @@
-name: Sync Index and Deploy to GitHub Pages
+name: Sync, Build Pages & Deploy
 
 on:
   push:
     branches: [master]
     paths:
       - "skills/**"
+      - "pages/build.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  sync-and-deploy:
+  sync-build-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout master
         uses: actions/checkout@v4
@@ -18,9 +21,15 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install jq
         run: sudo apt-get install -y jq
 
+      # ── Sync index.json ──
       - name: Sync skills/index.json
         run: |
           chmod +x scripts/sync-index.sh
@@ -31,44 +40,49 @@ jobs:
           chmod +x scripts/validate-index.sh
           ./scripts/validate-index.sh
 
+      # ── Build HTML pages ──
+      - name: Build HTML pages
+        run: python3 pages/build.py
+
+      # ── Commit everything ──
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Check for changes in index.json
+      - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet skills/index.json; then
+          if git diff --quiet skills/index.json pages/; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "ℹ️ No changes in skills/index.json"
+            echo "No changes to commit"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "✅ Changes detected in skills/index.json"
+            echo "Changes detected"
           fi
 
       - name: Commit and push to master
         if: steps.changes.outputs.changed == 'true'
         run: |
-          git add skills/index.json
-          git commit -m "chore: sync skills/index.json [skip ci]"
+          git add skills/index.json pages/
+          git commit -m "chore: sync index.json + rebuild pages [skip ci]"
           git push origin master
-          echo "✅ Changes committed and pushed to master"
 
+      # ── Deploy to gh-pages ──
       - name: Checkout gh-pages
         if: steps.changes.outputs.changed == 'true'
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-          path: gh-pages
+          path: gh-pages-deploy
 
       - name: Merge master to gh-pages
         if: steps.changes.outputs.changed == 'true'
         run: |
-          cd gh-pages
+          cd gh-pages-deploy
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin master
           git merge origin/master --strategy=ours --allow-unrelated-histories --no-edit
           git push origin gh-pages
-          echo "✅ gh-pages updated with latest changes"
+          echo "gh-pages updated with latest changes"

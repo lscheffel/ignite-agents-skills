@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>api-design / templates / error-contract — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">api-design</a> &rsaquo; templates &rsaquo; error-contract</div>
+  </nav>
+  <div class="content">
+    <h1 id="error-contract">Error Contract</h1>
+<h2 id="overview">Overview</h2>
+<p>This document defines the standard error format for all API endpoints.</p>
+<h2 id="error-response-format">Error Response Format</h2>
+<p>All errors follow this structure:</p>
+<pre data-lang="json"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;ERROR_CODE&quot;,
+    &quot;message&quot;: &quot;Human-readable error message&quot;,
+    &quot;details&quot;: [
+      {
+        &quot;field&quot;: &quot;field_name&quot;,
+        &quot;message&quot;: &quot;Specific error for this field&quot;
+      }
+    ]
+  }
+}</code></pre>
+<h2 id="error-fields">Error Fields</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr><tr><td>code</td><td>string</td><td>Yes</td><td>Machine-readable error code</td></tr><tr><td>message</td><td>string</td><td>Yes</td><td>Human-readable error message</td></tr><tr><td>details</td><td>array</td><td>No</td><td>Additional error details</td></tr></table></div>
+<h2 id="http-status-codes">HTTP Status Codes</h2>
+<div class="table-wrapper"><table><tr><th>Status</th><th>Code</th><th>Description</th></tr><tr><td>400</td><td>BAD_REQUEST</td><td>Invalid request format</td></tr><tr><td>400</td><td>VALIDATION_ERROR</td><td>Request validation failed</td></tr><tr><td>401</td><td>UNAUTHORIZED</td><td>Authentication required</td></tr><tr><td>403</td><td>FORBIDDEN</td><td>Insufficient permissions</td></tr><tr><td>404</td><td>NOT_FOUND</td><td>Resource not found</td></tr><tr><td>409</td><td>CONFLICT</td><td>Resource conflict</td></tr><tr><td>422</td><td>UNPROCESSABLE_ENTITY</td><td>Business logic error</td></tr><tr><td>429</td><td>TOO_MANY_REQUESTS</td><td>Rate limit exceeded</td></tr><tr><td>500</td><td>INTERNAL_ERROR</td><td>Server error</td></tr><tr><td>503</td><td>SERVICE_UNAVAILABLE</td><td>Service temporarily unavailable</td></tr></table></div>
+<h2 id="error-codes">Error Codes</h2>
+<h3 id="authentication-errors">Authentication Errors</h3>
+<div class="table-wrapper"><table><tr><th>Code</th><th>Status</th><th>Description</th></tr><tr><td>UNAUTHORIZED</td><td>401</td><td>Authentication required</td></tr><tr><td>INVALID_TOKEN</td><td>401</td><td>Token is invalid or expired</td></tr><tr><td>INSUFFICIENT_PERMISSIONS</td><td>403</td><td>User lacks required permissions</td></tr></table></div>
+<h3 id="validation-errors">Validation Errors</h3>
+<div class="table-wrapper"><table><tr><th>Code</th><th>Status</th><th>Description</th></tr><tr><td>VALIDATION_ERROR</td><td>400</td><td>Request validation failed</td></tr><tr><td>REQUIRED_FIELD</td><td>400</td><td>Required field is missing</td></tr><tr><td>INVALID_FORMAT</td><td>400</td><td>Field format is invalid</td></tr><tr><td>INVALID_VALUE</td><td>400</td><td>Field value is invalid</td></tr></table></div>
+<h3 id="resource-errors">Resource Errors</h3>
+<div class="table-wrapper"><table><tr><th>Code</th><th>Status</th><th>Description</th></tr><tr><td>NOT_FOUND</td><td>404</td><td>Resource not found</td></tr><tr><td>ALREADY_EXISTS</td><td>409</td><td>Resource already exists</td></tr><tr><td>CONFLICT</td><td>409</td><td>Resource conflict detected</td></tr></table></div>
+<h3 id="business-logic-errors">Business Logic Errors</h3>
+<div class="table-wrapper"><table><tr><th>Code</th><th>Status</th><th>Description</th></tr><tr><td>UNPROCESSABLE_ENTITY</td><td>422</td><td>Business rule violation</td></tr><tr><td>INVALID_STATE</td><td>422</td><td>Invalid resource state</td></tr><tr><td>OPERATION_NOT_ALLOWED</td><td>422</td><td>Operation not permitted</td></tr></table></div>
+<h3 id="rate-limiting">Rate Limiting</h3>
+<div class="table-wrapper"><table><tr><th>Code</th><th>Status</th><th>Description</th></tr><tr><td>TOO_MANY_REQUESTS</td><td>429</td><td>Rate limit exceeded</td></tr></table></div>
+<h3 id="server-errors">Server Errors</h3>
+<div class="table-wrapper"><table><tr><th>Code</th><th>Status</th><th>Description</th></tr><tr><td>INTERNAL_ERROR</td><td>500</td><td>Unexpected server error</td></tr><tr><td>SERVICE_UNAVAILABLE</td><td>503</td><td>Service temporarily unavailable</td></tr></table></div>
+<h2 id="error-examples">Error Examples</h2>
+<h3 id="400-bad-request">400 Bad Request</h3>
+<pre data-lang="json"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
+    &quot;message&quot;: &quot;Request validation failed&quot;,
+    &quot;details&quot;: [
+      {
+        &quot;field&quot;: &quot;email&quot;,
+        &quot;message&quot;: &quot;Invalid email format&quot;
+      },
+      {
+        &quot;field&quot;: &quot;password&quot;,
+        &quot;message&quot;: &quot;Password must be at least 8 characters&quot;
+      }
+    ]
+  }
+}</code></pre>
+<h3 id="401-unauthorized">401 Unauthorized</h3>
+<pre data-lang="json"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;UNAUTHORIZED&quot;,
+    &quot;message&quot;: &quot;Authentication required&quot;
+  }
+}</code></pre>
+<h3 id="404-not-found">404 Not Found</h3>
+<pre data-lang="json"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;NOT_FOUND&quot;,
+    &quot;message&quot;: &quot;User with id &#x27;123&#x27; not found&quot;
+  }
+}</code></pre>
+<h3 id="409-conflict">409 Conflict</h3>
+<pre data-lang="json"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;ALREADY_EXISTS&quot;,
+    &quot;message&quot;: &quot;User with email &#x27;john@example.com&#x27; already exists&quot;
+  }
+}</code></pre>
+<h3 id="429-too-many-requests">429 Too Many Requests</h3>
+<pre data-lang="json"><code>{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;TOO_MANY_REQUESTS&quot;,
+    &quot;message&quot;: &quot;Rate limit exceeded. Try again in 60 seconds&quot;
+  }
+}</code></pre>
+<h2 id="headers">Headers</h2>
+<p>When returning errors, include these headers:</p>
+<pre data-lang="http"><code>X-Request-Id: unique-request-id
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1623456789</code></pre>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Always return JSON for errors</li>
+<li>Use consistent error codes across all endpoints</li>
+<li>Include request ID for debugging</li>
+<li>Log errors server-side with full context</li>
+<li>Never expose internal implementation details</li>
+</ul>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

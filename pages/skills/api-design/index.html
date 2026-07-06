@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>api-design — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; api-design</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: api-design description: Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência. Use quando projetar novas APIs, revisar contratos existentes ou padronizar práticas de design de interface. version: 2.0.0 tags: [api, rest, graphql, endpoints, versioning] related_skills: [documentation, testing, governance] ---</p>
+<h1 id="api-design">API Design</h1>
+<p>Guia para design de APIs robustas, consistentes e escaláveis.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa projetar novos endpoints</li>
+<li>Precisa definir contrato de API</li>
+<li>Precisa implementar versionamento</li>
+<li>Precisa padronizar tratamento de erros</li>
+<li>Precisa revisar API existente</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Protótipo rápido sem contratos formais</li>
+<li>API interna entre serviços do mesmo time</li>
+<li>SDK já existe e está bem definido</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>documentation</code> — para documentação de API</li>
+<li><code>testing</code> — para testes de contrato</li>
+<li><code>governance</code> — para processos de review</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Precisa expor dados?] --&gt;|Sim| B[API pública?]
+    A --&gt;|Não| C[Use mensageria]
+    B --&gt;|Sim| D[REST ou GraphQL?]
+    B --&gt;|Não| E[API interna]
+    D --&gt;|CRUD simples| F[REST]
+    D --&gt;|Consultas complexas| G[GraphQL]
+    F --&gt; H[Definir endpoints CRUD]
+    H --&gt; I[Versionamento]
+    I --&gt; J[Formato de erro]
+    J --&gt; K[ paginação]
+    K --&gt; L[Idempotência]
+    L --&gt; M[API Pronta]
+    G --&gt; N[Schema GraphQL]
+    N --&gt; O[Resolvers]
+    O --&gt; I</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="restful-design">RESTful Design</h3>
+<p>API baseada em recursos HTTP.</p>
+<ul>
+<li><strong>Recursos</strong> representam entidades</li>
+<li><strong>Métodos</strong> definem ações</li>
+<li><strong>Status codes</strong> comunicam resultado</li>
+</ul>
+<pre><code>GET    /users         → Listar usuários
+POST   /users         → Criar usuário
+GET    /users/{id}    → Obter usuário
+PUT    /users/{id}    → Atualizar usuário
+DELETE /users/{id}    → Deletar usuário</code></pre>
+<h3 id="idempotncia">Idempotência</h3>
+<p>Operações que produzem mesmo resultado mesmo que executadas múltiplas vezes.</p>
+<ul>
+<li><strong>Idempotente</strong>: GET, PUT, DELETE</li>
+<li><strong>Não idempotente</strong>: POST, PATCH (por padrão)</li>
+<li><strong>Seguro</strong>: GET, HEAD, OPTIONS</li>
+</ul>
+<h3 id="versionamento">Versionamento</h3>
+<p>Estratégias para evoluir API sem quebrar clientes.</p>
+<ul>
+<li><strong>URL path</strong>: <code>/v1/users</code> (recomendado)</li>
+<li><strong>Header</strong>: <code>Accept: application/vnd.api.v1+json</code></li>
+<li><strong>Query param</strong>: <code>/users?version=1</code></li>
+</ul>
+<h3 id="contrato-de-api">Contrato de API</h3>
+<p>Acordo formal sobre formato de dados.</p>
+<ul>
+<li>Request/Response schema</li>
+<li>Códigos de erro</li>
+<li>Formatação de datas</li>
+<li>Paginação</li>
+</ul>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-definir-recursos">Fase 1: Definir Recursos</h3>
+<ol>
+<li>Identifique entidades do domínio:</li>
+</ol>
+<pre data-lang="bash"><code>   # Listar entidades do modelo
+   grep -r &quot;model\|entity&quot; src/</code></pre>
+<ol>
+<li>Crie mapeamento recurso-URL:</li>
+</ol>
+<pre><code>   /users          → User
+   /orders         → Order
+   /products       → Product</code></pre>
+<ol>
+<li>Defina relacionamentos:</li>
+</ol>
+<pre><code>   /users/{id}/orders   → Orders do user
+   /orders/{id}/items   → Items da order</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Lista de recursos aprovada</li>
+</ol>
+<h3 id="fase-2-especificar-endpoints">Fase 2: Especificar Endpoints</h3>
+<ol>
+<li>Para cada recurso, defina operações:</li>
+</ol>
+<pre data-lang="yaml"><code>   /users:
+     get:
+       summary: Listar usuários
+       parameters:
+         - name: page
+           in: query
+           schema:
+             type: integer
+             default: 1
+       responses:
+         200:
+           description: Lista de usuários</code></pre>
+<ol>
+<li>Use template <code>templates/endpoint-spec.md</code></li>
+<li>Documente request/response</li>
+<li><strong>Checkpoint</strong>: Especificação completa</li>
+</ol>
+<h3 id="fase-3-definir-tratamento-de-erros">Fase 3: Definir Tratamento de Erros</h3>
+<ol>
+<li>Crie contrato de erro padronizado:</li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;error&quot;: {
+       &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
+       &quot;message&quot;: &quot;Email inválido&quot;,
+       &quot;details&quot;: [
+         {
+           &quot;field&quot;: &quot;email&quot;,
+           &quot;message&quot;: &quot;Formato inválido&quot;
+         }
+       ]
+     }
+   }</code></pre>
+<ol>
+<li>Use template <code>templates/error-contract.md</code></li>
+<li>Mapeie códigos HTTP para erros</li>
+<li><strong>Checkpoint</strong>: Contrato de erro definido</li>
+</ol>
+<h3 id="fase-4-implementar-versionamento">Fase 4: Implementar Versionamento</h3>
+<ol>
+<li>Escolha estratégia de versionamento:</li>
+</ol>
+<pre data-lang="bash"><code>   # Recomendado: URL path
+   /v1/users
+   /v2/users</code></pre>
+<ol>
+<li>Use template <code>templates/api-versioning.md</code></li>
+<li>Defina política de depreciação</li>
+<li><strong>Checkpoint</strong>: Versionamento funcionando</li>
+</ol>
+<h3 id="fase-5-adicionar-paginao">Fase 5: Adicionar Paginação</h3>
+<ol>
+<li>Implemente paginação consistente:</li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;data&quot;: [...],
+     &quot;pagination&quot;: {
+       &quot;page&quot;: 1,
+       &quot;per_page&quot;: 20,
+       &quot;total&quot;: 100,
+       &quot;total_pages&quot;: 5
+     }
+   }</code></pre>
+<ol>
+<li>Defina limites padrão</li>
+<li>Adicione headers de paginação</li>
+<li><strong>Checkpoint</strong>: Paginação testada</li>
+</ol>
+<h3 id="fase-6-garantir-idempotncia">Fase 6: Garantir Idempotência</h3>
+<ol>
+<li>Identifique operações não idempotentes</li>
+<li>Implemente chaves de idempotência:</li>
+</ol>
+<pre data-lang="http"><code>   POST /payments
+   Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000</code></pre>
+<ol>
+<li>Armazene respostas temporárias</li>
+<li><strong>Checkpoint</strong>: Idempotência verificada</li>
+</ol>
+<h2 id="templates">Templates</h2>
+<h3 id="endpoint-specmd">endpoint-spec.md</h3>
+<p>Localização: <code>templates/endpoint-spec.md</code></p>
+<p>Template para especificação de endpoint.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/endpoint-spec.md docs/api/users.md</code></pre>
+<h3 id="error-contractmd">error-contract.md</h3>
+<p>Localização: <code>templates/error-contract.md</code></p>
+<p>Template para contrato de erro.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/error-contract.md docs/api/errors.md</code></pre>
+<h3 id="api-versioningmd">api-versioning.md</h3>
+<p>Localização: <code>templates/api-versioning.md</code></p>
+<p>Template para versionamento de API.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/api-versioning.md docs/api/versioning.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="endpoint-sem-tratamento-de-erro-consistente">Endpoint sem Tratamento de Erro Consistente</h4>
+<p><strong>O que é:</strong> Endpoints que retornam erros em formatos diferentes. <strong>Por que é ruim:</strong> Clientes não conseguem tratar erros programaticamente. <strong>Como evitar:</strong> Use contrato de erro padronizado em todos endpoints. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+GET /users/999
+{ &quot;msg&quot;: &quot;user not found&quot; }
+
+GET /orders/999
+Status: 404 Not Found
+# Sem body
+
+# ✅ CORRETO
+GET /users/999
+{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;NOT_FOUND&quot;,
+    &quot;message&quot;: &quot;User not found&quot;,
+    &quot;details&quot;: [{&quot;field&quot;: &quot;id&quot;, &quot;message&quot;: &quot;User with id 999 does not exist&quot;}]
+  }
+}</code></pre>
+<h4 id="put-sem-idempotncia">PUT sem Idempotência</h4>
+<p><strong>O que é:</strong> PUT que cria recursos duplicados em chamadas repetidas. <strong>Por que é ruim:</strong> Viola contrato REST, causa inconsistências. <strong>Como evitar:</strong> PUT deve ser idempotente, use POST para criação. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+PUT /users
+{ &quot;name&quot;: &quot;John&quot; }
+# Cria novo user a cada chamada
+
+# ✅ CORRETO
+PUT /users/123
+{ &quot;name&quot;: &quot;John&quot; }
+# Atualiza user existente, idempotente</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="post-para-operaes-de-leitura">POST para Operações de Leitura</h4>
+<p><strong>O que é:</strong> Usar POST para buscar dados. <strong>Por que é ruim:</strong> Confunde semântica HTTP, dificulta cache. <strong>Como evitar:</strong> Use GET para leitura, POST para criação. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+POST /search
+{ &quot;query&quot;: &quot;users&quot; }
+
+# ✅ CORRETO
+GET /users?q=users
+# ou
+GET /search?q=users</code></pre>
+<h4 id="versionamento-quebrando-clientes">Versionamento Quebrando Clientes</h4>
+<p><strong>O que é:</strong> Mudanças incompatíveis sem nova versão. <strong>Por que é ruim:</strong> Quebra clientes existentes. <strong>Como evitar:</strong> Use versionamento, mantenha backward compatibility. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+# v1: GET /users retorna { &quot;name&quot;: &quot;John&quot; }
+# v2: GET /users retorna { &quot;fullName&quot;: &quot;John&quot; }
+# Sem migração
+
+# ✅ CORRETO
+# v1: GET /users retorna { &quot;name&quot;: &quot;John&quot; }
+# v2: GET /users retorna { &quot;fullName&quot;: &quot;John&quot;, &quot;name&quot;: &quot;John&quot; }
+# Mantém compatibilidade</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="query-params-opcionais-sem-default">Query Params Opcionais sem Default</h4>
+<p><strong>O que é:</strong> Parâmetros sem valor padrão definido. <strong>Por que é ruim:</strong> Comportamento imprevisível, diferentes clientes podem ter diferentes comportamentos. <strong>Como evitar:</strong> Sempre defina valores padrão para parâmetros opcionais. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+GET /users?page=&amp;limit=
+
+# ✅ CORRETO
+GET /users?page=1&amp;limit=20
+# Ou documente que omitir usa defaults: page=1, limit=20</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-design-de-endpoint">Checklist de Design de Endpoint</h3>
+<ul>
+<li>[ ] Recurso identificado claramente</li>
+<li>[ ] Método HTTP correto (GET, POST, PUT, DELETE)</li>
+<li>[ ] Path naming consistente (kebab-case ou camelCase)</li>
+<li>[ ] Parâmetros documentados</li>
+<li>[ ] Request body definido</li>
+<li>[ ] Responses definidos (200, 201, 204, 400, 404, 500)</li>
+<li>[ ] Headers necessários listados</li>
+</ul>
+<h3 id="checklist-de-tratamento-de-erros">Checklist de Tratamento de Erros</h3>
+<ul>
+<li>[ ] Formato de erro padronizado</li>
+<li>[ ] Códigos de erro documentados</li>
+<li>[ ] Mensagens de erro claras</li>
+<li>[ ] Details quando aplicável</li>
+<li>[ ] Status codes corretos</li>
+</ul>
+<h3 id="checklist-de-versionamento">Checklist de Versionamento</h3>
+<ul>
+<li>[ ] Estratégia de versionamento definida</li>
+<li>[ ] Versão atual documentada</li>
+<li>[ ] Política de depreciação definida</li>
+<li>[ ] Migração documentada</li>
+<li>[ ] Compatibilidade backward verificada</li>
+</ul>
+<h3 id="checklist-de-paginao">Checklist de Paginação</h3>
+<ul>
+<li>[ ] Formato de paginação definido</li>
+<li>[ ] Limites padrão documentados</li>
+<li>[ ] Headers de paginação implementados</li>
+<li>[ ] Total items disponível</li>
+<li>[ ] Navegação (next/prev) funcional</li>
+</ul>
+<h3 id="checklist-de-idempotncia">Checklist de Idempotência</h3>
+<ul>
+<li>[ ] Operações idempotentes identificadas</li>
+<li>[ ] Chaves de idempotência implementadas</li>
+<li>[ ] Armazenamento temporário configurado</li>
+<li>[ ] Timeout de chaves definido</li>
+<li>[ ] Testes de idempotência escritos</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="api-que-precisa-de-autenticao">API que Precisa de Autenticação</h3>
+<p><strong>Situação:</strong> Endpoints que requerem autenticação. <strong>Solução:</strong> Defina scheme de autenticação (OAuth2, JWT, API Key). <strong>Exceção:</strong> Endpoints públicos não devem requerer autenticação.</p>
+<pre data-lang="http"><code>GET /users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</code></pre>
+<h3 id="api-com-operaes-assncronas">API com Operações Assíncronas</h3>
+<p><strong>Situação:</strong> Operações que levam tempo para completar. <strong>Solução:</strong> Use polling ou webhooks, retorne 202 Accepted.</p>
+<pre data-lang="http"><code>POST /reports/generate
+Status: 202 Accepted
+{
+  &quot;jobId&quot;: &quot;abc123&quot;,
+  &quot;status&quot;: &quot;processing&quot;,
+  &quot;pollUrl&quot;: &quot;/jobs/abc123&quot;
+}</code></pre>
+<h3 id="api-com-dados-sensveis">API com Dados Sensíveis</h3>
+<p><strong>Situação:</strong> Dados que precisam de proteção especial. <strong>Solução:</strong> Implemente criptografia em trânsito e repouso, mascare dados sensíveis.</p>
+<pre data-lang="json"><code>{
+  &quot;creditCard&quot;: &quot;****-****-****-1234&quot;,
+  &quot;email&quot;: &quot;j***@example.com&quot;
+}</code></pre>
+<h3 id="api-com-rate-limiting">API com Rate Limiting</h3>
+<p><strong>Situação:</strong> Proteger API de abuso. <strong>Solução:</strong> Implemente rate limiting com headers informativos.</p>
+<pre data-lang="http"><code>HTTP/1.1 429 Too Many Requests
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1623456789</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://www.oreilly.com/library/view/rest-api-design/9781449317843/">REST API Design Rulebook</a></li>
+<li><a href="https://httpstatuses.com/">HTTP Status Codes</a></li>
+<li><a href="https://jsonapi.org/">JSON API Specification</a></li>
+<li><code>documentation</code> — para documentação de API</li>
+<li><code>testing</code> — para testes de contrato</li>
+<li><code>governance</code> — para processos de review</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/api-versioning.html">api-versioning.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/endpoint-spec.html">endpoint-spec.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/error-contract.html">error-contract.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/error-handling-contract.html">error-handling-contract.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/python-flask-rest.html">python-flask-rest.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/rest-crud-spec.html">rest-crud-spec.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>
