@@ -76,13 +76,23 @@ jobs:
           ref: gh-pages
           path: gh-pages-deploy
 
-      - name: Merge master to gh-pages
+      - name: Sync ALL files from master to gh-pages
         if: steps.changes.outputs.changed == 'true'
         run: |
           cd gh-pages-deploy
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Fetch master branch
           git fetch origin master
-          git merge origin/master --strategy=ours --allow-unrelated-histories --no-edit
+          # Remove ALL tracked files (except .git, .nojekyll, CNAME)
+          git ls-files | grep -v -E '^(\.git|\.nojekyll|CNAME)' | xargs git rm -rf --quiet 2>/dev/null || true
+          # Checkout ALL files from master
+          git checkout origin/master -- .
+          # Re-add .nojekyll if it was removed
+          touch .nojekyll
+          git add .nojekyll
+          # Stage and commit
+          git add -A
+          git diff --cached --quiet || git commit -m "chore: full sync from master [skip ci]"
           git push origin gh-pages
-          echo "gh-pages updated with latest changes"
+          echo "gh-pages fully synced from master"
