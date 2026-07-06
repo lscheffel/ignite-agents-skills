@@ -45,12 +45,19 @@ def md_escape(text):
     return html.escape(text)
 
 
-def convert_inline_md(text):
-    """Convert inline markdown: bold, italic, code, links, images."""
+def convert_inline_md(text, depth=1):
+    """Convert inline markdown: bold, italic, code, links, images.
+    
+    Args:
+        text: Markdown text to convert
+        depth: Directory depth from pages/ root (1 for readme.html, 2 for skills/name/index.html)
+    """
+    # Calculate prefix for relative paths
+    prefix = "../" * depth
+    
     # Images ![alt](url)
     text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img src="\2" alt="\1" style="max-width:100%;border-radius:8px;">', text)
     # Links [text](url) - convert all .md links to .html
-    # Pages are at pages/XXX.html, so relative to pages/ root
     def convert_link(match):
         link_text = match.group(1)
         link_url = match.group(2)
@@ -59,20 +66,20 @@ def convert_inline_md(text):
             return f'<a href="{link_url}">{link_text}</a>'
         # Convert ADR INDEX.md link (./docs/adr/ or docs/adr/INDEX.md)
         if link_url.endswith('docs/adr/INDEX.md') or link_url == './docs/adr/' or link_url == 'docs/adr/':
-            return f'<a href="../adr/index.html">{link_text}</a>'
+            return f'<a href="{prefix}adr/index.html">{link_text}</a>'
         # Convert ADR archive links (docs/adr/archive/ADR-XXX.md)
         if 'docs/adr/archive/ADR-' in link_url and link_url.endswith('.md'):
             adr_name = link_url.split('/')[-1].replace('.md', '.html')
-            return f'<a href="../adr/{adr_name}">{link_text}</a>'
+            return f'<a href="{prefix}adr/{adr_name}">{link_text}</a>'
         elif 'docs/adr/ADR-' in link_url and link_url.endswith('.md'):
             adr_name = link_url.split('/')[-1].replace('.md', '.html')
-            return f'<a href="../adr/{adr_name}">{link_text}</a>'
+            return f'<a href="{prefix}adr/{adr_name}">{link_text}</a>'
         # Convert skill SKILL.md links (skills/name/SKILL.md)
         elif link_url.endswith('SKILL.md'):
             parts = link_url.split('/')
             skill_name = parts[-2] if len(parts) >= 2 else ''
             if skill_name:
-                return f'<a href="../skills/{skill_name}/index.html">{link_text}</a>'
+                return f'<a href="{prefix}skills/{skill_name}/index.html">{link_text}</a>'
         # Convert skill template/example/checklist links (skills/name/category/file.md)
         elif '/skills/' in link_url and link_url.endswith('.md'):
             parts = link_url.split('/')
@@ -80,10 +87,10 @@ def convert_inline_md(text):
             category = parts[-2] if len(parts) >= 2 else ''
             file_name = parts[-1].replace('.md', '.html')
             if skill_name and category:
-                return f'<a href="../skills/{skill_name}/{category}/{file_name}">{link_text}</a>'
+                return f'<a href="{prefix}skills/{skill_name}/{category}/{file_name}">{link_text}</a>'
         # Convert root .md files (README.md, USAGE.md, etc)
         elif link_url.endswith('.md') and '/' not in link_url:
-            return f'<a href="./{link_url.replace(".md", ".html")}">{link_text}</a>'
+            return f'<a href="{link_url.replace(".md", ".html")}">{link_text}</a>'
         # Default: keep original link
         return f'<a href="{link_url}">{link_text}</a>'
     text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', convert_link, text)
@@ -98,8 +105,13 @@ def convert_inline_md(text):
     return text
 
 
-def convert_md_to_html(md_text):
-    """Convert markdown text to HTML body content."""
+def convert_md_to_html(md_text, depth=1):
+    """Convert markdown text to HTML body content.
+    
+    Args:
+        md_text: Markdown text to convert
+        depth: Directory depth from pages/ root (1 for readme.html, 2 for skills/name/index.html)
+    """
     lines = md_text.split('\n')
     html_parts = []
     i = 0
@@ -127,7 +139,7 @@ def convert_md_to_html(md_text):
     def close_blockquote():
         nonlocal in_blockquote, blockquote_lines
         if in_blockquote:
-            content = convert_inline_md('\n'.join(blockquote_lines))
+            content = convert_inline_md('\n'.join(blockquote_lines), depth)
             html_parts.append(f'<blockquote>{content}</blockquote>')
             in_blockquote = False
             blockquote_lines = []
@@ -177,7 +189,7 @@ def convert_md_to_html(md_text):
             close_list()
             close_blockquote()
             level = len(m.group(1))
-            text = convert_inline_md(m.group(2))
+            text = convert_inline_md(m.group(2), depth)
             anchor = re.sub(r'[^a-z0-9-]', '', m.group(2).lower().replace(' ', '-'))
             html_parts.append(f'<h{level} id="{anchor}">{text}</h{level}>')
             i += 1
@@ -210,7 +222,7 @@ def convert_md_to_html(md_text):
         if m:
             close_table()
             close_blockquote()
-            content = convert_inline_md(m.group(2))
+            content = convert_inline_md(m.group(2), depth)
             if not in_list or list_type != 'ul':
                 close_list()
                 in_list = True
@@ -225,7 +237,7 @@ def convert_md_to_html(md_text):
         if m:
             close_table()
             close_blockquote()
-            content = convert_inline_md(m.group(2))
+            content = convert_inline_md(m.group(2), depth)
             if not in_list or list_type != 'ol':
                 close_list()
                 in_list = True
@@ -250,7 +262,7 @@ def convert_md_to_html(md_text):
             para_lines.append(lines[i])
             i += 1
         if para_lines:
-            text = convert_inline_md(' '.join(l.strip() for l in para_lines))
+            text = convert_inline_md(' '.join(l.strip() for l in para_lines), depth)
             html_parts.append(f'<p>{text}</p>')
         continue
 
@@ -719,7 +731,7 @@ def generate_skill_page(skill, skill_dir):
         return
 
     md_content = skill_md.read_text(encoding="utf-8")
-    body_html = convert_md_to_html(md_content)
+    body_html = convert_md_to_html(md_content, depth=2)
 
     # Build file lists for templates and examples
     templates = sorted((skill_dir / "templates").glob("*")) if (skill_dir / "templates").exists() else []
@@ -766,7 +778,7 @@ def generate_skill_page(skill, skill_dir):
 def generate_file_page(skill_name, md_path, category, skill):
     """Generate an HTML page for a template/example/checklist .md file."""
     md_content = md_path.read_text(encoding="utf-8")
-    body_html = convert_md_to_html(md_content)
+    body_html = convert_md_to_html(md_content, depth=3)
 
     breadcrumb = (
         f'<a href="../../../index.html">Skills</a> &rsaquo; '
@@ -789,7 +801,7 @@ def generate_doc_page(md_path, title, nav_active):
         print(f"  ⚠ {md_path.name} not found, skipping")
         return
     md_content = md_path.read_text(encoding="utf-8")
-    body_html = convert_md_to_html(md_content)
+    body_html = convert_md_to_html(md_content, depth=1)
     breadcrumb = title
     page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active=nav_active)
     out_name = f"{md_path.stem.lower()}.html"
