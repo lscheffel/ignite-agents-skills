@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ADRs — ignite-agents-skills</title>
+  <title>ADR — ADR-015.html — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -406,187 +406,47 @@
       <a href="../index.html">Skills</a>
       <a href="../readme.html">README</a>
       <a href="../usage.html">USAGE</a>
-      <a href="index.html" class="active">ADRs</a>
     </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-015.html</div>
   </nav>
-  <div class="content content-full">
-    
-    <h1 class="fancy-title">ADRs <span class="ver">Archive</span></h1>
-    <p class="fancy-sub">Architecture Decision Records arquivadas (implementadas).</p>
+  <div class="content">
+    <h1 id="adr-015-fix-caminhos-relativos-depth-aware-no-buildpy">ADR-015: Fix Caminhos Relativos Depth-Aware no Build.py</h1>
+<h2 id="status">Status</h2>
+<p>Implementado</p>
+<h2 id="date">Date</h2>
+<p>2026-07-06</p>
+<h2 id="contexto">Contexto</h2>
+<h3 id="diagnstico">Diagnóstico</h3>
+<div class="table-wrapper"><table><tr><th>Capacidade</th><th>Status</th><th>Evidência</th></tr><tr><td>Links relativos em HTMLs dinâmicos</td><td>❌</td><td><code>readme.html</code> gerava <code>../../adr/ADR-001.html</code> (404)</td></tr><tr><td>Nav links depth-aware</td><td>❌</td><td><code>get_page_template()</code> usava <code>../../</code> fixo para todas as páginas</td></tr><tr><td>ADR links funcionais</td><td>❌</td><td>Caminhos não resolviam para <code>/pages/adr/ADR-XXX.html</code></td></tr></table></div>
+<h3 id="consequncias-da-lacuna">Consequências da Lacuna</h3>
+<ul>
+<li>Todos os links ADR no <code>readme.html</code> retornavam 404</li>
+<li>Nav links em <code>usage.html</code> apontavam para caminhos inexistentes</li>
+<li>Usuários não conseguiam navegar entre páginas</li>
+</ul>
+<h2 id="deciso">Decisão</h2>
+<p>Implementar sistema de <strong>caminhos relativos depth-aware</strong> onde cada página calcula o prefixo correto baseado na sua profundidade no diretório:</p>
+<div class="table-wrapper"><table><tr><th>Página</th><th>Depth</th><th>Nav Prefix</th><th>Exemplo</th></tr><tr><td><code>pages/readme.html</code></td><td>1</td><td><em>(vazio)</em></td><td><code>adr/ADR-001.html</code></td></tr><tr><td><code>pages/adr/ADR-XXX.html</code></td><td>2</td><td><code>../</code></td><td><code>../index.html</code></td></tr><tr><td><code>pages/skills/name/index.html</code></td><td>3</td><td><code>../../</code></td><td><code>../../adr/ADR-005.html</code></td></tr><tr><td><code>pages/skills/name/cat/file.html</code></td><td>4</td><td><code>../../../</code></td><td><code>../../../adr/ADR-001.html</code></td></tr></table></div>
+<h3 id="implementao">Implementação</h3>
+<pre data-lang="python"><code># convert_inline_md e convert_md_to_html
+prefix = &quot;../&quot; * (depth - 1) if depth &gt; 1 else &quot;&quot;
 
-    <h2 id="adrs">ADRs Disponíveis</h2>
-    <div class="card-grid">
-      
-    <div class="card">
-      <div class="card-title"><a href="ADR-001.html">ADR-001.html</a></div>
-      <div class="card-desc">ADR-001</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-002-BP.html">ADR-002-BP.html</a></div>
-      <div class="card-desc">ADR-002-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-002-TODO.html">ADR-002-TODO.html</a></div>
-      <div class="card-desc">ADR-002-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-002.html">ADR-002.html</a></div>
-      <div class="card-desc">ADR-002</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-003.html">ADR-003.html</a></div>
-      <div class="card-desc">ADR-003</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-004-BP.html">ADR-004-BP.html</a></div>
-      <div class="card-desc">ADR-004-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-004-TODO.html">ADR-004-TODO.html</a></div>
-      <div class="card-desc">ADR-004-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-004.html">ADR-004.html</a></div>
-      <div class="card-desc">ADR-004</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-005-BP.html">ADR-005-BP.html</a></div>
-      <div class="card-desc">ADR-005-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-005-TODO.html">ADR-005-TODO.html</a></div>
-      <div class="card-desc">ADR-005-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-005.html">ADR-005.html</a></div>
-      <div class="card-desc">ADR-005</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-006-BP.html">ADR-006-BP.html</a></div>
-      <div class="card-desc">ADR-006-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-006-TODO.html">ADR-006-TODO.html</a></div>
-      <div class="card-desc">ADR-006-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-006-implementation-plan.html">ADR-006-implementation-plan.html</a></div>
-      <div class="card-desc">ADR-006-implementation-plan</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-006.html">ADR-006.html</a></div>
-      <div class="card-desc">ADR-006</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007-BP.html">ADR-007-BP.html</a></div>
-      <div class="card-desc">ADR-007-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007-TODO.html">ADR-007-TODO.html</a></div>
-      <div class="card-desc">ADR-007-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007-change-plan.html">ADR-007-change-plan.html</a></div>
-      <div class="card-desc">ADR-007-change-plan</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007-execution-contract.html">ADR-007-execution-contract.html</a></div>
-      <div class="card-desc">ADR-007-execution-contract</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007-execution-report.html">ADR-007-execution-report.html</a></div>
-      <div class="card-desc">ADR-007-execution-report</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007-implementation-plan.html">ADR-007-implementation-plan.html</a></div>
-      <div class="card-desc">ADR-007-implementation-plan</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-007.html">ADR-007.html</a></div>
-      <div class="card-desc">ADR-007</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-008-BP.html">ADR-008-BP.html</a></div>
-      <div class="card-desc">ADR-008-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-008-TODO.html">ADR-008-TODO.html</a></div>
-      <div class="card-desc">ADR-008-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-008-execution-contract.html">ADR-008-execution-contract.html</a></div>
-      <div class="card-desc">ADR-008-execution-contract</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-008-execution-report.html">ADR-008-execution-report.html</a></div>
-      <div class="card-desc">ADR-008-execution-report</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-008-implementation-plan.html">ADR-008-implementation-plan.html</a></div>
-      <div class="card-desc">ADR-008-implementation-plan</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-008.html">ADR-008.html</a></div>
-      <div class="card-desc">ADR-008</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-009-BP.html">ADR-009-BP.html</a></div>
-      <div class="card-desc">ADR-009-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-009-TODO.html">ADR-009-TODO.html</a></div>
-      <div class="card-desc">ADR-009-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-009.html">ADR-009.html</a></div>
-      <div class="card-desc">ADR-009</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-010.html">ADR-010.html</a></div>
-      <div class="card-desc">ADR-010</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-011-BP.html">ADR-011-BP.html</a></div>
-      <div class="card-desc">ADR-011-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-011-TODO.html">ADR-011-TODO.html</a></div>
-      <div class="card-desc">ADR-011-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-011.html">ADR-011.html</a></div>
-      <div class="card-desc">ADR-011</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-012-BP.html">ADR-012-BP.html</a></div>
-      <div class="card-desc">ADR-012-BP</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-012-TODO.html">ADR-012-TODO.html</a></div>
-      <div class="card-desc">ADR-012-TODO</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-012.html">ADR-012.html</a></div>
-      <div class="card-desc">ADR-012</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-013.html">ADR-013.html</a></div>
-      <div class="card-desc">ADR-013</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-014.html">ADR-014.html</a></div>
-      <div class="card-desc">ADR-014</div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="ADR-015.html">ADR-015.html</a></div>
-      <div class="card-desc">ADR-015</div>
-    </div>
-    </div>
+# get_page_template (nav links)
+nav_prefix = &quot;../&quot; * (depth - 1) if depth &gt; 1 else &quot;&quot;
 
-    <footer style="margin-top:3rem">
-      <p><strong>ignite-agents-skills</strong> &mdash; <a href="../index.html">Voltar para Skills</a></p>
-    </footer>
-  
+# generate_skill_page → depth=3
+# generate_file_page → depth=4
+# generate_doc_page → depth=1
+# generate_adr_page → depth=2</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="./archive/ADR-012.md">ADR-012</a> — Dynamic HTML Pages (sistema original)</li>
+<li><a href="./archive/ADR-014.md">ADR-014</a> — Fix Workflow sync-and-deploy</li>
+</ul>
   </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
 </body>
 </html>
