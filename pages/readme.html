@@ -512,31 +512,33 @@ description: Descrição curta para o agente decidir quando usar.
 </ul>
 <h2 id="status-da-implementao">Status da Implementação</h2>
 <p><strong>v2.2.0 — Skills Ultra-High Quality Grade</strong></p>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Status</th></tr><tr><td>Skills total</td><td>23 ✅</td></tr><tr><td>Skills refatoradas</td><td>23/23 ✅</td></tr><tr><td>Templates criados</td><td>72 ✅</td></tr><tr><td>Examples criados</td><td>18 ✅</td></tr><tr><td>Validação automática</td><td>✅</td></tr><tr><td>CI pipeline</td><td>✅ (<code>validate-skill.sh</code> + <code>validate-index.sh</code>)</td></tr><tr><td>Auto-sync index.json</td><td>✅ (<code>sync-and-deploy.yml</code>)</td></tr><tr><td>GitHub Pages</td><td>✅</td></tr><tr><td>SDLC completo</td><td>✅</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Status</th></tr><tr><td>Skills total</td><td>23 ✅</td></tr><tr><td>Skills refatoradas</td><td>23/23 ✅</td></tr><tr><td>Templates criados</td><td>72 ✅</td></tr><tr><td>Examples criados</td><td>18 ✅</td></tr><tr><td>Páginas HTML geradas</td><td>140 ✅</td></tr><tr><td>ADRs renderizados</td><td>38 ✅</td></tr><tr><td>Validação automática</td><td>✅</td></tr><tr><td>CI pipeline</td><td>✅ (<code>validate-skill.sh</code> + <code>validate-index.sh</code>)</td></tr><tr><td>Auto-sync index.json</td><td>✅ (<code>sync-and-deploy.yml</code>)</td></tr><tr><td>GitHub Pages</td><td>✅</td></tr><tr><td>Dynamic HTML Pages</td><td>✅ (<code>pages/build.py</code>)</td></tr><tr><td>SDLC completo</td><td>✅</td></tr></table></div>
 <h2 id="decises-arquiteturais">Decisões Arquiteturais</h2>
-<p>Decisões arquiteturais significativas são documentadas em <a href="./docs/adr/">docs/adr/</a>:</p>
+<p>Decisões arquiteturais significativas são documentadas em <a href="../../adr/index.html">docs/adr/</a>:</p>
 <p><strong>Active:</strong></p>
 <ul>
 <li><em>Nenhuma ADR ativa</em></li>
 </ul>
 <p><strong>Arquivadas (Cold Storage):</strong></p>
 <ul>
-<li><a href="./docs/adr/archive/ADR-001.md">ADR-001: Consolidar registry de skills em único index.json</a> ✅</li>
-<li><a href="./docs/adr/archive/ADR-002.md">ADR-002: Padrão de Skill Ultra-High Quality Grade</a> ✅</li>
-<li><a href="./docs/adr/archive/ADR-003.md">ADR-003: Retrospectiva da Implementação</a> ✅</li>
-<li><a href="./docs/adr/archive/ADR-004.md">ADR-004: Implementação das Recomendações da Ultra-Auditoria</a> ✅</li>
-<li><a href="./docs/adr/archive/ADR-005.md">ADR-005: Introdução da Skill implementation</a> ✅</li>
-<li><a href="./docs/adr/archive/ADR-006.md">ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages</a> ✅</li>
-<li><a href="./docs/adr/archive/ADR-007.md">ADR-007: Skill para Geração de AGENTS.md Adaptativo</a> ✅</li>
-<li><a href="./docs/adr/ADR-008.md">ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais</a> ✅</li>
+<li><a href="../../../adr/ADR-001.html">ADR-001: Consolidar registry de skills em único index.json</a> ✅</li>
+<li><a href="../../../adr/ADR-002.html">ADR-002: Padrão de Skill Ultra-High Quality Grade</a> ✅</li>
+<li><a href="../../../adr/ADR-003.html">ADR-003: Retrospectiva da Implementação</a> ✅</li>
+<li><a href="../../../adr/ADR-004.html">ADR-004: Implementação das Recomendações da Ultra-Auditoria</a> ✅</li>
+<li><a href="../../../adr/ADR-005.html">ADR-005: Introdução da Skill implementation</a> ✅</li>
+<li><a href="../../../adr/ADR-006.html">ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages</a> ✅</li>
+<li><a href="../../../adr/ADR-007.html">ADR-007: Skill para Geração de AGENTS.md Adaptativo</a> ✅</li>
+<li><a href="../../../adr/ADR-008.html">ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais</a> ✅</li>
+<li><a href="../../../adr/ADR-012.html">ADR-012: Dynamic HTML Pages — Rendering de Skills em GitHub Pages</a> ✅</li>
+<li><a href="../../../adr/ADR-013.html">ADR-013: Expansão do Build.py para Incluir ADRs e Referências</a> ✅</li>
 </ul>
-<blockquote>📦 ADRs implementadas são movidas para <code>docs/adr/archive/</code> como referência. Veja <a href="./docs/adr/INDEX.md">docs/adr/INDEX.md</a> para o índice completo.</blockquote>
+<blockquote>📦 ADRs implementadas são movidas para <code>docs/adr/archive/</code> como referência. Veja <a href="../../adr/index.html">docs/adr/INDEX.md</a> para o índice completo.</blockquote>
 <h2 id="licena">Licença</h2>
 <p>MIT — ver <a href="./LICENSE">LICENSE</a>.</p>
   </div>
-  <footer>
-    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
-    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
-  </footer>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
 </body>
 </html>
