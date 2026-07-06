@@ -7,6 +7,11 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 ## [Unreleased]
 
 ### Added
+- (nenhuma mudança desde v2.3.0)
+
+## [2.3.0] - 2026-07-05
+
+### Added
 - **ADR-012:** Dynamic HTML Pages — Rendering de Skills em GitHub Pages
   - `pages/build.py` — conversor Markdown→HTML puro (zero deps, ~850 linhas)
   - 127 páginas HTML geradas: 23 skills + 72 templates + 18 examples + checklists + README + USAGE
@@ -16,10 +21,6 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
   - Google Fonts Inter para tipografia premium
   - CI workflow consolidado (`sync-and-deploy.yml`): sync index + build pages + deploy gh-pages
   - Root `index.html` redireciona para `pages/index.html`
-- **ADR-011:** Documentation Reconciliation Skill
-  - Skill `documentation-reconciliation` — auditoria e reconciliação documental
-  - Templates: audit-report.md, reconciliation-checklist.md
-  - Workflow: 8 fases de auditoria e reconciliação
 - **ADR-009:** Resolução de Débitos da Auditoria v2.1.0
   - Validação de version sync em validate-index.sh
   - Seção "Solo + Agentes" em governance/SKILL.md
@@ -27,6 +28,14 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 - **ADR-010:** Branch Protection e SemVer para Tags — Emergencial
   - Regra obrigatória de branch de trabalho para implementação de ADR
   - SemVer obrigatório: nunca reaproveitar tags
+
+## [2.2.0] - 2026-07-05
+
+### Added
+- **ADR-011:** Documentation Reconciliation Skill
+  - Skill `documentation-reconciliation` — auditoria e reconciliação documental
+  - Templates: audit-report.md, reconciliation-checklist.md
+  - Workflow: 8 fases de auditoria e reconciliação
 
 ## [2.1.0] - 2026-07-05
 
@@ -138,3 +147,11 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 - Template de ADR incluso em `adr-generator/templates/adr.md`
 - `scripts/validate-index.sh`: valida `skills/index.json` contra os arquivos reais (paths, prefixo indevido `skills/`, e consistência com o frontmatter `name` de cada `SKILL.md`)
 - `.github/workflows/validate-skills.yml`: roda a validação acima em push/PR que tocam `skills/**`
+
+[Unreleased]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.0.3...v2.1.0
+[2.0.3]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.0.2...v2.0.3
+[2.0.2]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.0.1...v2.0.2
+[2.0.1]: https://github.com/lscheffel/ignite-agents-skills/compare/v2.0.0...v2.0.1
