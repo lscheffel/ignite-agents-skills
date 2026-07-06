@@ -693,8 +693,13 @@ def get_css():
     """
 
 
-def get_page_template(title, body_html, breadcrumb="", nav_active=""):
+def get_page_template(title, body_html, breadcrumb="", nav_active="", depth=1):
     css = get_css()
+    # Calculate nav prefix based on depth
+    # depth=1 → pages/XXX.html → nav links: index.html, readme.html, usage.html (no prefix)
+    # depth=2 → pages/adr/index.html → nav links: ../index.html, ../readme.html, ../usage.html
+    # depth=3 → pages/skills/name/index.html → nav links: ../../index.html, ../../readme.html, ../../usage.html
+    nav_prefix = "../" * (depth - 1) if depth > 1 else ""
     return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -707,11 +712,11 @@ def get_page_template(title, body_html, breadcrumb="", nav_active=""):
 </head>
 <body>
   <nav class="nav">
-    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <a href="{nav_prefix}index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
-      <a href="../../index.html"{ ' class="active"' if nav_active == "home" else ""}>Skills</a>
-      <a href="../../readme.html"{ ' class="active"' if nav_active == "readme" else ""}>README</a>
-      <a href="../../usage.html"{ ' class="active"' if nav_active == "usage" else ""}>USAGE</a>
+      <a href="{nav_prefix}index.html"{ ' class="active"' if nav_active == "home" else ""}>Skills</a>
+      <a href="{nav_prefix}readme.html"{ ' class="active"' if nav_active == "readme" else ""}>README</a>
+      <a href="{nav_prefix}usage.html"{ ' class="active"' if nav_active == "usage" else ""}>USAGE</a>
     </div>
     <div class="nav-breadcrumb">{breadcrumb}</div>
   </nav>
@@ -774,7 +779,7 @@ def generate_skill_page(skill, skill_dir):
     body_html += '\n' + files_section
 
     breadcrumb = f'<a href="../../index.html">Skills</a> &rsaquo; {skill["name"]}'
-    page = get_page_template(skill["name"], body_html, breadcrumb=breadcrumb, nav_active="home")
+    page = get_page_template(skill["name"], body_html, breadcrumb=breadcrumb, nav_active="home", depth=3)
 
     out = PAGES_DIR / "skills" / skill["name"] / "index.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -795,7 +800,7 @@ def generate_file_page(skill_name, md_path, category, skill):
     )
 
     title = f"{skill_name} / {category} / {md_path.stem}"
-    page = get_page_template(title, body_html, breadcrumb=breadcrumb)
+    page = get_page_template(title, body_html, breadcrumb=breadcrumb, depth=4)
 
     out = PAGES_DIR / "skills" / skill_name / category / f"{md_path.stem}.html"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -811,7 +816,7 @@ def generate_doc_page(md_path, title, nav_active):
     md_content = md_path.read_text(encoding="utf-8")
     body_html = convert_md_to_html(md_content, depth=1)
     breadcrumb = title
-    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active=nav_active)
+    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active=nav_active, depth=1)
     out_name = f"{md_path.stem.lower()}.html"
     out = PAGES_DIR / out_name
     out.write_text(page, encoding="utf-8")
@@ -823,10 +828,11 @@ def generate_adr_page(md_path, adr_name):
     if not md_path.exists():
         return
     md_content = md_path.read_text(encoding="utf-8")
-    body_html = convert_md_to_html(md_content)
+    # depth=2 because page is at pages/adr/ADR-XXX.html (2 levels from pages/ root)
+    body_html = convert_md_to_html(md_content, depth=2)
     breadcrumb = f'<a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; {adr_name}'
     title = f"ADR — {adr_name}"
-    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active="adr")
+    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active="adr", depth=2)
     out = PAGES_DIR / "adr" / f"{adr_name}"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
@@ -858,6 +864,8 @@ def generate_adr_index(adrs):
   """
 
     css = get_css()
+    # depth=2 because page is at pages/adr/index.html (2 levels from pages/ root)
+    nav_prefix = "../"
     page = f"""<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -870,11 +878,11 @@ def generate_adr_index(adrs):
 </head>
 <body>
   <nav class="nav">
-    <a href="../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <a href="{nav_prefix}index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
-      <a href="../index.html">Skills</a>
-      <a href="../readme.html">README</a>
-      <a href="../usage.html">USAGE</a>
+      <a href="{nav_prefix}index.html">Skills</a>
+      <a href="{nav_prefix}readme.html">README</a>
+      <a href="{nav_prefix}usage.html">USAGE</a>
       <a href="index.html" class="active">ADRs</a>
     </div>
   </nav>
