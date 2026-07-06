@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-007-implementation-plan.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-007-implementation-plan.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="plano-de-implementao-skill-agents-md-generator">Plano de Implementação: Skill agents-md-generator</h1>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>Criar uma skill para geração e manutenção de <code>AGENTS.md</code> adaptativo que se adapta ao contexto do projeto sendo desenvolvido. A skill detecta automaticamente o tipo de projeto, tecnologias, padrões e governança, gerando um AGENTS.md personalizado que serve como "conciliador" entre o estado atual do projeto e as regras de governança para agentes de IA.</p>
+<h2 id="picos">Épicos</h2>
+<h3 id="pico-1-fundao-da-skill">Épico 1: Fundação da Skill</h3>
+<ul>
+<li>[ ] Criar estrutura de diretórios da skill</li>
+<li>[ ] Definir frontmatter padrão</li>
+<li>[ ] Implementar detecção básica de contexto</li>
+<li>[ ] Criar template base do AGENTS.md</li>
+</ul>
+<h3 id="pico-2-deteco-de-contexto">Épico 2: Detecção de Contexto</h3>
+<ul>
+<li>[ ] Implementar detecção de tipo de projeto (CRM, API, WebApp, etc.)</li>
+<li>[ ] Implementar detecção de tecnologias (linguagens, frameworks)</li>
+<li>[ ] Implementar detecção de padrões arquiteturais</li>
+<li>[ ] Implementar detecção de governança existente</li>
+</ul>
+<h3 id="pico-3-gerao-de-templates">Épico 3: Geração de Templates</h3>
+<ul>
+<li>[ ] Criar template para repositórios de skills</li>
+<li>[ ] Criar template para projetos CRM</li>
+<li>[ ] Criar template para projetos de API</li>
+<li>[ ] Criar template para webapps</li>
+<li>[ ] Criar template para bibliotecas</li>
+<li>[ ] Criar template para CLIs</li>
+</ul>
+<h3 id="pico-4-gerao-do-agentsmd">Épico 4: Geração do AGENTS.md</h3>
+<ul>
+<li>[ ] Implementar lógica de seleção de template</li>
+<li>[ ] Implementar preenchimento automático de placeholders</li>
+<li>[ ] Implementar seção de visão geral adaptativa</li>
+<li>[ ] Implementar seção de estrutura do projeto</li>
+<li>[ ] Implementar seção de padrões de código</li>
+<li>[ ] Implementar seção de comandos importantes</li>
+<li>[ ] Implementar seção de governança</li>
+<li>[ ] Implementar seção de skills recomendadas</li>
+<li>[ ] Implementar seção de anti-patterns</li>
+<li>[ ] Implementar seção de edge cases</li>
+</ul>
+<h3 id="pico-5-manuteno-e-validao">Épico 5: Manutenção e Validação</h3>
+<ul>
+<li>[ ] Implementar detecção de mudanças no projeto</li>
+<li>[ ] Implementar sugestões de atualização</li>
+<li>[ ] Implementar validação do AGENTS.md</li>
+<li>[ ] Criar checklists de validação</li>
+<li>[ ] Integrar com scripts existentes</li>
+</ul>
+<h3 id="pico-6-documentao-e-exemplos">Épico 6: Documentação e Exemplos</h3>
+<ul>
+<li>[ ] Criar documentação completa da skill</li>
+<li>[ ] Criar exemplos de antes e depois</li>
+<li>[ ] Criar exemplos de detecção de contexto</li>
+<li>[ ] Criar guia de uso</li>
+</ul>
+<h2 id="timeline">Timeline</h2>
+<div class="table-wrapper"><table><tr><th>Sprint</th><th>Épico</th><th>Features</th><th>Complexidade</th></tr><tr><td>Sprint 1</td><td>Épico 1</td><td>Fundação da Skill</td><td>M</td></tr><tr><td>Sprint 2</td><td>Épico 2</td><td>Detecção de Contexto</td><td>L</td></tr><tr><td>Sprint 3</td><td>Épico 3</td><td>Geração de Templates</td><td>M</td></tr><tr><td>Sprint 4</td><td>Épico 4</td><td>Geração do AGENTS.md</td><td>L</td></tr><tr><td>Sprint 5</td><td>Épico 5</td><td>Manutenção e Validação</td><td>M</td></tr><tr><td>Sprint 6</td><td>Épico 6</td><td>Documentação e Exemplos</td><td>S</td></tr></table></div>
+<h2 id="tarefas-detalhadas">Tarefas Detalhadas</h2>
+<h3 id="tarefa-1-criar-estrutura-de-diretrios">Tarefa 1: Criar Estrutura de Diretórios</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/{SKILL.md,templates/,examples/,checklists/} <strong>Complexidade:</strong> S <strong>Dependências:</strong> Nenhuma <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Diretório <code>skills/agents-md-generator/</code> criado</li>
+<li>[ ] Subdiretórios <code>templates/</code>, <code>examples/</code>, <code>checklists/</code> criados</li>
+<li>[ ] Arquivo <code>SKILL.md</code> criado com frontmatter válido</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>ls -la skills/agents-md-generator/
+bash scripts/validate-skill.sh skills/agents-md-generator</code></pre>
+<h3 id="tarefa-2-definir-frontmatter-padro">Tarefa 2: Definir Frontmatter Padrão</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> S <strong>Dependências:</strong> Tarefa 1 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Frontmatter inclui <code>name: agents-md-generator</code></li>
+<li>[ ] Frontmatter inclui <code>description</code> adequada</li>
+<li>[ ] Frontmatter inclui <code>version: 1.0.0</code></li>
+<li>[ ] Frontmatter inclui <code>tags</code> relevantes</li>
+<li>[ ] Frontmatter inclui <code>related_skills</code> apropriadas</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>head -20 skills/agents-md-generator/SKILL.md</code></pre>
+<h3 id="tarefa-3-implementar-deteco-bsica-de-contexto">Tarefa 3: Implementar Detecção Básica de Contexto</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 2 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Documenta como detectar tipo de projeto</li>
+<li>[ ] Documenta como detectar tecnologias</li>
+<li>[ ] Documenta como detectar padrões arquiteturais</li>
+<li>[ ] Inclui exemplos de detecção</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>grep -A 10 &quot;Detecção&quot; skills/agents-md-generator/SKILL.md</code></pre>
+<h3 id="tarefa-4-criar-template-base-do-agentsmd">Tarefa 4: Criar Template Base do AGENTS.md</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/templates/AGENTS-base.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 1 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Template inclui seção de visão geral</li>
+<li>[ ] Template inclui seção de estrutura</li>
+<li>[ ] Template inclui seção de padrões</li>
+<li>[ ] Template inclui seção de comandos</li>
+<li>[ ] Template inclui seção de governança</li>
+<li>[ ] Template usa placeholders <code>{{placeholder}}</code></li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/templates/AGENTS-base.md</code></pre>
+<h3 id="tarefa-5-criar-template-para-repositrios-de-skills">Tarefa 5: Criar Template para Repositórios de Skills</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/templates/AGENTS-skills-repo.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 4 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Template adaptado para repositórios de skills</li>
+<li>[ ] Inclui seção sobre padrões de skills</li>
+<li>[ ] Inclui seção sobre validação de skills</li>
+<li>[ ] Inclui seção sobre manutenção de skills</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/templates/AGENTS-skills-repo.md</code></pre>
+<h3 id="tarefa-6-criar-template-para-projetos-crm">Tarefa 6: Criar Template para Projetos CRM</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/templates/AGENTS-crm.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 4 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Template adaptado para projetos CRM</li>
+<li>[ ] Inclui seção sobre modelagem de dados</li>
+<li>[ ] Inclui seção sobre processos de negócio</li>
+<li>[ ] Inclui seção sobre integrações</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/templates/AGENTS-crm.md</code></pre>
+<h3 id="tarefa-7-criar-template-para-projetos-de-api">Tarefa 7: Criar Template para Projetos de API</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/templates/AGENTS-api.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 4 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Template adaptado para projetos de API</li>
+<li>[ ] Inclui seção sobre endpoints</li>
+<li>[ ] Inclui seção sobre autenticação</li>
+<li>[ ] Inclui seção sobre versionamento</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/templates/AGENTS-api.md</code></pre>
+<h3 id="tarefa-8-criar-template-para-webapps">Tarefa 8: Criar Template para WebApps</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/templates/AGENTS-webapp.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 4 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Template adaptado para webapps</li>
+<li>[ ] Inclui seção sobre componentes</li>
+<li>[ ] Inclui seção sobre estado</li>
+<li>[ ] Inclui seção sobre rotas</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/templates/AGENTS-webapp.md</code></pre>
+<h3 id="tarefa-9-implementar-lgica-de-seleo-de-template">Tarefa 9: Implementar Lógica de Seleção de Template</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> L <strong>Dependências:</strong> Tarefas 5-8 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Documenta como selecionar template baseado no contexto</li>
+<li>[ ] Inclui fluxograma de decisão</li>
+<li>[ ] Inclui exemplos de seleção</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>grep -A 20 &quot;Seleção de Template&quot; skills/agents-md-generator/SKILL.md</code></pre>
+<h3 id="tarefa-10-implementar-preenchimento-automtico">Tarefa 10: Implementar Preenchimento Automático</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> L <strong>Dependências:</strong> Tarefa 9 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Documenta como preencher placeholders automaticamente</li>
+<li>[ ] Inclui exemplos de preenchimento</li>
+<li>[ ] Documenta como override manual</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>grep -A 20 &quot;Preenchimento&quot; skills/agents-md-generator/SKILL.md</code></pre>
+<h3 id="tarefa-11-implementar-sees-do-agentsmd">Tarefa 11: Implementar Seções do AGENTS.md</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> L <strong>Dependências:</strong> Tarefa 10 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Documenta cada seção do AGENTS.md</li>
+<li>[ ] Inclui exemplos de cada seção</li>
+<li>[ ] Documenta como personalizar cada seção</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>grep -A 5 &quot;Seções&quot; skills/agents-md-generator/SKILL.md</code></pre>
+<h3 id="tarefa-12-implementar-manuteno-automtica">Tarefa 12: Implementar Manutenção Automática</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 11 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Documenta como detectar mudanças no projeto</li>
+<li>[ ] Documenta como sugerir atualizações</li>
+<li>[ ] Documenta como validar AGENTS.md</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>grep -A 20 &quot;Manutenção&quot; skills/agents-md-generator/SKILL.md</code></pre>
+<h3 id="tarefa-13-criar-checklists-de-validao">Tarefa 13: Criar Checklists de Validação</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/checklists/validation.md <strong>Complexidade:</strong> S <strong>Dependências:</strong> Tarefa 12 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Checklist inclui validação de estrutura</li>
+<li>[ ] Checklist inclui validação de conteúdo</li>
+<li>[ ] Checklist inclui validação de format</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/checklists/validation.md</code></pre>
+<h3 id="tarefa-14-criar-exemplos-de-antes-e-depois">Tarefa 14: Criar Exemplos de Antes e Depois</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/examples/before-after.md <strong>Complexidade:</strong> S <strong>Dependências:</strong> Tarefa 13 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Exemplo mostra AGENTS.md antes da skill</li>
+<li>[ ] Exemplo mostra AGENTS.md depois da skill</li>
+<li>[ ] Exemplo inclui contexto de uso</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/examples/before-after.md</code></pre>
+<h3 id="tarefa-15-criar-exemplos-de-deteco-de-contexto">Tarefa 15: Criar Exemplos de Detecção de Contexto</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/examples/context-detection.md <strong>Complexidade:</strong> S <strong>Dependências:</strong> Tarefa 14 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Exemplo mostra detecção de tipo de projeto</li>
+<li>[ ] Exemplo mostra detecção de tecnologias</li>
+<li>[ ] Exemplo mostra detecção de padrões</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>cat skills/agents-md-generator/examples/context-detection.md</code></pre>
+<h3 id="tarefa-16-criar-documentao-completa">Tarefa 16: Criar Documentação Completa</h3>
+<p><strong>Arquivos:</strong> skills/agents-md-generator/SKILL.md <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefas 1-15 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] SKILL.md tem ≥150 linhas</li>
+<li>[ ] SKILL.md inclui todas as seções obrigatórias</li>
+<li>[ ] SKILL.md é válido pelo <code>validate-skill.sh</code></li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>wc -l skills/agents-md-generator/SKILL.md
+bash scripts/validate-skill.sh skills/agents-md-generator</code></pre>
+<h3 id="tarefa-17-integrar-com-scripts-existentes">Tarefa 17: Integrar com Scripts Existentes</h3>
+<p><strong>Arquivos:</strong> scripts/sync-index.sh, scripts/validate-index.sh <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 16 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Skill é detectada pelo <code>sync-index.sh</code></li>
+<li>[ ] Skill é validada pelo <code>validate-index.sh</code></li>
+<li>[ ] Skill aparece no <code>index.json</code></li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>./scripts/sync-index.sh
+./scripts/validate-index.sh
+grep &quot;agents-md-generator&quot; skills/index.json</code></pre>
+<h3 id="tarefa-18-testar-em-diferentes-contextos">Tarefa 18: Testar em Diferentes Contextos</h3>
+<p><strong>Arquivos:</strong> N/A <strong>Complexidade:</strong> L <strong>Dependências:</strong> Tarefa 17 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Testado em repositório de skills</li>
+<li>[ ] Testado em projeto CRM</li>
+<li>[ ] Testado em projeto de API</li>
+<li>[ ] Testado em webapp</li>
+<li>[ ] Testado em biblioteca</li>
+<li>[ ] Testado em CLI</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code># Testar em cada contexto</code></pre>
+<h2 id="riscos">Riscos</h2>
+<ul>
+<li><strong>Detecção Incorreta</strong>: O contexto pode ser mal interpretado</li>
+<li><strong>Mitigação</strong>: Permitir override manual do contexto detectado</li>
+<li><strong>Templates Desatualizados</strong>: Templates podem ficar obsoletos</li>
+<li><strong>Mitigação</strong>: Processo de revisão e atualização periódica</li>
+<li><strong>Complexidade Excessiva</strong>: A skill pode ficar complexa demais</li>
+<li><strong>Mitigação</strong>: Começar com templates básicos e evoluir</li>
+<li><strong>Integração com Scripts</strong>: Pode haver problemas de integração</li>
+<li><strong>Mitigação</strong>: Testar integração cedo e frequentemente</li>
+</ul>
+<h2 id="critrios-de-aceitao-gerais">Critérios de Aceitação Gerais</h2>
+<ul>
+<li>[ ] Skill passa na validação do <code>validate-skill.sh</code></li>
+<li>[ ] Skill tem ≥150 linhas de conteúdo acionável</li>
+<li>[ ] Skill inclui ≥3 templates adaptativos</li>
+<li>[ ] Skill inclui ≥3 exemplos</li>
+<li>[ ] Skill inclui checklists de validação</li>
+<li>[ ] Skill é registrada no <code>index.json</code></li>
+<li>[ ] Skill funciona em ≥3 tipos de projetos diferentes</li>
+<li>[ ] Skill documenta override manual do contexto</li>
+<li>[ ] Skill inclui fluxograma de decisão</li>
+<li>[ ] Skill inclui anti-patterns com severidade</li>
+</ul>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

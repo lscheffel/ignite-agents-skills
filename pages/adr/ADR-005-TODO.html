@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-005-TODO.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-005-TODO.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="todo-implementao-da-skill-implementation--execuo-governada-de-mudanas">TODO: Implementação da Skill <code>implementation</code> — Execução Governada de Mudanças</h1>
+<blockquote>ADR-005 | Início: 2026-07-05 | Conclusão: 2026-07-05 | Status: ✅ CONCLUÍDO</blockquote>
+<hr>
+<h2 id="legenda">Legenda</h2>
+<ul>
+<li>⬜ Pendente</li>
+<li>🔄 Em Andamento</li>
+<li>✅ Concluído</li>
+<li>❌ Bloqueado</li>
+<li>⏸️ Pausado</li>
+</ul>
+<p><strong>Prioridade:</strong> 🔴 Alta | 🟡 Média | 🟢 Baixa</p>
+<hr>
+<h2 id="fase-a-estrutura-base">Fase A: Estrutura Base</h2>
+<h3 id="a1-criar-diretrio-e-estrutura-de-pastas">A1: Criar diretório e estrutura de pastas</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A1.1</td><td>Criar diretório <code>skills/implementation/</code></td><td>✅</td><td>🔴</td><td>—</td><td>1min</td></tr><tr><td>A1.2</td><td>Criar subdiretório <code>skills/implementation/templates/</code></td><td>✅</td><td>🔴</td><td>A1.1</td><td>1min</td></tr><tr><td>A1.3</td><td>Criar subdiretório <code>skills/implementation/examples/</code></td><td>✅</td><td>🔴</td><td>A1.1</td><td>1min</td></tr><tr><td>A1.4</td><td>Criar subdiretório <code>skills/implementation/checklists/</code></td><td>✅</td><td>🔴</td><td>A1.1</td><td>1min</td></tr></table></div>
+<p><strong>Checkpoint A1:</strong></p>
+<ul>
+<li>[x] Estrutura de pastas criada conforme diagrama</li>
+</ul>
+<hr>
+<h3 id="a2-criar-templates-5-arquivos">A2: Criar templates (5 arquivos)</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A2.1</td><td>Criar <code>templates/execution-contract.md</code></td><td>✅</td><td>🔴</td><td>A1.2</td><td>10min</td></tr><tr><td>A2.2</td><td>Criar <code>templates/execution-report.md</code></td><td>✅</td><td>🔴</td><td>A1.2</td><td>10min</td></tr><tr><td>A2.3</td><td>Criar <code>templates/change-plan.md</code></td><td>✅</td><td>🔴</td><td>A1.2</td><td>10min</td></tr><tr><td>A2.4</td><td>Criar <code>templates/rollback-report.md</code></td><td>✅</td><td>🟡</td><td>A1.2</td><td>8min</td></tr><tr><td>A2.5</td><td>Criar <code>templates/task-progress.md</code></td><td>✅</td><td>🟡</td><td>A1.2</td><td>8min</td></tr></table></div>
+<p><strong>Checkpoint A2:</strong></p>
+<ul>
+<li>[x] 5 templates criados com placeholders <code>{{placeholder}}</code></li>
+<li>[x] Cada template instrutivo e autocontido</li>
+</ul>
+<hr>
+<h3 id="a3-criar-examples-2-arquivos">A3: Criar examples (2 arquivos)</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A3.1</td><td>Criar <code>examples/simple-change.md</code> — exemplo de mudança pontual (1-2 tarefas)</td><td>✅</td><td>🟡</td><td>A2</td><td>15min</td></tr><tr><td>A3.2</td><td>Criar <code>examples/complex-change.md</code> — exemplo de mudança multi-ADR (10+ tarefas)</td><td>✅</td><td>🟡</td><td>A2</td><td>20min</td></tr></table></div>
+<p><strong>Checkpoint A3:</strong></p>
+<ul>
+<li>[x] Exemplo simples mostra fluxo completo: ADR → Contract → 1-2 tarefas → Report</li>
+<li>[x] Exemplo complexo mostra DAG, paralelismo, rollback parcial</li>
+</ul>
+<hr>
+<h3 id="a4-criar-checklists-2-arquivos">A4: Criar checklists (2 arquivos)</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A4.1</td><td>Criar <code>checklists/pre-execution.md</code></td><td>✅</td><td>🔴</td><td>A1.4</td><td>8min</td></tr><tr><td>A4.2</td><td>Criar <code>checklists/post-execution.md</code></td><td>✅</td><td>🔴</td><td>A1.4</td><td>8min</td></tr></table></div>
+<p><strong>Checkpoint A4:</strong></p>
+<ul>
+<li>[x] Pre-execution: ≥10 itens verificáveis</li>
+<li>[x] Post-execution: ≥10 itens verificáveis</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase A:</strong></p>
+<ul>
+<li>[x] Estrutura de pastas completa</li>
+<li>[x] 5 templates, 2 examples, 2 checklists criados</li>
+<li>[x] Todos os artefatos são reutilizáveis e autoexplicativos</li>
+</ul>
+<hr>
+<h2 id="fase-b-skillmd">Fase B: SKILL.md</h2>
+<h3 id="b1-frontmatter-e-sees-introdutrias">B1: Frontmatter e seções introdutórias</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B1.1</td><td>Criar frontmatter (name, description, version, tags, related_skills)</td><td>✅</td><td>🔴</td><td>—</td><td>3min</td></tr><tr><td>B1.2</td><td>Criar parágrafo de contexto (o que é e por que existe)</td><td>✅</td><td>🔴</td><td>B1.1</td><td>5min</td></tr><tr><td>B1.3</td><td>Criar seção "Quando Usar" (Use quando / Não use quando / Skills relacionadas)</td><td>✅</td><td>🔴</td><td>B1.2</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B1:</strong></p>
+<ul>
+<li>[x] Frontmatter válido</li>
+<li>[x] Descrição ≤200 caracteres</li>
+<li>[x] <code>related_skills</code> inclui: <code>adr-generator</code>, <code>writing-plans</code>, <code>testing</code>, <code>git</code>, <code>documentation</code></li>
+</ul>
+<hr>
+<h3 id="b2-decision-tree">B2: Decision Tree</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B2.1</td><td>Criar decision tree em Mermaid (fluxo completo: ADR → Blueprint → TODO → Contract → Execution)</td><td>✅</td><td>🔴</td><td>B1</td><td>15min</td></tr><tr><td>B2.2</td><td>Incluir ramos para "não existe ADR", "não existe Blueprint", "contract falha"</td><td>✅</td><td>🔴</td><td>B2.1</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B2:</strong></p>
+<ul>
+<li>[x] Decision tree cobre todos os caminhos</li>
+<li>[x] Mermaid renderiza corretamente</li>
+</ul>
+<hr>
+<h3 id="b3-conceitos-fundamentais">B3: Conceitos Fundamentais</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B3.1</td><td>Documentar conceito "Execution Contract" (definição, campos, regras)</td><td>✅</td><td>🔴</td><td>B1</td><td>10min</td></tr><tr><td>B3.2</td><td>Documentar conceito "Artifact Resolution" (algoritmo, entrada, saída)</td><td>✅</td><td>🔴</td><td>B1</td><td>10min</td></tr><tr><td>B3.3</td><td>Documentar conceito "Execution Loop" (ciclo, regras, diagrama)</td><td>✅</td><td>🔴</td><td>B1</td><td>10min</td></tr><tr><td>B3.4</td><td>Documentar conceito "Change Lifecycle" (transições, validações)</td><td>✅</td><td>🔴</td><td>B1</td><td>10min</td></tr></table></div>
+<p><strong>Checkpoint B3:</strong></p>
+<ul>
+<li>[x] 4 conceitos documentados com definição precisa</li>
+<li>[x] Cada conceito tem diagrama ou exemplo</li>
+</ul>
+<hr>
+<h3 id="b4-workflows-8-workflows">B4: Workflows (8 workflows)</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B4.1</td><td>Workflow 1: Artifact Resolution (10 passos + checkpoint)</td><td>✅</td><td>🔴</td><td>B3</td><td>15min</td></tr><tr><td>B4.2</td><td>Workflow 2: Execution Contract (11 passos + checkpoint)</td><td>✅</td><td>🔴</td><td>B3</td><td>15min</td></tr><tr><td>B4.3</td><td>Workflow 3: Dependency Analysis & Execution Plan (9 passos + checkpoint)</td><td>✅</td><td>🔴</td><td>B3</td><td>15min</td></tr><tr><td>B4.4</td><td>Workflow 4: Incremental Execution (10 passos + checkpoint)</td><td>✅</td><td>🔴</td><td>B3</td><td>20min</td></tr><tr><td>B4.5</td><td>Workflow 5: Continuous Validation (7 passos)</td><td>✅</td><td>🔴</td><td>B3</td><td>10min</td></tr><tr><td>B4.6</td><td>Workflow 6: Documentation Synchronization (8 passos + checkpoint)</td><td>✅</td><td>🔴</td><td>B3</td><td>10min</td></tr><tr><td>B4.7</td><td>Workflow 7: Progress Tracking (5 estados + regras)</td><td>✅</td><td>🔴</td><td>B3</td><td>10min</td></tr><tr><td>B4.8</td><td>Workflow 8: Execution Report (campos do relatório)</td><td>✅</td><td>🔴</td><td>B3</td><td>10min</td></tr></table></div>
+<p><strong>Checkpoint B4:</strong></p>
+<ul>
+<li>[x] 8 workflows documentados</li>
+<li>[x] Cada workflow tem passos numerados</li>
+<li>[x] Cada workflow tem checkpoint explícito</li>
+<li>[x] ≥5 workflows com ≥5 passos</li>
+</ul>
+<hr>
+<h3 id="b5-anti-patterns">B5: Anti-patterns</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B5.1</td><td>Criar 3 anti-patterns 🔴 Crítico (sem contract, big bang, ignorar falha)</td><td>✅</td><td>🔴</td><td>B1</td><td>15min</td></tr><tr><td>B5.2</td><td>Criar 2 anti-patterns 🟡 Médio (código sem docs, ordem incorreta)</td><td>✅</td><td>🔴</td><td>B1</td><td>10min</td></tr><tr><td>B5.3</td><td>Criar 2 anti-patterns 🟢 Baixo (sem report, estimativas otimistas)</td><td>✅</td><td>🟡</td><td>B1</td><td>8min</td></tr></table></div>
+<p><strong>Checkpoint B5:</strong></p>
+<ul>
+<li>[x] ≥3 anti-patterns 🔴</li>
+<li>[x] ≥2 anti-patterns 🟡</li>
+<li>[x] ≥2 anti-patterns 🟢</li>
+<li>[x] Cada um com: o que é, por que é ruim, como evitar, exemplo antes/depois</li>
+</ul>
+<hr>
+<h3 id="b6-checklists-e-edge-cases">B6: Checklists e Edge Cases</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B6.1</td><td>Criar seção "Checklists" no SKILL.md (referência aos checklists externos)</td><td>✅</td><td>🔴</td><td>A4</td><td>5min</td></tr><tr><td>B6.2</td><td>Criar 5 edge cases (ADR proposta, Blueprint incompleto, TODO desatualizado, múltiplas ADRs, rollback)</td><td>✅</td><td>🔴</td><td>B1</td><td>20min</td></tr><tr><td>B6.3</td><td>Criar 1 edge case adicional (agente sem acesso a build/test)</td><td>✅</td><td>🟡</td><td>B6.2</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B6:</strong></p>
+<ul>
+<li>[x] ≥5 edge cases documentados</li>
+<li>[x] Cada um com: situação, solução, exceção</li>
+</ul>
+<hr>
+<h3 id="b7-integrao-e-referncias">B7: Integração e Referências</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B7.1</td><td>Criar seção "Integração com Skills Existentes" (tabela de relações)</td><td>✅</td><td>🟡</td><td>B1</td><td>10min</td></tr><tr><td>B7.2</td><td>Criar seção "Referências" (links para ADRs e skills)</td><td>✅</td><td>🟢</td><td>B1</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B7:</strong></p>
+<ul>
+<li>[x] Tabela de integração com ≥10 skills</li>
+<li>[x] Referências para ADR-001 a ADR-005</li>
+</ul>
+<hr>
+<h3 id="b8-validao-do-skillmd">B8: Validação do SKILL.md</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B8.1</td><td>Verificar SKILL.md ≥150 linhas</td><td>✅</td><td>🔴</td><td>B1-B7</td><td>2min</td></tr><tr><td>B8.2</td><td>Executar <code>validate-skill.sh skills/implementation</code></td><td>✅</td><td>🔴</td><td>B8.1</td><td>3min</td></tr><tr><td>B8.3</td><td>Corrigir qualquer erro retornado pelo script</td><td>✅</td><td>🔴</td><td>B8.2</td><td>variável</td></tr><tr><td>B8.4</td><td>Re-executar <code>validate-skill.sh</code> até 0 erros</td><td>✅</td><td>🔴</td><td>B8.3</td><td>3min</td></tr></table></div>
+<p><strong>Checkpoint B8:</strong></p>
+<ul>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] <code>validate-skill.sh</code> retorna 0 erros</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase B:</strong></p>
+<ul>
+<li>[x] SKILL.md completo com todas as seções obrigatórias</li>
+<li>[x] Decision tree funcional</li>
+<li>[x] 8 workflows documentados</li>
+<li>[x] 7+ anti-patterns com severidade</li>
+<li>[x] 5+ edge cases</li>
+<li>[x] Validação automática passa</li>
+</ul>
+<hr>
+<h2 id="fase-c-registro-no-registry">Fase C: Registro no Registry</h2>
+<h3 id="c1-atualizar-skillsindexjson">C1: Atualizar <code>skills/index.json</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>C1.1</td><td>Adicionar entrada <code>implementation</code> ao array <code>skills</code></td><td>✅</td><td>🔴</td><td>B8</td><td>5min</td></tr><tr><td>C1.2</td><td>Definir <code>name: "implementation"</code></td><td>✅</td><td>🔴</td><td>C1.1</td><td>1min</td></tr><tr><td>C1.3</td><td>Definir <code>version: "2.0.0"</code></td><td>✅</td><td>🔴</td><td>C1.1</td><td>1min</td></tr><tr><td>C1.4</td><td>Definir <code>tags: ["implementation", "execution", "artifact-driven", "sdlc"]</code></td><td>✅</td><td>🔴</td><td>C1.1</td><td>1min</td></tr><tr><td>C1.5</td><td>Definir <code>related_skills</code></td><td>✅</td><td>🔴</td><td>C1.1</td><td>2min</td></tr><tr><td>C1.6</td><td>Definir <code>files</code> (SKILL.md + 5 templates)</td><td>✅</td><td>🔴</td><td>C1.1</td><td>2min</td></tr><tr><td>C1.7</td><td>Atualizar <code>description</code> global para "(21 skills)"</td><td>✅</td><td>🟡</td><td>C1.1</td><td>1min</td></tr></table></div>
+<p><strong>Checkpoint C1:</strong></p>
+<ul>
+<li>[x] <code>index.json</code> tem 21 entradas (ou 15 se ADR-004 ainda não implementado)</li>
+<li>[x] Todos os <code>files</code> são paths relativos corretos</li>
+<li>[x] <code>validate-index.sh</code> passa</li>
+</ul>
+<hr>
+<h3 id="c2-atualizar-relatedskills-das-skills-impactadas">C2: Atualizar <code>related_skills</code> das skills impactadas</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>C2.1</td><td><code>adr-generator/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🔴</td><td>C1</td><td>2min</td></tr><tr><td>C2.2</td><td><code>writing-plans/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🔴</td><td>C1</td><td>2min</td></tr><tr><td>C2.3</td><td><code>planning/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.4</td><td><code>testing/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.5</td><td><code>documentation/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.6</td><td><code>governance/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.7</td><td><code>git/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.8</td><td><code>release/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.9</td><td><code>architecture-review/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟡</td><td>C1</td><td>2min</td></tr><tr><td>C2.10</td><td><code>ddd/SKILL.md</code> — adicionar <code>implementation</code> em <code>related_skills</code></td><td>✅</td><td>🟢</td><td>C1</td><td>2min</td></tr><tr><td>C2.11</td><td>Atualizar <code>index.json</code> com novos <code>related_skills</code></td><td>✅</td><td>🔴</td><td>C2.1-C2.10</td><td>3min</td></tr></table></div>
+<p><strong>Checkpoint C2:</strong></p>
+<ul>
+<li>[x] ≥8 skills referenciam <code>implementation</code> em <code>related_skills</code></li>
+<li>[x] <code>index.json</code> reflete mudanças</li>
+</ul>
+<hr>
+<h3 id="c3-atualizar-documentao-do-registry">C3: Atualizar documentação do registry</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>C3.1</td><td>Atualizar <code>README.md</code> — adicionar <code>implementation</code> na tabela de categorias</td><td>✅</td><td>🟡</td><td>C1</td><td>5min</td></tr><tr><td>C3.2</td><td>Atualizar <code>README.md</code> — adicionar na estrutura de diretórios</td><td>✅</td><td>🟡</td><td>C1</td><td>3min</td></tr><tr><td>C3.3</td><td>Atualizar <code>CHANGELOG.md</code> — adicionar entrada para <code>implementation</code></td><td>✅</td><td>🟡</td><td>C1</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint C3:</strong></p>
+<ul>
+<li>[x] README reflete 21 skills</li>
+<li>[x] CHANGELOG tem entrada para nova skill</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase C:</strong></p>
+<ul>
+<li>[x] <code>index.json</code> atualizado e validado</li>
+<li>[x] ≥8 skills com <code>implementation</code> em <code>related_skills</code></li>
+<li>[x] README e CHANGELOG atualizados</li>
+</ul>
+<hr>
+<h2 id="fase-d-validao-final">Fase D: Validação Final</h2>
+<h3 id="d1-validao-completa">D1: Validação completa</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>D1.1</td><td>Executar <code>validate-index.sh</code> — deve passar</td><td>✅</td><td>🔴</td><td>C1-C3</td><td>5min</td></tr><tr><td>D1.2</td><td>Executar <code>validate-skill.sh skills/implementation</code> — deve passar</td><td>✅</td><td>🔴</td><td>C1</td><td>3min</td></tr><tr><td>D1.3</td><td>Executar <code>validate-skill.sh</code> em todas as skills — nenhuma deve quebrar</td><td>✅</td><td>🔴</td><td>D1.2</td><td>10min</td></tr><tr><td>D1.4</td><td>Verificar que SKILL.md ≥150 linhas</td><td>✅</td><td>🔴</td><td>D1.2</td><td>2min</td></tr><tr><td>D1.5</td><td>Verificar que nenhum <code>related_skills</code> aponta para skill inexistente</td><td>✅</td><td>🔴</td><td>D1.3</td><td>5min</td></tr><tr><td>D1.6</td><td>Verificar que todos os arquivos listados em <code>index.json</code> existem</td><td>✅</td><td>🔴</td><td>D1.1</td><td>3min</td></tr></table></div>
+<p><strong>Checkpoint D1:</strong></p>
+<ul>
+<li>[x] <code>validate-index.sh</code>: 0 erros</li>
+<li>[x] <code>validate-skill.sh</code> para <code>implementation</code>: 0 erros</li>
+<li>[x] <code>validate-skill.sh</code> para todas as skills: 0 erros novos</li>
+<li>[x] Todos os paths válidos</li>
+</ul>
+<hr>
+<h3 id="d2-reviso-de-consistncia">D2: Revisão de consistência</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>D2.1</td><td>Verificar que SKILL.md referencia todos os templates criados</td><td>✅</td><td>🔴</td><td>D1</td><td>3min</td></tr><tr><td>D2.2</td><td>Verificar que decision tree está coerente com workflows</td><td>✅</td><td>🟡</td><td>D1</td><td>5min</td></tr><tr><td>D2.3</td><td>Verificar que anti-patterns cobrem os principais riscos</td><td>✅</td><td>🟡</td><td>D1</td><td>5min</td></tr><tr><td>D2.4</td><td>Verificar que edge cases cobrem cenários reais</td><td>✅</td><td>🟡</td><td>D1</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint D2:</strong></p>
+<ul>
+<li>[x] SKILL.md referencia todos os templates</li>
+<li>[x] Decision tree coerente com workflows</li>
+<li>[x] Anti-patterns e edge cases abrangentes</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase D:</strong></p>
+<ul>
+<li>[x] Validação automática passa para todas as skills</li>
+<li>[x] Consistência interna verificada</li>
+<li>[x] Skill pronta para uso</li>
+</ul>
+<hr>
+<h2 id="resumo-geral">Resumo Geral</h2>
+<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Horas Est.</th><th>Status</th></tr><tr><td>Fase A: Estrutura Base</td><td>13</td><td>1.5-2h</td><td>✅</td></tr><tr><td>Fase B: SKILL.md</td><td>30</td><td>3-4h</td><td>✅</td></tr><tr><td>Fase C: Registro no Registry</td><td>21</td><td>1-1.5h</td><td>✅</td></tr><tr><td>Fase D: Validação Final</td><td>10</td><td>0.5-1h</td><td>✅</td></tr><tr><td><strong>Total</strong></td><td><strong>74</strong></td><td><strong>~6-8.5h</strong></td><td><strong>✅ 100%</strong></td></tr></table></div>
+<hr>
+<h2 id="dependncias-entre-fases">Dependências entre Fases</h2>
+<pre><code>Fase A (Estrutura)
+  │
+  ├─── A1: Diretórios ──────────┐
+  ├─── A2: Templates ───────────┤
+  ├─── A3: Examples ────────────┤
+  └─── A4: Checklists ──────────┘
+                                  │
+Fase B (SKILL.md) ◄───────────────┘
+  │
+  ├─── B1: Frontmatter ─────────┐
+  ├─── B2: Decision Tree ───────┤
+  ├─── B3: Conceitos ───────────┤
+  ├─── B4: Workflows ───────────┤
+  ├─── B5: Anti-patterns ───────┤
+  ├─── B6: Checklists/Edge ─────┤
+  ├─── B7: Integração ──────────┤
+  └─── B8: Validação ───────────┘
+                                  │
+Fase C (Registry) ◄───────────────┘
+  │
+  ├─── C1: index.json ──────────┐
+  ├─── C2: related_skills ──────┤
+  └─── C3: Docs do registry ────┘
+                                  │
+Fase D (Validação) ◄──────────────┘
+  │
+  ├─── D1: Validação completa ──┐
+  └─── D2: Revisão de consistência┘</code></pre>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-005.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-004-TODO.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-004-TODO.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="todo-implementao-das-recomendaes-da-ultra-auditoria-v202">TODO: Implementação das Recomendações da Ultra-Auditoria v2.0.2</h1>
+<blockquote>ADR-004 | Início: 2026-07-05 | Conclusão: 2026-07-05 | Status: ✅ CONCLUÍDO</blockquote>
+<hr>
+<h2 id="legenda">Legenda</h2>
+<ul>
+<li>⬜ Pendente</li>
+<li>🔄 Em Andamento</li>
+<li>✅ Concluído</li>
+<li>❌ Bloqueado</li>
+<li>⏸️ Pausado</li>
+</ul>
+<p><strong>Prioridade:</strong> 🔴 Alta | 🟡 Média | 🟢 Baixa</p>
+<hr>
+<h2 id="fase-a-correo-de-dbitos-tcnicos">Fase A: Correção de Débitos Técnicos</h2>
+<h3 id="a1-adicionar-validate-skillsh-ao-pipeline-ci">A1: Adicionar <code>validate-skill.sh</code> ao pipeline CI</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A1.1</td><td>Modificar <code>.github/workflows/validate-skills.yml</code> para adicionar step de quality validation</td><td>✅</td><td>🔴</td><td>—</td><td>15min</td></tr><tr><td>A1.2</td><td>Adicionar loop que executa <code>validate-skill.sh</code> em todas as skills</td><td>✅</td><td>🔴</td><td>A1.1</td><td>10min</td></tr><tr><td>A1.3</td><td>Tratar erros: exit 1 se qualquer skill falhar, warnings apenas reportados</td><td>✅</td><td>🔴</td><td>A1.2</td><td>5min</td></tr><tr><td>A1.4</td><td>Testar workflow localmente (simular CI)</td><td>✅</td><td>🟡</td><td>A1.3</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint A1:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> é executado em todas as skills no pipeline</li>
+<li>[x] Pipeline falha se qualquer skill tiver erro</li>
+</ul>
+<hr>
+<h3 id="a2-escrever-changelog-para-v200v202">A2: Escrever CHANGELOG para v2.0.0→v2.0.2</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A2.1</td><td>Criar entrada <code>[2.0.2]</code> com data atual</td><td>✅</td><td>🔴</td><td>—</td><td>5min</td></tr><tr><td>A2.2</td><td>Documentar adição de <code>skill-audit-bulletin</code></td><td>✅</td><td>🔴</td><td>A2.1</td><td>5min</td></tr><tr><td>A2.3</td><td>Documentar refatoração das 13 skills para Ultra-High Quality Grade</td><td>✅</td><td>🔴</td><td>A2.1</td><td>5min</td></tr><tr><td>A2.4</td><td>Mover conteúdo de <code>[Unreleased]</code> para entrada <code>[2.0.1]</code></td><td>✅</td><td>🔴</td><td>—</td><td>5min</td></tr><tr><td>A2.5</td><td>Deixar seção <code>[Unreleased]</code> vazia</td><td>✅</td><td>🟢</td><td>A2.4</td><td>1min</td></tr></table></div>
+<p><strong>Checkpoint A2:</strong></p>
+<ul>
+<li>[x] CHANGELOG tem entradas para 2.0.2 e 2.0.1</li>
+<li>[x] Formato Keep a Changelog mantido</li>
+<li>[x] <code>[Unreleased]</code> está vazia</li>
+</ul>
+<hr>
+<h3 id="a3-resolver-coliso-architecture-review">A3: Resolver colisão <code>architecture-review</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A3.1</td><td>Renomear pasta <code>skills/architecture-review/</code> → <code>skills/architecture-review-kilo/</code></td><td>✅</td><td>🔴</td><td>—</td><td>2min</td></tr><tr><td>A3.2</td><td>Atualizar frontmatter em <code>SKILL.md</code>: <code>name: architecture-review-kilo</code></td><td>✅</td><td>🔴</td><td>A3.1</td><td>2min</td></tr><tr><td>A3.3</td><td>Atualizar <code>index.json</code>: chave <code>name</code> e <code>files</code></td><td>✅</td><td>🔴</td><td>A3.1</td><td>3min</td></tr><tr><td>A3.4</td><td>Buscar todas as referências em outros SKILL.md</td><td>✅</td><td>🔴</td><td>—</td><td>5min</td></tr><tr><td>A3.5</td><td>Atualizar <code>adr-generator/SKILL.md</code> → <code>related_skills: [documentation, architecture-review-kilo]</code></td><td>✅</td><td>🔴</td><td>A3.4</td><td>2min</td></tr><tr><td>A3.6</td><td>Atualizar <code>ddd/SKILL.md</code> → <code>related_skills: [architecture-review-kilo, testing]</code></td><td>✅</td><td>🔴</td><td>A3.4</td><td>2min</td></tr><tr><td>A3.7</td><td>Atualizar <code>skill-audit-bulletin/SKILL.md</code> → <code>related_skills: [architecture-review-kilo, documentation]</code></td><td>✅</td><td>🔴</td><td>A3.4</td><td>2min</td></tr><tr><td>A3.8</td><td>Verificar que nenhum <code>related_skills</code> aponta para nome inexistente</td><td>✅</td><td>🔴</td><td>A3.5-A3.7</td><td>3min</td></tr></table></div>
+<p><strong>Checkpoint A3:</strong></p>
+<ul>
+<li>[x] Pasta renomeada</li>
+<li>[x] Frontmatter e index.json atualizados</li>
+<li>[x] Todos os <code>related_skills</code> apontam para nomes válidos</li>
+</ul>
+<hr>
+<h3 id="a4-resolver-sobreposio-planning-vs-writing-plans">A4: Resolver sobreposição <code>planning</code> vs <code>writing-plans</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A4.1</td><td>Reescrever "Não use quando" em <code>planning/SKILL.md</code> mencionando <code>writing-plans</code></td><td>✅</td><td>🔴</td><td>—</td><td>5min</td></tr><tr><td>A4.2</td><td>Reescrever "Não use quando" em <code>writing-plans/SKILL.md</code> mencionando <code>planning</code></td><td>✅</td><td>🔴</td><td>—</td><td>5min</td></tr><tr><td>A4.3</td><td>Atualizar decision trees de ambas se necessário</td><td>✅</td><td>🟡</td><td>A4.1, A4.2</td><td>5min</td></tr><tr><td>A4.4</td><td>Verificar que <code>related_skills</code> mantêm referência cruzada</td><td>✅</td><td>🟢</td><td>A4.1, A4.2</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint A4:</strong></p>
+<ul>
+<li>[x] Ambas as skills mencionam a outra na seção "Não use quando"</li>
+<li>[x] Decision trees incluem desambiguação</li>
+</ul>
+<hr>
+<h3 id="a5-adicionar-skill-audit-bulletin-ao-grafo-de-relatedskills">A5: Adicionar <code>skill-audit-bulletin</code> ao grafo de <code>related_skills</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A5.1</td><td>Adicionar <code>skill-audit-bulletin</code> nos <code>related_skills</code> de <code>governance/SKILL.md</code></td><td>✅</td><td>🟡</td><td>—</td><td>2min</td></tr><tr><td>A5.2</td><td>Adicionar <code>skill-audit-bulletin</code> nos <code>related_skills</code> de <code>repo-bootstrap/SKILL.md</code></td><td>✅</td><td>🟡</td><td>—</td><td>2min</td></tr><tr><td>A5.3</td><td>Atualizar <code>index.json</code> com novos <code>related_skills</code></td><td>✅</td><td>🟡</td><td>A5.1, A5.2</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint A5:</strong></p>
+<ul>
+<li>[x] <code>governance</code> e <code>repo-bootstrap</code> referenciam <code>skill-audit-bulletin</code></li>
+<li>[x] <code>index.json</code> reflete mudanças</li>
+</ul>
+<hr>
+<h3 id="a6-resolver-pasta-checklists-fantasma">A6: Resolver pasta <code>checklists/</code> fantasma</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A6.1</td><td>Criar <code>skills/release/checklists/pre-release.md</code></td><td>✅</td><td>🟡</td><td>—</td><td>5min</td></tr><tr><td>A6.2</td><td>Criar <code>skills/release/checklists/post-release.md</code></td><td>✅</td><td>🟡</td><td>A6.1</td><td>5min</td></tr><tr><td>A6.3</td><td>Verificar que <code>templates/skill-template.md</code> não lista <code>checklists/</code> como obrigatório</td><td>✅</td><td>🟢</td><td>—</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint A6:</strong></p>
+<ul>
+<li>[x] <code>skills/release/checklists/</code> existe com ≥1 arquivo real</li>
+<li>[x] <code>checklists/</code> não é listado como obrigatório no template</li>
+</ul>
+<hr>
+<h3 id="a7-marcar-processo-de-peer-review-como-condicional">A7: Marcar processo de Peer Review como condicional</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A7.1</td><td>Adicionar nota "para equipes com >1 mantenedor" na seção Peer Review</td><td>✅</td><td>🟢</td><td>—</td><td>3min</td></tr><tr><td>A7.2</td><td>Reforçar seção Auto-review como processo atual para solo</td><td>✅</td><td>🟢</td><td>A7.1</td><td>2min</td></tr></table></div>
+<p><strong>Checkpoint A7:</strong></p>
+<ul>
+<li>[x] Peer Review marcado como condicional</li>
+<li>[x] Auto-review apresentado como processo atual</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase A:</strong></p>
+<ul>
+<li>[x] Todas as 7 tarefas (A1-A7) concluídas</li>
+<li>[x] <code>validate-index.sh</code> ainda passa após mudanças</li>
+<li>[x] Nenhum <code>related_skills</code> quebrado</li>
+</ul>
+<hr>
+<h2 id="fase-b-skills-novas">Fase B: Skills Novas</h2>
+<h3 id="b1-criar-skill-security-review-">B1: Criar skill <code>security-review</code> 🥇</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B1.1</td><td>Criar pasta <code>skills/security-review/</code></td><td>✅</td><td>🔴</td><td>A1</td><td>1min</td></tr><tr><td>B1.2</td><td>Criar <code>SKILL.md</code> com frontmatter completo</td><td>✅</td><td>🔴</td><td>B1.1</td><td>5min</td></tr><tr><td>B1.3</td><td>Criar decision tree (secret scanning, injeção, criptografia, dependências, ameaça)</td><td>✅</td><td>🔴</td><td>B1.2</td><td>15min</td></tr><tr><td>B1.4</td><td>Criar Workflow 1: Secret scanning</td><td>✅</td><td>🔴</td><td>B1.3</td><td>15min</td></tr><tr><td>B1.5</td><td>Criar Workflow 2: Revisão de dependências</td><td>✅</td><td>🔴</td><td>B1.3</td><td>15min</td></tr><tr><td>B1.6</td><td>Criar Workflow 3: Validação de criptografia</td><td>✅</td><td>🔴</td><td>B1.3</td><td>20min</td></tr><tr><td>B1.7</td><td>Criar Workflow 4: Modelagem de ameaça leve</td><td>✅</td><td>🔴</td><td>B1.3</td><td>15min</td></tr><tr><td>B1.8</td><td>Criar Workflow 5: Relatório de vulnerabilidade</td><td>✅</td><td>🟡</td><td>B1.3</td><td>10min</td></tr><tr><td>B1.9</td><td>Criar templates (security-checklist.md, threat-model.md, vulnerability-report.md)</td><td>✅</td><td>🔴</td><td>—</td><td>30min</td></tr><tr><td>B1.10</td><td>Criar anti-patterns com severidade 🔴🟡🟢</td><td>✅</td><td>🔴</td><td>—</td><td>20min</td></tr><tr><td>B1.11</td><td>Criar Checklists</td><td>✅</td><td>🔴</td><td>—</td><td>10min</td></tr><tr><td>B1.12</td><td>Criar Edge Cases</td><td>✅</td><td>🟡</td><td>—</td><td>10min</td></tr><tr><td>B1.13</td><td>Adicionar cross-references (<code>governance</code>, <code>architecture-review-kilo</code>, <code>testing</code>)</td><td>✅</td><td>🟡</td><td>A3</td><td>5min</td></tr><tr><td>B1.14</td><td>Atualizar <code>index.json</code></td><td>✅</td><td>🔴</td><td>B1.2-B1.13</td><td>3min</td></tr><tr><td>B1.15</td><td>Validar com <code>validate-skill.sh</code></td><td>✅</td><td>🔴</td><td>B1.14</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B1:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> passa com 0 erros</li>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] 3 templates funcionais</li>
+</ul>
+<hr>
+<h3 id="b2-criar-skill-agent-orchestration-">B2: Criar skill <code>agent-orchestration</code> 🥈</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B2.1</td><td>Criar pasta <code>skills/agent-orchestration/</code></td><td>✅</td><td>🔴</td><td>A1</td><td>1min</td></tr><tr><td>B2.2</td><td>Criar <code>SKILL.md</code> com frontmatter completo</td><td>✅</td><td>🔴</td><td>B2.1</td><td>5min</td></tr><tr><td>B2.3</td><td>Criar decision tree (decomposição, handoff, roteamento, pipeline)</td><td>✅</td><td>🔴</td><td>B2.2</td><td>15min</td></tr><tr><td>B2.4</td><td>Criar Workflow 1: Decompor tarefa em papéis</td><td>✅</td><td>🔴</td><td>B2.3</td><td>15min</td></tr><tr><td>B2.5</td><td>Criar Workflow 2: Definir protocolo de handoff</td><td>✅</td><td>🔴</td><td>B2.3</td><td>15min</td></tr><tr><td>B2.6</td><td>Criar Workflow 3: Roteamento de modelo</td><td>✅</td><td>🔴</td><td>B2.3</td><td>15min</td></tr><tr><td>B2.7</td><td>Criar Workflow 4: Orquestração paralela</td><td>✅</td><td>🔴</td><td>B2.3</td><td>15min</td></tr><tr><td>B2.8</td><td>Criar Workflow 5: Validação de contrato</td><td>✅</td><td>🟡</td><td>B2.3</td><td>10min</td></tr><tr><td>B2.9</td><td>Criar templates (agent-role-card.md, handoff-protocol.md, routing-decision.md)</td><td>✅</td><td>🔴</td><td>—</td><td>30min</td></tr><tr><td>B2.10</td><td>Criar anti-patterns com severidade 🔴🟡🟢</td><td>✅</td><td>🔴</td><td>—</td><td>20min</td></tr><tr><td>B2.11</td><td>Criar Checklists</td><td>✅</td><td>🔴</td><td>—</td><td>10min</td></tr><tr><td>B2.12</td><td>Criar Edge Cases</td><td>✅</td><td>🟡</td><td>—</td><td>10min</td></tr><tr><td>B2.13</td><td>Adicionar cross-references (<code>prompt-engineering</code>, <code>vibe-coding</code>, <code>governance</code>)</td><td>✅</td><td>🟡</td><td>—</td><td>5min</td></tr><tr><td>B2.14</td><td>Atualizar <code>index.json</code></td><td>✅</td><td>🔴</td><td>B2.2-B2.13</td><td>3min</td></tr><tr><td>B2.15</td><td>Validar com <code>validate-skill.sh</code></td><td>✅</td><td>🔴</td><td>B2.14</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B2:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> passa com 0 erros</li>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] 3 templates funcionais</li>
+</ul>
+<hr>
+<h3 id="b3-criar-skill-data-modeling-">B3: Criar skill <code>data-modeling</code> 🥉</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B3.1</td><td>Criar pasta <code>skills/data-modeling/</code></td><td>✅</td><td>🔴</td><td>A1</td><td>1min</td></tr><tr><td>B3.2</td><td>Criar <code>SKILL.md</code> com frontmatter completo</td><td>✅</td><td>🔴</td><td>B3.1</td><td>5min</td></tr><tr><td>B3.3</td><td>Criar decision tree (relacional, NoSQL, document, normalização, índices)</td><td>✅</td><td>🔴</td><td>B3.2</td><td>15min</td></tr><tr><td>B3.4</td><td>Criar Workflow 1: Analisar requisitos de dados</td><td>✅</td><td>🔴</td><td>B3.3</td><td>15min</td></tr><tr><td>B3.5</td><td>Criar Workflow 2: Definir schema relacional</td><td>✅</td><td>🔴</td><td>B3.3</td><td>15min</td></tr><tr><td>B3.6</td><td>Criar Workflow 3: Estratégia de índice</td><td>✅</td><td>🔴</td><td>B3.3</td><td>15min</td></tr><tr><td>B3.7</td><td>Criar Workflow 4: Migrations versionadas</td><td>✅</td><td>🔴</td><td>B3.3</td><td>15min</td></tr><tr><td>B3.8</td><td>Criar Workflow 5: Validação de schema</td><td>✅</td><td>🟡</td><td>B3.3</td><td>10min</td></tr><tr><td>B3.9</td><td>Criar templates (schema.sql, migration.md, index-strategy.md)</td><td>✅</td><td>🔴</td><td>—</td><td>30min</td></tr><tr><td>B3.10</td><td>Criar anti-patterns com severidade 🔴🟡🟢</td><td>✅</td><td>🔴</td><td>—</td><td>20min</td></tr><tr><td>B3.11</td><td>Criar Checklists</td><td>✅</td><td>🔴</td><td>—</td><td>10min</td></tr><tr><td>B3.12</td><td>Criar Edge Cases</td><td>✅</td><td>🟡</td><td>—</td><td>10min</td></tr><tr><td>B3.13</td><td>Adicionar cross-references (<code>ddd</code>, <code>testing</code>, <code>architecture-review-kilo</code>)</td><td>✅</td><td>🟡</td><td>A3</td><td>5min</td></tr><tr><td>B3.14</td><td>Atualizar <code>index.json</code></td><td>✅</td><td>🔴</td><td>B3.2-B3.13</td><td>3min</td></tr><tr><td>B3.15</td><td>Validar com <code>validate-skill.sh</code></td><td>✅</td><td>🔴</td><td>B3.14</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B3:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> passa com 0 erros</li>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] 3 templates funcionais</li>
+</ul>
+<hr>
+<h3 id="b4-criar-skill-api-design">B4: Criar skill <code>api-design</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B4.1</td><td>Criar pasta <code>skills/api-design/</code></td><td>✅</td><td>🔴</td><td>A1</td><td>1min</td></tr><tr><td>B4.2</td><td>Criar <code>SKILL.md</code> com frontmatter completo</td><td>✅</td><td>🔴</td><td>B4.1</td><td>5min</td></tr><tr><td>B4.3</td><td>Criar decision tree (REST, GraphQL, WebSocket, versionamento)</td><td>✅</td><td>🔴</td><td>B4.2</td><td>15min</td></tr><tr><td>B4.4</td><td>Criar Workflow 1: Definir contrato REST</td><td>✅</td><td>🔴</td><td>B4.3</td><td>15min</td></tr><tr><td>B4.5</td><td>Criar Workflow 2: Versionamento de API</td><td>✅</td><td>🔴</td><td>B4.3</td><td>10min</td></tr><tr><td>B4.6</td><td>Criar Workflow 3: Formato de erro consistente</td><td>✅</td><td>🔴</td><td>B4.3</td><td>10min</td></tr><tr><td>B4.7</td><td>Criar Workflow 4: Paginação</td><td>✅</td><td>🔴</td><td>B4.3</td><td>10min</td></tr><tr><td>B4.8</td><td>Criar Workflow 5: Idempotência</td><td>✅</td><td>🟡</td><td>B4.3</td><td>10min</td></tr><tr><td>B4.9</td><td>Criar templates (endpoint-spec.md, error-contract.md, api-versioning.md)</td><td>✅</td><td>🔴</td><td>—</td><td>25min</td></tr><tr><td>B4.10</td><td>Criar anti-patterns com severidade 🔴🟡🟢</td><td>✅</td><td>🔴</td><td>—</td><td>15min</td></tr><tr><td>B4.11</td><td>Criar Checklists</td><td>✅</td><td>🔴</td><td>—</td><td>10min</td></tr><tr><td>B4.12</td><td>Criar Edge Cases</td><td>✅</td><td>🟡</td><td>—</td><td>10min</td></tr><tr><td>B4.13</td><td>Adicionar cross-references (<code>documentation</code>, <code>testing</code>, <code>governance</code>)</td><td>✅</td><td>🟡</td><td>—</td><td>5min</td></tr><tr><td>B4.14</td><td>Atualizar <code>index.json</code></td><td>✅</td><td>🔴</td><td>B4.2-B4.13</td><td>3min</td></tr><tr><td>B4.15</td><td>Validar com <code>validate-skill.sh</code></td><td>✅</td><td>🔴</td><td>B4.14</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B4:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> passa com 0 erros</li>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] 3 templates funcionais</li>
+</ul>
+<hr>
+<h3 id="b5-criar-skill-observability">B5: Criar skill <code>observability</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B5.1</td><td>Criar pasta <code>skills/observability/</code></td><td>✅</td><td>🔴</td><td>A1</td><td>1min</td></tr><tr><td>B5.2</td><td>Criar <code>SKILL.md</code> com frontmatter completo</td><td>✅</td><td>🔴</td><td>B5.1</td><td>5min</td></tr><tr><td>B5.3</td><td>Criar decision tree (logging, métricas, tracing, alertas, SLAs)</td><td>✅</td><td>🔴</td><td>B5.2</td><td>15min</td></tr><tr><td>B5.4</td><td>Criar Workflow 1: Logging estruturado</td><td>✅</td><td>🔴</td><td>B5.3</td><td>15min</td></tr><tr><td>B5.5</td><td>Criar Workflow 2: Métricas RED</td><td>✅</td><td>🔴</td><td>B5.3</td><td>15min</td></tr><tr><td>B5.6</td><td>Criar Workflow 3: Alertas e limiares</td><td>✅</td><td>🔴</td><td>B5.3</td><td>10min</td></tr><tr><td>B5.7</td><td>Criar Workflow 4: Distributed tracing</td><td>✅</td><td>🔴</td><td>B5.3</td><td>15min</td></tr><tr><td>B5.8</td><td>Criar Workflow 5: SLAs/SLOs</td><td>✅</td><td>🟡</td><td>B5.3</td><td>10min</td></tr><tr><td>B5.9</td><td>Criar templates (logging-spec.md, metrics-sla.md, alert-rules.md)</td><td>✅</td><td>🔴</td><td>—</td><td>25min</td></tr><tr><td>B5.10</td><td>Criar anti-patterns com severidade 🔴🟡🟢</td><td>✅</td><td>🔴</td><td>—</td><td>15min</td></tr><tr><td>B5.11</td><td>Criar Checklists</td><td>✅</td><td>🔴</td><td>—</td><td>10min</td></tr><tr><td>B5.12</td><td>Criar Edge Cases</td><td>✅</td><td>🟡</td><td>—</td><td>10min</td></tr><tr><td>B5.13</td><td>Adicionar cross-references (<code>testing</code>, <code>release</code>, <code>governance</code>)</td><td>✅</td><td>🟡</td><td>—</td><td>5min</td></tr><tr><td>B5.14</td><td>Atualizar <code>index.json</code></td><td>✅</td><td>🔴</td><td>B5.2-B5.13</td><td>3min</td></tr><tr><td>B5.15</td><td>Validar com <code>validate-skill.sh</code></td><td>✅</td><td>🔴</td><td>B5.14</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B5:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> passa com 0 erros</li>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] 3 templates funcionais</li>
+</ul>
+<hr>
+<h3 id="b6-criar-skill-refactoring">B6: Criar skill <code>refactoring</code></h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B6.1</td><td>Criar pasta <code>skills/refactoring/</code></td><td>✅</td><td>🔴</td><td>A1</td><td>1min</td></tr><tr><td>B6.2</td><td>Criar <code>SKILL.md</code> com frontmatter completo</td><td>✅</td><td>🔴</td><td>B6.1</td><td>5min</td></tr><tr><td>B6.3</td><td>Criar decision tree (testes existentes, strangler fig, branch by abstraction)</td><td>✅</td><td>🔴</td><td>B6.2</td><td>15min</td></tr><tr><td>B6.4</td><td>Criar Workflow 1: Avaliar risco</td><td>✅</td><td>🔴</td><td>B6.3</td><td>10min</td></tr><tr><td>B6.5</td><td>Criar Workflow 2: Adicionar testes de caracterização</td><td>✅</td><td>🔴</td><td>B6.3</td><td>15min</td></tr><tr><td>B6.6</td><td>Criar Workflow 3: Aplicar refatoração segura</td><td>✅</td><td>🔴</td><td>B6.3</td><td>15min</td></tr><tr><td>B6.7</td><td>Criar Workflow 4: Validar com testes e revisão</td><td>✅</td><td>🔴</td><td>B6.3</td><td>10min</td></tr><tr><td>B6.8</td><td>Criar Workflow 5: Documentar decisão</td><td>✅</td><td>🟡</td><td>B6.3</td><td>10min</td></tr><tr><td>B6.9</td><td>Criar templates (refactoring-catalog.md, legacy-migration.md, test-before-refactor.md)</td><td>✅</td><td>🔴</td><td>—</td><td>25min</td></tr><tr><td>B6.10</td><td>Criar anti-patterns com severidade 🔴🟡🟢</td><td>✅</td><td>🔴</td><td>—</td><td>15min</td></tr><tr><td>B6.11</td><td>Criar Checklists</td><td>✅</td><td>🔴</td><td>—</td><td>10min</td></tr><tr><td>B6.12</td><td>Criar Edge Cases</td><td>✅</td><td>🟡</td><td>—</td><td>10min</td></tr><tr><td>B6.13</td><td>Adicionar cross-references (<code>architecture-review-kilo</code>, <code>ddd</code>, <code>testing</code>)</td><td>✅</td><td>🟡</td><td>A3</td><td>5min</td></tr><tr><td>B6.14</td><td>Atualizar <code>index.json</code></td><td>✅</td><td>🔴</td><td>B6.2-B6.13</td><td>3min</td></tr><tr><td>B6.15</td><td>Validar com <code>validate-skill.sh</code></td><td>✅</td><td>🔴</td><td>B6.14</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint B6:</strong></p>
+<ul>
+<li>[x] <code>validate-skill.sh</code> passa com 0 erros</li>
+<li>[x] SKILL.md ≥150 linhas</li>
+<li>[x] 3 templates funcionais</li>
+</ul>
+<hr>
+<p><strong>Checkpoint Geral Fase B:</strong></p>
+<ul>
+<li>[x] 6 novas skills criadas e validadas</li>
+<li>[x] <code>index.json</code> tem 20 entradas</li>
+<li>[x] Todas as 20 skills passam em <code>validate-skill.sh</code></li>
+</ul>
+<hr>
+<h2 id="fase-c-validao-final">Fase C: Validação Final</h2>
+<h3 id="c1-validao-cruzada-completa">C1: Validação cruzada completa</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>C1.1</td><td>Executar <code>validate-index.sh</code> — deve passar com 20/20 skills</td><td>✅</td><td>🔴</td><td>A1-A7, B1-B6</td><td>5min</td></tr><tr><td>C1.2</td><td>Executar <code>validate-skill.sh</code> em todas as 20 skills</td><td>✅</td><td>🔴</td><td>C1.1</td><td>10min</td></tr><tr><td>C1.3</td><td>Verificar que <code>index.json</code> tem 20 entradas e <code>version</code> = "2.0.2"</td><td>✅</td><td>🔴</td><td>C1.2</td><td>3min</td></tr><tr><td>C1.4</td><td>Verificar que nenhum <code>related_skills</code> aponta para skill inexistente</td><td>✅</td><td>🔴</td><td>C1.3</td><td>5min</td></tr><tr><td>C1.5</td><td>Verificar que todas as skills têm ≥150 linhas</td><td>✅</td><td>🔴</td><td>C1.2</td><td>3min</td></tr><tr><td>C1.6</td><td>Verificar que grafo de <code>related_skills</code> é conexo</td><td>✅</td><td>🟡</td><td>C1.4</td><td>5min</td></tr><tr><td>C1.7</td><td>Atualizar <code>CHANGELOG.md</code> com seção <code>[Unreleased]</code> se houver pendências</td><td>✅</td><td>🟢</td><td>C1.6</td><td>5min</td></tr></table></div>
+<p><strong>Checkpoint C1:</strong></p>
+<ul>
+<li>[x] <code>validate-index.sh</code> passa: 20/20 skills, 0 erros</li>
+<li>[x] <code>validate-skill.sh</code> passa para todas as 20 skills: 0 erros</li>
+<li>[x] <code>index.json</code> consistente</li>
+<li>[x] Grafo de <code>related_skills</code> conexo</li>
+</ul>
+<hr>
+<h2 id="resumo-geral">Resumo Geral</h2>
+<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Horas Est.</th><th>Status</th></tr><tr><td>Fase A: Débitos Técnicos</td><td>27</td><td>1.5-2h</td><td>✅</td></tr><tr><td>Fase B: Skills Novas</td><td>90</td><td>14-18h</td><td>✅</td></tr><tr><td>Fase C: Validação</td><td>7</td><td>0.5h</td><td>✅</td></tr><tr><td><strong>Total</strong></td><td><strong>124</strong></td><td><strong>~16-20.5h</strong></td><td><strong>✅ 100%</strong></td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-004.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

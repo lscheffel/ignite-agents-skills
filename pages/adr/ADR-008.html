@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-008.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-008.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="adr-008-ultra-avaliao-v203--correo-de-dbitos-estruturais-e-fechamento-de-loop-de-governana">ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais e Fechamento de Loop de Governança</h1>
+<h2 id="status">Status</h2>
+<p>Implementado (9/9 débitos corrigidos, audit bulletin executado)</p>
+<h2 id="contexto">Contexto</h2>
+<p>A Ultra-Avaliação v2.0.3 do repositório <code>ignite-agents-skills</code> (executada em 2026-07-05) aplicou a rubrica <code>skill-audit-bulletin</code> ao pacote inteiro e produziu um veredito <strong>B+/A- — 88/100</strong> ("ADOTAR COM AJUSTES"). Esta é uma evolução real desde a Ultra-Auditoria v2.0.2 (ADR-004, 81.5/100, B): os 9 débitos daquela rodada foram genuinamente resolvidos e as 6 skills novas propostas foram implementadas com qualidade. O repositório hoje é um runtime de governança para agentes — 22 módulos com frontmatter machine-readable, CI com validação, e ADR trail completo.</p>
+<p>Porém, a avaliação identificou <strong>9 novos débitos</strong> (3 críticos, 4 médios, 2 baixos), dos quais 3 são <strong>recorrência direta</strong> de padrões que a ADR-004 "corrigiu". Dois débitos são <strong>bugs reais</strong> — não hipóteses — e um deles afeta o gate de qualidade do CI. A nota potencial (94-96) está truncada porque o loop de governança não está fechando na prática.</p>
+<h3 id="dbitos-identificados">Débitos Identificados</h3>
+<div class="table-wrapper"><table><tr><th>ID</th><th>Débito</th><th>Severidade</th><th>Tipo</th><th>Esforço</th></tr><tr><td>D-001</td><td><code>validate-skill.sh</code> quebra silenciosamente no primeiro warning — <code>((WARNINGS++))</code> mata o script via <code>set -e</code> antes de rodar checks 7-10 e do resumo</td><td>🔴 Crítico</td><td>Bug</td><td>S</td></tr><tr><td>🔴</td><td>Links quebrados para ADRs arquivadas — 3 em <code>implementation/SKILL.md</code> (ADR-005, ADR-005-BP, ADR-002) + 1 em <code>agents-md-generator/SKILL.md</code> (ADR-007) apontam pra <code>../../docs/adr/ADR-XXX.md</code> que não existe</td><td>🔴 Crítico</td><td>Link morto</td><td>S</td></tr><tr><td>D-003</td><td><code>archive-adrs.sh</code> não reconhece artefatos da skill implementation (<code>-execution-contract.md</code>, <code>-execution-report.md</code>, <code>-change-plan.md</code>) — 3 arquivos órfãos em <code>docs/adr/</code></td><td>🟡 Médio</td><td>Gap funcional</td><td>S</td></tr><tr><td>D-004</td><td>Dois workflows de CI (<code>sync-and-deploy.yml</code> + <code>sync-pages.yml</code>) fazem o mesmo trabalho no mesmo evento, sem documentar o outro — corrida de commits na gh-pages</td><td>🟡 Médio</td><td>Redundância</td><td>S</td></tr><tr><td>D-005</td><td>Drift de versão recorrente — README (L153) diz v2.1.0, index.json diz 2.0.3, CHANGELOG só tem até [2.0.3] (recorrência do §4.2 da ADR-004)</td><td>🟡 Médio</td><td>Metadado</td><td>S</td></tr><tr><td>D-006</td><td>CHANGELOG sem entrada para <code>agents-md-generator</code> (ADR-007, v1.0.0, 13 arquivos) — recorrência do §4.3 da ADR-004</td><td>🟡 Médio</td><td>Metadado</td><td>S</td></tr><tr><td>D-007</td><td>Vazamento de tokens CJK/árabe em 7 arquivos diferentes (9+ pontos) — zero revisão de encoding no pipeline</td><td>🟡 Médio</td><td>Encoding</td><td>S</td></tr><tr><td>D-008</td><td>Skills com 0-1 exemplo prático apesar de templates ricos (writing-plans, api-design, security-review, ddd)</td><td>🟢 Baixo</td><td>Completude</td><td>M</td></tr><tr><td>D-009</td><td><code>skill-audit-bulletin</code> nunca usada em produção — <code>docs/audits/</code> não existe, template instrui criar mas ninguém segue</td><td>🟢 Baixo</td><td>Dogfooding</td><td>S</td></tr></table></div>
+<h3 id="padro-de-recorrncia">Padrão de Recorrência</h3>
+<p>Três dos débitos (D-005, D-006, e o conceito por trás de D-007) são <strong>idênticos</strong> aos que a ADR-004 corrigiu. Isso indica que o mecanismo de auto-correção é pontual (corrige o sintoma) mas não sistêmico (não impede recorrência). O CI "passa" mas tem um bug que mascara falhas reais (D-001), e os metadados de versão/changelog dependem de disciplina manual num ponto onde deveria haver enforcement automático.</p>
+<h2 id="deciso">Decisão</h2>
+<p>Corrigir os 9 débitos em 3 fases, priorizando bugs que afetam o CI (D-001) e links mortos que afetam agentes em uso hoje (D-002), seguido de automação que previne recorrência (D-003 a D-007), e por fim completude (D-008, D-009).</p>
+<h3 id="fase-1-bugs-de-ci-e-links-mortos-d-001-d-002--1h">Fase 1: Bugs de CI e Links Mortos (D-001, D-002) — ~1h</h3>
+<p>Correções pontuais, alto impacto, zero risco de regressão.</p>
+<h3 id="fase-2-automao-e-governana-d-003-d-004-d-005-d-006-d-007--3-4h">Fase 2: Automação e Governança (D-003, D-004, D-005, D-006, D-007) — ~3-4h</h3>
+<p>Fecha o loop de governança: scripts que conhecem os artefatos reais, workflows consolidados, validação de encoding, enforcement de versão no CI.</p>
+<h3 id="fase-3-completude-e-dogfooding-d-008-d-009--4-6h">Fase 3: Completude e Dogfooding (D-008, D-009) — ~4-6h</h3>
+<p>Melhora cobertura de exemplos e usa a própria <code>skill-audit-bulletin</code> no repo.</p>
+<h2 id="alternativas-consideradas">Alternativas Consideradas</h2>
+<h3 id="alternativa-a-s-corrigir-d-001-e-d-002-mnimo-vivel">Alternativa A: Só corrigir D-001 e D-002 (mínimo viável)</h3>
+<ul>
+<li><strong>Prós</strong>: Resolve os bugs mais urgentes rápido</li>
+<li><strong>Cons</strong>: D-005, D-006, D-007 continuam — os mesmos débitos vão reaparecer na próxima rodada</li>
+</ul>
+<h3 id="alternativa-b-corrigir-tudo-de-uma-vez-big-bang">Alternativa B: Corrigir tudo de uma vez (big bang)</h3>
+<ul>
+<li><strong>Prós</strong>: Consistência, tudo entrega junto</li>
+<li><strong>Cons</strong>: Alto risco de引入 novos bugs, difícil de revisar 9 changes simultâneos</li>
+</ul>
+<h3 id="alternativa-c-3-fases-incrementais-escolhida">Alternativa C: 3 fases incrementais (escolhida)</h3>
+<ul>
+<li><strong>Prós</strong>: Bugs críticos resolvidos primeiro (base sólida), automação previne recorrência, completude é polish</li>
+<li><strong>Cons</strong>: 3 commits/PRs separados, mas cada um é atomicamente verificável</li>
+</ul>
+<h2 id="consequncias">Consequências</h2>
+<h3 id="positivas">Positivas</h3>
+<ul>
+<li>CI valida qualidade real — <code>validate-skill.sh</code> agora roda todos os 10 checks, não para no primeiro warning</li>
+<li>Agentes não batem em 404 quando seguem Referências de skills</li>
+<li><code>archive-adrs.sh</code> conhece todos os artefatos que implementation produz</li>
+<li>Um único workflow de CI para deploy, sem corrida</li>
+<li>Versão consistente entre README, index.json e CHANGELOG — enforced por script</li>
+<li>Encoding limpo em todos os arquivos — enforced por CI</li>
+<li>Exemplos práticos aumentam acionabilidade das skills</li>
+</ul>
+<h3 id="negativas">Negativas</h3>
+<ul>
+<li>~8-11h de trabalho total</li>
+<li>D-008 requer criação de exemplos novos (não é automático)</li>
+<li>D-009 requer decidir onde armazenar audits (novo diretório <code>docs/audits/</code>)</li>
+</ul>
+<h3 id="riscos">Riscos</h3>
+<ul>
+<li><strong>Risco</strong>: Correção de D-001 pode expor warnings reais em skills que antes "passavam"</li>
+<li><strong>Mitigação</strong>: Rodar <code>validate-skill.sh</code> em todas as 22 skills após correção para mapear warnings existentes</li>
+<li><strong>Risco</strong>: Validação de encoding (D-007) pode ter falsos positivos em code blocks com exemplos em outros idiomas</li>
+<li><strong>Mitigação</strong>: Usar regex restrita que só pegue CJK/árabe fora de code blocks</li>
+</ul>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="./archive/ADR-004.md">ADR-004: Implementação das Recomendações da Ultra-Auditoria v2.0.2</a> — débitos originais que esta ADR resolve por recorrência</li>
+<li><a href="./archive/ADR-006.md">ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages</a> — decisão que <code>sync-and-deploy.yml</code> substitui</li>
+<li><a href="./archive/ADR-007.md">ADR-007: Skill para Geração de AGENTS.md Adaptativo</a> — skill cujos artefatos estão órfãos</li>
+<li><code>skills/skill-audit-bulletin/SKILL.md</code> — rubrica aplicada nesta avaliação</li>
+</ul>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

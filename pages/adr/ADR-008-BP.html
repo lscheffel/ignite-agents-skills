@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-008-BP.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-008-BP.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="blueprint-ultra-avaliao-v203--correo-de-dbitos-estruturais">Blueprint: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais</h1>
+<blockquote>ADR-008 | Versão 1.0 | 2026-07-05 | <strong>Status: ✅ CONCLUÍDO</strong></blockquote>
+<hr>
+<h2 id="1-viso-geral">1. Visão Geral</h2>
+<h3 id="objetivo">Objetivo</h3>
+<p>Corrigir 9 débitos técnicos identificados pela Ultra-Avaliação v2.0.3 (88/100), incluindo 2 bugs reais no CI, links quebrados que afetam agentes em uso, e 3 débitos de recorrência direta da ADR-004. Fechar o loop de governança para que os mesmos padrões de débito não reapareçam.</p>
+<h3 id="mtricas-de-sucesso">Métricas de Sucesso</h3>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Status</th></tr><tr><td><code>validate-skill.sh</code> roda todos os 10 checks</td><td>Não (para no 1º warning)</td><td>Sim</td><td>⬜</td></tr><tr><td>Links quebrados para ADRs arquivadas</td><td>4</td><td>0</td><td>⬜</td></tr><tr><td>Artefatos implementation órfãos em docs/adr/</td><td>3</td><td>0</td><td>⬜</td></tr><tr><td>Workflows de CI duplicados</td><td>2</td><td>1</td><td>⬜</td></tr><tr><td>Versão consistente (README/index/CHANGELOG)</td><td>Não (v2.1.0 vs 2.0.3)</td><td>Sim (2.0.3)</td><td>⬜</td></tr><tr><td>CHANGELOG inclui agents-md-generator</td><td>Não</td><td>Sim</td><td>⬜</td></tr><tr><td>Vazamentos CJK/árabe em arquivos .md</td><td>9</td><td>0</td><td>⬜</td></tr><tr><td>Skills com ≥2 exemplos práticos</td><td>1/4 (só ddd)</td><td>4/4</td><td>⬜</td></tr><tr><td>Audit bulletin real no repo</td><td>0</td><td>≥1</td><td>⬜</td></tr></table></div>
+<hr>
+<h2 id="2-fase-1-bugs-de-ci-e-links-mortos">2. Fase 1: Bugs de CI e Links Mortos</h2>
+<h3 id="f11-corrigir-warnings-em-validate-skillsh-d-001">F1.1: Corrigir <code>((WARNINGS++))</code> em validate-skill.sh [D-001]</h3>
+<p><strong>Arquivo:</strong> <code>scripts/validate-skill.sh</code></p>
+<p><strong>Bug:</strong> Em bash, <code>((VAR++))</code> retorna o valor antigo de <code>VAR</code> como status de saída. Quando <code>WARNINGS</code> sai de 0, a expressão avalia pra 0 (falso), e <code>set -e</code> mata o script antes de rodar os checks 7-10 e antes de imprimir o resumo. Isso transforma qualquer warning em falha silenciosa de CI.</p>
+<p><strong>Mudança:</strong></p>
+<pre data-lang="bash"><code># Linha 18: ((ERRORS++)) → ERRORS=$((ERRORS + 1))
+# Linha 24: ((WARNINGS++)) → WARNINGS=$((WARNINGS + 1))</code></pre>
+<p><strong>Estrutura proposta (linhas 16-25):</strong></p>
+<pre data-lang="bash"><code># Função para erro
+error() {
+    echo &quot;❌ ERRO: $1&quot;
+    ERRORS=$((ERRORS + 1))
+}
+
+# Função para warning
+warn() {
+    echo &quot;⚠️  WARNING: $1&quot;
+    WARNINGS=$((WARNINGS + 1))
+}</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>((ERRORS++))</code> substituído por <code>ERRORS=$((ERRORS + 1))</code></li>
+<li>[ ] <code>((WARNINGS++))</code> substituído por <code>WARNINGS=$((WARNINGS + 1))</code></li>
+<li>[ ] Script roda todos os 10 checks mesmo com warnings</li>
+<li>[ ] Resumo é impresso sempre (não truncado)</li>
+<li>[ ] Exit code = 0 quando só há warnings, 1 quando há errors</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>bash scripts/validate-skill.sh skills/writing-plans
+# Deve: imprimir resumo com warnings E exit 0
+echo &quot;Exit: $?&quot;</code></pre>
+<hr>
+<h3 id="f12-corrigir-links-quebrados-para-adrs-arquivadas-d-002">F1.2: Corrigir links quebrados para ADRs arquivadas [D-002]</h3>
+<p><strong>Arquivos:</strong> <code>skills/implementation/SKILL.md</code>, <code>skills/agents-md-generator/SKILL.md</code></p>
+<p><strong>Mudança:</strong> Adicionar <code>archive/</code> ao path de todos os links para ADRs arquivadas.</p>
+<p><strong>Links a corrigir:</strong></p>
+<div class="table-wrapper"><table><tr><th>Arquivo</th><th>Linha</th><th>Link atual</th><th>Link correto</th></tr><tr><td><code>skills/implementation/SKILL.md</code></td><td>401</td><td><code>../../docs/adr/ADR-005.md</code></td><td><code>../../docs/adr/archive/ADR-005.md</code></td></tr><tr><td><code>skills/implementation/SKILL.md</code></td><td>402</td><td><code>../../docs/adr/ADR-005-BP.md</code></td><td><code>../../docs/adr/archive/ADR-005-BP.md</code></td></tr><tr><td><code>skills/implementation/SKILL.md</code></td><td>403</td><td><code>../../docs/adr/ADR-002.md</code></td><td><code>../../docs/adr/archive/ADR-002.md</code></td></tr><tr><td><code>skills/agents-md-generator/SKILL.md</code></td><td>292</td><td><code>../../docs/adr/ADR-007.md</code></td><td><code>../../docs/adr/archive/ADR-007.md</code></td></tr></table></div>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Todos os 4 links apontam para <code>archive/ADR-XXX.md</code></li>
+<li>[ ] Zero ocorrências de <code>../../docs/adr/ADR-</code> sem <code>archive/</code> em skills/</li>
+<li>[ ] Arquivos-alvo existem em <code>docs/adr/archive/</code></li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>grep -rn &#x27;../../docs/adr/ADR-&#x27; skills/ | grep -v archive
+# Deve: ZERO resultados</code></pre>
+<hr>
+<h2 id="3-fase-2-automao-e-governana">3. Fase 2: Automação e Governança</h2>
+<h3 id="f21-atualizar-archive-adrssh-para-artefatos-de-implementation-d-003">F2.1: Atualizar archive-adrs.sh para artefatos de implementation [D-003]</h3>
+<p><strong>Arquivo:</strong> <code>scripts/archive-adrs.sh</code></p>
+<p><strong>Mudança:</strong> Adicionar sufixos <code>-execution-contract.md</code>, <code>-execution-report.md</code>, <code>-change-plan.md</code> ao loop de arquivamento (linha 60).</p>
+<p><strong>Estrutura proposta (linha 60):</strong></p>
+<pre data-lang="bash"><code># ANTES:
+for suffix in &quot;-BP.md&quot; &quot;-TODO.md&quot; &quot;-implementation-plan.md&quot;; do
+
+# DEPOIS:
+for suffix in &quot;-BP.md&quot; &quot;-TODO.md&quot; &quot;-implementation-plan.md&quot; &quot;-execution-contract.md&quot; &quot;-execution-report.md&quot; &quot;-change-plan.md&quot;; do</code></pre>
+<p><strong>Mudança adicional:</strong> Mover os 3 arquivos órfãos existentes para archive:</p>
+<pre data-lang="bash"><code>mv docs/adr/ADR-007-change-plan.md docs/adr/archive/
+mv docs/adr/ADR-007-execution-contract.md docs/adr/archive/
+mv docs/adr/ADR-007-execution-report.md docs/adr/archive/</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Script reconhece os 6 sufixos</li>
+<li>[ ] Os 3 arquivos órfãos de ADR-007 estão em <code>docs/adr/archive/</code></li>
+<li>[ ] <code>docs/adr/</code> só contém <code>INDEX.md</code> e <code>archive/</code></li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>ls docs/adr/
+# Deve: INDEX.md archive/
+ls docs/adr/archive/ADR-007-*
+# Deve: ADR-007-change-plan.md ADR-007-execution-contract.md ADR-007-execution-report.md</code></pre>
+<hr>
+<h3 id="f22-remover-sync-pagesyml-redundante-d-004">F2.2: Remover sync-pages.yml redundante [D-004]</h3>
+<p><strong>Arquivo:</strong> <code>.github/workflows/sync-pages.yml</code> (REMOVER)</p>
+<p><strong>Mudança:</strong> Deletar <code>sync-pages.yml</code>. O <code>sync-and-deploy.yml</code> (formalizado na ADR-006) já cobre o mesmo evento com strategy mais completa.</p>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>sync-pages.yml</code> não existe mais</li>
+<li>[ ] Nenhum arquivo referencia <code>sync-pages</code></li>
+<li>[ ] <code>sync-and-deploy.yml</code> é o único workflow de deploy</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>[ ! -f .github/workflows/sync-pages.yml ] &amp;&amp; echo &quot;OK&quot;
+grep -rn &quot;sync-pages&quot; .github/ skills/ docs/ README.md AGENTS.md
+# Deve: ZERO resultados</code></pre>
+<hr>
+<h3 id="f23-sincronizar-verso-readme--indexjson-d-005">F2.3: Sincronizar versão README ↔ index.json [D-005]</h3>
+<p><strong>Arquivo:</strong> <code>README.md</code> (L153)</p>
+<p><strong>Mudança:</strong> Corrigir <code>v2.1.0</code> para <code>v2.0.3</code> no cabeçalho de status.</p>
+<p><strong>Linha 153 atual:</strong></p>
+<pre data-lang="markdown"><code>**v2.1.0 — Skills Ultra-High Quality Grade**</code></pre>
+<p><strong>Linha 153 corrigida:</strong></p>
+<pre data-lang="markdown"><code>**v2.0.3 — Skills Ultra-High Quality Grade**</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] README diz <code>v2.0.3</code></li>
+<li>[ ] index.json diz <code>2.0.3</code></li>
+<li>[ ] CHANGELOG tem entry <code>[2.0.3]</code></li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>echo &quot;README: $(grep -oP &#x27;v[0-9]+\.[0-9]+\.[0-9]+&#x27; README.md | head -1)&quot;
+echo &quot;index.json: $(jq -r &#x27;.version&#x27; skills/index.json)&quot;
+echo &quot;CHANGELOG: $(grep -oP &#x27;\[[0-9]+\.[0-9]+\.[0-9]+\]&#x27; CHANGELOG.md | head -1)&quot;
+# Todos devem ser 2.0.3</code></pre>
+<hr>
+<h3 id="f24-adicionar-agents-md-generator-ao-changelog-d-006">F2.4: Adicionar agents-md-generator ao CHANGELOG [D-006]</h3>
+<p><strong>Arquivo:</strong> <code>CHANGELOG.md</code></p>
+<p><strong>Mudança:</strong> Adicionar entrada na seção <code>Added</code> da versão <code>[2.0.3]</code> documentando a skill <code>agents-md-generator</code>.</p>
+<p><strong>Entrada a adicionar (após a linha 12, dentro de <code>[2.0.3]</code>):</strong></p>
+<pre data-lang="markdown"><code>- Skill `agents-md-generator` — geração e manutenção de AGENTS.md adaptativo (ADR-007)
+  - Detecção automática de contexto do projeto
+  - 7 templates: AGENTS-base, AGENTS-api, AGENTS-cli, AGENTS-crm, AGENTS-library, AGENTS-skills-repo, AGENTS-webapp
+  - 3 examples: before-after, context-detection, customization
+  - 2 checklists: maintenance, validation
+  - Anti-patterns: template genérico, sem versionamento, sem validação</code></pre>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] CHANGELOG tem entrada para <code>agents-md-generator</code> dentro de <code>[2.0.3]</code></li>
+<li>[ ] Entrada menciona ADR-007, 7 templates, 3 examples</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>grep -A3 &quot;agents-md-generator&quot; CHANGELOG.md
+# Deve: mostrar entry descrevendo a skill</code></pre>
+<hr>
+<h3 id="f25-adicionar-validao-de-encoding--limpar-vazamentos-d-007">F2.5: Adicionar validação de encoding + limpar vazamentos [D-007]</h3>
+<p><strong>Arquivos:</strong></p>
+<ul>
+<li><code>scripts/validate-skill.sh</code> (novo check #11)</li>
+<li>8 arquivos com 9 vazamentos CJK/árabe</li>
+</ul>
+<h4 id="parte-a-novo-check-em-validate-skillsh">Parte A: Novo check em validate-skill.sh</h4>
+<p><strong>Inserir após o check #10 (linhas 125-129), antes do resumo:</strong></p>
+<pre data-lang="bash"><code># 11. Verificar encoding (CJK/árabe fora de code blocks)
+if [[ -f &quot;$SKILL_DIR/SKILL.md&quot; ]]; then
+    # Remove code blocks antes de verificar
+    non_code=$(sed &#x27;/^```/,/^```/d&#x27; &quot;$SKILL_DIR/SKILL.md&quot;)
+    if echo &quot;$non_code&quot; | grep -qP &#x27;[\x{4E00}-\x{9FFF}\x{0600}-\x{06FF}]&#x27; 2&gt;/dev/null; then
+        warn &quot;Caracteres CJK/árabe detectados fora de code blocks (verificar encoding)&quot;
+    else
+        success &quot;Encoding limpo (sem caracteres CJK/árabe)&quot;
+    fi
+fi</code></pre>
+<h4 id="parte-b-limpar-os-9-vazamentos">Parte B: Limpar os 9 vazamentos</h4>
+<div class="table-wrapper"><table><tr><th>#</th><th>Arquivo</th><th>Linha</th><th>Vazamento</th><th>Substituição</th></tr><tr><td>1</td><td><code>AGENTS.md</code></td><td>77</td><td><code>空行</code></td><td><code>linhas vazias</code></td></tr><tr><td>2</td><td><code>skills/agents-md-generator/templates/AGENTS-skills-repo.md</code></td><td>41</td><td><code>空行</code></td><td><code>linhas vazias</code></td></tr><tr><td>3</td><td><code>skills/refactoring/templates/test-before-refactor.md</code></td><td>116</td><td><code>分支</code></td><td><code>branches</code></td></tr><tr><td>4</td><td><code>skills/refactoring/SKILL.md</code></td><td>216</td><td><code>难以</code></td><td><code>difícil de</code></td></tr><tr><td>5</td><td><code>skills/refactoring/SKILL.md</code></td><td>231</td><td><code>难以</code></td><td><code>difícil de</code></td></tr><tr><td>6</td><td><code>skills/refactoring/SKILL.md</code></td><td>305</td><td><code>替换</code></td><td><code>substituir</code></td></tr><tr><td>7</td><td><code>skills/data-modeling/SKILL.md</code></td><td>56</td><td><code>Sنقem no commit</code></td><td><code>Sigma no commit</code></td></tr><tr><td>8</td><td><code>skills/data-modeling/SKILL.md</code></td><td>239</td><td><code>覆盖索covers</code></td><td><code>covering index</code></td></tr><tr><td>9</td><td><code>skills/agents-md-generator/templates/AGENTS-webapp.md</code></td><td>226</td><td><code>难 de refactor</code></td><td><code>difícil de refatorar</code></td></tr></table></div>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Check #11 existe em validate-skill.sh</li>
+<li>[ ] Zero vazamentos CJK/árabe em .md (fora de code blocks)</li>
+<li>[ ] Todos os 9 pontos corrigidos</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>grep -rnP &#x27;[\x{4E00}-\x{9FFF}\x{0600}-\x{06FF}]&#x27; skills/ AGENTS.md
+# Deve: ZERO resultados</code></pre>
+<hr>
+<h2 id="4-fase-3-completude-e-dogfooding">4. Fase 3: Completude e Dogfooding</h2>
+<h3 id="f31-adicionar-exemplos-prticos-d-008">F3.1: Adicionar exemplos práticos [D-008]</h3>
+<p><strong>Arquivos a criar:</strong></p>
+<ul>
+<li><code>skills/writing-plans/examples/api-migration-plan.md</code></li>
+<li><code>skills/writing-plans/examples/feature-breakdown.md</code></li>
+<li><code>skills/api-design/examples/rest-crud-spec.md</code></li>
+<li><code>skills/api-design/examples/error-handling-contract.md</code></li>
+<li><code>skills/security-review/examples/dependency-audit.md</code></li>
+<li><code>skills/security-review/examples/crypto-validation.md</code></li>
+</ul>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] writing-plans tem ≥2 exemplos (atual: 0)</li>
+<li>[ ] api-design tem ≥2 exemplos (atual: 0)</li>
+<li>[ ] security-review tem ≥2 exemplos (atual: 0)</li>
+<li>[ ] Cada exemplo tem ≥30 linhas com contexto, código, output esperado</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>for skill in writing-plans api-design security-review; do
+  count=$(find &quot;skills/$skill/examples&quot; -name &quot;*.md&quot; 2&gt;/dev/null | wc -l)
+  echo &quot;$skill: $count exemplos&quot;
+done</code></pre>
+<hr>
+<h3 id="f32-executar-skill-audit-bulletin-no-repo-d-009">F3.2: Executar skill-audit-bulletin no repo [D-009]</h3>
+<p><strong>Arquivos a criar:</strong></p>
+<ul>
+<li><code>docs/audits/</code> (diretório)</li>
+<li><code>docs/audits/ignite-agents-skills-audit.md</code></li>
+</ul>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Diretório <code>docs/audits/</code> existe</li>
+<li>[ ] Audit bulletin gerado seguindo template <code>skills/skill-audit-bulletin/templates/audit-bulletin.md</code></li>
+<li>[ ] Bulletin cobre ≥5 skills críticas</li>
+<li>[ ] Score ≥ 90/100</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code>[ -d docs/audits ] &amp;&amp; echo &quot;OK&quot; || echo &quot;FALTA&quot;
+ls docs/audits/</code></pre>
+<hr>
+<h2 id="5-fase-4-validao-final">5. Fase 4: Validação Final</h2>
+<h3 id="f41-validao-cruzada-completa">F4.1: Validação cruzada completa</h3>
+<p><strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>validate-index.sh</code> passa: 22/22 skills, 0 erros</li>
+<li>[ ] <code>validate-skill.sh</code> passa para todas as 22 skills: 0 erros (com check #11)</li>
+<li>[ ] Zero links quebrados para ADRs</li>
+<li>[ ] Zero vazamentos CJK/árabe</li>
+<li>[ ] Versão consistente em README, index.json, CHANGELOG</li>
+<li>[ ] <code>sync-pages.yml</code> removido</li>
+<li>[ ] <code>archive-adrs.sh</code> reconhece 6 sufixos</li>
+<li>[ ] Exemplos existem para writing-plans, api-design, security-review</li>
+<li>[ ] Audit bulletin existe em docs/audits/</li>
+</ul>
+<p><strong>Validação:</strong></p>
+<pre data-lang="bash"><code># 1. Index
+./scripts/validate-index.sh
+
+# 2. Todas as skills
+for skill in skills/*/; do
+  [ -f &quot;$skill/SKILL.md&quot; ] || continue
+  bash scripts/validate-skill.sh &quot;$skill&quot;
+done
+
+# 3. Links
+grep -rn &#x27;../../docs/adr/ADR-&#x27; skills/ | grep -v archive
+
+# 4. Encoding
+grep -rnP &#x27;[\x{4E00}-\x{9FFF}\x{0600}-\x{06FF}]&#x27; skills/ AGENTS.md
+
+# 5. Versão
+echo &quot;README: $(grep -oP &#x27;v[0-9]+\.[0-9]+\.[0-9]+&#x27; README.md | head -1)&quot;
+echo &quot;index: $(jq -r &#x27;.version&#x27; skills/index.json)&quot;
+
+# 6. Workflow
+[ ! -f .github/workflows/sync-pages.yml ] &amp;&amp; echo &quot;sync-pages OK&quot;
+
+# 7. Sufixos
+grep -q &quot;execution-contract&quot; scripts/archive-adrs.sh &amp;&amp; echo &quot;archive OK&quot;
+
+# 8. Exemplos
+for skill in writing-plans api-design security-review; do
+  count=$(find &quot;skills/$skill/examples&quot; -name &quot;*.md&quot; 2&gt;/dev/null | wc -l)
+  echo &quot;$skill: $count&quot;
+done
+
+# 9. Audit
+[ -f docs/audits/ignite-agents-skills-audit.md ] &amp;&amp; echo &quot;audit OK&quot;</code></pre>
+<hr>
+<h2 id="6-dependncias-e-sequenciamento">6. Dependências e Sequenciamento</h2>
+<pre><code>F1.1 (validate-skill.sh bug) ──┐
+F1.2 (links quebrados) ────────┤
+                                │
+F2.1 (archive-adrs.sh) ────────┤── Fase 2
+F2.2 (remover sync-pages.yml) ─┤
+F2.3 (versão) ─────────────────┤
+F2.4 (CHANGELOG) ──────────────┤
+F2.5 (encoding) ───────────────┘
+                                │
+F3.1 (exemplos) ───────────────┤── Fase 3
+F3.2 (dogfooding) ─────────────┘
+                                │
+F4.1 (validação) ──────────────┘── Fase 4</code></pre>
+<h3 id="ordem-de-execuo-recomendada">Ordem de Execução Recomendada</h3>
+<pre><code>Fase 1 (~1h) — paralelizável:
+  ├── F1.1: Corrigir ((WARNINGS++)) ─────────────┐
+  └── F1.2: Corrigir links quebrados ─────────────┘
+
+Fase 2 (~3-4h) — sequencial:
+  ├── F2.2: Remover sync-pages.yml ──────────────┐  (zero deps)
+  ├── F2.3: Sincronizar versão ──────────────────┤  (independente)
+  ├── F2.4: Atualizar CHANGELOG ─────────────────┤  (após F2.3)
+  ├── F2.1: Atualizar archive-adrs.sh ───────────┤  (após F1.1)
+  └── F2.5: Validação encoding + limpar ─────────┘  (após F1.1)
+
+Fase 3 (~4-6h) — após Fase 2:
+  ├── F3.1: Criar exemplos ──────────────────────┐
+  └── F3.2: Dogfooding audit ────────────────────┘  (após F3.1)
+
+Fase 4 — validação final:
+  └── F4.1: Validação cruzada ────────────────────  (após tudo)</code></pre>
+<hr>
+<h2 id="7-riscos-e-mitigaes">7. Riscos e Mitigações</h2>
+<div class="table-wrapper"><table><tr><th>Risco</th><th>Impacto</th><th>Probabilidade</th><th>Mitigação</th></tr><tr><td>Correção de D-001 expõe warnings reais em skills que "passavam"</td><td>Médio</td><td>Alta</td><td>Rodar validate-skill.sh em todas as 22 skills após correção para mapear warnings</td></tr><tr><td>Validação de encoding (D-007) dá falsos positivos em code blocks</td><td>Baixo</td><td>Média</td><td>Usar <code>sed</code> para remover code blocks antes de grep</td></tr><tr><td>Remoção de sync-pages.yml quebra deploy se sync-and-deploy.yml tem bug</td><td>Alto</td><td>Baixa</td><td>Verificar que sync-and-deploy.yml funciona antes de remover</td></tr><tr><td>Exemplos (D-008) ficam genéricos demais</td><td>Médio</td><td>Média</td><td>Usar casos reais do repo (Secure Notes, MestreCuca, FAISS)</td></tr></table></div>
+<hr>
+<h2 id="8-estimativas-detalhadas">8. Estimativas Detalhadas</h2>
+<div class="table-wrapper"><table><tr><th>Tarefa</th><th>Complexidade</th><th>Horas Est.</th><th>Dependências</th></tr><tr><td>F1.1: Corrigir ((WARNINGS++))</td><td>S</td><td>15min</td><td>—</td></tr><tr><td>F1.2: Corrigir links quebrados</td><td>S</td><td>15min</td><td>—</td></tr><tr><td>F2.1: Atualizar archive-adrs.sh</td><td>S</td><td>20min</td><td>F1.1</td></tr><tr><td>F2.2: Remover sync-pages.yml</td><td>S</td><td>5min</td><td>—</td></tr><tr><td>F2.3: Sincronizar versão</td><td>S</td><td>5min</td><td>—</td></tr><tr><td>F2.4: Atualizar CHANGELOG</td><td>S</td><td>10min</td><td>F2.3</td></tr><tr><td>F2.5: Validação encoding</td><td>S</td><td>30min</td><td>F1.1</td></tr><tr><td>F3.1: Criar exemplos</td><td>M</td><td>3-4h</td><td>Fase 2</td></tr><tr><td>F3.2: Dogfooding audit</td><td>M</td><td>1-2h</td><td>F3.1</td></tr><tr><td>F4.1: Validação cruzada</td><td>S</td><td>30min</td><td>Todas</td></tr><tr><td><strong>Total</strong></td><td></td><td><strong>~6-8h</strong></td><td></td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-008.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-005-BP.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-005-BP.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="blueprint-skill-implementation--execuo-governada-de-mudanas">Blueprint: Skill <code>implementation</code> — Execução Governada de Mudanças</h1>
+<blockquote>ADR-005 | Versão 1.0 | 2026-07-05 | <strong>Status: PENDENTE</strong></blockquote>
+<hr>
+<h2 id="1-viso-geral">1. Visão Geral</h2>
+<h3 id="objetivo">Objetivo</h3>
+<p>Criar a skill <code>implementation</code> — a ponte formal entre planejamento e execução no SDLC baseado em Agent Skills. A skill consome ADRs, Blueprints e TODOs e coordera sua implementação incremental com validação contínua.</p>
+<h3 id="mtricas-de-sucesso">Métricas de Sucesso</h3>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Status</th></tr><tr><td>Skills no registry</td><td>14 (+ 6 ADR-004)</td><td>21</td><td>⬜</td></tr><tr><td>SDLC coberto por skills</td><td>~70%</td><td>~95%</td><td>⬜</td></tr><tr><td>Capacidade de execução governada</td><td>Não</td><td>Sim</td><td>⬜</td></tr><tr><td>Artifact-Driven SDLC</td><td>Não</td><td>Sim</td><td>⬜</td></tr><tr><td>SKILL.md linhas</td><td>—</td><td>≥250</td><td>⬜</td></tr><tr><td>Templates criados</td><td>—</td><td>5</td><td>⬜</td></tr><tr><td>Examples criados</td><td>—</td><td>2</td><td>⬜</td></tr><tr><td><code>validate-skill.sh</code></td><td>—</td><td>0 erros</td><td>⬜</td></tr></table></div>
+<hr>
+<h2 id="2-estrutura-de-artefatos">2. Estrutura de Artefatos</h2>
+<pre><code>skills/implementation/
+├── SKILL.md                          # Skill principal (~280 linhas)
+├── templates/
+│   ├── execution-contract.md         # Contrato de execução pré-implementation
+│   ├── execution-report.md           # Relatório final da implementação
+│   ├── change-plan.md                # Plano interno de execução (DAG)
+│   ├── rollback-report.md            # Relatório de rollback
+│   └── task-progress.md              # Progresso individual de tarefa
+├── examples/
+│   ├── simple-change.md              # Exemplo: mudança pontual (1-2 tarefas)
+│   └── complex-change.md             # Exemplo: mudança multi-ADR (10+ tarefas)
+└── checklists/
+    ├── pre-execution.md              # Checklist antes de iniciar
+    └── post-execution.md             # Checklist após conclusão</code></pre>
+<hr>
+<h2 id="3-decision-tree">3. Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Mudança solicitada] --&gt;|Existe ADR?| B{ADR encontrada}
+    B --&gt;|Não| C[Usar adr-generator primeiro]
+    B --&gt;|Sim| D{Existe Blueprint?}
+    D --&gt;|Não| E[Usar writing-plans primeiro]
+    D --&gt;|Sim| F{Existe TODO?}
+    F --&gt;|Não| G[Usar writing-plans para gerar TODO]
+    F --&gt;|Sim| H{Execution Contract passa?}
+    H --&gt;|Não| I[Corrigir artefatos antes de continuar]
+    H --&gt;|Sim| J[Iniciar Execution Loop]
+    J --&gt; K[Selecionar tarefa via DAG]
+    K --&gt; L[Executar alteração]
+    L --&gt; M[Validar: build + lint + test]
+    M --&gt;|Falhou| N[Corrigir e re-validar]
+    M --&gt;|Passou| O[Atualizar documentação]
+    O --&gt; P[Atualizar TODO]
+    P --&gt; Q{Mais tarefas?}
+    Q --&gt;|Sim| K
+    Q --&gt;|Não| R[Gerar Execution Report]</code></pre>
+<hr>
+<h2 id="4-conceitos-fundamentais">4. Conceitos Fundamentais</h2>
+<h3 id="41-execution-contract">4.1 Execution Contract</h3>
+<p>Contrato obrigatório que valida se todos os artefatos necessários estão presentes e coerentes antes de qualquer alteração.</p>
+<p><strong>Campos do contrato:</strong></p>
+<ul>
+<li>ADR: path, status, decisão</li>
+<li>Blueprint: path, tarefas listadas</li>
+<li>TODO: path, tarefas com estados</li>
+<li>Branch: nome, estado limpo</li>
+<li>Workspace: sem alterações não commitadas</li>
+<li>Arquivos impactados: lista extraída do Blueprint</li>
+<li>Critérios de aceite: extraídos do TODO</li>
+<li>Critérios de rollback: definidos no Blueprint</li>
+</ul>
+<p><strong>Regra:</strong> Se qualquer campo obrigatório falhar, a implementação é interrompida.</p>
+<h3 id="42-artifact-resolution">4.2 Artifact Resolution</h3>
+<p>Processo de descoberta e correlação automática dos documentos envolvidos na mudança.</p>
+<p><strong>Entrada:</strong> Nome da ADR ou diretório de trabalho <strong>Saída:</strong> Mapa de artefatos correlacionados</p>
+<p><strong>Algoritmo:</strong></p>
+<ol>
+<li>Buscar <code>ADR-XXX.md</code> no diretório <code>docs/adr/</code></li>
+<li>Derivar paths do Blueprint (<code>ADR-XXX-BP.md</code>) e TODO (<code>ADR-XXX-TODO.md</code>)</li>
+<li>Verificar existência de cada artefato</li>
+<li>Extrair <code>related_skills</code> do frontmatter</li>
+<li>Mapear arquivos impactados a partir do Blueprint</li>
+<li>Retornar mapa consolidado</li>
+</ol>
+<h3 id="43-execution-loop">4.3 Execution Loop</h3>
+<p>Modelo incremental de execução. Cada iteração do loop processa uma tarefa do TODO.</p>
+<pre><code>┌─────────────────────────────────────────┐
+│           EXECUTION LOOP                │
+│                                         │
+│  1. Selecionar tarefa (via DAG)         │
+│  2. Marcar como &quot;Em andamento&quot;          │
+│  3. Executar alteração                  │
+│  4. Validar (build/lint/test/typecheck) │
+│  5. Atualizar documentação              │
+│  6. Marcar como &quot;Concluído&quot;             │
+│  7. Reavaliar dependências              │
+│  8. Repetir até fim do DAG              │
+└─────────────────────────────────────────┘</code></pre>
+<p><strong>Regras:</strong></p>
+<ul>
+<li>Máximo 1 tarefa "Em andamento" por vez</li>
+<li>Tarefa só inicia se todas as dependências estão "Concluído"</li>
+<li>Se validação falhar, tarefa vai para "Bloqueado" até correção</li>
+<li>Big Bang é estritamente proibido</li>
+</ul>
+<h3 id="44-change-lifecycle">4.4 Change Lifecycle</h3>
+<p>Modelo formal do ciclo de vida de uma mudança:</p>
+<pre><code>ADR → Blueprint → TODO → Execution Contract → Artifact Resolution
+  → Implementation → Validation → Documentation Update → Execution Report</code></pre>
+<p>Cada transição é validada. A mudança só avança se a fase anterior foi concluída com sucesso.</p>
+<hr>
+<h2 id="5-workflow">5. Workflow</h2>
+<h3 id="workflow-1-artifact-resolution">Workflow 1: Artifact Resolution</h3>
+<p><strong>Objetivo:</strong> Descobrir e correlacionar todos os artefatos envolvidos.</p>
+<ol>
+<li>Identificar a ADR de referência (por nome ou contexto)</li>
+<li>Derivar paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code></li>
+<li>Verificar existência de cada artefato</li>
+<li>Ler frontmatter da ADR para extrair status e decisão</li>
+<li>Ler Blueprint para extrair tarefas e dependências</li>
+<li>Ler TODO para extrair estados atuais</li>
+<li>Mapear <code>related_skills</code> do frontmatter</li>
+<li>Extrair arquivos impactados do Blueprint</li>
+<li>Retornar <strong>Artifact Map</strong> consolidado</li>
+<li><strong>Checkpoint</strong>: Todos os artefatos existem e estão coerentes</li>
+</ol>
+<h3 id="workflow-2-execution-contract">Workflow 2: Execution Contract</h3>
+<p><strong>Objetivo:</strong> Validar que a implementação pode iniciar com segurança.</p>
+<ol>
+<li>Carregar Artifact Map (Workflow 1)</li>
+<li>Validar que ADR existe e está "Aceito" ou "Proposto"</li>
+<li>Validar que Blueprint existe e contém tarefas</li>
+<li>Validar que TODO existe e contém tarefas com estados</li>
+<li>Validar branch atual (não main/master sem PR)</li>
+<li>Validar workspace limpo (sem uncommitted changes)</li>
+<li>Validar que arquivos impactados existem</li>
+<li>Extrair critérios de aceite do TODO</li>
+<li>Extrair critérios de rollback do Blueprint</li>
+<li>Gerar <code>execution-contract.md</code> preenchido</li>
+<li><strong>Checkpoint</strong>: Contrato assinado (todos os campos válidos)</li>
+</ol>
+<h3 id="workflow-3-dependency-analysis--execution-plan">Workflow 3: Dependency Analysis & Execution Plan</h3>
+<p><strong>Objetivo:</strong> Construir DAG e plano de execução.</p>
+<ol>
+<li>Ler TODO e extrair todas as tarefas</li>
+<li>Ler dependências de cada tarefa</li>
+<li>Construir grafo dirigido acíclico (DAG)</li>
+<li>Detectar ciclos (se existir, reportar erro e interromper)</li>
+<li>Topological sort para ordem de execução</li>
+<li>Identificar tarefas paralelizáveis (sem dependência entre si)</li>
+<li>Gerar <code>change-plan.md</code> com DAG e ordem</li>
+<li>Estimar tempo total a partir das estimativas do TODO</li>
+<li><strong>Checkpoint</strong>: DAG válido, sem ciclos, ordem definida</li>
+</ol>
+<h3 id="workflow-4-incremental-execution">Workflow 4: Incremental Execution</h3>
+<p><strong>Objetivo:</strong> Executar tarefas uma a uma com validação.</p>
+<p>Para cada tarefa na ordem do DAG:</p>
+<ol>
+<li>Verificar que todas as dependências estão "Concluído"</li>
+<li>Marcar tarefa como "Em andamento" no TODO</li>
+<li>Gerar <code>task-progress.md</code> para a tarefa</li>
+<li>Ler descrição e critérios de aceite da tarefa</li>
+<li>Executar as alterações no código</li>
+<li>Executar validação contínua (Workflow 5)</li>
+<li>Se validação passar:</li>
+</ol>
+<ul>
+<li>Atualizar documentação afetada</li>
+<li>Marcar tarefa como "Concluído" no TODO</li>
+<li>Atualizar <code>task-progress.md</code></li>
+</ul>
+<ol>
+<li>Se validação falhar:</li>
+</ol>
+<ul>
+<li>Analisar causa raiz</li>
+<li>Corrigir</li>
+<li>Re-executar validação</li>
+<li>Se não corrigir em 3 tentativas: marcar "Bloqueado"</li>
+</ul>
+<ol>
+<li>Reavaliar dependências (tarefas dependentes podem iniciar)</li>
+<li><strong>Checkpoint</strong>: Tarefa concluída, TODO atualizado</li>
+</ol>
+<h3 id="workflow-5-continuous-validation">Workflow 5: Continuous Validation</h3>
+<p><strong>Objetivo:</strong> Validar estado do projeto após cada alteração.</p>
+<p><strong>Sequência de validação (quando aplicável):</strong></p>
+<ol>
+<li><strong>Build</strong>: <code>npm run build</code> / <code>cargo build</code> / equivalente</li>
+<li><strong>Lint</strong>: <code>npm run lint</code> / <code>cargo clippy</code> / equivalente</li>
+<li><strong>Typecheck</strong>: <code>npm run typecheck</code> / <code>cargo check</code> / equivalente</li>
+<li><strong>Testes unitários</strong>: <code>npm run test</code> / <code>cargo test</code> / equivalente</li>
+<li><strong>Testes de integração</strong>: se existirem</li>
+<li><strong>Validação arquitetural</strong>: verificar consistência com ADR</li>
+<li><strong>Validação documental</strong>: verificar que docs estão atualizados</li>
+</ol>
+<p><strong>Regra:</strong> Se qualquer passo falhar, a tarefa não pode ser marcada como "Concluído".</p>
+<h3 id="workflow-6-documentation-synchronization">Workflow 6: Documentation Synchronization</h3>
+<p><strong>Objetivo:</strong> Garantir que documentação está sincronizada com código.</p>
+<p>Após cada tarefa concluída:</p>
+<ol>
+<li>Verificar se a alteração impacta ADRs existentes</li>
+<li>Se sim, atualizar a ADR com novas informações</li>
+<li>Verificar se o Blueprint precisa de ajustes</li>
+<li>Se sim, atualizar o Blueprint</li>
+<li>Verificar se README, CHANGELOG, USAGE, STATE, AGENTS precisa de atualização</li>
+<li>Se sim, atualizar README, CHANGELOG, USAGE, STATE, AGENTS</li>
+<li>Verificar se <code>related_skills</code> de outras skills precisam de ajuste</li>
+<li><strong>Checkpoint</strong>: Nenhuma documentação divergente do código</li>
+</ol>
+<h3 id="workflow-7-progress-tracking">Workflow 7: Progress Tracking</h3>
+<p><strong>Objetivo:</strong> Manter TODO sincronizado durante toda a implementação.</p>
+<p><strong>Estados permitidos:</strong></p>
+<div class="table-wrapper"><table><tr><th>Estado</th><th>Descrição</th><th>Transições</th></tr><tr><td>⬜ Pendente</td><td>Tarefa não iniciada</td><td>→ Em andamento</td></tr><tr><td>🔄 Em andamento</td><td>Tarefa em execução</td><td>→ Concluído, Bloqueado</td></tr><tr><td>✅ Concluído</td><td>Tarefa finalizada com sucesso</td><td>—</td></tr><tr><td>❌ Bloqueado</td><td>Tarefa impedida</td><td>→ Em andamento, Pendente</td></tr><tr><td>⏸️ Pausado</td><td>Tarefa adiada voluntariamente</td><td>→ Pendente</td></tr></table></div>
+<p><strong>Regras:</strong></p>
+<ul>
+<li>Máximo 1 tarefa "Em andamento" por vez</li>
+<li>"Concluído" só após validação bem-sucedida</li>
+<li>"Bloqueado" requer justificativa</li>
+<li>Estado deve ser atualizado no TODO imediatamente</li>
+</ul>
+<h3 id="workflow-8-execution-report">Workflow 8: Execution Report</h3>
+<p><strong>Objetivo:</strong> Gerar relatório final da implementação.</p>
+<p><strong>Campos do relatório:</strong></p>
+<ul>
+<li>Resumo da implementação</li>
+<li>ADR referência</li>
+<li>Data de início e término</li>
+<li>Tarefas concluídas (lista)</li>
+<li>Tarefas adiadas (lista com justificativa)</li>
+<li>Tarefas bloqueadas (lista com bloqueador)</li>
+<li>Validações executadas (build, lint, test)</li>
+<li>Testes realizados (cobertura, resultados)</li>
+<li>Riscos remanescentes</li>
+<li>Dívida técnica criada</li>
+<li>Recomendações futuras</li>
+</ul>
+<hr>
+<h2 id="6-templates">6. Templates</h2>
+<h3 id="61-execution-contractmd">6.1 execution-contract.md</h3>
+<pre data-lang="markdown"><code># Execution Contract
+
+## Artefatos
+
+| Artefato | Path | Status | Coerente |
+|----------|------|--------|----------|
+| ADR | docs/adr/ADR-XXX.md | {status} | ✅/❌ |
+| Blueprint | docs/adr/ADR-XXX-BP.md | {existente} | ✅/❌ |
+| TODO | docs/adr/ADR-XXX-TODO.md | {existente} | ✅/❌ |
+
+## Ambiente
+
+| Campo | Valor |
+|-------|-------|
+| Branch | {nome} |
+| Workspace limpo | {sim/não} |
+| Arquivos impactados | {lista} |
+
+## Critérios de Aceite
+
+- [ ] {critério 1}
+- [ ] {critério 2}
+
+## Critérios de Rollback
+
+- [ ] {critério 1}
+- [ ] {critério 2}
+
+## Assinatura
+
+- [ ] Contrato validado
+- [ ] Implementação autorizada</code></pre>
+<h3 id="62-execution-reportmd">6.2 execution-report.md</h3>
+<pre data-lang="markdown"><code># Execution Report
+
+## Resumo
+
+| Campo | Valor |
+|-------|-------|
+| ADR | {referência} |
+| Data início | {data} |
+| Data término | {data} |
+| Duração total | {tempo} |
+| Tarefas totais | {número} |
+| Tarefas concluídas | {número} |
+| Tarefas adiadas | {número} |
+| Tarefas bloqueadas | {número} |
+
+## Tarefas Concluídas
+
+| # | Tarefa | Duração | Validações |
+|---|--------|---------|------------|
+| 1 | {tarefa} | {tempo} | ✅ |
+
+## Tarefas Adiadas
+
+| # | Tarefa | Justificativa |
+|---|--------|---------------|
+| 1 | {tarefa} | {razão} |
+
+## Validações Executadas
+
+| Validação | Resultado |
+|-----------|-----------|
+| Build | ✅/❌ |
+| Lint | ✅/❌ |
+| Typecheck | ✅/❌ |
+| Testes unitários | ✅/❌ |
+| Testes integração | ✅/❌ |
+
+## Riscos Remanescentes
+
+- {risco 1}
+- {risco 2}
+
+## Dívida Técnica Criada
+
+- {débito 1}
+- {débito 2}
+
+## Recomendações Futuras
+
+- {recomendação 1}
+- {recomendação 2}</code></pre>
+<h3 id="63-change-planmd">6.3 change-plan.md</h3>
+<pre data-lang="markdown"><code># Change Plan
+
+## DAG de Execução
+</code></pre>
+<p>graph LR T1[Tarefa 1] --> T3[Tarefa 3] T2[Tarefa 2] --> T3 T3 --> T4[Tarefa 4] T3 --> T5[Tarefa 5]</p>
+<pre><code>
+## Ordem de Execução
+
+| Fase | Tarefas Paralelas | Tarefas Sequenciais |
+|------|-------------------|---------------------|
+| 1 | T1, T2 | — |
+| 2 | — | T3 |
+| 3 | T4, T5 | — |
+
+## Estimativa Total
+
+| Fase | Tempo Est. |
+|------|------------|
+| 1 | {tempo} |
+| 2 | {tempo} |
+| 3 | {tempo} |
+| **Total** | **{tempo}** |</code></pre>
+<h3 id="64-rollback-reportmd">6.4 rollback-report.md</h3>
+<pre data-lang="markdown"><code># Rollback Report
+
+## Motivo
+
+{descrição do motivo do rollback}
+
+## Tarefas Revertidas
+
+| # | Tarefa | Commits Revertidos |
+|---|--------|-------------------|
+| 1 | {tarefa} | {hashes} |
+
+## Estado Final
+
+| Campo | Valor |
+|-------|-------|
+| Branch | {nome} |
+| Commit final | {hash} |
+| Testes | ✅/❌ |
+| Build | ✅/❌ |
+
+## Ações Corretivas
+
+- {ação 1}
+- {ação 2}</code></pre>
+<h3 id="65-task-progressmd">6.5 task-progress.md</h3>
+<pre data-lang="markdown"><code># Task Progress: {Nome da Tarefa}
+
+## Estado
+
+| Campo | Valor |
+|-------|-------|
+| Estado atual | {🔄 Em andamento / ✅ Concluído / ❌ Bloqueado} |
+| Data início | {data} |
+| Data término | {data} |
+| Tentativas | {número} |
+
+## Alterações Realizadas
+
+| Arquivo | Tipo | Descrição |
+|---------|------|-----------|
+| {path} | {modificado/criado/removido} | {descrição} |
+
+## Validações
+
+| Validação | Resultado | Tentativa |
+|-----------|-----------|-----------|
+| Build | ✅/❌ | {n} |
+| Lint | ✅/❌ | {n} |
+| Test | ✅/❌ | {n} |
+
+## Bloqueadores (se aplicável)
+
+- {bloqueador 1}
+
+## Observações
+
+- {observação 1}</code></pre>
+<hr>
+<h2 id="7-anti-patterns">7. Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="executar-sem-execution-contract">Executar sem Execution Contract</h4>
+<p><strong>O que é:</strong> Iniciar alterações sem validar que ADR, Blueprint e TODO existem e estão coerentes. <strong>Por que é ruim:</strong> Pode levar a implementação inconsistente com a decisão arquitetural. <strong>Como evitar:</strong> Sempre gerar e validar o Execution Contract antes de qualquer alteração. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Vou implementar a ADR-005 agora&quot; (sem verificar se Blueprint existe)
+
+# ✅ CORRETO
+1. Gerar Artifact Map
+2. Validar Execution Contract
+3. Só então iniciar execução</code></pre>
+<h4 id="big-bang-implementation">Big Bang Implementation</h4>
+<p><strong>O que é:</strong> Implementar todas as tarefas de uma vez sem validação intermediária. <strong>Por que é ruim:</strong> Se algo falhar, não há ponto de retorno claro; dificulta rollback. <strong>Como evitar:</strong> Seguir o Execution Loop estritamente — uma tarefa por vez. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Modificar 15 arquivos de uma vez, commitar tudo junto
+
+# ✅ CORRETO
+Tarefa 1 → validar → commit
+Tarefa 2 → validar → commit
+Tarefa 3 → validar → commit</code></pre>
+<h4 id="ignorar-falha-de-validao">Ignorar Falha de Validação</h4>
+<p><strong>O que é:</strong> Prosseguir com tarefa seguinte quando build/test/lint falhou na tarefa atual. <strong>Por que é ruim:</strong> Acumula erros; cada tarefa depende do estado anterior. <strong>Como evitar:</strong> Se validação falhar, corrigir antes de avançar. Sem exceções. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;O teste falhou, mas vou continuar e corrigir depois&quot;
+
+# ✅ CORRETO
+&quot;O teste falhou → analisar causa → corrigir → re-testar → só então avançar&quot;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="atualizar-cdigo-sem-atualizar-documentao">Atualizar código sem atualizar documentação</h4>
+<p><strong>O que é:</strong> Implementar alteração mas esquecer de sincronizar ADR, Blueprint ou README. <strong>Por que é ruim:</strong> Documentação fica desatualizada; perde rastreabilidade. <strong>Como evitar:</strong> Workflow 6 (Documentation Synchronization) deve rodar após cada tarefa.</p>
+<h4 id="executar-tarefas-fora-da-ordem-do-dag">Executar tarefas fora da ordem do DAG</h4>
+<p><strong>O que é:</strong> Pular dependências e executar tarefa que depende de outra não concluída. <strong>Por que é ruim:</strong> Pode causar erros de compilação, lógica inconsistente. <strong>Como evitar:</strong> Respeitar topological sort do DAG; verificar dependências antes de cada tarefa.</p>
+<h4 id="marcar-tarefa-como-concludo-sem-validao">Marcar tarefa como "Concluído" sem validação</h4>
+<p><strong>O que é:</strong> Declarar tarefa pronta sem rodar build/test/lint. <strong>Por que é ruim:</strong> Tarefa pode conter erros silenciosos. <strong>Como evitar:</strong> Workflow 5 (Continuous Validation) é obrigatório antes de marcar "Concluído".</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="no-gerar-execution-report">Não gerar Execution Report</h4>
+<p><strong>O que é:</strong> Finalizar implementação sem produzir relatório. <strong>Por que é ruim:</strong> Perde-se oportunidade de documentar lições e riscos. <strong>Como evitar:</strong> Sempre gerar relatório ao término, mesmo para mudanças simples.</p>
+<h4 id="estimativas-muito-otimistas-no-change-plan">Estimativas muito otimistas no change-plan</h4>
+<p><strong>O que é:</strong> Subestimar tempo de tarefas no DAG. <strong>Por que é ruim:</strong> Cria expectativa irreal; pode levar a pressão desnecessária. <strong>Como evitar:</strong> Usar estimativas do TODO como base; adicionar buffer de 20%.</p>
+<hr>
+<h2 id="8-checklists">8. Checklists</h2>
+<h3 id="checklist-de-pr-execuo">Checklist de Pré-Execução</h3>
+<ul>
+<li>[ ] ADR existe e está com status "Aceito" ou "Proposto"</li>
+<li>[ ] Blueprint existe e contém tarefas documentadas</li>
+<li>[ ] TODO existe e contém tarefas com estados</li>
+<li>[ ] Branch atual não é main/master (ou há PR aberto)</li>
+<li>[ ] Workspace está limpo (sem uncommitted changes)</li>
+<li>[ ] Todos os arquivos impactados existem</li>
+<li>[ ] Critérios de aceite estão definidos</li>
+<li>[ ] Critérios de rollback estão definidos</li>
+<li>[ ] Execution Contract gerado e validado</li>
+<li>[ ] DAG construído e validado (sem ciclos)</li>
+</ul>
+<h3 id="checklist-de-ps-execuo">Checklist de Pós-Execução</h3>
+<ul>
+<li>[ ] Todas as tarefas do TODO marcadas como "Concluído"</li>
+<li>[ ] Build passa sem erros</li>
+<li>[ ] Lint passa sem erros</li>
+<li>[ ] Typecheck passa sem erros</li>
+<li>[ ] Testes unitários passam</li>
+<li>[ ] Testes de integração passam (se aplicável)</li>
+<li>[ ] ADRs relacionadas estão atualizadas</li>
+<li>[ ] Blueprint está sincronizado com código</li>
+<li>[ ] README está atualizado (se aplicável)</li>
+<li>[ ] Execution Report gerado</li>
+<li>[ ] Nenhum risco remanescente não documentado</li>
+</ul>
+<hr>
+<h2 id="9-edge-cases">9. Edge Cases</h2>
+<h3 id="adr-com-status-proposto-no-aceito">ADR com status "Proposto" (não "Aceito")</h3>
+<p><strong>Situação:</strong> O usuário quer implementar uma ADR que ainda não foi formalmente aceita. <strong>Solução:</strong> Alertar que a ADR não está aceita; pedir confirmação explícita antes de prosseguir. <strong>Exceção:</strong> Em contexto de prototipação, "Proposto" pode ser suficiente.</p>
+<h3 id="blueprint-incompleto-tarefas-sem-dependncias">Blueprint incompleto (tarefas sem dependências)</h3>
+<p><strong>Situação:</strong> O Blueprint existe mas não documenta dependências entre tarefas. <strong>Solução:</strong> Assumir que tarefas sem dependência explícita são independentes; construir DAG com base no que está disponível. <strong>Exceção:</strong> Se mais de 50% das tarefas não têm dependências, alertar sobre possível incompletude.</p>
+<h3 id="todo-com-tarefas-desatualizadas">TODO com tarefas desatualizadas</h3>
+<p><strong>Situação:</strong> O TODO não reflete o estado atual do código (tarefas já executadas manualmente). <strong>Solução:</strong> Antes de iniciar, verificar estado real do código contra o TODO; atualizar estados antes de construir DAG. <strong>Exceção:</strong> Nenhuma — TODO deve sempre estar sincronizado antes de execução.</p>
+<h3 id="implementao-com-mltiplas-adrs">Implementação com múltiplas ADRs</h3>
+<p><strong>Situação:</strong> A mudança envolve mais de uma ADR (ex: ADR-004 + ADR-005). <strong>Solução:</strong> Criar um Execution Contract para cada ADR; executar sequencialmente (uma ADR por vez); ou criar um "meta-contracto" se as ADRs são acopladas. <strong>Exceção:</strong> Se as ADRs são totalmente independentes, podem ser executadas em paralelo (worktrees separados).</p>
+<h3 id="rollback-durante-execuo">Rollback durante execução</h3>
+<p><strong>Situação:</strong> Tarefa executada causou problema que requer rollback. <strong>Solução:</strong> Gerar <code>rollback-report.md</code>, reverter commits da tarefa, marcar tarefa como "Bloqueado", analisar causa raiz. <strong>Exceção:</strong> Se o rollback corrompe o estado, interromper toda a implementação.</p>
+<h3 id="agente-sem-acesso-a-comandos-de-buildtest">Agente sem acesso a comandos de build/test</h3>
+<p><strong>Situação:</strong> O agente não consegue rodar <code>npm test</code>, <code>cargo build</code>, etc. <strong>Solução:</strong> Pular validação automatizada; marcar tarefa como "Concluído com ressalva"; documentar no Execution Report que validação manual é necessária. <strong>Exceção:</strong> Nenhuma — neste caso, o Execution Report deve indicar claramente a ausência de validação.</p>
+<hr>
+<h2 id="10-integrao-com-skills-existentes">10. Integração com Skills Existentes</h2>
+<h3 id="referncias-diretas-relatedskills">Referências Diretas (related_skills)</h3>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relação com <code>implementation</code></th></tr><tr><td><code>adr-generator</code></td><td>Consome ADRs geradas por esta skill</td></tr><tr><td><code>writing-plans</code></td><td>Consome Blueprints e TODOs gerados por esta skill</td></tr><tr><td><code>planning</code></td><td>Consome roadmap e estimativas</td></tr><tr><td><code>documentation</code></td><td>Delega atualização de documentação</td></tr><tr><td><code>governance</code></td><td>Respeita processos de revisão e aprovação</td></tr><tr><td><code>testing</code></td><td>Executa testes definidos nesta skill</td></tr><tr><td><code>git</code></td><td>Cria commits e branches seguindo padrões</td></tr><tr><td><code>release</code></td><td>Alimenta changelog e versionamento</td></tr><tr><td><code>architecture-review-kilo</code></td><td>Valida consistência arquitetural</td></tr><tr><td><code>ddd</code></td><td>Respeita modelos de domínio</td></tr><tr><td><code>repo-bootstrap</code></td><td>Compatível com estrutura de repositório</td></tr></table></div>
+<h3 id="referncias-futuras-compatibilidade">Referências Futuras (compatibilidade)</h3>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Interação esperada</th></tr><tr><td><code>security-review</code></td><td>Validação de segurança durante execução</td></tr><tr><td><code>refactoring</code></td><td>Padrões de refatoração segura</td></tr><tr><td><code>api-design</code></td><td>Contratos de API durante implementação</td></tr><tr><td><code>observability</code></td><td>Instrumentação durante execução</td></tr><tr><td><code>data-modeling</code></td><td>Schema durante implementação</td></tr><tr><td><code>agent-orchestration</code></td><td>Coordenção multi-agente</td></tr></table></div>
+<hr>
+<h2 id="11-estimativas">11. Estimativas</h2>
+<div class="table-wrapper"><table><tr><th>Componente</th><th>Linhas Est.</th><th>Templates</th><th>Examples</th></tr><tr><td>SKILL.md</td><td>~280</td><td>—</td><td>—</td></tr><tr><td>execution-contract.md</td><td>~60</td><td>✅</td><td>—</td></tr><tr><td>execution-report.md</td><td>~70</td><td>✅</td><td>—</td></tr><tr><td>change-plan.md</td><td>~50</td><td>✅</td><td>—</td></tr><tr><td>rollback-report.md</td><td>~40</td><td>✅</td><td>—</td></tr><tr><td>task-progress.md</td><td>~45</td><td>✅</td><td>—</td></tr><tr><td>simple-change.md</td><td>~80</td><td>—</td><td>✅</td></tr><tr><td>complex-change.md</td><td>~120</td><td>—</td><td>✅</td></tr><tr><td>pre-execution.md</td><td>~25</td><td>✅</td><td>—</td></tr><tr><td>post-execution.md</td><td>~25</td><td>✅</td><td>—</td></tr><tr><td><strong>Total</strong></td><td><strong>~795</strong></td><td><strong>7</strong></td><td><strong>2</strong></td></tr></table></div>
+<hr>
+<h2 id="12-riscos-e-mitigaes">12. Riscos e Mitigações</h2>
+<div class="table-wrapper"><table><tr><th>Risco</th><th>Impacto</th><th>Probabilidade</th><th>Mitigação</th></tr><tr><td>Skill muito complexa para agentes seguirem</td><td>Alto</td><td>Média</td><td>Progressive Disclosure + decision tree clara</td></tr><tr><td>Acoplamento forte com muitas skills</td><td>Médio</td><td>Alta</td><td>Contratos de I/O bem definidos</td></tr><tr><td>Agentes podem ignorar Execution Contract</td><td>Alto</td><td>Média</td><td>Tornar contract obrigatório no workflow</td></tr><tr><td>Dificuldade de debug durante execução</td><td>Médio</td><td>Média</td><td>task-progress.md detalhado</td></tr><tr><td>Manutenção de 7 templates</td><td>Baixo</td><td>Média</td><td>Templates simples e autoexplicativos</td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-07-05. Referência: ADR-005.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

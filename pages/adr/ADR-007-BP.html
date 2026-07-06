@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-007-BP.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-007-BP.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="adr-007-skill-para-gerao-de-agentsmd-adaptativo---blueprint">ADR-007: Skill para Geração de AGENTS.md Adaptativo - Blueprint</h1>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>Este blueprint detalha a implementação da skill <code>agents-md-generator</code> para o repositório <code>ignite-agents-skills</code>. A skill será responsável por gerar e manter arquivos <code>AGENTS.md</code> adaptativos que se adaptam ao contexto do projeto sendo desenvolvido.</p>
+<h2 id="arquitetura-da-skill">Arquitetura da Skill</h2>
+<h3 id="estrutura-de-diretrios">Estrutura de Diretórios</h3>
+<pre><code>skills/agents-md-generator/
+├── SKILL.md                    # Documentação principal
+├── templates/
+│   ├── AGENTS-base.md         # Template base
+│   ├── AGENTS-skills-repo.md  # Template para repositórios de skills
+│   ├── AGENTS-crm.md          # Template para projetos CRM
+│   ├── AGENTS-api.md          # Template para projetos de API
+│   ├── AGENTS-webapp.md       # Template para webapps
+│   ├── AGENTS-library.md      # Template para bibliotecas
+│   └── AGENTS-cli.md          # Template para CLIs
+├── examples/
+│   ├── before-after.md        # Exemplos de antes e depois
+│   ├── context-detection.md   # Exemplos de detecção de contexto
+│   └── customization.md       # Exemplos de personalização
+└── checklists/
+    ├── validation.md          # Checklist de validação
+    └── maintenance.md         # Checklist de manutenção</code></pre>
+<h3 id="componentes-principais">Componentes Principais</h3>
+<h4 id="1-detector-de-contexto">1. Detector de Contexto</h4>
+<p>Responsável por analisar o repositório e detectar:</p>
+<ul>
+<li><strong>Tipo de Projeto</strong>: CRM, API, WebApp, Biblioteca, CLI, etc.</li>
+<li><strong>Tecnologias</strong>: Linguagens, frameworks, bancos de dados</li>
+<li><strong>Padrões</strong>: Arquitetura (Clean, Hexagonal, DDD), padrões de código</li>
+<li><strong>Governança</strong>: Branching strategy, processo de PR, CI/CD</li>
+<li><strong>Equipe</strong>: Tamanho, estrutura, papéis</li>
+</ul>
+<p><strong>Algoritmo de Detecção:</strong></p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Iniciar Detecção] --&gt; B[Analizar package.json]
+    B --&gt; C[Analizar estrutura de diretórios]
+    C --&gt; D[Analizar arquivos de configuração]
+    D --&gt; E[Analizar README.md]
+    E --&gt; F[Analizar .github/]
+    F --&gt; G[Gerar Relatório de Contexto]
+    G --&gt; H[Selecionar Template]
+    H --&gt; I[Gerar AGENTS.md]</code></pre>
+<h4 id="2-gerador-de-template">2. Gerador de Template</h4>
+<p>Responsável por:</p>
+<ul>
+<li>Selecionar o template mais adequado baseado no contexto</li>
+<li>Preencher placeholders automaticamente</li>
+<li>Personalizar seções baseado no contexto detectado</li>
+<li>Permitir override manual</li>
+</ul>
+<h4 id="3-mantenedor-automtico">3. Mantenedor Automático</h4>
+<p>Responsável por:</p>
+<ul>
+<li>Detectar mudanças no projeto que afetem o AGENTS.md</li>
+<li>Sugerir atualizações quando o contexto mudar</li>
+<li>Validar se o AGENTS.md está atualizado</li>
+</ul>
+<h2 id="templates">Templates</h2>
+<h3 id="template-base-agents-basemd">Template Base (AGENTS-base.md)</h3>
+<pre data-lang="markdown"><code># AGENTS.md
+
+## Visão Geral
+
+{{project_description}}
+
+## Estrutura
+
+{{directory_structure}}
+
+## Padrões
+
+{{code_patterns}}
+
+## Comandos
+
+{{important_commands}}
+
+## Governança
+
+{{governance_rules}}
+
+## Skills Recomendadas
+
+{{recommended_skills}}
+
+## Anti-patterns
+
+{{anti_patterns}}
+
+## Edge Cases
+
+{{edge_cases}}</code></pre>
+<h3 id="template-para-repositrios-de-skills-agents-skills-repomd">Template para Repositórios de Skills (AGENTS-skills-repo.md)</h3>
+<pre data-lang="markdown"><code># AGENTS.md - Repositório de Skills
+
+## Visão Geral
+
+Este repositório contém skills para agentes de IA seguindo o padrão Ultra-High Quality Grade.
+
+## Estrutura
+
+{{skills_structure}}
+
+## Padrões de Skills
+
+{{skill_patterns}}
+
+## Validação
+
+{{validation_rules}}
+
+## Manutenção
+
+{{maintenance_process}}
+
+## Comandos
+
+{{skill_commands}}
+
+## Governança
+
+{{governance_rules}}
+
+## Skills Disponíveis
+
+{{available_skills}}</code></pre>
+<h3 id="template-para-projetos-crm-agents-crmmd">Template para Projetos CRM (AGENTS-crm.md)</h3>
+<pre data-lang="markdown"><code># AGENTS.md - Projeto CRM
+
+## Visão Geral
+
+{{crm_description}}
+
+## Estrutura
+
+{{crm_structure}}
+
+## Modelagem de Dados
+
+{{data_model}}
+
+## Processos de Negócio
+
+{{business_processes}}
+
+## Integrações
+
+{{integrations}}
+
+## Comandos
+
+{{crm_commands}}
+
+## Governança
+
+{{governance_rules}}
+
+## Skills Recomendadas
+
+{{recommended_skills}}</code></pre>
+<h2 id="fluxo-de-trabalho">Fluxo de Trabalho</h2>
+<h3 id="fluxo-principal">Fluxo Principal</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Usuário invoca skill] --&gt; B[Detector de Contexto]
+    B --&gt; C{Contexto detectado?}
+    C --&gt;|Sim| D[Selecionar Template]
+    C --&gt;|Não| E[Solicitar Contexto Manual]
+    E --&gt; D
+    D --&gt; F[Gerar AGENTS.md]
+    F --&gt; G[Validar AGENTS.md]
+    G --&gt; H{Válido?}
+    H --&gt;|Sim| I[Salvar AGENTS.md]
+    H --&gt;|Não| J[Corrigir Erros]
+    J --&gt; G
+    I --&gt; K[Fim]</code></pre>
+<h3 id="fluxo-de-manuteno">Fluxo de Manutenção</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Detectar Mudança no Projeto] --&gt; B{Mudança afeta AGENTS.md?}
+    B --&gt;|Sim| C[Sugerir Atualização]
+    B --&gt;|Não| D[Nenhuma Ação]
+    C --&gt; E[Usuário Aprova?]
+    E --&gt;|Sim| F[Atualizar AGENTS.md]
+    E --&gt;|Não| G[Manter Atual]
+    F --&gt; H[Validar AGENTS.md]
+    H --&gt; I[Fim]</code></pre>
+<h2 id="integrao-com-scripts">Integração com Scripts</h2>
+<h3 id="sync-indexsh">sync-index.sh</h3>
+<p>A skill deve ser detectada automaticamente pelo <code>sync-index.sh</code>:</p>
+<pre data-lang="bash"><code># O script detecta a skill e a registra no index.json
+./scripts/sync-index.sh</code></pre>
+<h3 id="validate-indexsh">validate-index.sh</h3>
+<p>A skill deve ser validada pelo <code>validate-index.sh</code>:</p>
+<pre data-lang="bash"><code># O script valida se a skill está correta
+./scripts/validate-index.sh</code></pre>
+<h3 id="validate-skillsh">validate-skill.sh</h3>
+<p>A skill deve passar na validação do <code>validate-skill.sh</code>:</p>
+<pre data-lang="bash"><code># O script valida se a skill segue o padrão Ultra-High Quality Grade
+bash scripts/validate-skill.sh skills/agents-md-generator</code></pre>
+<h2 id="critrios-de-aceitao">Critérios de Aceitação</h2>
+<h3 id="estruturais">Estruturais</h3>
+<ul>
+<li>[ ] Skill tem ≥150 linhas de conteúdo acionável</li>
+<li>[ ] Skill inclui frontmatter válido</li>
+<li>[ ] Skill inclui decision tree</li>
+<li>[ ] Skill inclui ≥3 workflows numerados</li>
+<li>[ ] Skill inclui checkpoints em cada workflow</li>
+<li>[ ] Skill inclui ≥3 anti-patterns com severidade</li>
+<li>[ ] Skill inclui checklists de validação</li>
+<li>[ ] Skill inclui ≥1 edge case documentado</li>
+<li>[ ] Skill inclui ≥1 template referenciado</li>
+<li>[ ] Skill inclui ≥1 cross-reference</li>
+</ul>
+<h3 id="funcionais">Funcionais</h3>
+<ul>
+<li>[ ] Skill detecta tipo de projeto automaticamente</li>
+<li>[ ] Skill detecta tecnologias automaticamente</li>
+<li>[ ] Skill detecta padrões arquiteturais automaticamente</li>
+<li>[ ] Skill seleciona template baseado no contexto</li>
+<li>[ ] Skill preenche placeholders automaticamente</li>
+<li>[ ] Skill permite override manual do contexto</li>
+<li>[ ] Skill gera AGENTS.md válido</li>
+<li>[ ] Skill valida AGENTS.md gerado</li>
+<li>[ ] Skill detecta mudanças no projeto</li>
+<li>[ ] Skill sugere atualizações</li>
+</ul>
+<h3 id="integrao">Integração</h3>
+<ul>
+<li>[ ] Skill é detectada pelo <code>sync-index.sh</code></li>
+<li>[ ] Skill é validada pelo <code>validate-index.sh</code></li>
+<li>[ ] Skill aparece no <code>index.json</code></li>
+<li>[ ] Skill funciona em ≥3 tipos de projetos diferentes</li>
+<li>[ ] Skill não quebra scripts existentes</li>
+</ul>
+<h2 id="riscos-e-mitigaes">Riscos e Mitigações</h2>
+<h3 id="risco-1-deteco-incorreta">Risco 1: Detecção Incorreta</h3>
+<p><strong>描述</strong>: O contexto pode ser mal interpretado pelo detector.</p>
+<p><strong>Mitigação</strong>:</p>
+<ul>
+<li>Permitir override manual do contexto detectado</li>
+<li>Incluir confirmação do usuário antes de gerar</li>
+<li>Fornecer opções de contexto quando a detecção é incerta</li>
+</ul>
+<h3 id="risco-2-templates-desatualizados">Risco 2: Templates Desatualizados</h3>
+<p><strong>描述</strong>: Templates podem ficar obsoletos com mudanças nas práticas.</p>
+<p><strong>Mitigação</strong>:</p>
+<ul>
+<li>Processo de revisão periódica dos templates</li>
+<li>Versionamento dos templates</li>
+<li>Comunidade pode contribuir com novos templates</li>
+</ul>
+<h3 id="risco-3-complexidade-excessiva">Risco 3: Complexidade Excessiva</h3>
+<p><strong>描述</strong>: A skill pode ficar complexa demais para usar.</p>
+<p><strong>Mitigação</strong>:</p>
+<ul>
+<li>Começar com templates básicos</li>
+<li>Evoluir gradualmente baseado em feedback</li>
+<li>Documentar exemplos claros de uso</li>
+</ul>
+<h3 id="risco-4-integrao-com-scripts">Risco 4: Integração com Scripts</h3>
+<p><strong>描述</strong>: Pode haver problemas de integração com scripts existentes.</p>
+<p><strong>Mitigação</strong>:</p>
+<ul>
+<li>Testar integração cedo e frequentemente</li>
+<li>Manter compatibilidade com versões anteriores</li>
+<li>Documentar mudanças de API</li>
+</ul>
+<h2 id="mtricas-de-sucesso">Métricas de Sucesso</h2>
+<h3 id="adoo">Adoção</h3>
+<ul>
+<li>Número de projetos usando a skill</li>
+<li>Número de AGENTS.md gerados</li>
+<li>Número de atualizações automáticas</li>
+</ul>
+<h3 id="qualidade">Qualidade</h3>
+<ul>
+<li>Taxa de sucesso na detecção de contexto</li>
+<li>Número de erros de geração</li>
+<li>Satisfação dos usuários</li>
+</ul>
+<h3 id="manuteno">Manutenção</h3>
+<ul>
+<li>Tempo médio de atualização dos templates</li>
+<li>Número de issues reportadas</li>
+<li>Tempo médio de resolução de issues</li>
+</ul>
+<h2 id="cronograma-de-implementao">Cronograma de Implementação</h2>
+<h3 id="semana-1-fundao">Semana 1: Fundação</h3>
+<ul>
+<li>Criar estrutura de diretórios</li>
+<li>Definir frontmatter padrão</li>
+<li>Implementar detecção básica</li>
+</ul>
+<h3 id="semana-2-templates">Semana 2: Templates</h3>
+<ul>
+<li>Criar templates para diferentes contextos</li>
+<li>Implementar lógica de seleção</li>
+<li>Implementar preenchimento automático</li>
+</ul>
+<h3 id="semana-3-gerao">Semana 3: Geração</h3>
+<ul>
+<li>Implementar geração do AGENTS.md</li>
+<li>Implementar validação</li>
+<li>Implementar manutenção automática</li>
+</ul>
+<h3 id="semana-4-documentao-e-testes">Semana 4: Documentação e Testes</h3>
+<ul>
+<li>Criar documentação completa</li>
+<li>Criar exemplos</li>
+<li>Testar em diferentes contextos</li>
+</ul>
+<h2 id="concluso">Conclusão</h2>
+<p>A skill <code>agents-md-generator</code> será uma adição valiosa ao repositório <code>ignite-agents-skills</code>, fornecendo uma maneira automatizada e adaptativa de gerar e manter arquivos <code>AGENTS.md</code> que servem como "conciliadores" entre o estado atual do projeto e as regras de governança para agentes de IA.</p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

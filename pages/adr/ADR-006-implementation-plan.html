@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-006-implementation-plan.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-006-implementation-plan.html</div>
+  </nav>
+  <div class="content">
+    <h1 id="implementation-plan-workflow-ci-para-auto-sync-do-index-e-deploy-github-pages">Implementation Plan: Workflow CI para Auto-sync do Index e Deploy GitHub Pages</h1>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>Automatizar o sincronismo do <code>skills/index.json</code> e o deploy para GitHub Pages via workflow de CI/CD. Quando uma nova skill é adicionada ou modificada em <code>./skills</code>, o workflow automaticamente:</p>
+<ol>
+<li>Sincroniza o <code>index.json</code> usando <code>sync-index.sh</code></li>
+<li>Valida o index usando <code>validate-index.sh</code></li>
+<li>Commita a mudança na branch <code>master</code></li>
+<li>Faz merge na branch <code>gh-pages</code></li>
+<li>Atualiza o GitHub Pages</li>
+</ol>
+<p><strong>Referência:</strong> ADR-006, ADR-006-BP, ADR-006-TODO</p>
+<hr>
+<h2 id="picos">Épicos</h2>
+<h3 id="pico-1-workflow-principal-sync-and-deployyml">Épico 1: Workflow Principal (sync-and-deploy.yml)</h3>
+<ul>
+<li>[ ] Criar arquivo <code>.github/workflows/sync-and-deploy.yml</code></li>
+<li>[ ] Configurar trigger: push para master com paths <code>skills/**</code></li>
+<li>[ ] Configurar permissions: contents: write</li>
+<li>[ ] Implementar steps de checkout, setup, sync, validate</li>
+<li>[ ] Implementar commit automático condicional</li>
+<li>[ ] Implementar deploy para gh-pages via merge</li>
+</ul>
+<h3 id="pico-2-validao">Épico 2: Validação</h3>
+<ul>
+<li>[ ] Testar scripts localmente (sync-index.sh + validate-index.sh)</li>
+<li>[ ] Testar workflow no GitHub (push, merge, verificar deploy)</li>
+<li>[ ] Verificar que GitHub Pages reflete mudanças</li>
+</ul>
+<h3 id="pico-3-documentao">Épico 3: Documentação</h3>
+<ul>
+<li>[ ] Atualizar <code>docs/skill-maintenance.md</code></li>
+<li>[ ] Atualizar <code>README.md</code></li>
+</ul>
+<hr>
+<h2 id="timeline">Timeline</h2>
+<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Tempo Est.</th><th>Dependências</th></tr><tr><td>Fase 1: Workflow</td><td>6 tarefas</td><td>30-45min</td><td>—</td></tr><tr><td>Fase 2: Validação</td><td>3 tarefas</td><td>30-45min</td><td>Fase 1</td></tr><tr><td>Fase 3: Documentação</td><td>2 tarefas</td><td>10-15min</td><td>Fase 2</td></tr><tr><td><strong>Total</strong></td><td><strong>11 tarefas</strong></td><td><strong>~70-105min</strong></td><td>—</td></tr></table></div>
+<hr>
+<h2 id="tarefa-1-criar-workflow-sync-and-deployyml">Tarefa 1: Criar workflow sync-and-deploy.yml</h2>
+<p><strong>Arquivos:</strong> <code>.github/workflows/sync-and-deploy.yml</code> <strong>Complexidade:</strong> M <strong>Dependências:</strong> Nenhuma <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Arquivo criado com trigger correto</li>
+<li>[ ] Permissions configuradas</li>
+<li>[ ] Steps de sync e validate implementados</li>
+<li>[ ] Commit automático com [skip ci]</li>
+<li>[ ] Deploy para gh-pages com strategy ours</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code># Verificar syntax YAML
+cat .github/workflows/sync-and-deploy.yml | python3 -c &quot;import sys, yaml; yaml.safe_load(sys.stdin)&quot;</code></pre>
+<hr>
+<h2 id="tarefa-2-testar-scripts-localmente">Tarefa 2: Testar scripts localmente</h2>
+<p><strong>Arquivos:</strong> Nenhum (uso de scripts existentes) <strong>Complexidade:</strong> S <strong>Dependências:</strong> Tarefa 1 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>sync-index.sh</code> executa sem erros</li>
+<li>[ ] <code>validate-index.sh</code> retorna 0 erros</li>
+<li>[ ] <code>index.json</code> é sincronizado corretamente</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>chmod +x scripts/sync-index.sh scripts/validate-index.sh
+./scripts/sync-index.sh
+./scripts/validate-index.sh
+echo $?  # Deve retornar 0</code></pre>
+<hr>
+<h2 id="tarefa-3-testar-workflow-no-github">Tarefa 3: Testar workflow no GitHub</h2>
+<p><strong>Arquivos:</strong> Nenhum <strong>Complexidade:</strong> M <strong>Dependências:</strong> Tarefa 1, Tarefa 2 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] Workflow aparece em Actions tab</li>
+<li>[ ] Workflow executa quando skills são modificadas</li>
+<li>[ ] Index.json é sincronizado automaticamente</li>
+<li>[ ] gh-pages é atualizada</li>
+<li>[ ] GitHub Pages reflete mudanças</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code># Verificar workflow via GitHub CLI
+gh workflow list
+gh run list --workflow=sync-and-deploy.yml</code></pre>
+<hr>
+<h2 id="tarefa-4-atualizar-documentao">Tarefa 4: Atualizar documentação</h2>
+<p><strong>Arquivos:</strong> <code>docs/skill-maintenance.md</code>, <code>README.md</code> <strong>Complexidade:</strong> S <strong>Dependências:</strong> Tarefa 3 <strong>Critérios de aceitação:</strong></p>
+<ul>
+<li>[ ] <code>skill-maintenance.md</code> documenta processo automático</li>
+<li>[ ] Instruções manuais marcadas como obsoletas</li>
+<li>[ ] <code>README.md</code> menciona workflow de deploy</li>
+</ul>
+<p><strong>Comandos de validação:</strong></p>
+<pre data-lang="bash"><code>grep -i &quot;automático\|workflow\|sync&quot; docs/skill-maintenance.md
+grep -i &quot;deploy\|gh-pages\|workflow&quot; README.md</code></pre>
+<hr>
+<h2 id="riscos">Riscos</h2>
+<div class="table-wrapper"><table><tr><th>Risco</th><th>Probabilidade</th><th>Impacto</th><th>Mitigação</th></tr><tr><td>Loop infinito de workflows</td><td>Baixa</td><td>Alto</td><td><code>[skip ci]</code> no commit</td></tr><tr><td>Conflitos de merge</td><td>Baixa</td><td>Médio</td><td>Strategy <code>ours</code></td></tr><tr><td>Token sem permissão</td><td>Baixa</td><td>Alto</td><td><code>permissions: contents: write</code></td></tr><tr><td>Index quebrado deployado</td><td>Baixa</td><td>Alto</td><td><code>validate-index.sh</code> antes de commitar</td></tr></table></div>
+<hr>
+<h2 id="notas">Notas</h2>
+<ul>
+<li>O workflow é <strong>idempotente</strong>: pode ser re-executado sem efeitos colaterais</li>
+<li>O workflow é <strong>condicional</strong>: só commita e deploya se houver mudanças reais</li>
+<li>O workflow é <strong>auditável</strong>: todos os steps são logados no GitHub Actions</li>
+<li>A strategy <code>ours</code> garante que <code>master</code> é sempre a fonte de verdade</li>
+<li><code>[skip ci]</code> previne loop infinito de workflows</li>
+</ul>
+<hr>
+<p><em>Plano gerado em 2026-07-05. Referência: ADR-006.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>
