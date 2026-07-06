@@ -185,6 +185,7 @@ Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/a
 - [ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais](./docs/adr/ADR-008.md) ✅
 - [ADR-012: Dynamic HTML Pages — Rendering de Skills em GitHub Pages](./docs/adr/archive/ADR-012.md) ✅
 - [ADR-013: Expansão do Build.py para Incluir ADRs e Referências](./docs/adr/archive/ADR-013.md) ✅
+- [ADR-014: Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages](./docs/adr/archive/ADR-014.md) ✅
 
 > 📦 ADRs implementadas são movidas para `docs/adr/archive/` como referência. Veja [docs/adr/INDEX.md](./docs/adr/INDEX.md) para o índice completo.
 

@@ -1,6 +1,6 @@
 # Architecture Decision Records (ADR) Index
 
-> Última atualização: 2026-07-05
+> Última atualização: 2026-07-06
 
 ## Status Definitions
 
@@ -38,6 +38,8 @@ ADR's implementadas são movidas para `docs/adr/archive/` como referência.
 | [ADR-010](./archive/ADR-010.md) | Branch Protection e SemVer para Tags — Emergencial | ✅ Implementado | 2026-07-05 |
 | [ADR-011](./archive/ADR-011.md) | Documentation Reconciliation Skill | ✅ Implementado | 2026-07-05 |
 | [ADR-012](./archive/ADR-012.md) | Dynamic HTML Pages — Rendering de Skills em GitHub Pages | ✅ Implementado | 2026-07-05 |
+| [ADR-013](./archive/ADR-013.md) | Expansão do Build.py para Incluir ADRs e Referências | ✅ Implementado | 2026-07-05 |
+| [ADR-014](./archive/ADR-014.md) | Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages | ✅ Implementado | 2026-07-06 |
 
 ---
 
