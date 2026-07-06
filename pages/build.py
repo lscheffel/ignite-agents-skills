@@ -49,19 +49,44 @@ def convert_inline_md(text):
     """Convert inline markdown: bold, italic, code, links, images."""
     # Images ![alt](url)
     text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img src="\2" alt="\1" style="max-width:100%;border-radius:8px;">', text)
-    # Links [text](url) - convert ADR paths to HTML
+    # Links [text](url) - convert all .md links to .html
     def convert_link(match):
         link_text = match.group(1)
         link_url = match.group(2)
-        # Convert ADR markdown links to HTML pages
+        # Skip external links (http, https, etc)
+        if link_url.startswith(('http://', 'https://', 'mailto:', '#')):
+            return f'<a href="{link_url}">{link_text}</a>'
+        # Convert ADR INDEX.md link
+        if link_url.endswith('docs/adr/INDEX.md') or link_url == './docs/adr/' or link_url == 'docs/adr/':
+            return f'<a href="../../adr/index.html">{link_text}</a>'
+        # Convert ADR archive links
         if 'docs/adr/archive/ADR-' in link_url and link_url.endswith('.md'):
             adr_name = link_url.split('/')[-1].replace('.md', '.html')
             return f'<a href="../../../adr/{adr_name}">{link_text}</a>'
         elif 'docs/adr/ADR-' in link_url and link_url.endswith('.md'):
             adr_name = link_url.split('/')[-1].replace('.md', '.html')
             return f'<a href="../../../adr/{adr_name}">{link_text}</a>'
-        else:
-            return f'<a href="{link_url}">{link_text}</a>'
+        # Convert skill SKILL.md links
+        elif link_url.endswith('SKILL.md'):
+            # skills/name/SKILL.md -> skills/name/index.html
+            parts = link_url.split('/')
+            skill_name = parts[-2] if len(parts) >= 2 else ''
+            if skill_name:
+                return f'<a href="../../skills/{skill_name}/index.html">{link_text}</a>'
+        # Convert skill template/example/checklist links
+        elif '/skills/' in link_url and link_url.endswith('.md'):
+            # skills/name/templates/file.md -> skills/name/templates/file.html
+            parts = link_url.split('/')
+            skill_name = parts[-3] if len(parts) >= 3 else ''
+            category = parts[-2] if len(parts) >= 2 else ''
+            file_name = parts[-1].replace('.md', '.html')
+            if skill_name and category:
+                return f'<a href="../../skills/{skill_name}/{category}/{file_name}">{link_text}</a>'
+        # Convert root .md files (README.md, USAGE.md, etc)
+        elif link_url.endswith('.md') and '/' not in link_url:
+            return f'<a href="../{link_url.replace(".md", ".html")}">{link_text}</a>'
+        # Default: keep original link
+        return f'<a href="{link_url}">{link_text}</a>'
     text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', convert_link, text)
     # Inline code `code`
     text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
