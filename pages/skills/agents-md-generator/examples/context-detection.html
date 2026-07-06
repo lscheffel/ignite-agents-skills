@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agents-md-generator / examples / context-detection — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">agents-md-generator</a> &rsaquo; examples &rsaquo; context-detection</div>
+  </nav>
+  <div class="content">
+    <h1 id="exemplos-deteco-de-contexto">Exemplos: Detecção de Contexto</h1>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>Este documento mostra como a skill <code>agents-md-generator</code> detecta automaticamente o contexto de um projeto.</p>
+<hr>
+<h2 id="exemplo-1-deteco-de-tipo-de-projeto">Exemplo 1: Detecção de Tipo de Projeto</h2>
+<h3 id="entrada">Entrada</h3>
+<p>Estrutura de diretórios:</p>
+<pre><code>meu-projeto/
+├── src/
+│   ├── domain/
+│   ├── application/
+│   ├── infrastructure/
+│   └── interfaces/
+├── package.json
+└── README.md</code></pre>
+<p><code>package.json</code>:</p>
+<pre data-lang="json"><code>{
+  &quot;name&quot;: &quot;meu-crm&quot;,
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^4.18.0&quot;,
+    &quot;typeorm&quot;: &quot;^0.3.0&quot;,
+    &quot;jsonwebtoken&quot;: &quot;^9.0.0&quot;
+  }
+}</code></pre>
+<h3 id="deteco-automtica">Detecção Automática</h3>
+<ol>
+<li><strong>Análise de package.json:</strong></li>
+</ol>
+<ul>
+<li><code>express</code> → API REST</li>
+<li><code>typeorm</code> → ORM (banco de dados)</li>
+<li><code>jsonwebtoken</code> → Autenticação</li>
+</ul>
+<ol>
+<li><strong>Análise de estrutura:</strong></li>
+</ol>
+<ul>
+<li><code>domain/</code> → Clean Architecture</li>
+<li><code>application/</code> → Casos de uso</li>
+<li><code>infrastructure/</code> → Adaptadores</li>
+<li><code>interfaces/</code> → Controllers</li>
+</ul>
+<ol>
+<li><strong>Resultado:</strong></li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;projectType&quot;: &quot;api&quot;,
+     &quot;architecture&quot;: &quot;clean&quot;,
+     &quot;technologies&quot;: [&quot;node&quot;, &quot;express&quot;, &quot;typeorm&quot;, &quot;jwt&quot;],
+     &quot;confidence&quot;: 95
+   }</code></pre>
+<h3 id="template-selecionado">Template Selecionado</h3>
+<p><code>AGENTS-api.md</code> com seções:</p>
+<ul>
+<li>Endpoints principais</li>
+<li>Autenticação e autorização</li>
+<li>Padrões REST</li>
+<li>Models de dados</li>
+</ul>
+<hr>
+<h2 id="exemplo-2-deteco-de-tecnologias">Exemplo 2: Detecção de Tecnologias</h2>
+<h3 id="entrada">Entrada</h3>
+<p><code>package.json</code>:</p>
+<pre data-lang="json"><code>{
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;^18.2.0&quot;,
+    &quot;react-dom&quot;: &quot;^18.2.0&quot;,
+    &quot;react-router-dom&quot;: &quot;^6.0.0&quot;,
+    &quot;redux&quot;: &quot;^4.2.0&quot;,
+    &quot;@reduxjs/toolkit&quot;: &quot;^1.9.0&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;typescript&quot;: &quot;^5.0.0&quot;,
+    &quot;@types/react&quot;: &quot;^18.2.0&quot;,
+    &quot;vite&quot;: &quot;^4.4.0&quot;
+  }
+}</code></pre>
+<h3 id="deteco-automtica">Detecção Automática</h3>
+<ol>
+<li><strong>Framework front-end:</strong></li>
+</ol>
+<ul>
+<li><code>react</code> → React</li>
+<li><code>react-dom</code> → React DOM</li>
+<li><code>react-router-dom</code> → React Router</li>
+</ul>
+<ol>
+<li><strong>State management:</strong></li>
+</ol>
+<ul>
+<li><code>redux</code> → Redux</li>
+<li><code>@reduxjs/toolkit</code> → Redux Toolkit</li>
+</ul>
+<ol>
+<li><strong>Build tool:</strong></li>
+</ol>
+<ul>
+<li><code>vite</code> → Vite</li>
+</ul>
+<ol>
+<li><strong>Linguagem:</strong></li>
+</ol>
+<ul>
+<li><code>typescript</code> → TypeScript</li>
+</ul>
+<ol>
+<li><strong>Resultado:</strong></li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;technologies&quot;: {
+       &quot;framework&quot;: &quot;react&quot;,
+       &quot;stateManagement&quot;: &quot;redux&quot;,
+       &quot;buildTool&quot;: &quot;vite&quot;,
+       &quot;language&quot;: &quot;typescript&quot;
+     },
+     &quot;confidence&quot;: 98
+   }</code></pre>
+<h3 id="template-selecionado">Template Selecionado</h3>
+<p><code>AGENTS-webapp.md</code> com seções:</p>
+<ul>
+<li>Componentes (Atomic Design)</li>
+<li>State Management (Redux)</li>
+<li>Rotas (React Router)</li>
+<li>Build (Vite)</li>
+</ul>
+<hr>
+<h2 id="exemplo-3-deteco-de-padres-arquiteturais">Exemplo 3: Detecção de Padrões Arquiteturais</h2>
+<h3 id="entrada">Entrada</h3>
+<p>Estrutura de diretórios:</p>
+<pre><code>src/
+├── commands/
+│   ├── CreateOrderCommand.ts
+│   └── UpdateOrderCommand.ts
+├── handlers/
+│   ├── CreateOrderHandler.ts
+│   └── UpdateOrderHandler.ts
+├── queries/
+│   ├── GetOrderQuery.ts
+│   └── ListOrdersQuery.ts
+└── events/
+    ├── OrderCreatedEvent.ts
+    └── OrderUpdatedEvent.ts</code></pre>
+<h3 id="deteco-automtica">Detecção Automática</h3>
+<ol>
+<li><strong>Padrão CQRS:</strong></li>
+</ol>
+<ul>
+<li><code>commands/</code> → Command side</li>
+<li><code>queries/</code> → Query side</li>
+<li><code>handlers/</code> → Command/Query handlers</li>
+</ul>
+<ol>
+<li><strong>Event Sourcing:</strong></li>
+</ol>
+<ul>
+<li><code>events/</code> → Domain events</li>
+</ul>
+<ol>
+<li><strong>Resultado:</strong></li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;patterns&quot;: {
+       &quot;architecture&quot;: &quot;cqrs&quot;,
+       &quot;eventSourcing&quot;: true,
+       &quot;ddd&quot;: true
+     },
+     &quot;confidence&quot;: 90
+   }</code></pre>
+<h3 id="template-selecionado">Template Selecionado</h3>
+<p><code>AGENTS-crm.md</code> com seções:</p>
+<ul>
+<li>CQRS (Commands/Queries)</li>
+<li>Event Sourcing</li>
+<li>Domain Events</li>
+<li>Handlers</li>
+</ul>
+<hr>
+<h2 id="exemplo-4-deteco-de-governana">Exemplo 4: Detecção de Governança</h2>
+<h3 id="entrada">Entrada</h3>
+<p>Diretório <code>.github/</code>:</p>
+<pre><code>.github/
+├── workflows/
+│   ├── ci.yml
+│   └── deploy.yml
+├── CODEOWNERS
+└── PULL_REQUEST_TEMPLATE.md</code></pre>
+<p><code>CODEOWNERS</code>:</p>
+<pre><code>* @equipe-core
+/src/domain/ @equipe-domain
+/src/api/ @equipe-api</code></pre>
+<h3 id="deteco-automtica">Detecção Automática</h3>
+<ol>
+<li><strong>CI/CD:</strong></li>
+</ol>
+<ul>
+<li><code>ci.yml</code> → GitHub Actions CI</li>
+<li><code>deploy.yml</code> → Deploy automático</li>
+</ul>
+<ol>
+<li><strong>Code Review:</strong></li>
+</ol>
+<ul>
+<li><code>CODEOWNERS</code> → Review obrigatório</li>
+<li><code>PULL_REQUEST_TEMPLATE.md</code> → Template de PR</li>
+</ul>
+<ol>
+<li><strong>Resultado:</strong></li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;governance&quot;: {
+       &quot;cicd&quot;: &quot;github-actions&quot;,
+       &quot;codeReview&quot;: true,
+       &quot;branchProtection&quot;: true,
+       &quot;prTemplate&quot;: true
+     },
+     &quot;confidence&quot;: 95
+   }</code></pre>
+<h3 id="template-selecionado">Template Selecionado</h3>
+<p><code>AGENTS-base.md</code> com seções:</p>
+<ul>
+<li>CI/CD (GitHub Actions)</li>
+<li>Code Review (CODEOWNERS)</li>
+<li>Branch Protection</li>
+<li>PR Template</li>
+</ul>
+<hr>
+<h2 id="exemplo-5-deteco-de-contexto-incerto">Exemplo 5: Detecção de Contexto Incerto</h2>
+<h3 id="entrada">Entrada</h3>
+<p><code>package.json</code>:</p>
+<pre data-lang="json"><code>{
+  &quot;name&quot;: &quot;meu-projeto&quot;,
+  &quot;dependencies&quot;: {
+    &quot;lodash&quot;: &quot;^4.17.0&quot;
+  }
+}</code></pre>
+<p>Estrutura simples:</p>
+<pre><code>meu-projeto/
+├── src/
+│   └── index.js
+├── package.json
+└── README.md</code></pre>
+<h3 id="deteco-automtica">Detecção Automática</h3>
+<ol>
+<li><strong>Análise limitada:</strong></li>
+</ol>
+<ul>
+<li><code>lodash</code> → Biblioteca utilitária (genérica)</li>
+<li>Estrutura simples → Não indica padrão específico</li>
+</ul>
+<ol>
+<li><strong>Resultado:</strong></li>
+</ol>
+<pre data-lang="json"><code>   {
+     &quot;projectType&quot;: &quot;unknown&quot;,
+     &quot;confidence&quot;: 40,
+     &quot;suggestion&quot;: &quot;manual-input&quot;
+   }</code></pre>
+<h3 id="ao">Ação</h3>
+<p>A skill solicita input manual:</p>
+<pre><code>Não foi possível detectar o contexto automaticamente.
+
+Por favor, selecione o tipo de projeto:
+1. API
+2. WebApp
+3. Biblioteca
+4. CLI
+5. Outro
+
+Resposta: </code></pre>
+<hr>
+<h2 id="fluxo-de-deteco">Fluxo de Detecção</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Iniciar Detecção] --&gt; B[Analisar package.json]
+    B --&gt; C[Analisar estrutura]
+    C --&gt; D[Analisar .github/]
+    D --&gt; E[Analisar README.md]
+    E --&gt; F{Confiança ≥ 80%?}
+    F --&gt;|Sim| G[Gerar Relatório]
+    F --&gt;|Não| H[Solicitar Input Manual]
+    H --&gt; G
+    G --&gt; I[Selecionar Template]
+    I --&gt; J[Gerar AGENTS.md]</code></pre>
+<hr>
+<h2 id="mtricas-de-deteco">Métricas de Detecção</h2>
+<div class="table-wrapper"><table><tr><th>Contexto</th><th>Confiança Média</th><th>Templates Disponíveis</th></tr><tr><td>API REST</td><td>95%</td><td>AGENTS-api.md</td></tr><tr><td>WebApp React</td><td>98%</td><td>AGENTS-webapp.md</td></tr><tr><td>CRM</td><td>90%</td><td>AGENTS-crm.md</td></tr><tr><td>Biblioteca</td><td>85%</td><td>AGENTS-library.md</td></tr><tr><td>CLI</td><td>88%</td><td>AGENTS-cli.md</td></tr><tr><td>Skills Repo</td><td>92%</td><td>AGENTS-skills-repo.md</td></tr><tr><td>Desconhecido</td><td>40%</td><td>AGENTS-base.md</td></tr></table></div>
+<hr>
+<h2 id="concluso">Conclusão</h2>
+<p>A detecção automática de contexto permite que a skill gere AGENTS.md adaptativos e precisos, melhorando a experiência de agentes de IA ao interagir com diferentes tipos de projetos.</p>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

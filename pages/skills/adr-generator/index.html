@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>adr-generator — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; adr-generator</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: adr-generator description: Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos. version: 2.0.0 tags: [architecture, decisions, adr, documentation] related_skills: [documentation, architecture-review-kilo, implementation] ---</p>
+<h1 id="adr-generator">ADR Generator</h1>
+<p>Gera Architecture Decision Records (ADRs) seguindo o formato MADR ou similar.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Decisão arquitetural significativa precisa ser documentada</li>
+<li>Usuário solicita criação de ADR</li>
+<li>Registro de trade-offs técnicos</li>
+<li>Decisões que afetam múltiplos módulos ou equipes</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Decisão é óbvia (ex: usar tabs vs spaces)</li>
+<li>Decisão é reversível sem custo</li>
+<li>Protótipo rápido</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>documentation</code> — para padrões de documentação</li>
+<li><code>architecture-review-kilo</code> — para revisar decisões arquiteturais</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Decisão importante?] --&gt;|Arquitetura| B[ADR]
+    A --&gt;|Processo| C[RFC]
+    A --&gt;|Simples| D[Decision Doc]
+    A --&gt;|Urgente| E[ADR de Emergência]
+    B --&gt;|Impacto alto| F[ADR Completo]
+    B --&gt;|Impacto baixo| G[ADR Simplificado]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-criar-adr-completo--bp--todo">Fase 1: Criar ADR Completo + BP + TODO</h3>
+<p>Ao criar uma nova ADR, <strong>sempre</strong> gere os três arquivos em conjunto:</p>
+<ol>
+<li>Crie o ADR em <code>docs/adr/ADR-XXX.md</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/adr.md docs/adr/ADR-00X.md</code></pre>
+<ol>
+<li>Crie o Blueprint (BP) em <code>docs/adr/ADR-XXX-BP.md</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/adr-bp.md docs/adr/ADR-00X-BP.md</code></pre>
+<ol>
+<li>Crie o TODO em <code>docs/adr/ADR-XXX-TODO.md</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md</code></pre>
+<blockquote><strong>Regra obrigatória:</strong> Uma ADR nunca existe isoladamente. Sempre que uma ADR é criada, seu BP e TODO devem ser gerados simultaneamente. O BP define as fases de implementação, e o TODO lista as tarefas verificáveis.</blockquote>
+<ol>
+<li>Preencha o ADR:</li>
+</ol>
+<ul>
+<li>Contexto: Problema, Motivação, Restrições</li>
+<li>Alternativas: A/B com prós/contras</li>
+<li>Decisão justificada</li>
+<li>Consequências positivas e negativas</li>
+</ul>
+<ol>
+<li>Preencha o BP:</li>
+</ol>
+<ul>
+<li>Fases de implementação com dependências</li>
+<li>Critérios de aceitação por fase</li>
+<li>Sequenciamento lógico</li>
+</ul>
+<ol>
+<li>Preencha o TODO:</li>
+</ol>
+<ul>
+<li>Tarefas granulares numeradas</li>
+<li>Cada tarefa verificável por comando</li>
+<li>Status inicial: <code>[ ]</code></li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: ADR + BP + TODO criados e linkados entre si</li>
+</ol>
+<h3 id="fase-2-revisar-adr-existente">Fase 2: Revisar ADR Existente</h3>
+<ol>
+<li>Leia ADR:</li>
+</ol>
+<pre data-lang="bash"><code>   cat docs/adr/ADR-00X.md</code></pre>
+<ol>
+<li>Verifique se ainda é válido:</li>
+</ol>
+<ul>
+<li>Contexto mudou?</li>
+<li>Alternativas mudaram?</li>
+</ul>
+<ol>
+<li>Atualize status:</li>
+</ol>
+<ul>
+<li>Aceito → Substituído (se aplicável)</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: ADR revisado ou mantido</li>
+</ol>
+<h3 id="fase-3-substituir-adr">Fase 3: Substituir ADR</h3>
+<ol>
+<li>Crie novo ADR:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/adr.md docs/adr/ADR-NEW.md</code></pre>
+<ol>
+<li>No ADR antigo, atualize status:</li>
+</ol>
+<pre data-lang="markdown"><code>   ## Status
+   Substituído por ADR-NEW</code></pre>
+<ol>
+<li>Link no novo ADR:</li>
+</ol>
+<pre data-lang="markdown"><code>   ## Referências
+   - Substitui ADR-OLD</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Substituição documentada</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="estrutura-do-adr">Estrutura do ADR</h3>
+<pre data-lang="markdown"><code># ADR-XXX: [Título da Decisão]
+
+## Status
+Proposto | Aceito | Rejeitado | Suspenso | Substituído
+
+## Contexto
+Descreva o problema, motivação e restrições.
+
+## Decisão
+Descreva a solução escolhida.
+
+## Alternativas Consideradas
+- Alternativa A: descrição, prós e contras
+- Alternativa B: descrição, prós e contras
+
+## Consequências
+### Positivas
+- ...
+
+### Negativas
+- ...</code></pre>
+<h3 id="status-values">Status Values</h3>
+<ul>
+<li><strong>Proposto</strong>: Em discussão</li>
+<li><strong>Aceito</strong>: Aprovado e implementado</li>
+<li><strong>Rejeitado</strong>: Rejeitado, não implementado</li>
+<li><strong>Suspenso</strong>: Em espera</li>
+<li><strong>Substituído</strong>: Reemplazado por outro ADR</li>
+</ul>
+<h2 id="templates">Templates</h2>
+<h3 id="adrmd">adr.md</h3>
+<p>Localização: <code>templates/adr.md</code></p>
+<p>Template para Architecture Decision Record.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr.md docs/adr/ADR-00X.md</code></pre>
+<h3 id="adr-bpmd">adr-bp.md</h3>
+<p>Localização: <code>templates/adr-bp.md</code></p>
+<p>Template para Blueprint de Implementação do ADR. Define fases, dependências e critérios de aceitação.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr-bp.md docs/adr/ADR-00X-BP.md</code></pre>
+<h3 id="adr-todomd">adr-todo.md</h3>
+<p>Localização: <code>templates/adr-todo.md</code></p>
+<p>Template para lista de tarefas verificáveis do ADR. Cada tarefa deve ter um comando de validação.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md</code></pre>
+<h3 id="adr-emergencymd">adr-emergency.md</h3>
+<p>Localização: <code>templates/adr-emergency.md</code></p>
+<p>Template para ADR emergencial (implementação imediata sem BP/TODO). Use para correções críticas.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr-emergency.md docs/adr/ADR-00X.md</code></pre>
+<h3 id="adr-simplemd">adr-simple.md</h3>
+<p>Localização: <code>templates/adr-simple.md</code></p>
+<p>Template para ADR simples (sem necessidade de BP/TODO). Use para decisões menores.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr-simple.md docs/adr/ADR-00X.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="adr-sem-blueprint-e-todo">ADR sem Blueprint e TODO</h4>
+<p><strong>O que é:</strong> Criar ADR sem gerar simultaneamente seu BP e TODO. <strong>Por que é ruim:</strong> ADR fica sem plano de implementação e sem tarefas verificáveis — quebra o ciclo ADR→Blueprint→TODO→Implementation. <strong>Como evitar:</strong> Sempre crie os 3 arquivos juntos: <code>ADR-XXX.md</code>, <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+mkdir -p docs/adr
+cp templates/adr.md docs/adr/ADR-009.md
+# (esqueceu BP e TODO)
+
+# ✅ CORRETO
+cp templates/adr.md docs/adr/ADR-009.md
+cp templates/adr-bp.md docs/adr/ADR-009-BP.md
+cp templates/adr-todo.md docs/adr/ADR-009-TODO.md</code></pre>
+<h4 id="adr-retrospectivo">ADR Retrospectivo</h4>
+<p><strong>O que é:</strong> Criar ADR após decisão já implementada. <strong>Por que é ruim:</strong> Não registra trade-offs, parece justificação. <strong>Como evitar:</strong> Crie ADR antes da implementação. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Decisão tomada em 2024-01-01
+ADR criado em 2024-06-01
+
+# ✅ CORRETO
+ADR criado em 2024-01-01
+Decisão implementada em 2024-01-15</code></pre>
+<h4 id="adr-sem-alternativas">ADR sem Alternativas</h4>
+<p><strong>O que é:</strong> ADR que não lista alternativas consideradas. <strong>Por que é ruim:</strong> Não mostra trade-offs, parece decisão aleatória. <strong>Como evitar:</strong> Sempre liste pelo menos 2 alternativas. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Escolhemos React porque é bom
+
+# ✅ CORRETO
+Alternativas:
+- React: comunidade grande, curva aprendizado média
+- Vue: curva aprendizado baixa, comunidade menor
+- Svelte: performance alta, comunidade pequena
+Escolhemos React por comunidade e documentação</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="adr-vago">ADR Vago</h4>
+<p><strong>O que é:</strong> ADR sem contexto ou decisão clara. <strong>Por que é ruim:</strong> Futuro desenvolvedor não entende motivação. <strong>Como evitar:</strong> Seja específico, inclua dados. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Usamos PostgreSQL
+
+# ✅ CORRETO
+Usamos PostgreSQL por:
+- Suporte a JSONB para queries flexíveis
+- Replicação síncrona para HA
+- Equipe já tem experiência</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="adr-sem-data">ADR sem Data</h4>
+<p><strong>O que é:</strong> ADR sem data de criação. <strong>Por que é ruim:</strong> Difícil rastrear histórico. <strong>Como evitar:</strong> Sempre inclua data. <strong>Exemplo:</strong></p>
+<pre data-lang="markdown"><code># ✅ CORRETO
+# ADR-001: Database Choice
+## Status
+Aceito
+
+## Date
+2024-01-15</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-adr">Checklist de ADR</h3>
+<ul>
+<li>[ ] Título claro e descritivo</li>
+<li>[ ] Contexto completo</li>
+<li>[ ] Alternativas listadas</li>
+<li>[ ] Decisão justificada</li>
+<li>[ ] Consequências documentadas</li>
+<li>[ ] Data incluída</li>
+<li>[ ] Stakeholders identificados</li>
+<li>[ ] <strong>Blueprint (BP) criado em <code>ADR-XXX-BP.md</code></strong></li>
+<li>[ ] <strong>TODO criado em <code>ADR-XXX-TODO.md</code></strong></li>
+<li>[ ] <strong>BP e TODO linkados no ADR</strong></li>
+</ul>
+<h3 id="checklist-de-review">Checklist de Review</h3>
+<ul>
+<li>[ ] Contexto ainda relevante?</li>
+<li>[ ] Decisão ainda válida?</li>
+<li>[ ] Alternativas precisam atualização?</li>
+<li>[ ] Status atualizado</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="adr-de-emergncia">ADR de Emergência</h3>
+<p><strong>Situação:</strong> Decisão urgente precisa ser documentada. <strong>Solução:</strong> Crie ADR simplificado, detalhe depois. <strong>Exceção:</strong> Se emergência é crítica, documente imediatamente.</p>
+<pre data-lang="markdown"><code>## Status
+Aceito (emergencial)</code></pre>
+<h3 id="adr-para-experimento">ADR para Experimento</h3>
+<p><strong>Situação:</strong> Decisão experimental precisa ser documentada. <strong>Solução:</strong> Use status "Suspenso" ou "Experimental". <strong>Exceção:</strong> Se experimento é pequeno, use Decision Doc.</p>
+<pre data-lang="markdown"><code>## Status
+Suspenso (experimental)</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://adr.github.io/madr/">MADR</a></li>
+<li><code>documentation</code> — para padrões</li>
+<li><code>architecture-review-kilo</code> — para revisões</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/adr-bp.html">adr-bp.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/adr-emergency.html">adr-emergency.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/adr-simple.html">adr-simple.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/adr-todo.html">adr-todo.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/adr.html">adr.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/database-choice.html">database-choice.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

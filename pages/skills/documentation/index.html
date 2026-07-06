@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>documentation — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; documentation</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: documentation description: Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code. Use quando criar documentação, revisar docs, ou padronizar material técnico. version: 2.0.0 tags: [documentation, docs, readme, api-docs, architecture] related_skills: [adr-generator, repo-bootstrap, implementation] ---</p>
+<h1 id="documentation">Documentation</h1>
+<p>Guia para documentação técnica eficaz e padronizada.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa criar documentação de projeto</li>
+<li>Precisa escrever ADR</li>
+<li>Precisa documentar API</li>
+<li>Precisa revisar documentação existente</li>
+<li>Precisa padronizar documentação entre projetos</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Protótipo rápido sem documentação</li>
+<li>Código autoexplicativo (ex: script pequeno)</li>
+<li>Documentação já existe e está atualizada</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>adr-generator</code> — para Architecture Decision Records</li>
+<li><code>repo-bootstrap</code> — para arquivos iniciais de documentação</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Tipo de Documento?] --&gt;|Projeto| B[README.md]
+    A --&gt;|Decisão técnica| C[ADR]
+    A --&gt;|Endpoints| D[API Docs]
+    A --&gt;|Sistema| E[Architecture Docs]
+    A --&gt;|Guia| F[Guide]
+    B --&gt;|Instalação| G[Quick Start]
+    B --&gt;|Uso| H[Usage]
+    B --&gt;|Contribuição| I[Contributing]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-criar-documentao-de-projeto">Fase 1: Criar Documentação de Projeto</h3>
+<ol>
+<li>Crie README.md com estrutura:</li>
+</ol>
+<pre data-lang="markdown"><code>   # Nome do Projeto
+   
+   ## Visão Geral
+   {O que o projeto faz}
+   
+   ## Instalação
+   {Como instalar em 5 minutos}
+   
+   ## Uso
+   {Exemplos básicos}
+   
+   ## Documentação
+   {Links para docs detalhadas}</code></pre>
+<ol>
+<li>Adicione badges:</li>
+</ol>
+<pre data-lang="markdown"><code>   ![CI](https://github.com/.../actions/badge.svg)
+   ![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: README renderiza corretamente no GitHub</li>
+</ol>
+<h3 id="fase-2-escrever-adr">Fase 2: Escrever ADR</h3>
+<ol>
+<li>Crie arquivo em <code>docs/adr/ADR-XXX.md</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/adr.md docs/adr/ADR-003.md</code></pre>
+<ol>
+<li>Preencha contexto:</li>
+</ol>
+<ul>
+<li>Problema</li>
+<li>Motivação</li>
+<li>Restrições</li>
+</ul>
+<ol>
+<li>Liste alternativas:</li>
+</ol>
+<ul>
+<li>Alternativa A: prós/contras</li>
+<li>Alternativa B: prós/contras</li>
+</ul>
+<ol>
+<li>Defina decisão</li>
+<li>Documente consequências</li>
+<li><strong>Checkpoint</strong>: ADR aprovado e linkado em README</li>
+</ol>
+<h3 id="fase-3-documentar-api">Fase 3: Documentar API</h3>
+<ol>
+<li>Identifique endpoints:</li>
+</ol>
+<pre data-lang="bash"><code>   # Listar rotas
+   grep -r &quot;router\.&quot; src/</code></pre>
+<ol>
+<li>Para cada endpoint, documente:</li>
+</ol>
+<ul>
+<li>Method e path</li>
+<li>Request body (exemplo)</li>
+<li>Response (exemplo)</li>
+<li>Códigos de erro</li>
+</ul>
+<ol>
+<li>Use OpenAPI/Swagger:</li>
+</ol>
+<pre data-lang="yaml"><code>   /users/{id}:
+     get:
+       summary: Get user by ID
+       parameters:
+         - name: id
+           in: path
+           required: true
+           schema:
+             type: string
+       responses:
+         200:
+           description: User found
+         404:
+           description: User not found</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Swagger UI funciona e documenta todos endpoints</li>
+</ol>
+<h3 id="fase-4-revisar-documentao-existente">Fase 4: Revisar Documentação Existente</h3>
+<ol>
+<li>Verifique links quebrados:</li>
+</ol>
+<pre data-lang="bash"><code>   # Usar markdown-link-check
+   npx markdown-link-check README.md</code></pre>
+<ol>
+<li>Verifique datas:</li>
+</ol>
+<ul>
+<li>README atualizado?</li>
+<li>CHANGELOG atualizado?</li>
+</ul>
+<ol>
+<li>Verifique exemplos:</li>
+</ol>
+<ul>
+<li>Código funciona?</li>
+<li>Versões corretas?</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Nenhum link quebrado, exemplos funcionam</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="docs-as-code">Docs-as-Code</h3>
+<p>Documentação versionada no mesmo repo que código.</p>
+<ul>
+<li>Use Markdown</li>
+<li>Review via PR</li>
+<li>CI verifica links</li>
+<li>Versionamento junto com código</li>
+</ul>
+<h3 id="progressive-disclosure">Progressive Disclosure</h3>
+<p>Informação básica primeiro, detalhes depois.</p>
+<pre data-lang="markdown"><code># Visão Geral (1 parágrafo)
+
+## Instalação (passo a passo)
+
+### Configuração Avançada (opcional)</code></pre>
+<h3 id="single-source-of-truth">Single Source of Truth</h3>
+<p>Uma fonte, não cópias.</p>
+<ul>
+<li>README aponta para docs/</li>
+<li>ADRs em docs/adr/</li>
+<li>API docs em docs/api/</li>
+</ul>
+<h2 id="templates">Templates</h2>
+<h3 id="readmemd">readme.md</h3>
+<p>Localização: <code>templates/readme.md</code></p>
+<p>Template para README de projeto.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/readme.md README.md</code></pre>
+<h3 id="adrmd">adr.md</h3>
+<p>Localização: <code>templates/adr.md</code></p>
+<p>Template para Architecture Decision Record.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr.md docs/adr/ADR-00X.md</code></pre>
+<h3 id="api-docmd">api-doc.md</h3>
+<p>Localização: <code>templates/api-doc.md</code></p>
+<p>Template para documentação de API.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/api-doc.md docs/api/endpoints.md</code></pre>
+<h3 id="architecture-docmd">architecture-doc.md</h3>
+<p>Localização: <code>templates/architecture-doc.md</code></p>
+<p>Template para documentação de arquitetura.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/architecture-doc.md docs/architecture/overview.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="documentao-desatualizada">Documentação Desatualizada</h4>
+<p><strong>O que é:</strong> Documentação que não reflete código atual. <strong>Por que é ruim:</strong> Desinforma usuários, causa frustração. <strong>Como evitar:</strong> Atualize docs junto com código, CI verifica. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+README: &quot;Use npm start para rodar&quot;
+package.json: &quot;start&quot;: &quot;node server.js&quot;  # mas arquivo se chama index.js
+
+# ✅ CORRETO
+README: &quot;Use npm start para rodar&quot;
+package.json: &quot;start&quot;: &quot;node index.js&quot;  # alinhado</code></pre>
+<h4 id="documentao-sem-exemplos">Documentação sem Exemplos</h4>
+<p><strong>O que é:</strong> Documentação que só descreve sem mostrar código. <strong>Por que é ruim:</strong> Usuários não sabem como usar, abrem issues. <strong>Como evitar:</strong> Sempre inclua exemplos funcionais. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Use a função createUser para criar usuário&quot;
+
+# ✅ CORRETO
+&quot;Use a função createUser para criar usuário:</code></pre>
+<p>const user = await createUser({ name: 'John', email: 'john@example.com' });</p>
+<pre data-lang="""><code></code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="documentao-duplicada">Documentação Duplicada</h4>
+<p><strong>O que é:</strong> Mesma informação em múltiplos arquivos. <strong>Por que é ruim:</strong> Manutenção dupla, inconsistência. <strong>Como evitar:</strong> Single source of truth, links internos. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+README.md: &quot;Instale com npm install&quot;
+docs/install.md: &quot;Instale com npm install&quot;
+
+# ✅ CORRETO
+README.md: &quot;Instale com npm install. Veja [Instalação Detalhada](docs/install.md)&quot;
+docs/install.md: &quot;Instale com npm install&quot;</code></pre>
+<h4 id="documentao-sem-estrutura">Documentação sem Estrutura</h4>
+<p><strong>O que é:</strong> Documentação sem headings, impossível navegar. <strong>Por que é ruim:</strong> Usuários não encontram informação. <strong>Como evitar:</strong> Use headings hierárquicos (#, ##, ###). <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Projeto X faz Y. Para instalar, rode npm install. Para usar...&quot;
+
+# ✅ CORRETO
+# Projeto X
+
+## Instalação
+npm install
+
+## Uso
+...&quot;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="documentao-sem-badges">Documentação sem Badges</h4>
+<p><strong>O que é:</strong> README sem badges de CI, coverage, versão. <strong>Por que é ruim:</strong> Usuários não sabem status do projeto. <strong>Como evitar:</strong> Adicione badges padrão no topo. <strong>Exemplo:</strong></p>
+<pre data-lang="markdown"><code># ✅ CORRETO
+![CI](https://github.com/.../actions/badge.svg)
+![npm](https://img.shields.io/npm/v/package)
+![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-review-de-doc">Checklist de Review de Doc</h3>
+<ul>
+<li>[ ] Links internos funcionam</li>
+<li>[ ] Links externos funcionam</li>
+<li>[ ] Exemplos de código funcionam</li>
+<li>[ ] Versões especificadas corretamente</li>
+<li>[ ] Gramática e português corretos</li>
+</ul>
+<h3 id="checklist-de-link-checker">Checklist de Link Checker</h3>
+<ul>
+<li>[ ] README.md sem links quebrados</li>
+<li>[ ] docs/ sem links quebrados</li>
+<li>[ ] ADRs sem links quebrados</li>
+<li>[ ] API docs sem links quebrados</li>
+</ul>
+<h3 id="checklist-de-freshness">Checklist de Freshness</h3>
+<ul>
+<li>[ ] README atualizado (últimos 6 meses)</li>
+<li>[ ] CHANGELOG atualizado</li>
+<li>[ ] API docs atualizados</li>
+<li>[ ] Architecture docs atualizados</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="documentao-para-projeto-legado">Documentação para Projeto Legado</h3>
+<p><strong>Situação:</strong> Projeto sem documentação, precisa ser criada. <strong>Solução:</strong> Comece com README mínimo, evolua incrementalmente. <strong>Exceção:</strong> Se projeto será descontinuado, documente apenas o essencial.</p>
+<pre data-lang="bash"><code># README mínimo para legado
+# Projeto Legado
+
+## Como rodar
+docker-compose up -d</code></pre>
+<h3 id="documentao-para-microservio">Documentação para Microserviço</h3>
+<p><strong>Situação:</strong> Documentar microserviço vs monolito. <strong>Solução:</strong> Foque em contrato de API, não em implementação. <strong>Exceção:</strong> Se microserviço é crítico, documente arquitetura também.</p>
+<pre data-lang="markdown"><code># Microserviço X
+
+## API
+{Endpoints e contratos}
+
+## Integração
+{Como outros serviços consomem}</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://keepachangelog.com/">Keep a Changelog</a></li>
+<li><a href="https://www.markdownguide.org/">Markdown Guide</a></li>
+<li><code>adr-generator</code> — para ADRs</li>
+<li><code>repo-bootstrap</code> — para estrutura inicial</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/api-doc.html">api-doc.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/architecture-doc.html">architecture-doc.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/readme.html">readme.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/readme-example.html">readme-example.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

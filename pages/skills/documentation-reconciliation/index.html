@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>documentation-reconciliation — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; documentation-reconciliation</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: documentation-reconciliation description: Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código version: 2.0.0 tags: [documentation, governance, adr, audit, changelog, readme] related_skills: [governance, adr-generator, skill-audit-bulletin] ---</p>
+<h1 id="documentation-reconciliation">Documentation Reconciliation</h1>
+<p>Audita e reconcilia documentação canônica e específica contra realidade do código, identificando gaps, status incorretos e artefatos não arquivados.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>README/CHANGELOG/USAGE desatualizados</li>
+<li>ADRs/BPs/TODOs com status incorretos</li>
+<li>ADRs implementadas não arquivadas</li>
+<li>Antes de release ou deploy gh-pages</li>
+<li>Gaps entre documentação e implementação</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Documentação já está sincronizada</li>
+<li>Apenas atualização pontual de texto</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>governance</code> — processos de governança e versionamento</li>
+<li><code>adr-generator</code> — criação de ADRs</li>
+<li><code>skill-audit-bulletin</code> — auditoria de qualidade de skills</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Reconciliação Necessária?] --&gt;|Sim| B[Tipo de Reconciliação]
+    B --&gt;|Canônica| C[README/CHANGELOG/USAGE]
+    B --&gt;|Específica| D[ADRs/BPs/TODOs]
+    B --&gt;|Completa| E[Full Repository]
+    C --&gt; F[Phase 1-4: Audit]
+    D --&gt; F
+    E --&gt; F
+    F --&gt; G[Phase 5-8: Reconciliação]
+    G --&gt; H[DOCUMENTATION_AUDIT_REPORT.md]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-repository-inventory">Fase 1: Repository Inventory</h3>
+<ol>
+<li>Executar <code>git status</code>, <code>git log --oneline -50</code>, <code>git diff --stat</code></li>
+<li>Identificar arquivos modificados recentemente</li>
+<li><strong>Checkpoint</strong>: Listar mudanças não documentadas</li>
+</ol>
+<h3 id="fase-2-canonical-docs-audit">Fase 2: Canonical Docs Audit</h3>
+<ol>
+<li>Comparar README.md ↔ index.json ↔ skills/</li>
+<li>Verificar CHANGELOG.md tem entradas para commits recentes</li>
+<li>Validar USAGE.md tem comandos atuais</li>
+<li><strong>Checkpoint</strong>: Identificar drift em cada documento</li>
+</ol>
+<h3 id="fase-3-adrbptodo-audit">Fase 3: ADR/BP/TODO Audit</h3>
+<ol>
+<li>Listar ADRs com status "Implementado" mas não arquivadas</li>
+<li>Verificar BPs com TODOs incompletos</li>
+<li>Identificar ADRs sem templates completos</li>
+<li><strong>Checkpoint</strong>: Listar artefatos com gaps</li>
+</ol>
+<h3 id="fase-4-governance-audit">Fase 4: Governance Audit</h3>
+<ol>
+<li>Verificar branch protection rules seguidas</li>
+<li>Validar SemVer aplicado corretamente</li>
+<li>Checar processos de arquivamento</li>
+<li><strong>Checkpoint</strong>: Identificar violações de governance</li>
+</ol>
+<h3 id="fase-5-documentation-reconciliation">Fase 5: Documentation Reconciliation</h3>
+<ol>
+<li>Atualizar README.md com features/skills atuais</li>
+<li>Gerar CHANGELOG.md com commits não documentados</li>
+<li>Sincronizar USAGE.md com comandos reais</li>
+<li><strong>Checkpoint</strong>: Documentos reconciliados</li>
+</ol>
+<h3 id="fase-6-origin-artifact-reconciliation">Fase 6: Origin Artifact Reconciliation</h3>
+<ol>
+<li>Arquivar ADRs implementadas com <code>./scripts/archive-adrs.sh</code></li>
+<li>Atualizar <code>docs/adr/INDEX.md</code></li>
+<li>Reconciliar BPs/TODOs com status real</li>
+<li><strong>Checkpoint</strong>: Artefatos origem reconciliados</li>
+</ol>
+<h3 id="fase-7-governance-report">Fase 7: Governance Report</h3>
+<ol>
+<li>Gerar <code>docs/DOCUMENTATION_AUDIT_REPORT.md</code></li>
+<li>Incluir: drift findings, arquivos atualizados, compliance score</li>
+<li><strong>Checkpoint</strong>: Relatório completo</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="repository-truth-model">Repository Truth Model</h3>
+<p>Modelo autoritativo derivado de: código fonte, git history, diffs, governance. Documentação deve refletir este modelo.</p>
+<h3 id="canonical-documents">Canonical Documents</h3>
+<p>Documentos canônicos: README.md, CHANGELOG.md, USAGE.md. Devem sempre refletir realidade.</p>
+<h3 id="origin-artifacts">Origin Artifacts</h3>
+<p>Artefatos que originaram implementações: ADRs, BPs, TODOs. Devem ser reconciliados quando implementação divergir.</p>
+<h2 id="templates">Templates</h2>
+<h3 id="audit-report">audit-report</h3>
+<p>Localização: <code>templates/audit-report.md</code></p>
+<p>Template para DOCUMENTATION_AUDIT_REPORT.md.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/audit-report.md docs/DOCUMENTATION_AUDIT_REPORT.md</code></pre>
+<h3 id="reconciliation-checklist">reconciliation-checklist</h3>
+<p>Localização: <code>templates/reconciliation-checklist.md</code></p>
+<p>Checklist de reconciliação documental.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/reconciliation-checklist.md ./RECONCILIATION_CHECKLIST.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="documentao-no-sincronizada">Documentação não sincronizada</h4>
+<p><strong>O que é:</strong> README/CHANGELOG/USAGE não refletem mudanças no código. <strong>Por que é ruim:</strong> Usuários e agentes seguem instruções obsoletas. <strong>Como evitar:</strong> Executar reconciliação antes de cada release.</p>
+<h4 id="adr-implementada-no-arquivada">ADR implementada não arquivada</h4>
+<p><strong>O que é:</strong> ADR com status "Implementado" mas não movida para archive. <strong>Por que é ruim:</strong> INDEX.md mostra ADRs que já foram implementadas. <strong>Como evitar:</strong> Sempre executar <code>./scripts/archive-adrs.sh</code> após implementação.</p>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="changelog-desorganizado">Changelog desorganizado</h4>
+<p><strong>O que é:</strong> Entradas não categorizadas ou em ordem cronológica. <strong>Por que é ruim:</strong> Difícil rastrear mudanças significativas. <strong>Como evitar:</strong> Usar formato Keep a Changelog (Added, Changed, Fixed).</p>
+<h4 id="status-incorreto-em-adr">Status incorreto em ADR</h4>
+<p><strong>O que é:</strong> ADR com status "Proposto" mas já implementada. <strong>Por que é ruim:</strong> Dificulta rastreamento de decisões ativas. <strong>Como evitar:</strong> Atualizar status imediatamente após implementação.</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="frontmatter-incompleto">Frontmatter incompleto</h4>
+<p><strong>O que é:</strong> SKILL.md sem campos obrigatórios. <strong>Por que é ruim:</strong> Dificulta descoberta automática. <strong>Como evitar:</strong> Validar com <code>./scripts/validate-skill.sh</code>.</p>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-reconciliao-cannica">Checklist de Reconciliação Canônica</h3>
+<ul>
+<li>[ ] README.md reflete skills atuais</li>
+<li>[ ] CHANGELOG.md tem entrada para commits recentes</li>
+<li>[ ] USAGE.md comandos são executáveis</li>
+<li>[ ] index.json sincronizado com skills/</li>
+</ul>
+<h3 id="checklist-de-reconciliao-adr">Checklist de Reconciliação ADR</h3>
+<ul>
+<li>[ ] ADRs "Implementado" estão em archive/</li>
+<li>[ ] INDEX.md atualizado</li>
+<li>[ ] BPs/TODOs reconciliados com status real</li>
+<li>[ ] Scripts de arquivamento executados</li>
+</ul>
+<h3 id="checklist-de-governance">Checklist de Governance</h3>
+<ul>
+<li>[ ] Branch protection seguida</li>
+<li>[ ] SemVer aplicado corretamente</li>
+<li>[ ] Processos de arquivamento completos</li>
+<li>[ ] CI/CD validando mudanças</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="adr-com-mltiplas-implementaes-parciais">ADR com múltiplas implementações parciais</h3>
+<p><strong>Situação:</strong> ADR implementada parcialmente em múltiplos branches. <strong>Solução:</strong> Criar ADR filha para cada implementação parcial. <strong>Exceção:</strong> Se implementação for contínua, manter status "Em Progresso".</p>
+<h3 id="changelog-com-commits-de-merge">Changelog com commits de merge</h3>
+<p><strong>Situação:</strong> Commits de merge poluem o changelog. <strong>Solução:</strong> Filtrar commits com <code>git log --merges --first-parent</code>. <strong>Exceção:</strong> Se merge contém mudanças significativas, documentar.</p>
+<h3 id="readme-com-badges-quebrados">README com badges quebrados</h3>
+<p><strong>Situação:</strong> Badges apontam para URLs que não existem. <strong>Solução:</strong> Remover badges quebrados ou corrigir URLs. <strong>Exceção:</strong> Badges de CI que podem estar temporariamente quebrados.</p>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="./docs/adr/archive/ADR-006.md">ADR-006</a> — Ultra-High Quality Grade</li>
+<li><a href="./skills/governance/SKILL.md">Governance</a> — Processos de governança</li>
+<li><a href="./skills/adr-generator/SKILL.md">ADR Generator</a> — Templates ADR</li>
+<li><a href="https://keepachangelog.com/">Keep a Changelog</a> — Formato de changelog</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/audit-report.html">audit-report.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/reconciliation-checklist.html">reconciliation-checklist.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

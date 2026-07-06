@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agents-md-generator — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; agents-md-generator</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: agents-md-generator description: Gera e mantém arquivos AGENTS.md adaptativos que se adaptam ao contexto do projeto. Detecta automaticamente tipo de projeto, tecnologias, padrões arquiteturais e governança, gerando um AGENTS.md personalizado que serve como conciliador entre o estado atual do projeto e as regras de governança para agentes de IA. version: 1.0.0 tags: [agents, governance, documentation, adaptation, context-detection] related_skills: [repo-bootstrap, governance, documentation, skill-audit-bulletin] ---</p>
+<h1 id="agents-md-generator">Agents MD Generator</h1>
+<p>Gera e mantém arquivos <code>AGENTS.md</code> adaptativos que se adaptam ao contexto do projeto.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa criar um AGENTS.md para um novo projeto</li>
+<li>Precisa atualizar um AGENTS.md existente</li>
+<li>O projeto mudou de contexto (ex: de CRM para API)</li>
+<li>Precisa de um AGENTS.md que se adapte automaticamente</li>
+<li>Precisa de governança para agentes de IA</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Projeto já tem um AGENTS.md completo e atualizado</li>
+<li>Projeto é muito pequeno e não justifica AGENTS.md</li>
+<li>Precisa de apenas uma documentação estática (use <code>documentation</code>)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>repo-bootstrap</code> — para estrutura inicial de repositório</li>
+<li><code>governance</code> — para processos de governança</li>
+<li><code>documentation</code> — para padrões de documentação</li>
+<li><code>skill-audit-bulletin</code> — para auditar qualidade de skills</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Precisa de AGENTS.md?] --&gt;|Sim| B{Projeto existe?}
+    B --&gt;|Não| C[Usar repo-bootstrap primeiro]
+    B --&gt;|Sim| D{AGENTS.md existe?}
+    D --&gt;|Não| E[Gerar novo AGENTS.md]
+    D --&gt;|Sim| F{Contexto mudou?}
+    F --&gt;|Não| G[Manter AGENTS.md atual]
+    F --&gt;|Sim| H[Atualizar AGENTS.md]
+    E --&gt; I[Detectar contexto do projeto]
+    H --&gt; I
+    I --&gt; J[Selecionar template]
+    J --&gt; K[Preencher placeholders]
+    K --&gt; L[Validar AGENTS.md]
+    L --&gt; M[Salvar AGENTS.md]</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="context-detection">Context Detection</h3>
+<p>A skill detecta automaticamente:</p>
+<ul>
+<li><strong>Tipo de Projeto</strong>: CRM, API, WebApp, Biblioteca, CLI, etc.</li>
+<li><strong>Tecnologias</strong>: Linguagens, frameworks, bancos de dados</li>
+<li><strong>Padrões</strong>: Arquitetura (Clean, Hexagonal, DDD), padrões de código</li>
+<li><strong>Governança</strong>: Branching strategy, processo de PR, CI/CD</li>
+<li><strong>Equipe</strong>: Tamanho, estrutura, papéis</li>
+</ul>
+<h3 id="adaptive-templates">Adaptive Templates</h3>
+<p>Templates que se adaptam ao contexto detectado:</p>
+<ul>
+<li><strong>AGENTS-base.md</strong>: Template genérico para qualquer projeto</li>
+<li><strong>AGENTS-skills-repo.md</strong>: Para repositórios de skills</li>
+<li><strong>AGENTS-crm.md</strong>: Para projetos CRM</li>
+<li><strong>AGENTS-api.md</strong>: Para projetos de API</li>
+<li><strong>AGENTS-webapp.md</strong>: Para webapps</li>
+<li><strong>AGENTS-library.md</strong>: Para bibliotecas</li>
+<li><strong>AGENTS-cli.md</strong>: Para CLIs</li>
+</ul>
+<h3 id="placeholder-system">Placeholder System</h3>
+<p>Placeholders que são preenchidos automaticamente:</p>
+<ul>
+<li><code>{{project_description}}</code>: Descrição do projeto</li>
+<li><code>{{directory_structure}}</code>: Estrutura de diretórios</li>
+<li><code>{{code_patterns}}</code>: Padrões de código</li>
+<li><code>{{important_commands}}</code>: Comandos importantes</li>
+<li><code>{{governance_rules}}</code>: Regras de governança</li>
+<li><code>{{recommended_skills}}</code>: Skills recomendadas</li>
+<li><code>{{anti_patterns}}</code>: Anti-patterns</li>
+<li><code>{{edge_cases}}</code>: Edge cases</li>
+</ul>
+<h2 id="workflow">Workflow</h2>
+<h3 id="workflow-1-context-detection">Workflow 1: Context Detection</h3>
+<p><strong>Objetivo:</strong> Detectar automaticamente o contexto do projeto.</p>
+<ol>
+<li>Analisar <code>package.json</code> ou <code>Cargo.toml</code> para tecnologias</li>
+<li>Analisar estrutura de diretórios para arquitetura</li>
+<li>Analisar <code>.github/</code> para governança</li>
+<li>Analisar <code>README.md</code> para descrição</li>
+<li>Analisar <code>docs/</code> para documentação existente</li>
+<li>Gerar relatório de contexto</li>
+<li><strong>Checkpoint</strong>: Contexto detectado com confiança ≥80%</li>
+</ol>
+<h3 id="workflow-2-template-selection">Workflow 2: Template Selection</h3>
+<p><strong>Objetivo:</strong> Selecionar o template mais adequado baseado no contexto.</p>
+<ol>
+<li>Ler relatório de contexto (Workflow 1)</li>
+<li>Mapear contexto para template disponível</li>
+<li>Se nenhum template se encaixa perfeitamente, usar <code>AGENTS-base.md</code></li>
+<li>Selecionar template escolhido</li>
+<li><strong>Checkpoint</strong>: Template selecionado e validado</li>
+</ol>
+<h3 id="workflow-3-placeholder-population">Workflow 3: Placeholder Population</h3>
+<p><strong>Objetivo:</strong> Preencher placeholders do template automaticamente.</p>
+<ol>
+<li>Ler template selecionado (Workflow 2)</li>
+<li>Identificar todos os placeholders</li>
+<li>Preencher cada placeholder com dados do contexto</li>
+<li>Se dado não disponível, usar valor padrão</li>
+<li>Validar que todos os placeholders foram preenchidos</li>
+<li><strong>Checkpoint</strong>: Todos os placeholders preenchidos</li>
+</ol>
+<h3 id="workflow-4-agentsmd-generation">Workflow 4: AGENTS.md Generation</h3>
+<p><strong>Objetivo:</strong> Gerar o arquivo AGENTS.md final.</p>
+<ol>
+<li>Ler template com placeholders preenchidos (Workflow 3)</li>
+<li>Validar formato e estrutura</li>
+<li>Validar que todas as seções estão presentes</li>
+<li>Gerar arquivo AGENTS.md</li>
+<li><strong>Checkpoint</strong>: AGENTS.md gerado e válido</li>
+</ol>
+<h3 id="workflow-5-validation">Workflow 5: Validation</h3>
+<p><strong>Objetivo:</strong> Validar que o AGENTS.md está correto e completo.</p>
+<ol>
+<li>Verificar que arquivo existe</li>
+<li>Verificar que tem ≥30 linhas</li>
+<li>Verificar que tem todas as seções obrigatórias</li>
+<li>Verificar que placeholders não foram esquecidos</li>
+<li>Verificar que conteúdo faz sentido para o contexto</li>
+<li><strong>Checkpoint</strong>: AGENTS.md válido e pronto para uso</li>
+</ol>
+<h3 id="workflow-6-maintenance">Workflow 6: Maintenance</h3>
+<p><strong>Objetivo:</strong> Manter AGENTS.md atualizado conforme o projeto evolui.</p>
+<ol>
+<li>Detectar mudanças no projeto que afetem AGENTS.md</li>
+<li>Sugerir atualizações quando contexto mudar</li>
+<li>Validar se AGENTS.md está atualizado</li>
+<li>Atualizar se necessário</li>
+<li><strong>Checkpoint</strong>: AGENTS.md sempre atualizado</li>
+</ol>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="agentsmd-genrico-demais">AGENTS.md Genérico Demais</h4>
+<p><strong>O que é:</strong> AGENTS.md que não se adapta ao contexto específico do projeto. <strong>Por que é ruim:</strong> Agentes de IA não têm contexto adequado para tomar decisões. <strong>Como evitar:</strong> Usar templates adaptativos baseados no contexto detectado. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+# AGENTS.md
+Este projeto usa JavaScript.
+
+# ✅ CORRETO
+# AGENTS.md - Projeto CRM
+Este projeto é um sistema CRM built com React + Node.js + PostgreSQL.
+Estrutura: src/domain/, src/application/, src/infrastructure/</code></pre>
+<h4 id="ignorar-mudanas-de-contexto">Ignorar Mudanças de Contexto</h4>
+<p><strong>O que é:</strong> Não atualizar AGENTS.md quando o projeto muda significativamente. <strong>Por que é ruim:</strong> AGENTS.md fica desatualizado e confunde agentes. <strong>Como evitar:</strong> Implementar detecção de mudanças e atualizações automáticas. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Projeto mudou de CRM para API, mas AGENTS.md ainda descreve CRM
+
+# ✅ CORRETO
+Projeto mudou → detectar mudança → sugerir atualização → atualizar AGENTS.md</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="placeholders-no-preenchidos">Placeholders Não Preenchidos</h4>
+<p><strong>O que é:</strong> AGENTS.md com placeholders como <code>{{project_description}}</code> não preenchidos. <strong>Por que é ruim:</strong> Agentes veem placeholders em vez de conteúdo real. <strong>Como evitar:</strong> Validar que todos os placeholders foram preenchidos antes de salvar. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+## Visão Geral
+{{project_description}}
+
+# ✅ CORRETO
+## Visão Geral
+Sistema CRM para gerenciamento de clientes e vendas.</code></pre>
+<h4 id="template-errado-para-contexto">Template Errado para Contexto</h4>
+<p><strong>O que é:</strong> Usar template de API para projeto CRM. <strong>Por que é ruim:</strong> Conteúdo não é relevante para o projeto. <strong>Como evitar:</strong> Validar seleção de template antes de preencher. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+# AGENTS.md - Projeto CRM
+## Endpoints
+GET /api/users
+POST /api/users
+
+# ✅ CORRETO
+# AGENTS.md - Projeto CRM
+## Modelos de Dados
+Cliente: { id, nome, email, telefone }
+Venda: { id, cliente_id, data, valor }</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="no-gerar-execution-report">Não Gerar Execution Report</h4>
+<p><strong>O que é:</strong> Finalizar geração sem produzir relatório. <strong>Por que é ruim:</strong> Perde-se oportunidade de documentar problemas. <strong>Como evitar:</strong> Sempre gerar relatório ao término. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+AGENTS.md gerado. Fim.
+
+# ✅ CORRETO
+AGENTS.md gerado com sucesso.
+- Contexto detectado: CRM
+- Template usado: AGENTS-crm.md
+- Placeholders preenchidos: 8/8
+- Validação: Passou</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-pr-gerao">Checklist de Pré-Geração</h3>
+<ul>
+<li>[ ] Projeto existe e tem estrutura básica</li>
+<li>[ ] Tecnologias podem ser detectadas</li>
+<li>[ ] Contexto pode ser determinado</li>
+<li>[ ] Template adequado está disponível</li>
+</ul>
+<h3 id="checklist-de-ps-gerao">Checklist de Pós-Geração</h3>
+<ul>
+<li>[ ] AGENTS.md criado com sucesso</li>
+<li>[ ] Tem ≥30 linhas</li>
+<li>[ ] Todas as seções obrigatórias presentes</li>
+<li>[ ] Nenhum placeholder não preenchido</li>
+<li>[ ] Conteúdo faz sentido para o contexto</li>
+<li>[ ] Validação passou</li>
+</ul>
+<h3 id="checklist-de-manuteno">Checklist de Manutenção</h3>
+<ul>
+<li>[ ] Mudanças no projeto detectadas</li>
+<li>[ ] AGENTS.md ainda está atualizado</li>
+<li>[ ] Se necessário, atualizações sugeridas</li>
+<li>[ ] Atualizações aprovadas e aplicadas</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="projeto-sem-packagejson-ou-cargotoml">Projeto sem package.json ou Cargo.toml</h3>
+<p><strong>Situação:</strong> Projeto não tem arquivo de configuração detectável. <strong>Solução:</strong> Usar estrutura de diretórios e README.md para detectar contexto. <strong>Exceção:</strong> Se nenhum contexto pode ser determinado, usar template genérico.</p>
+<h3 id="mltiplos-contextos">Múltiplos Contextos</h3>
+<p><strong>Situação:</strong> Projeto combina múltiplos contextos (ex: API + WebApp). <strong>Solução:</strong> Usar template mais específico ou combinar templates. <strong>Exceção:</strong> Se combinação é muito complexa, usar template base e personalizar manualmente.</p>
+<h3 id="agentsmd-muito-grande">AGENTS.md Muito Grande</h3>
+<p><strong>Situação:</strong> AGENTS.md gerado tem >200 linhas. <strong>Solução:</strong> Dividir em seções menores ou usar referências externas. <strong>Exceção:</strong> Se conteúdo é necessário, manter como está.</p>
+<h3 id="contexto-incerto">Contexto Incerto</h3>
+<p><strong>Situação:</strong> Detecção de contexto tem confiança <80%. <strong>Solução:</strong> Pedir confirmação do usuário antes de gerar. <strong>Exceção:</strong> Em contexto de prototipação, usar melhor estimativa.</p>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="../repo-bootstrap/SKILL.md">repo-bootstrap</a> — para estrutura inicial</li>
+<li><a href="../governance/SKILL.md">governance</a> — para processos</li>
+<li><a href="../documentation/SKILL.md">documentation</a> — para padrões</li>
+<li><a href="../../docs/adr/archive/ADR-007.md">ADR-007</a> — decisão arquitetural</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-api.html">AGENTS-api.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-base.html">AGENTS-base.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-cli.html">AGENTS-cli.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-crm.html">AGENTS-crm.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-library.html">AGENTS-library.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-skills-repo.html">AGENTS-skills-repo.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/AGENTS-webapp.html">AGENTS-webapp.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/before-after.html">before-after.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/context-detection.html">context-detection.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/customization.html">customization.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/maintenance.html">maintenance.md</a></li>
+  <li><span class="file-icon">&#9745;</span><a href="checklists/validation.html">validation.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agents-md-generator / templates / AGENTS-api — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">agents-md-generator</a> &rsaquo; templates &rsaquo; AGENTS-api</div>
+  </nav>
+  <div class="content">
+    <h1 id="agentsmd---projeto-de-api">AGENTS.md - Projeto de API</h1>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>Este projeto é uma API RESTful/GraphQL para fornecer serviços backend. A API expõe endpoints para operações CRUD, autenticação, autorização e integrações com outros sistemas.</p>
+<h2 id="estrutura-do-projeto">Estrutura do Projeto</h2>
+<pre><code>src/
+├── routes/                    # Rotas da API
+│   ├── v1/                   # Versão 1 da API
+│   └── v2/                   # Versão 2 da API
+├── controllers/               # Controllers
+├── services/                  # Lógica de negócio
+├── repositories/              # Acesso a dados
+├── models/                    # Modelos de dados
+├── middleware/                 # Middleware
+├── utils/                     # Utilitários
+├── config/                    # Configurações
+└── types/                     # Tipos TypeScript</code></pre>
+<h3 id="descrio-dos-diretrios">Descrição dos Diretórios</h3>
+<ul>
+<li><strong>routes/</strong>: Definição de rotas da API</li>
+<li><strong>controllers/</strong>: Handlers das requisições</li>
+<li><strong>services/</strong>: Lógica de negócio</li>
+<li><strong>repositories/</strong>: Acesso a banco de dados</li>
+<li><strong>models/</strong>: Modelos de dados</li>
+<li><strong>middleware/</strong>: Middleware (auth, validation, etc.)</li>
+<li><strong>utils/</strong>: Funções utilitárias</li>
+<li><strong>config/</strong>: Configurações da aplicação</li>
+<li><strong>types/</strong>: Definições de tipos</li>
+</ul>
+<h2 id="padres-de-cdigo">Padrões de Código</h2>
+<h3 id="convenes">Convenções</h3>
+<ul>
+<li>Seguir padrões REST para endpoints</li>
+<li>Usar HTTP methods corretos (GET, POST, PUT, PATCH, DELETE)</li>
+<li>Retornar status codes apropriados</li>
+<li>Usar versionamento de API</li>
+</ul>
+<h3 id="formatao">Formatação</h3>
+<ul>
+<li>JSON para request/response</li>
+<li>CamelCase para propriedades</li>
+<li>snake_case para banco de dados</li>
+<li>UTF-8 para encoding</li>
+</ul>
+<h3 id="naming">Naming</h3>
+<ul>
+<li>Endpoints em plural (/users, /orders)</li>
+<li>Nomes descritivos e auto-explicativos</li>
+<li>Verbos para ações especiais (/users/search)</li>
+</ul>
+<h2 id="comandos-importantes">Comandos Importantes</h2>
+<h3 id="desenvolvimento">Desenvolvimento</h3>
+<pre data-lang="bash"><code># Instalar dependências
+npm install
+
+# Iniciar desenvolvimento
+npm run dev
+
+# Database migrations
+npm run migrate
+
+# Seed dados
+npm run seed</code></pre>
+<h3 id="build">Build</h3>
+<pre data-lang="bash"><code># Build para produção
+npm run build
+
+# Build para desenvolvimento
+npm run build:dev</code></pre>
+<h3 id="testes">Testes</h3>
+<pre data-lang="bash"><code># Todos os testes
+npm test
+
+# Testes unitários
+npm run test:unit
+
+# Testes de integração
+npm run test:integration
+
+# Testes de contrato
+npm run test:contract
+
+# Coverage
+npm run test:coverage</code></pre>
+<h3 id="deploy">Deploy</h3>
+<pre data-lang="bash"><code># Deploy para staging
+npm run deploy:staging
+
+# Deploy para produção
+npm run deploy:production</code></pre>
+<h2 id="governana">Governança</h2>
+<h3 id="branching-strategy">Branching Strategy</h3>
+<ul>
+<li><strong>main</strong>: Código em produção</li>
+<li><strong>develop</strong>: Branch de integração</li>
+<li><strong>feature/</strong>*: Novas funcionalidades</li>
+<li><strong>fix/</strong>*: Correções de bugs</li>
+<li><strong>release/</strong>*: Preparação de release</li>
+</ul>
+<h3 id="processo-de-pr">Processo de PR</h3>
+<ol>
+<li>Criar branch a partir de <code>develop</code></li>
+<li>Fazer commits pequenos e focados</li>
+<li>Abrir PR com descrição completa</li>
+<li>Pelo menos 1 aprovação necessária</li>
+<li>CI deve passar</li>
+<li>Merge com squash</li>
+</ol>
+<h3 id="code-review">Code Review</h3>
+<ul>
+<li>Verificar contratos de API</li>
+<li>Testar endpoints</li>
+<li>Verificar segurança</li>
+<li>Revisar documentação</li>
+<li>Verificar performance</li>
+</ul>
+<h3 id="cicd">CI/CD</h3>
+<ul>
+<li>GitHub Actions para CI</li>
+<li>Testes em cada PR</li>
+<li>Deploy automático para staging</li>
+<li>Deploy manual para produção</li>
+<li>Health checks automáticos</li>
+</ul>
+<h2 id="endpoints">Endpoints</h2>
+<h3 id="autenticao">Autenticação</h3>
+<pre><code>POST /auth/login          # Login
+POST /auth/register       # Registro
+POST /auth/refresh        # Refresh token
+POST /auth/logout         # Logout</code></pre>
+<h3 id="usurios">Usuários</h3>
+<pre><code>GET    /users             # Listar usuários
+GET    /users/:id         # Obter usuário
+POST   /users             # Criar usuário
+PUT    /users/:id         # Atualizar usuário
+DELETE /users/:id         # Deletar usuário</code></pre>
+<h3 id="pedidos">Pedidos</h3>
+<pre><code>GET    /orders            # Listar pedidos
+GET    /orders/:id        # Obter pedido
+POST   /orders            # Criar pedido
+PATCH  /orders/:id/status # Atualizar status</code></pre>
+<h2 id="autenticao-e-autorizao">Autenticação e Autorização</h2>
+<h3 id="jwt-tokens">JWT Tokens</h3>
+<ul>
+<li>Access token: 15 minutos</li>
+<li>Refresh token: 7 dias</li>
+<li>Tokens são invalidados no logout</li>
+</ul>
+<h3 id="roles">Roles</h3>
+<ul>
+<li><code>admin</code>: Acesso total</li>
+<li><code>user</code>: Acesso padrão</li>
+<li><code>readonly</code>: Apenas leitura</li>
+</ul>
+<h3 id="permisses">Permissões</h3>
+<pre data-lang="typescript"><code>const permissions = {
+  admin: [&#x27;*&#x27;],
+  user: [&#x27;read&#x27;, &#x27;write&#x27;, &#x27;delete:own&#x27;],
+  readonly: [&#x27;read&#x27;]
+};</code></pre>
+<h2 id="skills-recomendadas">Skills Recomendadas</h2>
+<ul>
+<li><code>api-design</code> — para design de APIs</li>
+<li><code>security-review</code> — para revisão de segurança</li>
+<li><code>testing</code> — para testes</li>
+<li><code>observability</code> — para monitoramento</li>
+</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="sem-validao-de-input">Sem Validação de Input</h4>
+<p><strong>O que é:</strong> Não validar dados de entrada. <strong>Por que é ruim:</strong> Dados inválidos, vulnerabilidades. <strong>Como evitar:</strong> Validar todos os inputs com schemas.</p>
+<h4 id="sem-rate-limiting">Sem Rate Limiting</h4>
+<p><strong>O que é:</strong> Não limitar requisições por cliente. <strong>Por que é ruim:</strong> Abuso, DDoS. <strong>Como evitar:</strong> Implementar rate limiting.</p>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="status-codes-errados">Status Codes Errados</h4>
+<p><strong>O que é:</strong> Retornar 200 para erros. <strong>Por que é ruim:</strong> Clientes não conseguem tratar erros. <strong>Como evitar:</strong> Usar status codes HTTP corretos.</p>
+<h4 id="sem-paginao">Sem Paginação</h4>
+<p><strong>O que é:</strong> Retornar todos os registros de uma vez. <strong>Por que é ruim:</strong> Performance, memória. <strong>Como evitar:</strong> Implementar paginação.</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="logs-excessivos">Logs Excessivos</h4>
+<p><strong>O que é:</strong> Logar dados sensíveis. <strong>Por que é ruim:</strong> Segurança, performance. <strong>Como evitar:</strong> Logar apenas o necessário.</p>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="timeout-de-requisies">Timeout de Requisições</h3>
+<p><strong>Situação:</strong> Requisição demora mais que o esperado. <strong>Solução:</strong> Implementar timeout e retry. <strong>Exceção:</strong> Para operações longas, usar jobs assíncronos.</p>
+<h3 id="concorrncia">Concorrência</h3>
+<p><strong>Situação:</strong> Múltiplas requisições alteram o mesmo recurso. <strong>Solução:</strong> Usar optimistic locking. <strong>Exceção:</strong> Para operações de leitura, não bloquear.</p>
+<h3 id="integrao-com-apis-externas">Integração com APIs Externas</h3>
+<p><strong>Situação:</strong> API externa está fora do ar. <strong>Solução:</strong> Implementar circuit breaker. <strong>Exceção:</strong> Se API é crítica, ter fallback.</p>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://restfulapi.net/">REST API Design</a></li>
+<li><a href="https://jwt.io/">JSON Web Tokens</a></li>
+<li><a href="https://httpstatuses.com/">HTTP Status Codes</a></li>
+<li><a href="./skills/api-design/SKILL.md">API Design</a></li>
+<li><a href="./skills/security-review/SKILL.md">Security Review</a></li>
+</ul>
+<hr>
+<p><em>Gerado automaticamente por <code>agents-md-generator</code> em {{generation_date}}</em> <em>Última atualização: {{last_update}}</em></p>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

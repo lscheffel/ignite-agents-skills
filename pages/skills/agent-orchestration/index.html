@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agent-orchestration — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; agent-orchestration</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: agent-orchestration description: Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in e coordenação multi-agente. Use quando precisar coordenar vários agentes, definir papéis, gerenciar handoffs ou otimizar execução paralela. version: 2.0.0 tags: [orchestration, agents, multi-agent, coordination] related_skills: [prompt-engineering, vibe-coding, governance] ---</p>
+<h1 id="agent-orchestration">Agent Orchestration</h1>
+<p>Orquestração de múltiplos agentes de IA para tarefas complexas.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Tarefa complexa precisa ser decomposta em subtarefas</li>
+<li>Múltiplos agentes com papéis distintos precisam cooperar</li>
+<li>Subtarefas são independentes e podem rodar em paralelo</li>
+<li>Precisa definir contratos de handoff entre agentes</li>
+<li>Precisa rotear para modelos com custo/performance adequados</li>
+<li>Fluxo de trabalho envolve múltiplas etapas com validação</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Tarefa é simples e pode ser feita por um único agente</li>
+<li>Não há dependências entre subtarefas (basta paralelismo simples)</li>
+<li>Prompt único resolve o problema</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>prompt-engineering</code> — para estruturar prompts de cada agente</li>
+<li><code>vibe-coding</code> — para desenvolvimento guiado por IA</li>
+<li><code>governance</code> — para processos de aprovação e revisão</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Tarefa complexa?] --&gt;|Não| B[Agente único]
+    A --&gt;|Sim| C[Tarefa decomposta?]
+    C --&gt;|Não| D[Refinar decomposição]
+    C --&gt;|Sim| E[Multi-agente necessário?]
+    E --&gt;|Não| B
+    E --&gt;|Sim| F[Subtarefas independentes?]
+    F --&gt;|Não| G[Handoff sequencial]
+    F --&gt;|Sim| H[Paralelismo disponível?]
+    H --&gt;|Não| G
+    H --&gt;|Sim| I[Fan-out/Fan-in]
+    G --&gt; J[Definir contrato I/O]
+    I --&gt; J
+    J --&gt; K[Selecionar modelo por papel]
+    K --&gt; L[Executar e validar]</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="papel-do-agente">Papel do Agente</h3>
+<p>Cada agente possui um papel definido com responsabilidades, entrada e saída esperadas.</p>
+<ul>
+<li><strong>Orchestrator</strong>: coordena fluxo, delega subtarefas, valida resultados</li>
+<li><strong>Specialist</strong>: executa tarefa específica com expertise focada</li>
+<li><strong>Reviewer</strong>: valida output de outros agentes antes de prosseguir</li>
+<li><strong>Formatter</strong>: transforma output em formato consumível por downstream</li>
+</ul>
+<h3 id="contrato-io">Contrato I/O</h3>
+<p>Todo handoff entre agentes deve ter contrato explícito:</p>
+<div class="table-wrapper"><table><tr><th>Campo</th><th>Descrição</th></tr><tr><td>Input schema</td><td>Formato e campos de entrada</td></tr><tr><td>Output schema</td><td>Formato e campos de saída</td></tr><tr><td>Validação</td><td>Regras de validação do output</td></tr><tr><td>Fallback</td><td>O que fazer se output inválido</td></tr></table></div>
+<h3 id="roteamento-de-modelo">Roteamento de Modelo</h3>
+<p>Selecione modelo com base em complexidade e custo:</p>
+<div class="table-wrapper"><table><tr><th>Complexidade</th><th>Modelo sugerido</th><th>Custo</th></tr><tr><td>Simples (extração, formatação)</td><td>Modelo leve</td><td>$</td></tr><tr><td>Média (análise, síntese)</td><td>Modelo padrão</td><td>$$</td></tr><tr><td>Complexa (raciocínio, código)</td><td>Modelo avançado</td><td>$$$</td></tr></table></div>
+<h3 id="paralelismo">Paralelismo</h3>
+<ul>
+<li><strong>Fan-out</strong>: distribui trabalho para múltiplos agentes simultaneamente</li>
+<li><strong>Fan-in</strong>: agrega resultados de múltiplos agentes em output final</li>
+<li><strong>Gate</strong>: ponto de sincronização onde todos os resultados devem estar prontos</li>
+</ul>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-decompor-tarefa">Fase 1: Decompor Tarefa</h3>
+<ol>
+<li>Analise a tarefa complexa</li>
+<li>Identifique subtarefas independentes</li>
+<li>Defina dependências entre subtarefas</li>
+<li>Crie grafo de dependências</li>
+<li><strong>Checkpoint</strong>: Grafo de dependências validado com pelo menos 2 revisores</li>
+</ol>
+<h3 id="fase-2-definir-papis-e-contratos">Fase 2: Definir Papéis e Contratos</h3>
+<ol>
+<li>Para cada subtarefa, defina o papel do agente</li>
+<li>Crie card de papel com template <code>templates/agent-role-card.md</code></li>
+<li>Defina contrato I/O para cada handoff</li>
+<li>Valide que schemas são consistentes entre agentes</li>
+<li><strong>Checkpoint</strong>: Todos os contratos I/O validados e documentados</li>
+</ol>
+<h3 id="fase-3-selecionar-modelos">Fase 3: Selecionar Modelos</h3>
+<ol>
+<li>Para cada papel, avalie complexidade da tarefa</li>
+<li>Consulte <code>templates/routing-decision.md</code> para roteamento</li>
+<li>Equilibre custo vs qualidade</li>
+<li>Defina fallback para cada modelo</li>
+<li><strong>Checkpoint</strong>: Matriz de roteamento aprovada com estimativa de custo</li>
+</ol>
+<h3 id="fase-4-executar-com-paralelismo">Fase 4: Executar com Paralelismo</h3>
+<ol>
+<li>Identifique subtarefas que podem rodar em paralelo</li>
+<li>Implemente fan-out para subtarefas independentes</li>
+<li>Implemente fan-in para agregar resultados</li>
+<li>Use gate para sincronização</li>
+<li><strong>Checkpoint</strong>: Resultados parciais validados antes de prosseguir</li>
+</ol>
+<h3 id="fase-5-handoff-e-validao">Fase 5: Handoff e Validação</h3>
+<ol>
+<li>Execute handoff seguindo protocolo em <code>templates/handoff-protocol.md</code></li>
+<li>Valide output com contrato I/O definido</li>
+<li>Se output inválido, ative fallback</li>
+<li>Registre métricas de qualidade</li>
+<li><strong>Checkpoint</strong>: Todos os handoffs concluídos com output válido</li>
+</ol>
+<h3 id="fase-6-consolidar-resultado">Fase 6: Consolidar Resultado</h3>
+<ol>
+<li>Agregue resultados de todos os agentes</li>
+<li>Valide consistência do output final</li>
+<li>Formate para consumo do usuário</li>
+<li>Documente decisões e lições aprendidas</li>
+<li><strong>Checkpoint</strong>: Output final validado e entregue</li>
+</ol>
+<h2 id="templates">Templates</h2>
+<h3 id="agent-role-cardmd">agent-role-card.md</h3>
+<p>Localização: <code>templates/agent-role-card.md</code></p>
+<p>Template para definição de papel do agente.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cat templates/agent-role-card.md</code></pre>
+<h3 id="handoff-protocolmd">handoff-protocol.md</h3>
+<p>Localização: <code>templates/handoff-protocol.md</code></p>
+<p>Template para protocolo de handoff entre agentes.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cat templates/handoff-protocol.md</code></pre>
+<h3 id="routing-decisionmd">routing-decision.md</h3>
+<p>Localização: <code>templates/routing-decision.md</code></p>
+<p>Template para decisão de roteamento de modelo.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cat templates/routing-decision.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="handoff-sem-contrato-io">Handoff sem Contrato I/O</h4>
+<p><strong>O que é:</strong> Passar output de um agente para outro sem schema explícito. <strong>Por que é ruim:</strong> Output incompatível, falhas em runtime, difícil de debugar. <strong>Como evitar:</strong> Sempre defina contrato I/O antes de implementar handoff. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Agente A gera JSON livre → Agente B tenta parsear
+
+# ✅ CORRETO
+Contrato definido:
+  input: { schema: UserRequest, required: [name, email] }
+  output: { schema: UserCreated, required: [id, status] }
+Agente A gera JSON válido → Agente B valida com schema → prossegue</code></pre>
+<h4 id="usar-modelo-caro-para-tarefa-simples">Usar Modelo Caro para Tarefa Simples</h4>
+<p><strong>O que é:</strong> Usar modelo avançado para extração, formatação ou tarefas triviais. <strong>Por que é ruim:</strong> Custo desnecessário, latência maior, throughput menor. <strong>Como evitar:</strong> Roteie por complexidade, use modelo leve para tarefas simples. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Tarefa: &quot;Extraia o nome do JSON&quot;
+Modelo: Claude Sonnet 4 (custo alto)
+
+# ✅ CORRETO
+Tarefa: &quot;Extraia o nome do JSON&quot;
+Modelo: Modelo leve (custo baixo)</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="contexto-sem-janela-de-descarte">Contexto sem Janela de Descarte</h4>
+<p><strong>O que é:</strong> Acumular contexto de todos os agentes sem limite de janela. <strong>Por que é ruim:</strong> Excede limite de tokens, degrada performance, aumenta custo. <strong>Como evitar:</strong> Defina janela de contexto, resuma conversas anteriores. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Acumular 50 mensagens de histórico sem resumo
+
+# ✅ CORRETO
+A cada 10 mensagens:
+  1. Resumo da conversa até aqui
+  2. Mantém apenas últimos 5 exchanges
+  3. Descarta contexto antigo</code></pre>
+<h4 id="sem-fallback-quando-agente-falha">Sem Fallback quando Agente Falha</h4>
+<p><strong>O que é:</strong> Não ter plano B quando um agente retorna erro ou output inválido. <strong>Por que é ruim:</strong> Fluxo para completamente, sem recuperação. <strong>Como evitar:</strong> Defina fallback para cada agente (retry, modelo alternativo, regra heurística). <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Agente A falha → fluxo para
+
+# ✅ CORRETO
+Agente A falha:
+  1. Retry com prompt reformulado (1x)
+  2. Se falhar, usar modelo alternativo
+  3. Se falhar, usar regra heurística
+  4. Se falhar, notificar usuário</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="agente-nico-para-tarefa-paralelizvel">Agente Único para Tarefa Paralelizável</h4>
+<p><strong>O que é:</strong> Usar um agente sequencialmente para subtarefas que poderiam rodar em paralelo. <strong>Por que é ruim:</strong> Tempo de execução desnecessariamente longo. <strong>Como evitar:</strong> Identifique subtarefas independentes e use fan-out. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Agente processa: arquivo1 → arquivo2 → arquivo3 (sequencial)
+
+# ✅ CORRETO
+Fan-out para 3 agentes:
+  Agente 1: arquivo1
+  Agente 2: arquivo2
+  Agente 3: arquivo3
+Fan-in: consolidar resultados</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-decomposio">Checklist de Decomposição</h3>
+<ul>
+<li>[ ] Tarefa decomposta em subtarefas claras</li>
+<li>[ ] Dependências mapeadas</li>
+<li>[ ] Grafo de dependências validado</li>
+<li>[ ] Subtarefas independentes identificadas para paralelismo</li>
+</ul>
+<h3 id="checklist-de-contrato-io">Checklist de Contrato I/O</h3>
+<ul>
+<li>[ ] Input schema definido para cada handoff</li>
+<li>[ ] Output schema definido para cada handoff</li>
+<li>[ ] Regras de validação documentadas</li>
+<li>[ ] Fallback definido para cada handoff</li>
+<li>[ ] Schemas consistentes entre agentes</li>
+</ul>
+<h3 id="checklist-de-roteamento">Checklist de Roteamento</h3>
+<ul>
+<li>[ ] Complexidade avaliada para cada papel</li>
+<li>[ ] Modelo selecionado por complexidade</li>
+<li>[ ] Custo estimado documentado</li>
+<li>[ ] Fallback de modelo definido</li>
+</ul>
+<h3 id="checklist-de-execuo">Checklist de Execução</h3>
+<ul>
+<li>[ ] Fan-out implementado para subtarefas independentes</li>
+<li>[ ] Fan-in implementado para agregação</li>
+<li>[ ] Gate de sincronização definido</li>
+<li>[ ] Janela de contexto configurada</li>
+<li>[ ] Métricas de qualidade registradas</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="agente-com-output-ambguo">Agente com Output Ambíguo</h3>
+<p><strong>Situação:</strong> Agente retorna output que pode ser interpretado de múltiplas formas. <strong>Solução:</strong> Adicione validação estrita com schema, inclua exemplos de output esperado. <strong>Exceção:</strong> Se ambiguidade é intencional (ex: brainstorming), documente como aceitável.</p>
+<pre><code># Validação estrita
+output_schema = {
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [&quot;action&quot;, &quot;confidence&quot;],
+  &quot;properties&quot;: {
+    &quot;action&quot;: { &quot;enum&quot;: [&quot;approve&quot;, &quot;reject&quot;, &quot;review&quot;] },
+    &quot;confidence&quot;: { &quot;minimum&quot;: 0.5 }
+  }
+}</code></pre>
+<h3 id="cascata-de-falhas">Cascata de Falhas</h3>
+<p><strong>Situação:</strong> Falha em um agente causa falha em todos os downstream. <strong>Solução:</strong> Implemente circuit breaker, retry com backoff, fallback isolado. <strong>Exceção:</strong> Se dependência é absoluta, documente como ponto único de falha.</p>
+<pre><code># Circuit breaker pattern
+if agent_failures[circuit] &gt;= threshold:
+    use_fallback(circuit)
+    alert(&quot;Circuit {circuit} opened&quot;)</code></pre>
+<h3 id="conflito-entre-agentes">Conflito entre Agentes</h3>
+<p><strong>Situação:</strong> Dois agentes produzem output contraditório para mesma entrada. <strong>Solução:</strong> Use agente reconciliador, defina regra de prioridade, ou merge com heurística. <strong>Exceção:</strong> Se conflito é esperado (ex: votação), documente processo de resolução.</p>
+<pre><code># Reconciliação
+agent_a_output = agent_a(input)
+agent_b_output = agent_b(input)
+
+if agent_a_output != agent_b_output:
+    reconciler_output = reconciler(agent_a_output, agent_b_output)
+    output = reconciler_output
+else:
+    output = agent_a_output</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><code>prompt-engineering</code> — para estruturar prompts de cada agente</li>
+<li><code>vibe-coding</code> — para desenvolvimento guiado por IA</li>
+<li><code>governance</code> — para processos de aprovação</li>
+<li><a href="https://docs.crewai.com/">CrewAI Documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph Multi-Agent</a></li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/agent-role-card.html">agent-role-card.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/handoff-protocol.html">handoff-protocol.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/routing-decision.html">routing-decision.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/fan-out-fan-in.html">fan-out-fan-in.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/multi-agent-decomposition.html">multi-agent-decomposition.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/post-execution.html">post-execution.md</a></li>
+  <li><span class="file-icon">&#9745;</span><a href="checklists/pre-flight.html">pre-flight.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

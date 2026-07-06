@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agents-md-generator / examples / customization — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">agents-md-generator</a> &rsaquo; examples &rsaquo; customization</div>
+  </nav>
+  <div class="content">
+    <h1 id="exemplos-personalizao">Exemplos: Personalização</h1>
+<h2 id="viso-geral">Visão Geral</h2>
+<p>Este documento mostra como personalizar o AGENTS.md gerado para atender necessidades específicas do projeto.</p>
+<hr>
+<h2 id="exemplo-1-override-manual-de-contexto">Exemplo 1: Override Manual de Contexto</h2>
+<h3 id="situao">Situação</h3>
+<p>A detecção automática identificou o projeto como "API", mas na verdade é um "CRM com API".</p>
+<h3 id="comando">Comando</h3>
+<pre data-lang="bash"><code># Override manual do contexto
+agents-md-generator --context crm --project-name &quot;Sistema CRM&quot;</code></pre>
+<h3 id="resultado">Resultado</h3>
+<p>O template <code>AGENTS-crm.md</code> é selecionado em vez de <code>AGENTS-api.md</code>.</p>
+<hr>
+<h2 id="exemplo-2-adicionar-seo-personalizada">Exemplo 2: Adicionar Seção Personalizada</h2>
+<h3 id="situao">Situação</h3>
+<p>Precisa adicionar uma seção específica de "Integrações" ao AGENTS.md.</p>
+<h3 id="processo">Processo</h3>
+<ol>
+<li><strong>Gerar AGENTS.md básico:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   agents-md-generator --project-name &quot;Meu Projeto&quot;</code></pre>
+<ol>
+<li><strong>Adicionar seção personalizada:</strong></li>
+</ol>
+<pre data-lang="markdown"><code>   ## Integrações
+
+   ### Sistema de Pagamento
+   - Gateway: Stripe
+   - Webhooks: /webhooks/payments
+   - Events: payment.success, payment.failed
+
+   ### Sistema de Email
+   - Provider: SendGrid
+   - Templates: /templates/email
+   - Events: email.sent, email.failed</code></pre>
+<ol>
+<li><strong>Validar:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   agents-md-generator --validate</code></pre>
+<hr>
+<h2 id="exemplo-3-override-de-placeholders">Exemplo 3: Override de Placeholders</h2>
+<h3 id="situao">Situação</h3>
+<p>O placeholder <code>{{project_description}}</code> foi preenchido automaticamente, mas precisa de uma descrição mais detalhada.</p>
+<h3 id="processo">Processo</h3>
+<ol>
+<li><strong>Verificar AGENTS.md gerado:</strong></li>
+</ol>
+<pre data-lang="markdown"><code>   ## Visão Geral
+   {{project_description}}</code></pre>
+<ol>
+<li><strong>Override manual:</strong></li>
+</ol>
+<pre data-lang="markdown"><code>   ## Visão Geral
+   Sistema CRM completo para gerenciamento de clientes, vendas, leads e pipeline de vendas.
+   Inclui integração com Stripe para pagamentos e SendGrid para emails transacionais.</code></pre>
+<ol>
+<li><strong>Validar:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   agents-md-generator --validate</code></pre>
+<hr>
+<h2 id="exemplo-4-template-personalizado">Exemplo 4: Template Personalizado</h2>
+<h3 id="situao">Situação</h3>
+<p>Nenhum template existente atende ao projeto específico (ex: jogo 2D).</p>
+<h3 id="processo">Processo</h3>
+<ol>
+<li><strong>Criar template personalizado:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   mkdir -p skills/agents-md-generator/templates
+   cp skills/agents-md-generator/templates/AGENTS-base.md \
+      skills/agents-md-generator/templates/AGENTS-game-2d.md</code></pre>
+<ol>
+<li><strong>Editar template:</strong></li>
+</ol>
+<pre data-lang="markdown"><code>   # AGENTS.md - Jogo 2D
+
+   ## Visão Geral
+   {{project_description}}
+
+   ## Engine
+   - Engine: {{game_engine}}
+   - Linguagem: {{language}}
+
+   ## Asset Pipeline
+   - Sprites: /assets/sprites/
+   - Audio: /assets/audio/
+   - Levels: /assets/levels/
+
+   ## Comandos
+   npm run dev          # Iniciar desenvolvimento
+   npm run build        # Build para produção
+   npm run test         # Rodar testes</code></pre>
+<ol>
+<li><strong>Usar template:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   agents-md-generator --template game-2d --project-name &quot;Meu Jogo&quot;</code></pre>
+<hr>
+<h2 id="exemplo-5-mltiplos-projetos">Exemplo 5: Múltiplos Projetos</h2>
+<h3 id="situao">Situação</h3>
+<p>Monorepo com múltiplos projetos (API + WebApp + Biblioteca).</p>
+<h3 id="processo">Processo</h3>
+<ol>
+<li><strong>Gerar AGENTS.md para cada projeto:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   # Para API
+   cd packages/api
+   agents-md-generator --context api --project-name &quot;API&quot;
+
+   # Para WebApp
+   cd packages/webapp
+   agents-md-generator --context webapp --project-name &quot;WebApp&quot;
+
+   # Para Biblioteca
+   cd packages/shared
+   agents-md-generator --context library --project-name &quot;Shared Lib&quot;</code></pre>
+<ol>
+<li><strong>Criar AGENTS.md raiz:</strong></li>
+</ol>
+<pre data-lang="markdown"><code>   # AGENTS.md - Monorepo
+
+   ## Visão Geral
+   Monorepo com API, WebApp e Biblioteca compartilhada.
+
+   ## Estrutura
+   packages/
+   ├── api/        # API RESTful
+   ├── webapp/     # WebApp React
+   └── shared/     # Biblioteca compartilhada
+
+   ## Comandos
+   npm run dev          # Iniciar todos os projetos
+   npm run build        # Build de todos os projetos
+   npm run test         # Testes de todos os projetos</code></pre>
+<hr>
+<h2 id="exemplo-6-validao-de-personalizao">Exemplo 6: Validação de Personalização</h2>
+<h3 id="situao">Situação</h3>
+<p>Após personalizar o AGENTS.md, precisa validar se está correto.</p>
+<h3 id="comando">Comando</h3>
+<pre data-lang="bash"><code>agents-md-generator --validate</code></pre>
+<h3 id="resultado">Resultado</h3>
+<pre><code>✅ Validação do AGENTS.md
+
+Estrutura:
+  ✅ Arquivo existe
+  ✅ Tem 85 linhas (≥30)
+  ✅ Encoding UTF-8
+
+Seções obrigatórias:
+  ✅ Visão Geral
+  ✅ Estrutura do Projeto
+  ✅ Padrões de Código
+  ✅ Comandos Importantes
+  ✅ Governança
+  ✅ Skills Recomendadas
+  ✅ Anti-patterns
+  ✅ Edge Cases
+
+Placeholders:
+  ✅ Nenhum placeholder não preenchido
+
+Conteúdo:
+  ✅ Descrição coerente
+  ✅ Comandos relevantes
+  ✅ Padrões definidos
+
+Status: ✅ APROVADO</code></pre>
+<hr>
+<h2 id="exemplo-7-atualizao-automtica">Exemplo 7: Atualização Automática</h2>
+<h3 id="situao">Situação</h3>
+<p>O projeto mudou (nova feature, mudança de tecnologia), e o AGENTS.md precisa ser atualizado.</p>
+<h3 id="processo">Processo</h3>
+<ol>
+<li><strong>Detectar mudanças:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   agents-md-generator --detect-changes</code></pre>
+<ol>
+<li><strong>Resultado:</strong></li>
+</ol>
+<pre><code>   🔍 Mudanças detectadas:
+
+   - Novo diretório: src/integrations/
+   - Nova dependência: stripe
+   - Comando novo: npm run deploy:prod
+
+   Deseja atualizar o AGENTS.md? (s/n)</code></pre>
+<ol>
+<li><strong>Confirmar atualização:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   s</code></pre>
+<ol>
+<li><strong>AGENTS.md atualizado:</strong></li>
+</ol>
+<pre data-lang="markdown"><code>   ## Integrações
+
+   ### Stripe
+   - SDK: stripe
+   - Webhooks: /webhooks/stripe
+   - Events: payment.success, payment.failed
+
+   ## Comandos
+
+   ### Deploy
+   npm run deploy:staging    # Deploy para staging
+   npm run deploy:prod      # Deploy para produção</code></pre>
+<hr>
+<h2 id="comandos-de-personalizao">Comandos de Personalização</h2>
+<h3 id="override-de-contexto">Override de Contexto</h3>
+<pre data-lang="bash"><code>agents-md-generator --context &lt;tipo&gt;
+# Tipos: api, webapp, crm, library, cli, skills-repo, base</code></pre>
+<h3 id="override-de-template">Override de Template</h3>
+<pre data-lang="bash"><code>agents-md-generator --template &lt;nome&gt;
+# Nome do template em templates/</code></pre>
+<h3 id="override-de-placeholders">Override de Placeholders</h3>
+<pre data-lang="bash"><code>agents-md-generator --set &quot;project_description=Minha descrição personalizada&quot;</code></pre>
+<h3 id="validao">Validação</h3>
+<pre data-lang="bash"><code>agents-md-generator --validate</code></pre>
+<h3 id="deteco-de-mudanas">Detecção de Mudanças</h3>
+<pre data-lang="bash"><code>agents-md-generator --detect-changes</code></pre>
+<h3 id="atualizao">Atualização</h3>
+<pre data-lang="bash"><code>agents-md-generator --update</code></pre>
+<hr>
+<h2 id="melhores-prticas">Melhores Práticas</h2>
+<h3 id="1-override-com-cuidado">1. Override com Cuidado</h3>
+<ul>
+<li>Use override apenas quando a detecção automática falha</li>
+<li>Documente o motivo do override no AGENTS.md</li>
+<li>Valide após o override</li>
+</ul>
+<h3 id="2-templates-personalizados">2. Templates Personalizados</h3>
+<ul>
+<li>Crie templates para contextos específicos do seu projeto</li>
+<li>Mantenha templates genéricos para uso geral</li>
+<li>Documente templates personalizados</li>
+</ul>
+<h3 id="3-atualizao-regular">3. Atualização Regular</h3>
+<ul>
+<li>Atualize o AGENTS.md a cada mudança significativa</li>
+<li>Use detecção automática para identificar mudanças</li>
+<li>Valide após cada atualização</li>
+</ul>
+<h3 id="4-validao-contnua">4. Validação Contínua</h3>
+<ul>
+<li>Execute validação antes de commitar</li>
+<li>Use CI/CD para validar AGENTS.md</li>
+<li>Monitore qualidade da documentação</li>
+</ul>
+<hr>
+<h2 id="concluso">Conclusão</h2>
+<p>A personalização permite adaptar o AGENTS.md a necessidades específicas, mantendo os benefícios da geração automática. Use override com sabedoria e valide sempre após personalizações.</p>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

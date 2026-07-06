@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>testing — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; testing</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: testing description: Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas. Use quando escrever testes, revisar cobertura ou definir estratégia de testes. version: 2.0.0 tags: [testing, unit-tests, integration, e2e, coverage, tdd] related_skills: [ddd, governance, implementation] ---</p>
+<h1 id="testing">Testing</h1>
+<p>Guia para escrita de testes automatizados robustos.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa escrever testes para nova funcionalidade</li>
+<li>Quer aumentar cobertura de testes existente</li>
+<li>Precisa definir estratégia de testes para projeto</li>
+<li>Quer padronizar testes entre equipes</li>
+<li>Precisa revisar qualidade de testes</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Trabalhando em script muito simples (protótipo)</li>
+<li>Projeto sem suporte a testes automatizados</li>
+<li>Precisa de teste manual (UI/UX)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>ddd</code> — para testar agregados e entidades de domínio</li>
+<li><code>governance</code> — para políticas de coverage mínima</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Preciso de teste?] --&gt;|Unidade de lógica| B[Unitário]
+    A --&gt;|Integração entre módulos| C[Integração]
+    A --&gt;|Fluxo completo do usuário| D[E2E]
+    A --&gt;|Contrato de API| E[Contract]
+    B --&gt;|Classe pura| F[Mock dependencies]
+    B --&gt;|Função pura| G[Sem mocks]
+    C --&gt;|Database| H[Test DB separado]
+    C --&gt;|API externa| I[Mock server]
+    D --&gt;|Web UI| J[Playwright/Cypress]
+    D --&gt;|API| K[Supertest]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-escrever-teste-unitrio">Fase 1: Escrever Teste Unitário</h3>
+<ol>
+<li>Identifique a unidade a ser testada (classe, função, método)</li>
+<li>Crie arquivo de teste ao lado do código fonte:</li>
+</ol>
+<pre data-lang="bash"><code>   # Estrutura
+   src/
+   ├── services/
+   │   ├── user-service.ts
+   │   └── user-service.test.ts</code></pre>
+<ol>
+<li>Use o template <code>templates/unit-test.ts</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/unit-test.ts src/services/user-service.test.ts</code></pre>
+<ol>
+<li>Preencha os placeholders do template</li>
+<li>Execute o teste:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test -- user-service.test.ts</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Teste passa e cobre caminho feliz</li>
+</ol>
+<h3 id="fase-2-escrever-teste-de-integrao">Fase 2: Escrever Teste de Integração</h3>
+<ol>
+<li>Identifique o ponto de integração (database, API, serviço externo)</li>
+<li>Configure ambiente de teste:</li>
+</ol>
+<pre data-lang="bash"><code>   # docker-compose.test.yml
+   services:
+     postgres:
+       image: postgres:15
+       environment:
+         POSTGRES_DB: test_db</code></pre>
+<ol>
+<li>Use o template <code>templates/integration-test.ts</code></li>
+<li>Configure setup/teardown no <code>beforeAll</code>/<code>afterAll</code></li>
+<li>Execute testes:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run test:integration</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Teste passa e verifica persistência</li>
+</ol>
+<h3 id="fase-3-escrever-teste-e2e">Fase 3: Escrever Teste E2E</h3>
+<ol>
+<li>Identifique o fluxo crítico do usuário</li>
+<li>Configure ambiente E2E:</li>
+</ol>
+<pre data-lang="bash"><code>   # .env.test
+   BASE_URL=http://localhost:3000</code></pre>
+<ol>
+<li>Use o template <code>templates/e2e-test.ts</code></li>
+<li>Adicione <code>data-testid</code> aos elementos UI:</li>
+</ol>
+<pre data-lang="html"><code>   &lt;button data-testid=&quot;submit-button&quot;&gt;Submit&lt;/button&gt;</code></pre>
+<ol>
+<li>Execute teste:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run test:e2e</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Fluxo completo funciona</li>
+</ol>
+<h3 id="fase-4-analisar-cobertura">Fase 4: Analisar Cobertura</h3>
+<ol>
+<li>Execute testes com coverage:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run test:coverage</code></pre>
+<ol>
+<li>Abra relatório:</li>
+</ol>
+<pre data-lang="bash"><code>   open coverage/lcov-report/index.html</code></pre>
+<ol>
+<li>Identifique áreas sem cobertura</li>
+<li>Crie plano de cobertura:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/test-plan.md docs/test-plan.md</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Coverage ≥ 80% para unidades</li>
+</ol>
+<h3 id="fase-5-refatorar-com-testes-como-safety-net">Fase 5: Refatorar com Testes como Safety Net</h3>
+<ol>
+<li>Execute todos os testes antes de refatorar:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test</code></pre>
+<ol>
+<li>Refatore código mantendo API pública</li>
+<li>Execute testes após cada mudança:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test</code></pre>
+<ol>
+<li>Se teste quebra, revert ou ajuste refatoração</li>
+<li><strong>Checkpoint</strong>: Todos os testes passam após refatoração</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="pirmide-de-testes">Pirâmide de Testes</h3>
+<pre><code>         /\
+        /  \      E2E (poucos, críticos)
+       /____\
+      /      \    Integração (médio)
+     /________\
+    /          \  Unitários (muitos)
+   /____________\</code></pre>
+<h3 id="aaa-pattern">AAA Pattern</h3>
+<pre data-lang="typescript"><code>it(&#x27;should return total when items provided&#x27;, () =&gt; {
+  // Arrange - preparar dados
+  const cart = new ShoppingCart();
+  const item = { id: 1, price: 100 };
+  
+  // Act - executar ação
+  cart.addItem(item);
+  const total = cart.getTotal();
+  
+  // Assert - verificar resultado
+  expect(total).toBe(100);
+});</code></pre>
+<h3 id="naming-convention">Naming Convention</h3>
+<p>Padrão: <code>should [expected behavior] when [condition]</code></p>
+<pre data-lang="typescript"><code>// ✅ CORRETO
+it(&#x27;should throw ValidationError when email is invalid&#x27;)
+it(&#x27;should return user when id exists&#x27;)
+it(&#x27;should calculate total when items provided&#x27;)
+
+// ❌ ERRADO
+it(&#x27;test user&#x27;)
+it(&#x27;email validation&#x27;)
+it(&#x27;works&#x27;)</code></pre>
+<h2 id="templates">Templates</h2>
+<h3 id="unit-testts">unit-test.ts</h3>
+<p>Localização: <code>templates/unit-test.ts</code></p>
+<p>Template para testes unitários com Vitest/Jest.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/unit-test.ts src/{module}/{module}.test.ts</code></pre>
+<h3 id="integration-testts">integration-test.ts</h3>
+<p>Localização: <code>templates/integration-test.ts</code></p>
+<p>Template para testes de integração com setup/teardown.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/integration-test.ts test/integration/{module}.test.ts</code></pre>
+<h3 id="e2e-testts">e2e-test.ts</h3>
+<p>Localização: <code>templates/e2e-test.ts</code></p>
+<p>Template para testes E2E com Playwright.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/e2e-test.ts e2e/{flow}.spec.ts</code></pre>
+<h3 id="test-planmd">test-plan.md</h3>
+<p>Localização: <code>templates/test-plan.md</code></p>
+<p>Template para planejar cobertura de testes.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/test-plan.md docs/test-plan.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="test-leaky">Test Leaky</h4>
+<p><strong>O que é:</strong> Teste que depende de estado externo ou ordem de execução. <strong>Por que é ruim:</strong> Testes passam/falham aleatoriamente, impossível debug. <strong>Como evitar:</strong> Use setup/teardown, testes independentes. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - depende de banco real
+it(&#x27;should create user&#x27;, () =&gt; {
+  const user = userService.createUser({ name: &#x27;John&#x27; });
+  // espera que user.id seja 1 - pode falhar se outro teste rodou antes
+  expect(user.id).toBe(1);
+});
+
+// ✅ CORRETO - isolado
+it(&#x27;should create user&#x27;, async () =&gt; {
+  await setupTestDatabase();
+  const user = await userService.createUser({ name: &#x27;John&#x27; });
+  expect(user.id).toBeDefined();
+  await teardownTestDatabase();
+});</code></pre>
+<h4 id="mock-excessivo">Mock Excessivo</h4>
+<p><strong>O que é:</strong> Mockar tudo, incluindo código que deveria ser testado. <strong>Por que é ruim:</strong> Teste não valida integração real, falso positivo. <strong>Como evitar:</strong> Mock apenas dependências externas. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - mockando tudo
+const result = await jest.fn().mockReturnValue(&#x27;mocked&#x27;);
+
+// ✅ CORRETO - mockando apenas externo
+const httpClient = new MockHttpClient();
+const service = new UserService(httpClient);</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="test-sem-assertion">Test Sem Assertion</h4>
+<p><strong>O que é:</strong> Teste que não verifica nada. <strong>Por que é ruim:</strong> Teste sempre passa, não detecta bugs. <strong>Como evitar:</strong> Sempre use expect(). <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+it(&#x27;should work&#x27;, () =&gt; {
+  userService.createUser({ name: &#x27;John&#x27; });
+});
+
+// ✅ CORRETO
+it(&#x27;should create user successfully&#x27;, () =&gt; {
+  const user = userService.createUser({ name: &#x27;John&#x27; });
+  expect(user.id).toBeDefined();
+  expect(user.name).toBe(&#x27;John&#x27;);
+});</code></pre>
+<h4 id="test-frgil">Test Frágil</h4>
+<p><strong>O que é:</strong> Teste que quebra com mudanças não relacionadas. <strong>Por que é ruim:</strong> Alto custo de manutenção. <strong>Como evitar:</strong> Use seletores estáveis, teste comportamento não implementação. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - usa classe CSS que muda
+await page.click(&#x27;.btn-primary&#x27;);
+
+// ✅ CORRETO - usa data-testid estável
+await page.click(&#x27;[data-testid=&quot;submit-button&quot;]&#x27;);</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="test-com-lgica">Test com Lógica</h4>
+<p><strong>O que é:</strong> Teste que contém lógica condicional ou loops. <strong>Por que é ruim:</strong> Teste difícil de entender, pode ter bugs. <strong>Como evitar:</strong> Teste uma coisa, sem lógica. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+it(&#x27;should validate users&#x27;, () =&gt; {
+  users.forEach(user =&gt; {
+    if (user.age &gt; 18) {
+      expect(validate(user)).toBe(true);
+    }
+  });
+});
+
+// ✅ CORRETO
+it(&#x27;should validate adult user&#x27;, () =&gt; {
+  const user = { name: &#x27;John&#x27;, age: 25 };
+  expect(validate(user)).toBe(true);
+});
+
+it(&#x27;should reject minor user&#x27;, () =&gt; {
+  const user = { name: &#x27;Jane&#x27;, age: 15 };
+  expect(validate(user)).toBe(false);
+});</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-review-de-teste">Checklist de Review de Teste</h3>
+<ul>
+<li>[ ] Segue padrão AAA (Arrange, Act, Assert)</li>
+<li>[ ] Nome claro seguindo <code>should X when Y</code></li>
+<li>[ ] Um conceito por teste</li>
+<li>[ ] Teste caminho feliz</li>
+<li>[ ] Teste caminhos de erro</li>
+<li>[ ] Teste edge cases</li>
+<li>[ ] Mocks apenas para dependências externas</li>
+<li>[ ] Não tem lógica no teste</li>
+</ul>
+<h3 id="checklist-de-coverage">Checklist de Coverage</h3>
+<ul>
+<li>[ ] Coverage ≥ 80% para unidades</li>
+<li>[ ] Coverage ≥ 70% para integração</li>
+<li>[ ] Coverage ≥ 60% para E2E</li>
+<li>[ ] Nenhum arquivo com < 50% coverage</li>
+<li>[ ] Nenhum branch não coberto</li>
+<li>[ ] Nenhum path não coberto</li>
+</ul>
+<h3 id="checklist-de-ci">Checklist de CI</h3>
+<ul>
+<li>[ ] Testes rodam em CI</li>
+<li>[ ] Coverage é reportado</li>
+<li>[ ] Build falha se coverage < meta</li>
+<li>[ ] Testes paralelos habilitados</li>
+<li>[ ] Cache de dependências configurado</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="teste-dependente-de-ordem">Teste Dependente de Ordem</h3>
+<p><strong>Situação:</strong> Teste A passa apenas se executado antes do Teste B. <strong>Solução:</strong> Use <code>beforeEach</code>/<code>afterEach</code> para isolar estado. <strong>Exceção:</strong> Testes de migração de banco podem precisar de ordem.</p>
+<pre data-lang="typescript"><code>// Isolar estado entre testes
+beforeEach(() =&gt; {
+  jest.clearAllMocks();
+  testDb.clear();
+});</code></pre>
+<h3 id="flaky-test">Flaky Test</h3>
+<p><strong>Situação:</strong> Teste que passa/falha aleatoriamente. <strong>Solução:</strong> Identifique causa (timing, estado compartilhado, rede) e isole. <strong>Exceção:</strong> Testes com <code>setTimeout</code> para debounce podem ser flaky.</p>
+<pre data-lang="typescript"><code>// ❌ Pode ser flaky
+await button.click();
+expect(element).toBeVisible(); // timing issue
+
+// ✅ Mais estável
+await button.click();
+await page.waitForSelector(&#x27;[data-testid=&quot;element&quot;]&#x27;, { state: &#x27;visible&#x27; });
+expect(element).toBeVisible();</code></pre>
+<h3 id="teste-com-io-externo">Teste com I/O Externo</h3>
+<p><strong>Situação:</strong> Teste faz chamada real a API externa. <strong>Solução:</strong> Use mock server (MSW, nock) ou fixtures. <strong>Exceção:</strong> Testes de contrato podem precisar de I/O real.</p>
+<pre data-lang="typescript"><code>// Usar MSW para mockar API
+import { setupServer } from &#x27;msw/node&#x27;;
+const server = setupServer(
+  rest.get(&#x27;/api/users&#x27;, (req, res, ctx) =&gt; {
+    return res(ctx.json([{ id: 1, name: &#x27;John&#x27; }]));
+  })
+);</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://testing-library.com/">Testing Library</a></li>
+<li><a href="https://vitest.dev/">Vitest</a></li>
+<li><a href="https://playwright.dev/">Playwright</a></li>
+<li><code>ddd</code> — para testar agregados</li>
+<li><code>governance</code> — para políticas de CI/CD</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/test-plan.html">test-plan.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/order-testing.html">order-testing.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

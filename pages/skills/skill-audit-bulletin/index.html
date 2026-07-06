@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>skill-audit-bulletin — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; skill-audit-bulletin</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: skill-audit-bulletin description: Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final. Use quando revisar skills, validar registry ou decidir adoção. version: 2.0.0 tags: [audit, quality, review, validation, skills] related_skills: [architecture-review-kilo, documentation] ---</p>
+<h1 id="skill-audit-bulletin">Skill Audit Bulletin</h1>
+<p>Audita skills existentes avaliando qualidade, completude, acionabilidade e risco.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa revisar uma skill existente</li>
+<li>Precisa validar registry de skills</li>
+<li>Precisa decidir adoção de skill</li>
+<li>Precisa comparar skills similares</li>
+<li>Precisa auditoria de qualidade</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Skill é nova (use skill-template)</li>
+<li>Skill é trivial (não precisa auditoria)</li>
+<li>Apenas leitura (sem decisão)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>architecture-review-kilo</code> — para revisão de código</li>
+<li><code>documentation</code> — para padrões de documentação</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Skill para auditar?] --&gt;|Nova| B[Não auditar - use template]
+    A --&gt;|Existente| C[Skill Audit Bulletin]
+    C --&gt;|Score ≥ 85| D[ADOTAR AS-IS]
+    C --&gt;|Score 70-84| E[ADOTAR COM AJUSTES]
+    C --&gt;|Score 50-69| F[REFATORAR]
+    C --&gt;|Score &lt; 50| G[DEPRECIAR]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-auditoria-estrutural">Fase 1: Auditoria Estrutural</h3>
+<ol>
+<li>Verifique frontmatter:</li>
+</ol>
+<pre data-lang="bash"><code>   head -10 skills/{skill}/SKILL.md</code></pre>
+<ol>
+<li>Valide campos obrigatórios:</li>
+</ol>
+<ul>
+<li>name, description, version, tags, related_skills</li>
+</ul>
+<ol>
+<li>Execute script de validação:</li>
+</ol>
+<pre data-lang="bash"><code>   bash scripts/validate-skill.sh skills/{skill}</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Frontmatter válido, estrutura correta</li>
+</ol>
+<h3 id="fase-2-anlise-semntica">Fase 2: Análise Semântica</h3>
+<ol>
+<li>Analise description para keywords:</li>
+</ol>
+<ul>
+<li>Palavras-chave de gatilho</li>
+<li>Lacunas de cobertura</li>
+</ul>
+<ol>
+<li>Verifique decision tree:</li>
+</ol>
+<ul>
+<li>Clareza dos caminhos</li>
+<li>Exemplos incluídos</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Triggering preciso, fronteira clara</li>
+</ol>
+<h3 id="fase-3-avaliao-de-workflow">Fase 3: Avaliação de Workflow</h3>
+<ol>
+<li>Conte fases de workflow:</li>
+</ol>
+<pre data-lang="bash"><code>   grep -c &quot;^### Fase&quot; skills/{skill}/SKILL.md</code></pre>
+<ol>
+<li>Verifique checkpoints:</li>
+</ol>
+<pre data-lang="bash"><code>   grep -c &quot;Checkpoint&quot; skills/{skill}/SKILL.md</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Workflows completos com validação</li>
+</ol>
+<h3 id="fase-4-correo-tcnica">Fase 4: Correção Técnica</h3>
+<ol>
+<li>Valide exemplos:</li>
+</ol>
+<pre data-lang="bash"><code>   # Teste comandos em shell
+   # Verifique código compila</code></pre>
+<ol>
+<li>Verifique anti-patterns:</li>
+</ol>
+<ul>
+<li>Severidade (🔴🟡🟢)</li>
+<li>Exemplos antes/depois</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Conteúdo técnico correto</li>
+</ol>
+<h3 id="fase-5-gerar-bulletin">Fase 5: Gerar Bulletin</h3>
+<ol>
+<li>Use template <code>templates/audit-bulletin.md</code></li>
+<li>Preencha scores:</li>
+</ol>
+<ul>
+<li>Triggering: 0-10</li>
+<li>Aplicabilidade: 0-10</li>
+<li>Profundidade: 0-10</li>
+<li>Correção: 0-10</li>
+<li>Universalidade: 0-10</li>
+<li>Manutenibilidade: 0-10</li>
+<li>Ergonomia: 0-10</li>
+<li>Risco: 0-10 (invertido)</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Bulletin completo com veredito</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="skill-audit-bulletin">Skill Audit Bulletin</h3>
+<p>Template estruturado para auditoria de skills:</p>
+<pre data-lang="markdown"><code># Skill Audit Bulletin — {skill_name} (v{version})
+
+**Audit date:** {date}
+**Overall grade:** {S/A/B/C/D/F} — {0-100}/100
+**One-line verdict:** {frase única}
+**Recommended action:** {ADOTAR AS-IS / ADOTAR COM AJUSTES / REFATORAR / DEPRECIAR}</code></pre>
+<h3 id="scoring-weights">Scoring Weights</h3>
+<div class="table-wrapper"><table><tr><th>Categoria</th><th>Peso</th></tr><tr><td>Semantic Triggering Precision</td><td>20%</td></tr><tr><td>Aplicabilidade / Clareza de Fronteira</td><td>10%</td></tr><tr><td>Profundidade e Cobertura</td><td>15%</td></tr><tr><td>Correção Técnica</td><td>15%</td></tr><tr><td>Universalidade / Portabilidade</td><td>10%</td></tr><tr><td>Manutenibilidade</td><td>10%</td></tr><tr><td>Ergonomia do Agente Executor</td><td>10%</td></tr><tr><td>Perfil de Risco (invertido)</td><td>10%</td></tr></table></div>
+<h2 id="templates">Templates</h2>
+<h3 id="audit-bulletinmd">audit-bulletin.md</h3>
+<p>Localização: <code>templates/audit-bulletin.md</code></p>
+<p>Template para bulletin de auditoria.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/audit-bulletin.md docs/audits/{skill}-audit.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="audit-sem-scoring-objetivo">Audit sem Scoring Objetivo</h4>
+<p><strong>O que é:</strong> Auditoria sem scores numéricos. <strong>Por que é ruim:</strong> Decisão subjetiva, impossível comparar. <strong>Como evitar:</strong> Use weights e scores padronizados. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Skill está boa&quot;
+
+# ✅ CORRETO
+&quot;Skill: 85/100 (B) — ADOTAR COM AJUSTES&quot;</code></pre>
+<h4 id="falso-veredito">Falso Veredito</h4>
+<p><strong>O que é:</strong> Recomendação que não corresponde ao score. <strong>Por que é ruim:</strong> Confusão, decisões erradas. <strong>Como evitar:</strong> Veredito deve seguir score. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+Score 45/100, mas &quot;ADOTAR AS-IS&quot;
+
+# ✅ CORRETO
+Score 45/100 → &quot;REFATORAR&quot;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="audit-superficial">Audit superficial</h4>
+<p><strong>O que é:</strong> Auditoria que só verifica estrutura. <strong>Por que é ruim:</strong> Problemas técnicos não detectados. <strong>Como evitar:</strong> Teste exemplos, verifique código. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+&quot;Frontmatter OK, skill aprovada&quot;
+
+# ✅ CORRETO
+&quot;Frontmatter OK, exemplos testados, workflow validado&quot;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="audit-sem-data">Audit sem Data</h4>
+<p><strong>O que é:</strong> Bulletin sem data de auditoria. <strong>Por que é ruim:</strong> Impossível rastrear histórico. <strong>Como evitar:</strong> Sempre inclua data. <strong>Exemplo:</strong></p>
+<pre data-lang="markdown"><code># ✅ CORRETO
+**Audit date:** 2024-01-15</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-auditoria">Checklist de Auditoria</h3>
+<ul>
+<li>[ ] Frontmatter válido</li>
+<li>[ ] Description com keywords</li>
+<li>[ ] Decision tree presente</li>
+<li>[ ] Workflows com checkpoints</li>
+<li>[ ] Anti-patterns com severidade</li>
+<li>[ ] Exemplos testados</li>
+<li>[ ] Cross-references</li>
+<li>[ ] Score calculado</li>
+</ul>
+<h3 id="checklist-de-scoring">Checklist de Scoring</h3>
+<ul>
+<li>[ ] Triggering (0-10)</li>
+<li>[ ] Aplicabilidade (0-10)</li>
+<li>[ ] Profundidade (0-10)</li>
+<li>[ ] Correção (0-10)</li>
+<li>[ ] Universalidade (0-10)</li>
+<li>[ ] Manutenibilidade (0-10)</li>
+<li>[ ] Ergonomia (0-10)</li>
+<li>[ ] Risco (0-10, invertido)</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="skill-sem-templates">Skill sem Templates</h3>
+<p><strong>Situação:</strong> Skill sem pasta templates/. <strong>Solução:</strong> Score reduzido em 10-15%. <strong>Exceção:</strong> Skills conceituais podem não precisar.</p>
+<h3 id="skill-sem-examples">Skill sem Examples</h3>
+<p><strong>Situação:</strong> Skill sem exemplos práticos. <strong>Solução:</strong> Score reduzido em 5-10%. <strong>Exceção:</strong> Skills teóricas.</p>
+<h3 id="skill-com-conflito">Skill com Conflito</h3>
+<p><strong>Situação:</strong> Skill sobrescreve outra. <strong>Solução:</strong> Marcar como risco alto. <strong>Exceção:</strong> Se é intencional, documentar.</p>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><code>architecture-review-kilo</code> — para revisão de código</li>
+<li><code>documentation</code> — para padrões</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/audit-bulletin.html">audit-bulletin.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/git-audit.html">git-audit.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

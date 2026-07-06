@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>api-design / examples / error-handling-contract — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">api-design</a> &rsaquo; examples &rsaquo; error-handling-contract</div>
+  </nav>
+  <div class="content">
+    <h1 id="exemplo-contrato-de-erros--api-de-pagamentos">Exemplo: Contrato de Erros — API de Pagamentos</h1>
+<h2 id="contexto">Contexto</h2>
+<p>API de processamento de pagamentos com alta criticidade. Erros devem ser claros, acionáveis e seguros (sem vazar dados sensíveis).</p>
+<h2 id="definio-de-categorias-de-erro">Definição de Categorias de Erro</h2>
+<h3 id="1-erros-de-validao-4xx">1. Erros de Validação (4xx)</h3>
+<pre data-lang="json"><code>{
+  &quot;type&quot;: &quot;https://pay.example.com/errors/invalid-request&quot;,
+  &quot;title&quot;: &quot;Requisição inválida&quot;,
+  &quot;status&quot;: 400,
+  &quot;detail&quot;: &quot;O campo &#x27;amount&#x27; deve ser um número positivo&quot;,
+  &quot;instance&quot;: &quot;/payments&quot;,
+  &quot;request_id&quot;: &quot;req_abc123&quot;,
+  &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;,
+  &quot;errors&quot;: [
+    {
+      &quot;field&quot;: &quot;amount&quot;,
+      &quot;code&quot;: &quot;INVALID_VALUE&quot;,
+      &quot;message&quot;: &quot;deve ser um número positivo&quot;,
+      &quot;rejected_value&quot;: -100
+    }
+  ]
+}</code></pre>
+<h3 id="2-erros-de-autenticao-401403">2. Erros de Autenticação (401/403)</h3>
+<pre data-lang="json"><code>{
+  &quot;type&quot;: &quot;https://pay.example.com/errors/unauthorized&quot;,
+  &quot;title&quot;: &quot;Não autorizado&quot;,
+  &quot;status&quot;: 401,
+  &quot;detail&quot;: &quot;Token de acesso expirado ou inválido&quot;,
+  &quot;instance&quot;: &quot;/payments&quot;,
+  &quot;request_id&quot;: &quot;req_def456&quot;,
+  &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;
+}</code></pre>
+<p><strong>Regra de segurança:</strong> Nunca incluir detalhes sobre por que a autenticação falhou (token inválido vs expirado vs inexistente).</p>
+<h3 id="3-erros-de-negcio-422">3. Erros de Negócio (422)</h3>
+<pre data-lang="json"><code>{
+  &quot;type&quot;: &quot;https://pay.example.com/errors/insufficient-funds&quot;,
+  &quot;title&quot;: &quot;Saldo insuficiente&quot;,
+  &quot;status&quot;: 422,
+  &quot;detail&quot;: &quot;O saldo disponível (R$ 50.00) é menor que o valor solicitado (R$ 100.00)&quot;,
+  &quot;instance&quot;: &quot;/payments&quot;,
+  &quot;request_id&quot;: &quot;req_ghi789&quot;,
+  &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;,
+  &quot;metadata&quot;: {
+    &quot;available_balance&quot;: 50.00,
+    &quot;requested_amount&quot;: 100.00,
+    &quot;currency&quot;: &quot;BRL&quot;
+  }
+}</code></pre>
+<h3 id="4-erros-de-limite-429">4. Erros de Limite (429)</h3>
+<pre data-lang="json"><code>{
+  &quot;type&quot;: &quot;https://pay.example.com/errors/rate-limited&quot;,
+  &quot;title&quot;: &quot;Limite de requisições atingido&quot;,
+  &quot;status&quot;: 429,
+  &quot;detail&quot;: &quot;Limite de 100 requisições/minuto atingido. Tente novamente em 30 segundos.&quot;,
+  &quot;instance&quot;: &quot;/payments&quot;,
+  &quot;request_id&quot;: &quot;req_jkl012&quot;,
+  &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;,
+  &quot;retry_after&quot;: 30
+}</code></pre>
+<h3 id="5-erros-de-servidor-5xx">5. Erros de Servidor (5xx)</h3>
+<pre data-lang="json"><code>{
+  &quot;type&quot;: &quot;https://pay.example.com/errors/gateway-error&quot;,
+  &quot;title&quot;: &quot;Erro no gateway de pagamento&quot;,
+  &quot;status&quot;: 502,
+  &quot;detail&quot;: &quot;O gateway de pagamento retornou uma resposta inesperada&quot;,
+  &quot;instance&quot;: &quot;/payments&quot;,
+  &quot;request_id&quot;: &quot;req_mno345&quot;,
+  &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;
+}</code></pre>
+<p><strong>Regra de segurança:</strong> Nunca expor stack traces, IDs internos ou detalhes de infraestrutura em erros 5xx.</p>
+<h2 id="regras-gerais">Regras Gerais</h2>
+<ol>
+<li><strong>Consistência:</strong> Todos os erros seguem RFC 7807</li>
+<li><strong>Segurança:</strong> Nunca vazar dados sensíveis (tokens, senhas, IDs internos)</li>
+<li><strong>Accionabilidade:</strong> O <code>detail</code> deve explicar o que fazer para corrigir</li>
+<li><strong>Rastreabilidade:</strong> <code>request_id</code> e <code>timestamp</code> são obrigatórios</li>
+<li><strong>Idioma:</strong> Mensagens em português (para APIs brasileiras) ou inglês (para APIs internacionais)</li>
+<li><strong>Log:</strong> Erros 4xx logam em WARN, 5xx em ERROR</li>
+<li><strong>Alerta:</strong> Erros 5xx disparam alerta se taxa > 1% em 5 minutos</li>
+</ol>
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

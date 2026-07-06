@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>observability — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; observability</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: observability description: Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting. Use quando configurar monitoramento, investigar incidentes ou implementar observabilidade em microsserviços. version: 2.0.0 tags: [observability, logging, metrics, tracing, alerting] related_skills: [testing, release, governance] ---</p>
+<h1 id="observability">Observability</h1>
+<p>Guia completo para observabilidade de sistemas em produção.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Sistema em produção precisa de monitoramento</li>
+<li>Precisa investigar incidentes ou bugs em produção</li>
+<li>Quer implementar logging estruturado</li>
+<li>Precisa definir métricas e SLAs</li>
+<li>Quer configurar alertas acionáveis</li>
+<li>Precisa de tracing distribuído em microsserviços</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Projeto em fase de protótipo (sem requisitos de observabilidade)</li>
+<li>Sistema single-server sem necessidade de tracing</li>
+<li>Logs simples de debug em desenvolvimento</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>testing</code> — para testar instrumentação e mocks de métricas</li>
+<li><code>release</code> — para métricas de deploy e rollback</li>
+<li><code>governance</code> — para políticas de retenção de logs e compliance</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Sistema em produção] --&gt; B{O que aconteceu?}
+    B --&gt;|Preciso de logs| C[Logging]
+    B --&gt;|Preciso de dados quantitativos| D[Métricas]
+    B --&gt;|Preciso entender fluxo| E[Tracing]
+    B --&gt;|Preciso de notificação| F[Alerting]
+    
+    C --&gt; C1[Como está o estado?]
+    C1 --&gt; C2[Logs estruturados]
+    C2 --&gt; C3[Níveis apropriados]
+    
+    D --&gt; D1{Como está?}
+    D1 --&gt;|Disponibilidade| D2[SLA/SLO]
+    D1 --&gt;|Performance| D3[Latência/Throughput]
+    D1 --&gt;|Erros| D4[Taxa de erro]
+    
+    E --&gt; E1{Por quê?}
+    E1 --&gt;|Fluxo distribuído| E2[Trace propagation]
+    E1 --&gt;|Dependências| E3[Service map]
+    
+    F --&gt; F1[Alertas acionáveis]
+    F1 --&gt; F2[Runbooks]
+    F2 --&gt; F3[Escalonamento]</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="os-3-pilares-da-observabilidade">Os 3 Pilares da Observabilidade</h3>
+<div class="table-wrapper"><table><tr><th>Pilar</th><th>O que responde</th><th>Exemplo</th></tr><tr><td><strong>Logging</strong></td><td>O que aconteceu?</td><td>"Erro de conexão com DB"</td></tr><tr><td><strong>Metrics</strong></td><td>Como está o sistema?</td><td>"99.9% disponibilidade"</td></tr><tr><td><strong>Tracing</strong></td><td>Por que aconteceu?</td><td>"Request falhou no service B"</td></tr></table></div>
+<h3 id="nveis-de-log">Níveis de Log</h3>
+<div class="table-wrapper"><table><tr><th>Nível</th><th>Uso</th><th>Exemplo</th></tr><tr><td><code>ERROR</code></td><td>Falha que precisa de ação</td><td>"DB connection failed"</td></tr><tr><td><code>WARN</code></td><td>Anormalidade sem falha</td><td>"Retrying request"</td></tr><tr><td><code>INFO</code></td><td>Evento significativo</td><td>"User created"</td></tr><tr><td><code>DEBUG</code></td><td>Detalhes para debug</td><td>"Query executed: SELECT *..."</td></tr></table></div>
+<h3 id="mtricas-red-method">Métricas (RED Method)</h3>
+<ul>
+<li><strong>Rate</strong>: Taxa de requisições por segundo</li>
+<li><strong>Errors</strong>: Taxa de erros</li>
+<li><strong>Duration</strong>: Latência das requisições (p50, p95, p99)</li>
+</ul>
+<h3 id="tracing">Tracing</h3>
+<ul>
+<li><strong>Trace ID</strong>: Identificador único por request</li>
+<li><strong>Span</strong>: Unidade de trabalho dentro de um trace</li>
+<li><strong>Parent Span</strong>: Span que originou outro</li>
+</ul>
+<h2 id="workflow">Workflow</h2>
+<h3 id="workflow-1-implementar-logging-estruturado">Workflow 1: Implementar Logging Estruturado</h3>
+<ol>
+<li>Escolha formato de log (JSON recomendado):</li>
+</ol>
+<pre data-lang="bash"><code>   # Exemplo com pino (Node.js)
+   import pino from &#x27;pino&#x27;;
+   const logger = pino({ level: &#x27;info&#x27; });</code></pre>
+<ol>
+<li>Defina campos obrigatórios no template <code>templates/logging-spec.md</code></li>
+<li>Implemente logger centralizado:</li>
+</ol>
+<pre data-lang="typescript"><code>   // src/lib/logger.ts
+   export const logger = pino({
+     level: process.env.LOG_LEVEL || &#x27;info&#x27;,
+     formatters: { level: (label) =&gt; ({ level: label }) },
+   });</code></pre>
+<ol>
+<li>Substitua todos <code>console.log</code> por logger</li>
+<li><strong>Checkpoint</strong>: Todos os logs usam formato estruturado</li>
+</ol>
+<h3 id="workflow-2-configurar-mtricas-e-slas">Workflow 2: Configurar Métricas e SLAs</h3>
+<ol>
+<li>Defina SLAs no template <code>templates/metrics-sla.md</code></li>
+<li>Configure coletor de métricas (Prometheus/DataDog):</li>
+</ol>
+<pre data-lang="typescript"><code>   // Exemplo com prom-client
+   const httpRequestDuration = new Histogram({
+     name: &#x27;http_request_duration_seconds&#x27;,
+     help: &#x27;Duration of HTTP requests&#x27;,
+     labelNames: [&#x27;method&#x27;, &#x27;route&#x27;, &#x27;status_code&#x27;],
+     buckets: [0.1, 0.5, 1, 2, 5],
+   });</code></pre>
+<ol>
+<li>Instrumente endpoints principais</li>
+<li>Configure dashboards (Grafana/DataDog)</li>
+<li><strong>Checkpoint</strong>: Métricas visíveis no dashboard</li>
+</ol>
+<h3 id="workflow-3-implementar-tracing-distribudo">Workflow 3: Implementar Tracing Distribuído</h3>
+<ol>
+<li>Configure propagador de trace (OpenTelemetry):</li>
+</ol>
+<pre data-lang="typescript"><code>   import { NodeTracerProvider } from &#x27;@opentelemetry/sdk-trace-node&#x27;;
+   const provider = new NodeTracerProvider();
+   provider.register();</code></pre>
+<ol>
+<li>Instrumente serviços com spans:</li>
+</ol>
+<pre data-lang="typescript"><code>   const span = tracer.startSpan(&#x27;process-order&#x27;);
+   try {
+     await validateOrder(order);
+     span.setStatus({ code: SpanStatusCode.OK });
+   } catch (e) {
+     span.setStatus({ code: SpanStatusCode.ERROR });
+     throw e;
+   } finally {
+     span.end();
+   }</code></pre>
+<ol>
+<li>Configure exportador (Jaeger/Zipkin)</li>
+<li>Adicione contexto entre serviços (headers)</li>
+<li><strong>Checkpoint</strong>: Traces visíveis no Jaeger/Zipkin</li>
+</ol>
+<h3 id="workflow-4-criar-alertas-acionveis">Workflow 4: Criar Alertas Acionáveis</h3>
+<ol>
+<li>Defina regras no template <code>templates/alert-rules.md</code></li>
+<li>Implemente alertas com runbook:</li>
+</ol>
+<pre data-lang="yaml"><code>   # alert-rules.yml
+   - alert: HighErrorRate
+     expr: rate(http_requests_total{status=~&quot;5..&quot;}[5m]) &gt; 0.05
+     for: 5m
+     labels:
+       severity: critical
+     annotations:
+       summary: &quot;Taxa de erro &gt; 5%&quot;
+       runbook_url: &quot;https://wiki/runbooks/high-error-rate&quot;</code></pre>
+<ol>
+<li>Configure notificações (PagerDuty/Slack)</li>
+<li>Teste alertas com cenários simulados</li>
+<li><strong>Checkpoint</strong>: Alertas disparam e notificam corretamente</li>
+</ol>
+<h3 id="workflow-5-investigar-incidente">Workflow 5: Investigar Incidente</h3>
+<ol>
+<li>Identifique alerta disparado</li>
+<li>Acesse dashboard de métricas</li>
+<li>Use trace ID para rastrear request problemático</li>
+<li>Analise logs correlacionados</li>
+<li>Documente causa raiz</li>
+<li><strong>Checkpoint</strong>: Incidente resolvido e documentado</li>
+</ol>
+<h2 id="templates">Templates</h2>
+<h3 id="logging-specmd">logging-spec.md</h3>
+<p>Localização: <code>templates/logging-spec.md</code></p>
+<p>Especificação de logging estruturado. Define formato, campos obrigatórios e níveis.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/logging-spec.md docs/logging-spec.md</code></pre>
+<h3 id="metrics-slamd">metrics-sla.md</h3>
+<p>Localização: <code>templates/metrics-sla.md</code></p>
+<p>Template para definir métricas RED e SLAs/SLOs do sistema.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/metrics-sla.md docs/metrics-sla.md</code></pre>
+<h3 id="alert-rulesmd">alert-rules.md</h3>
+<p>Localização: <code>templates/alert-rules.md</code></p>
+<p>Template para regras de alerta com severidade e runbooks.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/alert-rules.md docs/alert-rules.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="log-com-dados-sensveis">Log com Dados Sensíveis</h4>
+<p><strong>O que é:</strong> Logs contendo senhas, tokens, CPFs ou dados pessoais. <strong>Por que é ruim:</strong> Violação de LGPD/GDPR, risco de vazamento. <strong>Como evitar:</strong> Use mascaramento e sanitize dados antes de logar. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - loga senha e token
+logger.info({ user: &#x27;john&#x27;, password: &#x27;secret123&#x27;, token: &#x27;abc123&#x27; });
+
+// ✅ CORRETO - sanitiza dados sensíveis
+logger.info({ user: &#x27;john&#x27;, password: &#x27;***&#x27;, token: &#x27;***&#x27; });</code></pre>
+<h4 id="alerta-sem-ao-definida">Alerta sem Ação Definida</h4>
+<p><strong>O que é:</strong> Alerta dispara mas ninguém sabe o que fazer. <strong>Por que é ruim:</strong> Alerta é ignorado, time perde confiança. <strong>Como evitar:</strong> Sempre inclua runbook com passos claros. <strong>Exemplo:</strong></p>
+<pre data-lang="yaml"><code># ❌ ERRADO - sem runbook
+- alert: HighCPU
+  expr: cpu_usage &gt; 90
+
+# ✅ CORRETO - com runbook
+- alert: HighCPU
+  expr: cpu_usage &gt; 90
+  annotations:
+    runbook_url: &quot;https://wiki/runbooks/high-cpu&quot;
+    steps: &quot;1. Verificar processos 2. Escalar se necessário&quot;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="log-sem-contexto">Log sem Contexto</h4>
+<p><strong>O que é:</strong> Logs sem identificador de request, usuário ou ambiente. <strong>Por que é ruim:</strong> Impossível correlacionar eventos em microsserviços. <strong>Como evitar:</strong> Sempre inclua trace_id, user_id e environment. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - sem contexto
+logger.error(&#x27;Failed to process order&#x27;);
+
+// ✅ CORRETO - com contexto
+logger.error({ traceId, userId, environment: &#x27;prod&#x27; }, &#x27;Failed to process order&#x27;);</code></pre>
+<h4 id="mtricas-sem-dimenso-temporal">Métricas sem Dimensão Temporal</h4>
+<p><strong>O que é:</strong> Métricas sem série temporal ou agregação adequada. <strong>Por que é ruim:</strong> Impossível identificar tendências ou comparar períodos. <strong>Como evitar:</strong> Use contadores, histogramas e séries temporais. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - apenas último valor
+gauge.set(errorCount);
+
+// ✅ CORRETO - com contagem e taxa
+counter.inc({ status: &#x27;error&#x27; });
+const errorRate = counter.rate({ status: &#x27;error&#x27; });</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="consolelog-em-produo">console.log em Produção</h4>
+<p><strong>O que é:</strong> Uso de <code>console.log</code> em código de produção. <strong>Por que é ruim:</strong> Sem estrutura, sem níveis, difícil de filtrar. <strong>Como evitar:</strong> Use biblioteca de logging estruturado. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+console.log(&#x27;User created:&#x27;, user);
+
+// ✅ CORRETO
+logger.info({ userId: user.id, action: &#x27;user_created&#x27; });</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-logging">Checklist de Logging</h3>
+<ul>
+<li>[ ] Logs em formato JSON estruturado</li>
+<li>[ ] Níveis de log apropriados (ERROR, WARN, INFO, DEBUG)</li>
+<li>[ ] Campos obrigatórios: timestamp, level, message, service</li>
+<li>[ ] Campos de contexto: trace_id, user_id, environment</li>
+<li>[ ] Dados sensíveis mascarados</li>
+<li>[ ] Retenção de logs definida</li>
+<li>[ ] Logs centralizados (ELK/Datadog)</li>
+</ul>
+<h3 id="checklist-de-mtricas">Checklist de Métricas</h3>
+<ul>
+<li>[ ] Métricas RED implementadas (Rate, Errors, Duration)</li>
+<li>[ ] SLAs/SLOs documentados</li>
+<li>[ ] Dashboards configurados</li>
+<li>[ ] Métricas de negócio definidas</li>
+<li>[ ] Retenção de métricas definida</li>
+<li>[ ] Alertas baseados em métricas</li>
+</ul>
+<h3 id="checklist-de-tracing">Checklist de Tracing</h3>
+<ul>
+<li>[ ] Trace propagation configurado entre serviços</li>
+<li>[ ] Spans instrumentados nos pontos principais</li>
+<li>[ ] Contexto propagado via headers</li>
+<li>[ ] Exportador configurado (Jaeger/Zipkin)</li>
+<li>[ ] Sampling rate definido</li>
+</ul>
+<h3 id="checklist-de-alertas">Checklist de Alertas</h3>
+<ul>
+<li>[ ] Alertas têm severidade definida</li>
+<li>[ ] Runbooks anexados a cada alerta</li>
+<li>[ ] Escalonamento configurado</li>
+<li>[ ] Testes de alertas realizados</li>
+<li>[ ] Alertas review periódico (quarterly)</li>
+</ul>
+<h3 id="checklist-de-incidente">Checklist de Incidente</h3>
+<ul>
+<li>[ ] Alerta identificado e confirmado</li>
+<li>[ ] Dashboard analisado</li>
+<li>[ ] Trace ID rastreado</li>
+<li>[ ] Logs correlacionados</li>
+<li>[ ] Causa raiz identificada</li>
+<li>[ ] Documentação pós-incidente</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="alto-volume-de-logs">Alto Volume de Logs</h3>
+<p><strong>Situação:</strong> Sistema gera milhões de logs por minuto. <strong>Solução:</strong> Use sampling, levels apropriados e compressão. <strong>Exceção:</strong> Logs de auditoria não devem ser sampled.</p>
+<pre data-lang="typescript"><code>// Sampling para debug
+const logger = pino({
+  level: &#x27;info&#x27;,
+  // Apenas 10% dos logs DEBUG
+  base: { sampleRate: process.env.NODE_ENV === &#x27;prod&#x27; ? 0.1 : 1 },
+});</code></pre>
+<h3 id="tracing-em-microsservios-assncronos">Tracing em Microsserviços Assíncronos</h3>
+<p><strong>Situação:</strong> Eventos via Kafka/RabbitMQ sem request HTTP. <strong>Solução:</strong> Propague trace context via message headers. <strong>Exceção:</strong> Consumers batch podem precisar de trace separado.</p>
+<pre data-lang="typescript"><code>// Producer
+const headers = { &#x27;trace-id&#x27;: span.context().traceId };
+await kafka.produce({ topic: &#x27;orders&#x27;, message: data, headers });
+
+// Consumer
+const traceId = message.headers[&#x27;trace-id&#x27;];
+const span = tracer.startSpan(&#x27;process-order&#x27;, { traceId });</code></pre>
+<h3 id="correlao-entre-servios">Correlação entre Serviços</h3>
+<p><strong>Situação:</strong> Logs de diferentes serviços não correlacionados. <strong>Solução:</strong> Use trace_id como campo comum e propague via headers. <strong>Exceção:</strong> Serviços legados sem suporte a tracing.</p>
+<pre data-lang="typescript"><code>// Middleware para propagar trace_id
+app.use((req, res, next) =&gt; {
+  const traceId = req.headers[&#x27;x-trace-id&#x27;] || generateTraceId();
+  req.traceId = traceId;
+  res.setHeader(&#x27;x-trace-id&#x27;, traceId);
+  next();
+});</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://opentelemetry.io/">OpenTelemetry</a></li>
+<li><a href="https://prometheus.io/">Prometheus</a></li>
+<li><a href="https://grafana.com/">Grafana</a></li>
+<li><a href="https://www.jaegertracing.io/">Jaeger</a></li>
+<li><a href="https://www.structuredlogging.org/">Structured Logging</a></li>
+<li><code>testing</code> — para testar instrumentação</li>
+<li><code>release</code> — para métricas de deploy</li>
+<li><code>governance</code> — para políticas de retenção</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/alert-rules.html">alert-rules.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/logging-spec.html">logging-spec.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/metrics-sla.html">metrics-sla.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/observability-implementation.html">observability-implementation.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

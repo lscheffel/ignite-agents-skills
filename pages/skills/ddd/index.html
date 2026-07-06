@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ddd — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; ddd</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: ddd description: Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados. Use quando modelar domínios ricos, refatorar entidades anêmicas ou estruturar contextos delimitados. version: 2.0.0 tags: [ddd, domain-driven-design, modeling, aggregates, events] related_skills: [architecture-review-kilo, testing, implementation] ---</p>
+<h1 id="domain-driven-design-ddd">Domain-Driven Design (DDD)</h1>
+<p>Guia para modelagem de domínio orientada a negócios.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Modelando domínio complexo com regras de negócio</li>
+<li>Refatorando entidades anêmicas</li>
+<li>Estruturando Bounded Contexts</li>
+<li>Definindo contratos de domínio</li>
+<li>Trabalhando com Domain Events</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>CRUD simples sem regras de negócio</li>
+<li>Protótipo rápido</li>
+<li>Projeto sem domínio complexo</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>architecture-review-kilo</code> — para validar aderência a DDD</li>
+<li><code>testing</code> — para testar agregados e entidades</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Objeto do domínio?] --&gt;|Tem identidade própria| B[Entidade]
+    A --&gt;|Definido por atributos| C[Value Object]
+    A --&gt;|Cluster de objetos| D[Aggregate]
+    B --&gt;|Raiz do agreggate| E[Aggregate Root]
+    C --&gt;|Imutável| F[Value Object]
+    D --&gt;|Única porta de entrada| G[Aggregate Root]
+    A --&gt;|Lógica sem dono| H[Domain Service]
+    A --&gt;|Algo aconteceu| I[Domain Event]
+    A --&gt;|Persistência| J[Repository]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-modelar-domnio">Fase 1: Modelar Domínio</h3>
+<ol>
+<li>Realize Event Storming:</li>
+</ol>
+<ul>
+<li>Liste eventos de negócio</li>
+<li>Identifique comandos</li>
+<li>Mapeie aggregates</li>
+</ul>
+<ol>
+<li>Defina Bounded Contexts:</li>
+</ol>
+<ul>
+<li>Contexto de Usuário</li>
+<li>Contexto de Pedido</li>
+<li>Contexto de Pagamento</li>
+</ul>
+<ol>
+<li>Crie context map:</li>
+</ol>
+<pre><code>   User Context &lt;---&gt; Order Context (Customer-Supplier)</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Contextos bem delimitados, sem overlap</li>
+</ol>
+<h3 id="fase-2-implementar-aggregate-root">Fase 2: Implementar Aggregate Root</h3>
+<ol>
+<li>Defina invariantes:</li>
+</ol>
+<pre data-lang="typescript"><code>   // Order invariants
+   - Status não pode pular (Draft -&gt; Pending -&gt; Paid -&gt; Shipped)
+   - Total deve ser recalculado ao adicionar item
+   - Não pode modificar pedido pago</code></pre>
+<ol>
+<li>Crie classe com validação:</li>
+</ol>
+<pre data-lang="typescript"><code>   class Order {
+     private status: OrderStatus = OrderStatus.Draft;
+     
+     addItem(item: OrderItem): void {
+       if (this.status !== OrderStatus.Draft) {
+         throw new DomainError(&quot;Cannot modify paid order&quot;);
+       }
+       this.items.push(item);
+       this.recalculateTotal();
+     }
+   }</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Aggregate respeita todas as invariantes</li>
+</ol>
+<h3 id="fase-3-implementar-value-object">Fase 3: Implementar Value Object</h3>
+<ol>
+<li>Defina atributos imutáveis:</li>
+</ol>
+<pre data-lang="typescript"><code>   class Money {
+     constructor(
+       private readonly amount: number,
+       private readonly currency: string
+     ) {}
+   }</code></pre>
+<ol>
+<li>Adicione validação no construtor:</li>
+</ol>
+<pre data-lang="typescript"><code>   if (amount &lt; 0) {
+     throw new DomainError(&quot;Amount cannot be negative&quot;);
+   }</code></pre>
+<ol>
+<li>Implemente equals:</li>
+</ol>
+<pre data-lang="typescript"><code>   equals(other: Money): boolean {
+     return this.amount === other.amount &amp;&amp; 
+            this.currency === other.currency;
+   }</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Value Object imutável e validado</li>
+</ol>
+<h3 id="fase-4-implementar-domain-event">Fase 4: Implementar Domain Event</h3>
+<ol>
+<li>Crie evento no passado:</li>
+</ol>
+<pre data-lang="typescript"><code>   class OrderCreated {
+     constructor(
+       public readonly orderId: OrderId,
+       public readonly userId: UserId,
+       public readonly total: Money
+     ) {}
+   }</code></pre>
+<ol>
+<li>Publique no aggregate:</li>
+</ol>
+<pre data-lang="typescript"><code>   static create(userId: UserId, items: OrderItem[]): Order {
+     const order = new Order(userId, items);
+     order.addDomainEvent(new OrderCreated(
+       order.id, userId, order.total
+     ));
+     return order;
+   }</code></pre>
+<ol>
+<li>Crie handler:</li>
+</ol>
+<pre data-lang="typescript"><code>   class SendOrderConfirmationHandler {
+     async handle(event: OrderCreated) {
+       await emailService.sendConfirmation(event.orderId);
+     }
+   }</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Evento publicado e handler funciona</li>
+</ol>
+<h3 id="fase-5-implementar-repository">Fase 5: Implementar Repository</h3>
+<ol>
+<li>Defina interface no domínio:</li>
+</ol>
+<pre data-lang="typescript"><code>   interface OrderRepository {
+     add(order: Order): Promise&lt;void&gt;;
+     remove(order: Order): Promise&lt;void&gt;;
+     findById(id: OrderId): Promise&lt;Order | null&gt;;
+     findByUserId(userId: UserId): Promise&lt;Order[]&gt;;
+   }</code></pre>
+<ol>
+<li>Implemente na infraestrutura:</li>
+</ol>
+<pre data-lang="typescript"><code>   class PrismaOrderRepository implements OrderRepository {
+     async findById(id: OrderId): Promise&lt;Order | null&gt; {
+       const data = await prisma.order.findUnique({
+         where: { id: id.value }
+       });
+       return data ? OrderMapper.toDomain(data) : null;
+     }
+   }</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Repository implementa interface corretamente</li>
+</ol>
+<h3 id="fase-6-definir-bounded-context">Fase 6: Definir Bounded Context</h3>
+<ol>
+<li>Mapeie contextos:</li>
+</ol>
+<pre><code>   User Context
+   - Entities: User, Profile
+   - Value Objects: Email, Name
+   - Services: PasswordHasher</code></pre>
+<ol>
+<li>Defina integrações:</li>
+</ol>
+<pre><code>   User Context publishes UserCreated
+   Order Context subscribes UserCreated</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Contextos bem delimitados com contratos claros</li>
+</ol>
+<h3 id="fase-7-refatorar-entidade-anmica">Fase 7: Refatorar Entidade Anêmica</h3>
+<ol>
+<li>Identifique entidade anêmica:</li>
+</ol>
+<pre data-lang="typescript"><code>   // Anêmica
+   class User {
+     id: string;
+     name: string;
+     email: string;
+     // só getters/setters
+   }</code></pre>
+<ol>
+<li>Mova regras para dentro:</li>
+</ol>
+<pre data-lang="typescript"><code>   class User {
+     changeEmail(newEmail: string) {
+       if (!this.isValidEmail(newEmail)) {
+         throw new DomainError(&quot;Invalid email&quot;);
+       }
+       this.email = newEmail;
+     }
+   }</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Entidade tem comportamento, não só dados</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="entidade">Entidade</h3>
+<p>Objeto com identidade própria, ciclos de vida e persistência.</p>
+<pre data-lang="typescript"><code>class Order {
+  private id: OrderId;  // identidade
+  private items: OrderItem[];
+  private status: OrderStatus;
+  
+  // comportamento, não só dados
+  addItem(item: OrderItem): void {
+    if (this.status !== OrderStatus.Draft) {
+      throw new DomainError(&quot;Cannot modify&quot;);
+    }
+    this.items.push(item);
+  }
+}</code></pre>
+<h3 id="value-object">Value Object</h3>
+<p>Objeto imutável definido por seus atributos, sem identidade própria.</p>
+<pre data-lang="typescript"><code>class Money {
+  constructor(
+    private readonly amount: number,
+    private readonly currency: string
+  ) {
+    if (amount &lt; 0) {
+      throw new DomainError(&quot;Amount cannot be negative&quot;);
+    }
+  }
+  
+  equals(other: Money): boolean {
+    return this.amount === other.amount &amp;&amp; 
+           this.currency === other.currency;
+  }
+}</code></pre>
+<h3 id="aggregate">Aggregate</h3>
+<p>Cluster de entidades e value objects com boundary e root.</p>
+<pre data-lang="typescript"><code>// Order é Aggregate Root
+// OrderItem é entidade filha (sem ID próprio)
+class Order {
+  private items: OrderItem[] = [];  // sem IDs
+  
+  addItem(item: OrderItem): void {
+    this.items.push(item);  // só via root
+  }
+}</code></pre>
+<h3 id="repository">Repository</h3>
+<p>Abstração de coleção para acesso a agregados.</p>
+<pre data-lang="typescript"><code>// Interface no domínio
+interface OrderRepository {
+  add(order: Order): Promise&lt;void&gt;;
+  findById(id: OrderId): Promise&lt;Order | null&gt;;
+}
+
+// Implementação na infraestrutura
+class PrismaOrderRepository implements OrderRepository {
+  async findById(id: OrderId): Promise&lt;Order | null&gt; {
+    // ...
+  }
+}</code></pre>
+<h3 id="domain-event">Domain Event</h3>
+<p>Registro de algo relevante que aconteceu no domínio.</p>
+<pre data-lang="typescript"><code>class OrderCreated {
+  constructor(
+    public readonly orderId: OrderId,
+    public readonly occurredAt: Date
+  ) {}
+}</code></pre>
+<h3 id="domain-service">Domain Service</h3>
+<p>Lógica que não pertence a uma entidade.</p>
+<pre data-lang="typescript"><code>class CurrencyConverter {
+  convert(amount: Money, to: string): Money {
+    // lógica que envolve múltiplos agregados
+  }
+}</code></pre>
+<h2 id="templates">Templates</h2>
+<h3 id="entityts">entity.ts</h3>
+<p>Localização: <code>templates/entity.ts</code></p>
+<p>Template para entidade de domínio.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/entity.ts src/domain/{entity}/{entity}.ts</code></pre>
+<h3 id="value-objectts">value-object.ts</h3>
+<p>Localização: <code>templates/value-object.ts</code></p>
+<p>Template para value object imutável.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/value-object.ts src/domain/{vo}/{vo}.ts</code></pre>
+<h3 id="aggregate-rootts">aggregate-root.ts</h3>
+<p>Localização: <code>templates/aggregate-root.ts</code></p>
+<p>Template para aggregate root com invariantes.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/aggregate-root.ts src/domain/{aggregate}/{aggregate}.ts</code></pre>
+<h3 id="domain-eventts">domain-event.ts</h3>
+<p>Localização: <code>templates/domain-event.ts</code></p>
+<p>Template para domain event.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/domain-event.ts src/domain/{event}/{event}.ts</code></pre>
+<h3 id="repositoryts">repository.ts</h3>
+<p>Localização: <code>templates/repository.ts</code></p>
+<p>Template para interface de repository.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/repository.ts src/domain/{aggregate}/{aggregate}-repository.ts</code></pre>
+<h3 id="domain-servicets">domain-service.ts</h3>
+<p>Localização: <code>templates/domain-service.ts</code></p>
+<p>Template para domain service.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/domain-service.ts src/domain/{service}/{service}.ts</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="entidade-anmica">Entidade Anêmica</h4>
+<p><strong>O que é:</strong> Classe com apenas getters/setters, sem comportamento. <strong>Por que é ruim:</strong> Regras de negócio espalhadas, impossível manter. <strong>Como evitar:</strong> Mova regras para dentro da entidade. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+class User {
+  setEmail(email: string) {
+    this.email = email;
+  }
+}
+
+// ✅ CORRETO
+class User {
+  setEmail(email: string) {
+    if (!this.isValidEmail(email)) {
+      throw new DomainError(&quot;Invalid email&quot;);
+    }
+    this.email = email;
+  }
+}</code></pre>
+<h4 id="aggregate-grosso">Aggregate Grosso</h4>
+<p><strong>O que é:</strong> Aggregate com muitas responsabilidades. <strong>Por que é ruim:</strong> Difícil de testar, acoplamento alto. <strong>Como evitar:</strong> Quebre em aggregates menores. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+class Order {
+  addItem() {}
+  calculateShipping() {}
+  sendEmail() {}
+  processPayment() {}
+}
+
+// ✅ CORRETO
+class Order {
+  addItem() {}
+}
+
+class ShippingService {
+  calculate() {}
+}</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="repository-genrico">Repository Genérico</h4>
+<p><strong>O que é:</strong> Repository com métodos genéricos como <code>save</code>, <code>find</code>. <strong>Por que é ruim:</strong> Perde semântico do domínio. <strong>Como evitar:</strong> Use nomes específicos do domínio. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+interface Repository&lt;T&gt; {
+  save(entity: T): Promise&lt;void&gt;;
+  findById(id: string): Promise&lt;T&gt;;
+}
+
+// ✅ CORRETO
+interface OrderRepository {
+  add(order: Order): Promise&lt;void&gt;;
+  findById(id: OrderId): Promise&lt;Order | null&gt;;
+  findPendingByUserId(userId: UserId): Promise&lt;Order[]&gt;;
+}</code></pre>
+<h4 id="event-como-command">Event como Command</h4>
+<p><strong>O que é:</strong> Usar evento para executar ação em vez de notificar. <strong>Por que é ruim:</strong> Acoplamento indesejado, difícil de debug. <strong>Como evitar:</strong> Event é notificação, command é ação. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+class OrderCreated {
+  async process() {
+    await paymentService.charge(this.orderId);
+  }
+}
+
+// ✅ CORRETO
+class OrderCreated {
+  // só dados
+}
+
+class ProcessOrderOnCreated {
+  async handle(event: OrderCreated) {
+    await paymentService.charge(event.orderId);
+  }
+}</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="value-object-mutvel">Value Object Mutável</h4>
+<p><strong>O que é:</strong> Value Object com setters ou métodos que mudam estado. <strong>Por que é ruim:</strong> Comparação por valor falha, bugs difíceis. <strong>Como evitar:</strong> Sempre retorne novo objeto. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+class Money {
+  setAmount(amount: number) {
+    this.amount = amount;
+  }
+}
+
+// ✅ CORRETO
+class Money {
+  add(other: Money): Money {
+    return new Money(this.amount + other.amount, this.currency);
+  }
+}</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-ddd-modeling">Checklist de DDD Modeling</h3>
+<ul>
+<li>[ ] Eventos de negócio identificados</li>
+<li>[ ] Aggregates bem delimitados</li>
+<li>[ ] Value Objects imutáveis</li>
+<li>[ ] Domain Events para integração</li>
+<li>[ ] Repositories como abstrações</li>
+<li>[ ] Bounded Contexts mapeados</li>
+</ul>
+<h3 id="checklist-de-aggregate-consistency">Checklist de Aggregate Consistency</h3>
+<ul>
+<li>[ ] Invariantes definidas</li>
+<li>[ ] Métodos respeitam invariantes</li>
+<li>[ ] Referências externas só por ID</li>
+<li>[ ] Aggregate Root é única porta de entrada</li>
+<li>[ ] Testes de invariantes passam</li>
+</ul>
+<h3 id="checklist-de-event-schema">Checklist de Event Schema</h3>
+<ul>
+<li>[ ] Evento no passado (OrderCreated, não CreateOrder)</li>
+<li>[ ] Evento imutável</li>
+<li>[ ] Evento contém dados relevantes</li>
+<li>[ ] Handler separado do evento</li>
+<li>[ ] Evento versionado (se necessário)</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="aggregate-com-muitas-entidades">Aggregate com Muitas Entidades</h3>
+<p><strong>Situação:</strong> Aggregate com 10+ entidades filhas. <strong>Solução:</strong> Quebre em aggregates menores, use eventual consistency. <strong>Exceção:</strong> Se todas são editadas atomicamente, mantenha junto.</p>
+<pre data-lang="typescript"><code>// Quebrar Order + OrderItems + Shipments
+// Em Order, OrderItems, Shipments separados</code></pre>
+<h3 id="evento-com-rollback">Evento com Rollback</h3>
+<p><strong>Situação:</strong> Evento publicado mas operação falha. <strong>Solução:</strong> Use transactional outbox ou compensação. <strong>Exceção:</strong> Se evento é crítico, use saga pattern.</p>
+<pre data-lang="typescript"><code>// Transactional outbox
+class OrderService {
+  async createOrder() {
+    const order = Order.create();
+    await this.orderRepo.add(order);
+    await this.outbox.save(OrderCreated.from(order));
+  }
+}</code></pre>
+<h3 id="shared-kernel">Shared Kernel</h3>
+<p><strong>Situação:</strong> Dois contextos compartilham código. <strong>Solução:</strong> Extraia shared kernel, versionamento separado. <strong>Exceção:</strong> Se compartilhamento é mínimo, considere duplicação.</p>
+<pre data-lang="typescript"><code>// shared-kernel/
+// - Money.ts
+// - Email.ts
+// - Result.ts</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://www.domainlanguage.com/ddd/">Domain-Driven Design Book</a></li>
+<li><code>architecture-review-kilo</code> — para validar aderência</li>
+<li><code>testing</code> — para testar agregados</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/order-modeling.html">order-modeling.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

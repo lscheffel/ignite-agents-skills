@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>git — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; git</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: git description: Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas. Use quando fazer commits, criar branches, resolver conflitos ou ensinar Git. version: 2.0.0 tags: [version-control, commits, branching, conventional-commits, workflow] related_skills: [governance, release, repo-bootstrap, implementation] ---</p>
+<h1 id="git">Git</h1>
+<p>Padrões e workflows para versionamento com Git.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa criar commits com mensagens padronizadas</li>
+<li>Precisa decidir entre merge, rebase ou cherry-pick</li>
+<li>Precisa resolver conflitos de merge</li>
+<li>Precisa configurar branching strategy para equipe</li>
+<li>Precisa fazer release via Git Flow</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Trabalhando em repositório somente leitura</li>
+<li>Precisa de versionamento sem Git (ex: SVN)</li>
+<li>Trabalhando com monorepo que usa outro sistema</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>governance</code> — para processos de branch protection e CODEOWNERS</li>
+<li><code>release</code> — para versionamento semântico e tags</li>
+<li><code>repo-bootstrap</code> — para configurar .gitignore e gitignore.io</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Preciso de Git?] --&gt;|Criar commit| B[Conventional Commits]
+    A --&gt;|Criar branch| C[Qual tipo?]
+    C --&gt;|Nova feature| D[feature/nome-curto]
+    C --&gt;|Bug fix| E[fix/nome-curto]
+    C --&gt;|Hotfix produção| F[hotfix/nome-curto]
+    A --&gt;|Integrar branch| G[Merge ou Rebase?]
+    G --&gt;|Precisa preservar histórico| H[Merge]
+    G --&gt;|Precisa histórico limpo| I[Rebase]
+    G --&gt;|Branch compartilhado| J[Merge - NUNCA rebase]
+    G --&gt;|Branch local| K[Rebase]
+    A --&gt;|Resolver conflito| L[Conflito de Merge]
+    L --&gt;|Arquivo binário| M[Git merge -X theirs/mine]
+    L --&gt;|Arquivo texto| N[Editar manualmente]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-criar-commit-convencional">Fase 1: Criar Commit Convencional</h3>
+<ol>
+<li>Stageie os arquivos relevantes:</li>
+</ol>
+<pre data-lang="bash"><code>   git add src/services/user.ts src/controllers/user.ts</code></pre>
+<ol>
+<li>Verifique o status:</li>
+</ol>
+<pre data-lang="bash"><code>   git status</code></pre>
+<ol>
+<li>Crie o commit:</li>
+</ol>
+<pre data-lang="bash"><code>   git commit -m &quot;feat(user): add email validation to registration&quot;</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Verifique o commit no log:</li>
+</ol>
+<pre data-lang="bash"><code>   git log -1 --pretty=format:&quot;%s&quot;
+   # Deve mostrar: feat(user): add email validation to registration</code></pre>
+<h3 id="fase-2-resolver-conflito-de-merge">Fase 2: Resolver Conflito de Merge</h3>
+<ol>
+<li>Identifique arquivos conflitantes:</li>
+</ol>
+<pre data-lang="bash"><code>   git status
+   # Arquivos com &quot;both modified&quot; são conflitantes</code></pre>
+<ol>
+<li>Abra o arquivo e localize marcadores:</li>
+</ol>
+<pre><code>   &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+   código da branch atual
+   =======
+   código da branch que está mergeando
+   &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</code></pre>
+<ol>
+<li>Edite manualmente para resolver:</li>
+</ol>
+<ul>
+<li>Mantenha código correto</li>
+<li>Remova marcadores de conflito</li>
+</ul>
+<ol>
+<li>Stageie o arquivo resolvido:</li>
+</ol>
+<pre data-lang="bash"><code>   git add caminho/arquivo.ts</code></pre>
+<ol>
+<li>Complete o merge:</li>
+</ol>
+<pre data-lang="bash"><code>   git commit  # Cria commit de merge
+   # ou
+   git rebase --continue  # Se for rebase</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Execute testes:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test &amp;&amp; npm run lint</code></pre>
+<h3 id="fase-3-fazer-release-via-git-flow">Fase 3: Fazer Release via Git Flow</h3>
+<ol>
+<li>Certifique-se que está em develop:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout develop
+   git pull origin develop</code></pre>
+<ol>
+<li>Crie branch de release:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout -b release/v1.2.0</code></pre>
+<ol>
+<li>Atualize versão:</li>
+</ol>
+<pre data-lang="bash"><code>   npm version minor --no-git-tag-version
+   # ou
+   # Atualize package.json manualmente</code></pre>
+<ol>
+<li>Atualize CHANGELOG.md</li>
+<li>Commit das mudanças:</li>
+</ol>
+<pre data-lang="bash"><code>   git add .
+   git commit -m &quot;chore(release): prepare v1.2.0&quot;</code></pre>
+<ol>
+<li>Merge para main:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout main
+   git merge --no-ff release/v1.2.0</code></pre>
+<ol>
+<li>Crie tag:</li>
+</ol>
+<pre data-lang="bash"><code>   git tag -a v1.2.0 -m &quot;Release v1.2.0&quot;</code></pre>
+<ol>
+<li>Merge de volta para develop:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout develop
+   git merge --no-ff release/v1.2.0</code></pre>
+<ol>
+<li>Delete branch de release:</li>
+</ol>
+<pre data-lang="bash"><code>   git branch -d release/v1.2.0</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Push com tags:</li>
+</ol>
+<pre data-lang="bash"><code>    git push origin main --tags
+    git push origin develop</code></pre>
+<h3 id="fase-4-limpar-histrico-rebase-interativo">Fase 4: Limpar Histórico (Rebase Interativo)</h3>
+<ol>
+<li>Identifique commits a limpar (últimos 3):</li>
+</ol>
+<pre data-lang="bash"><code>   git log --oneline -5</code></pre>
+<ol>
+<li>Inicie rebase interativo:</li>
+</ol>
+<pre data-lang="bash"><code>   git rebase -i HEAD~3</code></pre>
+<ol>
+<li>No editor, escolha ação para cada commit:</li>
+</ol>
+<ul>
+<li><code>pick</code> — manter commit</li>
+<li><code>squash</code> — unir com commit anterior</li>
+<li><code>fixup</code> — unir sem mensagem</li>
+<li><code>reword</code> — editar mensagem</li>
+<li><code>drop</code> — remover commit</li>
+</ul>
+<ol>
+<li>Edite mensagens se necessário</li>
+<li><strong>Checkpoint</strong>: Verifique histórico limpo:</li>
+</ol>
+<pre data-lang="bash"><code>   git log --oneline -5</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="conventional-commits">Conventional Commits</h3>
+<p>Formato: <code><tipo>(<escopo>): <descrição></code></p>
+<pre data-lang="bash"><code># Tipos válidos
+feat: nova funcionalidade
+fix: correção de bug
+docs: documentação
+style: formatação
+refactor: refatoração
+perf: performance
+test: testes
+chore: manutenção</code></pre>
+<h3 id="branching-strategies">Branching Strategies</h3>
+<h4 id="git-flow-recomendado-para-releases-agendadas">Git Flow (recomendado para releases agendadas)</h4>
+<ul>
+<li><code>main</code>: código em produção</li>
+<li><code>develop</code>: branch de integração</li>
+<li><code>feature/*</code>: novas features</li>
+<li><code>release/*</code>: preparação de release</li>
+<li><code>hotfix/*</code>: correções urgentes</li>
+</ul>
+<h4 id="trunk-based-recomendado-para-cicd-contnuo">Trunk-Based (recomendado para CI/CD contínuo)</h4>
+<ul>
+<li><code>main</code>: trunk sempre deployável</li>
+<li><code>feature/*</code>: branches curtas (< 1 dia)</li>
+<li>Commits pequenos e frequentes</li>
+</ul>
+<h3 id="merge-vs-rebase">Merge vs Rebase</h3>
+<div class="table-wrapper"><table><tr><th>Ação</th><th>Merge</th><th>Rebase</th></tr><tr><td>Preserva histórico</td><td>✅</td><td>❌</td></tr><tr><td>Histórico linear</td><td>❌</td><td>✅</td></tr><tr><td>Seguro para shared</td><td>✅</td><td>❌</td></tr><tr><td>Branch compartilhado</td><td>✅</td><td>❌</td></tr></table></div>
+<h2 id="templates">Templates</h2>
+<h3 id="commit-messagemd">commit-message.md</h3>
+<p>Localização: <code>templates/commit-message.md</code></p>
+<p>Template para mensagens de commit padronizadas.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Consulte antes de criar commit
+cat templates/commit-message.md</code></pre>
+<h3 id="branch-namingmd">branch-naming.md</h3>
+<p>Localização: <code>templates/branch-naming.md</code></p>
+<p>Convenção de nomes para branches.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Crie branch seguindo convenção
+git checkout -b feature/user-authentication</code></pre>
+<h3 id="pr-descriptionmd">pr-description.md</h3>
+<p>Localização: <code>templates/pr-description.md</code></p>
+<p>Template para descrição de Pull Request.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Copie para usar como base
+cp templates/pr-description.md .github/PULL_REQUEST_TEMPLATE.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="force-push-em-branch-compartilhado">Force push em branch compartilhado</h4>
+<p><strong>O que é:</strong> Usar <code>git push --force</code> em branch que outros desenvolvedores estão usando. <strong>Por que é ruim:</strong> Destrói histórico que outros desenvolvedores dependem, causando perda de trabalho. <strong>Como evitar:</strong> Use <code>git push --force-with-lease</code> ou nunca force push em branches compartilhados. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git push --force origin feature/user-auth
+
+# ✅ CORRETO
+git push --force-with-lease origin feature/user-auth
+# ou
+git merge origin/main  # preserva histórico</code></pre>
+<h4 id="commit-com-segredoscredenciais">Commit com segredos/credenciais</h4>
+<p><strong>O que é:</strong> Commitar arquivos contendo senhas, tokens ou credenciais. <strong>Por que é ruim:</strong> Exposição de credenciais no histórico do Git, impossível remover completamente. <strong>Como evitar:</strong> Use .env, .gitignore, e git-secrets. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git add .env
+git commit -m &quot;feat: add config&quot;
+
+# ✅ CORRETO
+echo &quot;.env&quot; &gt;&gt; .gitignore
+git add .env
+git commit -m &quot;feat: add config&quot;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="mensagem-de-commit-vaga">Mensagem de commit vaga</h4>
+<p><strong>O que é:</strong> Mensagens genéricas como "fix bug" ou "update code". <strong>Por que é ruim:</strong> Dificulta busca no histórico e gera documentação ruim. <strong>Como evitar:</strong> Use Conventional Commits com escopo e descrição clara. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git commit -m &quot;fix&quot;
+
+# ✅ CORRETO
+git commit -m &quot;fix(auth): handle expired JWT token&quot;</code></pre>
+<h4 id="branch-sem-pr">Branch sem PR</h4>
+<p><strong>O que é:</strong> Trabalhar diretamente em main sem Pull Request. <strong>Por que é ruim:</strong> Nenhuma revisão de código, histórico de decisões perdido. <strong>Como evitar:</strong> Sempre crie PR, mesmo para mudanças pequenas. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git checkout main
+git add .
+git commit -m &quot;feat: quick fix&quot;
+
+# ✅ CORRETO
+git checkout -b feature/quick-fix
+git add .
+git commit -m &quot;feat: quick fix&quot;
+gh pr create --title &quot;Quick fix&quot; --body &quot;Descrição&quot;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="commit-grande-com-mltiplas-mudanas">Commit grande com múltiplas mudanças</h4>
+<p><strong>O que é:</strong> Commitar vários arquivos com mudanças não relacionadas. <strong>Por que é ruim:</strong> Dificulta rollback seletivo e revisão de código. <strong>Como evitar:</strong> Commits atômicos, um conceito por commit. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git add .
+git commit -m &quot;feat: add user and fix login and update docs&quot;
+
+# ✅ CORRETO
+git add src/user.ts
+git commit -m &quot;feat(user): add user entity&quot;
+git add src/auth.ts
+git commit -m &quot;fix(auth): handle login error&quot;
+git add README.md
+git commit -m &quot;docs: update user flow&quot;</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-pr-commit">Checklist Pré-Commit</h3>
+<ul>
+<li>[ ] Código compila sem erros</li>
+<li>[ ] Testes passam (<code>npm test</code>)</li>
+<li>[ ] Lint passa (<code>npm run lint</code>)</li>
+<li>[ ] Mensagem de commit segue Conventional Commits</li>
+<li>[ ] Arquivo .env não está no stage</li>
+</ul>
+<h3 id="checklist-pr-merge">Checklist Pré-Merge</h3>
+<ul>
+<li>[ ] Branch está atualizada com main</li>
+<li>[ ] Todos os testes passam</li>
+<li>[ ] Coverage ≥ 80%</li>
+<li>[ ] PR tem descrição completa</li>
+<li>[ ] Pelo menos 1 aprovação</li>
+</ul>
+<h3 id="checklist-pr-release">Checklist Pré-Release</h3>
+<ul>
+<li>[ ] CHANGELOG.md atualizado</li>
+<li>[ ] Versão bumpado em package.json</li>
+<li>[ ] Todos os testes E2E passam</li>
+<li>[ ] Build de produção funciona</li>
+<li>[ ] Tag criada com semantic versioning</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="submodule-com-conflito">Submodule com conflito</h3>
+<p><strong>Situação:</strong> Conflito em repositório que usa submodules. <strong>Solução:</strong> Atualize o submodule separadamente, depois resolva o conflito. <strong>Exceção:</strong> Se o submodule é externo, considere usar subtree.</p>
+<pre data-lang="bash"><code># Atualizar submodule
+git submodule update --remote --merge
+git add path/to/submodule
+git commit -m &quot;chore: update submodule&quot;</code></pre>
+<h3 id="rebase-com-arquivo-binrio-conflito">Rebase com arquivo binário conflito</h3>
+<p><strong>Situação:</strong> Conflito em arquivo binário durante rebase. <strong>Solução:</strong> Use merge strategy para binários. <strong>Exceção:</strong> Se o binário é gerado, remova e regenere.</p>
+<pre data-lang="bash"><code># Resolver conflito em binário
+git checkout --ours path/to/file.bin
+git add path/to/file.bin
+git rebase --continue</code></pre>
+<h3 id="detached-head">Detached HEAD</h3>
+<p><strong>Situação:</strong> Git checkout em commit específico, ficando em estado detached HEAD. <strong>Solução:</strong> Crie branch para trabalhar ou retorne ao branch anterior. <strong>Exceção:</strong> Se for só para inspecionar, não há problema.</p>
+<pre data-lang="bash"><code># Sair do detached HEAD
+git checkout main
+# ou criar branch
+git switch -c temp-branch</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://www.conventionalcommits.org/">Conventional Commits</a></li>
+<li><a href="https://nvie.com/posts/a-successful-git-branching-model/">Git Flow</a></li>
+<li><code>governance</code> — para branch protection e CODEOWNERS</li>
+<li><code>release</code> — para versionamento semântico</li>
+<li><code>repo-bootstrap</code> — para .gitignore patterns</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/branch-naming.html">branch-naming.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/commit-message.html">commit-message.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/pr-description.html">pr-description.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/feature-workflow.html">feature-workflow.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

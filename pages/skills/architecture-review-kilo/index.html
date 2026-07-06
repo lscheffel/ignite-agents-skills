@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>architecture-review-kilo — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; architecture-review-kilo</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: architecture-review-kilo description: Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais. Use quando o usuário pedir revisão de arquitetura, análise de estrutura, ou avaliação de design. version: 2.0.0 tags: [architecture, solid, review, clean-architecture, code-smells] related_skills: [ddd, adr-generator] ---</p>
+<h1 id="architecture-review">Architecture Review</h1>
+<p>Realiza revisões arquiteturais sistemáticas de código e estruturas de projeto.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Revisão de PR com impacto arquitetural</li>
+<li>Análise de estrutura de projeto</li>
+<li>Detecção de violações de princípios SOLID</li>
+<li>Avaliação de aderência a padrões (Clean Architecture, Hexagonal, DDD)</li>
+<li>Identificação de tech debt arquitetural</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Revisão de estilo/formatting</li>
+<li>Bug fix simples</li>
+<li>Teste de unidade</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>ddd</code> — para validar modelagem de domínio</li>
+<li><code>adr-generator</code> — para documentar decisões arquiteturais</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Tipo de Review?] --&gt;|PR| B[Pull Request Review]
+    A --&gt;|Projeto| C[Architecture Assessment]
+    A --&gt;|Tech Debt| D[Code Smell Detection]
+    A --&gt;|Scaling| E[Performance Review]
+    B --&gt;|Arquitetura| F[Clean Architecture Check]
+    C --&gt;|Layers| G[Layer Analysis]
+    C --&gt;|Dependencies| H[Dependency Graph]
+    D --&gt;|God Class| I[Extract Classes]
+    D --&gt;|Circular| J[Break Dependencies]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-reviso-de-pr-com-impacto-arquitetural">Fase 1: Revisão de PR com Impacto Arquitetural</h3>
+<ol>
+<li>Receba PR para review:</li>
+</ol>
+<pre data-lang="bash"><code>   gh pr view 123 --json changedFiles</code></pre>
+<ol>
+<li>Analise mudanças:</li>
+</ol>
+<ul>
+<li>Novas dependências?</li>
+<li>Nova camada?</li>
+<li>Mudança em contrato?</li>
+</ul>
+<ol>
+<li>Execute checklist:</li>
+</ol>
+<ul>
+<li>[ ] SRP respeitado</li>
+<li>[ ] OCP aplicado</li>
+<li>[ ] Clean Architecture</li>
+</ul>
+<ol>
+<li>Comente no PR:</li>
+</ol>
+<pre><code>   ### [HIGH] God Class
+   **Arquivo:** src/services/user-service.ts:45
+   **Princípio violado:** SRP
+   **Descrição:** UserService tem 500 linhas e 15 responsabilidades
+   **Sugestão:** Quebrar em UserService, UserValidator, UserNotifier</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: PR aprovado ou ajustes solicitados</li>
+</ol>
+<h3 id="fase-2-anlise-de-estrutura-de-projeto">Fase 2: Análise de Estrutura de Projeto</h3>
+<ol>
+<li>Mapeie estrutura:</li>
+</ol>
+<pre><code>   src/
+   ├── controllers/
+   ├── services/
+   ├── repositories/
+   ├── domain/
+   └── infrastructure/</code></pre>
+<ol>
+<li>Verifique camadas:</li>
+</ol>
+<ul>
+<li>Domain sem dependências externas?</li>
+<li>Controllers não têm lógica de negócio?</li>
+<li>Repositories são abstrações?</li>
+</ul>
+<ol>
+<li>Gere dependency graph:</li>
+</ol>
+<pre data-lang="bash"><code>   npx madge --image deps.png src/</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Estrutura validada, issues documentadas</li>
+</ol>
+<h3 id="fase-3-deteco-de-code-smells-estruturais">Fase 3: Detecção de Code Smells Estruturais</h3>
+<ol>
+<li>Procure God Class:</li>
+</ol>
+<pre data-lang="bash"><code>   # Classes com &gt; 500 linhas
+   find src -name &quot;*.ts&quot; -exec wc -l {} \; | sort -rn | head -10</code></pre>
+<ol>
+<li>Procure Feature Envy:</li>
+</ol>
+<pre data-lang="bash"><code>   # Métodos que acessam muitos atributos de outra classe
+   grep -r &quot;otherClass\.&quot; src/</code></pre>
+<ol>
+<li>Procure Circular Dependencies:</li>
+</ol>
+<pre data-lang="bash"><code>   npx madge --circular src/</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Smells identificados e priorizados</li>
+</ol>
+<h3 id="fase-4-avaliao-de-aderncia-a-padres">Fase 4: Avaliação de Aderência a Padrões</h3>
+<ol>
+<li>Clean Architecture checklist:</li>
+</ol>
+<ul>
+<li>[ ] Regras de negócio não dependem de frameworks</li>
+<li>[ ] Casos de uso orquestram entidades</li>
+<li>[ ] Adaptadores isolam infraestrutura</li>
+<li>[ ] Inversão de dependência respeitada</li>
+</ul>
+<ol>
+<li>DDD checklist:</li>
+</ol>
+<ul>
+<li>[ ] Entidades com identidade própria</li>
+<li>[ ] Value Objects imutáveis</li>
+<li>[ ] Aggregates com boundary bem definido</li>
+<li>[ ] Repositories como abstração de coleção</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Score de aderência calculado</li>
+</ol>
+<h3 id="fase-5-criar-relatrio-de-reviso">Fase 5: Criar Relatório de Revisão</h3>
+<ol>
+<li>Use template <code>templates/architecture-review-report.md</code></li>
+<li>Documente issues por severidade</li>
+<li>Inclua screenshots/grafos</li>
+<li>Proponha ações corretivas</li>
+<li><strong>Checkpoint</strong>: Relatório completo e acionável</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="solid-principles">SOLID Principles</h3>
+<h4 id="srp-single-responsibility">SRP (Single Responsibility)</h4>
+<p>Cada classe/módulo tem uma única responsabilidade.</p>
+<pre data-lang="typescript"><code>// ❌ Viola SRP
+class UserService {
+  createUser() {}  // persiste
+  sendEmail() {}   // notifica
+  validate() {}    // valida
+}
+
+// ✅ SRP respeitado
+class UserService {
+  createUser() {}
+}
+class EmailService {
+  send() {}
+}
+class UserValidator {
+  validate() {}
+}</code></pre>
+<h4 id="ocp-openclosed">OCP (Open/Closed)</h4>
+<p>Extensível sem modificar código existente.</p>
+<pre data-lang="typescript"><code>// ✅ OCP via strategy
+interface PaymentMethod {
+  process(amount: Money): Promise&lt;void&gt;;
+}
+
+class CreditCard implements PaymentMethod {
+  process(amount: Money) { /* ... */ }
+}
+
+class Pix implements PaymentMethod {
+  process(amount: Money) { /* ... */ }
+}</code></pre>
+<h4 id="lsp-liskov-substitution">LSP (Liskov Substitution)</h4>
+<p>Subtipos substituem seus tipos base.</p>
+<pre data-lang="typescript"><code>// ✅ LSP - Square é subtype de Rectangle
+class Rectangle {
+  setWidth(w: number) {}
+  setHeight(h: number) {}
+}
+
+class Square extends Rectangle {
+  setWidth(w: number) {
+    super.setWidth(w);
+    super.setHeight(w);  // mantém invariante
+  }
+}</code></pre>
+<h4 id="isp-interface-segregation">ISP (Interface Segregation)</h4>
+<p>Interfaces específicas, não genéricas.</p>
+<pre data-lang="typescript"><code>// ❌ Interface gorda
+interface UserService {
+  createUser()
+  createOrder()
+  sendEmail()
+  calculateTax()
+}
+
+// ✅ Interfaces específicas
+interface UserRepository {
+  save()
+  findById()
+}</code></pre>
+<h4 id="dip-dependency-inversion">DIP (Dependency Inversion)</h4>
+<p>Depende de abstrações, não concretos.</p>
+<pre data-lang="typescript"><code>// ✅ DIP
+class OrderService {
+  constructor(private readonly repo: OrderRepository) {}  // abstração
+}</code></pre>
+<h3 id="clean-architecture--hexagonal">Clean Architecture / Hexagonal</h3>
+<ul>
+<li>Regras de negócio não dependem de frameworks</li>
+<li>Casos de uso orquestram entidades</li>
+<li>Adaptadores (gateways, controllers) isolam infraestrutura</li>
+<li>Inversão de dependência respeitada</li>
+</ul>
+<h3 id="ddd">DDD</h3>
+<ul>
+<li>Entidades com identidade própria</li>
+<li>Value Objects imutáveis</li>
+<li>Aggregates com boundary bem definido</li>
+<li>Repositories como abstração de coleção</li>
+<li>Domain Events para comunicação entre contextos</li>
+</ul>
+<h3 id="code-smells-estruturais">Code Smells Estruturais</h3>
+<ul>
+<li><strong>God Class / God Module</strong>: Classe com muitas responsabilidades</li>
+<li><strong>Feature Envy</strong>: Método que usa mais dados de outra classe</li>
+<li><strong>Data Clumps</strong>: Mesmos dados sempre juntos</li>
+<li><strong>Shotgun Surgery</strong>: Mudança em múltiplos arquivos</li>
+<li><strong>Circular Dependencies</strong>: Módulos que dependem circularmente</li>
+</ul>
+<h2 id="templates">Templates</h2>
+<h3 id="architecture-review-reportmd">architecture-review-report.md</h3>
+<p>Localização: <code>templates/architecture-review-report.md</code></p>
+<p>Template para relatório de revisão arquitetural.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/architecture-review-report.md docs/architecture-review-report.md</code></pre>
+<h3 id="tech-debt-itemmd">tech-debt-item.md</h3>
+<p>Localização: <code>templates/tech-debt-item.md</code></p>
+<p>Template para item de tech debt.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/tech-debt-item.md docs/tech-debt/{item}.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="god-class">God Class</h4>
+<p><strong>O que é:</strong> Classe com muitas responsabilidades. <strong>Por que é ruim:</strong> Difícil de testar, manter e entender. <strong>Como evitar:</strong> Quebra em classes menores, cada uma com SRP. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - 500 linhas, 15 responsabilidades
+class UserService {
+  createUser() {}
+  validateUser() {}
+  sendEmail() {}
+  calculateDiscount() {}
+  generateReport() {}
+}
+
+// ✅ CORRETO - Classes focadas
+class UserService {
+  createUser() {}
+}
+class UserValidator {
+  validate() {}
+}</code></pre>
+<h4 id="circular-dependencies">Circular Dependencies</h4>
+<p><strong>O que é:</strong> Módulo A importa B, B importa A. <strong>Por que é ruim:</strong> Impossível testar isoladamente, acoplamento alto. <strong>Como evitar:</strong> Extraia interface ou mova código comum. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+// user-service.ts
+import { OrderService } from &#x27;./order-service&#x27;;
+
+// order-service.ts
+import { UserService } from &#x27;./user-service&#x27;;
+
+// ✅ CORRETO
+// user-service.ts
+import { OrderRepository } from &#x27;../repositories/order-repository&#x27;;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="feature-envy">Feature Envy</h4>
+<p><strong>O que é:</strong> Método que usa mais atributos de outra classe. <strong>Por que é ruim:</strong> Lógica no lugar errado, violação de encapsulamento. <strong>Como evitar:</strong> Mova método para classe correta. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+class ReportGenerator {
+  generate(user: User) {
+    return `${user.name} - ${user.email}`;  // usa dados de User
+  }
+}
+
+// ✅ CORRETO
+class User {
+  getDisplayName() {
+    return `${this.name} - ${this.email}`;
+  }
+}</code></pre>
+<h4 id="data-clumps">Data Clumps</h4>
+<p><strong>O que é:</strong> Mesmos dados sempre juntos em parâmetros. <strong>Por que é ruim:</strong> Indica Value Object escondido. <strong>Como evitar:</strong> Crie Value Object. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+function createUser(name: string, email: string, phone: string) {}
+
+// ✅ CORRETO
+function createUser(contact: Contact) {}</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="shotgun-surgery">Shotgun Surgery</h4>
+<p><strong>O que é:</strong> Mudança simples requer edição em muitos arquivos. <strong>Por que é ruim:</strong> Alto custo de manutenção. <strong>Como evitar:</strong> Agrupe lógica relacionada. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - mudar validação requer 5 arquivos
+// user-validator.ts, order-validator.ts, etc.
+
+// ✅ CORRETO - validação centralizada
+// validation/
+// - user.ts
+// - order.ts</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-solid">Checklist SOLID</h3>
+<ul>
+<li>[ ] SRP: Cada classe/módulo tem uma única responsabilidade?</li>
+<li>[ ] OCP: Extensível sem modificar código existente?</li>
+<li>[ ] LSP: Subtipos substituem seus tipos base?</li>
+<li>[ ] ISP: Interfaces específicas, não genéricas?</li>
+<li>[ ] DIP: Depende de abstrações, não concretos?</li>
+</ul>
+<h3 id="checklist-clean-architecture">Checklist Clean Architecture</h3>
+<ul>
+<li>[ ] Regras de negócio não dependem de frameworks</li>
+<li>[ ] Casos de uso orquestram entidades</li>
+<li>[ ] Adaptadores isolam infraestrutura</li>
+<li>[ ] Inversão de dependência respeitada</li>
+<li>[ ] UI é plugin do core</li>
+</ul>
+<h3 id="checklist-ddd">Checklist DDD</h3>
+<ul>
+<li>[ ] Entidades com identidade própria</li>
+<li>[ ] Value Objects imutáveis</li>
+<li>[ ] Aggregates com boundary bem definido</li>
+<li>[ ] Repositories como abstração de coleção</li>
+<li>[ ] Domain Events para comunicação entre contextos</li>
+</ul>
+<h3 id="checklist-performance">Checklist Performance</h3>
+<ul>
+<li>[ ] N+1 queries identificados</li>
+<li>[ ] Cache implementado onde necessário</li>
+<li>[ ] Queries otimizadas</li>
+<li>[ ] Memory leaks verificados</li>
+<li>[ ] Concurrency tratada</li>
+</ul>
+<h3 id="checklist-security">Checklist Security</h3>
+<ul>
+<li>[ ] Input validado</li>
+<li>[ ] SQL injection prevenida</li>
+<li>[ ] XSS prevenido</li>
+<li>[ ] Auth/authorization verificado</li>
+<li>[ ] Secrets não expostos</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="projeto-legado-sem-testes">Projeto Legado sem Testes</h3>
+<p><strong>Situação:</strong> Código legado sem cobertura de testes. <strong>Solução:</strong> Refatore com characterization tests primeiro. <strong>Exceção:</strong> Se mudança é emergencial, documente risco.</p>
+<pre data-lang="bash"><code># Adicionar characterization tests
+cp templates/unit-test.ts test/legacy/user-characterization.test.ts</code></pre>
+<h3 id="microservio-mal-delimitado">Microserviço Mal Delimitado</h3>
+<p><strong>Situação:</strong> Serviço com múltiplos contextos misturados. <strong>Solução:</strong> Identifique contextos, planeje separação. <strong>Exceção:</strong> Se acoplamento é alto, use strangler pattern.</p>
+<pre data-lang="markdown"><code>## Contextos Misturados
+- User Context (deve ser separado)
+- Order Context (deve ser separado)</code></pre>
+<h3 id="monolito-que-precisa-escalar">Monolito que Precisa Escalar</h3>
+<p><strong>Situação:</strong> Monolito com performance degradada. <strong>Solução:</strong> Identifique bounded contexts, extraia serviços. <strong>Exceção:</strong> Se escala horizontal resolve, mantenha monolito.</p>
+<pre data-lang="markdown"><code>## Serviços a Extrair
+1. Auth Service (alta prioridade)
+2. Notification Service (média prioridade)</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><code>ddd</code> — para modelagem de domínio</li>
+<li><code>adr-generator</code> — para documentar decisões</li>
+<li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/Clean-Code.html">Clean Architecture</a></li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/architecture-review-report.html">architecture-review-report.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/tech-debt-item.html">tech-debt-item.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/god-class-refactor.html">god-class-refactor.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>release — ignite-agents-skills</title>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../index.html#categories">Categorias</a>
+      <a href="../../README.md">README</a>
+      <a href="../../USAGE.md">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; release</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: release description: Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico. version: 2.0.0 tags: [release, versioning, changelog, deploy, rollback] related_skills: [git, governance, implementation] ---</p>
+<h1 id="release">Release</h1>
+<p>Guia para gestão de releases e versionamento.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa preparar uma release</li>
+<li>Precisa publicar pacote npm/docker</li>
+<li>Precisa gerenciar versionamento semântico</li>
+<li>Precisa fazer rollback de release</li>
+<li>Precisa atualizar CHANGELOG</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Protótipo sem versionamento</li>
+<li>Projeto sem deploy automatizado</li>
+<li>Hotfix urgente (use skill git)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>git</code> — para tags e branching</li>
+<li><code>governance</code> — para processo de aprovação</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Tipo de Release?] --&gt;|npm package| B[npm]
+    A --&gt;|Docker image| C[Docker]
+    A --&gt;|GitHub Release| D[GitHub]
+    A --&gt;|Custom| E[Manual]
+    B --&gt;|Patch| F[1.0.1]
+    B --&gt;|Minor| G[1.1.0]
+    B --&gt;|Major| H[2.0.0]
+    C --&gt;|Tag semântica| I[v1.2.0]
+    C --&gt;|Latest| J[latest]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-preparar-release">Fase 1: Preparar Release</h3>
+<ol>
+<li>Atualize CHANGELOG.md:</li>
+</ol>
+<pre data-lang="markdown"><code>   ## [Unreleased]
+   ### Added
+   - Nova funcionalidade X
+   
+   ## [1.2.0] - 2024-01-15
+   ### Added
+   - Feature X
+   ### Fixed
+   - Bug Y</code></pre>
+<ol>
+<li>Bump versão em package.json:</li>
+</ol>
+<pre data-lang="bash"><code>   npm version minor  # ou major/patch</code></pre>
+<ol>
+<li>Atualize versão em outros arquivos:</li>
+</ol>
+<ul>
+<li>package-lock.json (automático)</li>
+<li>Dockerfile (se aplicável)</li>
+<li>Helm chart (se aplicável)</li>
+</ul>
+<ol>
+<li><strong>Checkpoint</strong>: Versão bumpada e CHANGELOG atualizado</li>
+</ol>
+<h3 id="fase-2-validar-release">Fase 2: Validar Release</h3>
+<ol>
+<li>Execute todos os testes:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test
+   npm run test:integration
+   npm run test:e2e</code></pre>
+<ol>
+<li>Execute lint:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run lint</code></pre>
+<ol>
+<li>Execute build:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run build</code></pre>
+<ol>
+<li>Verifique security:</li>
+</ol>
+<pre data-lang="bash"><code>   npm audit</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Todos os checks passam</li>
+</ol>
+<h3 id="fase-3-publicar-release">Fase 3: Publicar Release</h3>
+<ol>
+<li>Commit das mudanças:</li>
+</ol>
+<pre data-lang="bash"><code>   git add .
+   git commit -m &quot;chore(release): prepare v1.2.0&quot;</code></pre>
+<ol>
+<li>Crie tag:</li>
+</ol>
+<pre data-lang="bash"><code>   git tag -a v1.2.0 -m &quot;Release v1.2.0&quot;</code></pre>
+<ol>
+<li>Push com tags:</li>
+</ol>
+<pre data-lang="bash"><code>   git push origin main --tags</code></pre>
+<ol>
+<li>Publicar npm (se aplicável):</li>
+</ol>
+<pre data-lang="bash"><code>   npm publish</code></pre>
+<ol>
+<li>Publicar Docker (se aplicável):</li>
+</ol>
+<pre data-lang="bash"><code>   docker build -t myimage:v1.2.0 .
+   docker push myimage:v1.2.0</code></pre>
+<ol>
+<li>Criar GitHub Release:</li>
+</ol>
+<pre data-lang="bash"><code>   gh release create v1.2.0 --generate-notes</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Release publicada em todos os canais</li>
+</ol>
+<h3 id="fase-4-rollback">Fase 4: Rollback</h3>
+<ol>
+<li>Identifique versão estável anterior:</li>
+</ol>
+<pre data-lang="bash"><code>   git tag | grep -E &quot;^v[0-9]&quot; | tail -5</code></pre>
+<ol>
+<li>Crie branch de rollback:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout -b rollback/v1.2.0-20240115 v1.1.0</code></pre>
+<ol>
+<li>Documente motivo:</li>
+</ol>
+<pre data-lang="bash"><code>   echo &quot;Rollback v1.2.0 - motivo: memory leak&quot; &gt; ROLLBACK.md</code></pre>
+<ol>
+<li>Publique rollback:</li>
+</ol>
+<pre data-lang="bash"><code>   git tag v1.2.0-rollback-20240115
+   git push origin rollback/v1.2.0-20240115 --tags</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Rollback publicado e documentado</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="versionamento-semntico">Versionamento Semântico</h3>
+<p>Formato: <code>MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]</code></p>
+<ul>
+<li><strong>MAJOR</strong>: mudanças incompatíveis (breaking changes)</li>
+<li><strong>MINOR</strong>: funcionalidades novas, retrocompatível</li>
+<li><strong>PATCH</strong>: correções de bug, retrocompatível</li>
+<li><strong>PRERELEASE</strong>: alpha, beta, rc</li>
+<li><strong>BUILD</strong>: metadados de build</li>
+</ul>
+<h3 id="changelog-format">Changelog Format</h3>
+<p>Siga <a href="https://keepachangelog.com/">Keep a Changelog</a>:</p>
+<pre data-lang="markdown"><code># Changelog
+
+## [Unreleased]
+### Added
+- Nova funcionalidade
+
+## [1.2.0] - 2024-01-15
+### Added
+- Feature X
+### Fixed
+- Bug Y
+
+[Unreleased]: https://github.com/.../compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/.../compare/v1.1.0...v1.2.0</code></pre>
+<h2 id="templates">Templates</h2>
+<h3 id="changelog-entrymd">changelog-entry.md</h3>
+<p>Localização: <code>templates/changelog-entry.md</code></p>
+<p>Template para entrada de changelog.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Adicione ao CHANGELOG.md
+## [Unreleased]
+### Added
+- {{descrição da mudança}}</code></pre>
+<h3 id="release-checklistmd">release-checklist.md</h3>
+<p>Localização: <code>templates/release-checklist.md</code></p>
+<p>Checklist de validação pré-release.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/release-checklist.md docs/release-checklist.md</code></pre>
+<h3 id="rollback-planmd">rollback-plan.md</h3>
+<p>Localização: <code>templates/rollback-plan.md</code></p>
+<p>Template para plano de rollback.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/rollback-plan.md docs/rollback-plan.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="release-sem-changelog">Release sem Changelog</h4>
+<p><strong>O que é:</strong> Publicar release sem atualizar CHANGELOG.md. <strong>Por que é ruim:</strong> Usuários não sabem o que mudou, dificulta upgrade. <strong>Como evitar:</strong> Sempre atualize CHANGELOG antes do release. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git tag v1.2.0
+git push --tags
+npm publish
+
+# ✅ CORRETO
+# Atualizar CHANGELOG.md
+git add CHANGELOG.md
+git commit -m &quot;docs: update changelog&quot;
+git tag v1.2.0
+git push --tags
+npm publish</code></pre>
+<h4 id="breaking-change-sem-major-bump">Breaking Change sem Major Bump</h4>
+<p><strong>O que é:</strong> Mudança que quebra API sem incrementar MAJOR. <strong>Por que é ruim:</strong> Quebra projetos dos usuários, perde confiança. <strong>Como evitar:</strong> SEMPRE major bump para breaking changes. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+# Remover campo user.email sem major bump
+npm version minor
+
+# ✅ CORRETO
+# Remover campo user.email
+npm version major</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="release-sem-testes">Release sem Testes</h4>
+<p><strong>O que é:</strong> Publicar release sem executar testes completos. <strong>Por que é ruim:</strong> Bugs em produção, rollback necessário. <strong>Como evitar:</strong> CI obrigatório antes do release. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+npm version minor
+git push --tags
+npm publish
+
+# ✅ CORRETO
+npm test
+npm run test:e2e
+npm version minor
+git push --tags
+npm publish</code></pre>
+<h4 id="tag-duplicada">Tag Duplicada</h4>
+<p><strong>O que é:</strong> Criar tag com mesmo nome de release anterior. <strong>Por que é ruim:</strong> Confusão, impossível rastrear histórico. <strong>Como evitar:</strong> Delete tag antes de recriar, ou use suffix. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git tag v1.2.0  # já existe
+git push --tags  # erro
+
+# ✅ CORRETO
+git tag -d v1.2.0
+git tag v1.2.0
+git push --tags</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="release-sem-notas">Release sem Notas</h4>
+<p><strong>O que é:</strong> Release sem descrição do que mudou. <strong>Por que é ruim:</strong> Usuários não sabem se devem atualizar. <strong>Como evitar:</strong> Use <code>gh release create --generate-notes</code> ou escreva manualmente. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git tag v1.2.0
+git push --tags
+
+# ✅ CORRETO
+gh release create v1.2.0 --title &quot;v1.2.0&quot; --notes &quot;Bug fixes and performance improvements&quot;</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-pr-release">Checklist Pré-Release</h3>
+<ul>
+<li>[ ] CHANGELOG.md atualizado</li>
+<li>[ ] Versão bumpada em package.json</li>
+<li>[ ] Todos os testes passam</li>
+<li>[ ] Lint passa</li>
+<li>[ ] Build passa</li>
+<li>[ ] npm audit sem vulnerabilidades altas</li>
+<li>[ ] Documentação atualizada</li>
+<li>[ ] README.md atualizado (se necessário)</li>
+</ul>
+<h3 id="checklist-ps-release">Checklist Pós-Release</h3>
+<ul>
+<li>[ ] Tag criada e push</li>
+<li>[ ] npm publish (se aplicável)</li>
+<li>[ ] Docker push (se aplicável)</li>
+<li>[ ] GitHub Release criado</li>
+<li>[ ] Slack/Discord notificado</li>
+<li>[ ] Versão atualizada para próximo dev</li>
+</ul>
+<h3 id="checklist-de-rollback">Checklist de Rollback</h3>
+<ul>
+<li>[ ] Versão problemática identificada</li>
+<li>[ ] Versão anterior estável identificada</li>
+<li>[ ] Branch de rollback criada</li>
+<li>[ ] Rollback publicado</li>
+<li>[ ] Usuários notificados</li>
+<li>[ ] Issue criada para bug root cause</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="breaking-change-no-documentado">Breaking Change não Documentado</h3>
+<p><strong>Situação:</strong> Release contém breaking change sem documentação. <strong>Solução:</strong> Reverta imediatamente, publique correção documentada. <strong>Exceção:</strong> Se breaking é intencional e documentado em alpha/beta.</p>
+<pre data-lang="bash"><code># Documentar breaking change
+echo &quot;BREAKING: user.email removed, use user.primaryEmail&quot; &gt;&gt; CHANGELOG.md</code></pre>
+<h3 id="hotfix-durante-release">Hotfix Durante Release</h3>
+<p><strong>Situação:</strong> Bug crítico encontrado enquanto prepara release. <strong>Solução:</strong> Pausar release, fazer hotfix, depois continuar. <strong>Exceção:</strong> Se hotfix é pequeno, pode incluir no release.</p>
+<pre data-lang="bash"><code># Hotfix durante release
+git checkout -b hotfix/critical-bug main
+# ... corrigir ...
+git checkout release/v1.2.0
+git merge hotfix/critical-bug</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://keepachangelog.com/">Keep a Changelog</a></li>
+<li><a href="https://semver.org/">Semantic Versioning</a></li>
+<li><code>git</code> — para tags e branching</li>
+<li><code>governance</code> — para processo de aprovação</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/changelog-entry.html">changelog-entry.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/release-checklist.html">release-checklist.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/rollback-plan.html">rollback-plan.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/release-process.html">release-process.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/post-release.html">post-release.md</a></li>
+  <li><span class="file-icon">&#9745;</span><a href="checklists/pre-release.html">pre-release.md</a></li>
+</ul>
+
+  </div>
+  <footer>
+    <p><strong>ignite-agents-skills</strong> v2.2.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
+</body>
+</html>
