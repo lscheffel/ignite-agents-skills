@@ -1,6 +1,20 @@
 {
   "skills": [
     {
+      "name": "adr-archive",
+      "version": "1.0.0",
+      "description": "Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.",
+      "tags": [],
+      "related_skills": [],
+      "files": [
+        "SKILL.md",
+        "examples/ADR-997-TODO.md",
+        "examples/ADR-998-TODO.md",
+        "examples/ADR-999-TODO.md",
+        "scripts/audit.py"
+      ]
+    },
+    {
       "name": "adr-generator",
       "version": "2.0.0",
       "description": "Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos.",
@@ -587,7 +601,7 @@
   ],
   "version": "2.2.0",
   "schema_version": "2.0.0",
-  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (23 skills)",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (24 skills)",
   "validation": {
     "min_lines_per_skill": 150,
     "required_sections": [
