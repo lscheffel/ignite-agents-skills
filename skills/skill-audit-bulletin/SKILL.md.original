@@ -1,0 +1,255 @@
+---
+name: skill-audit-bulletin
+description: Audita skills existentes avaliando qualidade, completude, acionabilidade
+  e risco. Gera bulletins de auditoria com scores, recomendações e veredito final.
+  Use quando revisar skills, validar registry ou decidir adoção.
+version: 2.0.0
+tags:
+- audit
+- quality
+- review
+- validation
+- skills
+related_skills:
+- architecture-review-kilo
+- documentation
+---
+
+# Skill Audit Bulletin
+
+Audita skills existentes avaliando qualidade, completude, acionabilidade e risco.
+
+## Quando Usar
+
+### Use quando:
+- Precisa revisar uma skill existente
+- Precisa validar registry de skills
+- Precisa decidir adoção de skill
+- Precisa comparar skills similares
+- Precisa auditoria de qualidade
+
+### Não use quando:
+- Skill é nova (use skill-template)
+- Skill é trivial (não precisa auditoria)
+- Apenas leitura (sem decisão)
+
+### Skills relacionadas:
+- `architecture-review-kilo` — para revisão de código
+- `documentation` — para padrões de documentação
+
+## Decision Tree
+
+```mermaid
+graph TD
+    A[Skill para auditar?] -->|Nova| B[Não auditar - use template]
+    A -->|Existente| C[Skill Audit Bulletin]
+    C -->|Score ≥ 85| D[ADOTAR AS-IS]
+    C -->|Score 70-84| E[ADOTAR COM AJUSTES]
+    C -->|Score 50-69| F[REFATORAR]
+    C -->|Score < 50| G[DEPRECIAR]
+```
+
+## Workflow
+
+### Fase 1: Auditoria Estrutural
+
+1. Verifique frontmatter:
+   ```bash
+   head -10 skills/{skill}/SKILL.md
+   ```
+2. Valide campos obrigatórios:
+   - name, description, version, tags, related_skills
+3. Execute script de validação:
+   ```bash
+   bash scripts/validate-skill.sh skills/{skill}
+   ```
+4. **Checkpoint**: Frontmatter válido, estrutura correta
+
+### Fase 2: Análise Semântica
+
+1. Analise description para keywords:
+   - Palavras-chave de gatilho
+   - Lacunas de cobertura
+2. Verifique decision tree:
+   - Clareza dos caminhos
+   - Exemplos incluídos
+3. **Checkpoint**: Triggering preciso, fronteira clara
+
+### Fase 3: Avaliação de Workflow
+
+1. Conte fases de workflow:
+   ```bash
+   grep -c "^### Fase" skills/{skill}/SKILL.md
+   ```
+2. Verifique checkpoints:
+   ```bash
+   grep -c "Checkpoint" skills/{skill}/SKILL.md
+   ```
+3. **Checkpoint**: Workflows completos com validação
+
+### Fase 4: Correção Técnica
+
+1. Valide exemplos:
+   ```bash
+   # Teste comandos em shell
+   # Verifique código compila
+   ```
+2. Verifique anti-patterns:
+   - Severidade (🔴🟡🟢)
+   - Exemplos antes/depois
+3. **Checkpoint**: Conteúdo técnico correto
+
+### Fase 5: Gerar Bulletin
+
+1. Use template `templates/audit-bulletin.md`
+2. Preencha scores:
+   - Triggering: 0-10
+   - Aplicabilidade: 0-10
+   - Profundidade: 0-10
+   - Correção: 0-10
+   - Universalidade: 0-10
+   - Manutenibilidade: 0-10
+   - Ergonomia: 0-10
+   - Risco: 0-10 (invertido)
+3. **Checkpoint**: Bulletin completo com veredito
+
+## Conceitos Fundamentais
+
+### Skill Audit Bulletin
+
+Template estruturado para auditoria de skills:
+
+```markdown
+# Skill Audit Bulletin — {skill_name} (v{version})
+
+**Audit date:** {date}
+**Overall grade:** {S/A/B/C/D/F} — {0-100}/100
+**One-line verdict:** {frase única}
+**Recommended action:** {ADOTAR AS-IS / ADOTAR COM AJUSTES / REFATORAR / DEPRECIAR}
+```
+
+### Scoring Weights
+
+| Categoria | Peso |
+|-----------|------|
+| Semantic Triggering Precision | 20% |
+| Aplicabilidade / Clareza de Fronteira | 10% |
+| Profundidade e Cobertura | 15% |
+| Correção Técnica | 15% |
+| Universalidade / Portabilidade | 10% |
+| Manutenibilidade | 10% |
+| Ergonomia do Agente Executor | 10% |
+| Perfil de Risco (invertido) | 10% |
+
+## Templates
+
+### audit-bulletin.md
+Localização: `templates/audit-bulletin.md`
+
+Template para bulletin de auditoria.
+
+**Uso:**
+```bash
+cp templates/audit-bulletin.md docs/audits/{skill}-audit.md
+```
+
+## Anti-patterns
+
+### 🔴 Crítico
+
+#### Audit sem Scoring Objetivo
+**O que é:** Auditoria sem scores numéricos.
+**Por que é ruim:** Decisão subjetiva, impossível comparar.
+**Como evitar:** Use weights e scores padronizados.
+**Exemplo:**
+```
+# ❌ ERRADO
+"Skill está boa"
+
+# ✅ CORRETO
+"Skill: 85/100 (B) — ADOTAR COM AJUSTES"
+```
+
+#### Falso Veredito
+**O que é:** Recomendação que não corresponde ao score.
+**Por que é ruim:** Confusão, decisões erradas.
+**Como evitar:** Veredito deve seguir score.
+**Exemplo:**
+```
+# ❌ ERRADO
+Score 45/100, mas "ADOTAR AS-IS"
+
+# ✅ CORRETO
+Score 45/100 → "REFATORAR"
+```
+
+### 🟡 Médio
+
+#### Audit superficial
+**O que é:** Auditoria que só verifica estrutura.
+**Por que é ruim:** Problemas técnicos não detectados.
+**Como evitar:** Teste exemplos, verifique código.
+**Exemplo:**
+```
+# ❌ ERRADO
+"Frontmatter OK, skill aprovada"
+
+# ✅ CORRETO
+"Frontmatter OK, exemplos testados, workflow validado"
+```
+
+### 🟢 Baixo
+
+#### Audit sem Data
+**O que é:** Bulletin sem data de auditoria.
+**Por que é ruim:** Impossível rastrear histórico.
+**Como evitar:** Sempre inclua data.
+**Exemplo:**
+```markdown
+# ✅ CORRETO
+**Audit date:** 2024-01-15
+```
+
+## Checklists
+
+### Checklist de Auditoria
+- [ ] Frontmatter válido
+- [ ] Description com keywords
+- [ ] Decision tree presente
+- [ ] Workflows com checkpoints
+- [ ] Anti-patterns com severidade
+- [ ] Exemplos testados
+- [ ] Cross-references
+- [ ] Score calculado
+
+### Checklist de Scoring
+- [ ] Triggering (0-10)
+- [ ] Aplicabilidade (0-10)
+- [ ] Profundidade (0-10)
+- [ ] Correção (0-10)
+- [ ] Universalidade (0-10)
+- [ ] Manutenibilidade (0-10)
+- [ ] Ergonomia (0-10)
+- [ ] Risco (0-10, invertido)
+
+## Edge Cases
+
+### Skill sem Templates
+**Situação:** Skill sem pasta templates/.
+**Solução:** Score reduzido em 10-15%.
+**Exceção:** Skills conceituais podem não precisar.
+
+### Skill sem Examples
+**Situação:** Skill sem exemplos práticos.
+**Solução:** Score reduzido em 5-10%.
+**Exceção:** Skills teóricas.
+
+### Skill com Conflito
+**Situação:** Skill sobrescreve outra.
+**Solução:** Marcar como risco alto.
+**Exceção:** Se é intencional, documentar.
+
+## Referências
+
+- `architecture-review-kilo` — para revisão de código
+- `documentation` — para padrões

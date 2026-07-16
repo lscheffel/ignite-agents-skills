@@ -1,344 +1,192 @@
 ---
 name: writing-plans
-description: Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação, dependências e sequenciamento. Use quando o usuário pedir um plano de implementação, roadmap técnico, ou quebra de tarefas.
-version: 2.0.0
-tags: [planning, implementation, roadmap, tasks, breakdown]
-related_skills: [planning, ddd, implementation]
+description: Use when you have a spec or requirements for a multi-step task, before
+  touching code
 ---
 
 # Writing Plans
 
-Gera planos de implementação estruturados e executáveis.
+## Overview
 
-## Quando Usar
+Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
 
-### Use quando:
-- Precisa criar plano de implementação
-- Precisa quebrar feature em tarefas
-- Precisa estimar esforço
-- Precisa priorizar backlog
-- Precisa criar roadmap técnico
+Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
-### Não use quando:
-- Tarefa é imediata (< 1 hora)
-- Protótipo rápido sem planejamento
-- Bug fix simples
-- **Precisa de roadmap estratégico ou priorização de portfólio → use `planning`**
-- **Precisa de estimativa de esforço para iniciativa inteira → use `planning`**
+**Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-### Skills relacionadas:
-- `planning` — para priorização e estimativas
-- `ddd` — para decompor domínio complexo
+**Context:** If working in an isolated worktree, it should have been created via the `superpowers:using-git-worktrees` skill at execution time.
 
-## Decision Tree
+## ⚠️ Token Optimization (Skip Consolidated ADRs)
+Quando você precisar varrer as ADRs do repositório para obter contexto, faça **PRIMEIRO** a leitura do `docs/adr/ADR-INDEX.md` ou um `grep` no frontmatter das ADRs. 
+Você está **PROIBIDO** de ler o conteúdo completo (via `view_file` ou `cat`) de qualquer arquivo que possua a tag `implementation_status: CONSOLIDADA` no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.
 
-```mermaid
-graph TD
-    A[Preciso de plano?] -->|Feature nova| B[Plano de Feature]
-    A -->|Refatoração| C[Plano de Refatoração]
-    A -->|Incidente| D[Plano de Incidente]
-    A -->|Spike| E[Plano de Exploração]
-    B -->|Tamanho| F[T-Shirt Size]
-    F -->|XS| G[1-2 dias]
-    F -->|S| H[3-5 dias]
-    F -->|M| I[1-2 semanas]
-    F -->|L| J[2-4 semanas]
+## Fallback e Governança (ADR-002)
+
+**ATENÇÃO:** Planos de implementação (PI) devem idealmente derivar de uma ADR aprovada.
+Se o repositório já segue o padrão de governança de ADRs (`docs/adr/`), **NÃO** crie arquivos isolados.
+1. Se não houver ADR para a feature solicitada, acione o **Fallback**: peça para o usuário gerar a ADR (usando a skill `adr-generator`) antes de detalhar o plano, a menos que seja uma tarefa trivial.
+2. Ao gerar o plano, escreva-o em `docs/adr/ADR-XXX-PI.md` (Implementation Plan).
+3. Exija o uso e atualização do arquivo `docs/adr/ADR-XXX-TODO.md` para rastrear as tarefas criadas no PI. (Não use formatos antigos como `task-card`).
+
+<HARD-GATE: UNIFIED-TODO>
+**É TERMINANTEMENTE PROIBIDO** criar múltiplos arquivos TODO para a mesma ADR (ex: `ADR-XXX-P2-TODO.md` ou `ADR-XXX-Fase2-TODO.md`). O formato da Quadra exige mapeamento 1:1 rigoroso. 
+Se uma ADR tiver múltiplas fases, mapeie TODAS ELAS em um único arquivo `ADR-XXX-TODO.md` usando cabeçalhos markdown (`## Fase 1`, `## Fase 2`). 
+Se o escopo da ADR for gigantesco a ponto de inviabilizar um único TODO, oriente o usuário a desmembrar a própria ADR-mãe em sub-ADRs independentes (ex: `ADR-008-A`, `ADR-008-B`), cada qual com sua própria Quadra.
+</HARD-GATE>
+
+Se o repositório for legado e não possuir governança de ADRs (Fallback silencioso), salve provisoriamente em: `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md` e ignore o `todo`.
+
+## Scope Check
+
+If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+
+## File Structure
+
+Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
+
+- Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.
+- You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
+- Files that change together should live together. Split by responsibility, not by technical layer.
+- In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
+
+This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
+
+## Task Right-Sizing
+
+A task is the smallest unit that carries its own test cycle and is worth a
+fresh reviewer's gate. When drawing task boundaries: fold setup,
+configuration, scaffolding, and documentation steps into the task whose
+deliverable needs them; split only where a reviewer could meaningfully
+reject one task while approving its neighbor. Each task ends with an
+independently testable deliverable.
+
+## Bite-Sized Task Granularity
+
+**Each step is one action (2-5 minutes):**
+- "Write the failing test" - step
+- "Run it to make sure it fails" - step
+- "Implement the minimal code to make the test pass" - step
+- "Run the tests and make sure they pass" - step
+- "Commit" - step
+
+## Plan Document Header
+
+**Every plan MUST start with this header:**
+
+```markdown
+# [Feature Name] Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** [One sentence describing what this builds]
+
+**Architecture:** [2-3 sentences about approach]
+
+**Tech Stack:** [Key technologies/libraries]
+
+## Global Constraints
+
+[The spec's project-wide requirements — version floors, dependency limits,
+naming and copy rules, platform requirements — one line each, with exact
+values copied verbatim from the spec. Every task's requirements implicitly
+include this section.]
+
+---
 ```
 
-## Workflow
+## Task Structure
 
-### Fase 1: Criar Plano de Implementação
+````markdown
+### Task N: [Component Name]
 
-1. Receba especificação do produto:
-   ```
-   Como usuário, quero login com Google para não lembrar senha
-   ```
-2. Decomponha em funcionalidades:
-   - OAuth com Google
-   - Callback handler
-   - Criar/atualizar usuário
-   - JWT token
-3. Crie épico no plano:
-   ```markdown
-   ## Épico: Login Social com Google
-   ```
-4. Quebre em features:
-   ```markdown
-   ### Feature: OAuth Integration
-   - [ ] Configurar Google OAuth
-   - [ ] Implementar callback
-   ```
-5. Quebre em tasks:
-   ```markdown
-   #### Task: Configurar Google OAuth
-   - [ ] Criar projeto no Google Console
-   - [ ] Adicionar redirect URI
-   - [ ] Salvar credenciais em .env
-   ```
-6. **Checkpoint**: Plano tem tasks com critérios de aceitação
+**Files:**
+- Create: `exact/path/to/file.py`
+- Modify: `exact/path/to/existing.py:123-145`
+- Test: `tests/exact/path/to/test.py`
 
-### Fase 2: Estimar e Priorizar
+**Interfaces:**
+- Consumes: [what this task uses from earlier tasks — exact signatures]
+- Produces: [what later tasks rely on — exact function names, parameter
+  and return types. A task's implementer sees only their own task; this
+  block is how they learn the names and types neighboring tasks use.]
 
-1. Estime cada task:
-   - **XS**: 1-2 horas
-   - **S**: 1 dia
-   - **M**: 3-5 dias
-   - **L**: 1-2 semanas
-2. Use MoSCoW para priorizar:
-   - **Must**: obrigatório
-   - **Should**: importante
-   - **Could**: desejável
-   - **Won't**: não agora
-3. Use RICE para scoring:
-   ```
-   Score = (Reach × Impact × Confidence) / Effort
-   ```
-4. **Checkpoint**: Tasks estimadas e priorizadas
+- [ ] **Step 1: Write the failing test**
 
-### Fase 3: Acompanhar Execução
+```python
+def test_specific_behavior():
+    result = function(input)
+    assert result == expected
+```
 
-1. Atualize status diariamente:
-   ```markdown
-   - [x] Task concluído
-   - [~] Task em progresso (50%)
-   - [ ] Task pendente
-   ```
-2. Identifique blockers:
-   ```markdown
-   ## Blockers
-   - Task X bloqueado por Task Y
-   ```
-3. Replaneje se necessário:
-   ```markdown
-   ## Ajustes
-   - Task Z dividida em Z1 e Z2
-   ```
-4. **Checkpoint**: Progresso visível, blockers resolvidos
+- [ ] **Step 2: Run test to verify it fails**
 
-### Fase 4: Validar Entrega
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: FAIL with "function not defined"
 
-1. Verifique critérios de aceitação:
-   - [ ] Todos os Must completos
-   - [ ] Testes passam
-   - [ ] Documentação atualizada
-2. Faça demo:
-   ```bash
-   # Executar feature
-   npm run dev
-   ```
-3. Atualize roadmap:
-   ```markdown
-   ## Concluído
-   - [x] Login Social com Google
-   ```
-4. **Checkpoint**: Feature entregue e validada
+- [ ] **Step 3: Write minimal implementation**
 
-## Conceitos Fundamentais
+```python
+def function(input):
+    return expected
+```
 
-### Estrutura Hierárquica
+- [ ] **Step 4: Run test to verify it passes**
 
-#### Épico
-Unidade grande de trabalho, múltiplas sprints.
-- Alinhado a objetivo de negócio
-- Entrega de valor mensurável
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: PASS
 
-#### Feature
-Conjunto de funcionalidades relacionadas, 1 sprint.
-- Valor de negócio isolado
-- Pode ser demonstrado
+- [ ] **Step 5: Commit**
 
-#### Task
-Unidade mínima de trabalho, horas.
-- Responsável único
-- Critérios de aceitação claros
-
-### Estimativas
-
-#### T-Shirt Size
-- **XS**: 1-2 horas
-- **S**: 1 dia
-- **M**: 3-5 dias
-- **L**: 1-2 semanas
-- **XL**: > 2 semanas (quebrar)
-
-#### Planning Poker
-Números de Fibonacci: 1, 2, 3, 5, 8, 13
-- Use para consenso de equipe
-- Discuta diferenças grandes
-
-### Priorização
-
-#### MoSCoW
-- **Must**: obrigatório para a entrega
-- **Should**: importante, mas não crítico
-- **Could**: desejável, pode esperar
-- **Won't**: não será feito agora
-
-#### RICE
-- **Reach**: quantos usuários afetados
-- **Impact**: magnitude do impacto
-- **Confidence**: certeza da estimativa
-- **Effort**: custo de implementação
-
-## Templates
-
-### implementation-plan.md
-Localização: `templates/implementation-plan.md`
-
-Template para plano de implementação.
-
-**Uso:**
 ```bash
-cp templates/implementation-plan.md docs/implementation-plan.md
+git add tests/path/test.py src/path/file.py
+git commit -m "feat: add specific feature"
 ```
+````
 
-### task-card.md
-Localização: `templates/task-card.md`
+## No Placeholders
 
-Template para card de task.
+Every step must contain the actual content an engineer needs. These are **plan failures** — never write them:
+- "TBD", "TODO", "implement later", "fill in details"
+- "Add appropriate error handling" / "add validation" / "handle edge cases"
+- "Write tests for the above" (without actual test code)
+- "Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)
+- Steps that describe what to do without showing how (code blocks required for code steps)
+- References to types, functions, or methods not defined in any task
 
-**Uso:**
-```bash
-cp templates/task-card.md .github/ISSUE_TEMPLATE/task.md
-```
+## Remember
+- Exact file paths always
+- Complete code in every step — if a step changes code, show the code
+- Exact commands with expected output
+- DRY, YAGNI, TDD, frequent commits
 
-## Anti-patterns
+## Self-Review
 
-### 🔴 Crítico
+After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
 
-#### Plano sem Critérios de Aceitação
-**O que é:** Task sem definição clara de "pronto".
-**Por que é ruim:** Trabalho nunca termina, revisão impossível.
-**Como evitar:** Sempre defina critérios antes de iniciar.
-**Exemplo:**
-```
-# ❌ ERRADO
-- [ ] Implementar login
+**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
 
-# ✅ CORRETO
-- [ ] Implementar login
-  - Critérios:
-    - [ ] OAuth com Google funciona
-    - [ ] Callback cria JWT
-    - [ ] Testes passam
-```
+**2. Placeholder scan:** Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.
 
-#### Task > 4h
-**O que é:** Task estimada em mais de 4 horas.
-**Por que é ruim:** Difícil estimar, hard to track progress.
-**Como evitar:** Quebre em tasks menores.
-**Exemplo:**
-```
-# ❌ ERRADO
-- [ ] Implementar sistema de pagamento (8h)
+**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 
-# ✅ CORRETO
-- [ ] Integrar gateway de pagamento (2h)
-- [ ] Implementar cálculo de taxas (1h)
-- [ ] Adicionar testes de pagamento (2h)
-- [ ] Documentar API de pagamento (1h)
-```
+If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
 
-### 🟡 Médio
+## Execution Handoff
 
-#### Dependência Circular
-**O que é:** Task A depende de Task B, B depende de A.
-**Por que é ruim:** Impossível executar, deadlock.
-**Como evitar:** Quebre dependência, use interface.
-**Exemplo:**
-```
-# ❌ ERRADO
-Task A: "Precisa do resultado de B"
-Task B: "Precisa do resultado de A"
+After saving the plan, offer execution choice:
 
-# ✅ CORRETO
-Task A: "Define interface comum"
-Task B: "Implementa interface"
-Task C: "Integra A e B"
-```
+**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Two execution options:**
 
-#### Estimativa sem Base
-**O que é:** Estimativa "chutômetro" sem justificativa.
-**Por que é ruim:** Erro de planning, frustração da equipe.
-**Como evitar:** Use referência histórica, decomponha.
-**Exemplo:**
-```
-# ❌ ERRADO
-"Vou estimar 3 dias"
+**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
 
-# ✅ CORRETO
-"Similar ao feature X que levou 2 dias
-+ Complexidade Y adicional
-= Estimativa: 3 dias"
-```
+**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
 
-### 🟢 Baixo
+**Which approach?"**
 
-#### Plano sem Roadmap
-**O que é:** Plano sem data de entrega ou milestones.
-**Por que é ruim:** Ninguém sabe quando vai ser entregue.
-**Como evitar:** Defina milestones no início.
-**Exemplo:**
-```markdown
-# ✅ CORRETO
-## Milestones
-- M1: Auth básico (2024-01-15)
-- M2: Auth social (2024-01-22)
-- M3: Auth 2FA (2024-01-29)
-```
+**If Subagent-Driven chosen:**
+- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+- Fresh subagent per task + two-stage review
 
-## Checklists
-
-### Checklist de Plano
-- [ ] Épico tem objetivo de negócio claro
-- [ ] Features decompostas em tasks
-- [ ] Tasks têm critérios de aceitação
-- [ ] Estimativas definidas
-- [ ] Priorização aplicada
-- [ ] Dependências mapeadas
-
-### Checklist de Estimativa
-- [ ] Task tem referência histórica
-- [ ] Complexidade identificada
-- [ ] Risco avaliado
-- [ ] Esforço realista
-- [ ] Consenso da equipe
-
-### Checklist de Execução
-- [ ] Tasks em progresso atualizadas
-- [ ] Blockers identificados
-- [ ] Daily standup realizado
-- [ ] Demo preparado
-- [ ] Retrospectiva agendada
-
-## Edge Cases
-
-### Plano para Spike/Exploração
-**Situação:** Precisa explorar tecnologia desconhecida.
-**Solução:** Timebox em 1-2 dias, resultado é decisão.
-**Exceção:** Se spike revelar complexidade, replaneje.
-
-```markdown
-## Spike: GraphQL vs REST
-- Timebox: 2 dias
-- Resultado: Decisão documentada
-- Task: Criar PoC de ambas
-```
-
-### Replanejamento Durante Execução
-**Situação:** Scope creep ou descoberta de complexidade.
-**Solução:** Replaneje com stakeholders, ajuste timeline.
-**Exceção:** Se é urgente, priorize e remova do escopo.
-
-```markdown
-## Ajuste de Escopo
-- Removido: Feature Y (será M+1)
-- Adicionado: Bugfix Z (Must)
-- Nova estimativa: +3 dias
-```
-
-## Referências
-
-- `planning` — para priorização e estimativas
-- `ddd` — para decompor domínio
-- [RICE Framework](https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/)
+**If Inline Execution chosen:**
+- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
+- Batch execution with checkpoints for review

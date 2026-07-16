@@ -1,3 +1,7 @@
+---
+implementation_status: PENDENTE
+---
+
 # ADR-{{id}}: {{title}}
 
 ## Status

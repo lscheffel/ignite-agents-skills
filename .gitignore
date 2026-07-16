@@ -1,6 +1,7 @@
 # Dependencies
 node_modules/
 vendor/
+/docs/new-skills/
 
 # Build outputs
 dist/
@@ -12,6 +13,7 @@ out/
 .vscode/
 *.swp
 *.swo
+*.rar
 
 # OS
 .DS_Store
