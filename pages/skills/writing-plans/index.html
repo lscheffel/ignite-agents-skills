@@ -411,140 +411,205 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: writing-plans description: Use when you have a spec or requirements for a multi-step task, before touching code ---</p>
-<h1 id="writing-plans">Writing Plans</h1>
-<h2 id="overview">Overview</h2>
-<p>Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.</p>
-<p>Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.</p>
-<p><strong>Announce at start:</strong> "I'm using the writing-plans skill to create the implementation plan."</p>
-<p><strong>Context:</strong> If working in an isolated worktree, it should have been created via the <code>superpowers:using-git-worktrees</code> skill at execution time.</p>
-<h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
-<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
-<h2 id="fallback-e-governana-adr-002">Fallback e Governança (ADR-002)</h2>
-<p><strong>ATENÇÃO:</strong> Planos de implementação (PI) devem idealmente derivar de uma ADR aprovada. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
+<p>name: writing-plans description: Use when you have a spec or requirements for a multi-step task, before touching code. Creates comprehensive implementation plans with bite-sized tasks, DRY principles, TDD, and frequent commits. version: 2.0.0 tags:</p>
+<ul>
+<li>planning</li>
+<li>implementation-plan</li>
+<li>task-breakdown</li>
+<li>tdd</li>
+<li>governance</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>planning</li>
+<li>adr-generator</li>
+<li>implementation</li>
+<li>testing</li>
+<li>governance</li>
+</ul>
+<hr>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Tiver uma spec ou requisitos para uma task multi-step</li>
+<li>Precisar quebrar feature em tasks executáveis</li>
+<li>Criar roadmap técnico</li>
+<li>Planejar implementação antes de codificar</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Task for trivial (one-liner, bug fix óbvio)</li>
+<li>Já existir PI (Implementation Plan) para a ADR</li>
+<li>Não houver clareza sobre o que construir (peça clarificação)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>planning</code> — planejamento estratégico/tático</li>
+<li><code>adr-generator</code> — criar ADR pré-requisito</li>
+<li><code>implementation</code> — executar o plano gerado</li>
+<li><code>testing</code> — estratégia de testes</li>
+<li><code>governance</code> — compliance ADR→PI→TODO→Impl</li>
+</ul>
+<hr>
+<h1 id="decision-tree">Decision Tree</h1>
+<pre data-lang="mermaid"><code>graph TD
+    A[Nova Feature/Tarefa] --&gt; B{Existe ADR?}
+    B --&gt;|Não| C[Criar ADR via adr-generator]
+    B --&gt;|Sim| D[Ler ADR + BP + TODO]
+    C --&gt; D
+    D --&gt; E{Escopo Claro?}
+    E --&gt;|Não| F[Pedir Clarificação]
+    E --&gt;|Sim| G[Gerar PI - Implementation Plan]
+    G --&gt; H[Escrever em ADR-XXX-PI.md]
+    H --&gt; I[Atualizar ADR-XXX-TODO.md]
+    I --&gt; J[Validar com writing-plans checklist]
+    J --&gt; K[Entregar Plano]</code></pre>
+<hr>
+<h2 id="workflow">Workflow</h2>
+<h2 id="fase-1-contexto-e-descoberta">Fase 1: Contexto e Descoberta</h2>
 <ol>
-<li>Se não houver ADR para a feature solicitada, acione o <strong>Fallback</strong>: peça para o usuário gerar a ADR (usando a skill <code>adr-generator</code>) antes de detalhar o plano, a menos que seja uma tarefa trivial.</li>
-<li>Ao gerar o plano, escreva-o em <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan).</li>
-<li>Exija o uso e atualização do arquivo <code>docs/adr/ADR-XXX-TODO.md</code> para rastrear as tarefas criadas no PI. (Não use formatos antigos como <code>task-card</code>).</li>
+<li>Identificar ADR relacionada (ou criar via fallback)</li>
+<li>Ler ADR, BP, TODO existentes</li>
+<li>Entender:</li>
 </ol>
-<p><HARD-GATE: UNIFIED-TODO> <strong>É TERMINANTEMENTE PROIBIDO</strong> criar múltiplos arquivos TODO para a mesma ADR (ex: <code>ADR-XXX-P2-TODO.md</code> ou <code>ADR-XXX-Fase2-TODO.md</code>). O formato da Quadra exige mapeamento 1:1 rigoroso. Se uma ADR tiver múltiplas fases, mapeie TODAS ELAS em um único arquivo <code>ADR-XXX-TODO.md</code> usando cabeçalhos markdown (<code>## Fase 1</code>, <code>## Fase 2</code>). Se o escopo da ADR for gigantesco a ponto de inviabilizar um único TODO, oriente o usuário a desmembrar a própria ADR-mãe em sub-ADRs independentes (ex: <code>ADR-008-A</code>, <code>ADR-008-B</code>), cada qual com sua própria Quadra. </HARD-GATE></p>
-<p>Se o repositório for legado e não possuir governança de ADRs (Fallback silencioso), salve provisoriamente em: <code>docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md</code> e ignore o <code>todo</code>.</p>
-<h2 id="scope-check">Scope Check</h2>
-<p>If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.</p>
-<h2 id="file-structure">File Structure</h2>
-<p>Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.</p>
 <ul>
-<li>Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.</li>
-<li>You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.</li>
-<li>Files that change together should live together. Split by responsibility, not by technical layer.</li>
-<li>In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.</li>
+<li>Objetivo da feature</li>
+<li>Constraints arquiteturais</li>
+<li>Dependências existentes</li>
+<li>Padrões do codebase</li>
 </ul>
-<p>This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.</p>
-<h2 id="task-right-sizing">Task Right-Sizing</h2>
-<p>A task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. When drawing task boundaries: fold setup, configuration, scaffolding, and documentation steps into the task whose deliverable needs them; split only where a reviewer could meaningfully reject one task while approving its neighbor. Each task ends with an independently testable deliverable.</p>
-<h2 id="bite-sized-task-granularity">Bite-Sized Task Granularity</h2>
-<p><strong>Each step is one action (2-5 minutes):</strong></p>
+<p><strong>Checkpoint:</strong> [ ] ADR identificada [ ] Contexto compreendido [ ] Escopo definido</p>
+<hr>
+<h2 id="fase-2-decomposio-em-tasks">Fase 2: Decomposição em Tasks</h2>
+<ol>
+<li>Quebrar feature em tasks atômicas (uma task = um commit)</li>
+<li>Cada task deve ter:</li>
+</ol>
 <ul>
-<li>"Write the failing test" - step</li>
-<li>"Run it to make sure it fails" - step</li>
-<li>"Implement the minimal code to make the test pass" - step</li>
-<li>"Run the tests and make sure they pass" - step</li>
-<li>"Commit" - step</li>
+<li>Descrição clara</li>
+<li>Arquivos a modificar</li>
+<li>Critérios de aceite</li>
+<li>Comando de validação</li>
+<li>Testes esperados (TDD: teste primeiro)</li>
 </ul>
-<h2 id="plan-document-header">Plan Document Header</h2>
-<p><strong>Every plan MUST start with this header:</strong></p>
-<pre data-lang="markdown"><code># [Feature Name] Implementation Plan
-
-&gt; **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
-**Goal:** [One sentence describing what this builds]
-
-**Architecture:** [2-3 sentences about approach]
-
-**Tech Stack:** [Key technologies/libraries]
-
-## Global Constraints
-
-[The spec&#x27;s project-wide requirements — version floors, dependency limits,
-naming and copy rules, platform requirements — one line each, with exact
-values copied verbatim from the spec. Every task&#x27;s requirements implicitly
-include this section.]
-
----</code></pre>
-<h2 id="task-structure">Task Structure</h2>
-<pre data-lang="`markdown"><code>### Task N: [Component Name]
-
-**Files:**
-- Create: `exact/path/to/file.py`
-- Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
-
-**Interfaces:**
-- Consumes: [what this task uses from earlier tasks — exact signatures]
-- Produces: [what later tasks rely on — exact function names, parameter
-  and return types. A task&#x27;s implementer sees only their own task; this
-  block is how they learn the names and types neighboring tasks use.]
-
-- [ ] **Step 1: Write the failing test**
-</code></pre>
-<p>def test_specific_behavior(): result = function(input) assert result == expected</p>
-<pre><code>
-- [ ] **Step 2: Run test to verify it fails**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with &quot;function not defined&quot;
-
-- [ ] **Step 3: Write minimal implementation**
-</code></pre>
-<p>def function(input): return expected</p>
-<pre><code>
-- [ ] **Step 4: Run test to verify it passes**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
-
-- [ ] **Step 5: Commit**
-</code></pre>
-<p>git add tests/path/test.py src/path/file.py git commit -m "feat: add specific feature"</p>
-<pre><code></code></pre>
-<h2 id="no-placeholders">No Placeholders</h2>
-<p>Every step must contain the actual content an engineer needs. These are <strong>plan failures</strong> — never write them:</p>
+<p><strong>Checkpoint:</strong> [ ] Tasks atômicas [ ] Cada task tem validação [ ] TDD considerado</p>
+<hr>
+<h2 id="fase-3-escrita-do-pi-implementation-plan">Fase 3: Escrita do PI (Implementation Plan)</h2>
+<p>Template: <code>templates/implementation-plan.md</code></p>
+<p>Estrutura obrigatória:</p>
+<ol>
+<li><strong>Visão Geral</strong> — Objetivo, ADR referência</li>
+<li><strong>Tasks</strong> — Lista ordenada com dependências</li>
+<li><strong>Arquivos por Task</strong> — Mapeamento task → arquivos</li>
+<li><strong>Test Strategy</strong> — Unit, Integration, E2E por task</li>
+<li><strong>Rollback Plan</strong> — Como reverter cada task</li>
+<li><strong>Edge Cases</strong> — Cenários excepcionais mapeados</li>
+</ol>
+<p><strong>Checkpoint:</strong> [ ] PI completo [ ] Tasks mapeadas [ ] Test strategy definida</p>
+<hr>
+<h2 id="fase-4-atualizao-do-todo">Fase 4: Atualização do TODO</h2>
+<ol>
+<li>Sincronizar <code>ADR-XXX-TODO.md</code> com tasks do PI</li>
+<li>Usar cabeçalhos <code>## Fase 1</code>, <code>## Fase 2</code> para fases</li>
+<li>Cada item: <code>- [ ] Descrição | Validação: \</code>comando\``</li>
+</ol>
+<p><strong>Checkpoint:</strong> [ ] TODO sincronizado [ ] Formato correto [ ] 1:1 com PI</p>
+<hr>
+<h2 id="fase-5-validao-e-entrega">Fase 5: Validação e Entrega</h2>
+<ol>
+<li>Rodar checklist de qualidade</li>
+<li>Apresentar plano ao usuário</li>
+<li>Aguardar aprovação antes de implementar</li>
+</ol>
+<p><strong>Checkpoint:</strong> [ ] Checklist passado [ ] Usuário aprovou</p>
+<hr>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="task-atmica">Task Atômica</h3>
+<p>Uma task que:</p>
 <ul>
-<li>"TBD", "TODO", "implement later", "fill in details"</li>
-<li>"Add appropriate error handling" / "add validation" / "handle edge cases"</li>
-<li>"Write tests for the above" (without actual test code)</li>
-<li>"Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)</li>
-<li>Steps that describe what to do without showing how (code blocks required for code steps)</li>
-<li>References to types, functions, or methods not defined in any task</li>
+<li>Produz um commit funcional</li>
+<li>Pode ser validada independentemente</li>
+<li>Tem rollback claro</li>
+<li>Segue TDD (teste escrito antes)</li>
 </ul>
-<h2 id="remember">Remember</h2>
+<h3 id="implementation-plan-pi">Implementation Plan (PI)</h3>
+<p>Documento que transforma requisitos em tasks executáveis com:</p>
 <ul>
-<li>Exact file paths always</li>
-<li>Complete code in every step — if a step changes code, show the code</li>
-<li>Exact commands with expected output</li>
-<li>DRY, YAGNI, TDD, frequent commits</li>
+<li>Mapeamento arquivo↔task</li>
+<li>Estratégia de teste</li>
+<li>Plano de rollback</li>
+<li>Edge cases</li>
 </ul>
-<h2 id="self-review">Self-Review</h2>
-<p>After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.</p>
-<p><strong>1. Spec coverage:</strong> Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.</p>
-<p><strong>2. Placeholder scan:</strong> Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.</p>
-<p><strong>3. Type consistency:</strong> Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called <code>clearLayers()</code> in Task 3 but <code>clearFullLayers()</code> in Task 7 is a bug.</p>
-<p>If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.</p>
-<h2 id="execution-handoff">Execution Handoff</h2>
-<p>After saving the plan, offer execution choice:</p>
-<p><strong>"Plan complete and saved to <code>docs/superpowers/plans/<filename>.md</code>. Two execution options:</strong></p>
-<p><strong>1. Subagent-Driven (recommended)</strong> - I dispatch a fresh subagent per task, review between tasks, fast iteration</p>
-<p><strong>2. Inline Execution</strong> - Execute tasks in this session using executing-plans, batch execution with checkpoints</p>
-<p><strong>Which approach?"</strong></p>
-<p><strong>If Subagent-Driven chosen:</strong></p>
+<h3 id="unified-todo">Unified TODO</h3>
+<p>Único arquivo TODO por ADR, mapeando todas as fases via cabeçalhos markdown.</p>
+<hr>
+<h2 id="templates">Templates</h2>
+<h3 id="implementation-plan">implementation-plan</h3>
+<p>Localização: <code>templates/implementation-plan.md</code></p>
+<p>Template para Implementation Plan (PI) Nível Enterprise.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/implementation-plan.md docs/adr/ADR-XXX-PI.md</code></pre>
+<h3 id="task-card">task-card</h3>
+<p>Localização: <code>templates/task-card.md</code></p>
+<p>Template para task card individual.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/task-card.md docs/adr/ADR-XXX-TASK-N.md</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="plano-sem-adr">Plano sem ADR</h4>
+<p><strong>O que é:</strong> Criar PI sem ADR aprovada. <strong>Por que é ruim:</strong> Falta contexto, decisões não documentadas, governança quebrada. <strong>Como evitar:</strong> Sempre seguir fallback — criar ADR primeiro.</p>
+<h4 id="tasks-no-atmicas">Tasks Não-Atômicas</h4>
+<p><strong>O que é:</strong> Tasks que exigem múltiplos commits ou não são independentemente validáveis. <strong>Por que é ruim:</strong> Dificulta review, rollback, bisect, CI. <strong>Como evitar:</strong> Uma task = um commit = uma validação.</p>
+<h4 id="mltiplos-todos">Múltiplos TODOs</h4>
+<p><strong>O que é:</strong> Criar <code>ADR-XXX-P2-TODO.md</code>, <code>ADR-XXX-Fase2-TODO.md</code>. <strong>Por que é ruim:</strong> Quebra rastreabilidade 1:1, governance falha. <strong>Como evitar:</strong> Usar cabeçalhos <code>## Fase N</code> em único <code>ADR-XXX-TODO.md</code>.</p>
+<h4 id="ignorar-tdd">Ignorar TDD</h4>
+<p><strong>O que é:</strong> Planejar implementação sem testes primeiros. <strong>Por que é ruim:</strong> Bugs em produção, refatoração insegura, debt técnico. <strong>Como evitar:</strong> Cada task tem "Teste:" antes de "Implementação:".</p>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="plano-vago">Plano Vago</h4>
+<p><strong>O que é:</strong> Tasks sem arquivos específicos, validação genérica. <strong>Por que é ruim:</strong> Engenheiro perdido, implementação inconsistente. <strong>Como evitar:</strong> Especificar paths exatos, comandos exatos.</p>
+<h4 id="sem-rollback-plan">Sem Rollback Plan</h4>
+<p><strong>O que é:</strong> Task sem estratégia de reversão. <strong>Por que é ruim:</strong> Deploy arriscado, incidentes longos. <strong>Como evitar:</strong> Documentar <code>git revert</code> ou migration down para cada task.</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="sem-edge-cases">Sem Edge Cases</h4>
+<p><strong>O que é:</strong> Plano só cobre happy path. <strong>Por que é ruim:</strong> Bugs em produção nos casos de borda. <strong>Como evitar:</strong> Seção obrigatória "Edge Cases" no PI.</p>
+<hr>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-qualidade-do-pi">Checklist de Qualidade do PI</h3>
 <ul>
-<li><strong>REQUIRED SUB-SKILL:</strong> Use superpowers:subagent-driven-development</li>
-<li>Fresh subagent per task + two-stage review</li>
+<li>[ ] Referencia ADR válida</li>
+<li>[ ] Tasks atômicas (1 commit cada)</li>
+<li>[ ] Cada task tem: descrição, arquivos, validação, testes</li>
+<li>[ ] Test strategy: unit/integration/e2e por task</li>
+<li>[ ] Rollback plan por task</li>
+<li>[ ] Edge cases mapeados</li>
+<li>[ ] TODO sincronizado (formato 1:1)</li>
+<li>[ ] Sem tasks "genéricas" (ex: "implementar feature")</li>
 </ul>
-<p><strong>If Inline Execution chosen:</strong></p>
+<h3 id="checklist-de-entrega">Checklist de Entrega</h3>
 <ul>
-<li><strong>REQUIRED SUB-SKILL:</strong> Use superpowers:executing-plans</li>
-<li>Batch execution with checkpoints for review</li>
+<li>[ ] PI salvo em <code>docs/adr/ADR-XXX-PI.md</code></li>
+<li>[ ] TODO atualizado em <code>docs/adr/ADR-XXX-TODO.md</code></li>
+<li>[ ] Usuário revisou e aprovou</li>
+<li>[ ] Branch de trabalho criada (se aplicável)</li>
+<li>[ ] Próxima step: invocar skill <code>implementation</code></li>
+</ul>
+<hr>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="tarefa-trivial-sem-adr">Tarefa Trivial (Sem ADR)</h3>
+<p><strong>Situação:</strong> Bug fix óbvio, one-liner, sem impacto arquitetural. <strong>Solução:</strong> Pular ADR, criar PI simplificado direto, documentar no commit. <strong>Exceção:</strong> Se fix toca área sensível (auth, payments, infra), ADR obrigatória.</p>
+<h3 id="feature-gigante">Feature Gigante</h3>
+<p><strong>Situação:</strong> Feature requer dezenas de tasks, múltiplas ADRs. <strong>Solução:</strong> Desmembrar em sub-ADRs independentes, cada uma com seu PI/TODO. <strong>Exceção:</strong> Se monolito inegável, usar fases no TODO único com cabeçalhos.</p>
+<h3 id="plano-para-cdigo-legado">Plano para Código Legado</h3>
+<p><strong>Situação:</strong> Implementar em código sem testes, sem docs, sem patterns. <strong>Solução:</strong> Incluir tasks de "Characterization Tests" antes de qualquer mudança. <strong>Exceção:</strong> Nenhuma — regra de refactoring seguro.</p>
+<hr>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><code>adr-generator</code> — Para criar ADR pré-requisito</li>
+<li><code>implementation</code> — Para executar o plano gerado</li>
+<li><code>testing</code> — Para test strategy</li>
+<li><code>governance</code> — Para compliance ADR→PI→TODO→Impl</li>
+<li><a href="../../adr/ADR-002.html">ADR-002</a> — Ultra-High Quality Grade</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
@@ -556,6 +621,7 @@ Expected: PASS
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/api-migration-plan.html">api-migration-plan.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/feature-breakdown.html">feature-breakdown.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/social-auth-plan.html">social-auth-plan.md</a></li>
 </ul>
 
   </div>

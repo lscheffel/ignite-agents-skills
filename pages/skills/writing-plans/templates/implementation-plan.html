@@ -410,22 +410,101 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">writing-plans</a> &rsaquo; templates &rsaquo; implementation-plan</div>
   </nav>
   <div class="content">
-    <h1 id="implementation-plan-template">Implementation Plan Template</h1>
-<h2 id="viso-geral">Visão Geral</h2>
-<p>{Descrição do plano}</p>
-<h2 id="picos">Épicos</h2>
-<h3 id="pico-1">Épico 1</h3>
+    <h1 id="implementation-plan-pi-template">Implementation Plan (PI) Template</h1>
+<blockquote>Plano de Implementação Nível Enterprise — derivado de ADR aprovada</blockquote>
+<hr>
+<h1 id="adr-xxx-ttulo-da-adr">ADR-XXX: [Título da ADR]</h1>
+<h2 id="implementation-plan">Implementation Plan</h2>
+<p><strong>ADR Referência:</strong> <code>docs/adr/ADR-XXX.md</code> <strong>Blueprint:</strong> <code>docs/adr/ADR-XXX-BP.md</code> <strong>TODO:</strong> <code>docs/adr/ADR-XXX-TODO.md</code> <strong>Data:</strong> {{DATE}} <strong>Autor:</strong> {{AUTHOR}}</p>
+<hr>
+<h2 id="1-viso-geral">1. Visão Geral</h2>
+<h3 id="objetivo">Objetivo</h3>
+<p>{{OBJETIVO}}</p>
+<h3 id="escopo">Escopo</h3>
 <ul>
-<li>[ ] Feature 1</li>
-<li>[ ] Feature 2</li>
+<li><strong>Incluso:</strong> {{INCLUSO}}</li>
+<li><strong>Fora de Escopo:</strong> {{FORA_DE_ESCOPO}}</li>
 </ul>
-<h2 id="timeline">Timeline</h2>
-<div class="table-wrapper"><table><tr><th>Sprint</th><th>Features</th></tr><tr><td>Sprint 1</td><td>Feature A, Feature B</td></tr><tr><td>Sprint 2</td><td>Feature C</td></tr></table></div>
-<h2 id="riscos">Riscos</h2>
+<h3 id="constraints-arquiteturais">Constraints Arquiteturais</h3>
 <ul>
-<li>{risco 1}</li>
-<li>{risco 2}</li>
+<li>{{CONSTRAINT_1}}</li>
+<li>{{CONSTRAINT_2}}</li>
 </ul>
+<h3 id="dependncias">Dependências</h3>
+<ul>
+<li>{{DEPENDENCIA_1}}</li>
+<li>{{DEPENDENCIA_2}}</li>
+</ul>
+<hr>
+<h2 id="2-tasks-ordenadas-por-dependncia">2. Tasks (Ordenadas por Dependência)</h2>
+<h3 id="fase-1-fase1nome">Fase 1: {{FASE_1_NOME}}</h3>
+<h4 id="task-11-task11desc">Task 1.1: {{TASK_1_1_DESC}}</h4>
+<ul>
+<li><strong>Arquivos:</strong> <code>{{FILE_1}}</code>, <code>{{FILE_2}}</code></li>
+<li><strong>Validação:</strong> <code>{{VALIDATION_CMD}}</code></li>
+<li><strong>Teste:</strong> <code>{{TEST_DESC}}</code></li>
+<li><strong>Rollback:</strong> <code>git checkout HEAD -- {{FILE_1}} {{FILE_2}}</code></li>
+</ul>
+<h4 id="task-12-task12desc">Task 1.2: {{TASK_1_2_DESC}}</h4>
+<ul>
+<li><strong>Arquivos:</strong> <code>{{FILE_3}}</code></li>
+<li><strong>Validação:</strong> <code>{{VALIDATION_CMD}}</code></li>
+<li><strong>Teste:</strong> <code>{{TEST_DESC}}</code></li>
+<li><strong>Rollback:</strong> <code>git checkout HEAD -- {{FILE_3}}</code></li>
+</ul>
+<h3 id="fase-2-fase2nome">Fase 2: {{FASE_2_NOME}}</h3>
+<h4 id="task-21-task21desc">Task 2.1: {{TASK_2_1_DESC}}</h4>
+<ul>
+<li><strong>Arquivos:</strong> <code>{{FILE_4}}</code></li>
+<li><strong>Validação:</strong> <code>{{VALIDATION_CMD}}</code></li>
+<li><strong>Teste:</strong> <code>{{TEST_DESC}}</code></li>
+<li><strong>Rollback:</strong> <code>git checkout HEAD -- {{FILE_4}}</code></li>
+</ul>
+<hr>
+<h2 id="3-mapeamento-task--arquivos">3. Mapeamento Task → Arquivos</h2>
+<div class="table-wrapper"><table><tr><th>Task</th><th>Arquivos</th><th>Tipo</th></tr><tr><td>1.1</td><td><code>src/...</code>, <code>tests/...</code></td><td>Implementation + Test</td></tr><tr><td>1.2</td><td><code>src/...</code></td><td>Implementation</td></tr><tr><td>2.1</td><td><code>docs/...</code>, <code>src/...</code></td><td>Docs + Implementation</td></tr></table></div>
+<hr>
+<h2 id="4-test-strategy">4. Test Strategy</h2>
+<h3 id="unit-tests-por-task">Unit Tests (por Task)</h3>
+<ul>
+<li>Task 1.1: <code>tests/unit/{{MODULE}}.test.ts</code> — coverage ≥ 80%</li>
+<li>Task 1.2: <code>tests/unit/{{MODULE}}.test.ts</code> — coverage ≥ 80%</li>
+</ul>
+<h3 id="integration-tests">Integration Tests</h3>
+<ul>
+<li><code>tests/integration/{{FEATURE}}.test.ts</code> — fluxo completo</li>
+</ul>
+<h3 id="e2e-tests">E2E Tests</h3>
+<ul>
+<li><code>tests/e2e/{{FEATURE}}.test.ts</code> — critical path</li>
+</ul>
+<h3 id="tdd-order">TDD Order</h3>
+<ol>
+<li>Escrever teste falhando</li>
+<li>Implementar código mínimo</li>
+<li>Passar teste</li>
+<li>Refatorar</li>
+</ol>
+<hr>
+<h2 id="5-rollback-plan">5. Rollback Plan</h2>
+<div class="table-wrapper"><table><tr><th>Task</th><th>Rollback Command</th><th>Verification</th></tr><tr><td>1.1</td><td><code>git revert {{COMMIT_1_1}}</code></td><td><code>npm test</code> passes</td></tr><tr><td>1.2</td><td><code>git revert {{COMMIT_1_2}}</code></td><td><code>npm test</code> passes</td></tr><tr><td>2.1</td><td><code>git revert {{COMMIT_2_1}}</code></td><td><code>npm test</code> passes</td></tr></table></div>
+<p><strong>Full Rollback:</strong> <code>git reset --hard {{BASE_COMMIT}}</code></p>
+<hr>
+<h2 id="6-edge-cases">6. Edge Cases</h2>
+<div class="table-wrapper"><table><tr><th>Cenário</th><th>Tratamento</th><th>Task Relacionada</th></tr><tr><td>{{EDGE_1}}</td><td>{{HANDLING_1}}</td><td>1.1</td></tr><tr><td>{{EDGE_2}}</td><td>{{HANDLING_2}}</td><td>1.2</td></tr><tr><td>{{EDGE_3}}</td><td>{{HANDLING_3}}</td><td>2.1</td></tr></table></div>
+<hr>
+<h2 id="7-validao-final">7. Validação Final</h2>
+<ul>
+<li>[ ] Todas tasks validadas com comandos especificados</li>
+<li>[ ] Testes unitários passando (coverage ≥ 80%)</li>
+<li>[ ] Testes integração passando</li>
+<li>[ ] Testes E2E passando</li>
+<li>[ ] Lint/TypeCheck limpo</li>
+<li>[ ] Documentação atualizada</li>
+<li>[ ] TODO sincronizado (todas <code>[x]</code>)</li>
+</ul>
+<hr>
+<p><em>Template: <code>skills/writing-plans/templates/implementation-plan.md</code></em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

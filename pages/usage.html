@@ -425,9 +425,9 @@
 </ol>
 <hr>
 <h2 id="viso-geral">Visão Geral</h2>
-<p>O repositório <code>ignite-agents-skills</code> contém <strong>22 skills</strong> para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>. Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.</p>
-<h3 id="total-de-skills-22">Total de Skills: 22</h3>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Quantidade</th><th>Skills</th></tr><tr><td>Architecture</td><td>2</td><td><code>architecture-review-kilo</code>, <code>ddd</code></td></tr><tr><td>Documentation</td><td>2</td><td><code>documentation</code>, <code>adr-generator</code></td></tr><tr><td>Governance</td><td>3</td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-generator</code></td></tr><tr><td>Planning</td><td>2</td><td><code>planning</code>, <code>writing-plans</code></td></tr><tr><td>Implementation</td><td>1</td><td><code>implementation</code></td></tr><tr><td>Quality</td><td>1</td><td><code>testing</code></td></tr><tr><td>Security</td><td>1</td><td><code>security-review</code></td></tr><tr><td>AI</td><td>2</td><td><code>prompt-engineering</code>, <code>vibe-coding</code></td></tr><tr><td>Orchestration</td><td>1</td><td><code>agent-orchestration</code></td></tr><tr><td>Data</td><td>1</td><td><code>data-modeling</code></td></tr><tr><td>API</td><td>1</td><td><code>api-design</code></td></tr><tr><td>Operations</td><td>1</td><td><code>observability</code></td></tr><tr><td>Code Quality</td><td>1</td><td><code>refactoring</code></td></tr><tr><td>Tools</td><td>2</td><td><code>git</code>, <code>release</code></td></tr><tr><td>Audit</td><td>1</td><td><code>skill-audit-bulletin</code></td></tr></table></div>
+<p>O repositório <code>ignite-agents-skills</code> contém <strong>25 skills</strong> para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>. Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.</p>
+<h3 id="total-de-skills-25">Total de Skills: 25</h3>
+<div class="table-wrapper"><table><tr><th>Categoria</th><th>Quantidade</th><th>Skills</th></tr><tr><td>Architecture</td><td>2</td><td><code>architecture-review-kilo</code>, <code>ddd</code></td></tr><tr><td>Documentation</td><td>3</td><td><code>documentation</code>, <code>adr-generator</code>, <code>documentation-reconciliation</code></td></tr><tr><td>Governance</td><td>3</td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-generator</code></td></tr><tr><td>Planning</td><td>2</td><td><code>planning</code>, <code>writing-plans</code></td></tr><tr><td>Implementation</td><td>1</td><td><code>implementation</code></td></tr><tr><td>Quality</td><td>2</td><td><code>testing</code>, <code>code-review-lite</code></td></tr><tr><td>Security</td><td>1</td><td><code>security-review</code></td></tr><tr><td>AI</td><td>2</td><td><code>prompt-engineering</code>, <code>vibe-coding</code></td></tr><tr><td>Orchestration</td><td>1</td><td><code>agent-orchestration</code></td></tr><tr><td>Data</td><td>1</td><td><code>data-modeling</code></td></tr><tr><td>API</td><td>1</td><td><code>api-design</code></td></tr><tr><td>Operations</td><td>1</td><td><code>observability</code></td></tr><tr><td>Code Quality</td><td>1</td><td><code>refactoring</code></td></tr><tr><td>Tools</td><td>2</td><td><code>git</code>, <code>release</code></td></tr><tr><td>Audit</td><td>2</td><td><code>skill-audit-bulletin</code>, <code>adr-archive</code></td></tr></table></div>
 <hr>
 <h2 id="como-configurar">Como Configurar</h2>
 <h3 id="no-kilo-code-vs-code">No Kilo Code (VS Code)</h3>
@@ -499,6 +499,20 @@ curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq 
 <p><strong>Exemplo de uso:</strong></p>
 <pre><code>Crie um README completo para este projeto</code></pre>
 <p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>repo-bootstrap</code>, <code>implementation</code></p>
+<hr>
+<h4 id="documentation-reconciliation"><code>documentation-reconciliation</code></h4>
+<p><strong>Descrição:</strong> Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>README/CHANGELOG/USAGE desatualizados</li>
+<li>ADRs/BPs/TODOs com status incorretos</li>
+<li>ADRs implementadas não arquivadas</li>
+<li>Antes de release ou deploy gh-pages</li>
+<li>Gaps entre documentação e implementação</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Execute reconciliação documental completa deste repositório</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>adr-generator</code>, <code>skill-audit-bulletin</code></p>
 <hr>
 <h3 id="-governance">🏛️ Governance</h3>
 <h4 id="governance"><code>governance</code></h4>
@@ -588,6 +602,19 @@ curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq 
 <p><strong>Exemplo de uso:</strong></p>
 <pre><code>Crie testes unitários para o UserService</code></pre>
 <p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>governance</code>, <code>implementation</code></p>
+<hr>
+<h4 id="code-review-lite"><code>code-review-lite</code></h4>
+<p><strong>Descrição:</strong> Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Após completar features/refactors</li>
+<li>Antes de commits/push</li>
+<li>Detectar regressões óbvias</li>
+<li>Validar alinhamento com ADRs</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Revise este código para bugs óbvios e drift arquitetural</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>planning</code>, <code>adr-generator</code>, <code>testing</code>, <code>security-review</code>, <code>architecture-review-kilo</code></p>
 <hr>
 <h3 id="-security">🔒 Security</h3>
 <h4 id="security-review"><code>security-review</code></h4>
@@ -733,6 +760,20 @@ curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq 
 <pre><code>Audite a qualidade da skill governance</code></pre>
 <p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>documentation</code></p>
 <hr>
+<h4 id="adr-archive"><code>adr-archive</code></h4>
+<p><strong>Descrição:</strong> Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.</p>
+<p><strong>Quando usar:</strong></p>
+<ul>
+<li>Arquivar ADRs implementadas</li>
+<li>Limpar artefatos de execução (BP, TODO, PI) da raiz</li>
+<li>Garantir que apenas ADRs ativas e ERs de ADRs finalizadas fiquem visíveis</li>
+<li>Executar reconciliação documental pré-release</li>
+<li>Automatizar governança de ADRs</li>
+</ul>
+<p><strong>Exemplo de uso:</strong></p>
+<pre><code>Arquive as ADRs implementadas deste repositório</code></pre>
+<p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>implementation</code>, <code>documentation-reconciliation</code>, <code>governance</code></p>
+<hr>
 <h2 id="fluxos-de-trabalho-comuns">Fluxos de Trabalho Comuns</h2>
 <h3 id="fluxo-1-iniciar-novo-projeto">Fluxo 1: Iniciar Novo Projeto</h3>
 <pre data-lang="mermaid"><code>graph TD
@@ -769,12 +810,14 @@ curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq 
     A[PR Aberto] --&gt; B[architecture-review-kilo]
     B --&gt; C[security-review]
     C --&gt; D[testing]
-    D --&gt; E[documentation]
-    E --&gt; F[Review Completo]</code></pre>
+    D --&gt; E[code-review-lite]
+    E --&gt; F[documentation]
+    F --&gt; G[Review Completo]</code></pre>
 <ol>
 <li><strong>architecture-review-kilo</strong> — Revisar arquitetura</li>
 <li><strong>security-review</strong> — Verificar segurança</li>
 <li><strong>testing</strong> — Validar testes</li>
+<li><strong>code-review-lite</strong> — Revisão leve (AI-first)</li>
 <li><strong>documentation</strong> — Verificar documentação</li>
 </ol>
 <hr>
@@ -806,6 +849,21 @@ curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq 
 <li><strong>observability</strong> — Monitorar deploy</li>
 </ol>
 <hr>
+<h3 id="fluxo-6-reconciliao-documental-pr-release">Fluxo 6: Reconciliação Documental (Pré-Release)</h3>
+<pre data-lang="mermaid"><code>graph TD
+    A[Pré-Release] --&gt; B[documentation-reconciliation]
+    B --&gt; C[adr-archive]
+    C --&gt; D[validate-index]
+    D --&gt; E[CHANGELOG update]
+    E --&gt; F[Tag + Deploy]</code></pre>
+<ol>
+<li><strong>documentation-reconciliation</strong> — Auditar docs canônicas + ADR/BP/TODO</li>
+<li><strong>adr-archive</strong> — Arquivar ADRs implementadas</li>
+<li><strong>validate-index</strong> — Verificar registry</li>
+<li><strong>CHANGELOG update</strong> — Entradas para commits recentes</li>
+<li><strong>Tag + Deploy</strong> — SemVer + gh-pages sync</li>
+</ol>
+<hr>
 <h2 id="anti-patterns-gerais">Anti-patterns Gerais</h2>
 <h3 id="-crtico">🔴 Crítico</h3>
 <h4 id="usar-mltiplas-skills-para-a-mesma-tarefa">Usar múltiplas skills para a mesma tarefa</h4>
@@ -834,7 +892,7 @@ curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq 
 <li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture</a></li>
 </ul>
 <hr>
-<p><em>Última atualização: 2026-07-05</em> <em>Total de skills: 22</em> <em>Versão do registry: 2.0.3</em></p>
+<p><em>Última atualização: 2026-07-15</em> <em>Total de skills: 25</em> <em>Versão do registry: 2.3.1</em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

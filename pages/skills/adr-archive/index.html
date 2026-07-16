@@ -411,98 +411,193 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: adr-archive description: Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz. version: 1.0.0 tags:</p>
+<p>name: adr-archive description: Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz. version: 2.0.0 tags:</p>
 <ul>
 <li>architecture</li>
 <li>adr</li>
 <li>cleanup</li>
 <li>governance</li>
 <li>archive</li>
+<li>automation</li>
 </ul>
 <p>related_skills:</p>
 <ul>
 <li>adr-generator</li>
 <li>implementation</li>
+<li>documentation-reconciliation</li>
+<li>governance</li>
 </ul>
 <hr>
 <h1 id="adr-archive-janitor">ADR Archive (Janitor)</h1>
 <p>Audita todas as ADRs do repositório para manter a pasta de governança organizada. Funciona como um "garbage collector" para artefatos de execução.</p>
-<h2 id="estratgia-de-arquivamento">Estratégia de Arquivamento</h2>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
 <ul>
-<li><strong>O que fica na raiz de ADRs (<code>docs/adr/</code>):</strong></li>
+<li>Precisar arquivar ADRs implementadas</li>
+<li>Limpar artefatos de execução (BP, TODO, PI) da raiz</li>
+<li>Garantir que apenas ADRs ativas e ERs de ADRs finalizadas fiquem visíveis</li>
+<li>Executar reconciliação documental pré-release</li>
+<li>Automatizar governança de ADRs</li>
 </ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>ADR ainda estiver em implementação</li>
+<li>Houver tarefas pendentes no TODO</li>
+<li>ER ainda não foi gerado</li>
+<li>Apenas leitura de status for necessária (use <code>./scripts/archive-adrs.sh --dry-run</code>)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>adr-generator</code> — criação de ADRs</li>
+<li><code>implementation</code> — execução governada que gera ERs</li>
+<li><code>documentation-reconciliation</code> — auditoria documental completa</li>
+<li><code>governance</code> — processos de arquivamento obrigatório</li>
+</ul>
+<hr>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Invocar ADR Archive] --&gt; B{Executar script auditoria}
+    B --&gt; C[Ler relatório gerado]
+    C --&gt; D{Flags encontradas?}
+    D --&gt;|READY_TO_ARCHIVE| E[Arquivar ADR + BP + TODO + PI]
+    D --&gt;|ARCHIVED_NEEDS_ER| F[Criar ER na raiz]
+    D --&gt;|ARCHIVED_MISTAKE_RETURN| G[Devolver artefatos do archive para raiz]
+    D --&gt;|Nenhuma flag| H[Nada a fazer]
+    E --&gt; I[Atualizar docs/adr/INDEX.md]
+    F --&gt; I
+    G --&gt; I
+    H --&gt; I
+    I --&gt; J[Consolidar débitos técnicos]
+    J --&gt; K[Reportar ao usuário]</code></pre>
+<hr>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-auditoria-nativa-zero-tokens">Fase 1: Auditoria Nativa (Zero Tokens)</h3>
 <ol>
-<li>ADRs que ainda não foram plenamente implementadas (junto com seus BP, TODO, PI).</li>
-<li>Arquivos <code>ER</code> (Execution Reports) das ADRs que <strong>já foram</strong> implementadas. O ER serve como certificado de implementação na raiz.</li>
+<li>Execute o script Python interno para mapear ADRs:</li>
 </ol>
-<ul>
-<li><strong>O que vai para o arquivo morto (<code>docs/adr/archive/</code>):</strong></li>
-</ul>
+<pre data-lang="bash"><code>   python scripts/adr_archive_audit.py .</code></pre>
 <ol>
-<li>O arquivo principal da <code>ADR</code> (que já foi executada), o <code>BP</code>, o <code>TODO</code> e o <code>PI</code>.</li>
+<li>O script imprime flags no terminal e gera relatório em <code>docs/reports/adr-archive-report-*.md</code></li>
 </ol>
-<blockquote>Isso deixa visualmente óbvio quais arquiteturas estão pendentes (as ADRs visíveis) e quais já foram finalizadas (os ERs visíveis).</blockquote>
-<h2 id="workflow-passo-a-passo-para-o-agente">Workflow (Passo a Passo para o Agente)</h2>
-<p>Sempre que a skill for invocada (ex: <code>/janitor</code>, "arquive as adrs", "limpe as adrs"):</p>
+<p><strong>Checkpoint:</strong> [ ] Script executado [ ] Flags e relatório disponíveis</p>
+<hr>
+<h3 id="fase-2-anlise-de-flags-e-ao">Fase 2: Análise de Flags e Ação</h3>
+<div class="table-wrapper"><table><tr><th>Flag</th><th>Significado</th><th>Ação Obrigatória</th></tr><tr><td><code>READY_TO_ARCHIVE: ADR-XXX</code></td><td>ADR + TODO concluídos, ER existe na raiz</td><td><code>python scripts/adr_archive_audit.py . --archive ADR-XXX</code></td></tr><tr><td><code>ARCHIVED_NEEDS_ER: ADR-XXX</code></td><td>ADR arquivada mas sem ER na raiz</td><td>Criar <code>docs/adr/ADR-XXX-ER.md</code> manualmente na raiz</td></tr><tr><td><code>ARCHIVED_MISTAKE_RETURN: ADR-XXX</code></td><td>ADR arquivada prematuramente (TODO incompleto)</td><td><code>mv docs/adr/archive/ADR-XXX* docs/adr/</code></td></tr></table></div>
+<p><strong>Checkpoint:</strong> [ ] Todas as flags processadas [ ] Ações executadas</p>
+<hr>
+<h3 id="fase-3-consolidao-de-dbitos-tcnicos">Fase 3: Consolidação de Débitos Técnicos</h3>
 <ol>
-<li><strong>Rode o Auditor Nativo</strong></li>
+<li>Ler relatório gerado (<code>docs/reports/adr-archive-report-*.md</code>)</li>
+<li>Avaliar seção "Débitos Técnicos Consolidados"</li>
+<li>Se débitos relevantes existirem → sugerir nova ADR de Refatoração e Débito Técnico</li>
 </ol>
-<ul>
-<li>Execute o script python interno para mapear as ADRs gastando 0 tokens na leitura.</li>
-</ul>
-<pre data-lang="bash"><code>   python ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></pre>
+<p><strong>Checkpoint:</strong> [ ] Débitos avaliados [ ] Sugestão feita se aplicável</p>
+<hr>
+<h3 id="fase-4-atualizao-de-ndice">Fase 4: Atualização de Índice</h3>
 <ol>
-<li><strong>Analise o Output e atue nas Flags</strong></li>
+<li>Executar <code>./scripts/archive-adrs.sh</code> (move arquivos, atualiza INDEX.md)</li>
+<li>Verificar <code>docs/adr/INDEX.md</code> reflete estado atual</li>
 </ol>
+<p><strong>Checkpoint:</strong> [ ] INDEX.md sincronizado [ ] Arquivamento completo</p>
+<hr>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="estratgia-de-visibilidade">Estratégia de Visibilidade</h3>
 <ul>
-<li><strong><code>NEEDS_ER: ADR-XXX</code></strong></li>
+<li><strong>Raiz <code>docs/adr/</code></strong>: Apenas ADRs ativas (pendentes) + ERs de ADRs finalizadas</li>
+<li><strong>Archive <code>docs/adr/archive/</code></strong>: ADRs implementadas + BP + TODO + PI</li>
+<li><strong>ER (Execution Report)</strong>: Certificado de implementação, sempre na raiz</li>
 </ul>
-<ol>
-<li><strong>Analise o Output e o Relatório</strong></li>
-</ol>
-<p>O script retornará rapidamente no terminal as flags de anomalia. Porém, <strong>a principal fonte da verdade agora é o relatório gerado</strong>. O script imprimirá no final: <code>Report generated: <path/to/report.md></code>.</p>
+<h3 id="ciclo-de-vida-da-adr">Ciclo de Vida da ADR</h3>
+<pre><code>Criação (ADR+BP+TODO) → Implementação → ER gerado → Arquivamento (ADR+BP+TODO+PI → archive) → ER permanece na raiz</code></pre>
+<hr>
+<h2 id="templates">Templates</h2>
+<h3 id="adrarchiveauditpy">adr_archive_audit.py</h3>
+<p>Localização: <code>scripts/adr_archive_audit.py</code></p>
+<p>Script de auditoria nativa (Python, zero LLM tokens).</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Auditoria completa com relatório
+python scripts/adr_archive_audit.py .
+
+# Arquivar ADR específica
+python scripts/adr_archive_audit.py . --archive ADR-007
+
+# Dry run
+python scripts/adr_archive_audit.py . --dry-run</code></pre>
+<h3 id="archivereportmd">archive_report.md</h3>
+<p>Localização: <code>templates/archive_report.md</code></p>
+<p>Template para relatório de auditoria gerado pelo script.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/archive_report.md docs/reports/adr-archive-report-$(date +%Y%m%d).md</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="arquivar-adr-sem-er">Arquivar ADR sem ER</h4>
+<p><strong>O que é:</strong> Mover ADR para archive sem ter <code>ADR-XXX-ER.md</code> na raiz. <strong>Por que é ruim:</strong> Perde o certificado de implementação, governança quebrada. <strong>Como evitar:</strong> Sempre verificar flag <code>ARCHIVED_NEEDS_ER</code> antes de arquivar. ER é pré-requisito.</p>
+<h4 id="arquivar-adr-com-todo-incompleto">Arquivar ADR com TODO incompleto</h4>
+<p><strong>O que é:</strong> Mover ADR para archive enquanto <code>ADR-XXX-TODO.md</code> tem tarefas <code>[ ]</code>. <strong>Por que é ruim:</strong> ADR volta como "mistake return", polui histórico, confunde auditoria. <strong>Como evitar:</strong> Script valida TODO 100% completo antes de permitir arquivamento.</p>
+<h4 id="deletar-er-da-raiz">Deletar ER da raiz</h4>
+<p><strong>O que é:</strong> Remover <code>docs/adr/ADR-XXX-ER.md</code> achando que é lixo. <strong>Por que é ruim:</strong> ER é o único registro visível de que a ADR foi implementada. <strong>Como evitar:</strong> ERs NUNCA vão para archive. Regra imutável.</p>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="no-atualizar-indexmd-aps-arquivar">Não atualizar INDEX.md após arquivar</h4>
+<p><strong>O que é:</strong> Executar arquivamento mas esquecer de mover entrada no INDEX.md. <strong>Por que é ruim:</strong> Índice mostra ADR ativa que já foi arquivada. <strong>Como evitar:</strong> <code>./scripts/archive-adrs.sh</code> atualiza INDEX.md automaticamente.</p>
+<h4 id="ignorar-dbitos-tcnicos-consolidados">Ignorar débitos técnicos consolidados</h4>
+<p><strong>O que é:</strong> Relatório mostra débitos mas não se cria ADR de refatoração. <strong>Por que é ruim:</strong> Débitos acumulam, tornam-se ingerenciáveis. <strong>Como evitar:</strong> Sempre avaliar seção "Débitos Técnicos" do relatório.</p>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="executar-auditoria-manual-sem-script">Executar auditoria manual sem script</h4>
+<p><strong>O que é:</strong> Ler ADRs uma a uma em vez de usar <code>adr_archive_audit.py</code>. <strong>Por que é ruim:</strong> Gasta tokens, propenso a erro humano, não escala. <strong>Como evitar:</strong> Sempre usar script nativo primeiro.</p>
+<hr>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-pr-arquivamento">Checklist Pré-Arquivamento</h3>
 <ul>
-<li>Se houver flags <code>READY_TO_ARCHIVE</code>, <code>ARCHIVED_NEEDS_ER</code> ou <code>ARCHIVED_MISTAKE_RETURN</code>, execute as mesmas regras abaixo:</li>
+<li>[ ] <code>./scripts/archive-adrs.sh --dry-run</code> retorna ADRs para arquivar</li>
+<li>[ ] Cada ADR candidata tem <code>ER</code> correspondente na raiz <code>docs/adr/</code></li>
+<li>[ ] Cada ADR candidata tem <code>TODO</code> 100% completo (<code>[x]</code> em todas tarefas)</li>
+<li>[ ] Nenhuma ADR ativa (status "Proposto" ou "Em Implementação") será arquivada</li>
 </ul>
+<h3 id="checklist-ps-arquivamento">Checklist Pós-Arquivamento</h3>
 <ul>
-<li><strong><code>READY_TO_ARCHIVE: ADR-XXX</code></strong></li>
+<li>[ ] <code>docs/adr/INDEX.md</code> atualizado (entradas movidas para "Archived ADRs")</li>
+<li>[ ] <code>docs/adr/archive/ADR-XXX.md</code> + BP + TODO + PI presentes</li>
+<li>[ ] <code>docs/adr/ADR-XXX-ER.md</code> permanece na raiz</li>
+<li>[ ] Relatório de auditoria salvo em <code>docs/reports/</code></li>
 </ul>
-<p>A ADR e o seu TODO foram integralmente concluídos, e o ER correspondente já existe na raiz. <em>Comando esperado:</em></p>
-<pre data-lang="bash"><code>     python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
+<h3 id="checklist-de-dbitos-tcnicos">Checklist de Débitos Técnicos</h3>
 <ul>
-<li><strong><code>ARCHIVED_NEEDS_ER: ADR-XXX</code></strong></li>
+<li>[ ] Ler seção "Débitos Técnicos Consolidados" do relatório</li>
+<li>[ ] Classificar cada débito: Crítico / Médio / Baixo</li>
+<li>[ ] Se ≥1 Crítico ou ≥3 Médios → sugerir ADR de Refatoração</li>
+<li>[ ] Documentar decisão no relatório ou criar nova ADR</li>
 </ul>
-<p>Se a ADR está arquivada e plenamente implementada, mas está faltando o ER na raiz:</p>
+<hr>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="adr-arquivada-mas-er-corrompidoausente">ADR arquivada mas ER corrompido/ausente</h3>
+<p><strong>Situação:</strong> <code>ARCHIVED_NEEDS_ER</code> flagged mas ER foi deletado acidentalmente. <strong>Solução:</strong> Recriar ER a partir do <code>execution-report.md</code> no archive (se existir) ou gerar novo resumindo implementação. <strong>Exceção:</strong> Se nem execution-report existe, documentar como "ER perdido - reconstruído".</p>
+<h3 id="adr-com-mltiplas-implementaes-parciais">ADR com múltiplas implementações parciais</h3>
+<p><strong>Situação:</strong> ADR implementada em múltiplos branches/PRs, TODO nunca 100% completo. <strong>Solução:</strong> Não arquivar. Criar ADRs filhas para cada implementação parcial, manter ADR-mãe ativa até consolidação. <strong>Exceção:</strong> Se implementação é contínua e intencional, documentar no TODO e manter ativa.</p>
+<h3 id="er-criado-mas-adr-no-arquivada-por-meses">ER criado mas ADR não arquivada por meses</h3>
+<p><strong>Situação:</strong> ER existe na raiz, ADR+BP+TODO ainda na raiz (não arquivados). <strong>Solução:</strong> Executar <code>./scripts/archive-adrs.sh</code> — script detecta <code>READY_TO_ARCHIVE</code> e arquiva automaticamente. <strong>Exceção:</strong> Se equipe decide manter ADR visível por contexto, documentar exceção no ER.</p>
+<h3 id="conflito-entre-archive-adrssh-e-script-python">Conflito entre archive-adrs.sh e script Python</h3>
+<p><strong>Situação:</strong> Dois mecanismos de arquivamento com lógica diferente. <strong>Solução:</strong> <code>archive-adrs.sh</code> é wrapper que chama script Python. Usar apenas o script Python diretamente para controle fino. <strong>Exceção:</strong> Para arquivamento em lote padrão, usar shell script.</p>
+<hr>
+<h2 id="referncias">Referências</h2>
 <ul>
-<li>Crie manualmente o artefato <code>ADR-XXX-ER.md</code> contendo o relatório de conclusão (conforme template das skills de governança).</li>
-<li>Salve o ER sempre na pasta <strong>RAIZ</strong> das ADRs (ex: <code>docs/adr/ADR-XXX-ER.md</code>), <strong>NÃO</strong> no diretório archive.</li>
+<li><code>scripts/adr_archive_audit.py</code> — Auditoria nativa</li>
+<li><code>scripts/archive-adrs.sh</code> — Arquivamento em lote + INDEX.md update</li>
+<li><code>docs/adr/INDEX.md</code> — Índice de ADRs</li>
+<li><a href="../../adr/ADR-011.html">ADR-011</a> — Documentation Reconciliation Skill</li>
 </ul>
-<ul>
-<li><strong><code>ARCHIVED_MISTAKE_RETURN: ADR-XXX</code></strong></li>
-</ul>
-<p>Se a ADR está arquivada, não possui ER e não está plenamente concluída (ainda possui pendências parciais ou totais no TODO):</p>
-<ul>
-<li>A ADR foi arquivada prematuramente ou por erro humano.</li>
-<li>Devolva todos os artefatos da ADR do <code>/archive</code> de volta para a pasta raiz das ADRs.</li>
-<li>Comando esperado: <code>mv docs/adr/archive/ADR-XXX* docs/adr/</code></li>
-</ul>
-<ol>
-<li><strong>Consolidação de Débitos Técnicos</strong></li>
-</ol>
-<ul>
-<li>Use a ferramenta <code>view_file</code> para ler o arquivo do relatório gerado (caminho em <code>docs/reports/adr-archive-report-*.md</code>).</li>
-<li>Avalie a seção de "Débitos Técnicos Consolidados". Se existirem débitos relevantes e expressivos, sugira ao usuário a criação de uma nova ADR de Refatoração e Débito Técnico para atacá-los sistematicamente.</li>
-</ul>
-<ol>
-<li><strong>Reporte ao Usuário</strong></li>
-</ol>
-<p>Forneça um relatório rápido das ações tomadas. Apresente ao usuário (resumidamente) a lista de débitos técnicos encontrada (ou diga que não há débitos).</p>
 <h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/archive-checklist.html">archive-checklist.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/audit-report.html">audit-report.md</a></li>
+</ul>
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/ADR-997-TODO.html">ADR-997-TODO.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/ADR-998-TODO.html">ADR-998-TODO.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/ADR-999-TODO.html">ADR-999-TODO.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/archive-workflow.html">archive-workflow.md</a></li>
 </ul>
 
   </div>

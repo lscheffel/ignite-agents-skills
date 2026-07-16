@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>writing-plans / templates / task-card — ignite-agents-skills</title>
+  <title>writing-plans / examples / social-auth-plan — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -407,86 +407,182 @@
       <a href="../../../readme.html">README</a>
       <a href="../../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">writing-plans</a> &rsaquo; templates &rsaquo; task-card</div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">writing-plans</a> &rsaquo; examples &rsaquo; social-auth-plan</div>
   </nav>
   <div class="content">
-    <h1 id="task-card-template">Task Card Template</h1>
-<blockquote>Card individual de task para o Implementation Plan</blockquote>
+    <h1 id="example-writing-plans--feature-breakdown">Example: Writing Plans — Feature Breakdown</h1>
+<blockquote>Exemplo de criação de Implementation Plan (PI) para feature de autenticação social</blockquote>
 <hr>
-<h2 id="task-taskid-taskname">Task {{TASK_ID}}: {{TASK_NAME}}</h2>
-<p><strong>Fase:</strong> {{FASE}} <strong>Dependências:</strong> {{DEPENDENCIES}} <strong>Estimativa:</strong> {{ESTIMATE}}</p>
-<h3 id="descrio">Descrição</h3>
-<p>{{DESCRIPTION}}</p>
-<h3 id="arquivos">Arquivos</h3>
-<p><strong>Criar:</strong></p>
+<h2 id="cenrio">Cenário</h2>
+<p><strong>Feature:</strong> Login com Google OAuth 2.0 <strong>ADR:</strong> ADR-015 (Social Authentication Strategy) <strong>Tipo:</strong> Nova feature, Tier 2 (Zen-Mode Quadra)</p>
+<hr>
+<h2 id="fase-1-adr--blueprint--todo-pr-requisito">Fase 1: ADR + Blueprint + TODO (Pré-requisito)</h2>
+<p>Já existem:</p>
 <ul>
-<li><code>{{NEW_FILE_1}}</code></li>
-<li><code>{{NEW_FILE_2}}</code></li>
-</ul>
-<p><strong>Modificar:</strong></p>
-<ul>
-<li><code>{{MOD_FILE_1}}:{{LINE_RANGE}}</code></li>
-<li><code>{{MOD_FILE_2}}:{{LINE_RANGE}}</code></li>
-</ul>
-<p><strong>Testes:</strong></p>
-<ul>
-<li><code>{{TEST_FILE}}</code></li>
-</ul>
-<h3 id="interfaces">Interfaces</h3>
-<p><strong>Consome (de tasks anteriores):</strong></p>
-<ul>
-<li><code>{{INTERFACE_1}}</code> — <code>{{TYPE_1}}</code></li>
-<li><code>{{INTERFACE_2}}</code> — <code>{{TYPE_2}}</code></li>
-</ul>
-<p><strong>Produz (para tasks seguintes):</strong></p>
-<ul>
-<li><code>{{OUTPUT_1}}</code> — <code>{{TYPE_3}}</code></li>
-<li><code>{{OUTPUT_2}}</code> — <code>{{TYPE_4}}</code></li>
-</ul>
-<h3 id="steps-tdd">Steps (TDD)</h3>
-<ul>
-<li>[ ] <strong>Step 1: Write Failing Test</strong></li>
-</ul>
-<pre data-lang="{{LANG}}"><code>// {{TEST_FILE}}
-describe(&#x27;{{FEATURE}}&#x27;, () =&gt; {
-  it(&#x27;should {{BEHAVIOR}}&#x27;, () =&gt; {
-    const result = {{FUNCTION}}({{INPUT}});
-    expect(result).to{{MATCHER}}({{EXPECTED}});
-  });
-});</code></pre>
-<p><strong>Run:</strong> <code>{{TEST_CMD}}</code> <strong>Expected:</strong> FAIL — <code>{{FAIL_REASON}}</code></p>
-<ul>
-<li>[ ] <strong>Step 2: Run Test to Verify Fail</strong></li>
-</ul>
-<pre data-lang="bash"><code>{{TEST_CMD}}</code></pre>
-<ul>
-<li>[ ] <strong>Step 3: Minimal Implementation</strong></li>
-</ul>
-<pre data-lang="{{LANG}}"><code>// {{MOD_FILE_1}}
-export function {{FUNCTION}}({{PARAMS}}): {{RETURN_TYPE}} {
-  return {{MINIMAL_IMPL}};
-}</code></pre>
-<ul>
-<li>[ ] <strong>Step 4: Run Test to Verify Pass</strong></li>
-</ul>
-<pre data-lang="bash"><code>{{TEST_CMD}}</code></pre>
-<p><strong>Expected:</strong> PASS</p>
-<ul>
-<li>[ ] <strong>Step 5: Commit</strong></li>
-</ul>
-<pre data-lang="bash"><code>git add {{TEST_FILE}} {{MOD_FILE_1}}
-git commit -m &quot;{{CONVENTIONAL_COMMIT_MSG}}&quot;</code></pre>
-<h3 id="validao-ps-commit">Validação Pós-Commit</h3>
-<pre data-lang="bash"><code>{{VALIDATION_CMD}}</code></pre>
-<p><strong>Critérios de Sucesso:</strong></p>
-<ul>
-<li>[ ] Tests pass</li>
-<li>[ ] Lint clean</li>
-<li>[ ] TypeCheck clean</li>
-<li>[ ] No regressions</li>
+<li><code>docs/adr/ADR-015.md</code> — Decisão: Google OAuth, JWT tokens, refresh rotation</li>
+<li><code>docs/adr/ADR-015-BP.md</code> — 3 fases: Config, Auth Flow, Token Management</li>
+<li><code>docs/adr/ADR-015-TODO.md</code> — 12 tasks mapeadas</li>
 </ul>
 <hr>
-<p><em>Template: <code>skills/writing-plans/templates/task-card.md</code></em></p>
+<h2 id="fase-2-gerar-pi-implementation-plan">Fase 2: Gerar PI (Implementation Plan)</h2>
+<p><strong>Arquivo:</strong> <code>docs/adr/ADR-015-PI.md</code></p>
+<pre data-lang="markdown"><code># ADR-015: Social Authentication — Implementation Plan
+
+## 1. Visão Geral
+**Objetivo:** Implementar login Google OAuth 2.0 com JWT + refresh rotation
+**ADR:** docs/adr/ADR-015.md
+**Blueprint:** docs/adr/ADR-015-BP.md
+
+## 2. Tasks
+
+### Fase 1: Configuração Google Cloud
+
+#### Task 1.1: Criar OAuth Client no Google Cloud Console
+- **Arquivos:** `docs/google-oauth-setup.md` (doc interno)
+- **Validação:** Client ID/Secret gerados
+- **Teste:** N/A (manual)
+- **Rollback:** Deletar client no console
+
+#### Task 1.2: Adicionar env vars
+- **Arquivos:** `.env.example`, `.env.local`
+- **Validação:** `grep GOOGLE_CLIENT_ID .env.local`
+- **Teste:** N/A
+- **Rollback:** `git checkout HEAD -- .env.example .env.local`
+
+### Fase 2: Auth Flow
+
+#### Task 2.1: Instalar dependências
+- **Arquivos:** `package.json`, `pnpm-lock.yaml`
+- **Validação:** `pnpm install &amp;&amp; pnpm audit`
+- **Teste:** N/A
+- **Rollback:** `git checkout HEAD -- package.json pnpm-lock.yaml`
+
+#### Task 2.2: Implementar Google Strategy (Passport)
+- **Arquivos:** `src/auth/strategies/google.strategy.ts`
+- **Validação:** `npm run typecheck`
+- **Teste:** `tests/unit/auth/google.strategy.test.ts`
+- **Rollback:** `git checkout HEAD -- src/auth/strategies/google.strategy.ts`
+
+#### Task 2.3: Criar rotas /auth/google e /auth/google/callback
+- **Arquivos:** `src/routes/auth.ts`
+- **Validação:** `curl -I http://localhost:3000/auth/google` → 302
+- **Teste:** `tests/integration/auth/google-oauth.test.ts`
+- **Rollback:** `git checkout HEAD -- src/routes/auth.ts`
+
+#### Task 2.4: Implementar callback handler + user upsert
+- **Arquivos:** `src/services/auth.service.ts`, `src/repositories/user.repository.ts`
+- **Validação:** `npm run typecheck &amp;&amp; npm test`
+- **Teste:** `tests/unit/auth/auth.service.test.ts`
+- **Rollback:** `git checkout HEAD -- src/services/auth.service.ts src/repositories/user.repository.ts`
+
+### Fase 3: Token Management
+
+#### Task 3.1: JWT Access Token (15min) + Refresh Token (7d)
+- **Arquivos:** `src/utils/jwt.ts`
+- **Validação:** `npm run typecheck`
+- **Teste:** `tests/unit/utils/jwt.test.ts`
+- **Rollback:** `git checkout HEAD -- src/utils/jwt.ts`
+
+#### Task 3.2: Refresh Rotation Endpoint
+- **Arquivos:** `src/routes/auth.ts` (add `/auth/refresh`)
+- **Validação:** `curl -X POST /auth/refresh` → new access token
+- **Teste:** `tests/integration/auth/refresh.test.ts`
+- **Rollback:** `git checkout HEAD -- src/routes/auth.ts`
+
+#### Task 3.3: Logout + Revoke Refresh Token
+- **Arquivos:** `src/services/auth.service.ts`, `src/routes/auth.ts`
+- **Validação:** `npm test`
+- **Teste:** `tests/integration/auth/logout.test.ts`
+- **Rollback:** `git checkout HEAD -- src/services/auth.service.ts src/routes/auth.ts`
+
+## 3. Mapeamento Task → Arquivos
+
+| Task | Arquivos | Tipo |
+|------|----------|------|
+| 1.1 | `docs/google-oauth-setup.md` | Doc |
+| 1.2 | `.env.example`, `.env.local` | Config |
+| 2.1 | `package.json`, `pnpm-lock.yaml` | Deps |
+| 2.2 | `src/auth/strategies/google.strategy.ts` | Impl + Test |
+| 2.3 | `src/routes/auth.ts` | Impl + Test |
+| 2.4 | `src/services/auth.service.ts`, `src/repositories/user.repository.ts` | Impl + Test |
+| 3.1 | `src/utils/jwt.ts` | Impl + Test |
+| 3.2 | `src/routes/auth.ts` | Impl + Test |
+| 3.3 | `src/services/auth.service.ts`, `src/routes/auth.ts` | Impl + Test |
+
+## 4. Test Strategy
+
+### Unit (por task)
+- 2.2: Strategy config validation
+- 2.4: User upsert logic (new vs existing)
+- 3.1: Token generation/validation, expiry
+
+### Integration
+- 2.3: Full OAuth flow (mock Google)
+- 3.2: Refresh rotation (new access + new refresh)
+- 3.3: Logout revokes refresh
+
+### E2E
+- Happy path: Login → Access protected → Refresh → Logout
+- Edge: Expired refresh → re-login required
+
+## 5. Rollback Plan
+
+| Task | Rollback | Verification |
+|------|----------|--------------|
+| 1.1 | Delete Google Client | N/A |
+| 1.2 | `git checkout HEAD -- .env*` | `grep` fails |
+| 2.1 | `git checkout HEAD -- package.json pnpm-lock.yaml` | `pnpm install` |
+| 2.2 | `git checkout HEAD -- google.strategy.ts` | Tests pass |
+| 2.3 | `git checkout HEAD -- auth.ts` (routes) | Tests pass |
+| 2.4 | `git checkout HEAD -- auth.service.ts user.repository.ts` | Tests pass |
+| 3.1 | `git checkout HEAD -- jwt.ts` | Tests pass |
+| 3.2 | `git checkout HEAD -- auth.ts` (routes) | Tests pass |
+| 3.3 | `git checkout HEAD -- auth.service.ts auth.ts` | Tests pass |
+
+## 6. Edge Cases
+
+| Cenário | Tratamento | Task |
+|---------|------------|------|
+| Google retorna email não verificado | Rejeitar login, logar warning | 2.4 |
+| Usuário já existe com email (local auth) | Link accounts, merge profiles | 2.4 |
+| Refresh token roubado (reuse detection) | Revoke all user sessions, alert | 3.2 |
+| Clock skew entre servers | Leeway 60s na validação JWT | 3.1 |
+| Rate limit Google API | Exponential backoff, circuit breaker | 2.2 |
+
+## 7. Validação Final
+
+- [x] Tasks 1.1-3.3 validadas
+- [x] Unit tests: 15 passing, coverage 87%
+- [x] Integration tests: 8 passing
+- [x] E2E tests: 3 passing
+- [x] Lint/TypeCheck clean
+- [x] Docs: `docs/api.md` atualizado
+- [x] TODO sincronizado: 12/12 `[x]`</code></pre>
+<hr>
+<h2 id="fase-3-atualizar-todo">Fase 3: Atualizar TODO</h2>
+<p><strong>Arquivo:</strong> <code>docs/adr/ADR-015-TODO.md</code></p>
+<pre data-lang="markdown"><code>## Fase 1: Configuração Google Cloud
+
+- [x] Task 1.1: Criar OAuth Client no Google Cloud Console | Validação: Client ID/Secret gerados
+- [x] Task 1.2: Adicionar env vars | Validação: `grep GOOGLE_CLIENT_ID .env.local`
+
+## Fase 2: Auth Flow
+
+- [x] Task 2.1: Instalar dependências | Validação: `pnpm install &amp;&amp; pnpm audit`
+- [x] Task 2.2: Google Strategy (Passport) | Validação: `npm run typecheck` | Teste: `tests/unit/auth/google.strategy.test.ts`
+- [x] Task 2.3: Rotas /auth/google e callback | Validação: `curl -I /auth/google` → 302 | Teste: `tests/integration/auth/google-oauth.test.ts`
+- [x] Task 2.4: Callback handler + user upsert | Validação: `npm test` | Teste: `tests/unit/auth/auth.service.test.ts`
+
+## Fase 3: Token Management
+
+- [x] Task 3.1: JWT Access (15min) + Refresh (7d) | Validação: `npm run typecheck` | Teste: `tests/unit/utils/jwt.test.ts`
+- [x] Task 3.2: Refresh Rotation Endpoint | Validação: `curl -X POST /auth/refresh` | Teste: `tests/integration/auth/refresh.test.ts`
+- [x] Task 3.3: Logout + Revoke Refresh | Validação: `npm test` | Teste: `tests/integration/auth/logout.test.ts`</code></pre>
+<hr>
+<h2 id="fase-4-entrega">Fase 4: Entrega</h2>
+<p>Plano aprovado → Invocar skill <code>implementation</code> para execução.</p>
+<hr>
+<p><em>Exemplo: <code>skills/writing-plans/examples/social-auth-plan.md</code></em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

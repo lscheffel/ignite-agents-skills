@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>writing-plans / templates / task-card — ignite-agents-skills</title>
+  <title>code-review-lite / examples / review-session — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -407,86 +407,87 @@
       <a href="../../../readme.html">README</a>
       <a href="../../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">writing-plans</a> &rsaquo; templates &rsaquo; task-card</div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">code-review-lite</a> &rsaquo; examples &rsaquo; review-session</div>
   </nav>
   <div class="content">
-    <h1 id="task-card-template">Task Card Template</h1>
-<blockquote>Card individual de task para o Implementation Plan</blockquote>
+    <h1 id="example-code-review-lite-session">Example: Code Review Lite Session</h1>
+<blockquote>Exemplo de uso da skill <code>code-review-lite</code> para uma feature típica</blockquote>
 <hr>
-<h2 id="task-taskid-taskname">Task {{TASK_ID}}: {{TASK_NAME}}</h2>
-<p><strong>Fase:</strong> {{FASE}} <strong>Dependências:</strong> {{DEPENDENCIES}} <strong>Estimativa:</strong> {{ESTIMATE}}</p>
-<h3 id="descrio">Descrição</h3>
-<p>{{DESCRIPTION}}</p>
-<h3 id="arquivos">Arquivos</h3>
-<p><strong>Criar:</strong></p>
+<h2 id="cenrio">Cenário</h2>
+<p><strong>Feature:</strong> Adicionar endpoint <code>/api/users/:id/profile</code> com cache Redis <strong>Commit:</strong> <code>feat: add user profile endpoint with caching</code> <strong>Files Changed:</strong> 5 files, ~280 lines</p>
+<hr>
+<h2 id="fase-1-context-loading">Fase 1: Context Loading</h2>
+<pre data-lang="bash"><code># Changed files
+git diff --name-only HEAD~1
+# src/routes/user.ts
+# src/services/user-service.ts
+# src/middleware/cache.ts
+# tests/user-profile.test.ts
+# docs/api.md</code></pre>
+<p><strong>Task Reference:</strong> ADR-023 (API Caching Strategy) <strong>Expected Behavior:</strong> GET <code>/api/users/:id/profile</code> returns cached profile, 5min TTL <strong>Architectural Constraints:</strong></p>
 <ul>
-<li><code>{{NEW_FILE_1}}</code></li>
-<li><code>{{NEW_FILE_2}}</code></li>
-</ul>
-<p><strong>Modificar:</strong></p>
-<ul>
-<li><code>{{MOD_FILE_1}}:{{LINE_RANGE}}</code></li>
-<li><code>{{MOD_FILE_2}}:{{LINE_RANGE}}</code></li>
-</ul>
-<p><strong>Testes:</strong></p>
-<ul>
-<li><code>{{TEST_FILE}}</code></li>
-</ul>
-<h3 id="interfaces">Interfaces</h3>
-<p><strong>Consome (de tasks anteriores):</strong></p>
-<ul>
-<li><code>{{INTERFACE_1}}</code> — <code>{{TYPE_1}}</code></li>
-<li><code>{{INTERFACE_2}}</code> — <code>{{TYPE_2}}</code></li>
-</ul>
-<p><strong>Produz (para tasks seguintes):</strong></p>
-<ul>
-<li><code>{{OUTPUT_1}}</code> — <code>{{TYPE_3}}</code></li>
-<li><code>{{OUTPUT_2}}</code> — <code>{{TYPE_4}}</code></li>
-</ul>
-<h3 id="steps-tdd">Steps (TDD)</h3>
-<ul>
-<li>[ ] <strong>Step 1: Write Failing Test</strong></li>
-</ul>
-<pre data-lang="{{LANG}}"><code>// {{TEST_FILE}}
-describe(&#x27;{{FEATURE}}&#x27;, () =&gt; {
-  it(&#x27;should {{BEHAVIOR}}&#x27;, () =&gt; {
-    const result = {{FUNCTION}}({{INPUT}});
-    expect(result).to{{MATCHER}}({{EXPECTED}});
-  });
-});</code></pre>
-<p><strong>Run:</strong> <code>{{TEST_CMD}}</code> <strong>Expected:</strong> FAIL — <code>{{FAIL_REASON}}</code></p>
-<ul>
-<li>[ ] <strong>Step 2: Run Test to Verify Fail</strong></li>
-</ul>
-<pre data-lang="bash"><code>{{TEST_CMD}}</code></pre>
-<ul>
-<li>[ ] <strong>Step 3: Minimal Implementation</strong></li>
-</ul>
-<pre data-lang="{{LANG}}"><code>// {{MOD_FILE_1}}
-export function {{FUNCTION}}({{PARAMS}}): {{RETURN_TYPE}} {
-  return {{MINIMAL_IMPL}};
-}</code></pre>
-<ul>
-<li>[ ] <strong>Step 4: Run Test to Verify Pass</strong></li>
-</ul>
-<pre data-lang="bash"><code>{{TEST_CMD}}</code></pre>
-<p><strong>Expected:</strong> PASS</p>
-<ul>
-<li>[ ] <strong>Step 5: Commit</strong></li>
-</ul>
-<pre data-lang="bash"><code>git add {{TEST_FILE}} {{MOD_FILE_1}}
-git commit -m &quot;{{CONVENTIONAL_COMMIT_MSG}}&quot;</code></pre>
-<h3 id="validao-ps-commit">Validação Pós-Commit</h3>
-<pre data-lang="bash"><code>{{VALIDATION_CMD}}</code></pre>
-<p><strong>Critérios de Sucesso:</strong></p>
-<ul>
-<li>[ ] Tests pass</li>
-<li>[ ] Lint clean</li>
-<li>[ ] TypeCheck clean</li>
-<li>[ ] No regressions</li>
+<li>Cache layer via <code>src/middleware/cache.ts</code> (per ADR-023)</li>
+<li>No direct Redis calls in routes</li>
+<li>Error handling via <code>AppError</code> class</li>
 </ul>
 <hr>
-<p><em>Template: <code>skills/writing-plans/templates/task-card.md</code></em></p>
+<h2 id="fase-2-fast-review-5-dimensions">Fase 2: Fast Review (5 Dimensions)</h2>
+<h3 id="1-plan-alignment-">1. Plan Alignment ✅</h3>
+<ul>
+<li>[x] Scope matches: endpoint + cache only</li>
+<li>[x] No gold-plating: no rate limiting, no auth changes</li>
+</ul>
+<h3 id="2-obvious-bugs-">2. Obvious Bugs ⚠️</h3>
+<pre data-lang="typescript"><code>// src/routes/user.ts:45 - POTENTIAL BUG
+const profile = await userService.getProfile(userId); // Missing null check
+return res.json(profile); // Could return null → 500</code></pre>
+<p><strong>Finding:</strong> Missing null check on service return</p>
+<h3 id="3-security-regression-">3. Security Regression ✅</h3>
+<ul>
+<li>[x] No secrets exposed</li>
+<li>[x] Input sanitized (userId validated via <code>:id</code> param middleware)</li>
+<li>[x] Auth check present (<code>requireAuth</code> middleware)</li>
+<li>[x] No injection vectors (parameterized query in service)</li>
+</ul>
+<h3 id="4-architecture-drift-">4. Architecture Drift ⚠️</h3>
+<pre data-lang="typescript"><code>// src/services/user-service.ts:12 - DRIFT
+import { redis } from &#x27;../config/redis&#x27;; // Direct Redis import!</code></pre>
+<p><strong>Finding:</strong> Violates ADR-023 — should use <code>cacheMiddleware</code> abstraction</p>
+<h3 id="5-testing-">5. Testing ⚠️</h3>
+<ul>
+<li>[x] Unit tests for service exist</li>
+<li>[ ] <strong>Missing:</strong> Integration test for cache hit/miss</li>
+<li>[x] Existing tests pass</li>
+</ul>
+<hr>
+<h2 id="output">Output</h2>
+<pre><code>REQUIRES_FIXES
+
+Blocking Issues:
+1. src/routes/user.ts:45 — Missing null check on service return (potential 500)
+2. src/services/user-service.ts:12 — Direct Redis import violates ADR-023 cache abstraction
+
+Warnings:
+- Missing integration test for cache hit/miss scenarios
+
+Escalation: Not triggered (no auth/payment/infra/api/db/schema/lockfile changes)</code></pre>
+<hr>
+<h2 id="fixes-applied">Fixes Applied</h2>
+<pre data-lang="typescript"><code>// Fix 1: Null check
+const profile = await userService.getProfile(userId);
+if (!profile) return res.status(404).json({ error: &#x27;Not found&#x27; });
+return res.json(profile);
+
+// Fix 2: Use cache abstraction
+// Remove: import { redis } from &#x27;../config/redis&#x27;;
+// Use: cacheMiddleware.get/set in route handler</code></pre>
+<hr>
+<h2 id="re-review">Re-review</h2>
+<pre><code>APPROVED
+
+All blocking issues fixed. Cache abstraction respected. Tests pass.</code></pre>
+<hr>
+<p><em>Exemplo: <code>skills/code-review-lite/examples/review-session.md</code></em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

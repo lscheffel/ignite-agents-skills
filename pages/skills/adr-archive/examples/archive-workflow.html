@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>writing-plans / templates / task-card — ignite-agents-skills</title>
+  <title>adr-archive / examples / archive-workflow — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -407,86 +407,80 @@
       <a href="../../../readme.html">README</a>
       <a href="../../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">writing-plans</a> &rsaquo; templates &rsaquo; task-card</div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-archive</a> &rsaquo; examples &rsaquo; archive-workflow</div>
   </nav>
   <div class="content">
-    <h1 id="task-card-template">Task Card Template</h1>
-<blockquote>Card individual de task para o Implementation Plan</blockquote>
+    <h1 id="example-adr-archive-workflow">Example: ADR Archive Workflow</h1>
+<blockquote>Exemplo completo de uso da skill <code>adr-archive</code> para arquivar ADR-007</blockquote>
 <hr>
-<h2 id="task-taskid-taskname">Task {{TASK_ID}}: {{TASK_NAME}}</h2>
-<p><strong>Fase:</strong> {{FASE}} <strong>Dependências:</strong> {{DEPENDENCIES}} <strong>Estimativa:</strong> {{ESTIMATE}}</p>
-<h3 id="descrio">Descrição</h3>
-<p>{{DESCRIPTION}}</p>
-<h3 id="arquivos">Arquivos</h3>
-<p><strong>Criar:</strong></p>
+<h2 id="cenrio">Cenário</h2>
+<p>ADR-007 (AGENTS.md Generator) foi implementada com:</p>
 <ul>
-<li><code>{{NEW_FILE_1}}</code></li>
-<li><code>{{NEW_FILE_2}}</code></li>
-</ul>
-<p><strong>Modificar:</strong></p>
-<ul>
-<li><code>{{MOD_FILE_1}}:{{LINE_RANGE}}</code></li>
-<li><code>{{MOD_FILE_2}}:{{LINE_RANGE}}</code></li>
-</ul>
-<p><strong>Testes:</strong></p>
-<ul>
-<li><code>{{TEST_FILE}}</code></li>
-</ul>
-<h3 id="interfaces">Interfaces</h3>
-<p><strong>Consome (de tasks anteriores):</strong></p>
-<ul>
-<li><code>{{INTERFACE_1}}</code> — <code>{{TYPE_1}}</code></li>
-<li><code>{{INTERFACE_2}}</code> — <code>{{TYPE_2}}</code></li>
-</ul>
-<p><strong>Produz (para tasks seguintes):</strong></p>
-<ul>
-<li><code>{{OUTPUT_1}}</code> — <code>{{TYPE_3}}</code></li>
-<li><code>{{OUTPUT_2}}</code> — <code>{{TYPE_4}}</code></li>
-</ul>
-<h3 id="steps-tdd">Steps (TDD)</h3>
-<ul>
-<li>[ ] <strong>Step 1: Write Failing Test</strong></li>
-</ul>
-<pre data-lang="{{LANG}}"><code>// {{TEST_FILE}}
-describe(&#x27;{{FEATURE}}&#x27;, () =&gt; {
-  it(&#x27;should {{BEHAVIOR}}&#x27;, () =&gt; {
-    const result = {{FUNCTION}}({{INPUT}});
-    expect(result).to{{MATCHER}}({{EXPECTED}});
-  });
-});</code></pre>
-<p><strong>Run:</strong> <code>{{TEST_CMD}}</code> <strong>Expected:</strong> FAIL — <code>{{FAIL_REASON}}</code></p>
-<ul>
-<li>[ ] <strong>Step 2: Run Test to Verify Fail</strong></li>
-</ul>
-<pre data-lang="bash"><code>{{TEST_CMD}}</code></pre>
-<ul>
-<li>[ ] <strong>Step 3: Minimal Implementation</strong></li>
-</ul>
-<pre data-lang="{{LANG}}"><code>// {{MOD_FILE_1}}
-export function {{FUNCTION}}({{PARAMS}}): {{RETURN_TYPE}} {
-  return {{MINIMAL_IMPL}};
-}</code></pre>
-<ul>
-<li>[ ] <strong>Step 4: Run Test to Verify Pass</strong></li>
-</ul>
-<pre data-lang="bash"><code>{{TEST_CMD}}</code></pre>
-<p><strong>Expected:</strong> PASS</p>
-<ul>
-<li>[ ] <strong>Step 5: Commit</strong></li>
-</ul>
-<pre data-lang="bash"><code>git add {{TEST_FILE}} {{MOD_FILE_1}}
-git commit -m &quot;{{CONVENTIONAL_COMMIT_MSG}}&quot;</code></pre>
-<h3 id="validao-ps-commit">Validação Pós-Commit</h3>
-<pre data-lang="bash"><code>{{VALIDATION_CMD}}</code></pre>
-<p><strong>Critérios de Sucesso:</strong></p>
-<ul>
-<li>[ ] Tests pass</li>
-<li>[ ] Lint clean</li>
-<li>[ ] TypeCheck clean</li>
-<li>[ ] No regressions</li>
+<li><code>docs/adr/ADR-007.md</code> — ADR principal</li>
+<li><code>docs/adr/ADR-007-BP.md</code> — Blueprint</li>
+<li><code>docs/adr/ADR-007-TODO.md</code> — TODO 100% completo</li>
+<li><code>docs/adr/ADR-007-PI.md</code> — Implementation Plan (Tier 2)</li>
+<li><code>docs/adr/ADR-007-ER.md</code> — Execution Report na raiz</li>
 </ul>
 <hr>
-<p><em>Template: <code>skills/writing-plans/templates/task-card.md</code></em></p>
+<h2 id="passo-1-auditoria-zero-tokens">Passo 1: Auditoria (Zero Tokens)</h2>
+<pre data-lang="bash"><code>cd /home/loupan/projetosVS/ignite-agents-skills
+python3 skills/adr-archive/scripts/audit.py .</code></pre>
+<p><strong>Output esperado:</strong></p>
+<pre><code>🔍 ADR Archive Audit — 2026-07-15
+=====================================
+
+📊 Stats:
+  Total ADRs: 15
+  Active (root): 0
+  Archived: 15
+
+🚩 Flags Found:
+  [READY_TO_ARCHIVE] ADR-007 — ADR-007-ER.md exists, TODO complete
+  [READY_TO_ARCHIVE] ADR-008 — ADR-008-ER.md exists, TODO complete
+
+📝 Report: docs/reports/adr-archive-report-20260715.md</code></pre>
+<hr>
+<h2 id="passo-2-ler-relatrio">Passo 2: Ler Relatório</h2>
+<pre data-lang="bash"><code>cat docs/reports/adr-archive-report-20260715.md</code></pre>
+<p><strong>Trecho do relatório:</strong></p>
+<pre data-lang="markdown"><code>## Flags de Ação
+| Flag | ADR | Descrição | Ação Requerida |
+|------|-----|-----------|----------------|
+| READY_TO_ARCHIVE | ADR-007 | ADR-007-ER.md exists, TODO complete | python3 audit.py . --archive ADR-007 |
+| READY_TO_ARCHIVE | ADR-008 | ADR-008-ER.md exists, TODO complete | python3 audit.py . --archive ADR-008 |</code></pre>
+<hr>
+<h2 id="passo-3-arquivar">Passo 3: Arquivar</h2>
+<pre data-lang="bash"><code>python3 skills/adr-archive/scripts/audit.py . --archive ADR-007
+python3 skills/adr-archive/scripts/audit.py . --archive ADR-008</code></pre>
+<p><strong>Output:</strong></p>
+<pre><code>✅ ADR-007 archived successfully
+   Moved: ADR-007.md, ADR-007-BP.md, ADR-007-TODO.md, ADR-007-PI.md → archive/
+   Kept: ADR-007-ER.md in root
+   Updated: docs/adr/INDEX.md
+
+✅ ADR-008 archived successfully
+   Moved: ADR-008.md, ADR-008-BP.md, ADR-008-TODO.md, ADR-008-PI.md → archive/
+   Kept: ADR-008-ER.md in root
+   Updated: docs/adr/INDEX.md</code></pre>
+<hr>
+<h2 id="passo-4-verificar">Passo 4: Verificar</h2>
+<pre data-lang="bash"><code>ls -la docs/adr/
+# Deve mostrar apenas ERs + ADRs ativas (se houver)
+
+ls -la docs/adr/archive/
+# Deve mostrar ADR-007*, ADR-008*
+
+cat docs/adr/INDEX.md
+# Seção &quot;Archived ADRs&quot; deve incluir ADR-007 e ADR-008</code></pre>
+<hr>
+<h2 id="passo-5-deploy-gh-pages-governana">Passo 5: Deploy gh-pages (Governança)</h2>
+<pre data-lang="bash"><code>git checkout gh-pages
+git merge master
+git push origin gh-pages
+git checkout master</code></pre>
+<hr>
+<p><em>Exemplo: <code>skills/adr-archive/examples/archive-workflow.md</code></em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

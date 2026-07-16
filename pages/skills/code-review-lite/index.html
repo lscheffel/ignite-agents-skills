@@ -411,8 +411,7 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: code-review-lite description: Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity. version: 4.0-lite maturity: daily-development classification: fast-quality-gate owner: Development Runtime ---</p>
-<p>tags:</p>
+<p>name: code-review-lite description: Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity. version: 2.0.0 maturity: daily-development classification: fast-quality-gate owner: Development Runtime tags:</p>
 <ul>
 <li>code-review</li>
 <li>vibe-coding</li>
@@ -420,68 +419,57 @@
 <li>ai-development</li>
 <li>fast-feedback</li>
 </ul>
-<p>triggers:</p>
-<ul>
-<li>feature_completed</li>
-<li>refactor_completed</li>
-<li>before_commit</li>
-<li>before_push</li>
-<li>major_file_change</li>
-</ul>
-<p>execution_target: 30-90_seconds</p>
-<p>required_before_merge: false required_before_release: true</p>
-<p>capabilities:</p>
-<ul>
-<li>plan_alignment</li>
-<li>regression_detection</li>
-<li>security_regression_detection</li>
-<li>architecture_drift_detection</li>
-<li>test_validation</li>
-</ul>
-<p>integrations:</p>
+<p>related_skills:</p>
 <ul>
 <li>planning</li>
-<li>adr</li>
-<li>todo</li>
-<li>verification-before-completion</li>
-</ul>
-<h2 id="skilltype-fastguardrail">skill_type: FAST_GUARDRAIL</h2>
-<h1 id="code-review-lite-v4">Code Review Lite v4</h1>
-<h2 id="mission">Mission</h2>
-<p>Catch the mistakes that actually matter during day-to-day development while preserving momentum.</p>
-<h1 id="review-philosophy">Review Philosophy</h1>
-<p>Prioritize detection of:</p>
-<ol>
-<li>Broken behavior</li>
-<li>Architectural drift</li>
-<li>Security regressions</li>
-<li>Missing validation</li>
-<li>Technical debt explosions</li>
-</ol>
-<p>Ignore:</p>
-<ul>
-<li>cosmetic style issues</li>
-<li>micro optimizations</li>
-<li>theoretical edge cases</li>
-<li>premature abstractions</li>
+<li>adr-generator</li>
+<li>testing</li>
+<li>security-review</li>
+<li>architecture-review-kilo</li>
 </ul>
 <hr>
-<h1 id="review-scope">Review Scope</h1>
-<p>Review only:</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
 <ul>
-<li>modified files</li>
-<li>directly affected modules</li>
-<li>changed interfaces</li>
-<li>modified dependencies</li>
+<li>Finalizar uma feature ou refatoração</li>
+<li>Antes de commit ou push</li>
+<li>Precisar de feedback rápido sobre qualidade</li>
+<li>Detectar regressões óbvias</li>
+<li>Validar alinhamento com ADRs</li>
 </ul>
-<p>Never review:</p>
+<h3 id="no-use-quando">Não use quando:</h3>
 <ul>
-<li>entire repository</li>
-<li>unrelated modules</li>
-<li>historical commits</li>
+<li>Mudança envolve autenticação, pagamento, infra, API pública, schema DB, lockfile</li>
+<li>Precisar de auditoria completa de segurança</li>
+<li>Mudança >20 arquivos ou >1500 linhas</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>planning</code> — para alinhamento de escopo</li>
+<li><code>adr-generator</code> — para decisões arquiteturais</li>
+<li><code>testing</code> — para estratégia de testes</li>
+<li><code>security-review</code> — para auditoria completa</li>
+<li><code>architecture-review-kilo</code> — para revisão estrutural</li>
 </ul>
 <hr>
-<h1 id="phase-1--context-loading">Phase 1 — Context Loading</h1>
+<h1 id="decision-tree">Decision Tree</h1>
+<pre data-lang="mermaid"><code>graph TD
+    A[Code Change] --&gt; B{Size}
+    B --&gt;|&lt;5 files, &lt;300 lines| C[SMALL_CHANGE]
+    B --&gt;|5-20 files, &lt;1500 lines| D[NORMAL_CHANGE]
+    B --&gt;|&gt;20 files, &gt;1500 lines| E[LARGE_CHANGE]
+    C --&gt; F[Focus: Bugs + Regressions]
+    D --&gt; G[Focus: Arch + Tests + Security]
+    E --&gt; H[RECOMMEND_FULL_REVIEW]
+    F --&gt; I{Issues?}
+    G --&gt; I
+    I --&gt;|No| J[APPROVED]
+    I --&gt;|Warnings| K[APPROVED_WITH_WARNINGS]
+    I --&gt;|Blocking| L[REQUIRES_FIXES]
+    H --&gt; M[ESCALATE]</code></pre>
+<hr>
+<h2 id="workflow">Workflow</h2>
+<h2 id="fase-1--context-loading">Fase 1 — Context Loading</h2>
 <p>Collect:</p>
 <ul>
 <li>changed files</li>
@@ -497,18 +485,20 @@
 </ul>
 <p>If requirements are unclear:</p>
 <pre data-lang="text"><code>ASK_FOR_CONTEXT</code></pre>
+<p><strong>Checkpoint:</strong> [ ] Files identified [ ] Task context loaded [ ] Constraints clear</p>
 <hr>
-<h1 id="phase-2--fast-review">Phase 2 — Fast Review</h1>
+<h2 id="fase-2--fast-review">Fase 2 — Fast Review</h2>
 <p>Evaluate only five dimensions.</p>
-<h2 id="1-plan-alignment">1. Plan Alignment</h2>
+<h3 id="1-plan-alignment">1. Plan Alignment</h3>
 <p>Questions:</p>
 <ul>
 <li>Does implementation match requirements?</li>
 <li>Was scope respected?</li>
 <li>Was unnecessary functionality introduced?</li>
 </ul>
+<p><strong>Checkpoint:</strong> [ ] Scope matches [ ] No gold-plating</p>
 <hr>
-<h2 id="2-obvious-bugs">2. Obvious Bugs</h2>
+<h3 id="2-obvious-bugs">2. Obvious Bugs</h3>
 <p>Look for:</p>
 <ul>
 <li>null references</li>
@@ -519,8 +509,9 @@
 <li>race conditions</li>
 <li>unhandled exceptions</li>
 </ul>
+<p><strong>Checkpoint:</strong> [ ] No null derefs [ ] Imports resolve [ ] Conditions valid [ ] Returns present [ ] Exceptions handled</p>
 <hr>
-<h2 id="3-security-regression">3. Security Regression</h2>
+<h3 id="3-security-regression">3. Security Regression</h3>
 <p>Look for:</p>
 <ul>
 <li>exposed secrets</li>
@@ -531,8 +522,9 @@
 <li>unsafe deserialization</li>
 </ul>
 <p>Do not perform full security audit.</p>
+<p><strong>Checkpoint:</strong> [ ] No secrets exposed [ ] Input sanitized [ ] Auth checks present [ ] No injection vectors</p>
 <hr>
-<h2 id="4-architecture-drift">4. Architecture Drift</h2>
+<h3 id="4-architecture-drift">4. Architecture Drift</h3>
 <p>Look for:</p>
 <ul>
 <li>duplicated logic</li>
@@ -541,17 +533,19 @@
 <li>leaking responsibilities</li>
 <li>violation of ADRs</li>
 </ul>
+<p><strong>Checkpoint:</strong> [ ] No new duplication [ ] Abstractions intact [ ] No circular deps [ ] ADRs respected</p>
 <hr>
-<h2 id="5-testing">5. Testing</h2>
+<h3 id="5-testing">5. Testing</h3>
 <p>Verify:</p>
 <ul>
 <li>existing tests still make sense</li>
 <li>new behavior is covered</li>
 <li>obvious missing tests</li>
 </ul>
+<p><strong>Checkpoint:</strong> [ ] Tests pass [ ] New behavior tested [ ] No obvious gaps</p>
 <hr>
-<h1 id="review-modes">Review Modes</h1>
-<h2 id="smallchange">SMALL_CHANGE</h2>
+<h2 id="review-modes">Review Modes</h2>
+<h3 id="smallchange">SMALL_CHANGE</h3>
 <p>Criteria:</p>
 <ul>
 <li>less than 5 files</li>
@@ -563,7 +557,7 @@
 <li>regressions</li>
 </ul>
 <hr>
-<h2 id="normalchange">NORMAL_CHANGE</h2>
+<h3 id="normalchange">NORMAL_CHANGE</h3>
 <p>Criteria:</p>
 <ul>
 <li>5-20 files</li>
@@ -576,7 +570,7 @@
 <li>security regressions</li>
 </ul>
 <hr>
-<h2 id="largechange">LARGE_CHANGE</h2>
+<h3 id="largechange">LARGE_CHANGE</h3>
 <p>Criteria:</p>
 <ul>
 <li>more than 20 files</li>
@@ -585,11 +579,11 @@
 <p>Action:</p>
 <pre data-lang="text"><code>RECOMMEND_FULL_REVIEW</code></pre>
 <hr>
-<h1 id="output-format">Output Format</h1>
-<h2 id="approved">APPROVED</h2>
+<h2 id="output-format">Output Format</h2>
+<h3 id="approved">APPROVED</h3>
 <p>No blocking issues found.</p>
 <hr>
-<h2 id="approvedwithwarnings">APPROVED_WITH_WARNINGS</h2>
+<h3 id="approvedwithwarnings">APPROVED_WITH_WARNINGS</h3>
 <p>Example:</p>
 <ul>
 <li>missing test</li>
@@ -597,7 +591,7 @@
 <li>documentation lag</li>
 </ul>
 <hr>
-<h2 id="requiresfixes">REQUIRES_FIXES</h2>
+<h3 id="requiresfixes">REQUIRES_FIXES</h3>
 <p>Blocking examples:</p>
 <ul>
 <li>broken logic</li>
@@ -606,7 +600,7 @@
 <li>regression risk</li>
 </ul>
 <hr>
-<h1 id="escalation-rules">Escalation Rules</h1>
+<h2 id="escalation-rules">Escalation Rules</h2>
 <p>Automatically recommend full review if:</p>
 <ul>
 <li>authentication changed</li>
@@ -619,28 +613,65 @@
 <p>Escalation target:</p>
 <pre data-lang="text"><code>code-review-v4</code></pre>
 <hr>
-<h1 id="anti-patterns">Anti-Patterns</h1>
-<p>Reject:</p>
-<ul>
-<li>massive god functions</li>
-<li>hidden side effects</li>
-<li>copy-paste programming</li>
-<li>bypassing architecture</li>
-<li>dead code accumulation</li>
-</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="massive-god-functions">Massive God Functions</h4>
+<p><strong>O que é:</strong> Funções com >200 linhas, múltiplas responsabilidades. <strong>Por que é ruim:</strong> Impossível testar, entender, manter. <strong>Como evitar:</strong> Extrair para funções pequenas, single responsibility.</p>
+<h4 id="hidden-side-effects">Hidden Side Effects</h4>
+<p><strong>O que é:</strong> Funções que modificam estado global, DB, filesystem sem indicar na assinatura. <strong>Por que é ruim:</strong> Quebra referential transparency, causa bugs silenciosos. <strong>Como evitar:</strong> Pure functions, explicit IO types, command pattern.</p>
+<h4 id="copy-paste-programming">Copy-Paste Programming</h4>
+<p><strong>O que é:</strong> Duplicar código em vez de abstrair. <strong>Por que é ruim:</strong> Bugs se multiplicam, manutenção exponencial. <strong>Como evitar:</strong> DRY, extrair para shared module, template pattern.</p>
+<h4 id="bypassing-architecture">Bypassing Architecture</h4>
+<p><strong>O que é:</strong> Ignorar layers, chamar DB direto do controller, pular use cases. <strong>Por que é ruim:</strong> Acoplamento, impossibilita testes, viola ADRs. <strong>Como evitar:</strong> Respeitar boundaries, dependency inversion, lint rules.</p>
+<h4 id="dead-code-accumulation">Dead Code Accumulation</h4>
+<p><strong>O que é:</strong> Código não executado, comentado, feature flags eternos. <strong>Por que é ruim:</strong> Ruído cognitivo, falsos positivos em análise. <strong>Como evitar:</strong> Remover imediatamente, feature flags com TTL, CI check.</p>
 <hr>
-<h1 id="runtime-limits">Runtime Limits</h1>
+<h2 id="runtime-limits">Runtime Limits</h2>
 <div class="table-wrapper"><table><tr><th>Metric</th><th>Limit</th></tr><tr><td>Files</td><td>20</td></tr><tr><td>Changed Lines</td><td>1500</td></tr><tr><td>Execution Time</td><td>90 seconds</td></tr></table></div>
 <hr>
-<h1 id="final-rule">Final Rule</h1>
+<h2 id="final-rule">Final Rule</h2>
 <p>If confidence drops below:</p>
 <pre data-lang="text"><code>70%</code></pre>
 <p>Return:</p>
 <pre data-lang="text"><code>ESCALATE_TO_FULL_REVIEW</code></pre>
 <hr>
-<h1 id="iron-law">Iron Law</h1>
+<h2 id="iron-law">Iron Law</h2>
 <pre data-lang="text"><code>Move fast.
 Do not move blindly.</code></pre>
+<hr>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="change-touches-generated-code">Change Touches Generated Code</h3>
+<p><strong>Situação:</strong> Modificou arquivo gerado (ex: protobuf, GraphQL schema). <strong>Solução:</strong> Review apenas a fonte (.proto, schema.graphql), ignorar gerado. <strong>Exceção:</strong> Se gerado não versionado, alertar para versionar fonte.</p>
+<h3 id="change-in-vendored-dependency">Change in Vendored Dependency</h3>
+<p><strong>Situação:</strong> Modificou código em <code>vendor/</code> ou <code>node_modules/</code>. <strong>Solução:</strong> REJECT — dependências devem ser atualizadas via package manager. <strong>Exceção:</strong> Fork temporário com PR upstream — documentar no ADR.</p>
+<h3 id="refactor-without-tests">Refactor Without Tests</h3>
+<p><strong>Situação:</strong> Refatoração grande sem testes de caracterização. <strong>Solução:</strong> REQUIRE_TESTS_FIRST — bloquear até testes existirem. <strong>Exceção:</strong> Nenhuma — regra inegociável.</p>
+<hr>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-pr-review">Checklist Pré-Review</h3>
+<ul>
+<li>[ ] Arquivos modificados identificados</li>
+<li>[ ] Task/ADR/TODO referenciados</li>
+<li>[ ] Comportamento esperado claro</li>
+<li>[ ] Contexto suficiente (senão ASK_FOR_CONTEXT)</li>
+</ul>
+<h3 id="checklist-ps-review">Checklist Pós-Review</h3>
+<ul>
+<li>[ ] Output format correto (APPROVED/WARNINGS/REQUIRES_FIXES)</li>
+<li>[ ] Checkpoints das 5 dimensões preenchidos</li>
+<li>[ ] Escalação aplicada se necessário</li>
+<li>[ ] Anti-patterns verificados</li>
+<li>[ ] Runtime limits respeitados</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/review-checklist.html">review-checklist.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/review-session.html">review-session.md</a></li>
+</ul>
 
   </div>
 <footer>
