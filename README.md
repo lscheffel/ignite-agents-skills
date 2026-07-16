@@ -14,6 +14,7 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 ├── USAGE.md                          # Guia completo de uso das skills
 ├── skills/
 │   ├── index.json                    # Registry de skills (fonte única)
+│   ├── adr-archive/
 │   ├── adr-generator/
 │   ├── agent-orchestration/
 │   ├── agents-md-generator/          # 🆕 Skill para AGENTS.md adaptativo
@@ -22,6 +23,7 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 │   ├── data-modeling/
 │   ├── ddd/
 │   ├── documentation/
+│   ├── documentation-reconciliation/
 │   ├── git/
 │   ├── governance/
 │   ├── implementation/
@@ -59,11 +61,11 @@ Hospedado como GitHub Pages, este repositório serve como registry remoto para m
 | Categoria | Skills |
 |-----------|--------|
 | Architecture | `architecture-review-kilo`, `ddd` |
-| Documentation | `documentation`, `adr-generator` |
+| Documentation | `documentation`, `adr-generator`, `documentation-reconciliation` |
 | Governance | `governance`, `repo-bootstrap`, `agents-md-generator` |
 | Planning | `planning`, `writing-plans` |
 | Implementation | `implementation` |
-| Quality | `testing`, `architecture-review-kilo` |
+| Quality | `testing` |
 | Security | `security-review` |
 | AI | `prompt-engineering`, `vibe-coding` |
 | Orchestration | `agent-orchestration` |
@@ -150,16 +152,16 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 
 ## Status da Implementação
 
-**v2.2.0 — Skills Ultra-High Quality Grade**
+**v2.3.1 — Skills Ultra-High Quality Grade**
 
 | Métrica | Status |
 |---------|--------|
-| Skills total | 23 ✅ |
-| Skills refatoradas | 23/23 ✅ |
-| Templates criados | 72 ✅ |
-| Examples criados | 18 ✅ |
-| Páginas HTML geradas | 140 ✅ |
-| ADRs renderizados | 38 ✅ |
+| Skills total | 25 ✅ |
+| Skills refatoradas | 25/25 ✅ |
+| Templates criados | 72+ ✅ |
+| Examples criados | 18+ ✅ |
+| Páginas HTML geradas | 140+ ✅ |
+| ADRs renderizadas | 38 ✅ |
 | Validação automática | ✅ |
 | CI pipeline | ✅ (`validate-skill.sh` + `validate-index.sh`) |
 | Auto-sync index.json | ✅ (`sync-and-deploy.yml`) |
@@ -171,18 +173,21 @@ Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
 
 Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
 
-**Active:**
+**Ativas:**
 - *Nenhuma ADR ativa*
 
 **Arquivadas (Cold Storage):**
 - [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/archive/ADR-001.md) ✅
 - [ADR-002: Padrão de Skill Ultra-High Quality Grade](./docs/adr/archive/ADR-002.md) ✅
-- [ADR-003: Retrospectiva da Implementação](./docs/adr/archive/ADR-003.md) ✅
-- [ADR-004: Implementação das Recomendações da Ultra-Auditoria](./docs/adr/archive/ADR-004.md) ✅
-- [ADR-005: Introdução da Skill implementation](./docs/adr/archive/ADR-005.md) ✅
+- [ADR-003: Retrospectiva da Implementação Ultra-High Quality Grade](./docs/adr/archive/ADR-003.md) ✅
+- [ADR-004: Implementação das Recomendações da Ultra-Auditoria v2.0.2](./docs/adr/archive/ADR-004.md) ✅
+- [ADR-005: Introdução da Skill `implementation` para Execução Governada de Mudanças](./docs/adr/archive/ADR-005.md) ✅
 - [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/archive/ADR-006.md) ✅
 - [ADR-007: Skill para Geração de AGENTS.md Adaptativo](./docs/adr/archive/ADR-007.md) ✅
-- [ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais](./docs/adr/ADR-008.md) ✅
+- [ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais](./docs/adr/archive/ADR-008.md) ✅
+- [ADR-009: Resolução de Débitos da Auditoria v2.1.0](./docs/adr/archive/ADR-009.md) ✅
+- [ADR-010: Branch Protection e SemVer para Tags — Emergencial](./docs/adr/archive/ADR-010.md) ✅
+- [ADR-011: Documentation Reconciliation Skill](./docs/adr/archive/ADR-011.md) ✅
 - [ADR-012: Dynamic HTML Pages — Rendering de Skills em GitHub Pages](./docs/adr/archive/ADR-012.md) ✅
 - [ADR-013: Expansão do Build.py para Incluir ADRs e Referências](./docs/adr/archive/ADR-013.md) ✅
 - [ADR-014: Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages](./docs/adr/archive/ADR-014.md) ✅

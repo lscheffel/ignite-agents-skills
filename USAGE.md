@@ -18,18 +18,18 @@
 
 ## Visão Geral
 
-O repositório `ignite-agents-skills` contém **22 skills** para agentes de IA compatíveis com o padrão [Agent Skills](https://agentskills.io). Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.
+O repositório `ignite-agents-skills` contém **25 skills** para agentes de IA compatíveis com o padrão [Agent Skills](https://agentskills.io). Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.
 
-### Total de Skills: 22
+### Total de Skills: 25
 
 | Categoria | Quantidade | Skills |
 |-----------|------------|--------|
 | Architecture | 2 | `architecture-review-kilo`, `ddd` |
-| Documentation | 2 | `documentation`, `adr-generator` |
+| Documentation | 3 | `documentation`, `adr-generator`, `documentation-reconciliation` |
 | Governance | 3 | `governance`, `repo-bootstrap`, `agents-md-generator` |
 | Planning | 2 | `planning`, `writing-plans` |
 | Implementation | 1 | `implementation` |
-| Quality | 1 | `testing` |
+| Quality | 2 | `testing`, `code-review-lite` |
 | Security | 1 | `security-review` |
 | AI | 2 | `prompt-engineering`, `vibe-coding` |
 | Orchestration | 1 | `agent-orchestration` |
@@ -38,7 +38,7 @@ O repositório `ignite-agents-skills` contém **22 skills** para agentes de IA c
 | Operations | 1 | `observability` |
 | Code Quality | 1 | `refactoring` |
 | Tools | 2 | `git`, `release` |
-| Audit | 1 | `skill-audit-bulletin` |
+| Audit | 2 | `skill-audit-bulletin`, `adr-archive` |
 
 ---
 
@@ -150,6 +150,26 @@ Crie um README completo para este projeto
 ```
 
 **Skills relacionadas:** `adr-generator`, `repo-bootstrap`, `implementation`
+
+---
+
+#### `documentation-reconciliation`
+
+**Descrição:** Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código.
+
+**Quando usar:**
+- README/CHANGELOG/USAGE desatualizados
+- ADRs/BPs/TODOs com status incorretos
+- ADRs implementadas não arquivadas
+- Antes de release ou deploy gh-pages
+- Gaps entre documentação e implementação
+
+**Exemplo de uso:**
+```
+Execute reconciliação documental completa deste repositório
+```
+
+**Skills relacionadas:** `governance`, `adr-generator`, `skill-audit-bulletin`
 
 ---
 
@@ -285,6 +305,25 @@ Crie testes unitários para o UserService
 ```
 
 **Skills relacionadas:** `ddd`, `governance`, `implementation`
+
+---
+
+#### `code-review-lite`
+
+**Descrição:** Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.
+
+**Quando usar:**
+- Após completar features/refactors
+- Antes de commits/push
+- Detectar regressões óbvias
+- Validar alinhamento com ADRs
+
+**Exemplo de uso:**
+```
+Revise este código para bugs óbvios e drift arquitetural
+```
+
+**Skills relacionadas:** `planning`, `adr-generator`, `testing`, `security-review`, `architecture-review-kilo`
 
 ---
 
@@ -507,6 +546,26 @@ Audite a qualidade da skill governance
 
 ---
 
+#### `adr-archive`
+
+**Descrição:** Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.
+
+**Quando usar:**
+- Arquivar ADRs implementadas
+- Limpar artefatos de execução (BP, TODO, PI) da raiz
+- Garantir que apenas ADRs ativas e ERs de ADRs finalizadas fiquem visíveis
+- Executar reconciliação documental pré-release
+- Automatizar governança de ADRs
+
+**Exemplo de uso:**
+```
+Arquive as ADRs implementadas deste repositório
+```
+
+**Skills relacionadas:** `adr-generator`, `implementation`, `documentation-reconciliation`, `governance`
+
+---
+
 ## Fluxos de Trabalho Comuns
 
 ### Fluxo 1: Iniciar Novo Projeto
@@ -554,14 +613,16 @@ graph TD
     A[PR Aberto] --> B[architecture-review-kilo]
     B --> C[security-review]
     C --> D[testing]
-    D --> E[documentation]
-    E --> F[Review Completo]
+    D --> E[code-review-lite]
+    E --> F[documentation]
+    F --> G[Review Completo]
 ```
 
 1. **architecture-review-kilo** — Revisar arquitetura
 2. **security-review** — Verificar segurança
 3. **testing** — Validar testes
-4. **documentation** — Verificar documentação
+4. **code-review-lite** — Revisão leve (AI-first)
+5. **documentation** — Verificar documentação
 
 ---
 
@@ -598,6 +659,25 @@ graph TD
 2. **git** — Criar tags e branches
 3. **governance** — Verificar processo
 4. **observability** — Monitorar deploy
+
+---
+
+### Fluxo 6: Reconciliação Documental (Pré-Release)
+
+```mermaid
+graph TD
+    A[Pré-Release] --> B[documentation-reconciliation]
+    B --> C[adr-archive]
+    C --> D[validate-index]
+    D --> E[CHANGELOG update]
+    E --> F[Tag + Deploy]
+```
+
+1. **documentation-reconciliation** — Auditar docs canônicas + ADR/BP/TODO
+2. **adr-archive** — Arquivar ADRs implementadas
+3. **validate-index** — Verificar registry
+4. **CHANGELOG update** — Entradas para commits recentes
+5. **Tag + Deploy** — SemVer + gh-pages sync
 
 ---
 
@@ -653,6 +733,6 @@ graph TD
 
 ---
 
-*Última atualização: 2026-07-05*
-*Total de skills: 22*
-*Versão do registry: 2.0.3*
+*Última atualização: 2026-07-15*
+*Total de skills: 25*
+*Versão do registry: 2.3.1*

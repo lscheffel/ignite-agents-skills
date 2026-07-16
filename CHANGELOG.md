@@ -12,6 +12,17 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
   - `get_page_template()` calcula nav prefix baseado na profundidade
   - Corrigidos links ADR, skill e nav em todas as páginas HTML
 
+### Changed
+- **Reconciliação Documental Completa** (2026-07-15)
+  - Removida skill `code-review` (protocolo autônomo legacy, 6398 linhas) + `code-review.rar` lixo
+  - Corrigidas 3 skills com falha de validação Ultra-High Quality:
+    - `adr-archive` v2.0.0 — expandida para 250 linhas, templates + examples adicionados
+    - `code-review-lite` v2.0.0 — related_skills no frontmatter, severity nos anti-patterns, checkpoints
+    - `writing-plans` v2.0.0 — frontmatter completo (version, tags, related_skills), seção Workflow
+  - Sincronizado `skills/index.json` com filesystem (25 skills válidas)
+  - Atualizados documentos canônicos: README.md, CHANGELOG.md, USAGE.md
+  - Version bump: index.json → 2.3.1 (match CHANGELOG latest)
+
 ## [2.3.1] - 2026-07-05
 
 ### Added

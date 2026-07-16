@@ -1,29 +1,100 @@
 # Task Card Template
 
-## Descrição
+> Card individual de task para o Implementation Plan
 
-{Descrição clara da task}
+---
 
-## Critérios de Aceitação
+## Task {{TASK_ID}}: {{TASK_NAME}}
 
-- [ ] Critério 1
-- [ ] Critério 2
-- [ ] Critério 3
+**Fase:** {{FASE}}
+**Dependências:** {{DEPENDENCIES}}
+**Estimativa:** {{ESTIMATE}}
 
-## Estimativa
+### Descrição
+{{DESCRIPTION}}
 
-{T-Shirt size: XS/S/M/L/XL}
+### Arquivos
 
-## Dependências
+**Criar:**
+- `{{NEW_FILE_1}}`
+- `{{NEW_FILE_2}}`
 
-- Task X
-- Task Y
+**Modificar:**
+- `{{MOD_FILE_1}}:{{LINE_RANGE}}`
+- `{{MOD_FILE_2}}:{{LINE_RANGE}}`
 
-## Branch
+**Testes:**
+- `{{TEST_FILE}}`
 
-`{tipo}/{nome-curto}`
+### Interfaces
 
-## Labels
+**Consome (de tasks anteriores):**
+- `{{INTERFACE_1}}` — `{{TYPE_1}}`
+- `{{INTERFACE_2}}` — `{{TYPE_2}}`
 
-- `priority/{nivel}`
-- `type/{tipo}`
+**Produz (para tasks seguintes):**
+- `{{OUTPUT_1}}` — `{{TYPE_3}}`
+- `{{OUTPUT_2}}` — `{{TYPE_4}}`
+
+### Steps (TDD)
+
+- [ ] **Step 1: Write Failing Test**
+
+```{{LANG}}
+// {{TEST_FILE}}
+describe('{{FEATURE}}', () => {
+  it('should {{BEHAVIOR}}', () => {
+    const result = {{FUNCTION}}({{INPUT}});
+    expect(result).to{{MATCHER}}({{EXPECTED}});
+  });
+});
+```
+
+**Run:** `{{TEST_CMD}}`
+**Expected:** FAIL — `{{FAIL_REASON}}`
+
+- [ ] **Step 2: Run Test to Verify Fail**
+
+```bash
+{{TEST_CMD}}
+```
+
+- [ ] **Step 3: Minimal Implementation**
+
+```{{LANG}}
+// {{MOD_FILE_1}}
+export function {{FUNCTION}}({{PARAMS}}): {{RETURN_TYPE}} {
+  return {{MINIMAL_IMPL}};
+}
+```
+
+- [ ] **Step 4: Run Test to Verify Pass**
+
+```bash
+{{TEST_CMD}}
+```
+
+**Expected:** PASS
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add {{TEST_FILE}} {{MOD_FILE_1}}
+git commit -m "{{CONVENTIONAL_COMMIT_MSG}}"
+```
+
+### Validação Pós-Commit
+
+```bash
+{{VALIDATION_CMD}}
+```
+
+**Critérios de Sucesso:**
+- [ ] Tests pass
+- [ ] Lint clean
+- [ ] TypeCheck clean
+- [ ] No regressions
+
+---
+
+*Template: `skills/writing-plans/templates/task-card.md`*

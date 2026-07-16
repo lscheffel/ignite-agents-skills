@@ -2,16 +2,19 @@
   "skills": [
     {
       "name": "adr-archive",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.",
       "tags": [],
       "related_skills": [],
       "files": [
-        "SKILL.md",
         "examples/ADR-997-TODO.md",
         "examples/ADR-998-TODO.md",
         "examples/ADR-999-TODO.md",
-        "scripts/audit.py"
+        "examples/archive-workflow.md",
+        "scripts/audit.py",
+        "SKILL.md",
+        "templates/archive-checklist.md",
+        "templates/audit-report.md"
       ]
     },
     {
@@ -21,18 +24,18 @@
       "tags": [],
       "related_skills": [],
       "files": [
-        "SKILL.md",
         "examples/database-choice.md",
         "examples/quadra/ADR-001-BP.md",
+        "examples/quadra/ADR-001.md",
         "examples/quadra/ADR-001-PI.md",
         "examples/quadra/ADR-001-TODO.md",
-        "examples/quadra/ADR-001.md",
+        "SKILL.md",
         "templates/adr-bp.md",
         "templates/adr-emergency.md",
+        "templates/adr.md",
         "templates/adr-pi.md",
         "templates/adr-simple.md",
-        "templates/adr-todo.md",
-        "templates/adr.md"
+        "templates/adr-todo.md"
       ]
     },
     {
@@ -51,11 +54,11 @@
         "governance"
       ],
       "files": [
-        "SKILL.md",
         "checklists/post-execution.md",
         "checklists/pre-flight.md",
         "examples/fan-out-fan-in.md",
         "examples/multi-agent-decomposition.md",
+        "SKILL.md",
         "templates/agent-role-card.md",
         "templates/handoff-protocol.md",
         "templates/routing-decision.md"
@@ -79,12 +82,12 @@
         "skill-audit-bulletin"
       ],
       "files": [
-        "SKILL.md",
         "checklists/maintenance.md",
         "checklists/validation.md",
         "examples/before-after.md",
         "examples/context-detection.md",
         "examples/customization.md",
+        "SKILL.md",
         "templates/AGENTS-api.md",
         "templates/AGENTS-base.md",
         "templates/AGENTS-cli.md",
@@ -111,10 +114,10 @@
         "governance"
       ],
       "files": [
-        "SKILL.md",
         "examples/error-handling-contract.md",
         "examples/python-flask-rest.md",
         "examples/rest-crud-spec.md",
+        "SKILL.md",
         "templates/api-versioning.md",
         "templates/endpoint-spec.md",
         "templates/error-contract.md"
@@ -136,30 +139,22 @@
         "adr-generator"
       ],
       "files": [
-        "SKILL.md",
         "examples/god-class-refactor.md",
+        "SKILL.md",
         "templates/architecture-review-report.md",
         "templates/tech-debt-item.md"
       ]
     },
     {
-      "name": "code-review",
-      "version": "4.0.0",
-      "description": ">",
-      "tags": [],
-      "related_skills": [],
-      "files": [
-        "SKILL.md"
-      ]
-    },
-    {
       "name": "code-review-lite",
-      "version": "4.0-lite",
+      "version": "2.0.0",
       "description": "Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.",
       "tags": [],
       "related_skills": [],
       "files": [
-        "SKILL.md"
+        "examples/review-session.md",
+        "SKILL.md",
+        "templates/review-checklist.md"
       ]
     },
     {
@@ -179,8 +174,8 @@
         "architecture-review-kilo"
       ],
       "files": [
-        "SKILL.md",
         "checklists/schema-review.md",
+        "SKILL.md",
         "templates/index-strategy.md",
         "templates/migration.md",
         "templates/schema.sql"
@@ -203,8 +198,8 @@
         "implementation"
       ],
       "files": [
-        "SKILL.md",
         "examples/order-modeling.md",
+        "SKILL.md",
         "templates/aggregate-root.ts",
         "templates/domain-event.ts",
         "templates/domain-service.ts",
@@ -230,8 +225,8 @@
         "implementation"
       ],
       "files": [
-        "SKILL.md",
         "examples/readme-example.md",
+        "SKILL.md",
         "templates/api-doc.md",
         "templates/architecture-doc.md",
         "templates/readme.md"
@@ -278,8 +273,8 @@
         "implementation"
       ],
       "files": [
-        "SKILL.md",
         "examples/feature-workflow.md",
+        "SKILL.md",
         "templates/branch-naming.md",
         "templates/commit-message.md",
         "templates/pr-description.md"
@@ -304,8 +299,8 @@
         "skill-audit-bulletin"
       ],
       "files": [
-        "SKILL.md",
         "examples/branch-protection.md",
+        "SKILL.md",
         "templates/codeowners",
         "templates/issue-template.md",
         "templates/pull-request-template.md"
@@ -318,11 +313,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
-        "SKILL.md",
         "checklists/post-execution.md",
         "checklists/pre-execution.md",
         "examples/complex-change.md",
         "examples/simple-change.md",
+        "SKILL.md",
         "templates/change-plan.md",
         "templates/execution-contract.md",
         "templates/execution-report.md",
@@ -347,11 +342,11 @@
         "governance"
       ],
       "files": [
-        "SKILL.md",
         "checklists/observability-implementation.md",
         "examples/express-logging.ts",
         "examples/prometheus-metrics.ts",
         "examples/tracing-setup.ts",
+        "SKILL.md",
         "templates/alert-rules.md",
         "templates/logging-spec.md",
         "templates/metrics-sla.md"
@@ -374,8 +369,8 @@
         "implementation"
       ],
       "files": [
-        "SKILL.md",
         "examples/social-login-plan.md",
+        "SKILL.md",
         "templates/epic-card.md",
         "templates/feature-card.md",
         "templates/task-card.md"
@@ -396,8 +391,8 @@
         "vibe-coding"
       ],
       "files": [
-        "SKILL.md",
         "examples/refactoring-prompt.md",
+        "SKILL.md",
         "templates/prompt-complex.md",
         "templates/prompt-evaluation.md",
         "templates/prompt-simple.md"
@@ -420,9 +415,9 @@
         "testing"
       ],
       "files": [
-        "SKILL.md",
         "examples/extract-method.ts",
         "examples/strangler-fig.ts",
+        "SKILL.md",
         "templates/legacy-migration.md",
         "templates/refactoring-catalog.md",
         "templates/test-before-refactor.md"
@@ -445,10 +440,10 @@
         "implementation"
       ],
       "files": [
-        "SKILL.md",
         "checklists/post-release.md",
         "checklists/pre-release.md",
         "examples/release-process.md",
+        "SKILL.md",
         "templates/changelog-entry.md",
         "templates/release-checklist.md",
         "templates/rollback-plan.md"
@@ -472,13 +467,13 @@
         "skill-audit-bulletin"
       ],
       "files": [
-        "SKILL.md",
         "examples/bootstrap-example.md",
+        "SKILL.md",
         "templates/AGENTS.md",
+        "templates/ci.yml",
         "templates/CONTRIBUTING.md",
         "templates/README.md",
-        "templates/SECURITY.md",
-        "templates/ci.yml"
+        "templates/SECURITY.md"
       ]
     },
     {
@@ -498,9 +493,9 @@
         "testing"
       ],
       "files": [
-        "SKILL.md",
         "examples/crypto-validation.md",
         "examples/dependency-audit.md",
+        "SKILL.md",
         "templates/security-checklist.md",
         "templates/threat-model.md",
         "templates/vulnerability-report.md"
@@ -513,9 +508,9 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "examples/git-audit.md",
         "SKILL.md",
         "SKILL.md.original",
-        "examples/git-audit.md",
         "templates/audit-bulletin.md"
       ]
     },
@@ -537,8 +532,8 @@
         "implementation"
       ],
       "files": [
-        "SKILL.md",
         "examples/order-testing.md",
+        "SKILL.md",
         "templates/e2e-test.ts",
         "templates/integration-test.ts",
         "templates/test-plan.md",
@@ -560,30 +555,31 @@
         "testing"
       ],
       "files": [
-        "SKILL.md",
         "examples/session-example.md",
+        "SKILL.md",
         "templates/vibe-session.md"
       ]
     },
     {
       "name": "writing-plans",
       "version": "2.0.0",
-      "description": "Use when you have a spec or requirements for a multi-step task, before",
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code. Creates comprehensive implementation plans with bite-sized tasks, DRY principles, TDD, and frequent commits.",
       "tags": [],
       "related_skills": [],
       "files": [
-        "SKILL.md",
         "examples/api-migration-plan.md",
         "examples/feature-breakdown.md",
+        "examples/social-auth-plan.md",
         "plan-document-reviewer-prompt.md",
+        "SKILL.md",
         "templates/implementation-plan.md",
         "templates/task-card.md"
       ]
     }
   ],
-  "version": "2.2.0",
+  "version": "2.3.1",
   "schema_version": "2.0.0",
-  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (26 skills)",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (25 skills)",
   "validation": {
     "min_lines_per_skill": 150,
     "required_sections": [
