@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>adr-generator / templates / adr-emergency — ignite-agents-skills</title>
+  <title>adr-generator / templates / adr-pi — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -407,46 +407,64 @@
       <a href="../../../readme.html">README</a>
       <a href="../../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-emergency</div>
+    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-pi</div>
   </nav>
   <div class="content">
     <hr>
-<p>implementation_status: PENDENTE ---</p>
-<h1 id="adr-id-title">ADR-{{id}}: {{title}}</h1>
-<h2 id="status">Status</h2>
-<p>Implementado (emergencial)</p>
-<h2 id="data">Data</h2>
-<p>{{date}}</p>
-<h2 id="contexto">Contexto</h2>
-<h3 id="diagnstico">Diagnóstico</h3>
-<div class="table-wrapper"><table><tr><th>Capacidade</th><th>Status</th><th>Evidence</th></tr><tr><td>{{capability}}</td><td>❌</td><td>{{evidence}}</td></tr></table></div>
-<h3 id="consequncias-da-lacuna">Consequências da Lacuna</h3>
+<p>id: ADR-XXX-PI type: pi title: Implementation Plan - [Título da Decisão] created: YYYY-MM-DD updated: YYYY-MM-DD adr_ref: ADR-XXX ---</p>
+<h1 id="adr-xxx-pi-implementation-plan---ttulo-da-deciso">ADR-XXX-PI: Implementation Plan - [Título da Decisão]</h1>
+<blockquote>Referência: <a href="./ADR-XXX.md">ADR-XXX</a> | <a href="./ADR-XXX-TODO.md">ADR-XXX-TODO</a></blockquote>
+<h2 id="1-viso-geral-overview">1. Visão Geral (Overview)</h2>
+<p>Breve sumário do objetivo técnico deste plano. O que o agente autônomo está prestes a codificar e por quê?</p>
+<h2 id="2-padres-de-aceitao-e-qualidade-quality-standards">2. Padrões de Aceitação e Qualidade (Quality Standards)</h2>
 <ul>
-<li>{{consequence_1}}</li>
-<li>{{consequence_2}}</li>
+<li><strong>Test Coverage:</strong> Exigência de cobertura (ex: > 90% para a nova feature).</li>
+<li><strong>Linter/Typing:</strong> Padrão a ser respeitado (ex: Strict mypy, ruff).</li>
+<li><strong>Design Patterns:</strong> Padrões a serem aplicados (ex: Repository Pattern, Strategy).</li>
 </ul>
-<h2 id="deciso">Decisão</h2>
-<p>{{decision}}</p>
-<h3 id="implementao-imediata">Implementação Imediata</h3>
-<pre><code>{{implementation_steps}}</code></pre>
-<h2 id="consequncias">Consequências</h2>
-<h3 id="positivas">Positivas</h3>
+<h2 id="3-plano-de-execuo-granular-tdd--step-by-step">3. Plano de Execução Granular (TDD & Step-by-Step)</h2>
+<p>A implementação deve ser dividida em passos lógicos, auto-contidos e validados por testes ANTES da implementação do código-fonte (TDD).</p>
+<h3 id="fase-abc-nome-da-fase">Fase [A/B/C]: [Nome da Fase]</h3>
+<h4 id="passo-xy-ttulo-do-passo---ex-criar-abstrao-de-repositrio">Passo [X.Y]: [Título do Passo - Ex: Criar Abstração de Repositório]</h4>
+<p><strong>1. TDD Specs (O que testar primeiro):</strong></p>
 <ul>
-<li>{{positive_1}}</li>
+<li><strong>Arquivo de Teste:</strong> <code>tests/caminho/para/test_arquivo.py</code></li>
+<li><strong>Mocks Necessários:</strong> Ex: Mock do banco de dados, Fixtures.</li>
+<li><strong>Asserções Esperadas:</strong> O que caracteriza o sucesso deste teste? (Ex: Deve levantar exceção X quando Y ocorrer).</li>
+<li><strong>Comando de Teste:</strong> <code>pytest tests/caminho/para/test_arquivo.py -v</code></li>
 </ul>
-<h3 id="negativas">Negativas</h3>
+<p><strong>2. Code Specs (Implementação da regra de negócio):</strong></p>
 <ul>
-<li>{{negative_1}}</li>
+<li><strong>Arquivos Afetados:</strong> <code>src/caminho/para/arquivo.py</code></li>
+<li><strong>Assinaturas/Interfaces:</strong></li>
 </ul>
-<h3 id="riscos">Riscos</h3>
+<pre data-lang="python"><code>  class INomeDaInterface(Protocol):
+      async def metodo_x(self, param: str) -&gt; bool: ...</code></pre>
 <ul>
-<li><strong>Risco</strong>: {{risk}}</li>
-<li><strong>Mitigação</strong>: {{mitigation}}</li>
+<li><strong>Lógica e Constantes:</strong> Instruções precisas sobre como preencher a lógica.</li>
 </ul>
-<h2 id="referncias">Referências</h2>
+<p><strong>3. Integração e Comandos de Terminal:</strong></p>
 <ul>
-<li>{{reference}}</li>
+<li>Bibliotecas a instalar: <code>pip install lib-X</code></li>
+<li>Geração de types/migrations: <code>alembic revision --autogenerate -m "..."</code></li>
 </ul>
+<p><strong>4. Edge Cases e Rollback (Prevenção de Falhas):</strong></p>
+<ul>
+<li>O que o agente deve fazer se a biblioteca X não estiver na versão correta?</li>
+<li>O que fazer se o teste falhar por falta de dependência circular? (Plano de Rollback / Fix).</li>
+</ul>
+<hr>
+<p><em>(Repetir a estrutura de "Passo X.Y" para cada micro-tarefa da fase correspondente no arquivo TODO).</em></p>
+<h2 id="4-validao-contnua-continuous-validation">4. Validação Contínua (Continuous Validation)</h2>
+<p>Comandos exatos que o agente deve rodar no terminal para validar que o contrato de execução inteiro (build, lint, test) não foi quebrado após a conclusão de todos os passos:</p>
+<pre data-lang="bash"><code># 1. Typecheck
+mypy src/
+
+# 2. Linting
+ruff check src/
+
+# 3. Test Suite da Feature
+pytest tests/caminho/da/feature/</code></pre>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

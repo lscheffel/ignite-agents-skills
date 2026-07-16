@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>adr-generator / templates / adr-emergency — ignite-agents-skills</title>
+  <title>code-review — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -401,52 +401,355 @@
 </head>
 <body>
   <nav class="nav">
-    <a href="../../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
-      <a href="../../../index.html">Skills</a>
-      <a href="../../../readme.html">README</a>
-      <a href="../../../usage.html">USAGE</a>
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-emergency</div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; code-review</div>
   </nav>
   <div class="content">
     <hr>
-<p>implementation_status: PENDENTE ---</p>
-<h1 id="adr-id-title">ADR-{{id}}: {{title}}</h1>
-<h2 id="status">Status</h2>
-<p>Implementado (emergencial)</p>
-<h2 id="data">Data</h2>
-<p>{{date}}</p>
-<h2 id="contexto">Contexto</h2>
-<h3 id="diagnstico">Diagnóstico</h3>
-<div class="table-wrapper"><table><tr><th>Capacidade</th><th>Status</th><th>Evidence</th></tr><tr><td>{{capability}}</td><td>❌</td><td>{{evidence}}</td></tr></table></div>
-<h3 id="consequncias-da-lacuna">Consequências da Lacuna</h3>
+<p>name: code-review description: > Autonomous multi-agent code review runtime protocol with deterministic execution, semantic code analysis, consensus voting, immutable audit trails, supply-chain security verification and fail-closed governance enforcement.</p>
+<p>version: 4.0.0 maturity: autonomous-runtime classification: critical-governance-component</p>
+<p>owner: Architecture Governance Board</p>
+<p>tags:</p>
 <ul>
-<li>{{consequence_1}}</li>
-<li>{{consequence_2}}</li>
+<li>code-review</li>
+<li>governance</li>
+<li>security</li>
+<li>autonomous-agents</li>
+<li>supply-chain</li>
+<li>audit</li>
+<li>compliance</li>
 </ul>
-<h2 id="deciso">Decisão</h2>
-<p>{{decision}}</p>
-<h3 id="implementao-imediata">Implementação Imediata</h3>
-<pre><code>{{implementation_steps}}</code></pre>
-<h2 id="consequncias">Consequências</h2>
-<h3 id="positivas">Positivas</h3>
+<p>triggers:</p>
 <ul>
-<li>{{positive_1}}</li>
+<li>task_completion</li>
+<li>feature_completion</li>
+<li>pre_commit</li>
+<li>pre_merge</li>
+<li>release_candidate</li>
+<li>production_deployment</li>
 </ul>
-<h3 id="negativas">Negativas</h3>
+<p>required_before_merge: true audit_required: true consensus_required: true minimum_reviewers: 3</p>
+<p>capabilities:</p>
 <ul>
-<li>{{negative_1}}</li>
+<li>semantic_analysis</li>
+<li>dependency_scanning</li>
+<li>security_review</li>
+<li>architecture_review</li>
+<li>performance_review</li>
+<li>audit_generation</li>
+<li>consensus_evaluation</li>
 </ul>
-<h3 id="riscos">Riscos</h3>
+<p>dependencies: external_tools:</p>
 <ul>
-<li><strong>Risco</strong>: {{risk}}</li>
-<li><strong>Mitigação</strong>: {{mitigation}}</li>
+<li>syft</li>
+<li>gitleaks</li>
+<li>pip-audit</li>
+<li>npm-audit</li>
+<li>cargo-audit</li>
+<li>grype</li>
 </ul>
-<h2 id="referncias">Referências</h2>
+<p>integrations:</p>
 <ul>
-<li>{{reference}}</li>
+<li>planning</li>
+<li>acceptance-testing</li>
+<li>security-review</li>
+<li>self-learning</li>
+<li>verification-before-completion</li>
 </ul>
+<h2 id="skilltype-rigid">skill_type: RIGID</h2>
+<h1 id="code-review-v40">Code Review v4.0</h1>
+<h2 id="mission">Mission</h2>
+<p>Guarantee that no code reaches production without:</p>
+<ul>
+<li>specification compliance</li>
+<li>architectural compliance</li>
+<li>security compliance</li>
+<li>operational compliance</li>
+<li>supply-chain compliance</li>
+<li>audit traceability</li>
+</ul>
+<hr>
+<h1 id="runtime-principles">Runtime Principles</h1>
+<ol>
+<li>Zero Trust</li>
+<li>Least Privilege</li>
+<li>Defense in Depth</li>
+<li>Immutable Audit Trail</li>
+<li>Human Override</li>
+<li>Multi-Agent Consensus</li>
+<li>No Raw Untrusted Context</li>
+<li>Fail Closed</li>
+</ol>
+<hr>
+<h1 id="runtime-state-machine">Runtime State Machine</h1>
+<pre data-lang="text"><code>INITIALIZED
+    ↓
+DEPENDENCY_VERIFICATION
+    ↓
+INPUT_SANITIZATION
+    ↓
+SEMANTIC_EXTRACTION
+    ↓
+REVIEW_DISPATCH
+    ↓
+CONSENSUS_EVALUATION
+    ↓
+AUDIT_PERSISTENCE
+    ↓
+MERGE_APPROVED</code></pre>
+<p>Terminal states:</p>
+<pre data-lang="text"><code>MERGE_BLOCKED
+ESCALATED
+FAILED</code></pre>
+<hr>
+<h1 id="phase-0--dependency-verification">Phase 0 — Dependency Verification</h1>
+<h2 id="generate-sbom">Generate SBOM</h2>
+<pre data-lang="bash"><code>syft . -o json &gt; sbom.json</code></pre>
+<h2 id="dependency-security-scanning">Dependency Security Scanning</h2>
+<p>Python:</p>
+<pre data-lang="bash"><code>pip-audit</code></pre>
+<p>Node:</p>
+<pre data-lang="bash"><code>npm audit --audit-level high</code></pre>
+<p>Rust:</p>
+<pre data-lang="bash"><code>cargo audit</code></pre>
+<p>Containers:</p>
+<pre data-lang="bash"><code>grype .</code></pre>
+<h2 id="approved-tool-verification">Approved Tool Verification</h2>
+<p>Every executable dependency MUST satisfy:</p>
+<ul>
+<li>approved version</li>
+<li>cryptographic hash verification</li>
+<li>signature validation</li>
+<li>approved trust level</li>
+</ul>
+<p>Failure result:</p>
+<pre data-lang="text"><code>BLOCK_EXECUTION</code></pre>
+<hr>
+<h1 id="phase-1--input-sanitization">Phase 1 — Input Sanitization</h1>
+<h2 id="objective">Objective</h2>
+<p>Transform untrusted inputs into trusted semantic artifacts.</p>
+<h2 id="security-gateway-pipeline">Security Gateway Pipeline</h2>
+<pre data-lang="text"><code>RAW INPUT
+    ↓
+Tokenizer
+    ↓
+Parser
+    ↓
+Metadata Extractor
+    ↓
+Normalizer
+    ↓
+Schema Validator
+    ↓
+Policy Validator
+    ↓
+Serializer
+    ↓
+TRUSTED ARTIFACT</code></pre>
+<h2 id="forbidden-inputs">Forbidden Inputs</h2>
+<p>Never expose directly to reviewer agents:</p>
+<ul>
+<li>raw git diff</li>
+<li>shell output</li>
+<li>stack traces</li>
+<li>environment variables</li>
+<li>secrets</li>
+<li>credentials</li>
+<li>configuration files</li>
+</ul>
+<h2 id="secret-detection">Secret Detection</h2>
+<p>Execute:</p>
+<pre data-lang="bash"><code>gitleaks detect
+detect-secrets scan
+trufflehog git .</code></pre>
+<p>Detection result:</p>
+<pre data-lang="text"><code>BLOCK_MERGE
+ESCALATE_SECURITY</code></pre>
+<hr>
+<h1 id="phase-2--semantic-extraction">Phase 2 — Semantic Extraction</h1>
+<h2 id="allowed-artifacts">Allowed Artifacts</h2>
+<ul>
+<li>AST</li>
+<li>Semantic Graph</li>
+<li>Code Property Graph</li>
+<li>Dependency Graph</li>
+</ul>
+<h2 id="forbidden-artifact">Forbidden Artifact</h2>
+<pre data-lang="text"><code>RAW_DIFF</code></pre>
+<h2 id="semantic-change-schema">Semantic Change Schema</h2>
+<pre data-lang="json"><code>{
+  &quot;change_id&quot;: &quot;uuid&quot;,
+  &quot;change_type&quot;: &quot;function_added&quot;,
+  &quot;module&quot;: &quot;auth.py&quot;,
+  &quot;symbol&quot;: &quot;validate_token&quot;,
+  &quot;dependencies_added&quot;: [&quot;jwt&quot;],
+  &quot;security_impact&quot;: true,
+  &quot;behavior_change&quot;: true,
+  &quot;breaking_change&quot;: false,
+  &quot;risk_score&quot;: 0.82
+}</code></pre>
+<hr>
+<h1 id="phase-3--review-dispatch">Phase 3 — Review Dispatch</h1>
+<h2 id="reviewer-swarm">Reviewer Swarm</h2>
+<h3 id="architecture-reviewer">Architecture Reviewer</h3>
+<p>Responsibilities:</p>
+<ul>
+<li>complexity</li>
+<li>maintainability</li>
+<li>coupling</li>
+<li>modularity</li>
+</ul>
+<h3 id="security-reviewer">Security Reviewer</h3>
+<p>Responsibilities:</p>
+<ul>
+<li>OWASP Top 10</li>
+<li>secrets</li>
+<li>injection</li>
+<li>authentication</li>
+<li>authorization</li>
+<li>supply-chain risk</li>
+</ul>
+<h3 id="quality-reviewer">Quality Reviewer</h3>
+<p>Responsibilities:</p>
+<ul>
+<li>readability</li>
+<li>duplication</li>
+<li>testing</li>
+<li>conventions</li>
+</ul>
+<h3 id="performance-reviewer">Performance Reviewer</h3>
+<p>Responsibilities:</p>
+<ul>
+<li>complexity analysis</li>
+<li>scalability</li>
+<li>memory consumption</li>
+<li>hot paths</li>
+</ul>
+<hr>
+<h1 id="agent-runtime-contract">Agent Runtime Contract</h1>
+<p>Example:</p>
+<pre data-lang="yaml"><code>agent_id: security-reviewer
+
+timeout_seconds: 300
+max_tokens: 25000
+retries: 2
+
+resources:
+  cpu_limit: 1
+  memory_limit_mb: 1024
+
+permissions:
+  filesystem:
+    mode: readonly
+
+  network:
+    enabled: false
+
+  shell:
+    whitelist:
+      - pip-audit
+      - pytest</code></pre>
+<hr>
+<h1 id="phase-4--consensus-evaluation">Phase 4 — Consensus Evaluation</h1>
+<h2 id="voting-weights">Voting Weights</h2>
+<div class="table-wrapper"><table><tr><th>Reviewer</th><th>Weight</th></tr><tr><td>Security</td><td>0.35</td></tr><tr><td>Architecture</td><td>0.25</td></tr><tr><td>Quality</td><td>0.20</td></tr><tr><td>Performance</td><td>0.20</td></tr></table></div>
+<h2 id="decision-rules">Decision Rules</h2>
+<p>Automatic rejection:</p>
+<ul>
+<li>critical vulnerability</li>
+<li>secret exposure</li>
+<li>authentication failure</li>
+<li>undefined behavior</li>
+<li>missing audit</li>
+</ul>
+<p>Automatic escalation:</p>
+<ul>
+<li>consensus score < 0.75</li>
+<li>conflicting findings</li>
+<li>reviewer timeout</li>
+</ul>
+<p>Automatic approval:</p>
+<ul>
+<li>consensus score ≥ 0.90</li>
+<li>no blocking findings</li>
+</ul>
+<hr>
+<h1 id="phase-5--immutable-audit">Phase 5 — Immutable Audit</h1>
+<h2 id="audit-artifact">Audit Artifact</h2>
+<pre data-lang="json"><code>{
+  &quot;review_id&quot;: &quot;uuid&quot;,
+  &quot;trace_id&quot;: &quot;uuid&quot;,
+  &quot;timestamp&quot;: &quot;iso8601&quot;,
+  &quot;semantic_diff_hash&quot;: &quot;sha256&quot;,
+  &quot;reviewers&quot;: [],
+  &quot;votes&quot;: [],
+  &quot;consensus_score&quot;: 0.0,
+  &quot;decision&quot;: &quot;approve&quot;,
+  &quot;signature&quot;: &quot;ed25519&quot;
+}</code></pre>
+<h2 id="protection">Protection</h2>
+<p>Encryption:</p>
+<pre data-lang="text"><code>AES256-GCM</code></pre>
+<p>Integrity:</p>
+<pre data-lang="text"><code>SHA256
+Ed25519</code></pre>
+<p>Access:</p>
+<pre data-lang="text"><code>RBAC_REQUIRED</code></pre>
+<hr>
+<h1 id="failure-matrix">Failure Matrix</h1>
+<div class="table-wrapper"><table><tr><th>Failure</th><th>Action</th></tr><tr><td>Dependency scan timeout</td><td>Block merge</td></tr><tr><td>Semantic parser failure</td><td>Escalate</td></tr><tr><td>Reviewer timeout</td><td>Retry then escalate</td></tr><tr><td>Consensus failure</td><td>Escalate</td></tr><tr><td>Audit persistence failure</td><td>Block merge</td></tr></table></div>
+<hr>
+<h1 id="governance-lifecycle">Governance Lifecycle</h1>
+<h2 id="versioning">Versioning</h2>
+<ul>
+<li>MAJOR → Runtime changes</li>
+<li>MINOR → New reviewers or capabilities</li>
+<li>PATCH → Policy updates</li>
+</ul>
+<h2 id="change-requirements">Change Requirements</h2>
+<p>Every change requires:</p>
+<ul>
+<li>ADR</li>
+<li>Security Review</li>
+<li>Architecture Approval</li>
+<li>Migration Guide</li>
+</ul>
+<h2 id="deprecation-policy">Deprecation Policy</h2>
+<ul>
+<li>minimum support period: 24 months</li>
+<li>migration window: 12 months</li>
+</ul>
+<hr>
+<h1 id="validation-suite">Validation Suite</h1>
+<p>Mandatory scenarios:</p>
+<ul>
+<li>prompt injection</li>
+<li>dependency poisoning</li>
+<li>tool compromise</li>
+<li>reviewer compromise</li>
+<li>secret leakage</li>
+<li>consensus split</li>
+<li>audit corruption</li>
+</ul>
+<hr>
+<h1 id="iron-law">Iron Law</h1>
+<pre data-lang="text"><code>NO MERGE WITHOUT REVIEW
+NO REVIEW WITHOUT CONSENSUS
+NO CONSENSUS WITHOUT AUDIT
+NO AUDIT WITHOUT TRACEABILITY
+NO EXCEPTIONS</code></pre>
+<hr>
+<h1 id="final-rule">Final Rule</h1>
+<p>If uncertainty exists:</p>
+<pre data-lang="text"><code>FAIL_CLOSED
+BLOCK_MERGE
+ESCALATE</code></pre>
+
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

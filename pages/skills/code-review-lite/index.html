@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>adr-generator / templates / adr-emergency — ignite-agents-skills</title>
+  <title>code-review-lite — ignite-agents-skills</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
@@ -401,52 +401,247 @@
 </head>
 <body>
   <nav class="nav">
-    <a href="../../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
     <div class="nav-links">
-      <a href="../../../index.html">Skills</a>
-      <a href="../../../readme.html">README</a>
-      <a href="../../../usage.html">USAGE</a>
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
     </div>
-    <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-emergency</div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; code-review-lite</div>
   </nav>
   <div class="content">
     <hr>
-<p>implementation_status: PENDENTE ---</p>
-<h1 id="adr-id-title">ADR-{{id}}: {{title}}</h1>
-<h2 id="status">Status</h2>
-<p>Implementado (emergencial)</p>
-<h2 id="data">Data</h2>
-<p>{{date}}</p>
-<h2 id="contexto">Contexto</h2>
-<h3 id="diagnstico">Diagnóstico</h3>
-<div class="table-wrapper"><table><tr><th>Capacidade</th><th>Status</th><th>Evidence</th></tr><tr><td>{{capability}}</td><td>❌</td><td>{{evidence}}</td></tr></table></div>
-<h3 id="consequncias-da-lacuna">Consequências da Lacuna</h3>
+<p>name: code-review-lite description: Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity. version: 4.0-lite maturity: daily-development classification: fast-quality-gate owner: Development Runtime ---</p>
+<p>tags:</p>
 <ul>
-<li>{{consequence_1}}</li>
-<li>{{consequence_2}}</li>
+<li>code-review</li>
+<li>vibe-coding</li>
+<li>quality-gate</li>
+<li>ai-development</li>
+<li>fast-feedback</li>
 </ul>
-<h2 id="deciso">Decisão</h2>
-<p>{{decision}}</p>
-<h3 id="implementao-imediata">Implementação Imediata</h3>
-<pre><code>{{implementation_steps}}</code></pre>
-<h2 id="consequncias">Consequências</h2>
-<h3 id="positivas">Positivas</h3>
+<p>triggers:</p>
 <ul>
-<li>{{positive_1}}</li>
+<li>feature_completed</li>
+<li>refactor_completed</li>
+<li>before_commit</li>
+<li>before_push</li>
+<li>major_file_change</li>
 </ul>
-<h3 id="negativas">Negativas</h3>
+<p>execution_target: 30-90_seconds</p>
+<p>required_before_merge: false required_before_release: true</p>
+<p>capabilities:</p>
 <ul>
-<li>{{negative_1}}</li>
+<li>plan_alignment</li>
+<li>regression_detection</li>
+<li>security_regression_detection</li>
+<li>architecture_drift_detection</li>
+<li>test_validation</li>
 </ul>
-<h3 id="riscos">Riscos</h3>
+<p>integrations:</p>
 <ul>
-<li><strong>Risco</strong>: {{risk}}</li>
-<li><strong>Mitigação</strong>: {{mitigation}}</li>
+<li>planning</li>
+<li>adr</li>
+<li>todo</li>
+<li>verification-before-completion</li>
 </ul>
-<h2 id="referncias">Referências</h2>
+<h2 id="skilltype-fastguardrail">skill_type: FAST_GUARDRAIL</h2>
+<h1 id="code-review-lite-v4">Code Review Lite v4</h1>
+<h2 id="mission">Mission</h2>
+<p>Catch the mistakes that actually matter during day-to-day development while preserving momentum.</p>
+<h1 id="review-philosophy">Review Philosophy</h1>
+<p>Prioritize detection of:</p>
+<ol>
+<li>Broken behavior</li>
+<li>Architectural drift</li>
+<li>Security regressions</li>
+<li>Missing validation</li>
+<li>Technical debt explosions</li>
+</ol>
+<p>Ignore:</p>
 <ul>
-<li>{{reference}}</li>
+<li>cosmetic style issues</li>
+<li>micro optimizations</li>
+<li>theoretical edge cases</li>
+<li>premature abstractions</li>
 </ul>
+<hr>
+<h1 id="review-scope">Review Scope</h1>
+<p>Review only:</p>
+<ul>
+<li>modified files</li>
+<li>directly affected modules</li>
+<li>changed interfaces</li>
+<li>modified dependencies</li>
+</ul>
+<p>Never review:</p>
+<ul>
+<li>entire repository</li>
+<li>unrelated modules</li>
+<li>historical commits</li>
+</ul>
+<hr>
+<h1 id="phase-1--context-loading">Phase 1 — Context Loading</h1>
+<p>Collect:</p>
+<ul>
+<li>changed files</li>
+<li>current task</li>
+<li>ADR references</li>
+<li>TODO references</li>
+</ul>
+<p>Determine:</p>
+<ul>
+<li>intended behavior</li>
+<li>expected output</li>
+<li>architectural constraints</li>
+</ul>
+<p>If requirements are unclear:</p>
+<pre data-lang="text"><code>ASK_FOR_CONTEXT</code></pre>
+<hr>
+<h1 id="phase-2--fast-review">Phase 2 — Fast Review</h1>
+<p>Evaluate only five dimensions.</p>
+<h2 id="1-plan-alignment">1. Plan Alignment</h2>
+<p>Questions:</p>
+<ul>
+<li>Does implementation match requirements?</li>
+<li>Was scope respected?</li>
+<li>Was unnecessary functionality introduced?</li>
+</ul>
+<hr>
+<h2 id="2-obvious-bugs">2. Obvious Bugs</h2>
+<p>Look for:</p>
+<ul>
+<li>null references</li>
+<li>missing imports</li>
+<li>broken conditions</li>
+<li>invalid assumptions</li>
+<li>missing returns</li>
+<li>race conditions</li>
+<li>unhandled exceptions</li>
+</ul>
+<hr>
+<h2 id="3-security-regression">3. Security Regression</h2>
+<p>Look for:</p>
+<ul>
+<li>exposed secrets</li>
+<li>unsafe input handling</li>
+<li>missing authorization checks</li>
+<li>command injection</li>
+<li>path traversal</li>
+<li>unsafe deserialization</li>
+</ul>
+<p>Do not perform full security audit.</p>
+<hr>
+<h2 id="4-architecture-drift">4. Architecture Drift</h2>
+<p>Look for:</p>
+<ul>
+<li>duplicated logic</li>
+<li>broken abstractions</li>
+<li>circular dependencies</li>
+<li>leaking responsibilities</li>
+<li>violation of ADRs</li>
+</ul>
+<hr>
+<h2 id="5-testing">5. Testing</h2>
+<p>Verify:</p>
+<ul>
+<li>existing tests still make sense</li>
+<li>new behavior is covered</li>
+<li>obvious missing tests</li>
+</ul>
+<hr>
+<h1 id="review-modes">Review Modes</h1>
+<h2 id="smallchange">SMALL_CHANGE</h2>
+<p>Criteria:</p>
+<ul>
+<li>less than 5 files</li>
+<li>less than 300 lines</li>
+</ul>
+<p>Focus:</p>
+<ul>
+<li>bugs</li>
+<li>regressions</li>
+</ul>
+<hr>
+<h2 id="normalchange">NORMAL_CHANGE</h2>
+<p>Criteria:</p>
+<ul>
+<li>5-20 files</li>
+<li>less than 1500 lines</li>
+</ul>
+<p>Focus:</p>
+<ul>
+<li>architecture</li>
+<li>tests</li>
+<li>security regressions</li>
+</ul>
+<hr>
+<h2 id="largechange">LARGE_CHANGE</h2>
+<p>Criteria:</p>
+<ul>
+<li>more than 20 files</li>
+<li>more than 1500 lines</li>
+</ul>
+<p>Action:</p>
+<pre data-lang="text"><code>RECOMMEND_FULL_REVIEW</code></pre>
+<hr>
+<h1 id="output-format">Output Format</h1>
+<h2 id="approved">APPROVED</h2>
+<p>No blocking issues found.</p>
+<hr>
+<h2 id="approvedwithwarnings">APPROVED_WITH_WARNINGS</h2>
+<p>Example:</p>
+<ul>
+<li>missing test</li>
+<li>minor duplication</li>
+<li>documentation lag</li>
+</ul>
+<hr>
+<h2 id="requiresfixes">REQUIRES_FIXES</h2>
+<p>Blocking examples:</p>
+<ul>
+<li>broken logic</li>
+<li>security issue</li>
+<li>ADR violation</li>
+<li>regression risk</li>
+</ul>
+<hr>
+<h1 id="escalation-rules">Escalation Rules</h1>
+<p>Automatically recommend full review if:</p>
+<ul>
+<li>authentication changed</li>
+<li>payment flow changed</li>
+<li>infrastructure changed</li>
+<li>public API changed</li>
+<li>database schema changed</li>
+<li>dependency lockfile changed</li>
+</ul>
+<p>Escalation target:</p>
+<pre data-lang="text"><code>code-review-v4</code></pre>
+<hr>
+<h1 id="anti-patterns">Anti-Patterns</h1>
+<p>Reject:</p>
+<ul>
+<li>massive god functions</li>
+<li>hidden side effects</li>
+<li>copy-paste programming</li>
+<li>bypassing architecture</li>
+<li>dead code accumulation</li>
+</ul>
+<hr>
+<h1 id="runtime-limits">Runtime Limits</h1>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Limit</th></tr><tr><td>Files</td><td>20</td></tr><tr><td>Changed Lines</td><td>1500</td></tr><tr><td>Execution Time</td><td>90 seconds</td></tr></table></div>
+<hr>
+<h1 id="final-rule">Final Rule</h1>
+<p>If confidence drops below:</p>
+<pre data-lang="text"><code>70%</code></pre>
+<p>Return:</p>
+<pre data-lang="text"><code>ESCALATE_TO_FULL_REVIEW</code></pre>
+<hr>
+<h1 id="iron-law">Iron Law</h1>
+<pre data-lang="text"><code>Move fast.
+Do not move blindly.</code></pre>
+
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

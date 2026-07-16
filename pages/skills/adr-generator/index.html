@@ -411,7 +411,20 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: adr-generator description: Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos. version: 2.0.0 tags: [architecture, decisions, adr, documentation] related_skills: [documentation, architecture-review-kilo, implementation] ---</p>
+<p>name: adr-generator description: Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos. version: 2.0.0 tags:</p>
+<ul>
+<li>architecture</li>
+<li>decisions</li>
+<li>adr</li>
+<li>documentation</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>documentation</li>
+<li>architecture-review-kilo</li>
+<li>implementation</li>
+</ul>
+<hr>
 <h1 id="adr-generator">ADR Generator</h1>
 <p>Gera Architecture Decision Records (ADRs) seguindo o formato MADR ou similar.</p>
 <h2 id="quando-usar">Quando Usar</h2>
@@ -435,56 +448,49 @@
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Decisão importante?] --&gt;|Arquitetura| B[ADR]
-    A --&gt;|Processo| C[RFC]
-    A --&gt;|Simples| D[Decision Doc]
-    A --&gt;|Urgente| E[ADR de Emergência]
-    B --&gt;|Impacto alto| F[ADR Completo]
-    B --&gt;|Impacto baixo| G[ADR Simplificado]</code></pre>
+    A[Nova Decisão Arquitetural?] --&gt; B{Nível de Autonomia}
+    B --&gt;|Apenas Documentar| C[Tier 1: ADR Simples]
+    B --&gt;|Planejar Código| D[Tier 2: ADR Padrão Zen-Mode]
+    B --&gt;|Codar Agora| E[Tier 3: ADR Emergencial]
+    C --&gt; F[Gera Tríade: ADR+BP+TODO]
+    D --&gt; F
+    F --&gt; G[Gera PI: Implementation Plan]
+    G --&gt; H[Review Silencioso Kilo]
+    E --&gt; F
+    E --&gt; G
+    E --&gt; I[Invoca skill &#x27;implementation&#x27;]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-criar-adr-completo--bp--todo">Fase 1: Criar ADR Completo + BP + TODO</h3>
-<p>Ao criar uma nova ADR, <strong>sempre</strong> gere os três arquivos em conjunto:</p>
+<p>O processo de criação de ADRs agora suporta três níveis (Tiers) baseados no grau de autonomia desejada:</p>
+<h3 id="tier-1-adr-simples-trade-base">Tier 1: ADR Simples (Tríade Base)</h3>
+<p>Use para documentação pura e planejamento macro, sem gerar código de imediato.</p>
 <ol>
-<li>Crie o ADR em <code>docs/adr/ADR-XXX.md</code>:</li>
-</ol>
-<pre data-lang="bash"><code>   cp templates/adr.md docs/adr/ADR-00X.md</code></pre>
-<ol>
-<li>Crie o Blueprint (BP) em <code>docs/adr/ADR-XXX-BP.md</code>:</li>
-</ol>
-<pre data-lang="bash"><code>   cp templates/adr-bp.md docs/adr/ADR-00X-BP.md</code></pre>
-<ol>
-<li>Crie o TODO em <code>docs/adr/ADR-XXX-TODO.md</code>:</li>
-</ol>
-<pre data-lang="bash"><code>   cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md</code></pre>
-<blockquote><strong>Regra obrigatória:</strong> Uma ADR nunca existe isoladamente. Sempre que uma ADR é criada, seu BP e TODO devem ser gerados simultaneamente. O BP define as fases de implementação, e o TODO lista as tarefas verificáveis.</blockquote>
-<ol>
-<li>Preencha o ADR:</li>
+<li>Gere a Tríade de artefatos simultaneamente:</li>
 </ol>
 <ul>
-<li>Contexto: Problema, Motivação, Restrições</li>
-<li>Alternativas: A/B com prós/contras</li>
-<li>Decisão justificada</li>
-<li>Consequências positivas e negativas</li>
+<li><code>docs/adr/ADR-XXX.md</code> (A decisão e contexto)</li>
+<li><code>docs/adr/ADR-XXX-BP.md</code> (Fases de implementação macro)</li>
+<li><code>docs/adr/ADR-XXX-TODO.md</code> (Critérios de aceite e checklist macro)</li>
 </ul>
 <ol>
-<li>Preencha o BP:</li>
+<li>Preencha os três arquivos com base na solicitação.</li>
+<li><strong>Checkpoint Final:</strong> Tríade gerada e linkada. (Pare aqui).</li>
 </ol>
-<ul>
-<li>Fases de implementação com dependências</li>
-<li>Critérios de aceitação por fase</li>
-<li>Sequenciamento lógico</li>
-</ul>
+<h3 id="tier-2-adr-padro-zen-mode-quadra">Tier 2: ADR Padrão ("Zen-Mode" Quadra)</h3>
+<p>Use quando a arquitetura está definida e deseja-se gerar o plano de código imediato, porém com gatekeeper autônomo.</p>
 <ol>
-<li>Preencha o TODO:</li>
+<li><strong>Round 1:</strong> Siga todos os passos do Tier 1 (Gere a Tríade completa).</li>
+<li><strong>Round 2:</strong> Leia o conteúdo recém-gerado no <code>ADR-XXX-TODO.md</code>.</li>
+<li><strong>Round 3:</strong> Invoque as regras e diretrizes da skill <code>writing-plans</code> nativamente. <strong>Antes de gerar o PI, leia atentamente a pasta <code>examples/quadra/</code></strong> para usar como <em>Few-Shot Prompt</em> e garantir qualidade Enterprise. Crie o 4º artefato: <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan), usando o template <code>templates/adr-pi.md</code> para quebrar os requisitos do TODO em passos microscópicos (TDD, arquivos específicos, edge cases, rollback e comandos de terminal).</li>
+<li><strong>Round 4:</strong> Acione a skill <code>architecture-review-kilo</code> em modo <strong>silencioso</strong> para analisar a Quadra gerada. O output visível para o usuário deve ser apenas a confirmação dos 4 arquivos gerados e aprovados.</li>
+<li><strong>Checkpoint Final:</strong> Apresente os links para a Quadra finalizada.</li>
 </ol>
-<ul>
-<li>Tarefas granulares numeradas</li>
-<li>Cada tarefa verificável por comando</li>
-<li>Status inicial: <code>[ ]</code></li>
-</ul>
+<h3 id="tier-3-adr-emergencial-execuo-direta">Tier 3: ADR Emergencial (Execução Direta)</h3>
+<p>Use para correções urgentes ou tarefas óbvias que devem ser codadas no mesmo instante.</p>
 <ol>
-<li><strong>Checkpoint</strong>: ADR + BP + TODO criados e linkados entre si</li>
+<li><strong>Round 1:</strong> Execute os Rounds 1 a 3 do "ADR Padrão" (Gere a Quadra). O review silencioso (Round 4) é opcional e pode ser pulado para velocidade.</li>
+<li><strong>Round 2:</strong> Acione automaticamente a skill <code>implementation</code> (passando a Quadra recém-criada) para que os agentes já comecem a escrever o código e modificar o repositório no mesmo momento.</li>
 </ol>
+<blockquote><strong>Regra obrigatória:</strong> Uma decisão nunca existe isoladamente. Sempre que uma ADR é criada, seja qual for o Tier, a Tríade inicial (ADR + BP + TODO) deve ser preenchida para manter a governança ativa. O 4º arquivo (PI) entra para Tiers elevados.</blockquote>
 <h3 id="fase-2-revisar-adr-existente">Fase 2: Revisar ADR Existente</h3>
 <ol>
 <li>Leia ADR:</li>
@@ -523,6 +529,20 @@
    - Substitui ADR-OLD</code></pre>
 <ol>
 <li><strong>Checkpoint</strong>: Substituição documentada</li>
+</ol>
+<h3 id="fase-4-auto-repair-e-retroactive-governance">Fase 4: Auto-Repair e Retroactive Governance</h3>
+<p>Use para projetos legado ou para "consertar" uma governança quebrada que a skill <code>implementation</code> tenha rejeitado.</p>
+<ol>
+<li><strong>Diagnóstico:</strong> Analise o que está faltando:</li>
+</ol>
+<ul>
+<li>Só existe código, mas sem decisão formal documentada? → Criar "ADR Retrospectivo" usando a flag emergencial de auto-repair.</li>
+<li>Existe ADR, mas não BP nem TODO? → Gerar a Tríade (ou Quadra) faltante, extraindo dados do ADR original e do código existente.</li>
+<li>Artefatos estão com formato errado (sem frontmatter)? → Reescrever usando os templates obrigatórios.</li>
+</ul>
+<ol>
+<li><strong>Auto-Correção:</strong> Gere os artefatos faltantes e linke-os entre si.</li>
+<li><strong>Checkpoint:</strong> Governança restaurada; a skill <code>implementation</code> pode continuar.</li>
 </ol>
 <h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
 <h3 id="estrutura-do-adr">Estrutura do ADR</h3>
@@ -581,6 +601,11 @@ Descreva a solução escolhida.
 <p>Template para ADR simples (sem necessidade de BP/TODO). Use para decisões menores.</p>
 <p><strong>Uso:</strong></p>
 <pre data-lang="bash"><code>cp templates/adr-simple.md docs/adr/ADR-00X.md</code></pre>
+<h3 id="adr-pimd">adr-pi.md</h3>
+<p>Localização: <code>templates/adr-pi.md</code></p>
+<p>Template para Implementation Plan (PI) Nível Enterprise. Focado em TDD granular, isolamento de escopo, mocks, tratamento de exceções (edge cases) e regras estritas de Rollback.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/adr-pi.md docs/adr/ADR-00X-PI.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
 <h3 id="-crtico">🔴 Crítico</h3>
 <h4 id="adr-sem-blueprint-e-todo">ADR sem Blueprint e TODO</h4>
@@ -595,12 +620,12 @@ cp templates/adr.md docs/adr/ADR-009.md
 cp templates/adr-bp.md docs/adr/ADR-009-BP.md
 cp templates/adr-todo.md docs/adr/ADR-009-TODO.md</code></pre>
 <h4 id="adr-retrospectivo">ADR Retrospectivo</h4>
-<p><strong>O que é:</strong> Criar ADR após decisão já implementada. <strong>Por que é ruim:</strong> Não registra trade-offs, parece justificação. <strong>Como evitar:</strong> Crie ADR antes da implementação. <strong>Exemplo:</strong></p>
+<p><strong>O que é:</strong> Criar ADR após decisão já implementada. <strong>Por que é ruim:</strong> Não registra trade-offs reais, parece justificação. <strong>Como evitar:</strong> Crie ADR antes da implementação. <strong>Exceção de Auto-Repair:</strong> É permitido gerar um ADR retrospectivamente EXCLUSIVAMENTE para fins de <strong>Retroactive Governance</strong> em projetos legados que estão sendo padronizados para o Zen-Mode. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 Decisão tomada em 2024-01-01
-ADR criado em 2024-06-01
+ADR criado em 2024-06-01 (sem ser projeto legado)
 
-# ✅ CORRETO
+# ✅ CORRETO (em modo regular)
 ADR criado em 2024-01-01
 Decisão implementada em 2024-01-15</code></pre>
 <h4 id="adr-sem-alternativas">ADR sem Alternativas</h4>
@@ -647,7 +672,8 @@ Aceito
 <li>[ ] Stakeholders identificados</li>
 <li>[ ] <strong>Blueprint (BP) criado em <code>ADR-XXX-BP.md</code></strong></li>
 <li>[ ] <strong>TODO criado em <code>ADR-XXX-TODO.md</code></strong></li>
-<li>[ ] <strong>BP e TODO linkados no ADR</strong></li>
+<li>[ ] <strong>PI (Implementation Plan) criado em <code>ADR-XXX-PI.md</code> (Para Tiers 2 e 3)</strong></li>
+<li>[ ] <strong>Arquivos linkados entre si no ADR</strong></li>
 </ul>
 <h3 id="checklist-de-review">Checklist de Review</h3>
 <ul>
@@ -676,6 +702,7 @@ Suspenso (experimental)</code></pre>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="templates/adr-bp.html">adr-bp.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/adr-emergency.html">adr-emergency.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/adr-pi.html">adr-pi.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/adr-simple.html">adr-simple.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/adr-todo.html">adr-todo.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/adr.html">adr.md</a></li>

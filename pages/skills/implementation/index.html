@@ -411,9 +411,33 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: implementation description: Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada. version: 2.0.0 tags: [implementation, execution, artifact-driven, sdlc, governance] related_skills: [adr-generator, writing-plans, planning, testing, git, documentation, governance, release, architecture-review-kilo, ddd] ---</p>
+<p>name: implementation description: Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada. version: 2.0.0 tags:</p>
+<ul>
+<li>implementation</li>
+<li>execution</li>
+<li>artifact-driven</li>
+<li>sdlc</li>
+<li>governance</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>adr-archive</li>
+<li>adr-generator</li>
+<li>writing-plans</li>
+<li>planning</li>
+<li>testing</li>
+<li>git</li>
+<li>documentation</li>
+<li>governance</li>
+<li>release</li>
+<li>architecture-review-kilo</li>
+<li>ddd</li>
+</ul>
+<hr>
 <h1 id="implementation">Implementation</h1>
 <p>Executa mudanças previamente planejadas de forma governada e incremental, fechando o ciclo do SDLC baseado em Agent Skills.</p>
+<h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
+<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
 <h2 id="quando-usar">Quando Usar</h2>
 <h3 id="use-quando">Use quando:</h3>
 <ul>
@@ -467,32 +491,34 @@
 <li>ADR: path, status, decisão</li>
 <li>Blueprint: path, tarefas listadas</li>
 <li>TODO: path, tarefas com estados</li>
+<li>PI (Implementation Plan): path, passos granulares (TDD) <strong>[Opcional / Recomendado]</strong></li>
 <li>Branch: nome, estado limpo</li>
 <li>Workspace: sem alterações não commitadas</li>
-<li>Arquivos impactados: lista extraída do Blueprint</li>
-<li>Critérios de aceite: extraídos do TODO</li>
+<li>Arquivos impactados: lista extraída do PI</li>
+<li>Critérios de aceite: extraídos do TODO e do PI</li>
 <li>Critérios de rollback: definidos no Blueprint</li>
 </ul>
-<p><strong>Regra:</strong> Se qualquer campo obrigatório falhar, a implementação é interrompida.</p>
+<p><strong>Regra de Auto-Repair:</strong> Se a Tríade (ADR, BP, TODO) ou o PI estiverem ausentes, malformados ou divergirem dos templates padrão, a skill não deve abortar. O agente deve acionar a skill <code>adr-generator</code> (ou <code>writing-plans</code>) em modo <strong>Retroactive Governance</strong> para gerar ou refatorar os artefatos faltantes antes de iniciar a execução.</p>
 <h3 id="artifact-resolution">Artifact Resolution</h3>
 <p>Processo de descoberta e correlação automática dos documentos envolvidos na mudança.</p>
 <p><strong>Algoritmo:</strong></p>
 <ol>
 <li>Buscar <code>ADR-XXX.md</code> no diretório <code>docs/adr/</code></li>
-<li>Derivar paths do Blueprint (<code>ADR-XXX-BP.md</code>) e TODO (<code>ADR-XXX-TODO.md</code>)</li>
-<li>Verificar existência de cada artefato</li>
+<li>Derivar paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code> e <code>ADR-XXX-PI.md</code></li>
+<li>Verificar existência de cada artefato (PI é opcional, mas gera execução legacy se ausente)</li>
 <li>Extrair <code>related_skills</code> do frontmatter</li>
-<li>Mapear arquivos impactados a partir do Blueprint</li>
+<li>Mapear arquivos impactados a partir do PI</li>
 <li>Retornar mapa consolidado</li>
 </ol>
 <h3 id="execution-loop">Execution Loop</h3>
-<p>Modelo incremental de execução. Cada iteração processa uma tarefa do TODO:</p>
+<p>Modelo incremental de execução. O loop tenta consumir o PI (Implementation Plan) em passos granulares (TDD). Se o PI não existir, o loop opera em modo <strong>Legacy</strong>, consumindo diretamente as tarefas macro do TODO:</p>
 <ol>
+<li><strong>Ler</strong> o plano detalhado no <code>ADR-XXX-PI.md</code> (ou o <code>ADR-XXX-TODO.md</code> no modo Legacy)</li>
 <li><strong>Selecionar</strong> tarefa (via DAG, respeitando dependências)</li>
-<li><strong>Executar</strong> alteração no código</li>
+<li><strong>Executar</strong> alteração no código seguindo os passos prescritos (micro-tarefas no PI ou macro-escopo no TODO)</li>
 <li><strong>Validar</strong> (build, lint, typecheck, testes)</li>
 <li><strong>Atualizar</strong> documentação afetada</li>
-<li><strong>Marcar</strong> tarefa como concluída no TODO</li>
+<li><strong>Marcar</strong> tarefa como concluída no PI e refletir o progresso no TODO</li>
 <li><strong>Reavaliar</strong> dependências (próximas tarefas podem iniciar)</li>
 </ol>
 <p><strong>Regras:</strong></p>
@@ -504,20 +530,21 @@
 </ul>
 <h3 id="change-lifecycle">Change Lifecycle</h3>
 <p>Modelo formal do ciclo de vida de uma mudança:</p>
-<pre><code>ADR → Blueprint → TODO → Execution Contract → Artifact Resolution
+<pre><code>ADR → Blueprint → TODO → PI → Execution Contract → Artifact Resolution
   → Implementation → Validation → Documentation Update → Execution Report</code></pre>
 <h2 id="workflow">Workflow</h2>
 <h3 id="workflow-1-artifact-resolution">Workflow 1: Artifact Resolution</h3>
 <p><strong>Objetivo:</strong> Descobrir e correlacionar todos os artefatos envolvidos.</p>
 <ol>
 <li>Identificar a ADR de referência (por nome ou contexto)</li>
-<li>Derivar paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code></li>
+<li>Derivar paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>, <code>ADR-XXX-PI.md</code></li>
 <li>Verificar existência de cada artefato</li>
 <li>Ler frontmatter da ADR para extrair status e decisão</li>
-<li>Ler Blueprint para extrair tarefas e dependências</li>
-<li>Ler TODO para extrair estados atuais</li>
+<li>Ler Blueprint para extrair fases macro</li>
+<li>Ler TODO para extrair estados macro</li>
+<li>Ler PI para extrair tarefas granulares e código</li>
 <li>Mapear <code>related_skills</code> do frontmatter</li>
-<li>Extrair arquivos impactados do Blueprint</li>
+<li>Extrair arquivos impactados do PI</li>
 <li>Retornar <strong>Artifact Map</strong> consolidado</li>
 <li><strong>Checkpoint</strong>: Todos os artefatos existem e estão coerentes</li>
 </ol>
@@ -525,13 +552,19 @@
 <p><strong>Objetivo:</strong> Validar que a implementação pode iniciar com segurança.</p>
 <ol>
 <li>Carregar Artifact Map (Workflow 1)</li>
-<li>Validar que ADR existe e está "Aceito" ou "Proposto"</li>
-<li>Validar que Blueprint existe e contém tarefas</li>
-<li>Validar que TODO existe e contém tarefas com estados</li>
+<li>Validar se a ADR, BP e TODO existem e são coerentes.</li>
+<li>Se faltar artefatos ou os templates estiverem desatualizados, <strong>pause a validação e inicie o Auto-Repair</strong>:</li>
+</ol>
+<ul>
+<li>Acione a skill <code>adr-generator</code> para aplicar a governança retroativa (Retroactive Governance).</li>
+</ul>
+<ol>
+<li>Verificar se o PI existe (Opcional, mas altera o workflow para Zen-Mode ou Legacy).</li>
+<li>Validar que o PI (se existir) contém passos TDD ou que o TODO (se Legacy) contém tarefas.</li>
 <li>Validar branch atual (não main/master sem PR)</li>
 <li>Validar workspace limpo (sem uncommitted changes)</li>
 <li>Validar que arquivos impactados existem</li>
-<li>Extrair critérios de aceite do TODO</li>
+<li>Extrair critérios de aceite do TODO e PI</li>
 <li>Extrair critérios de rollback do Blueprint</li>
 <li>Gerar <code>execution-contract.md</code> preenchido</li>
 <li><strong>Checkpoint</strong>: Contrato assinado (todos os campos válidos)</li>
@@ -539,8 +572,8 @@
 <h3 id="workflow-3-dependency-analysis--execution-plan">Workflow 3: Dependency Analysis & Execution Plan</h3>
 <p><strong>Objetivo:</strong> Construir DAG e plano de execução.</p>
 <ol>
-<li>Ler TODO e extrair todas as tarefas</li>
-<li>Ler dependências de cada tarefa</li>
+<li>Ler PI e extrair todas as micro-tarefas</li>
+<li>Ler dependências de cada tarefa no PI</li>
 <li>Construir grafo dirigido acíclico (DAG)</li>
 <li>Detectar ciclos (se existir, reportar erro e interromper)</li>
 <li>Topological sort para ordem de execução</li>
@@ -551,19 +584,19 @@
 </ol>
 <h3 id="workflow-4-incremental-execution">Workflow 4: Incremental Execution</h3>
 <p><strong>Objetivo:</strong> Executar tarefas uma a uma com validação.</p>
-<p>Para cada tarefa na ordem do DAG:</p>
+<p>Para cada tarefa na ordem do DAG (derivada do PI ou do TODO, se Legacy):</p>
 <ol>
 <li>Verificar que todas as dependências estão "Concluído"</li>
-<li>Marcar tarefa como "Em andamento" no TODO</li>
+<li>Marcar tarefa como "Em andamento" (no PI e no TODO simultaneamente se Zen-Mode, ou apenas no TODO se Legacy)</li>
 <li>Gerar <code>task-progress.md</code> para a tarefa</li>
-<li>Ler descrição e critérios de aceite da tarefa</li>
-<li>Executar as alterações no código</li>
+<li>Ler passos exatos (TDD no PI) ou inferir implementação (TODO no Legacy)</li>
+<li>Executar as alterações no código exatamente como prescritas ou inferidas</li>
 <li>Executar validação contínua (Workflow 5)</li>
 <li>Se validação passar:</li>
 </ol>
 <ul>
 <li>Atualizar documentação afetada</li>
-<li>Marcar tarefa como "Concluído" no TODO</li>
+<li>Marcar tarefa como "Concluído" no PI e atualizar TODO</li>
 <li>Atualizar <code>task-progress.md</code></li>
 </ul>
 <ol>
@@ -616,19 +649,18 @@
 <li>"Bloqueado" requer justificativa</li>
 <li>Estado deve ser atualizado no TODO imediatamente</li>
 </ul>
-<h3 id="workflow-8-execution-report">Workflow 8: Execution Report</h3>
-<p><strong>Objetivo:</strong> Gerar relatório final da implementação.</p>
-<p><strong>Campos do relatório:</strong></p>
-<ul>
-<li>Resumo da implementação</li>
-<li>ADR referência</li>
-<li>Data de início e término</li>
-<li>Tarefas concluídas, adiadas, bloqueadas</li>
-<li>Validações executadas (build, lint, test)</li>
-<li>Riscos remanescentes</li>
-<li>Dívida técnica criada</li>
-<li>Recomendações futuras</li>
-</ul>
+<h3 id="workflow-8-final-audit--handoff-gatekeeper-restrito">Workflow 8: Final Audit & Handoff (GATEKEEPER RESTRITO)</h3>
+<p><strong>Objetivo:</strong> Invocar a auditoria para fechamento de ciclo e geração indireta do Execution Report.</p>
+<p><HARD-GATE> <strong>PROIBIÇÃO ABSOLUTA DE GERAR ARQUIVOS <code>ER.md</code> DIRETAMENTE.</strong> Você (agente) está ESTRITAMENTE PROIBIDO de criar, editar ou mockar qualquer arquivo que termine em <code>*-ER.md</code>. A geração do Execution Report agora é de competência EXCLUSIVA do gatekeeper algorítmico (<code>audit.py</code> / <code>adr-archive</code>). </HARD-GATE></p>
+<p><strong>Passo Final (Obrigatório):</strong></p>
+<ol>
+<li>Você deve <strong>tocar fisicamente</strong> o arquivo <code>TODO.md</code> (ou <code>*-PI.md</code>) e marcar os checkboxes das tarefas concluídas com <code>- [x]</code>.</li>
+<li>Após finalizar todas as marcações, <strong>NÃO</strong> gere o ER. Em vez disso, você <strong>DEVE OBRIGATORIAMENTE</strong> rodar o motor de auditoria executando o comando no terminal:</li>
+</ol>
+<p><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></p>
+<ol>
+<li>Após o comando rodar, leia a saída do terminal e o relatório gerado na pasta <code>docs/reports</code>. Apresente um resumo claro e direto para o usuário informando o veredito do Janitor (ex: se o sistema aprovou o arquivamento e gerou o ER, ou se ainda há débitos a corrigir).</li>
+</ol>
 <h2 id="templates">Templates</h2>
 <h3 id="execution-contractmd">execution-contract.md</h3>
 <p>Localização: <code>templates/execution-contract.md</code></p>
@@ -648,14 +680,15 @@
 <h2 id="anti-patterns">Anti-patterns</h2>
 <h3 id="-crtico">🔴 Crítico</h3>
 <h4 id="executar-sem-execution-contract">Executar sem Execution Contract</h4>
-<p><strong>O que é:</strong> Iniciar alterações sem validar que ADR, Blueprint e TODO existem e estão coerentes. <strong>Por que é ruim:</strong> Pode levar a implementação inconsistente com a decisão arquitetural. <strong>Como evitar:</strong> Sempre gerar e validar o Execution Contract antes de qualquer alteração. <strong>Exemplo:</strong></p>
+<p><strong>O que é:</strong> Iniciar alterações sem validar que ADR, Blueprint e TODO existem e estão coerentes. <strong>Por que é ruim:</strong> Pode levar a implementação inconsistente com a decisão arquitetural. <strong>Como evitar:</strong> Sempre rodar Artifact Resolution e Contract. Se faltarem arquivos, inicie o processo de <strong>Auto-Repair</strong> com <code>adr-generator</code>. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 &quot;Vou implementar a ADR-005 agora&quot; (sem verificar se Blueprint existe)
 
 # ✅ CORRETO
 1. Gerar Artifact Map
-2. Validar Execution Contract
-3. Só então iniciar execução</code></pre>
+2. Faltou BP? → Auto-Repair via adr-generator
+3. Validar Execution Contract
+4. Iniciar execução</code></pre>
 <h4 id="big-bang-implementation">Big Bang Implementation</h4>
 <p><strong>O que é:</strong> Implementar todas as tarefas de uma vez sem validação intermediária. <strong>Por que é ruim:</strong> Se algo falhar, não há ponto de retorno claro; dificulta rollback. <strong>Como evitar:</strong> Seguir o Execution Loop estritamente — uma tarefa por vez. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO

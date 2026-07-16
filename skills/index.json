@@ -17,23 +17,19 @@
     {
       "name": "adr-generator",
       "version": "2.0.0",
-      "description": "Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos.",
-      "tags": [
-        "architecture",
-        "decisions",
-        "adr",
-        "documentation"
-      ],
-      "related_skills": [
-        "documentation",
-        "architecture-review-kilo",
-        "implementation"
-      ],
+      "description": "Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais",
+      "tags": [],
+      "related_skills": [],
       "files": [
         "SKILL.md",
         "examples/database-choice.md",
+        "examples/quadra/ADR-001-BP.md",
+        "examples/quadra/ADR-001-PI.md",
+        "examples/quadra/ADR-001-TODO.md",
+        "examples/quadra/ADR-001.md",
         "templates/adr-bp.md",
         "templates/adr-emergency.md",
+        "templates/adr-pi.md",
         "templates/adr-simple.md",
         "templates/adr-todo.md",
         "templates/adr.md"
@@ -144,6 +140,26 @@
         "examples/god-class-refactor.md",
         "templates/architecture-review-report.md",
         "templates/tech-debt-item.md"
+      ]
+    },
+    {
+      "name": "code-review",
+      "version": "4.0.0",
+      "description": ">",
+      "tags": [],
+      "related_skills": [],
+      "files": [
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "code-review-lite",
+      "version": "4.0-lite",
+      "description": "Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.",
+      "tags": [],
+      "related_skills": [],
+      "files": [
+        "SKILL.md"
       ]
     },
     {
@@ -299,25 +315,8 @@
       "name": "implementation",
       "version": "2.0.0",
       "description": "Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada.",
-      "tags": [
-        "implementation",
-        "execution",
-        "artifact-driven",
-        "sdlc",
-        "governance"
-      ],
-      "related_skills": [
-        "adr-generator",
-        "writing-plans",
-        "planning",
-        "testing",
-        "git",
-        "documentation",
-        "governance",
-        "release",
-        "architecture-review-kilo",
-        "ddd"
-      ],
+      "tags": [],
+      "related_skills": [],
       "files": [
         "SKILL.md",
         "checklists/post-execution.md",
@@ -509,21 +508,13 @@
     },
     {
       "name": "skill-audit-bulletin",
-      "version": "2.0.0",
-      "description": "Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final. Use quando revisar skills, validar registry ou decidir adoção.",
-      "tags": [
-        "audit",
-        "quality",
-        "review",
-        "validation",
-        "skills"
-      ],
-      "related_skills": [
-        "architecture-review-kilo",
-        "documentation"
-      ],
+      "version": "3.0.0",
+      "description": "Audita skills existentes avaliando qualidade, completude, acionabilidade",
+      "tags": [],
+      "related_skills": [],
       "files": [
         "SKILL.md",
+        "SKILL.md.original",
         "examples/git-audit.md",
         "templates/audit-bulletin.md"
       ]
@@ -577,23 +568,14 @@
     {
       "name": "writing-plans",
       "version": "2.0.0",
-      "description": "Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação, dependências e sequenciamento. Use quando o usuário pedir um plano de implementação, roadmap técnico, ou quebra de tarefas.",
-      "tags": [
-        "planning",
-        "implementation",
-        "roadmap",
-        "tasks",
-        "breakdown"
-      ],
-      "related_skills": [
-        "planning",
-        "ddd",
-        "implementation"
-      ],
+      "description": "Use when you have a spec or requirements for a multi-step task, before",
+      "tags": [],
+      "related_skills": [],
       "files": [
         "SKILL.md",
         "examples/api-migration-plan.md",
         "examples/feature-breakdown.md",
+        "plan-document-reviewer-prompt.md",
         "templates/implementation-plan.md",
         "templates/task-card.md"
       ]
@@ -601,7 +583,7 @@
   ],
   "version": "2.2.0",
   "schema_version": "2.0.0",
-  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (24 skills)",
+  "description": "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. (26 skills)",
   "validation": {
     "min_lines_per_skill": 150,
     "required_sections": [
