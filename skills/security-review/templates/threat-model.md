@@ -1,63 +1,63 @@
 # Threat Model Template
 
-Modelo de ameaça simplificado baseado em STRIDE.
+Simplified threat model based on STRIDE.
 
-## Informações do Sistema
+## System Information
 
-- **Nome do sistema:** {{system_name}}
-- **Versão:** {{version}}
-- **Data:** {{date}}
-- **Revisor:** {{reviewer}}
+- **System Name:** {{system_name}}
+- **Version:** {{version}}
+- **Date:** {{date}}
+- **Reviewer:** {{reviewer}}
 
-## Endpoints/Expostos
+## Endpoints/Exposed Components
 
-| # | Endpoint/Componente | Descrição | Dados Sensíveis |
+| # | Endpoint/Component | Description | Sensitive Data |
 |---|---------------------|-----------|-----------------|
 | 1 | {{endpoint_1}} | {{description_1}} | {{sensitive_1}} |
 | 2 | {{endpoint_2}} | {{description_2}} | {{sensitive_2}} |
 
-## Análise STRIDE
+## STRIDE Analysis
 
-Para cada endpoint, avaliar:
+For each endpoint, evaluate:
 
-### Spoofing (Falsificação)
-- **Pergunta:** A autenticação é adequada?
-- **Achados:** {{findings_spoofing}}
-- **Risco:** 🔴 / 🟡 / 🟢
+### Spoofing (Falsification)
+- **Question:** Is authentication adequate?
+- **Findings:** {{findings_spoofing}}
+- **Risk:** 🔴 / 🟡 / 🟢
 
-### Tampering (Adulteração)
-- **Pergunta:** A integridade dos dados é protegida?
-- **Achados:** {{findings_tampering}}
-- **Risco:** 🔴 / 🟡 / 🟢
+### Tampering (Adulteration)
+- **Question:** Are data integrity protections in place?
+- **Findings:** {{findings_tampering}}
+- **Risk:** 🔴 / 🟡 / 🟢
 
-### Repudiação (Negação)
-- **Pergunta:** Existe audit trail?
-- **Achados:** {{findings_repudiation}}
-- **Risco:** 🔴 / 🟡 / 🟢
+### Repudiation (Denial)
+- **Question:** Is an audit trail present?
+- **Findings:** {{findings_repudiation}}
+- **Risk:** 🔴 / 🟡 / 🟢
 
-### Information Disclosure (Vazamento)
-- **Pergunta:** Dados sensíveis estão expostos?
-- **Achados:** {{findings_disclosure}}
-- **Risco:** 🔴 / 🟡 / 🟢
+### Information Disclosure (Leakage)
+- **Question:** Are sensitive data exposed?
+- **Findings:** {{findings_disclosure}}
+- **Risk:** 🔴 / 🟡 / 🟢
 
-### Denial of Service (Indisponibilidade)
-- **Pergunta:** Há rate limiting e proteção contra abuso?
-- **Achados:** {{findings_dos}}
-- **Risco:** 🔴 / 🟡 / 🟢
+### Denial of Service (Unavailability)
+- **Question:** Are rate limiting and abuse protection in place?
+- **Findings:** {{findings_dos}}
+- **Risk:** 🔴 / 🟡 / 🟢
 
-### Elevation of Privilege (Privilégio)
-- **Pergunta:** O controle de acesso é adequado?
-- **Achados:** {{findings_elevation}}
-- **Risco:** 🔴 / 🟡 / 🟢
+### Elevation of Privilege (Privilege Escalation)
+- **Question:** Is access control adequate?
+- **Findings:** {{findings_elevation}}
+- **Risk:** 🔴 / 🟡 / 🟢
 
-## Resumo de Riscos
+## Risk Summary
 
-| Severidade | Quantidade | Ações |
+| Severity | Quantity | Actions |
 |------------|------------|-------|
-| 🔴 Crítico | {{critical_count}} | Corrigir antes de merge |
-| 🟡 Médio | {{medium_count}} | Corrigir em sprint atual |
-| 🟢 Baixo | {{low_count}} | Documentar e planejar |
+| 🔴 Critical | {{critical_count}} | Fix before merge |
+| 🟡 Medium | {{medium_count}} | Fix in current sprint |
+| 🟢 Low | {{low_count}} | Document and plan |
 
 ---
 
-*Template de modelo de ameaça para ignite-agents-skills.*
+*Threat model template for ignite-agents-skills.*

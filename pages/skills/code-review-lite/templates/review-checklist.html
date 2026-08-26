@@ -411,83 +411,83 @@
   </nav>
   <div class="content">
     <h1 id="code-review-lite-checklist">Code Review Lite Checklist</h1>
-<blockquote>Checklist rápido para revisão de código leve (code-review-lite)</blockquote>
+<blockquote>Quick checklist for lightweight code review (code-review-lite)</blockquote>
 <hr>
-<h2 id="pr-reviso">Pré-Revisão</h2>
+<h2 id="pre-review">Pre-Review</h2>
 <ul>
-<li>[ ] Branch atual identificado</li>
-<li>[ ] Arquivos modificados listados (<code>git diff --name-only</code>)</li>
-<li>[ ] Contexto da task/issue carregado</li>
-<li>[ ] ADRs referenciadas identificadas</li>
-<li>[ ] TODOs referenciados identificados</li>
+<li>[ ] Current branch identified</li>
+<li>[ ] Modified files listed (<code>git diff --name-only</code>)</li>
+<li>[ ] Task/issue context loaded</li>
+<li>[ ] ADRs referenced identified</li>
+<li>[ ] TODOs referenced identified</li>
 </ul>
 <hr>
-<h2 id="fase-1-context-loading">Fase 1: Context Loading</h2>
+<h2 id="phase-1-context-loading">Phase 1: Context Loading</h2>
 <ul>
-<li>[ ] Comportamento esperado entendido</li>
-<li>[ ] Output esperado definido</li>
-<li>[ ] Constraints arquiteturais conhecidas</li>
+<li>[ ] Expected behavior understood</li>
+<li>[ ] Expected output defined</li>
+<li>[ ] Architectural constraints known</li>
 </ul>
 <hr>
-<h2 id="fase-2-five-dimensions">Fase 2: Five Dimensions</h2>
+<h2 id="phase-2-five-dimensions">Phase 2: Five Dimensions</h2>
 <h3 id="1-plan-alignment">1. Plan Alignment</h3>
 <ul>
-<li>[ ] Implementação = Requisitos</li>
-<li>[ ] Escopo respeitado (sem gold-plating)</li>
-<li>[ ] Funcionalidade desnecessária ausente</li>
+<li>[ ] Implementation = Requirements</li>
+<li>[ ] Scope respected (no gold-plating)</li>
+<li>[ ] Unnecessary functionality absent</li>
 </ul>
 <h3 id="2-obvious-bugs">2. Obvious Bugs</h3>
 <ul>
-<li>[ ] Sem referências nulas</li>
-<li>[ ] Imports resolvem</li>
-<li>[ ] Condições válidas</li>
-<li>[ ] Returns presentes</li>
-<li>[ ] Exceções tratadas</li>
-<li>[ ] Sem race conditions óbvias</li>
+<li>[ ] No null references</li>
+<li>[ ] Imports resolved</li>
+<li>[ ] Valid conditions</li>
+<li>[ ] Returns present</li>
+<li>[ ] Exceptions handled</li>
+<li>[ ] No obvious race conditions</li>
 </ul>
 <h3 id="3-security-regression">3. Security Regression</h3>
 <ul>
-<li>[ ] Sem secrets expostos</li>
-<li>[ ] Input sanitizado</li>
-<li>[ ] Auth checks presentes</li>
-<li>[ ] Sem injection vectors (SQL, command, path)</li>
-<li>[ ] Deserialization segura</li>
+<li>[ ] No exposed secrets</li>
+<li>[ ] Input sanitized</li>
+<li>[ ] Auth checks present</li>
+<li>[ ] No injection vectors (SQL, command, path)</li>
+<li>[ ] Secure deserialization</li>
 </ul>
 <h3 id="4-architecture-drift">4. Architecture Drift</h3>
 <ul>
-<li>[ ] Sem duplicação nova</li>
-<li>[ ] Abstrações intactas</li>
-<li>[ ] Sem dependências circulares</li>
-<li>[ ] ADRs respeitadas</li>
-<li>[ ] Responsabilidades não vazando</li>
+<li>[ ] No duplicated code</li>
+<li>[ ] Abstractions intact</li>
+<li>[ ] No circular dependencies</li>
+<li>[ ] ADRs respected</li>
+<li>[ ] Responsibilities not leaking</li>
 </ul>
 <h3 id="5-testing">5. Testing</h3>
 <ul>
-<li>[ ] Testes existentes passam</li>
-<li>[ ] Novo comportamento testado</li>
-<li>[ ] Gaps óbvios cobertos</li>
+<li>[ ] Existing tests pass</li>
+<li>[ ] New behavior tested</li>
+<li>[ ] Obvious gaps covered</li>
 </ul>
 <hr>
-<h2 id="deciso">Decisão</h2>
+<h2 id="decision">Decision</h2>
 <ul>
-<li>[ ] <strong>APPROVED</strong> — Sem issues bloqueantes</li>
-<li>[ ] <strong>APPROVED_WITH_WARNINGS</strong> — Issues menores documentados</li>
-<li>[ ] <strong>REQUIRES_FIXES</strong> — Issues bloqueantes listados</li>
-<li>[ ] <strong>ESCALATE_TO_FULL_REVIEW</strong> — Confidence < 70% ou triggers de escala</li>
+<li>[ ] <strong>APPROVED</strong> — No blocking issues</li>
+<li>[ ] <strong>APPROVED_WITH_WARNINGS</strong> — Minor issues documented</li>
+<li>[ ] <strong>REQUIRES_FIXES</strong> — Blocking issues listed</li>
+<li>[ ] <strong>ESCALATE_TO_FULL_REVIEW</strong> — Confidence < 70% or escalation triggers</li>
 </ul>
 <hr>
 <h2 id="escalation-triggers-auto">Escalation Triggers (Auto)</h2>
 <ul>
-<li>[ ] Auth alterado</li>
-<li>[ ] Payment flow alterado</li>
-<li>[ ] Infrastructure alterado</li>
-<li>[ ] Public API alterado</li>
-<li>[ ] DB schema alterado</li>
-<li>[ ] Lockfile alterado</li>
+<li>[ ] Auth changed</li>
+<li>[ ] Payment flow changed</li>
+<li>[ ] Infrastructure changed</li>
+<li>[ ] Public API changed</li>
+<li>[ ] DB schema changed</li>
+<li>[ ] Lockfile changed</li>
 </ul>
 <hr>
-<h2 id="notas">Notas</h2>
-<p>Issues encontrados: - -</p>
+<h2 id="notes">Notes</h2>
+<p>Found issues: - -</p>
 <p>Warnings: - -</p>
 <hr>
 <p><em>Template: <code>skills/code-review-lite/templates/review-checklist.md</code></em></p>

@@ -422,160 +422,358 @@
     <div class="card-grid" id="skill-grid">
       
     <div class="card">
-      <div class="card-title"><a href="skills/adr-archive/index.html">adr-archive</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.</div>
+      <div class="card-title"><a href="skills/adr-archive/index.html">adr-archive</a> <span class="version-badge">v3.0.0</span></div>
+      <div class="card-desc">Automates the archiving, auditing, and lifecycle governance of Architecture Decision Records (ADRs) and the structured Tech Debt Registry. Silently parses TODO/PI completion, auto-generates canonical Evidence Records (ER.md), moves executed Decision Sets (ADR, BP, TODO, PI) to archive while keeping ER certificates visible in the root, manages frozen ADRs, and prunes resolved technical debts for maximum token efficiency.</div>
       <div class="tags"></div>
-      <div class="card-meta">8 files &middot; <a href="skills/adr-archive/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-meta">9 files &middot; <a href="skills/adr-archive/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/adr-generator/index.html">adr-generator</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais</div>
+      <div class="card-title"><a href="skills/adr-generator/index.html">adr-generator</a> <span class="version-badge">v3.1.1</span></div>
+      <div class="card-desc"></div>
       <div class="tags"></div>
-      <div class="card-meta">12 files &middot; <a href="skills/adr-generator/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-meta">13 files &middot; <a href="skills/adr-generator/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/agent-development/index.html">agent-development</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs to build AI agents — tool use patterns, memory</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/agent-development/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/agent-orchestration/index.html">agent-orchestration</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in e coordenação multi-agente. Use quando precisar coordenar vários agentes, definir papéis, gerenciar handoffs ou otimizar execução paralela.</div>
-      <div class="tags"><span class="tag">orchestration</span> <span class="tag">agents</span> <span class="tag">multi-agent</span> <span class="tag">coordination</span></div>
+      <div class="card-desc">Orchestrates multiple AI agents for complex tasks. Covers task decomposition, model routing, I/O contract handoff, fan-out/fan-in parallelism, and multi-agent coordination. Use when needing to coordinate multiple agents, define roles, manage handoffs, or optimize parallel execution.</div>
+      <div class="tags"></div>
       <div class="card-meta">8 files &middot; <a href="skills/agent-orchestration/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/agents-md-generator/index.html">agents-md-generator</a> <span class="version-badge">v1.0.0</span></div>
-      <div class="card-desc">Gera e mantém arquivos AGENTS.md adaptativos que se adaptam ao contexto do projeto. Detecta automaticamente tipo de projeto, tecnologias, padrões arquiteturais e governança, gerando um AGENTS.md personalizado que serve como conciliador entre o estado atual do projeto e as regras de governança para agentes de IA.</div>
-      <div class="tags"><span class="tag">agents</span> <span class="tag">governance</span> <span class="tag">documentation</span> <span class="tag">adaptation</span></div>
-      <div class="card-meta">13 files &middot; <a href="skills/agents-md-generator/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/agent-planning-execution/index.html">agent-planning-execution</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Comprehensive planning, roadmap management, task decomposition, and plan</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/agent-planning-execution/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/agents-md-management/index.html">agents-md-management</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Management, refactoring, and generation of AGENTS.md files for agentic repositories.</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/agents-md-management/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/api-design/index.html">api-design</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência. Use quando projetar novas APIs, revisar contratos existentes ou padronizar práticas de design de interface.</div>
-      <div class="tags"><span class="tag">api</span> <span class="tag">rest</span> <span class="tag">graphql</span> <span class="tag">endpoints</span></div>
+      <div class="card-desc">Comprehensive guide to designing robust, consistent, and scalable RESTful and GraphQL APIs. Define standards for endpoints, versioning, error contracts, pagination, and idempotence. Use when designing new APIs, reviewing existing contracts, or standardizing interface design practices.</div>
+      <div class="tags"></div>
       <div class="card-meta">7 files &middot; <a href="skills/api-design/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/architecture-review-kilo/index.html">architecture-review-kilo</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais. Use quando o usuário pedir revisão de arquitetura, análise de estrutura, ou avaliação de design.</div>
-      <div class="tags"><span class="tag">architecture</span> <span class="tag">solid</span> <span class="tag">review</span> <span class="tag">clean-architecture</span></div>
-      <div class="card-meta">4 files &middot; <a href="skills/architecture-review-kilo/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/architecture-review/index.html">architecture-review</a> <span class="version-badge">v2.1.0</span></div>
+      <div class="card-desc">Performs architectural code reviews, detecting violations of SOLID principles, architectural patterns (Clean Architecture, Hexagonal, DDD), and structural code smells. Use when the user requests an architecture review, structure analysis, or design evaluation.</div>
+      <div class="tags"></div>
+      <div class="card-meta">4 files &middot; <a href="skills/architecture-review/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/code-review/index.html">code-review</a> <span class="version-badge">v4.0.0</span></div>
-      <div class="card-desc">&gt;</div>
+      <div class="card-title"><a href="skills/artifacts-builder/index.html">artifacts-builder</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs standalone HTML/CSS/JS artifacts — interactive</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/artifacts-builder/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/brainstorming/index.html">brainstorming</a> <span class="version-badge">v2.1.0</span></div>
+      <div class="card-desc">Structured collaborative ideation and design exploration engine. Transforms vague requirements and ideas into validated, documented designs before planning and implementation.</div>
+      <div class="tags"></div>
+      <div class="card-meta">8 files &middot; <a href="skills/brainstorming/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/cap/index.html">cap</a> <span class="version-badge">v3.0.0</span></div>
+      <div class="card-desc">Minimal Context Bootstrap for AI Coding Agents. Acquire only the repository knowledge strictly required to execute the supplied task. Optimize for minimal token consumption, deterministic discovery, and early execution.</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/cap/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/changelog-generator/index.html">changelog-generator</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Automatically creates user-facing changelogs from git commits by analyzing</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/changelog-generator/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/circuit-breaker/index.html">circuit-breaker</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Use when running autonomous loops, repeated operations, or when detecting</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/circuit-breaker/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/clean-code/index.html">clean-code</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs code quality review, refactoring guidance, SOLID</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/clean-code/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/code-review/index.html">code-review</a> <span class="version-badge">v5.0.0</span></div>
+      <div class="card-desc">Unified code review engine supporting fast iterative review (mode: lite) and rigorous multi-agent consensus verification (mode: full).</div>
       <div class="tags"></div>
       <div class="card-meta">1 files &middot; <a href="skills/code-review/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/code-review-lite/index.html">code-review-lite</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.</div>
+      <div class="card-title"><a href="skills/code-review-lite/index.html">code-review-lite</a> <span class="version-badge">v5.0.0-alias</span></div>
+      <div class="card-desc">Lightweight code review optimized for AI-first and vibe-coding workflows. Delegates directly to unified code-review (mode: lite).</div>
       <div class="tags"></div>
       <div class="card-meta">3 files &middot; <a href="skills/code-review-lite/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/data-modeling/index.html">data-modeling</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance. Use quando criar bancos de dados, projetar schemas, otimizar queries ou gerenciar migrações.</div>
-      <div class="tags"><span class="tag">data-modeling</span> <span class="tag">database</span> <span class="tag">schema</span> <span class="tag">sql</span></div>
-      <div class="card-meta">5 files &middot; <a href="skills/data-modeling/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/code-review-workflow/index.html">code-review-workflow</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Structured workflow for requesting, conducting, and receiving code reviews.</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/code-review-workflow/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/content-creator/index.html">content-creator</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs marketing copy, social media content, brand</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/content-creator/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/content-research-writer/index.html">content-research-writer</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs research methodology, long-form content creation,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/content-research-writer/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/context7-mcp/index.html">context7-mcp</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">This skill should be used when the user asks about libraries, frameworks,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/context7-mcp/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/database-architecture/index.html">database-architecture</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">Unified database modeling, schema design, migrations, and performance optimization.</div>
+      <div class="tags"></div>
+      <div class="card-meta">4 files &middot; <a href="skills/database-architecture/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/ddd/index.html">ddd</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados. Use quando modelar domínios ricos, refatorar entidades anêmicas ou estruturar contextos delimitados.</div>
-      <div class="tags"><span class="tag">ddd</span> <span class="tag">domain-driven-design</span> <span class="tag">modeling</span> <span class="tag">aggregates</span></div>
+      <div class="card-desc">Guide to Domain-Driven Design (DDD) modeling. Defines guidelines for Entities, Value Objects, Aggregates, Repositories, Domain Events, Domain Services, and Bounded Contexts. Use when modeling rich domains, refactoring anemic entities, or structuring bounded contexts.</div>
+      <div class="tags"></div>
       <div class="card-meta">8 files &middot; <a href="skills/ddd/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/documentation/index.html">documentation</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code. Use quando criar documentação, revisar docs, ou padronizar material técnico.</div>
-      <div class="tags"><span class="tag">documentation</span> <span class="tag">docs</span> <span class="tag">readme</span> <span class="tag">api-docs</span></div>
-      <div class="card-meta">5 files &middot; <a href="skills/documentation/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/deployment/index.html">deployment</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when setting up CI/CD pipelines, creating deployment configurations,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/deployment/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/documentation-reconciliation/index.html">documentation-reconciliation</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código</div>
-      <div class="tags"><span class="tag">documentation</span> <span class="tag">governance</span> <span class="tag">adr</span> <span class="tag">audit</span></div>
-      <div class="card-meta">3 files &middot; <a href="skills/documentation-reconciliation/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/dispatching-parallel-agents/index.html">dispatching-parallel-agents</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Use when a task has multiple independent subtasks that can be executed</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/dispatching-parallel-agents/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/git/index.html">git</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas. Use quando fazer commits, criar branches, resolver conflitos ou ensinar Git.</div>
-      <div class="tags"><span class="tag">version-control</span> <span class="tag">commits</span> <span class="tag">branching</span> <span class="tag">conventional-commits</span></div>
-      <div class="card-meta">5 files &middot; <a href="skills/git/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/docx-processing/index.html">docx-processing</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs Word document generation, template filling,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/docx-processing/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/email-composer/index.html">email-composer</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs professional email drafting, tone adjustment,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/email-composer/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/find-skills/index.html">find-skills</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Helps users discover and install agent skills when they ask questions</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/find-skills/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/git-workflow/index.html">git-workflow</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Unified Git operations, commit styling, worktree management, and branch</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/git-workflow/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/governance/index.html">governance</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs. Use quando definir processos de equipe, implementar governance-as-code ou padronizar workflows de desenvolvimento.</div>
-      <div class="tags"><span class="tag">governance</span> <span class="tag">branching</span> <span class="tag">code-review</span> <span class="tag">process</span></div>
+      <div class="card-desc">Define governance guidelines for repositories and teams. Covers review, approval, branching strategy, semantic versioning, and issue/PR management processes. Use when defining team processes, implementing governance-as-code, or standardizing development workflows.</div>
+      <div class="tags"></div>
       <div class="card-meta">5 files &middot; <a href="skills/governance/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/implementation/index.html">implementation</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada.</div>
+      <div class="card-title"><a href="skills/implementation/index.html">implementation</a> <span class="version-badge">v2.2.1</span></div>
+      <div class="card-desc"></div>
       <div class="tags"></div>
       <div class="card-meta">10 files &middot; <a href="skills/implementation/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
+      <div class="card-title"><a href="skills/llm-as-judge/index.html">llm-as-judge</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when validating subjective quality criteria that cannot be deterministically</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/llm-as-judge/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/mcp-builder/index.html">mcp-builder</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs to build MCP (Model Context Protocol) servers</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/mcp-builder/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/mobile-design/index.html">mobile-design</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs mobile app design and development patterns for</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/mobile-design/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
       <div class="card-title"><a href="skills/observability/index.html">observability</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting. Use quando configurar monitoramento, investigar incidentes ou implementar observabilidade em microsserviços.</div>
-      <div class="tags"><span class="tag">observability</span> <span class="tag">logging</span> <span class="tag">metrics</span> <span class="tag">tracing</span></div>
+      <div class="card-desc">Comprehensive guide to system observability in production. Defines standards</div>
+      <div class="tags"></div>
       <div class="card-meta">8 files &middot; <a href="skills/observability/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/planning/index.html">planning</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização. Use quando planejar projeto, roadmap, estimativas ou breakdown de trabalho.</div>
-      <div class="tags"><span class="tag">planning</span> <span class="tag">project-management</span> <span class="tag">backlog</span> <span class="tag">estimation</span></div>
-      <div class="card-meta">5 files &middot; <a href="skills/planning/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/pdf-processing/index.html">pdf-processing</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs PDF generation, manipulation, form filling,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/pdf-processing/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/performance-optimization/index.html">performance-optimization</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when optimizing application performance, reducing load times, improving</div>
+      <div class="tags"></div>
+      <div class="card-meta">2 files &middot; <a href="skills/performance-optimization/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/php-laravel-ecosystem/index.html">php-laravel-ecosystem</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Specialized development guidelines and best practices for PHP and the</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/php-laravel-ecosystem/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/product-spec-engineering/index.html">product-spec-engineering</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">PRD generation, technical spec writing, and reverse engineering requirements.</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/product-spec-engineering/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/prompt-engineering/index.html">prompt-engineering</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas. Use quando criar prompts para agentes de IA, otimizar interações ou treinar equipes em IA.</div>
-      <div class="tags"><span class="tag">prompts</span> <span class="tag">llm</span> <span class="tag">ai</span> <span class="tag">techniques</span></div>
+      <div class="card-desc">Guidelines for effective prompt engineering with AI agents. Covers prompt structure, few-shot, chain-of-thought, role prompting, constraints, and advanced techniques. Use when creating prompts for AI agents, optimizing interactions, or training teams in AI.</div>
+      <div class="tags"></div>
       <div class="card-meta">5 files &middot; <a href="skills/prompt-engineering/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
+      <div class="card-title"><a href="skills/react-best-practices/index.html">react-best-practices</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs React-specific patterns — hooks, component composition,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/react-best-practices/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
       <div class="card-title"><a href="skills/refactoring/index.html">refactoring</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado. Use quando refatorar código, melhorar estrutura existente ou migrar sistemas legados.</div>
-      <div class="tags"><span class="tag">refactoring</span> <span class="tag">code-quality</span> <span class="tag">legacy</span> <span class="tag">strangler-fig</span></div>
+      <div class="card-desc">Comprehensive guide to safe and incremental refactoring. Covers techniques for extraction, Strangler Fig, Branch by Abstraction, testing before refactoring, and legacy migration. Use when refactoring code, improving existing structure, or migrating legacy systems.</div>
+      <div class="tags"></div>
       <div class="card-meta">6 files &middot; <a href="skills/refactoring/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/release/index.html">release</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico.</div>
-      <div class="tags"><span class="tag">release</span> <span class="tag">versioning</span> <span class="tag">changelog</span> <span class="tag">deploy</span></div>
+      <div class="card-desc">Guide for release management and versioning. Defines release process,</div>
+      <div class="tags"></div>
       <div class="card-meta">7 files &middot; <a href="skills/release/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
       <div class="card-title"><a href="skills/repo-bootstrap/index.html">repo-bootstrap</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, estrutura de docs/ e exemplos de CI/CD. Use quando iniciar um novo repositório ou padronizar estrutura de projeto.</div>
-      <div class="tags"><span class="tag">repository</span> <span class="tag">scaffolding</span> <span class="tag">boilerplate</span> <span class="tag">governance</span></div>
+      <div class="card-desc">&#x27;Generates an initial repository structure with governance files: README.md,</div>
+      <div class="tags"></div>
       <div class="card-meta">7 files &middot; <a href="skills/repo-bootstrap/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/security-review/index.html">security-review</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras. Use quando revisar código por segurança, auditar dependências ou validar práticas de criptografia.</div>
-      <div class="tags"><span class="tag">security</span> <span class="tag">vulnerabilities</span> <span class="tag">secrets</span> <span class="tag">cryptography</span></div>
-      <div class="card-meta">6 files &middot; <a href="skills/security-review/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-title"><a href="skills/resilient-execution/index.html">resilient-execution</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Use when a task fails, an approach does not work, when encountering errors</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/resilient-execution/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/skill-audit-bulletin/index.html">skill-audit-bulletin</a> <span class="version-badge">v3.0.0</span></div>
-      <div class="card-desc">Audita skills existentes avaliando qualidade, completude, acionabilidade</div>
+      <div class="card-title"><a href="skills/security-review/index.html">security-review</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when reviewing code for security vulnerabilities, implementing authentication</div>
+      <div class="tags"></div>
+      <div class="card-meta">7 files &middot; <a href="skills/security-review/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/seo-optimizer/index.html">seo-optimizer</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs technical SEO audits, meta tag optimization,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/seo-optimizer/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/skill-audit-bulletin/index.html">skill-audit-bulletin</a> <span class="version-badge">v5.1.0</span></div>
+      <div class="card-desc">Comprehensive Dual-Axis (Structural &amp; Domain SOTA) audit framework for AI agent skills. Evaluates physical metadata/governance alongside metaphysical domain efficacy, best practices, SWOT analysis, and provides direct ADR generation handoff gates with continuous ledger persistence in docs/audit/skills/.</div>
       <div class="tags"></div>
       <div class="card-meta">4 files &middot; <a href="skills/skill-audit-bulletin/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     <div class="card">
-      <div class="card-title"><a href="skills/testing/index.html">testing</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas. Use quando escrever testes, revisar cobertura ou definir estratégia de testes.</div>
-      <div class="tags"><span class="tag">testing</span> <span class="tag">unit-tests</span> <span class="tag">integration</span> <span class="tag">e2e</span></div>
-      <div class="card-meta">6 files &middot; <a href="skills/testing/index.html">Ver SKILL.md &rarr;</a></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="skills/vibe-coding/index.html">vibe-coding</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Modalidade de desenvolvimento onde o desenvolvedor guia o agente de IA com intenção e direção, não comandos detalhados. Foca em resultado, velocidade e fluxo contínuo. Use quando o usuário mencionar vibe coding, pair programming com IA, ou desenvolvimento assistido por IA.</div>
-      <div class="tags"><span class="tag">ai-assisted</span> <span class="tag">pair-programming</span> <span class="tag">intent-driven</span> <span class="tag">agents</span></div>
-      <div class="card-meta">3 files &middot; <a href="skills/vibe-coding/index.html">Ver SKILL.md &rarr;</a></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><a href="skills/writing-plans/index.html">writing-plans</a> <span class="version-badge">v2.0.0</span></div>
-      <div class="card-desc">Use when you have a spec or requirements for a multi-step task, before touching code. Creates comprehensive implementation plans with bite-sized tasks, DRY principles, TDD, and frequent commits.</div>
+      <div class="card-title"><a href="skills/skill-creator/index.html">skill-creator</a> <span class="version-badge">v2.0.0</span></div>
+      <div class="card-desc">End-to-end framework and scaffolding engine for creating, testing, validating, and packaging autonomous AI agent skills with progressive disclosure, deterministic frontmatter, and bundled resources.</div>
       <div class="tags"></div>
-      <div class="card-meta">7 files &middot; <a href="skills/writing-plans/index.html">Ver SKILL.md &rarr;</a></div>
+      <div class="card-meta">7 files &middot; <a href="skills/skill-creator/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/skill-discovery/index.html">skill-discovery</a> <span class="version-badge">v3.0.0</span></div>
+      <div class="card-desc">&quot;Single authoritative router and dynamic discovery engine for all canonical skills in the repository.&quot;</div>
+      <div class="tags"></div>
+      <div class="card-meta">2 files &middot; <a href="skills/skill-discovery/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/subagent-driven-development/index.html">subagent-driven-development</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Use when executing multi-task plans where each task can be implemented</div>
+      <div class="tags"></div>
+      <div class="card-meta">8 files &middot; <a href="skills/subagent-driven-development/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/systematic-debugging/index.html">systematic-debugging</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when encountering bugs, unexpected behavior, test failures, or errors</div>
+      <div class="tags"></div>
+      <div class="card-meta">11 files &middot; <a href="skills/systematic-debugging/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/technical-documentation/index.html">technical-documentation</a> <span class="version-badge">v2.1.0</span></div>
+      <div class="card-desc">Technical documentation generation, architectural diagrams, and comprehensive SOTA documentation reconciliation across all 6 canonical repository pillars (README, CHANGELOG, USAGE, RELEASE-NOTES, STATE, AGENTS/GEMINI).</div>
+      <div class="tags"></div>
+      <div class="card-meta">8 files &middot; <a href="skills/technical-documentation/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/test-driven-development/index.html">test-driven-development</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when writing any new code, adding features, or fixing bugs that</div>
+      <div class="tags"></div>
+      <div class="card-meta">2 files &middot; <a href="skills/test-driven-development/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/testing-mastery/index.html">testing-mastery</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Unified testing framework covering unit, integration, acceptance, webapp,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/testing-mastery/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/ui-ux-pro-max/index.html">ui-ux-pro-max</a> <span class="version-badge">v3.0.0</span></div>
+      <div class="card-desc">Authoritative UI/UX visual engine, design tokens, component architecture, responsive design, WCAG accessibility, and aesthetic heuristics.</div>
+      <div class="tags"></div>
+      <div class="card-meta">2 files &middot; <a href="skills/ui-ux-pro-max/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/ux-researcher-designer/index.html">ux-researcher-designer</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs user research methodologies, persona development,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/ux-researcher-designer/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/verification-before-completion/index.html">verification-before-completion</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Use before claiming any task is complete, any feature works, or any bug</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/verification-before-completion/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/writing-skills/index.html">writing-skills</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">Use when creating new skills, commands, or agent definitions for Claude</div>
+      <div class="tags"></div>
+      <div class="card-meta">7 files &middot; <a href="skills/writing-skills/index.html">Ver SKILL.md &rarr;</a></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><a href="skills/xlsx-processing/index.html">xlsx-processing</a> <span class="version-badge">v1.0.0</span></div>
+      <div class="card-desc">&#x27;Use when the user needs Excel file manipulation — reading, writing,</div>
+      <div class="tags"></div>
+      <div class="card-meta">1 files &middot; <a href="skills/xlsx-processing/index.html">Ver SKILL.md &rarr;</a></div>
     </div>
     </div>
 

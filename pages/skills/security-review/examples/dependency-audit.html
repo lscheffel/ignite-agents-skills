@@ -410,17 +410,17 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">security-review</a> &rsaquo; examples &rsaquo; dependency-audit</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-auditoria-de-dependncias--projeto-nodejs">Exemplo: Auditoria de Dependências — Projeto Node.js</h1>
-<h2 id="contexto">Contexto</h2>
-<p>Aplicação Express.js com 47 dependências diretas. Precisa de auditoria de segurança antes de deploy.</p>
-<h2 id="ferramentas-utilizadas">Ferramentas Utilizadas</h2>
+    <h1 id="example-dependency-audit--nodejs-project">Example: Dependency Audit — Node.js Project</h1>
+<h2 id="context">Context</h2>
+<p>Express.js application with 47 direct dependencies. Requires security audit before deployment.</p>
+<h2 id="tools-used">Tools Used</h2>
 <ul>
-<li><code>npm audit</code> (nativo)</li>
-<li><code>snyk test</code> (complementar)</li>
-<li>Revisão manual de dependências criticas</li>
+<li><code>npm audit</code> (native)</li>
+<li><code>snyk test</code> (complementary)</li>
+<li>Manual review of critical dependencies</li>
 </ul>
-<h2 id="execuo">Execução</h2>
-<h3 id="passo-1-npm-audit">Passo 1: npm audit</h3>
+<h2 id="execution">Execution</h2>
+<h3 id="step-1-npm-audit">Step 1: npm audit</h3>
 <pre data-lang="bash"><code>$ npm audit --json | jq &#x27;.metadata.vulnerabilities&#x27;
 {
   &quot;info&quot;: 0,
@@ -430,44 +430,44 @@
   &quot;critical&quot;: 0,
   &quot;total&quot;: 6
 }</code></pre>
-<h3 id="passo-2-detalhar-vulnerabilidades">Passo 2: Detalhar Vulnerabilidades</h3>
-<div class="table-wrapper"><table><tr><th>Pacote</th><th>Severidade</th><th>Vulnerabilidade</th><th>Versão Afetada</th><th>Fix</th></tr><tr><td><code>lodash</code></td><td>🟡 Medium</td><td>Prototype Pollution</td><td><4.17.21</td><td>Atualizar para 4.17.21</td></tr><tr><td><code>minimist</code></td><td>🟡 Medium</td><td>Prototype Pollution</td><td><1.2.6</td><td>Atualizar para 1.2.6</td></tr><tr><td><code>node-fetch</code></td><td>🔴 High</td><td>Information Exposure</td><td><2.6.7</td><td>Atualizar para 2.6.7</td></tr><tr><td><code>express</code></td><td>🟢 Low</td><td>Open Redirect</td><td><4.18.2</td><td>Atualizar para 4.18.2</td></tr><tr><td><code>qs</code></td><td>🟢 Low</td><td>Prototype Pollution</td><td><6.11.0</td><td>Atualizar para 6.11.0</td></tr><tr><td><code>cookie</code></td><td>🟢 Low</td><td>Insufficient Validation</td><td><0.5.0</td><td>Atualizar para 0.5.0</td></tr></table></div>
-<h3 id="passo-3-anlise-de-impacto">Passo 3: Análise de Impacto</h3>
+<h3 id="step-2-detailing-vulnerabilities">Step 2: Detailing Vulnerabilities</h3>
+<div class="table-wrapper"><table><tr><th>Package</th><th>Severity</th><th>Vulnerability</th><th>Affected Version</th><th>Fix</th></tr><tr><td><code>lodash</code></td><td>🟡 Medium</td><td>Prototype Pollution</td><td><4.17.21</td><td>Update to 4.17.21</td></tr><tr><td><code>minimist</code></td><td>🟡 Medium</td><td>Prototype Pollution</td><td><1.2.6</td><td>Update to 1.2.6</td></tr><tr><td><code>node-fetch</code></td><td>🔴 High</td><td>Information Exposure</td><td><2.6.7</td><td>Update to 2.6.7</td></tr><tr><td><code>express</code></td><td>🟢 Low</td><td>Open Redirect</td><td><4.18.2</td><td>Update to 4.18.2</td></tr><tr><td><code>qs</code></td><td>🟢 Low</td><td>Prototype Pollution</td><td><6.11.0</td><td>Update to 6.11.0</td></tr><tr><td><code>cookie</code></td><td>🟢 Low</td><td>Insufficient Validation</td><td><0.5.0</td><td>Update to 0.5.0</td></tr></table></div>
+<h3 id="step-3-impact-analysis">Step 3: Impact Analysis</h3>
 <p><strong><code>node-fetch</code> (High):</strong></p>
 <ul>
-<li>Vulnerabilidade: expõe headers de autorização em redirects cross-origin</li>
-<li>Impacto: tokens de acesso podem ser vazados se houver redirect malicioso</li>
-<li>Mitigação: verificar se a aplicação segue redirects (raro em APIs)</li>
-<li>Ação: ATUALIZAR URGENTE</li>
+<li>Vulnerability: exposes authorization headers in cross-origin redirects</li>
+<li>Impact: access tokens may be leaked if malicious redirect occurs</li>
+<li>Mitigation: verify if the application follows redirects (rare in APIs)</li>
+<li>Action: URGENTLY UPDATE</li>
 </ul>
-<p><strong><code>lodash</code> e <code>minimist</code> (Medium):</strong></p>
+<p><strong><code>lodash</code> and <code>minimist</code> (Medium):</strong></p>
 <ul>
-<li>Vulnerabilidade: prototype pollution permite injeção de propriedades</li>
-<li>Impacto: depende de como a aplicação processa input do usuário</li>
-<li>Mitigação: verificar se há input não sanitizado passado para essas libs</li>
-<li>Ação: ATUALIZAR</li>
+<li>Vulnerability: prototype pollution allows property injection</li>
+<li>Impact: depends on how the application processes user input</li>
+<li>Mitigation: verify if unsanitized user input is passed to these libs</li>
+<li>Action: UPDATE</li>
 </ul>
-<h3 id="passo-4-correo">Passo 4: Correção</h3>
-<pre data-lang="bash"><code># Atualizar dependências vulneráveis
+<h3 id="step-4-correction">Step 4: Correction</h3>
+<pre data-lang="bash"><code># Update vulnerable dependencies
 npm install lodash@4.17.21 minimist@1.2.6 node-fetch@2.6.7 express@4.18.2 qs@6.11.0 cookie@0.5.0
 
-# Verificar correção
+# Verify correction
 npm audit
 # expected: 0 vulnerabilities</code></pre>
-<h3 id="passo-5-validao">Passo 5: Validação</h3>
-<pre data-lang="bash"><code># Rodar testes para garantir que atualizações não quebraram nada
+<h3 id="step-5-validation">Step 5: Validation</h3>
+<pre data-lang="bash"><code># Run tests to ensure updates did not break anything
 npm test
 
-# Verificar que nenhum lockfile mudou inesperadamente
+# Verify no unexpected lockfile changes
 git diff package-lock.json | grep -E &quot;^\+.*version&quot; | head -10</code></pre>
-<h2 id="resultado">Resultado</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th></tr><tr><td>Vulnerabilidades</td><td>6</td><td>0</td></tr><tr><td>High</td><td>1</td><td>0</td></tr><tr><td>Medium</td><td>2</td><td>0</td></tr><tr><td>Low</td><td>3</td><td>0</td></tr><tr><td>Dependências atualizadas</td><td>—</td><td>6</td></tr></table></div>
-<h2 id="recomendaes">Recomendações</h2>
+<h2 id="result">Result</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Before</th><th>After</th></tr><tr><td>Vulnerabilities</td><td>6</td><td>0</td></tr><tr><td>High</td><td>1</td><td>0</td></tr><tr><td>Medium</td><td>2</td><td>0</td></tr><tr><td>Low</td><td>3</td><td>0</td></tr><tr><td>Updated Dependencies</td><td>—</td><td>6</td></tr></table></div>
+<h2 id="recommendations">Recommendations</h2>
 <ol>
-<li><strong>Automatizar:</strong> Adicionar <code>npm audit --audit-level=high</code> ao CI</li>
-<li><strong>Dependabot:</strong> Habilitar dependabot para PRs automáticos</li>
-<li><strong>Revisão trimestral:</strong> Auditoria completa a cada trimestre</li>
-<li><strong>Lockfile:</strong> Commitar <code>package-lock.json</code> sempre</li>
+<li><strong>Automate:</strong> Add <code>npm audit --audit-level=high</code> to CI</li>
+<li><strong>Dependabot:</strong> Enable dependabot for automatic PRs</li>
+<li><strong>Quarterly Review:</strong> Perform complete audit every quarter</li>
+<li><strong>Lockfile:</strong> Commit <code>package-lock.json</code> always</li>
 </ol>
   </div>
 <footer>

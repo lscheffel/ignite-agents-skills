@@ -410,113 +410,113 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">refactoring</a> &rsaquo; templates &rsaquo; legacy-migration</div>
   </nav>
   <div class="content">
-    <h1 id="plano-de-migrao-de-legado">Plano de Migração de Legado</h1>
-<h2 id="viso-geral">Visão Geral</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Sistema Legado</td><td>{legacy-system-name}</td></tr><tr><td>Responsável</td><td>{your-name}</td></tr><tr><td>Data de Início</td><td>{start-date}</td></tr><tr><td>Data Prevista de Conclusão</td><td>{target-date}</td></tr><tr><td>Status</td><td>Planejada/Em andamento/Concluída</td></tr></table></div>
-<h2 id="contexto">Contexto</h2>
-<h3 id="por-que-migrar">Por que migrar?</h3>
+    <h1 id="legacy-migration-plan">Legacy Migration Plan</h1>
+<h2 id="overview">Overview</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Legacy System</td><td>{legacy-system-name}</td></tr><tr><td>Responsible</td><td>{your-name}</td></tr><tr><td>Start Date</td><td>{start-date}</td></tr><tr><td>Target Completion Date</td><td>{target-date}</td></tr><tr><td>Status</td><td>Planned/In Progress/Completed</td></tr></table></div>
+<h2 id="context">Context</h2>
+<h3 id="why-migrate">Why Migrate?</h3>
 <ul>
-<li>{reason 1: manutenção difícil}</li>
-<li>{reason 2: dependências desatualizadas}</li>
-<li>{reason 3: performance inadequada}</li>
+<li>{reason 1: difficult maintenance}</li>
+<li>{reason 2: outdated dependencies}</li>
+<li>{reason 3: inadequate performance}</li>
 </ul>
-<h3 id="dependncias-do-sistema">Dependências do Sistema</h3>
+<h3 id="system-dependencies">System Dependencies</h3>
 <ul>
 <li>{service 1}: {description}</li>
 <li>{service 2}: {description}</li>
 <li>{database}: {type and version}</li>
 </ul>
-<h2 id="estratgia-de-migrao">Estratégia de Migração</h2>
-<h3 id="abordagem-strangler-fig">Abordagem: Strangler Fig</h3>
-<pre><code>Fase 1: Criar abstração
+<h2 id="migration-strategy">Migration Strategy</h2>
+<h3 id="approach-strangler-fig">Approach: Strangler Fig</h3>
+<pre><code>Phase 1: Create Abstraction
 ┌─────────────────────────┐
 │  API Gateway / Facade   │
 ├─────────────┬───────────┤
-│   Legado    │  Novo     │
+│   Legacy    │  New     │
 │  (100%)     │  (0%)     │
 └─────────────┴───────────┘
 
-Fase 2: Migrar módulo a módulo
+Phase 2: Migrate Module by Module
 ┌─────────────────────────┐
 │  API Gateway / Facade   │
 ├─────────────┬───────────┤
-│   Legado    │  Novo     │
+│   Legacy    │  New     │
 │  (70%)      │  (30%)    │
 └─────────────┴───────────┘
 
-Fase 3: Completar migração
+Phase 3: Complete Migration
 ┌─────────────────────────┐
 │  API Gateway / Facade   │
 ├─────────────┬───────────┤
-│   Legado    │  Novo     │
+│   Legacy    │  New     │
 │  (0%)       │  (100%)   │
 └─────────────┴───────────┘</code></pre>
-<h2 id="fases-de-migrao">Fases de Migração</h2>
-<h3 id="fase-1-preparao">Fase 1: Preparação</h3>
-<p><strong>Duração estimada:</strong> {weeks}</p>
+<h2 id="migration-phases">Migration Phases</h2>
+<h3 id="phase-1-preparation">Phase 1: Preparation</h3>
+<p><strong>Estimated Duration:</strong> {weeks}</p>
 <ul>
-<li>[ ] Mapear todas as rotas/endpoints do legado</li>
-<li>[ ] Identificar dependências externas</li>
-<li>[ ] Criar testes de caracterização</li>
-<li>[ ] Configurar ambiente de desenvolvimento para novo sistema</li>
-<li>[ ] Definir interface de migração</li>
+<li>[ ] Map all legacy routes/endpoints</li>
+<li>[ ] Identify external dependencies</li>
+<li>[ ] Create characterization tests</li>
+<li>[ ] Configure development environment for new system</li>
+<li>[ ] Define migration interface</li>
 </ul>
-<h3 id="fase-2-mdulo-module-1">Fase 2: Módulo {module-1}</h3>
-<p><strong>Duração estimada:</strong> {weeks}</p>
+<h3 id="phase-2-module-module-1">Phase 2: Module {module-1}</h3>
+<p><strong>Estimated Duration:</strong> {weeks}</p>
 <ul>
-<li>[ ] Extrair interface do módulo</li>
-<li>[ ] Implementar novo módulo</li>
-<li>[ ] Criar testes para novo módulo</li>
-<li>[ ] Configurar feature flag</li>
-<li>[ ] Redirecionar 10% do tráfego</li>
-<li>[ ] Monitorar por {days} dias</li>
-<li>[ ] Redirecionar 100% do tráfego</li>
-<li>[ ] Remover código legado do módulo</li>
+<li>[ ] Extract interface from module</li>
+<li>[ ] Implement new module</li>
+<li>[ ] Create tests for new module</li>
+<li>[ ] Configure feature flag</li>
+<li>[ ] Redirect 10% of traffic</li>
+<li>[ ] Monitor for {days} days</li>
+<li>[ ] Redirect 100% of traffic</li>
+<li>[ ] Remove legacy code from module</li>
 </ul>
-<h3 id="fase-3-mdulo-module-2">Fase 3: Módulo {module-2}</h3>
-<p><strong>Duração estimada:</strong> {weeks}</p>
+<h3 id="phase-3-module-module-2">Phase 3: Module {module-2}</h3>
+<p><strong>Estimated Duration:</strong> {weeks}</p>
 <ul>
-<li>[ ] Extrair interface do módulo</li>
-<li>[ ] Implementar novo módulo</li>
-<li>[ ] Criar testes para novo módulo</li>
-<li>[ ] Configurar feature flag</li>
-<li>[ ] Redirecionar 10% do tráfego</li>
-<li>[ ] Monitorar por {days} dias</li>
-<li>[ ] Redirecionar 100% do tráfego</li>
-<li>[ ] Remover código legado do módulo</li>
+<li>[ ] Extract interface from module</li>
+<li>[ ] Implement new module</li>
+<li>[ ] Create tests for new module</li>
+<li>[ ] Configure feature flag</li>
+<li>[ ] Redirect 10% of traffic</li>
+<li>[ ] Monitor for {days} days</li>
+<li>[ ] Redirect 100% of traffic</li>
+<li>[ ] Remove legacy code from module</li>
 </ul>
-<h3 id="fase-4-limpeza">Fase 4: Limpeza</h3>
-<p><strong>Duração estimada:</strong> {weeks}</p>
+<h3 id="phase-4-cleanup">Phase 4: Cleanup</h3>
+<p><strong>Estimated Duration:</strong> {weeks}</p>
 <ul>
-<li>[ ] Remover código legado restante</li>
-<li>[ ] Remover dependências legadas</li>
-<li>[ ] Atualizar documentação</li>
-<li>[ ] Remover feature flags</li>
-<li>[ ] Fechar issues de migração</li>
+<li>[ ] Remove remaining legacy code</li>
+<li>[ ] Remove legacy dependencies</li>
+<li>[ ] Update documentation</li>
+<li>[ ] Remove feature flags</li>
+<li>[ ] Close migration issues</li>
 </ul>
-<h2 id="riscos-e-mitigaes">Riscos e Mitigações</h2>
-<div class="table-wrapper"><table><tr><th>Risco</th><th>Impacto</th><th>Probabilidade</th><th>Mitigação</th></tr><tr><td>Dados inconsistentes</td><td>Alto</td><td>Média</td><td>Sincronização durante migração</td></tr><tr><td>Performance degradation</td><td>Médio</td><td>Baixa</td><td>Benchmark antes/depois</td></tr><tr><td>Perda de funcionalidade</td><td>Alto</td><td>Baixa</td><td>Testes de caracterização completos</td></tr><tr><td>Resistência da equipe</td><td>Médio</td><td>Média</td><td>Treinamento e documentação</td></tr></table></div>
-<h2 id="critrios-de-sucesso">Critérios de Sucesso</h2>
+<h2 id="risks-and-mitigations">Risks and Mitigations</h2>
+<div class="table-wrapper"><table><tr><th>Risk</th><th>Impact</th><th>Probability</th><th>Mitigation</th></tr><tr><td>Inconsistent Data</td><td>High</td><td>Medium</td><td>Synchronization during migration</td></tr><tr><td>Performance Degradation</td><td>Medium</td><td>Low</td><td>Benchmark before/after</td></tr><tr><td>Loss of Functionality</td><td>High</td><td>Low</td><td>Complete characterization tests</td></tr><tr><td>Team Resistance</td><td>Medium</td><td>Medium</td><td>Training and documentation</td></tr></table></div>
+<h2 id="success-criteria">Success Criteria</h2>
 <ul>
-<li>[ ] Todos os módulos migrados</li>
-<li>[ ] Testes automatizados cobrindo novo sistema</li>
-<li>[ ] Performance igual ou melhor que legado</li>
-<li>[ ] Zero regressões em produção</li>
-<li>[ ] Documentação atualizada</li>
-<li>[ ] Time treinado no novo sistema</li>
+<li>[ ] All modules migrated</li>
+<li>[ ] Automated tests covering new system</li>
+<li>[ ] Performance equal to or better than legacy</li>
+<li>[ ] Zero regressions in production</li>
+<li>[ ] Updated documentation</li>
+<li>[ ] Team trained on new system</li>
 </ul>
 <h2 id="rollback-plan">Rollback Plan</h2>
 <ol>
-<li>Desativar feature flag para novo módulo</li>
-<li>Redirecionar tráfego todo para legado</li>
-<li>Investigar causa da falha</li>
-<li>Corrigir e tentar novamente</li>
+<li>Disable feature flag for new module</li>
+<li>Redirect all traffic to legacy</li>
+<li>Investigate cause of failure</li>
+<li>Correct and try again</li>
 </ol>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://martinfowler.com/bliki/StranglerFigApplication.html">Strangler Fig Pattern</a></li>
 <li><a href="https://martinfowler.com/bliki/branchByAbstraction.html">Branch by Abstraction</a></li>
-<li><code>refactoring</code> - para técnicas de refatoração incremental</li>
+<li><code>refactoring</code> - for incremental refactoring techniques</li>
 </ul>
   </div>
 <footer>

@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>git-workflow — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; git-workflow</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: git-workflow version: 1.0.0 description: Unified Git operations, commit styling, worktree management, and branch completion workflows. domain: agentic-workflow triggers:</p>
+<ul>
+<li>git-workflow</li>
+<li>agentic-workflow</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>git-workflow</li>
+<li>agentic-workflow</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="git-workflow--version-control-hub">Git Workflow & Version Control Hub</h1>
+<p>Unified Git operations, commit styling, worktree management, and branch completion workflows.</p>
+<h2 id="sub-domain--component-git">Sub-Domain / Component: <code>git</code></h2>
+<h1 id="git">Git</h1>
+<p>Padrões e workflows para versionamento com Git.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa criar commits com mensagens padronizadas</li>
+<li>Precisa decidir entre merge, rebase ou cherry-pick</li>
+<li>Precisa resolver conflitos de merge</li>
+<li>Precisa configurar branching strategy para equipe</li>
+<li>Precisa fazer release via Git Flow</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Trabalhando em repositório somente leitura</li>
+<li>Precisa de versionamento sem Git (ex: SVN)</li>
+<li>Trabalhando com monorepo que usa outro sistema</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>governance</code> — para processos de branch protection e CODEOWNERS</li>
+<li><code>release</code> — para versionamento semântico e tags</li>
+<li><code>repo-bootstrap</code> — para configurar .gitignore e gitignore.io</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Preciso de Git?] --&gt;|Criar commit| B[Conventional Commits]
+    A --&gt;|Criar branch| C[Qual tipo?]
+    C --&gt;|Nova feature| D[feature/nome-curto]
+    C --&gt;|Bug fix| E[fix/nome-curto]
+    C --&gt;|Hotfix produção| F[hotfix/nome-curto]
+    A --&gt;|Integrar branch| G[Merge ou Rebase?]
+    G --&gt;|Precisa preservar histórico| H[Merge]
+    G --&gt;|Precisa histórico limpo| I[Rebase]
+    G --&gt;|Branch compartilhado| J[Merge - NUNCA rebase]
+    G --&gt;|Branch local| K[Rebase]
+    A --&gt;|Resolver conflito| L[Conflito de Merge]
+    L --&gt;|Arquivo binário| M[Git merge -X theirs/mine]
+    L --&gt;|Arquivo texto| N[Editar manualmente]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-criar-commit-convencional">Fase 1: Criar Commit Convencional</h3>
+<ol>
+<li>Stageie os arquivos relevantes:</li>
+</ol>
+<pre data-lang="bash"><code>   git add src/services/user.ts src/controllers/user.ts</code></pre>
+<ol>
+<li>Verifique o status:</li>
+</ol>
+<pre data-lang="bash"><code>   git status</code></pre>
+<ol>
+<li>Crie o commit:</li>
+</ol>
+<pre data-lang="bash"><code>   git commit -m &quot;feat(user): add email validation to registration&quot;</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Verifique o commit no log:</li>
+</ol>
+<pre data-lang="bash"><code>   git log -1 --pretty=format:&quot;%s&quot;
+   # Deve mostrar: feat(user): add email validation to registration</code></pre>
+<h3 id="fase-2-resolver-conflito-de-merge">Fase 2: Resolver Conflito de Merge</h3>
+<ol>
+<li>Identifique arquivos conflitantes:</li>
+</ol>
+<pre data-lang="bash"><code>   git status
+   # Arquivos com &quot;both modified&quot; são conflitantes</code></pre>
+<ol>
+<li>Abra o arquivo e localize marcadores:</li>
+</ol>
+<pre><code>   &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+   código da branch atual
+   =======
+   código da branch que está mergeando
+   &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</code></pre>
+<ol>
+<li>Edite manualmente para resolver:</li>
+</ol>
+<ul>
+<li>Mantenha código correto</li>
+<li>Remova marcadores de conflito</li>
+</ul>
+<ol>
+<li>Stageie o arquivo resolvido:</li>
+</ol>
+<pre data-lang="bash"><code>   git add caminho/arquivo.ts</code></pre>
+<ol>
+<li>Complete o merge:</li>
+</ol>
+<pre data-lang="bash"><code>   git commit  # Cria commit de merge
+   # ou
+   git rebase --continue  # Se for rebase</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Execute testes:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test &amp;&amp; npm run lint</code></pre>
+<h3 id="fase-3-fazer-release-via-git-flow">Fase 3: Fazer Release via Git Flow</h3>
+<ol>
+<li>Certifique-se que está em develop:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout develop
+   git pull origin develop</code></pre>
+<ol>
+<li>Crie branch de release:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout -b release/v1.2.0</code></pre>
+<ol>
+<li>Atualize versão:</li>
+</ol>
+<pre data-lang="bash"><code>   npm version minor --no-git-tag-version
+   # ou
+   # Atualize package.json manualmente</code></pre>
+<ol>
+<li>Atualize CHANGELOG.md</li>
+<li>Commit das mudanças:</li>
+</ol>
+<pre data-lang="bash"><code>   git add .
+   git commit -m &quot;chore(release): prepare v1.2.0&quot;</code></pre>
+<ol>
+<li>Merge para main:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout main
+   git merge --no-ff release/v1.2.0</code></pre>
+<ol>
+<li>Crie tag:</li>
+</ol>
+<pre data-lang="bash"><code>   git tag -a v1.2.0 -m &quot;Release v1.2.0&quot;</code></pre>
+<ol>
+<li>Merge de volta para develop:</li>
+</ol>
+<pre data-lang="bash"><code>   git checkout develop
+   git merge --no-ff release/v1.2.0</code></pre>
+<ol>
+<li>Delete branch de release:</li>
+</ol>
+<pre data-lang="bash"><code>   git branch -d release/v1.2.0</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Push com tags:</li>
+</ol>
+<pre data-lang="bash"><code>    git push origin main --tags
+    git push origin develop</code></pre>
+<h3 id="fase-4-limpar-histrico-rebase-interativo">Fase 4: Limpar Histórico (Rebase Interativo)</h3>
+<ol>
+<li>Identifique commits a limpar (últimos 3):</li>
+</ol>
+<pre data-lang="bash"><code>   git log --oneline -5</code></pre>
+<ol>
+<li>Inicie rebase interativo:</li>
+</ol>
+<pre data-lang="bash"><code>   git rebase -i HEAD~3</code></pre>
+<ol>
+<li>No editor, escolha ação para cada commit:</li>
+</ol>
+<ul>
+<li><code>pick</code> — manter commit</li>
+<li><code>squash</code> — unir com commit anterior</li>
+<li><code>fixup</code> — unir sem mensagem</li>
+<li><code>reword</code> — editar mensagem</li>
+<li><code>drop</code> — remover commit</li>
+</ul>
+<ol>
+<li>Edite mensagens se necessário</li>
+<li><strong>Checkpoint</strong>: Verifique histórico limpo:</li>
+</ol>
+<pre data-lang="bash"><code>   git log --oneline -5</code></pre>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="conventional-commits">Conventional Commits</h3>
+<p>Formato: <code><tipo>(<escopo>): <descrição></code></p>
+<pre data-lang="bash"><code># Tipos válidos
+feat: nova funcionalidade
+fix: correção de bug
+docs: documentação
+style: formatação
+refactor: refatoração
+perf: performance
+test: testes
+chore: manutenção</code></pre>
+<h3 id="branching-strategies">Branching Strategies</h3>
+<h4 id="git-flow-recomendado-para-releases-agendadas">Git Flow (recomendado para releases agendadas)</h4>
+<ul>
+<li><code>main</code>: código em produção</li>
+<li><code>develop</code>: branch de integração</li>
+<li><code>feature/*</code>: novas features</li>
+<li><code>release/*</code>: preparação de release</li>
+<li><code>hotfix/*</code>: correções urgentes</li>
+</ul>
+<h4 id="trunk-based-recomendado-para-cicd-contnuo">Trunk-Based (recomendado para CI/CD contínuo)</h4>
+<ul>
+<li><code>main</code>: trunk sempre deployável</li>
+<li><code>feature/*</code>: branches curtas (< 1 dia)</li>
+<li>Commits pequenos e frequentes</li>
+</ul>
+<h3 id="merge-vs-rebase">Merge vs Rebase</h3>
+<div class="table-wrapper"><table><tr><th>Ação</th><th>Merge</th><th>Rebase</th></tr><tr><td>Preserva histórico</td><td>✅</td><td>❌</td></tr><tr><td>Histórico linear</td><td>❌</td><td>✅</td></tr><tr><td>Seguro para shared</td><td>✅</td><td>❌</td></tr><tr><td>Branch compartilhado</td><td>✅</td><td>❌</td></tr></table></div>
+<h2 id="templates">Templates</h2>
+<h3 id="commit-messagemd">commit-message.md</h3>
+<p>Localização: <code>templates/commit-message.md</code></p>
+<p>Template para mensagens de commit padronizadas.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Consulte antes de criar commit
+cat templates/commit-message.md</code></pre>
+<h3 id="branch-namingmd">branch-naming.md</h3>
+<p>Localização: <code>templates/branch-naming.md</code></p>
+<p>Convenção de nomes para branches.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Crie branch seguindo convenção
+git checkout -b feature/user-authentication</code></pre>
+<h3 id="pr-descriptionmd">pr-description.md</h3>
+<p>Localização: <code>templates/pr-description.md</code></p>
+<p>Template para descrição de Pull Request.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code># Copie para usar como base
+cp templates/pr-description.md .github/PULL_REQUEST_TEMPLATE.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="force-push-em-branch-compartilhado">Force push em branch compartilhado</h4>
+<p><strong>O que é:</strong> Usar <code>git push --force</code> em branch que outros desenvolvedores estão usando. <strong>Por que é ruim:</strong> Destrói histórico que outros desenvolvedores dependem, causando perda de trabalho. <strong>Como evitar:</strong> Use <code>git push --force-with-lease</code> ou nunca force push em branches compartilhados. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git push --force origin feature/user-auth
+
+# ✅ CORRETO
+git push --force-with-lease origin feature/user-auth
+# ou
+git merge origin/main  # preserva histórico</code></pre>
+<h4 id="commit-com-segredoscredenciais">Commit com segredos/credenciais</h4>
+<p><strong>O que é:</strong> Commitar arquivos contendo senhas, tokens ou credenciais. <strong>Por que é ruim:</strong> Exposição de credenciais no histórico do Git, impossível remover completamente. <strong>Como evitar:</strong> Use .env, .gitignore, e git-secrets. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git add .env
+git commit -m &quot;feat: add config&quot;
+
+# ✅ CORRETO
+echo &quot;.env&quot; &gt;&gt; .gitignore
+git add .env
+git commit -m &quot;feat: add config&quot;</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="mensagem-de-commit-vaga">Mensagem de commit vaga</h4>
+<p><strong>O que é:</strong> Mensagens genéricas como "fix bug" ou "update code". <strong>Por que é ruim:</strong> Dificulta busca no histórico e gera documentação ruim. <strong>Como evitar:</strong> Use Conventional Commits com escopo e descrição clara. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git commit -m &quot;fix&quot;
+
+# ✅ CORRETO
+git commit -m &quot;fix(auth): handle expired JWT token&quot;</code></pre>
+<h4 id="branch-sem-pr">Branch sem PR</h4>
+<p><strong>O que é:</strong> Trabalhar diretamente em main sem Pull Request. <strong>Por que é ruim:</strong> Nenhuma revisão de código, histórico de decisões perdido. <strong>Como evitar:</strong> Sempre crie PR, mesmo para mudanças pequenas. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git checkout main
+git add .
+git commit -m &quot;feat: quick fix&quot;
+
+# ✅ CORRETO
+git checkout -b feature/quick-fix
+git add .
+git commit -m &quot;feat: quick fix&quot;
+gh pr create --title &quot;Quick fix&quot; --body &quot;Descrição&quot;</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="commit-grande-com-mltiplas-mudanas">Commit grande com múltiplas mudanças</h4>
+<p><strong>O que é:</strong> Commitar vários arquivos com mudanças não relacionadas. <strong>Por que é ruim:</strong> Dificulta rollback seletivo e revisão de código. <strong>Como evitar:</strong> Commits atômicos, um conceito por commit. <strong>Exemplo:</strong></p>
+<pre><code># ❌ ERRADO
+git add .
+git commit -m &quot;feat: add user and fix login and update docs&quot;
+
+# ✅ CORRETO
+git add src/user.ts
+git commit -m &quot;feat(user): add user entity&quot;
+git add src/auth.ts
+git commit -m &quot;fix(auth): handle login error&quot;
+git add README.md
+git commit -m &quot;docs: update user flow&quot;</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-pr-commit">Checklist Pré-Commit</h3>
+<ul>
+<li>[ ] Código compila sem erros</li>
+<li>[ ] Testes passam (<code>npm test</code>)</li>
+<li>[ ] Lint passa (<code>npm run lint</code>)</li>
+<li>[ ] Mensagem de commit segue Conventional Commits</li>
+<li>[ ] Arquivo .env não está no stage</li>
+</ul>
+<h3 id="checklist-pr-merge">Checklist Pré-Merge</h3>
+<ul>
+<li>[ ] Branch está atualizada com main</li>
+<li>[ ] Todos os testes passam</li>
+<li>[ ] Coverage ≥ 80%</li>
+<li>[ ] PR tem descrição completa</li>
+<li>[ ] Pelo menos 1 aprovação</li>
+</ul>
+<h3 id="checklist-pr-release">Checklist Pré-Release</h3>
+<ul>
+<li>[ ] CHANGELOG.md atualizado</li>
+<li>[ ] Versão bumpado em package.json</li>
+<li>[ ] Todos os testes E2E passam</li>
+<li>[ ] Build de produção funciona</li>
+<li>[ ] Tag criada com semantic versioning</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="submodule-com-conflito">Submodule com conflito</h3>
+<p><strong>Situação:</strong> Conflito em repositório que usa submodules. <strong>Solução:</strong> Atualize o submodule separadamente, depois resolva o conflito. <strong>Exceção:</strong> Se o submodule é externo, considere usar subtree.</p>
+<pre data-lang="bash"><code># Atualizar submodule
+git submodule update --remote --merge
+git add path/to/submodule
+git commit -m &quot;chore: update submodule&quot;</code></pre>
+<h3 id="rebase-com-arquivo-binrio-conflito">Rebase com arquivo binário conflito</h3>
+<p><strong>Situação:</strong> Conflito em arquivo binário durante rebase. <strong>Solução:</strong> Use merge strategy para binários. <strong>Exceção:</strong> Se o binário é gerado, remova e regenere.</p>
+<pre data-lang="bash"><code># Resolver conflito em binário
+git checkout --ours path/to/file.bin
+git add path/to/file.bin
+git rebase --continue</code></pre>
+<h3 id="detached-head">Detached HEAD</h3>
+<p><strong>Situação:</strong> Git checkout em commit específico, ficando em estado detached HEAD. <strong>Solução:</strong> Crie branch para trabalhar ou retorne ao branch anterior. <strong>Exceção:</strong> Se for só para inspecionar, não há problema.</p>
+<pre data-lang="bash"><code># Sair do detached HEAD
+git checkout main
+# ou criar branch
+git switch -c temp-branch</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://www.conventionalcommits.org/">Conventional Commits</a></li>
+<li><a href="https://nvie.com/posts/a-successful-git-branching-model/">Git Flow</a></li>
+<li><code>governance</code> — para branch protection e CODEOWNERS</li>
+<li><code>release</code> — para versionamento semântico</li>
+<li><code>repo-bootstrap</code> — para .gitignore patterns</li>
+</ul>
+<hr>
+<h2 id="sub-domain--component-git-commit-helper">Sub-Domain / Component: <code>git-commit-helper</code></h2>
+<h1 id="git-commit-helper">Git Commit Helper</h1>
+<h2 id="overview">Overview</h2>
+<p>Enforce conventional commit standards, guide semantic versioning decisions, generate changelogs, and ensure commit message quality. This skill provides a structured approach to version control communication that enables automated tooling and clear project history.</p>
+<h2 id="phase-1-analyze-changes">Phase 1: Analyze Changes</h2>
+<p>Analyze the staged diff to understand what was changed:</p>
+<pre data-lang="bash"><code>git diff --cached --stat
+git diff --cached</code></pre>
+<ol>
+<li>Identify the files and modules affected</li>
+<li>Determine the nature of the change (new feature, bug fix, refactoring, etc.)</li>
+<li>Check if the change is breaking (API changes, removed features, changed contracts)</li>
+</ol>
+<p><strong>STOP — Do NOT write a commit message until you understand the full scope of changes.</strong></p>
+<h2 id="phase-2-classify-and-compose">Phase 2: Classify and Compose</h2>
+<h3 id="commit-type-decision-table">Commit Type Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Type</th><th>When to Use</th><th>Version Bump</th><th>Example</th></tr><tr><td><code>feat</code></td><td>New feature for the user</td><td>MINOR</td><td><code>feat(auth): add OAuth2 login flow</code></td></tr><tr><td><code>fix</code></td><td>Bug fix for the user</td><td>PATCH</td><td><code>fix(api): handle null response in user endpoint</code></td></tr><tr><td><code>docs</code></td><td>Documentation only changes</td><td>None</td><td><code>docs(readme): update installation steps</code></td></tr><tr><td><code>style</code></td><td>Formatting, missing semicolons, etc.</td><td>None</td><td><code>style(lint): fix trailing whitespace</code></td></tr><tr><td><code>refactor</code></td><td>Code change with no behavior change</td><td>None</td><td><code>refactor(utils): extract date formatting helpers</code></td></tr><tr><td><code>perf</code></td><td>Performance improvement</td><td>PATCH</td><td><code>perf(query): add index for user lookup</code></td></tr><tr><td><code>test</code></td><td>Adding or correcting tests</td><td>None</td><td><code>test(auth): add login failure scenarios</code></td></tr><tr><td><code>chore</code></td><td>Maintenance, deps, tooling</td><td>None</td><td><code>chore(deps): update typescript to 5.4</code></td></tr><tr><td><code>ci</code></td><td>CI/CD configuration changes</td><td>None</td><td><code>ci(github): add Node 20 to test matrix</code></td></tr><tr><td><code>build</code></td><td>Build system or external dependencies</td><td>None</td><td><code>build(webpack): optimize chunk splitting</code></td></tr></table></div>
+<h3 id="conventional-commit-format">Conventional Commit Format</h3>
+<pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]</code></pre>
+<h3 id="scope-guidelines">Scope Guidelines</h3>
+<p>Scope should identify the area of the codebase affected:</p>
+<div class="table-wrapper"><table><tr><th>Scope Strategy</th><th>Examples</th><th>When to Use</th></tr><tr><td>By module</td><td><code>auth</code>, <code>billing</code>, <code>dashboard</code>, <code>api</code></td><td>Feature-organized codebases</td></tr><tr><td>By layer</td><td><code>db</code>, <code>ui</code>, <code>middleware</code>, <code>config</code></td><td>Layer-organized codebases</td></tr><tr><td>By package</td><td><code>@app/core</code>, <code>@app/shared</code></td><td>Monorepos</td></tr><tr><td>General</td><td><code>deps</code>, <code>ci</code>, <code>lint</code>, <code>types</code></td><td>Cross-cutting changes</td></tr></table></div>
+<p>Rules:</p>
+<ul>
+<li>Lowercase, kebab-case</li>
+<li>Keep consistent within a project</li>
+<li>Optional but recommended for projects with 10+ files changed regularly</li>
+<li>Omit scope for truly cross-cutting changes</li>
+</ul>
+<h3 id="description-rules">Description Rules</h3>
+<ul>
+<li>Use imperative mood: "add" not "added" or "adds"</li>
+<li>No capital first letter</li>
+<li>No period at the end</li>
+<li>Maximum 72 characters (type + scope + description combined)</li>
+<li>Describe WHAT changed, not HOW</li>
+</ul>
+<h2 id="phase-3-write-the-commit-message">Phase 3: Write the Commit Message</h2>
+<h3 id="body-guidelines">Body Guidelines</h3>
+<pre><code>feat(cart): add quantity update functionality
+
+Users can now change item quantities directly in the cart
+without removing and re-adding items. The quantity selector
+supports values from 1 to 99 with real-time price updates.
+
+Closes #234</code></pre>
+<ul>
+<li>Wrap at 72 characters</li>
+<li>Explain WHY the change was made (motivation)</li>
+<li>Explain WHAT changed at a high level</li>
+<li>Use blank line to separate from description and footer</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<pre><code>feat(api)!: change user endpoint response format
+
+BREAKING CHANGE: The /api/users endpoint now returns a paginated
+response object instead of a plain array. Clients must update
+to read from the `data` field.
+
+Migration guide:
+- Before: const users = await fetch(&#x27;/api/users&#x27;).json()
+- After:  const { data: users } = await fetch(&#x27;/api/users&#x27;).json()</code></pre>
+<p>Two ways to indicate breaking changes:</p>
+<ol>
+<li><code>!</code> after type/scope: <code>feat(api)!: description</code></li>
+<li><code>BREAKING CHANGE:</code> footer (provides space for migration details)</li>
+</ol>
+<p>Both trigger a MAJOR version bump.</p>
+<p><strong>STOP — Present the commit message to the user for approval before committing.</strong></p>
+<h2 id="phase-4-assess-version-impact">Phase 4: Assess Version Impact</h2>
+<h3 id="semantic-versioning-semver-majorminorpatch">Semantic Versioning (SemVer): MAJOR.MINOR.PATCH</h3>
+<div class="table-wrapper"><table><tr><th>Component</th><th>Increment When</th><th>Example</th></tr><tr><td>MAJOR</td><td>Breaking changes (incompatible API changes)</td><td>1.0.0 -> 2.0.0</td></tr><tr><td>MINOR</td><td>New features (backward compatible)</td><td>1.0.0 -> 1.1.0</td></tr><tr><td>PATCH</td><td>Bug fixes (backward compatible)</td><td>1.0.0 -> 1.0.1</td></tr></table></div>
+<h3 id="version-bumping-rules">Version Bumping Rules</h3>
+<pre><code>Commits since last release:
+  fix(auth): handle expired tokens       -&gt; PATCH
+  feat(search): add fuzzy matching       -&gt; MINOR (overrides PATCH)
+  fix(ui): correct button alignment      -&gt; already MINOR
+  feat(api)!: change response format     -&gt; MAJOR (overrides MINOR)
+
+Result: MAJOR bump (highest wins)</code></pre>
+<h3 id="pre-release-versions">Pre-Release Versions</h3>
+<pre><code>1.0.0-alpha.1    -&gt; Early testing
+1.0.0-beta.1     -&gt; Feature complete, testing
+1.0.0-rc.1       -&gt; Release candidate
+1.0.0            -&gt; Stable release</code></pre>
+<h3 id="initial-development-0xy">Initial Development (0.x.y)</h3>
+<ul>
+<li>0.1.0: First usable version</li>
+<li>0.x.y: API is not stable; MINOR can include breaking changes</li>
+<li>1.0.0: First stable release; SemVer rules fully apply</li>
+</ul>
+<h2 id="phase-5-generate-changelog-if-applicable">Phase 5: Generate Changelog (if applicable)</h2>
+<h3 id="changelogmd-format">CHANGELOG.md Format</h3>
+<pre data-lang="markdown"><code># Changelog
+
+## [1.2.0] - 2025-03-15
+
+### Added
+- Fuzzy search matching for product catalog (#234)
+- Bulk export functionality for reports (#245)
+
+### Fixed
+- Handle expired authentication tokens gracefully (#230)
+- Correct button alignment on mobile viewports (#232)
+
+### Changed
+- Update TypeScript to 5.4 (#240)
+
+## [1.1.0] - 2025-02-28
+...</code></pre>
+<h3 id="commit-type-to-changelog-section-mapping">Commit Type to Changelog Section Mapping</h3>
+<div class="table-wrapper"><table><tr><th>Commit Type</th><th>Changelog Section</th></tr><tr><td><code>feat</code></td><td>Added</td></tr><tr><td><code>fix</code></td><td>Fixed</td></tr><tr><td><code>perf</code></td><td>Performance</td></tr><tr><td><code>refactor</code></td><td>Changed</td></tr><tr><td><code>docs</code></td><td>Documentation</td></tr><tr><td><code>BREAKING CHANGE</code></td><td>Breaking Changes (top of release)</td></tr><tr><td><code>chore</code>, <code>ci</code>, <code>build</code>, <code>style</code>, <code>test</code></td><td>Typically excluded</td></tr></table></div>
+<h3 id="automation-tools">Automation Tools</h3>
+<div class="table-wrapper"><table><tr><th>Tool</th><th>Use Case</th></tr><tr><td><code>conventional-changelog</code></td><td>Generate changelog from git history</td></tr><tr><td><code>semantic-release</code></td><td>Fully automated versioning + publishing</td></tr><tr><td><code>changeset</code></td><td>Manual changeset files for monorepos</td></tr><tr><td><code>release-please</code></td><td>Google's release automation</td></tr></table></div>
+<h2 id="commit-message-quality-checklist">Commit Message Quality Checklist</h2>
+<h3 id="must-pass">Must Pass</h3>
+<ul>
+<li>[ ] Uses conventional commit format (<code>type(scope): description</code>)</li>
+<li>[ ] Type is from the allowed list</li>
+<li>[ ] Description uses imperative mood</li>
+<li>[ ] Description is under 72 characters total</li>
+<li>[ ] No period at end of description</li>
+<li>[ ] Breaking changes are clearly marked</li>
+</ul>
+<h3 id="should-pass">Should Pass</h3>
+<ul>
+<li>[ ] Scope accurately identifies the affected area</li>
+<li>[ ] Body explains WHY, not just WHAT (for non-trivial changes)</li>
+<li>[ ] References issue/ticket number (<code>Closes #123</code>, <code>Refs #456</code>)</li>
+<li>[ ] Single logical change per commit (atomic commits)</li>
+<li>[ ] No "WIP" or "temp" commits in main branch history</li>
+</ul>
+<h2 id="commit-splitting-guide">Commit Splitting Guide</h2>
+<h3 id="when-to-split-decision-table">When to Split Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Action</th></tr><tr><td>Changes to different modules/features</td><td>Split into separate commits</td></tr><tr><td>Refactor combined with feature addition</td><td>Split: refactor first, then feature</td></tr><tr><td>Test additions for existing code + new feature</td><td>Split: tests first, then feature</td></tr><tr><td>Config changes + code changes</td><td>Split into separate commits</td></tr><tr><td>Single logical change across multiple files</td><td>Keep as one commit</td></tr></table></div>
+<h3 id="how-to-split">How to Split</h3>
+<pre data-lang="bash"><code># Interactive staging for partial commits
+git add -p                    # Stage hunks interactively
+git add path/to/specific/file # Stage specific files
+
+# Example: split refactor + feature
+git add src/utils/date.ts
+git commit -m &quot;refactor(utils): extract date formatting helpers&quot;
+
+git add src/components/DatePicker.tsx src/components/DatePicker.test.tsx
+git commit -m &quot;feat(ui): add date range picker component&quot;</code></pre>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td><code>fix</code> type for a new feature</td><td>Misleads version bump automation</td><td>Use <code>feat</code> for new functionality</td></tr><tr><td>Squashing meaningful history</td><td>Loses context of development process</td><td>Keep atomic commits, squash only WIP</td></tr><tr><td>Using <code>--no-verify</code> to skip hooks</td><td>Bypasses quality gates</td><td>Fix the hook failure instead</td></tr><tr><td>Amending published/pushed commits</td><td>Breaks other developers' history</td><td>Create new commit instead</td></tr><tr><td>Empty or "." commit messages</td><td>Zero information for future readers</td><td>Write a descriptive message</td></tr><tr><td>Mixing formatting with logic changes</td><td>Cannot revert one without the other</td><td>Separate into distinct commits</td></tr><tr><td>"change X to Y" duplicating the diff</td><td>Adds no information beyond the diff</td><td>Describe WHY the change was made</td></tr><tr><td>Huge commits touching 20+ files</td><td>Impossible to review or bisect</td><td>Split into logical atomic commits</td></tr></table></div>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>finishing-a-development-branch</code></td><td>Squash commit message follows conventional format</td></tr><tr><td><code>code-review</code></td><td>Commit quality is part of review checklist</td></tr><tr><td><code>deployment</code></td><td>Version bumps trigger release pipelines</td></tr><tr><td><code>planning</code></td><td>Commit scoping aligns with plan task granularity</td></tr><tr><td><code>verification-before-completion</code></td><td>Verify tests pass before committing</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Conventional commit format is strongly recommended but can be adapted to existing project conventions. Version bumping rules are deterministic when conventional commits are used. Changelog sections map directly from commit types.</p>
+<hr>
+<h2 id="sub-domain--component-using-git-worktrees">Sub-Domain / Component: <code>using-git-worktrees</code></h2>
+<h1 id="using-git-worktrees">Using Git Worktrees</h1>
+<h2 id="overview">Overview</h2>
+<p>Create isolated working directories for parallel development tasks using <code>git worktree</code>, allowing multiple branches to be checked out simultaneously without conflicts. This skill enforces a deterministic, multi-phase process from directory selection through setup verification, ensuring every worktree is production-ready before any work begins.</p>
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>Starting a new feature branch that should not interfere with current work</li>
+<li>Working on multiple tasks simultaneously (bug fix + feature)</li>
+<li>Creating a clean environment for testing or code review</li>
+<li>Running long processes (tests, builds) while continuing development</li>
+</ul>
+<h2 id="phase-1-select-worktree-directory">Phase 1: Select Worktree Directory</h2>
+<p>[HARD-GATE] Do NOT skip directory selection. Do NOT assume a default path without checking priorities.</p>
+<p>Follow this priority order exactly:</p>
+<h3 id="priority-1-existing-worktree-matching-task">Priority 1: Existing Worktree Matching Task</h3>
+<p>Check if a worktree already exists for the task:</p>
+<pre data-lang="bash"><code>git worktree list</code></pre>
+<p>If a matching worktree exists, use it. Do NOT create a duplicate.</p>
+<h3 id="priority-2-claudemd-worktree-directory-hint">Priority 2: CLAUDE.md Worktree Directory Hint</h3>
+<p>Check the project's CLAUDE.md for a configured worktree directory:</p>
+<pre><code># Example CLAUDE.md entry
+worktree-directory: ../worktrees</code></pre>
+<p>If specified, create worktrees under that directory.</p>
+<h3 id="priority-3-ask-the-user">Priority 3: Ask the User</h3>
+<p>If no hint is configured and no convention is obvious, ask the user where worktrees should be created. Suggest a sensible default:</p>
+<pre><code>../worktrees/&lt;project-name&gt;/&lt;branch-name&gt;</code></pre>
+<p><strong>STOP — Confirm the worktree directory with the user before proceeding.</strong></p>
+<h3 id="directory-selection-decision-table">Directory Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Action</th></tr><tr><td>Worktree for this branch already exists</td><td>Navigate to existing worktree</td></tr><tr><td>CLAUDE.md has <code>worktree-directory</code></td><td>Use configured path</td></tr><tr><td>Project has existing worktrees</td><td>Use same parent directory pattern</td></tr><tr><td>No convention found</td><td>Ask user, suggest <code>../worktrees/<project>/<branch></code></td></tr><tr><td>User specifies path inside repo root</td><td>Warn — must add to <code>.gitignore</code></td></tr></table></div>
+<h2 id="phase-2-safety-verification">Phase 2: Safety Verification</h2>
+<p>[HARD-GATE] Do NOT create any worktree until all safety checks pass.</p>
+<h3 id="check-gitignore-coverage">Check .gitignore Coverage</h3>
+<p>If the worktree directory is inside the repository root, ensure it is in <code>.gitignore</code>:</p>
+<pre data-lang="bash"><code># Check if the worktree path would be tracked
+git check-ignore &lt;worktree-path&gt;</code></pre>
+<p>If not ignored, warn the user and suggest adding it to <code>.gitignore</code>.</p>
+<h3 id="verify-clean-working-tree">Verify Clean Working Tree</h3>
+<p>Check for uncommitted changes that could cause issues:</p>
+<pre data-lang="bash"><code>git status --porcelain</code></pre>
+<p>If the working tree is dirty, inform the user and ask how to proceed:</p>
+<ul>
+<li>Commit changes first</li>
+<li>Stash changes</li>
+<li>Proceed anyway (worktree creation itself is safe)</li>
+</ul>
+<h3 id="verify-branch-does-not-exist-in-another-worktree">Verify Branch Does Not Exist in Another Worktree</h3>
+<pre data-lang="bash"><code>git worktree list</code></pre>
+<p>A branch cannot be checked out in two worktrees simultaneously. If the branch is already checked out, navigate to that existing worktree instead.</p>
+<h3 id="safety-check-decision-table">Safety Check Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Result</th><th>Action</th></tr><tr><td>Path inside repo, not in <code>.gitignore</code></td><td>FAIL</td><td>Add to <code>.gitignore</code> first</td></tr><tr><td>Branch already in another worktree</td><td>FAIL</td><td>Use existing worktree</td></tr><tr><td>Working tree dirty</td><td>WARN</td><td>Inform user, ask preference</td></tr><tr><td>Path already exists (not worktree)</td><td>FAIL</td><td>Choose different path</td></tr><tr><td>All checks pass</td><td>PASS</td><td>Proceed to Phase 3</td></tr></table></div>
+<h2 id="phase-3-create-the-worktree">Phase 3: Create the Worktree</h2>
+<pre data-lang="bash"><code># For a new branch
+git worktree add &lt;path&gt; -b &lt;branch-name&gt; &lt;base-branch&gt;
+
+# For an existing branch
+git worktree add &lt;path&gt; &lt;existing-branch&gt;</code></pre>
+<p>Always tell the user the full path where the worktree was created:</p>
+<pre><code>Worktree created at: /absolute/path/to/worktree
+Branch: feature/my-feature
+Base: main</code></pre>
+<p><strong>STOP — Confirm the worktree was created successfully before proceeding to setup.</strong></p>
+<h2 id="phase-4-project-setup-and-auto-detection">Phase 4: Project Setup and Auto-Detection</h2>
+<p>After creating the worktree, detect and run the project's setup commands.</p>
+<h3 id="setup-detection-decision-table">Setup Detection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Indicator File</th><th>Ecosystem</th><th>Setup Command</th></tr><tr><td><code>pnpm-lock.yaml</code></td><td>Node.js (pnpm)</td><td><code>pnpm install</code></td></tr><tr><td><code>yarn.lock</code></td><td>Node.js (yarn)</td><td><code>yarn install</code></td></tr><tr><td><code>package-lock.json</code></td><td>Node.js (npm)</td><td><code>npm install</code></td></tr><tr><td><code>package.json</code> (no lock)</td><td>Node.js (npm)</td><td><code>npm install</code></td></tr><tr><td><code>pyproject.toml</code> + <code>tool.poetry</code></td><td>Python (poetry)</td><td><code>poetry install</code></td></tr><tr><td><code>pyproject.toml</code> (no poetry)</td><td>Python (pip)</td><td><code>pip install -e .</code></td></tr><tr><td><code>setup.py</code></td><td>Python (pip)</td><td><code>pip install -e .</code></td></tr><tr><td><code>requirements.txt</code></td><td>Python (pip)</td><td><code>pip install -r requirements.txt</code></td></tr><tr><td><code>go.mod</code></td><td>Go</td><td><code>go mod download</code></td></tr><tr><td><code>Cargo.toml</code></td><td>Rust</td><td><code>cargo build</code></td></tr><tr><td><code>Gemfile</code></td><td>Ruby</td><td><code>bundle install</code></td></tr><tr><td><code>composer.json</code></td><td>PHP</td><td><code>composer install</code></td></tr></table></div>
+<h3 id="multiple-ecosystems">Multiple Ecosystems</h3>
+<p>If the project uses multiple ecosystems (e.g., a Go backend with a Node.js frontend), run setup for each detected ecosystem in the appropriate subdirectories.</p>
+<h3 id="environment-files">Environment Files</h3>
+<p>If the project has <code>.env.example</code> or <code>.env.template</code>:</p>
+<pre data-lang="bash"><code># Copy environment template if .env does not exist in worktree
+cp .env.example .env  # then inform user to update values</code></pre>
+<h2 id="phase-5-clean-baseline-test-verification">Phase 5: Clean Baseline Test Verification</h2>
+<p>[HARD-GATE] Do NOT proceed with any work until baseline tests pass or failures are acknowledged.</p>
+<p>Run the project's test suite to establish a clean baseline BEFORE starting any work:</p>
+<pre data-lang="bash"><code># Use the project&#x27;s test command
+# Node.js: npm test / yarn test / pnpm test
+# Python: pytest / python -m pytest
+# Go: go test ./...
+# Rust: cargo test</code></pre>
+<p>Purpose:</p>
+<ul>
+<li>Confirms the worktree is set up correctly</li>
+<li>Establishes that all tests pass before changes are made</li>
+<li>Any test failures after this point are caused by your changes, not pre-existing issues</li>
+</ul>
+<p>If baseline tests fail:</p>
+<ul>
+<li>Report the failures to the user</li>
+<li>Do NOT proceed with work until the baseline is understood</li>
+<li>The base branch may have broken tests that need addressing first</li>
+</ul>
+<h2 id="phase-6-location-reporting">Phase 6: Location Reporting</h2>
+<p>Always report the worktree location clearly to the user:</p>
+<pre><code>Worktree ready:
+  Path:    /Users/dev/worktrees/myproject/feature-auth
+  Branch:  feature/auth-refactor
+  Base:    main
+  Setup:   npm install (completed)
+  Tests:   24 passed, 0 failed</code></pre>
+<h2 id="cleanup-patterns">Cleanup Patterns</h2>
+<h3 id="after-merging-or-completing-work">After Merging or Completing Work</h3>
+<pre data-lang="bash"><code># Remove the worktree
+git worktree remove &lt;path&gt;
+
+# If files remain (dirty worktree), force removal
+git worktree remove --force &lt;path&gt;
+
+# Prune stale worktree references
+git worktree prune</code></pre>
+<h3 id="list-all-worktrees">List All Worktrees</h3>
+<pre data-lang="bash"><code>git worktree list</code></pre>
+<h3 id="handling-locked-worktrees">Handling Locked Worktrees</h3>
+<p>If a worktree is locked (to prevent accidental removal):</p>
+<pre data-lang="bash"><code># Unlock before removing
+git worktree unlock &lt;path&gt;
+git worktree remove &lt;path&gt;</code></pre>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Creating duplicate worktree for same branch</td><td>Git does not allow it; wastes time</td><td>Check <code>git worktree list</code> first</td></tr><tr><td>Worktree inside repo without <code>.gitignore</code></td><td>Worktree files show as untracked</td><td>Add path to <code>.gitignore</code></td></tr><tr><td>Skipping dependency install in worktree</td><td>Build/test failures from missing deps</td><td>Always run project setup</td></tr><tr><td>Skipping baseline test run</td><td>Cannot distinguish pre-existing vs new failures</td><td>Run tests before starting work</td></tr><tr><td>Assuming worktree has same env vars</td><td><code>.env</code> files are not shared between worktrees</td><td>Copy and configure <code>.env</code></td></tr><tr><td>Leaving stale worktrees after merge</td><td>Disk waste, confusing <code>git worktree list</code></td><td>Remove worktrees after branch completion</td></tr><tr><td>Force-removing worktree with uncommitted work</td><td>Permanent data loss</td><td>Commit or stash first</td></tr></table></div>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>finishing-a-development-branch</code></td><td>After completing work in a worktree, use this to merge or create a PR</td></tr><tr><td><code>dispatching-parallel-agents</code></td><td>Run agents in separate worktrees for true isolation</td></tr><tr><td><code>verification-before-completion</code></td><td>Validate work before leaving the worktree</td></tr><tr><td><code>self-learning</code></td><td>Check CLAUDE.md for worktree directory preferences</td></tr><tr><td><code>planning</code></td><td>Worktree creation is often the first step of plan execution</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly. Every phase must be completed in order. Do NOT skip safety checks. Do NOT skip baseline test verification. Do NOT create worktrees without confirming the directory.</p>
+<hr>
+<h2 id="sub-domain--component-finishing-a-development-branch">Sub-Domain / Component: <code>finishing-a-development-branch</code></h2>
+<h1 id="finishing-a-development-branch">Finishing a Development Branch</h1>
+<h2 id="overview">Overview</h2>
+<p>Provide a structured, safe process for completing work on a development branch, including verification, merge strategy selection, and cleanup. This skill ensures no branch is merged without passing tests, and every destructive operation requires explicit user confirmation.</p>
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>All planned work on a feature branch is complete</li>
+<li>A branch is ready for code review or merge</li>
+<li>Cleaning up after development work is finished</li>
+<li>Preparing a pull request for team review</li>
+</ul>
+<h2 id="phase-1-verify-all-tests-pass">Phase 1: Verify All Tests Pass</h2>
+<p>[HARD-GATE] Do NOT proceed to any merge or PR activity without passing verification.</p>
+<p>Before any merge or PR activity, invoke <strong>verification-before-completion</strong> to confirm:</p>
+<ul>
+<li>All tests pass (unit, integration, e2e as applicable)</li>
+<li>No lint errors or warnings</li>
+<li>Build succeeds</li>
+<li>No untracked files that should be committed</li>
+</ul>
+<pre data-lang="bash"><code># Run the project&#x27;s full verification suite
+# Do NOT skip this step even if &quot;tests were passing earlier&quot;</code></pre>
+<p>If verification fails, STOP. Fix the failures before proceeding. Do NOT create PRs or merge branches with failing tests.</p>
+<p><strong>STOP — Verification must pass before continuing to Phase 2.</strong></p>
+<h2 id="phase-2-determine-base-branch">Phase 2: Determine Base Branch</h2>
+<p>Identify the branch to merge into, using this detection logic:</p>
+<h3 id="auto-detection">Auto-Detection</h3>
+<pre data-lang="bash"><code># Check for common base branch names
+git branch -a | grep -E &#x27;remotes/origin/(main|master|develop)$&#x27;
+
+# Check what branch was the fork point
+git log --oneline --decorate --graph HEAD...main --first-parent 2&gt;/dev/null
+git log --oneline --decorate --graph HEAD...master --first-parent 2&gt;/dev/null</code></pre>
+<h3 id="base-branch-selection-decision-table">Base Branch Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Base Branch</th><th>Confidence</th></tr><tr><td><code>main</code> exists</td><td><code>main</code></td><td>High</td></tr><tr><td>Only <code>master</code> exists</td><td><code>master</code></td><td>High</td></tr><tr><td><code>develop</code> exists and project uses GitFlow</td><td><code>develop</code></td><td>Medium</td></tr><tr><td>Multiple candidates found</td><td>Ask user</td><td>Required</td></tr><tr><td>None of the above exist</td><td>Ask user</td><td>Required</td></tr></table></div>
+<h3 id="verify-base-branch-is-up-to-date">Verify Base Branch is Up to Date</h3>
+<pre data-lang="bash"><code>git fetch origin
+git log HEAD..&lt;base-branch&gt; --oneline</code></pre>
+<p>If the base branch has advanced since the feature branch was created, inform the user. They may want to rebase or merge base into the feature branch first.</p>
+<h3 id="base-branch-divergence-decision-table">Base Branch Divergence Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Divergence</th><th>Action</th></tr><tr><td>Base has 0 new commits</td><td>Proceed normally</td></tr><tr><td>Base has 1-5 new commits</td><td>Inform user, suggest rebase</td></tr><tr><td>Base has 6+ new commits</td><td>Warn user, recommend merge or rebase before proceeding</td></tr><tr><td>Merge conflicts detected</td><td>STOP — resolve conflicts first</td></tr></table></div>
+<p><strong>STOP — Confirm the base branch with the user before proceeding.</strong></p>
+<h2 id="phase-3-present-merge-options">Phase 3: Present Merge Options</h2>
+<p>Present exactly these four options to the user. Do NOT add or remove options.</p>
+<pre><code>How would you like to finish this branch?
+
+  A) Create PR    -- push and open a pull request for review
+  B) Merge        -- merge into &lt;base&gt; with a merge commit
+  C) Squash merge -- squash into one commit, merge into &lt;base&gt;
+  D) Leave as-is  -- keep the branch, decide later</code></pre>
+<h3 id="option-selection-decision-table">Option Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Context</th><th>Recommended Option</th><th>Why</th></tr><tr><td>Team project with code review</td><td>A) Create PR</td><td>Enables review workflow</td></tr><tr><td>Solo project, clean history</td><td>B) Merge</td><td>Preserves full branch history</td></tr><tr><td>Many WIP commits, messy history</td><td>C) Squash merge</td><td>Clean single commit on base</td></tr><tr><td>Work incomplete or uncertain</td><td>D) Leave as-is</td><td>No risk, decide later</td></tr></table></div>
+<p><strong>STOP — Wait for user to select an option. Do NOT assume a default.</strong></p>
+<h2 id="phase-4-execute-chosen-option">Phase 4: Execute Chosen Option</h2>
+<h3 id="option-a-create-pull-request">Option A: Create Pull Request</h3>
+<pre data-lang="bash"><code># Push the branch
+git push -u origin &lt;branch-name&gt;
+
+# Generate PR title from branch name or recent commits
+# Generate PR body from commit messages and diff summary
+gh pr create --title &quot;&lt;title&gt;&quot; --body &quot;&lt;body&gt;&quot;</code></pre>
+<p><strong>PR Title Generation:</strong></p>
+<ul>
+<li>Derive from branch name: <code>feature/add-auth</code> becomes <code>Add authentication</code></li>
+<li>Keep under 70 characters</li>
+<li>Use imperative mood</li>
+</ul>
+<p><strong>PR Body Generation:</strong></p>
+<ul>
+<li>Summarize the changes (what and why)</li>
+<li>List key modifications</li>
+<li>Note any breaking changes</li>
+<li>Include test plan</li>
+</ul>
+<h3 id="option-b-merge-locally">Option B: Merge Locally</h3>
+<pre data-lang="bash"><code># Switch to base branch
+git checkout &lt;base-branch&gt;
+
+# Merge feature branch
+git merge &lt;feature-branch&gt;
+
+# Delete the feature branch
+git branch -d &lt;feature-branch&gt;</code></pre>
+<p><strong>Confirmation required</strong> before executing the merge.</p>
+<h3 id="option-c-squash-merge">Option C: Squash Merge</h3>
+<pre data-lang="bash"><code># Switch to base branch
+git checkout &lt;base-branch&gt;
+
+# Squash merge
+git merge --squash &lt;feature-branch&gt;
+
+# Commit with a comprehensive message
+git commit -m &quot;&lt;squash commit message&gt;&quot;
+
+# Delete the feature branch
+git branch -d &lt;feature-branch&gt;</code></pre>
+<p><strong>Squash commit message</strong> should summarize all changes from the branch, not just the last commit.</p>
+<p><strong>Confirmation required</strong> before executing the squash merge.</p>
+<h3 id="option-d-leave-branch-as-is">Option D: Leave Branch As-Is</h3>
+<p>No action needed. Inform the user:</p>
+<pre><code>Branch &lt;branch-name&gt; left as-is.
+You can return to it later with: git checkout &lt;branch-name&gt;</code></pre>
+<h2 id="phase-5-cleanup">Phase 5: Cleanup</h2>
+<p>After executing options A, B, or C, perform cleanup:</p>
+<h3 id="remove-worktree-if-applicable">Remove Worktree (if applicable)</h3>
+<p>If the branch was developed in a git worktree:</p>
+<pre data-lang="bash"><code># Navigate out of the worktree first
+git worktree remove &lt;worktree-path&gt;
+git worktree prune</code></pre>
+<h3 id="clean-up-remote-tracking-option-b-and-c-only">Clean Up Remote Tracking (Option B and C only)</h3>
+<p>If the branch was previously pushed:</p>
+<pre data-lang="bash"><code># Delete remote branch after local merge
+git push origin --delete &lt;branch-name&gt;</code></pre>
+<p><strong>Confirmation required</strong> before deleting remote branches.</p>
+<h3 id="verify-final-state">Verify Final State</h3>
+<pre data-lang="bash"><code>git status
+git log --oneline -5</code></pre>
+<p>Confirm the base branch is in the expected state.</p>
+<h2 id="confirmation-requirements">Confirmation Requirements</h2>
+<p>[HARD-GATE] The following operations require explicit user confirmation before execution. Do NOT proceed on assumption. Always ask.</p>
+<div class="table-wrapper"><table><tr><th>Operation</th><th>Why Confirmation Is Required</th></tr><tr><td>Merge into base branch</td><td>Changes base branch history</td></tr><tr><td>Squash merge</td><td>Loses individual commit history</td></tr><tr><td>Delete local branch</td><td>Cannot be undone if not pushed</td></tr><tr><td>Delete remote branch</td><td>Affects other collaborators</td></tr><tr><td>Force remove worktree</td><td>May discard uncommitted changes</td></tr><tr><td>Rebase onto updated base</td><td>Rewrites commit history</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Merging without running tests</td><td>Broken code reaches base branch</td><td>Always run full verification first</td></tr><tr><td>Skipping base branch freshness check</td><td>Merge conflicts discovered late</td><td><code>git fetch</code> and check divergence</td></tr><tr><td>Auto-selecting merge strategy</td><td>User may prefer different approach</td><td>Always present all four options</td></tr><tr><td>Deleting branch without confirmation</td><td>Data loss risk</td><td>Ask before every deletion</td></tr><tr><td>Creating PR with failing CI</td><td>Wastes reviewer time</td><td>Fix CI before creating PR</td></tr><tr><td>Squash message from last commit only</td><td>Loses context of full branch work</td><td>Summarize all changes in squash msg</td></tr><tr><td>Leaving stale remote branches</td><td>Cluttered repository</td><td>Clean up remote after merge</td></tr><tr><td>Force-pushing after PR creation</td><td>Destroys review comments</td><td>Avoid force-push on PR branches</td></tr></table></div>
+<h2 id="error-handling">Error Handling</h2>
+<div class="table-wrapper"><table><tr><th>Error</th><th>Action</th></tr><tr><td>Merge conflicts</td><td>Report conflicts, ask user to resolve, do NOT auto-resolve</td></tr><tr><td>Push rejected</td><td>Fetch and check if rebase/merge is needed</td></tr><tr><td>PR creation fails</td><td>Check <code>gh auth status</code>, report error details</td></tr><tr><td>Branch already deleted</td><td>Skip deletion, continue with remaining cleanup</td></tr><tr><td>Tests fail</td><td>STOP immediately, do NOT merge or create PR</td></tr><tr><td>Base branch does not exist on remote</td><td>Ask user to confirm the correct base</td></tr></table></div>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>verification-before-completion</code></td><td>Must invoke in Phase 1 before any merge activity</td></tr><tr><td><code>using-git-worktrees</code></td><td>Cleanup includes worktree removal if applicable</td></tr><tr><td><code>git-commit-helper</code></td><td>Squash commit message follows conventional commit format</td></tr><tr><td><code>code-review</code></td><td>PR creation (Option A) feeds into code review workflow</td></tr><tr><td><code>planning</code></td><td>Branch completion is the final step of plan execution</td></tr><tr><td><code>deployment</code></td><td>Merge to main/release may trigger deployment pipeline</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly. Every phase must be completed in order. Do NOT skip verification. Do NOT merge without user confirmation. Do NOT assume a merge strategy. Do NOT delete branches without asking.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

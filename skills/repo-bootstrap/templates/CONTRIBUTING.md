@@ -1,22 +1,22 @@
 # Contributing Template
 
-## Como Contribuir
+## How to Contribute
 
-1. Fork o repositório
-2. Crie branch: `git checkout -b feature/sua-feature`
-3. Commit: `git commit -m "feat: sua mudança"`
-4. Push: `git push origin feature/sua-feature`
-5. Abra Pull Request
+1. Fork the repository
+2. Create branch: `git checkout -b feature/your-feature`
+3. Commit: `git commit -m "feat: your change"`
+4. Push: `git push origin feature/your-feature`
+5. Open Pull Request
 
-## Padrões
+## Guidelines
 
 - Use Conventional Commits
-- Mantenha coverage ≥ 80%
-- Lint passa: `npm run lint`
-- Testes passam: `npm test`
+- Maintain coverage ≥ 80%
+- Lint passes: `npm run lint`
+- Tests pass: `npm test`
 
 ## Code Review
 
-- Pelo menos 1 aprovação
-- CI verde
-- Sem conflitos
+- At least 1 approval
+- CI green
+- No conflicts

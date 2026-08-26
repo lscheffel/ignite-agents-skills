@@ -1,301 +1,311 @@
 ---
 name: agent-orchestration
-description: Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in e coordenação multi-agente. Use quando precisar coordenar vários agentes, definir papéis, gerenciar handoffs ou otimizar execução paralela.
 version: 2.0.0
-tags: [orchestration, agents, multi-agent, coordination]
-related_skills: [prompt-engineering, vibe-coding, governance]
+description: Orchestrates multiple AI agents for complex tasks. Covers task decomposition, model routing, I/O contract handoff, fan-out/fan-in parallelism, and multi-agent coordination. Use when needing to coordinate multiple agents, define roles, manage handoffs, or optimize parallel execution.
+domain: agentic-workflow
+triggers:
+- agent-orchestration
+tags:
+- orchestration
+- agents
+- multi-agent
+- coordination
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Agent Orchestration
 
-Orquestração de múltiplos agentes de IA para tarefas complexas.
+Orchestrates multiple AI agents for complex tasks.
 
-## Quando Usar
+## When to Use
 
-### Use quando:
-- Tarefa complexa precisa ser decomposta em subtarefas
-- Múltiplos agentes com papéis distintos precisam cooperar
-- Subtarefas são independentes e podem rodar em paralelo
-- Precisa definir contratos de handoff entre agentes
-- Precisa rotear para modelos com custo/performance adequados
-- Fluxo de trabalho envolve múltiplas etapas com validação
+### Use When:
+- Complex task needs to be decomposed into subtasks
+- Multiple agents with distinct roles need to collaborate
+- Subtasks are independent and can run in parallel
+- Need to define contracts for handoffs between agents
+- Need to route to models with suitable cost/performance
+- Workflow involves multiple stages with validation
 
-### Não use quando:
-- Tarefa é simples e pode ser feita por um único agente
-- Não há dependências entre subtarefas (basta paralelismo simples)
-- Prompt único resolve o problema
+### Do Not Use When:
+- Task is simple and can be handled by a single agent
+- There are no dependencies between subtasks (simple parallelism suffices)
+- A single prompt resolves the issue
 
-### Skills relacionadas:
-- `prompt-engineering` — para estruturar prompts de cada agente
-- `vibe-coding` — para desenvolvimento guiado por IA
-- `governance` — para processos de aprovação e revisão
+### Related Skills:
+- `prompt-engineering` — for structuring prompts for each agent
+- `vibe-coding` — for AI-guided development
+- `governance` — for approval and review processes
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Tarefa complexa?] -->|Não| B[Agente único]
-    A -->|Sim| C[Tarefa decomposta?]
-    C -->|Não| D[Refinar decomposição]
-    C -->|Sim| E[Multi-agente necessário?]
-    E -->|Não| B
-    E -->|Sim| F[Subtarefas independentes?]
-    F -->|Não| G[Handoff sequencial]
-    F -->|Sim| H[Paralelismo disponível?]
-    H -->|Não| G
-    H -->|Sim| I[Fan-out/Fan-in]
-    G --> J[Definir contrato I/O]
+    A[Complex Task?] -->|No| B[Single Agent]
+    A -->|Yes| C[Task Decomposed?]
+    C -->|No| D[Refine Decomposition]
+    C -->|Yes| E[Multi-Agent Required?]
+    E -->|No| B
+    E -->|Yes| F[Subtasks Independent?]
+    F -->|No| G[Sequential Handoff]
+    F -->|Yes| H[Parallelism Available?]
+    H -->|No| G
+    H -->|Yes| I[Fan-out/Fan-in]
+    G --> J[Define I/O Contract]
     I --> J
-    J --> K[Selecionar modelo por papel]
-    K --> L[Executar e validar]
+    J --> K[Select Model by Role]
+    K --> L[Execute and Validate]
 ```
 
-## Conceitos Fundamentais
+## Fundamental Concepts
 
-### Papel do Agente
+### Agent Role
 
-Cada agente possui um papel definido com responsabilidades, entrada e saída esperadas.
+Each agent has a defined role with responsibilities, expected input, and output.
 
-- **Orchestrator**: coordena fluxo, delega subtarefas, valida resultados
-- **Specialist**: executa tarefa específica com expertise focada
-- **Reviewer**: valida output de outros agentes antes de prosseguir
-- **Formatter**: transforma output em formato consumível por downstream
+- **Orchestrator**: coordinates flow, delegates subtasks, validates results
+- **Specialist**: executes specific task with focused expertise
+- **Reviewer**: validates output of other agents before proceeding
+- **Formatter**: transforms output into consumable format for downstream
 
-### Contrato I/O
+### I/O Contract
 
-Todo handoff entre agentes deve ter contrato explícito:
+Every handoff between agents must have an explicit contract:
 
-| Campo | Descrição |
-|-------|-----------|
-| Input schema | Formato e campos de entrada |
-| Output schema | Formato e campos de saída |
-| Validação | Regras de validação do output |
-| Fallback | O que fazer se output inválido |
+| Field | Description |
+|-------|-------------|
+| Input schema | Input format and fields |
+| Output schema | Output format and fields |
+| Validation | Output validation rules |
+| Fallback | What to do if output is invalid |
 
-### Roteamento de Modelo
+### Model Routing
 
-Selecione modelo com base em complexidade e custo:
+Select model based on complexity and cost:
 
-| Complexidade | Modelo sugerido | Custo |
-|-------------|----------------|-------|
-| Simples (extração, formatação) | Modelo leve | $ |
-| Média (análise, síntese) | Modelo padrão | $$ |
-| Complexa (raciocínio, código) | Modelo avançado | $$$ |
+| Complexity | Suggested Model | Cost |
+|------------|-----------------|------|
+| Simple (extraction, formatting) | Lightweight model | $ |
+| Medium (analysis, synthesis) | Standard model | $$ |
+| Complex (reasoning, coding) | Advanced model | $$$ |
 
-### Paralelismo
+### Parallelism
 
-- **Fan-out**: distribui trabalho para múltiplos agentes simultaneamente
-- **Fan-in**: agrega resultados de múltiplos agentes em output final
-- **Gate**: ponto de sincronização onde todos os resultados devem estar prontos
+- **Fan-out**: distributes work to multiple agents simultaneously
+- **Fan-in**: aggregates results from multiple agents into final output
+- **Gate**: synchronization point where all results must be ready
 
 ## Workflow
 
-### Fase 1: Decompor Tarefa
+### Phase 1: Decompose Task
 
-1. Analise a tarefa complexa
-2. Identifique subtarefas independentes
-3. Defina dependências entre subtarefas
-4. Crie grafo de dependências
-5. **Checkpoint**: Grafo de dependências validado com pelo menos 2 revisores
+1. Analyze complex task
+2. Identify independent subtasks
+3. Define dependencies between subtasks
+4. Create dependency graph
+5. **Checkpoint**: Validated dependency graph with at least 2 reviewers
 
-### Fase 2: Definir Papéis e Contratos
+### Phase 2: Define Roles and Contracts
 
-1. Para cada subtarefa, defina o papel do agente
-2. Crie card de papel com template `templates/agent-role-card.md`
-3. Defina contrato I/O para cada handoff
-4. Valide que schemas são consistentes entre agentes
-5. **Checkpoint**: Todos os contratos I/O validados e documentados
+1. For each subtask, define agent role
+2. Create role card with template `templates/agent-role-card.md`
+3. Define I/O contract for each handoff
+4. Validate that schemas are consistent between agents
+5. **Checkpoint**: All I/O contracts validated and documented
 
-### Fase 3: Selecionar Modelos
+### Phase 3: Select Models
 
-1. Para cada papel, avalie complexidade da tarefa
-2. Consulte `templates/routing-decision.md` para roteamento
-3. Equilibre custo vs qualidade
-4. Defina fallback para cada modelo
-5. **Checkpoint**: Matriz de roteamento aprovada com estimativa de custo
+1. For each role, evaluate task complexity
+2. Consult `templates/routing-decision.md` for routing
+3. Balance cost vs quality
+4. Define fallback for each model
+5. **Checkpoint**: Approved routing matrix with estimated cost
 
-### Fase 4: Executar com Paralelismo
+### Phase 4: Execute with Parallelism
 
-1. Identifique subtarefas que podem rodar em paralelo
-2. Implemente fan-out para subtarefas independentes
-3. Implemente fan-in para agregar resultados
-4. Use gate para sincronização
-5. **Checkpoint**: Resultados parciais validados antes de prosseguir
+1. Identify subtasks that can run in parallel
+2. Implement fan-out for independent subtasks
+3. Implement fan-in to aggregate results
+4. Use gate for synchronization
+5. **Checkpoint**: Partial results validated before proceeding
 
-### Fase 5: Handoff e Validação
+### Phase 5: Handoff and Validation
 
-1. Execute handoff seguindo protocolo em `templates/handoff-protocol.md`
-2. Valide output com contrato I/O definido
-3. Se output inválido, ative fallback
-4. Registre métricas de qualidade
-5. **Checkpoint**: Todos os handoffs concluídos com output válido
+1. Execute handoff following protocol in `templates/handoff-protocol.md`
+2. Validate output with defined I/O contract
+3. If output is invalid, activate fallback
+4. Record quality metrics
+5. **Checkpoint**: All handoffs completed with valid output
 
-### Fase 6: Consolidar Resultado
+### Phase 6: Consolidate Result
 
-1. Agregue resultados de todos os agentes
-2. Valide consistência do output final
-3. Formate para consumo do usuário
-4. Documente decisões e lições aprendidas
-5. **Checkpoint**: Output final validado e entregue
+1. Aggregate results from all agents
+2. Validate consistency of final output
+3. Format for user consumption
+4. Document decisions and lessons learned
+5. **Checkpoint**: Final output validated and delivered
 
 ## Templates
 
 ### agent-role-card.md
-Localização: `templates/agent-role-card.md`
+Location: `templates/agent-role-card.md`
 
-Template para definição de papel do agente.
+Template for defining agent role.
 
-**Uso:**
+**Usage:**
 ```bash
 cat templates/agent-role-card.md
 ```
 
 ### handoff-protocol.md
-Localização: `templates/handoff-protocol.md`
+Location: `templates/handoff-protocol.md`
 
-Template para protocolo de handoff entre agentes.
+Template for handoff protocol between agents.
 
-**Uso:**
+**Usage:**
 ```bash
 cat templates/handoff-protocol.md
 ```
 
 ### routing-decision.md
-Localização: `templates/routing-decision.md`
+Location: `templates/routing-decision.md`
 
-Template para decisão de roteamento de modelo.
+Template for model routing decision.
 
-**Uso:**
+**Usage:**
 ```bash
 cat templates/routing-decision.md
 ```
 
 ## Anti-patterns
 
-### 🔴 Crítico
+### Critical
 
-#### Handoff sem Contrato I/O
-**O que é:** Passar output de um agente para outro sem schema explícito.
-**Por que é ruim:** Output incompatível, falhas em runtime, difícil de debugar.
-**Como evitar:** Sempre defina contrato I/O antes de implementar handoff.
-**Exemplo:**
+#### Handoff without I/O Contract
+**What is it:** Passing output from one agent to another without explicit schema.
+**Why is it bad:** Incompatible output, runtime failures, difficult to debug.
+**How to avoid:** Always define I/O contract before implementing handoff.
+**Example:**
 ```
-# ❌ ERRADO
-Agente A gera JSON livre → Agente B tenta parsear
+# ❌ WRONG
+Agent A generates free-form JSON → Agent B tries to parse
 
-# ✅ CORRETO
-Contrato definido:
+# ✅ RIGHT
+Defined contract:
   input: { schema: UserRequest, required: [name, email] }
   output: { schema: UserCreated, required: [id, status] }
-Agente A gera JSON válido → Agente B valida com schema → prossegue
+Agent A generates JSON with schema → Agent B validates with schema → proceeds
 ```
 
-#### Usar Modelo Caro para Tarefa Simples
-**O que é:** Usar modelo avançado para extração, formatação ou tarefas triviais.
-**Por que é ruim:** Custo desnecessário, latência maior, throughput menor.
-**Como evitar:** Roteie por complexidade, use modelo leve para tarefas simples.
-**Exemplo:**
+#### Using Expensive Model for Simple Task
+**What is it:** Using advanced model for extraction, formatting, or trivial tasks.
+**Why is it bad:** Unnecessary cost, higher latency, lower throughput.
+**How to avoid:** Route by complexity, use lightweight model for simple tasks.
+**Example:**
 ```
-# ❌ ERRADO
-Tarefa: "Extraia o nome do JSON"
-Modelo: Claude Sonnet 4 (custo alto)
+# ❌ WRONG
+Task: "Extract the name from JSON"
+Model: Claude Sonnet 4 (high cost)
 
-# ✅ CORRETO
-Tarefa: "Extraia o nome do JSON"
-Modelo: Modelo leve (custo baixo)
-```
-
-### 🟡 Médio
-
-#### Contexto sem Janela de Descarte
-**O que é:** Acumular contexto de todos os agentes sem limite de janela.
-**Por que é ruim:** Excede limite de tokens, degrada performance, aumenta custo.
-**Como evitar:** Defina janela de contexto, resuma conversas anteriores.
-**Exemplo:**
-```
-# ❌ ERRADO
-Acumular 50 mensagens de histórico sem resumo
-
-# ✅ CORRETO
-A cada 10 mensagens:
-  1. Resumo da conversa até aqui
-  2. Mantém apenas últimos 5 exchanges
-  3. Descarta contexto antigo
+# ✅ RIGHT
+Task: "Extract the name from JSON"
+Model: Lightweight model (low cost)
 ```
 
-#### Sem Fallback quando Agente Falha
-**O que é:** Não ter plano B quando um agente retorna erro ou output inválido.
-**Por que é ruim:** Fluxo para completamente, sem recuperação.
-**Como evitar:** Defina fallback para cada agente (retry, modelo alternativo, regra heurística).
-**Exemplo:**
+### Medium
+
+#### Accumulating Context without Expiration Window
+**What is it:** Accumulating context from all agents without a limit.
+**Why is it bad:** Exceeds token limit, degrades performance, increases cost.
+**How to avoid:** Define context window, summarize previous conversations.
+**Example:**
 ```
-# ❌ ERRADO
-Agente A falha → fluxo para
+# ❌ WRONG
+Accumulate 50 message history without summarization
 
-# ✅ CORRETO
-Agente A falha:
-  1. Retry com prompt reformulado (1x)
-  2. Se falhar, usar modelo alternativo
-  3. Se falhar, usar regra heurística
-  4. Se falhar, notificar usuário
+# ✅ RIGHT
+Every 10 messages:
+  1. Summarize conversation up to now
+  2. Keep only last 5 exchanges
+  3. Discard old context
 ```
 
-### 🟢 Baixo
-
-#### Agente Único para Tarefa Paralelizável
-**O que é:** Usar um agente sequencialmente para subtarefas que poderiam rodar em paralelo.
-**Por que é ruim:** Tempo de execução desnecessariamente longo.
-**Como evitar:** Identifique subtarefas independentes e use fan-out.
-**Exemplo:**
+#### No Fallback when Agent Fails
+**What is it:** Not having a plan B when an agent returns error or invalid output.
+**Why is it bad:** Workflow fails completely, no recovery.
+**How to avoid:** Define fallback for each agent (retry, alternative model, heuristic rule).
+**Example:**
 ```
-# ❌ ERRADO
-Agente processa: arquivo1 → arquivo2 → arquivo3 (sequencial)
+# ❌ WRONG
+Agent A fails → workflow fails
 
-# ✅ CORRETO
-Fan-out para 3 agentes:
-  Agente 1: arquivo1
-  Agente 2: arquivo2
-  Agente 3: arquivo3
-Fan-in: consolidar resultados
+# ✅ RIGHT
+Agent A fails:
+  1. Retry with reformulated prompt (1x)
+  2. If fails, use alternative model
+  3. If fails, use heuristic rule
+  4. If fails, notify user
+```
+
+### Low
+
+#### Single Agent for Parallelizable Task
+**What is it:** Using a single agent sequentially for subtasks that could run in parallel.
+**Why is it bad:** Unnecessary long execution time.
+**How to avoid:** Identify independent subtasks and use fan-out.
+**Example:**
+```
+# ❌ WRONG
+Agent processes: file1 → file2 → file3 (sequential)
+
+# ✅ RIGHT
+Fan-out to 3 agents:
+  Agent 1: file1
+  Agent 2: file2
+  Agent 3: file3
+Fan-in: consolidate results
 ```
 
 ## Checklists
 
-### Checklist de Decomposição
-- [ ] Tarefa decomposta em subtarefas claras
-- [ ] Dependências mapeadas
-- [ ] Grafo de dependências validado
-- [ ] Subtarefas independentes identificadas para paralelismo
+### Decomposition Checklist
+- [ ] Task decomposed into clear subtasks
+- [ ] Dependencies mapped
+- [ ] Validated dependency graph
+- [ ] Independent subtasks identified for parallelism
 
-### Checklist de Contrato I/O
-- [ ] Input schema definido para cada handoff
-- [ ] Output schema definido para cada handoff
-- [ ] Regras de validação documentadas
-- [ ] Fallback definido para cada handoff
-- [ ] Schemas consistentes entre agentes
+### I/O Contract Checklist
+- [ ] Input schema defined for each handoff
+- [ ] Output schema defined for each handoff
+- [ ] Validation rules documented
+- [ ] Fallback defined for each handoff
+- [ ] Schemas consistent between agents
 
-### Checklist de Roteamento
-- [ ] Complexidade avaliada para cada papel
-- [ ] Modelo selecionado por complexidade
-- [ ] Custo estimado documentado
-- [ ] Fallback de modelo definido
+### Routing Checklist
+- [ ] Complexity evaluated for each role
+- [ ] Model selected by complexity
+- [ ] Estimated cost documented
+- [ ] Fallback model defined
 
-### Checklist de Execução
-- [ ] Fan-out implementado para subtarefas independentes
-- [ ] Fan-in implementado para agregação
-- [ ] Gate de sincronização definido
-- [ ] Janela de contexto configurada
-- [ ] Métricas de qualidade registradas
+### Execution Checklist
+- [ ] Fan-out implemented for independent subtasks
+- [ ] Fan-in implemented for aggregation
+- [ ] Gate defined for synchronization
+- [ ] Context window configured
+- [ ] Quality metrics recorded
 
 ## Edge Cases
 
-### Agente com Output Ambíguo
-**Situação:** Agente retorna output que pode ser interpretado de múltiplas formas.
-**Solução:** Adicione validação estrita com schema, inclua exemplos de output esperado.
-**Exceção:** Se ambiguidade é intencional (ex: brainstorming), documente como aceitável.
+### Agent with Ambiguous Output
+**Situation:** Agent returns output that can be interpreted in multiple ways.
+**Solution:** Add strict validation with schema, include examples of expected output.
+**Exception:** If ambiguity is intentional (e.g., brainstorming), document as acceptable.
 
 ```
-# Validação estrita
+# Strict validation
 output_schema = {
   "type": "object",
   "required": ["action", "confidence"],
@@ -306,10 +316,10 @@ output_schema = {
 }
 ```
 
-### Cascata de Falhas
-**Situação:** Falha em um agente causa falha em todos os downstream.
-**Solução:** Implemente circuit breaker, retry com backoff, fallback isolado.
-**Exceção:** Se dependência é absoluta, documente como ponto único de falha.
+### Cascading Failures
+**Situation:** Failure in one agent causes failure in all downstream.
+**Solution:** Implement circuit breaker, retry with backoff, isolated fallback.
+**Exception:** If dependency is absolute, document as single point of failure.
 
 ```
 # Circuit breaker pattern
@@ -318,13 +328,13 @@ if agent_failures[circuit] >= threshold:
     alert("Circuit {circuit} opened")
 ```
 
-### Conflito entre Agentes
-**Situação:** Dois agentes produzem output contraditório para mesma entrada.
-**Solução:** Use agente reconciliador, defina regra de prioridade, ou merge com heurística.
-**Exceção:** Se conflito é esperado (ex: votação), documente processo de resolução.
+### Conflict between Agents
+**Situation:** Two agents produce contradictory output for the same input.
+**Solution:** Use reconciliator agent, define priority rule, or merge with heuristic.
+**Exception:** If conflict is expected (e.g., voting), document resolution process.
 
 ```
-# Reconciliação
+# Reconciliation
 agent_a_output = agent_a(input)
 agent_b_output = agent_b(input)
 
@@ -335,10 +345,10 @@ else:
     output = agent_a_output
 ```
 
-## Referências
+## References
 
-- `prompt-engineering` — para estruturar prompts de cada agente
-- `vibe-coding` — para desenvolvimento guiado por IA
-- `governance` — para processos de aprovação
+- `prompt-engineering` — for structuring prompts for each agent
+- `vibe-coding` — for AI-guided development
+- `governance` — for approval processes
 - [CrewAI Documentation](https://docs.crewai.com/)
 - [LangGraph Multi-Agent](https://langchain-ai.github.io/langgraph/)

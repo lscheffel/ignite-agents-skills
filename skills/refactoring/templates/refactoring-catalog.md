@@ -1,85 +1,85 @@
-# Catálogo de Refatorações
+# Refactoring Catalog
 
-## Visão Geral
+## Overview
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Projeto | {project-name} |
-| Responsável | {your-name} |
-| Data de Início | {start-date} |
-| Status | Em andamento |
+| Project | {project-name} |
+| Responsible | {your-name} |
+| Start Date | {start-date} |
+| Status | In Progress |
 
-## Refatorações Planejadas
+## Planned Refactorings
 
 ### 1. {Refactoring Name}
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Prioridade | Alta/Média/Baixa |
-| Esforço | Pequeno/Médio/Grande |
-| Técnica | Extract Method / Extract Class / Strangler Fig / etc |
-| Módulo | {module-path} |
-| Dependências | {dependencies} |
-| Status | Planejada/Em andamento/Concluída |
+| Priority | High/Medium/Low |
+| Effort | Small/Medium/Large |
+| Technique | Extract Method / Extract Class / Strangler Fig / etc |
+| Module | {module-path} |
+| Dependencies | {dependencies} |
+| Status | Planned/In Progress/Completed |
 
-**Code Smell Identificado:**
-- {descrição do problema}
+**Code Smell Identified:**
+- {description of the problem}
 
-**Testes Necessários:**
-- [ ] Testes unitários
-- [ ] Testes de integração
-- [ ] Testes E2E
+**Required Tests:**
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] E2E tests
 
-**Critérios de Aceitação:**
-- [ ] Todos os testes existentes passam
-- [ ] Cobertura de testes não diminui
-- [ ] Lint e typecheck passando
-- [ ] Code review aprovado
+**Acceptance Criteria:**
+- [ ] All existing tests pass
+- [ ] Test coverage does not decrease
+- [ ] Lint and typecheck pass
+- [ ] Code review approved
 
 ---
 
 ### 2. {Refactoring Name}
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Prioridade | Alta/Média/Baixa |
-| Esforço | Pequeno/Médio/Grande |
-| Técnica | Extract Method / Extract Class / Strangler Fig / etc |
-| Módulo | {module-path} |
-| Dependências | {dependencies} |
-| Status | Planejada/Em andamento/Concluída |
+| Priority | High/Medium/Low |
+| Effort | Small/Medium/Large |
+| Technique | Extract Method / Extract Class / Strangler Fig / etc |
+| Module | {module-path} |
+| Dependencies | {dependencies} |
+| Status | Planned/In Progress/Completed |
 
-**Code Smell Identificado:**
-- {descrição do problema}
+**Code Smell Identified:**
+- {description of the problem}
 
-**Testes Necessários:**
-- [ ] Testes unitários
-- [ ] Testes de integração
-- [ ] Testes E2E
+**Required Tests:**
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] E2E tests
 
-**Critérios de Aceitação:**
-- [ ] Todos os testes existentes passam
-- [ ] Cobertura de testes não diminui
-- [ ] Lint e typecheck passando
-- [ ] Code review aprovado
+**Acceptance Criteria:**
+- [ ] All existing tests pass
+- [ ] Test coverage does not decrease
+- [ ] Lint and typecheck pass
+- [ ] Code review approved
 
 ---
 
-## Refatorações Concluídas
+## Completed Refactorings
 
-| Data | Refatoração | Módulo | Resultado |
+| Date | Refactoring | Module | Result |
 |------|-------------|--------|-----------|
 | {date} | {name} | {module} | {success/partial/failed} |
 
-## Métricas
+## Metrics
 
-| Métrica | Antes | Depois | Delta |
+| Metric | Before | After | Delta |
 |---------|-------|--------|-------|
-| Linhas de código | {before} | {after} | {delta} |
-| Complexidade ciclomática | {before} | {after} | {delta} |
-| Cobertura de testes | {before}% | {after}% | {delta}% |
+| Lines of Code | {before} | {after} | {delta} |
+| Cyclomatic Complexity | {before} | {after} | {delta} |
+| Test Coverage | {before}% | {after}% | {delta}% |
 | Duplication | {before}% | {after}% | {delta}% |
 
-## Notas
+## Notes
 
 - {add notes about decisions, trade-offs, or learnings}

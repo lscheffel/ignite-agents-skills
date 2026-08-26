@@ -3,16 +3,16 @@
 **Audit date:** {date}
 **Overall grade:** {S/A/B/C/D/F} — {0-100}/100
 **One-line verdict:** {frase única, sem hedging}
-**Recommended action:** {ADOTAR AS-IS / ADOTAR COM AJUSTES / REFATORAR / DEPRECIAR}
+**Recommended action:** {ADOPT AS-IS / ADOPT WITH ADJUSTMENTS / REFACTOR / DEPRECATE}
 
 ## 1. Executive Summary
-- Ponto mais forte: {evidenciado}
-- Ponto mais fraco: {evidenciado}
-- Principal risco se implantada sem alteração: {1 frase}
-- Esforço para alcançar a próxima faixa de nota: {BAIXO / MÉDIO / ALTO}
+- Strongest point: {evidenciado}
+- Weakest point: {evidenciado}
+- Principal risk if implemented without changes: {1 sentence}
+- Effort to reach the next grade level: {LOW / MEDIUM / HIGH}
 
-## 2. Compliance Estrutural e Metadata
-| Campo | Status | Comentário |
+## 2. Compliance Structural and Metadata
+| Field | Status | Comment |
 |---|---|---|
 | name | ✅/⚠️/❌ | |
 | description | ✅/⚠️/❌ | |
@@ -20,73 +20,72 @@
 | tags | ✅/⚠️/❌ | |
 | related_skills | ✅/⚠️/❌ | |
 
-## 3. Análise Semântica de Triggering
-- Score da description: {0-10}
-- Lacunas de cobertura de keywords: {lista + frase de exemplo}
-- Risco de colisão com related/sibling skills: {lista + likelihood}
-- Cenário(s) de falso positivo: {exemplo concreto}
-- Cenário(s) de falso negativo: {exemplo concreto}
+## 3. Semantic Analysis of Triggering
+- Description score: {0-10}
+- Keyword coverage gaps: {list + example sentence}
+- Risk of collision with related/sibling skills: {list + likelihood}
+- False positive scenario(s): {concrete example}
+- False negative scenario(s): {concrete example}
 
-## 4. Aplicabilidade e Escopo
-- Score de clareza de fronteira: {0-10}
-- Solidez da decision tree: {evidenciado}
-- Sobreposição/conflito com related_skills: {evidenciado}
+## 4. Applicability and Scope
+- Clarity of border score: {0-10}
+- Decision tree solidity: {evidenciado}
+- Overlap/conflict with related_skills: {evidenciado}
 
-## 5. Profundidade e Cobertura de Workflow
-- Avaliação fase a fase: {tabela ou lista}
-- Qualidade dos checkpoints: {evidenciado}
-- Estimativa de cobertura de edge cases: {%} — faltando: {lista}
+## 5. Depth and Coverage of Workflow
+- Phase-by-phase evaluation: {table or list}
+- Checkpoint quality: {evidenciado}
+- Estimated coverage of edge cases: {%} — missing: {list}
 
-## 6. Correção Técnica e Robustez
-- Exemplos/comandos validados: {lista com pass/fail + justificativa}
-- Issues de correção encontrados: {evidenciado, com referência de seção}
+## 6. Technical Correction and Robustness
+- Validated examples/commands: {list with pass/fail + justification}
+- Correction issues found: {evidenciado, with reference to section}
 
-## 7. Universalidade e Portabilidade
-- Lock-ins de ambiente: {lista}
-- Comportamento fora do ambiente assumido: {gracioso / falha silenciosa / desconhecido}
+## 7. Universality and Portability
+- Environment lock-ins: {list}
+- Behavior outside the assumed environment: {amusing / silent failure / unknown}
 
-## 8. Manutenibilidade
-- Disciplina de versionamento: {evidenciado}
-- Modularidade (seções atualizáveis isoladamente?): {evidenciado}
-- Risco de rot externo (horizonte de 12 meses): {lista + likelihood}
+## 8. Maintainability
+- Versioning discipline: {evidenciado}
+- Modularity (sections updatable independently?): {evidenciado}
+- Risk of external rot (12-month horizon): {list + likelihood}
 
-## 9. Ergonomia para o Agente Executor
-- Acionabilidade sem inferência: {0-10}
-- Adequação de densidade/tamanho: {evidenciado}
-- Confiança excessiva no julgamento do modelo executor: {evidenciado}
+## 9. Ergonomics for the Executor Agent
+- Actionability without inference: {0-10}
+- Adequacy of density/size: {evidenciado}
+- Excessive trust in the executor model's judgment: {evidenciado}
 
-## 10. Matriz de Risco
-| Risco | Likelihood | Impacto | Mitigação (ref) |
+## 10. Risk Matrix
+| Risk | Likelihood | Impact | Mitigation (ref) |
 |---|---|---|---|
-| | | | → ver §13 |
+| | | | → see §13 |
 
 ## 11. Pros
 - {bullet evidenciado}
 
 ## 12. Cons
-- {bullet evidenciado} → mitigado em §13
+- {bullet evidenciado} → mitigated in §13
 
-## 13. Mitigações e Recomendações
+## 13. Mitigations and Recommendations
 ### Quick wins (< 1h)
-- {edição concreta e específica}
-### Médio (estrutural mas escopado)
-- {edição concreta e específica}
-### Estrutural (nível de redesign)
-- {edição concreta e específica}
+- {concrete and specific edit}
+### Medium (structurally but scoped)
+- {concrete and specific edit}
+### Structural (redesign level)
+- {concrete and specific edit}
 
 ## 14. Scoring Breakdown
-| Categoria | Peso | Score (0-10) | Ponderado |
+| Category | Weight | Score (0-10) | Weighted |
 |---|---|---|---|
 | Semantic Triggering Precision | 20% | | |
-| Aplicabilidade / Clareza de Fronteira | 10% | | |
-| Profundidade e Cobertura | 15% | | |
-| Correção Técnica | 15% | | |
-| Universalidade / Portabilidade | 10% | | |
-| Manutenibilidade | 10% | | |
-| Ergonomia do Agente Executor | 10% | | |
-| Perfil de Risco (invertido) | 10% | | |
+| Applicability / Border Clarity | 10% | | |
+| Depth and Coverage | 15% | | |
+| Technical Correction | 15% | | |
+| Universality / Portability | 10% | | |
+| Maintainability | 10% | | |
+| Executor Agent Ergonomics | 10% | | |
+| Risk Profile (inverted) | 10% | | |
 | **Total** | 100% | | **{X}/100** |
 
-## 15. Veredito Final
-{2-3 frases, diretas, sem hedging. Declarar explicitamente se esta skill é
-segura para auto-load em um registry de produção hoje.}
+## 15. Final Verdict
+{2-3 sentences, direct, without hedging. Explicitly declare whether this skill is safe for auto-load in a production registry today.}

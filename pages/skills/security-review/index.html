@@ -411,202 +411,148 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: security-review description: Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras. Use quando revisar código por segurança, auditar dependências ou validar práticas de criptografia. version: 2.0.0 tags: [security, vulnerabilities, secrets, cryptography, dependencies] related_skills: [governance, architecture-review-kilo, testing] ---</p>
+<p>name: security-review version: 1.0.0 description: 'Use when reviewing code for security vulnerabilities, implementing authentication or authorization, handling user input, managing secrets, or auditing dependencies for known CVEs. Triggers: auth implementation, input handling, secrets management, dependency audit, pre-deployment security check, OWASP compliance review.' domain: engineering-quality triggers:</p>
+<ul>
+<li>security-review</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>security-review</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="security-review">Security Review</h1>
-<p>Realiza revisões de segurança abrangentes em código, focando em vulnerabilidades reais e práticas seguras.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
-<ul>
-<li>Revisando código novo antes de merge</li>
-<li>Auditando dependências por CVEs conhecidos</li>
-<li>Validando implementações de criptografia (AES-GCM, scrypt, BIP39)</li>
-<li>Investigando potenciais vazamento de secrets</li>
-<li>Preparando release de aplicação sensível</li>
-<li>Verificando conformidade com OWASP Top 10</li>
-</ul>
-<h3 id="no-use-quando">Não use quando:</h3>
-<ul>
-<li>Bug fix trivial sem impacto de segurança</li>
-<li>Refatoração puramente estética</li>
-<li>Documentação ou README</li>
-<li>Apenas testes unitários (use <code>testing</code>)</li>
-</ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
-<ul>
-<li><code>governance</code> — processos de aprovação e branching</li>
-<li><code>architecture-review-kilo</code> — revisão de design e padrões</li>
-<li><code>testing</code> — validação funcional</li>
-</ul>
-<h2 id="decision-tree">Decision Tree</h2>
-<pre data-lang="mermaid"><code>graph TD
-    A[Código para revisar] --&gt;|Contém segredos/creds?| B[Secret Scanning]
-    A --&gt;|Interpola dados?| C[Injeção SQL/NoSQL/XSS]
-    A --&gt;|Usa criptografia?| D[Revisão de Criptografia]
-    A --&gt;|Tem dependências?| E[Dependency Audit]
-    A --&gt;|Expõe API?| F[Modelagem de Ameaça]
-    B --&gt; G[Remover e rotacionar]
-    C --&gt; H[Parametrizar queries]
-    D --&gt; I[Validar parâmetros KDF/nonce]
-    E --&gt; J[Atualizar/remover pacotes]
-    F --&gt; K[STRIDE simplificado]</code></pre>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="threat-categories-owasp-top-10-2021">Threat Categories (OWASP Top 10 2021)</h3>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Descrição</th><th>Onde procurar</th></tr><tr><td>A01: Broken Access Control</td><td>Controle de acesso inadequado</td><td>Endpoints, middleware, rotas</td></tr><tr><td>A02: Cryptographic Failures</td><td>Erros de criptografia</td><td>Chaves, nonces, algoritmos</td></tr><tr><td>A03: Injection</td><td>Injeção de código</td><td>Queries, templates, eval</td></tr><tr><td>A04: Insecure Design</td><td>Design inseguro</td><td>Arquitetura, fluxos</td></tr><tr><td>A05: Security Misconfiguration</td><td>Configuração incorreta</td><td>.env, headers, CORS</td></tr><tr><td>A06: Vulnerable Components</td><td>Componentes vulneráveis</td><td>package.json, lock files</td></tr><tr><td>A07: Auth Failures</td><td>Falhas de autenticação</td><td>Login, sessões, tokens</td></tr></table></div>
-<h3 id="criptografia--parmetros-crticos">Criptografia — Parâmetros Críticos</h3>
-<p><strong>AES-GCM:</strong></p>
-<ul>
-<li>Nonce: 12 bytes, NUNCA reutilizado para a mesma chave</li>
-<li>Tag: 16 bytes (autenticação)</li>
-<li>Key: 256 bits para AES-256</li>
-</ul>
-<p><strong>scrypt (KDF):</strong></p>
-<ul>
-<li>N (CPU/memory cost): ≥16384 (2^14)</li>
-<li>r (block size): ≥8</li>
-<li>p (parallelization): ≥1</li>
-<li>Salt: ≥16 bytes aleatórios</li>
-</ul>
-<p><strong>BIP39 (mnemonic):</strong></p>
-<ul>
-<li>Entropy: 128-256 bits</li>
-<li>Wordlist: inglês ou português (não misturar)</li>
-<li>PBKDF2 com ≥2048 iterações</li>
-</ul>
-<h2 id="workflow">Workflow</h2>
-<h3 id="workflow-1-secret-scanning">Workflow 1: Secret Scanning</h3>
-<p><strong>Objetivo:</strong> Detectar credenciais, chaves e segredos expostos no código.</p>
+<h2 id="overview">Overview</h2>
+<p>Systematically review code for security vulnerabilities, apply secure coding patterns, and ensure applications follow defense-in-depth principles. This skill covers the OWASP Top 10, authentication pattern selection, input validation, secrets management, dependency auditing, security headers, and threat modeling.</p>
+<p><strong>Announce at start:</strong> "I'm using the security-review skill to assess security posture."</p>
+<hr>
+<h2 id="phase-1-scope-and-threat-assessment">Phase 1: Scope and Threat Assessment</h2>
+<p><strong>Goal:</strong> Identify the attack surface and prioritize review areas.</p>
+<h3 id="actions">Actions</h3>
 <ol>
-<li>Buscar padrões de secrets:</li>
+<li>Identify all user-facing endpoints and input surfaces</li>
+<li>Map authentication and authorization boundaries</li>
+<li>List external dependencies and their trust levels</li>
+<li>Identify sensitive data flows (PII, credentials, payment)</li>
+<li>Determine compliance requirements (SOC 2, GDPR, HIPAA)</li>
 </ol>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
 <ul>
-<li>API keys: <code>sk_live_</code>, <code>pk_live_</code>, <code>AKIA</code>, <code>ghp_</code></li>
-<li>Passwords: <code>password =</code>, <code>passwd =</code>, <code>secret =</code></li>
-<li>Tokens: <code>bearer </code>, <code>token =</code>, <code>jwt </code></li>
+<li>[ ] Attack surface is mapped</li>
+<li>[ ] Sensitive data flows are identified</li>
+<li>[ ] Compliance requirements are known</li>
 </ul>
-<ol>
-<li>Verificar arquivos <code>.env</code> e <code>.env.*</code></li>
-<li>Verificar <code>.gitignore</code> cobre arquivos sensíveis</li>
-<li>Verificar se testes usam valores hardcoded</li>
-<li>Verificar logs por dados sensíveis (PII, tokens)</li>
-<li><strong>Checkpoint</strong>: Nenhum secret encontrado ou todos são placeholders</li>
-</ol>
-<h3 id="workflow-2-reviso-de-dependncias">Workflow 2: Revisão de Dependências</h3>
-<p><strong>Objetivo:</strong> Identificar dependências com vulnerabilidades conhecidas.</p>
-<ol>
-<li>Executar <code>npm audit</code> / <code>yarn audit</code> / <code>pip audit</code> / <code>cargo audit</code></li>
-<li>Verificar CVEs em dependências diretas</li>
-<li>Verificar dependências transitivas</li>
-<li>Avaliar se dependências abandonadas</li>
-<li>Verificar licenças (GPL em código proprietário)</li>
-<li><strong>Checkpoint</strong>: Zero vulnerabilidades críticas, <5 warnings</li>
-</ol>
-<h3 id="workflow-3-validao-de-criptografia">Workflow 3: Validação de Criptografia</h3>
-<p><strong>Objetivo:</strong> Garantir implementações criptográficas corretas.</p>
-<ol>
-<li>Verificar algoritmos usados (não MD5, SHA1 para hashes de senha)</li>
-<li>Validar parâmetros AES-GCM (nonce, tag, key size)</li>
-<li>Validar parâmetros scrypt/KDF (N, r, p, salt)</li>
-<li>Verificar se chaves estão hardcoded</li>
-<li>Verificar se nonce é reutilizado</li>
-<li>Verificar timing attacks em comparações</li>
-<li><strong>Checkpoint</strong>: Parâmetros criptográficos válidos</li>
-</ol>
-<h3 id="workflow-4-modelagem-de-ameaa-leve">Workflow 4: Modelagem de Ameaça Leve</h3>
-<p><strong>Objetivo:</strong> Identificar vetores de ataque para endpoints e fluxos.</p>
-<ol>
-<li>Listar endpoints/expostos</li>
-<li>Para cada endpoint, aplicar STRIDE simplificado:</li>
-</ol>
+<hr>
+<h2 id="phase-2-owasp-top-10-audit">Phase 2: OWASP Top 10 Audit</h2>
+<p><strong>Goal:</strong> Systematically check against each OWASP category.</p>
+<h3 id="owasp-top-10-checklist-2021">OWASP Top 10 Checklist (2021)</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Category</th><th>Key Check</th><th>Pass/Fail</th></tr><tr><td>1</td><td><strong>Broken Access Control</strong></td><td>Authorization verified on every endpoint, deny by default</td><td></td></tr><tr><td>2</td><td><strong>Cryptographic Failures</strong></td><td>No plaintext secrets, strong algorithms (AES-256, bcrypt)</td><td></td></tr><tr><td>3</td><td><strong>Injection</strong></td><td>Parameterized queries, no string concatenation for SQL/commands</td><td></td></tr><tr><td>4</td><td><strong>Insecure Design</strong></td><td>Threat model exists, rate limiting, abuse cases considered</td><td></td></tr><tr><td>5</td><td><strong>Security Misconfiguration</strong></td><td>No defaults in production, minimal permissions, error messages leak nothing</td><td></td></tr><tr><td>6</td><td><strong>Vulnerable Components</strong></td><td>Dependencies audited, no known CVEs, update policy in place</td><td></td></tr><tr><td>7</td><td><strong>Auth Failures</strong></td><td>MFA available, passwords hashed, session management secure</td><td></td></tr><tr><td>8</td><td><strong>Data Integrity Failures</strong></td><td>Verify signatures, validate CI/CD pipeline integrity</td><td></td></tr><tr><td>9</td><td><strong>Logging Failures</strong></td><td>Log auth events, access control failures, input validation failures</td><td></td></tr><tr><td>10</td><td><strong>SSRF</strong></td><td>Validate/allowlist URLs, no internal network access from user input</td><td></td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
 <ul>
-<li><strong>S</strong>poofing: Autenticação Adequada?</li>
-<li><strong>T</strong>ampering: Integridade Protegida?</li>
-<li><strong>R</strong>epudiation: Audit Trail?</li>
-<li><strong>I</strong>nformation Disclosure: Dados Sensíveis Expostos?</li>
-<li><strong>D</strong>enial of Service: Rate Limiting?</li>
-<li><strong>E</strong>levation of Privilege: Controle de Acesso?</li>
+<li>[ ] All 10 categories are checked</li>
+<li>[ ] Findings are documented with severity</li>
 </ul>
-<ol>
-<li>Classificar risco (Crítico/Médio/Baixo)</li>
-<li><strong>Checkpoint</strong>: Todos os endpoints avaliados</li>
-</ol>
-<h3 id="workflow-5-relatrio-de-vulnerabilidade">Workflow 5: Relatório de Vulnerabilidade</h3>
-<p><strong>Objetivo:</strong> Documentar achados de forma acionável.</p>
-<ol>
-<li>Para cada vulnerabilidade encontrada:</li>
-</ol>
-<ul>
-<li>Título descritivo</li>
-<li>Severidade (🔴 Crítico, 🟡 Médio, 🟢 Baixo)</li>
-<li>Localização exata (arquivo + linha)</li>
-<li>Descrição do impacto</li>
-<li>PoC ou código vulnerável</li>
-<li>Recomendação de correção</li>
-<li>Referência (CWE, OWASP, CVE)</li>
-</ul>
-<ol>
-<li>Classificar por severidade</li>
-<li><strong>Checkpoint</strong>: Relatório completo e acionável</li>
-</ol>
-<h2 id="templates">Templates</h2>
-<h3 id="security-checklistmd">security-checklist.md</h3>
-<p>Localização: <code>templates/security-checklist.md</code></p>
-<p>Checklist abrangente de segurança para revisão de código. Cobere secrets, dependências, criptografia, autenticação, autorização e validação de entrada.</p>
-<h3 id="threat-modelmd">threat-model.md</h3>
-<p>Localização: <code>templates/threat-model.md</code></p>
-<p>Modelo de ameaça simplificado baseado em STRIDE. Listar endpoints, aplicar categorias, classificar risco.</p>
-<h3 id="vulnerability-reportmd">vulnerability-report.md</h3>
-<p>Localização: <code>templates/vulnerability-report.md</code></p>
-<p>Template para relatório de vulnerabilidade com severidade, localização, impacto e recomendação.</p>
-<h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="nonce-reuso-em-aes-gcm">Nonce Reuso em AES-GCM</h4>
-<p><strong>O que é:</strong> Usar o mesmo nonce para criptografar diferentes mensagens com a mesma chave. <strong>Por que é ruim:</strong> Permite recuperação da chave via XOR das streams de cifra. <strong>Como evitar:</strong> Gerar nonce aleatório de 12 bytes para cada operação; armazenar com o ciphertext. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-const nonce = Buffer.from(&#x27;fixed-nonce-12&#x27;); // sempre igual
-cipher.update(data, &#x27;utf8&#x27;, &#x27;hex&#x27;, nonce);
+<hr>
+<h2 id="phase-3-deep-review-by-category">Phase 3: Deep Review by Category</h2>
+<p><strong>Goal:</strong> Apply detailed security patterns to identified issues.</p>
+<h3 id="auth-pattern-selection-table">Auth Pattern Selection Table</h3>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>Use When</th><th>Key Requirements</th></tr><tr><td><strong>JWT</strong></td><td>Stateless APIs, microservices, mobile backends</td><td>RS256 for multi-service; access token 15min max; HttpOnly cookies</td></tr><tr><td><strong>Session-based</strong></td><td>Traditional web apps, server-rendered pages</td><td>Server-side storage; HttpOnly + Secure + SameSite cookies; CSRF tokens</td></tr><tr><td><strong>OAuth2/OIDC</strong></td><td>Third-party login, SSO, delegated auth</td><td>Authorization Code + PKCE; validate ID token claims; server-side token storage</td></tr><tr><td><strong>Passkeys/WebAuthn</strong></td><td>Passwordless, high-security apps</td><td>Phishing-resistant; store public keys only; support multiple per account</td></tr></table></div>
+<h3 id="jwt-security-checklist">JWT Security Checklist</h3>
+<div class="table-wrapper"><table><tr><th>Aspect</th><th>Guidance</th></tr><tr><td>Signing</td><td>RS256 (asymmetric) for multi-service, HS256 for single service</td></tr><tr><td>Expiry</td><td>Access token: 15 minutes max. Refresh token: 7 days max</td></tr><tr><td>Storage</td><td>HttpOnly cookie (web) or secure storage (mobile). Never localStorage</td></tr><tr><td>Refresh</td><td>Rotate refresh tokens on use, invalidate on logout</td></tr><tr><td>Payload</td><td>Minimal claims (sub, exp, iat, roles). No sensitive data</td></tr></table></div>
+<h3 id="input-validation-patterns">Input Validation Patterns</h3>
+<p><strong>Allow-List Validation</strong> (always prefer over block-list):</p>
+<pre data-lang="python"><code># Good: allow-list
+ALLOWED_SORT_FIELDS = {&#x27;name&#x27;, &#x27;created_at&#x27;, &#x27;price&#x27;}
+if sort_field not in ALLOWED_SORT_FIELDS:
+    raise ValidationError(&quot;Invalid sort field&quot;)
 
-# ✅ CORRETO
-const nonce = crypto.randomBytes(12); // único por operação
-cipher.update(data, &#x27;utf8&#x27;, &#x27;hex&#x27;, nonce);</code></pre>
-<h4 id="kdf-com-parmetros-fracos">KDF com Parâmetros Fracos</h4>
-<p><strong>O que é:</strong> Usar scrypt/bcrypt com parâmetros abaixo do recomendado. <strong>Por que é ruim:</strong> Torna o brute-force viável com hardware moderno. <strong>Como evitar:</strong> scrypt N≥16384, r≥8, p≥1; bcrypt work factor≥12. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-scrypt.sync(password, salt, { N: 1024, r: 1, p: 1 });
+# Bad: block-list (always incomplete)
+BLOCKED_CHARS = [&#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&quot;&#x27;]</code></pre>
+<p><strong>Parameterized Queries</strong> (never concatenate user input):</p>
+<pre data-lang="python"><code># Good: parameterized
+cursor.execute(&quot;SELECT * FROM users WHERE id = %s&quot;, (user_id,))
 
-# ✅ CORRETO
-scrypt.sync(password, salt, { N: 16384, r: 8, p: 1 });</code></pre>
-<h4 id="timing-attack-em-comparaes">Timing Attack em Comparações</h4>
-<p><strong>O que é:</strong> Comparar tokens com <code>===</code> que faz curto-circuito no primeiro byte diferente. <strong>Por que é ruim:</strong> Permite inferir o valor correto byte a byte. <strong>Como evitar:</strong> Usar <code>crypto.timingSafeEqual()</code> para comparações de tokens.</p>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="hardcoded-secrets-em-testes">Hardcoded Secrets em Testes</h4>
-<p><strong>O que é:</strong> Colocar chaves reais em arquivos de teste. <strong>Por que é ruim:</strong> Pode vazar para repositórios públicos. <strong>Como evitar:</strong> Usar variáveis de ambiente ou mocks.</p>
-<h4 id="env-commitado-sem-gitignore"><code>.env</code> Commitado sem <code>.gitignore</code></h4>
-<p><strong>O que é:</strong> Arquivo .env com credenciais reais no version control. <strong>Por que é ruim:</strong> Histórico do git preserva credenciais mesmo após remoção. <strong>Como evitar:</strong> Adicionar <code>.env*</code> ao <code>.gitignore</code>; usar <code>.env.example</code> sem valores.</p>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="logs-com-dados-sensveis">Logs com Dados Sensíveis</h4>
-<p><strong>O que é:</strong> Logar PII, tokens ou senhas em logs de produção. <strong>Por que é ruim:</strong> Violação de privacidade e compliance (LGPD, GDPR). <strong>Como evitar:</strong> Máscarar dados sensíveis antes de logar.</p>
-<h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-reviso-de-segurana">Checklist de Revisão de Segurança</h3>
-<p>Localização: <code>checklists/security-review.md</code></p>
-<p>Executar antes de merge de código com impacto de segurança. Valida secrets, dependências, criptografia, autenticação e validação de entrada.</p>
-<h2 id="edge-cases">Edge Cases</h2>
-<h3 id="biblioteca-de-criptografia-descontinuada">Biblioteca de Criptografia Descontinuada</h3>
-<p><strong>Situação:</strong> Projeto usa biblioteca de criptografia que não recebe atualizações. <strong>Solução:</strong> Migrar para alternativa maintida (ex: <code>crypto</code> nativo do Node.js). <strong>Exceção:</strong> Se a biblioteca é battle-tested e o uso é limitado, documentar risco aceito.</p>
-<h3 id="dependncia-com-cve-em-dependncia-transitiva">Dependência com CVE em Dependência Transitiva</h3>
-<p><strong>Situação:</strong> <code>npm audit</code> reporta CVE em pacote que é dependência de dependência. <strong>Solução:</strong> Verificar se o código afetado é realmente usado; se sim, atualizar ou fazer override. <strong>Exceção:</strong> Se o CVE afeta feature não utilizada, documentar e marcar como aceito.</p>
-<h3 id="aplicao-com-mltiplos-algoritmos-de-hash">Aplicação com Múltiplos Algoritmos de Hash</h3>
-<p><strong>Situação:</strong> Código usa SHA-256 para uma coisa e bcrypt para outra. <strong>Solução:</strong> Verificar se cada algoritmo é adequado para seu caso de uso (não usar hash genérico para senhas). <strong>Exceção:</strong> SHA-256 para checksums de integridade é aceitável.</p>
-<h3 id="secret-em-varivel-de-ambiente-mas-no-em-envexample">Secret em Variável de Ambiente mas Não em <code>.env.example</code></h3>
-<p><strong>Situação:</strong> Código lê de <code>process.env.API_KEY</code> mas <code>.env.example</code> não lista essa variável. <strong>Solução:</strong> Adicionar ao <code>.env.example</code> com valor placeholder; documentar no README. <strong>Exceção:</strong> Nenhuma — toda variável de ambiente deve estar documentada.</p>
-<h2 id="referncias">Referências</h2>
+# Bad: SQL injection vulnerability
+cursor.execute(f&quot;SELECT * FROM users WHERE id = {user_id}&quot;)</code></pre>
+<h3 id="file-upload-validation">File Upload Validation</h3>
 <ul>
-<li><a href="https://owasp.org/Top10/">OWASP Top 10 2021</a></li>
-<li><a href="https://cwe.mitre.org/top25/">CWE/SANS Top 25</a></li>
-<li><a href="https://nodejs.org/api/crypto.html">Node.js Crypto</a></li>
-<li><a href="../../skills/governance/index.html">Skill governance</a></li>
-<li><a href="../../skills/architecture-review-kilo/index.html">Skill architecture-review-kilo</a></li>
-<li><a href="../../skills/testing/index.html">Skill testing</a></li>
+<li>Validate MIME type server-side (not just extension)</li>
+<li>Enforce file size limits</li>
+<li>Generate random filenames (never use user-supplied names)</li>
+<li>Store uploads outside the web root</li>
+<li>Scan for malware if accepting from untrusted users</li>
 </ul>
+<h3 id="stop--do-not-proceed-to-phase-4-until">STOP — Do NOT proceed to Phase 4 until:</h3>
+<ul>
+<li>[ ] All identified issues have remediation recommendations</li>
+<li>[ ] Auth patterns are correctly applied</li>
+<li>[ ] Input validation is comprehensive</li>
+</ul>
+<hr>
+<h2 id="phase-4-infrastructure-and-dependency-hardening">Phase 4: Infrastructure and Dependency Hardening</h2>
+<p><strong>Goal:</strong> Secure the deployment environment and supply chain.</p>
+<h3 id="secrets-management-rules">Secrets Management Rules</h3>
+<div class="table-wrapper"><table><tr><th>Environment</th><th>Method</th></tr><tr><td>Development</td><td><code>.env</code> files (git-ignored)</td></tr><tr><td>CI/CD</td><td>Pipeline secrets (GitHub Secrets, GitLab CI vars)</td></tr><tr><td>Production</td><td>Secrets manager (AWS Secrets Manager, Vault, GCP Secret Manager)</td></tr></table></div>
+<h3 id="secrets-never-list">Secrets Never List</h3>
+<ul>
+<li>Never hard-code secrets in source code</li>
+<li>Never commit <code>.env</code> files to git</li>
+<li>Never log secrets (even at debug level)</li>
+<li>Never pass secrets as command-line arguments</li>
+<li>Never use the same secrets across environments</li>
+</ul>
+<h3 id="dependency-auditing-commands">Dependency Auditing Commands</h3>
+<pre data-lang="bash"><code># Node.js
+npm audit
+npx socket-security audit
+
+# Python
+pip-audit
+safety check
+
+# Go
+govulncheck ./...
+
+# Rust
+cargo audit</code></pre>
+<h3 id="security-headers">Security Headers</h3>
+<div class="table-wrapper"><table><tr><th>Header</th><th>Value</th><th>Purpose</th></tr><tr><td><code>Content-Security-Policy</code></td><td><code>default-src 'self'</code> (customize per app)</td><td>Prevents XSS, data injection</td></tr><tr><td><code>Strict-Transport-Security</code></td><td><code>max-age=63072000; includeSubDomains</code></td><td>Forces HTTPS</td></tr><tr><td><code>X-Content-Type-Options</code></td><td><code>nosniff</code></td><td>Prevents MIME sniffing</td></tr><tr><td><code>X-Frame-Options</code></td><td><code>DENY</code> or <code>SAMEORIGIN</code></td><td>Prevents clickjacking</td></tr><tr><td><code>Referrer-Policy</code></td><td><code>strict-origin-when-cross-origin</code></td><td>Controls referer leakage</td></tr><tr><td><code>Permissions-Policy</code></td><td>Disable unused APIs</td><td>Limits browser feature access</td></tr></table></div>
+<h3 id="cors-rules">CORS Rules</h3>
+<ul>
+<li>Never use <code>Access-Control-Allow-Origin: *</code> with credentials</li>
+<li>Allowlist specific origins</li>
+<li>Restrict allowed methods and headers to what is needed</li>
+</ul>
+<hr>
+<h2 id="phase-5-threat-modeling-stride">Phase 5: Threat Modeling (STRIDE)</h2>
+<p><strong>Goal:</strong> For new features or significant changes, walk through each threat category.</p>
+<div class="table-wrapper"><table><tr><th>Threat</th><th>Question</th><th>Mitigation</th></tr><tr><td><strong>Spoofing</strong></td><td>Can an attacker pretend to be someone else?</td><td>Strong authentication, MFA</td></tr><tr><td><strong>Tampering</strong></td><td>Can data be modified without detection?</td><td>Integrity checks, signatures</td></tr><tr><td><strong>Repudiation</strong></td><td>Can a user deny performing an action?</td><td>Audit logging</td></tr><tr><td><strong>Information Disclosure</strong></td><td>Can sensitive data leak through errors, logs, or side channels?</td><td>Error sanitization, encryption</td></tr><tr><td><strong>Denial of Service</strong></td><td>Can the system be overwhelmed?</td><td>Rate limits, resource quotas</td></tr><tr><td><strong>Elevation of Privilege</strong></td><td>Can a user gain permissions they should not have?</td><td>Least privilege, RBAC</td></tr></table></div>
+<p>For each identified threat:</p>
+<ol>
+<li>Document the threat and attack vector</li>
+<li>Assess likelihood and impact</li>
+<li>Define mitigations</li>
+<li>Verify mitigations are implemented and tested</li>
+</ol>
+<hr>
+<h2 id="decision-table-security-review-depth">Decision Table: Security Review Depth</h2>
+<div class="table-wrapper"><table><tr><th>Change Type</th><th>Review Depth</th><th>Focus Areas</th></tr><tr><td>Auth/session changes</td><td>Full STRIDE + OWASP</td><td>All categories</td></tr><tr><td>User input handling</td><td>Injection + validation focus</td><td>OWASP 1, 3, 10</td></tr><tr><td>Dependency update</td><td>CVE scan + changelog review</td><td>OWASP 6</td></tr><tr><td>API endpoint addition</td><td>Access control + input validation</td><td>OWASP 1, 3, 5</td></tr><tr><td>Config/infrastructure</td><td>Secrets + headers + misconfig</td><td>OWASP 2, 5</td></tr><tr><td>File upload feature</td><td>Injection + SSRF + malware</td><td>OWASP 3, 10</td></tr></table></div>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Client-side only validation</td><td>Easily bypassed</td><td>Always validate server-side</td></tr><tr><td>Storing tokens in localStorage</td><td>XSS can steal them</td><td>Use HttpOnly cookies</td></tr><tr><td>Block-list input validation</td><td>Always incomplete</td><td>Use allow-list validation</td></tr><tr><td>Generic error messages in production</td><td>May leak internal details</td><td>Sanitize errors, log details server-side</td></tr><tr><td>Same secrets across environments</td><td>Breach of one compromises all</td><td>Unique secrets per environment</td></tr><tr><td>Ignoring dependency CVEs</td><td>Known vulnerabilities are actively exploited</td><td>Audit and update regularly</td></tr><tr><td>CORS wildcard with credentials</td><td>Defeats CORS protection entirely</td><td>Allowlist specific origins</td></tr><tr><td>Logging sensitive data</td><td>Log exposure creates data breach</td><td>Never log secrets, PII, or tokens</td></tr></table></div>
+<hr>
+<h2 id="secrets-rotation-schedule">Secrets Rotation Schedule</h2>
+<div class="table-wrapper"><table><tr><th>Secret Type</th><th>Rotation Frequency</th><th>After Suspected Compromise</th></tr><tr><td>API keys</td><td>Every 90 days</td><td>Immediately</td></tr><tr><td>Database passwords</td><td>Every 90 days</td><td>Immediately</td></tr><tr><td>Encryption keys</td><td>Annually (support key versioning)</td><td>Immediately</td></tr><tr><td>JWT signing keys</td><td>Every 6 months</td><td>Immediately</td></tr><tr><td>OAuth client secrets</td><td>Every 90 days</td><td>Immediately</td></tr></table></div>
+<hr>
+<h2 id="subagent-dispatch-opportunities">Subagent Dispatch Opportunities</h2>
+<div class="table-wrapper"><table><tr><th>Task Pattern</th><th>Dispatch To</th><th>When</th></tr><tr><td>Scanning different OWASP categories in parallel</td><td><code>Agent</code> tool with <code>subagent_type="Explore"</code> (one per category)</td><td>When reviewing a large codebase across multiple vulnerability types</td></tr><tr><td>Authentication flow analysis</td><td><code>Agent</code> tool with <code>subagent_type="general-purpose"</code></td><td>When auth implementation spans multiple files/services</td></tr><tr><td>Dependency vulnerability scanning</td><td><code>Bash</code> tool with <code>run_in_background=true</code></td><td>When running <code>npm audit</code> or similar tools concurrently</td></tr></table></div>
+<p>Follow the <code>dispatching-parallel-agents</code> skill protocol when dispatching.</p>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>code-review</code></td><td>Security findings are Critical category issues</td></tr><tr><td><code>senior-backend</code></td><td>Backend hardening follows security review findings</td></tr><tr><td><code>senior-fullstack</code></td><td>Auth implementation follows security patterns</td></tr><tr><td><code>acceptance-testing</code></td><td>Security requirements become acceptance criteria</td></tr><tr><td><code>performance-optimization</code></td><td>Rate limiting serves both security and performance</td></tr><tr><td><code>systematic-debugging</code></td><td>Security incidents trigger debugging workflow</td></tr></table></div>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the depth of review to the change type using the decision table. The OWASP checklist and STRIDE analysis are strongly recommended for any auth or input-handling changes. Secrets management rules are non-negotiable.</p>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

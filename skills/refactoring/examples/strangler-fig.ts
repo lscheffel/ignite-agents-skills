@@ -1,22 +1,22 @@
-// Exemplo: Strangler Fig Pattern - Migração gradual
+// Example: Strangler Fig Pattern - Gradual Migration
 
-// ❌ ANTES - monolito com tudo junto
+// ❌ BEFORE - monolithic with everything together
 class LegacyPaymentService {
   processPayment(order: Order) {
-    // lógica de pagamento antiga
+    // old payment logic
     const gateway = new LegacyGateway();
     return gateway.charge(order.total, order.creditCard);
   }
 }
 
-// ✅ DEPOIS - Strangler Fig com feature flag
+// ✅ AFTER - Strangler Fig with feature flag
 
-// 1. Criar interface
+// 1. Create interface
 interface PaymentProcessor {
   process(order: Order): Promise<PaymentResult>;
 }
 
-// 2. Implementar nova versão
+// 2. Implement new version
 class StripePaymentProcessor implements PaymentProcessor {
   async process(order: Order): Promise<PaymentResult> {
     const stripe = new Stripe(process.env.STRIPE_KEY);
@@ -29,7 +29,7 @@ class StripePaymentProcessor implements PaymentProcessor {
   }
 }
 
-// 3. Manter legado como fallback
+// 3. Keep legacy as fallback
 class LegacyPaymentProcessor implements PaymentProcessor {
   async process(order: Order): Promise<PaymentResult> {
     const gateway = new LegacyGateway();
@@ -38,7 +38,7 @@ class LegacyPaymentProcessor implements PaymentProcessor {
   }
 }
 
-// 4. Usar feature flag para alternar
+// 4. Use feature flag to toggle
 class PaymentService {
   private processor: PaymentProcessor;
 
@@ -55,7 +55,7 @@ class PaymentService {
   }
 }
 
-// 5. Quando migration estiver completa, remover legado
-// - Remover LegacyPaymentProcessor
-// - Remover feature flag
-// - Simplificar PaymentService
+// 5. When migration is complete, remove legacy
+// - Remove LegacyPaymentProcessor
+// - Remove feature flag
+// - Simplify PaymentService

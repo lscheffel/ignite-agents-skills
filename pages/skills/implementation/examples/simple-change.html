@@ -410,98 +410,98 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">implementation</a> &rsaquo; examples &rsaquo; simple-change</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-mudana-simples-1-2-tarefas">Exemplo: Mudança Simples (1-2 Tarefas)</h1>
-<blockquote>Exemplo de implementação governada para uma mudança pontual: adicionar validação de input em um endpoint.</blockquote>
+    <h1 id="example-simple-change-1-2-tasks">Example: Simple Change (1-2 Tasks)</h1>
+<blockquote>Example of a governed implementation for a point change: adding input validation to an endpoint.</blockquote>
 <hr>
-<h2 id="contexto">Contexto</h2>
+<h2 id="context">Context</h2>
 <ul>
-<li><strong>ADR:</strong> ADR-006 (proposta para adicionar validação de input)</li>
-<li><strong>Blueprint:</strong> ADR-006-BP.md (2 tarefas: criar middleware + integrar)</li>
-<li><strong>TODO:</strong> ADR-006-TODO.md (2 tarefas, sem dependências entre si)</li>
+<li><strong>ADR:</strong> ADR-006 (proposed for adding input validation)</li>
+<li><strong>Blueprint:</strong> ADR-006-BP.md (2 tasks: create middleware + integrate)</li>
+<li><strong>TODO:</strong> ADR-006-TODO.md (2 tasks, no dependencies between them)</li>
 </ul>
 <hr>
-<h2 id="fluxo-completo">Fluxo Completo</h2>
+<h2 id="complete-flow">Complete Flow</h2>
 <h3 id="1-artifact-resolution">1. Artifact Resolution</h3>
-<pre data-lang="bash"><code># Agente identifica os artefatos
+<pre data-lang="bash"><code># Agent identifies artifacts
 ADR_PATH=&quot;docs/adr/ADR-006.md&quot;
 BP_PATH=&quot;docs/adr/ADR-006-BP.md&quot;
 TODO_PATH=&quot;docs/adr/ADR-006-TODO.md&quot;</code></pre>
-<p><strong>Resultado:</strong></p>
+<p><strong>Result:</strong></p>
 <ul>
-<li>ADR existe ✅</li>
-<li>Blueprint existe ✅</li>
-<li>TODO existe ✅</li>
-<li>Coerência verificada ✅</li>
+<li>ADR exists ✅</li>
+<li>Blueprint exists ✅</li>
+<li>TODO exists ✅</li>
+<li>Coherence verified ✅</li>
 </ul>
 <hr>
 <h3 id="2-execution-contract">2. Execution Contract</h3>
-<pre data-lang="markdown"><code>## Artefatos
-| Artefato | Status | Coerente |
+<pre data-lang="markdown"><code>## Artifacts
+| Artifact | Status | Coherent |
 |----------|--------|----------|
-| ADR-006.md | Aceito | ✅ |
-| ADR-006-BP.md | Existente | ✅ |
-| ADR-006-TODO.md | Existente | ✅ |
+| ADR-006.md | Accepted | ✅ |
+| ADR-006-BP.md | Exists | ✅ |
+| ADR-006-TODO.md | Exists | ✅ |
 
-## Ambiente
-| Campo | Valor |
+## Environment
+| Field | Value |
 |-------|-------|
 | Branch | feature/input-validation |
-| Workspace limpo | Sim |
-| Arquivos impactados | src/middleware/validate.ts, src/routes/users.ts |</code></pre>
-<p><strong>Contrato validado ✅</strong></p>
+| Clean Workspace | Yes |
+| Affected Files | src/middleware/validate.ts, src/routes/users.ts |</code></pre>
+<p><strong>Contract validated ✅</strong></p>
 <hr>
 <h3 id="3-change-plan-dag">3. Change Plan (DAG)</h3>
 <pre data-lang="mermaid"><code>graph LR
-    T1[ Criar middleware validate.ts] --&gt; T2[Integrar no endpoint]</code></pre>
-<p><strong>Ordem:</strong> T1 → T2 (sequencial, T2 depende de T1)</p>
+    T1[Create validate.ts middleware] --&gt; T2[Integrate into endpoint]</code></pre>
+<p><strong>Order:</strong> T1 → T2 (sequential, T2 depends on T1)</p>
 <hr>
 <h3 id="4-execution-loop">4. Execution Loop</h3>
-<h4 id="tarefa-1-criar-middleware-validatets">Tarefa 1: Criar middleware validate.ts</h4>
-<p><strong>Estado:</strong> ⬜ → 🔄 Em andamento</p>
-<p><strong>Alterações:</strong></p>
-<pre><code>Criado: src/middleware/validate.ts (+45 linhas)</code></pre>
-<p><strong>Validações:</strong></p>
-<div class="table-wrapper"><table><tr><th>Validação</th><th>Resultado</th><th>Tentativa</th></tr><tr><td>Build</td><td>✅</td><td>1</td></tr><tr><td>Lint</td><td>✅</td><td>1</td></tr><tr><td>Typecheck</td><td>✅</td><td>1</td></tr></table></div>
-<p><strong>Estado:</strong> 🔄 → ✅ Concluído</p>
+<h4 id="task-1-create-validatets-middleware">Task 1: Create validate.ts middleware</h4>
+<p><strong>State:</strong> ⬜ → 🔄 In progress</p>
+<p><strong>Changes:</strong></p>
+<pre><code>Created: src/middleware/validate.ts (+45 lines)</code></pre>
+<p><strong>Validations:</strong></p>
+<div class="table-wrapper"><table><tr><th>Validation</th><th>Result</th><th>Attempt</th></tr><tr><td>Build</td><td>✅</td><td>1</td></tr><tr><td>Lint</td><td>✅</td><td>1</td></tr><tr><td>Typecheck</td><td>✅</td><td>1</td></tr></table></div>
+<p><strong>State:</strong> 🔄 → ✅ Completed</p>
 <hr>
-<h4 id="tarefa-2-integrar-no-endpoint">Tarefa 2: Integrar no endpoint</h4>
-<p><strong>Estado:</strong> ⬜ → 🔄 Em andamento</p>
-<p><strong>Alterações:</strong></p>
-<pre><code>Modificado: src/routes/users.ts (+3 linhas, -1 linha)</code></pre>
-<p><strong>Validações:</strong></p>
-<div class="table-wrapper"><table><tr><th>Validação</th><th>Resultado</th><th>Tentativa</th></tr><tr><td>Build</td><td>✅</td><td>1</td></tr><tr><td>Lint</td><td>✅</td><td>1</td></tr><tr><td>Typecheck</td><td>✅</td><td>1</td></tr><tr><td>Testes unitários</td><td>✅</td><td>1</td></tr></table></div>
-<p><strong>Estado:</strong> 🔄 → ✅ Concluído</p>
+<h4 id="task-2-integrate-into-endpoint">Task 2: Integrate into endpoint</h4>
+<p><strong>State:</strong> ⬜ → 🔄 In progress</p>
+<p><strong>Changes:</strong></p>
+<pre><code>Modified: src/routes/users.ts (+3 lines, -1 line)</code></pre>
+<p><strong>Validations:</strong></p>
+<div class="table-wrapper"><table><tr><th>Validation</th><th>Result</th><th>Attempt</th></tr><tr><td>Build</td><td>✅</td><td>1</td></tr><tr><td>Lint</td><td>✅</td><td>1</td></tr><tr><td>Typecheck</td><td>✅</td><td>1</td></tr><tr><td>Unit Tests</td><td>✅</td><td>1</td></tr></table></div>
+<p><strong>State:</strong> 🔄 → ✅ Completed</p>
 <hr>
 <h3 id="5-documentation-synchronization">5. Documentation Synchronization</h3>
 <ul>
-<li>ADR-006.md: adicionada nota de implementação ✅</li>
-<li>README.md: não requer atualização (feature interna)</li>
+<li>ADR-006.md: added implementation note ✅</li>
+<li>README.md: no update required (internal feature)</li>
 </ul>
 <hr>
 <h3 id="6-execution-report">6. Execution Report</h3>
-<pre data-lang="markdown"><code>## Resumo
-| Campo | Valor |
+<pre data-lang="markdown"><code>## Summary
+| Field | Value |
 |-------|-------|
-| Tarefas totais | 2 |
-| Concluídas | 2 |
-| Adiadas | 0 |
-| Bloqueadas | 0 |
-| Taxa de conclusão | 100% |
+| Total Tasks | 2 |
+| Completed | 2 |
+| Deferred | 0 |
+| Blocked | 0 |
+| Completion Rate | 100% |
 
-## Validações
-| Validação | Resultado |
-|-----------|-----------|
+## Validations
+| Validation | Result |
+|-----------|--------|
 | Build | ✅ |
 | Lint | ✅ |
 | Typecheck | ✅ |
-| Testes | ✅ |</code></pre>
-<p><strong>Implementação concluída com sucesso ✅</strong></p>
+| Tests | ✅ |</code></pre>
+<p><strong>Implementation completed successfully ✅</strong></p>
 <hr>
-<h2 id="lies">Lições</h2>
+<h2 id="lessons">Lessons</h2>
 <ol>
-<li>Mudanças simples (1-2 tarefas) podem ser executadas em um único ciclo</li>
-<li>Mesmo para mudanças simples, o Execution Contract garante que nada foi esquecido</li>
-<li>O relatório final documenta que a implementação foi validada</li>
+<li>Simple changes (1-2 tasks) can be executed in a single cycle</li>
+<li>Even for simple changes, the Execution Contract ensures nothing was overlooked</li>
+<li>The final report documents that the implementation was validated</li>
 </ol>
   </div>
 <footer>

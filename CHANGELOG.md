@@ -4,24 +4,30 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 
-## [Unreleased]
+## [2.5.0] - 2026-08-26
 
 ### Added
-- **ADR-015:** Fix Caminhos Relativos Depth-Aware no Build.py
-  - `convert_inline_md()` e `convert_md_to_html()` agora aceitam parâmetro `depth`
-  - `get_page_template()` calcula nav prefix baseado na profundidade
-  - Corrigidos links ADR, skill e nav em todas as páginas HTML
+- **Unificação Integral do Ecossistema SOTA (59 Skills):**
+  - Substituição de todas as 24 skills legadas pelas **59 skills SOTA** em `skills/` (arquitetura modular com `references/`, `templates/`, `examples/` e `scripts/`).
+  - Suporte total a padrões bilíngues (PT/EN) em `scripts/validate-skill.sh` com 100% de aprovação.
+- **Servidor MCP Stdio Dedicado (`skills-rag-mcp`):**
+  - Novo servidor em `scripts/skills_mcp_server.py` implementando JSON-RPC 2.0 com 7 ferramentas analíticas: `search_skills`, `route_task`, `get_skill_details`, `list_skills_catalog`, `bootstrap_agent_instructions`, `get_rag_telemetry` e `inspect_rag_index`.
+- **Motor RAG Semântico e Neural Hierárquico (ADR-021 a ADR-025):**
+  - Indexador vetorial `scripts/skills_rag_indexer.py` vetorizando 3.941 chunks em `data/skills_rag_db/skills_rag.sqlite3`.
+  - Busca híbrida FTS5 BM25 + Embeddings com fallback 512/2048-dim e cache SHA-256 de reranking (0ms).
+- **CLI Router:**
+  - Utilitário `scripts/skills_router.py` para busca semântica via terminal e exportação JSON/XML snippet.
+- **Motor de Auditoria Forense em 8 Dimensões SOTA:**
+  - Script `scripts/audit_engine.py` auditando 81 ativos com Score Global Médio de 91.10/100 (100% APROVADAS).
+- **Suíte de Testes Automatizados:**
+  - 42 testes unitários e de integração em `scripts/tests/` (100% green).
+- **Reconciliação Documental dos 6 Pilares:**
+  - Atualização completa de `README.md`, `CHANGELOG.md`, `USAGE.md`, `RELEASE-NOTES.md`, `STATE.md`, `AGENTS.md` e `GEMINI.md`.
 
 ### Changed
-- **Reconciliação Documental Completa** (2026-07-15)
-  - Removida skill `code-review` (protocolo autônomo legacy, 6398 linhas) + `code-review.rar` lixo
-  - Corrigidas 3 skills com falha de validação Ultra-High Quality:
-    - `adr-archive` v2.0.0 — expandida para 250 linhas, templates + examples adicionados
-    - `code-review-lite` v2.0.0 — related_skills no frontmatter, severity nos anti-patterns, checkpoints
-    - `writing-plans` v2.0.0 — frontmatter completo (version, tags, related_skills), seção Workflow
-  - Sincronizado `skills/index.json` com filesystem (25 skills válidas)
-  - Atualizados documentos canônicos: README.md, CHANGELOG.md, USAGE.md
-  - Version bump: index.json → 2.3.1 (match CHANGELOG latest)
+- Sincronização do registry canônico `skills/index.json` para 59 skills.
+- Geração de páginas HTML dinâmicas em `pages/` para todas as 59 skills e ADR-001 a ADR-026 via `pages/build.py`.
+- Atualização do workflow `.github/workflows/validate-skills.yml` com validação de index, qualidade e execução de testes.
 
 ## [2.3.1] - 2026-07-05
 

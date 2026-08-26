@@ -1,50 +1,50 @@
-# Checklist de Implementação de Observabilidade
+# Implementation Checklist for Observability
 
-## Pré-requisitos
-- [ ] Definir formato de log (JSON recomendado)
-- [ ] Escolher stack de observabilidade (ELK/Datadog/Grafana)
-- [ ] Definir SLAs/SLOs do sistema
-- [ ] Mapear serviços críticos
+## Prerequisites
+- [ ] Define log format (JSON recommended)
+- [ ] Choose observability stack (ELK/Datadog/Grafana)
+- [ ] Define SLAs/SLOs for the system
+- [ ] Map critical services
 
 ## Logging
-- [ ] Logger centralizado configurado
-- [ ] Formato JSON definido
-- [ ] Campos obrigatórios implementados
-- [ ] Sanitização de dados sensíveis
-- [ ] Níveis de log configurados por ambiente
-- [ ] Retenção de logs documentada
-- [ ] Logs centralizados (ELK/Datadog)
+- [ ] Centralized logger configured
+- [ ] JSON format defined
+- [ ] Mandatory fields implemented
+- [ ] Sensitive data sanitized
+- [ ] Log levels configured by environment
+- [ ] Log retention documented
+- [ ] Centralized logs (ELK/Datadog)
 
-## Métricas
-- [ ] Métricas RED implementadas (Rate, Errors, Duration)
-- [ ] Métricas de negócio definidas
-- [ ] Dashboards configurados
-- [ ] Alertas baseados em métricas
-- [ ] Retenção de métricas definida
+## Metrics
+- [ ] RED metrics implemented (Rate, Errors, Duration)
+- [ ] Business metrics defined
+- [ ] Dashboards configured
+- [ ] Metric-based alerts
+- [ ] Metric retention defined
 
 ## Tracing
-- [ ] OpenTelemetry configurado
-- [ ] Trace propagation entre serviços
-- [ ] Spans instrumentados nos pontos principais
-- [ ] Exportador configurado (Jaeger/Zipkin)
-- [ ] Sampling rate definido
+- [ ] OpenTelemetry configured
+- [ ] Trace propagation between services
+- [ ] Spans instrumented at key points
+- [ ] Exporter configured (Jaeger/Zipkin)
+- [ ] Sampling rate defined
 
-## Alertas
-- [ ] Alertas definidos com severidade
-- [ ] Runbooks anexados a cada alerta
-- [ ] Escalonamento configurado
-- [ ] Notificações testadas
-- [ ] Alertas review quarterly
+## Alerts
+- [ ] Alerts defined with severity
+- [ ] Runbooks attached to each alert
+- [ ] Escalation configured
+- [ ] Notifications tested
+- [ ] Quarterly alert review
 
-## Testes
-- [ ] Testes de instrumentação
-- [ ] Mocks de métricas configurados
-- [ ] Testes de alertas
-- [ ] Testes de tracing
+## Testing
+- [ ] Instrumentation testing
+- [ ] Metric mocks configured
+- [ ] Alert testing
+- [ ] Tracing testing
 
-## Documentação
-- [ ] Especificação de logging documentada
-- [ ] Métricas e SLAs documentados
-- [ ] Regras de alerta documentadas
-- [ ] Runbooks documentados
-- [ ] Playbook de incidentes
+## Documentation
+- [ ] Logging specification documented
+- [ ] Metrics and SLAs documented
+- [ ] Alert rules documented
+- [ ] Runbooks documented
+- [ ] Incident playbook

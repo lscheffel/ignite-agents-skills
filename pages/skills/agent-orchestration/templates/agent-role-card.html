@@ -411,10 +411,10 @@
   </nav>
   <div class="content">
     <h1 id="agent-role-card">Agent Role Card</h1>
-<p>Card de papel do agente para orquestração multi-agente.</p>
-<h2 id="informaes-do-agente">Informações do Agente</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td><strong>Nome</strong></td><td><code>{agent_name}</code></td></tr><tr><td><strong>Papel</strong></td><td><code>{role: orchestrator, specialist, reviewer, formatter}</code></td></tr><tr><td><strong>Modelo</strong></td><td><code>{model: lightweight, standard, advanced}</code></td></tr><tr><td><strong>Responsabilidade</strong></td><td><code>{responsibility}</code></td></tr></table></div>
-<h2 id="contrato-io">Contrato I/O</h2>
+<p>Multi-Agent Orchestrator Agent Role Card.</p>
+<h2 id="agent-information">Agent Information</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td><strong>Name</strong></td><td><code>{agent_name}</code></td></tr><tr><td><strong>Role</strong></td><td><code>{role: orchestrator, specialist, reviewer, formatter}</code></td></tr><tr><td><strong>Model</strong></td><td><code>{model: lightweight, standard, advanced}</code></td></tr><tr><td><strong>Responsibility</strong></td><td><code>{responsibility}</code></td></tr></table></div>
+<h2 id="io-contract">I/O Contract</h2>
 <h3 id="input">Input</h3>
 <pre data-lang="yaml"><code>schema: {InputSchemaName}
 fields:
@@ -437,22 +437,22 @@ fields:
     type: {type}
     required: {true|false}
     description: {description}</code></pre>
-<h2 id="validao">Validação</h2>
+<h2 id="validation">Validation</h2>
 <ul>
-<li>[ ] Input válido antes de executar</li>
-<li>[ ] Output válido após executar</li>
-<li>[ ] Erros tratados conforme fallback</li>
+<li>[ ] Valid input before execution</li>
+<li>[ ] Valid output after execution</li>
+<li>[ ] Errors handled according to fallback</li>
 </ul>
 <h2 id="fallback">Fallback</h2>
-<div class="table-wrapper"><table><tr><th>Cenário</th><th>Ação</th></tr><tr><td>Input inválido</td><td><code>{fallback_action}</code></td></tr><tr><td>Timeout</td><td><code>{fallback_action}</code></td></tr><tr><td>Output inválido</td><td><code>{fallback_action}</code></td></tr><tr><td>Erro inesperado</td><td><code>{fallback_action}</code></td></tr></table></div>
-<h2 id="dependncias">Dependências</h2>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Action</th></tr><tr><td>Invalid input</td><td><code>{fallback_action}</code></td></tr><tr><td>Timeout</td><td><code>{fallback_action}</code></td></tr><tr><td>Invalid output</td><td><code>{fallback_action}</code></td></tr><tr><td>Unexpected error</td><td><code>{fallback_action}</code></td></tr></table></div>
+<h2 id="dependencies">Dependencies</h2>
 <ul>
-<li><strong>Depende de</strong>: <code>{upstream_agents}</code></li>
-<li><strong>Alimenta</strong>: <code>{downstream_agents}</code></li>
-<li><strong>Paralelo com</strong>: <code>{parallel_agents}</code></li>
+<li><strong>Depends on</strong>: <code>{upstream_agents}</code></li>
+<li><strong>Feeds</strong>: <code>{downstream_agents}</code></li>
+<li><strong>Parallel with</strong>: <code>{parallel_agents}</code></li>
 </ul>
-<h2 id="mtricas">Métricas</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Target</th></tr><tr><td>Taxa de sucesso</td><td><code>{success_rate}</code></td></tr><tr><td>Latência média</td><td><code>{latency}</code></td></tr><tr><td>Custo estimado</td><td><code>{cost}</code></td></tr></table></div>
+<h2 id="metrics">Metrics</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Target</th></tr><tr><td>Success rate</td><td><code>{success_rate}</code></td></tr><tr><td>Average latency</td><td><code>{latency}</code></td></tr><tr><td>Estimated cost</td><td><code>{cost}</code></td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

@@ -411,67 +411,67 @@
   </nav>
   <div class="content">
     <h1 id="adr-archive-checklist-template">ADR Archive Checklist Template</h1>
-<blockquote>Checklist para validação antes de arquivar ADR</blockquote>
+<blockquote>Checklist for validation before archiving ADR</blockquote>
 <hr>
-<h2 id="pr-requisitos-de-arquivamento">Pré-requisitos de Arquivamento</h2>
-<h3 id="adr-principal">ADR Principal</h3>
+<h2 id="prerequisites-for-archiving">Prerequisites for Archiving</h2>
+<h3 id="primary-adr">Primary ADR</h3>
 <ul>
-<li>[ ] Status é "Implementado" ou "Aceito"</li>
-<li>[ ] ADR tem data de arquivamento</li>
-<li>[ ] Referências a BP, TODO, PI (se aplicável) atualizadas</li>
+<li>[ ] Status is "Implemented" or "Accepted"</li>
+<li>[ ] ADR has an archiving date</li>
+<li>[ ] References to BP, TODO, PI (if applicable) are up-to-date</li>
 </ul>
 <h3 id="blueprint-bp">Blueprint (BP)</h3>
 <ul>
-<li>[ ] BP existe: <code>ADR-XXX-BP.md</code></li>
-<li>[ ] Todas as fases marcadas como concluídas</li>
-<li>[ ] Critérios de aceitação atendidos</li>
+<li>[ ] BP exists: <code>ADR-XXX-BP.md</code></li>
+<li>[ ] All phases are marked as completed</li>
+<li>[ ] Acceptance criteria are met</li>
 </ul>
 <h3 id="todo">TODO</h3>
 <ul>
-<li>[ ] TODO existe: <code>ADR-XXX-TODO.md</code></li>
-<li>[ ] <strong>Zero tarefas pendentes</strong> (<code>[ ]</code> → todas <code>[x]</code>)</li>
-<li>[ ] Todos os comandos de validação passam</li>
+<li>[ ] TODO exists: <code>ADR-XXX-TODO.md</code></li>
+<li>[ ] <strong>Zero pending tasks</strong> (<code>[ ]</code> → all <code>[x]</code>)</li>
+<li>[ ] All validation commands pass</li>
 </ul>
-<h3 id="implementation-plan-pi--se-tier-23">Implementation Plan (PI) — se Tier 2/3</h3>
+<h3 id="implementation-plan-pi--if-tier-23">Implementation Plan (PI) — if Tier 2/3</h3>
 <ul>
-<li>[ ] PI existe: <code>ADR-XXX-PI.md</code></li>
-<li>[ ] Tasks microscópicas todas concluídas</li>
-<li>[ ] Testes TDD passando</li>
+<li>[ ] PI exists: <code>ADR-XXX-PI.md</code></li>
+<li>[ ] Microscopic tasks are all completed</li>
+<li>[ ] TDD tests are passing</li>
 </ul>
 <h3 id="execution-report-er">Execution Report (ER)</h3>
 <ul>
-<li>[ ] ER existe na raiz: <code>docs/adr/ADR-XXX-ER.md</code></li>
-<li>[ ] ER documenta: o que foi feito, testes, métricas, lições</li>
-<li>[ ] ER linkado no ADR principal</li>
+<li>[ ] ER exists in the root: <code>docs/adr/ADR-XXX-ER.md</code></li>
+<li>[ ] ER documents: what was done, tests, metrics, lessons</li>
+<li>[ ] ER is linked in the primary ADR</li>
 </ul>
 <hr>
-<h2 id="validao-de-execuo">Validação de Execução</h2>
+<h2 id="execution-validation">Execution Validation</h2>
 <ul>
-<li>[ ] <code>./scripts/archive-adrs.sh --dry-run</code> mostra ADR como "Ready to Archive"</li>
-<li>[ ] Nenhuma flag <code>ARCHIVED_MISTAKE_RETURN</code> para esta ADR</li>
-<li>[ ] Branch de trabalho mergeada para master</li>
-<li>[ ] Tag SemVer criada (se feature completa)</li>
+<li>[ ] <code>./scripts/archive-adrs.sh --dry-run</code> shows ADR as "Ready to Archive"</li>
+<li>[ ] No <code>ARCHIVED_MISTAKE_RETURN</code> flag for this ADR</li>
+<li>[ ] Work branch merged into master</li>
+<li>[ ] SemVer tag created (if feature is complete)</li>
 </ul>
 <hr>
-<h2 id="comando-de-arquivamento">Comando de Arquivamento</h2>
+<h2 id="archiving-command">Archiving Command</h2>
 <pre data-lang="bash"><code>python3 audit.py . --archive ADR-XXX
-# OU
+# OR
 ./scripts/archive-adrs.sh</code></pre>
 <hr>
-<h2 id="ps-arquivamento">Pós-Arquivamento</h2>
+<h2 id="post-archiving">Post-Archiving</h2>
 <ul>
-<li>[ ] <code>docs/adr/INDEX.md</code> atualizado (movido para "Archived ADRs")</li>
-<li>[ ] ADR + BP + TODO + PI movidos para <code>docs/adr/archive/</code></li>
-<li>[ ] ER permanece em <code>docs/adr/</code> (raiz)</li>
-<li>[ ] Deploy gh-pages sincronizado</li>
+<li>[ ] <code>docs/adr/INDEX.md</code> updated (moved to "Archived ADRs")</li>
+<li>[ ] ADR + BP + TODO + PI moved to <code>docs/adr/archive/</code></li>
+<li>[ ] ER remains in <code>docs/adr/</code> (root)</li>
+<li>[ ] gh-pages deploy synchronized</li>
 </ul>
 <hr>
-<h2 id="excees-no-arquivar">Exceções (Não Arquivar)</h2>
+<h2 id="exceptions-do-not-archive">Exceptions (Do Not Archive)</h2>
 <ul>
-<li>[ ] ADR com status "Proposto" ou "Em Progresso"</li>
-<li>[ ] ADR com TODO contendo <code>[ ]</code> (pendências)</li>
-<li>[ ] ADR sem ER na raiz (criar ER primeiro)</li>
-<li>[ ] ADR marcando débito técnico ativo (manter visível)</li>
+<li>[ ] ADR with status "Proposed" or "In Progress"</li>
+<li>[ ] ADR with TODO containing <code>[ ]</code> (pending tasks)</li>
+<li>[ ] ADR without ER in the root (create ER first)</li>
+<li>[ ] ADR marking active technical debt (keep visible)</li>
 </ul>
 <hr>
 <p><em>Template: <code>skills/adr-archive/templates/archive-checklist.md</code></em></p>

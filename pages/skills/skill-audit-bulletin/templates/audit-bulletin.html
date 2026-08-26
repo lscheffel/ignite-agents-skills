@@ -411,85 +411,85 @@
   </nav>
   <div class="content">
     <h1 id="skill-audit-bulletin--skillname-vversion">Skill Audit Bulletin — {skill_name} (v{version})</h1>
-<p><strong>Audit date:</strong> {date} <strong>Overall grade:</strong> {S/A/B/C/D/F} — {0-100}/100 <strong>One-line verdict:</strong> {frase única, sem hedging} <strong>Recommended action:</strong> {ADOTAR AS-IS / ADOTAR COM AJUSTES / REFATORAR / DEPRECIAR}</p>
+<p><strong>Audit date:</strong> {date} <strong>Overall grade:</strong> {S/A/B/C/D/F} — {0-100}/100 <strong>One-line verdict:</strong> {frase única, sem hedging} <strong>Recommended action:</strong> {ADOPT AS-IS / ADOPT WITH ADJUSTMENTS / REFACTOR / DEPRECATE}</p>
 <h2 id="1-executive-summary">1. Executive Summary</h2>
 <ul>
-<li>Ponto mais forte: {evidenciado}</li>
-<li>Ponto mais fraco: {evidenciado}</li>
-<li>Principal risco se implantada sem alteração: {1 frase}</li>
-<li>Esforço para alcançar a próxima faixa de nota: {BAIXO / MÉDIO / ALTO}</li>
+<li>Strongest point: {evidenciado}</li>
+<li>Weakest point: {evidenciado}</li>
+<li>Principal risk if implemented without changes: {1 sentence}</li>
+<li>Effort to reach the next grade level: {LOW / MEDIUM / HIGH}</li>
 </ul>
-<h2 id="2-compliance-estrutural-e-metadata">2. Compliance Estrutural e Metadata</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Status</th><th>Comentário</th></tr><tr><td>name</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>description</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>version</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>tags</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>related_skills</td><td>✅/⚠️/❌</td><td></td></tr></table></div>
-<h2 id="3-anlise-semntica-de-triggering">3. Análise Semântica de Triggering</h2>
+<h2 id="2-compliance-structural-and-metadata">2. Compliance Structural and Metadata</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Status</th><th>Comment</th></tr><tr><td>name</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>description</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>version</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>tags</td><td>✅/⚠️/❌</td><td></td></tr><tr><td>related_skills</td><td>✅/⚠️/❌</td><td></td></tr></table></div>
+<h2 id="3-semantic-analysis-of-triggering">3. Semantic Analysis of Triggering</h2>
 <ul>
-<li>Score da description: {0-10}</li>
-<li>Lacunas de cobertura de keywords: {lista + frase de exemplo}</li>
-<li>Risco de colisão com related/sibling skills: {lista + likelihood}</li>
-<li>Cenário(s) de falso positivo: {exemplo concreto}</li>
-<li>Cenário(s) de falso negativo: {exemplo concreto}</li>
+<li>Description score: {0-10}</li>
+<li>Keyword coverage gaps: {list + example sentence}</li>
+<li>Risk of collision with related/sibling skills: {list + likelihood}</li>
+<li>False positive scenario(s): {concrete example}</li>
+<li>False negative scenario(s): {concrete example}</li>
 </ul>
-<h2 id="4-aplicabilidade-e-escopo">4. Aplicabilidade e Escopo</h2>
+<h2 id="4-applicability-and-scope">4. Applicability and Scope</h2>
 <ul>
-<li>Score de clareza de fronteira: {0-10}</li>
-<li>Solidez da decision tree: {evidenciado}</li>
-<li>Sobreposição/conflito com related_skills: {evidenciado}</li>
+<li>Clarity of border score: {0-10}</li>
+<li>Decision tree solidity: {evidenciado}</li>
+<li>Overlap/conflict with related_skills: {evidenciado}</li>
 </ul>
-<h2 id="5-profundidade-e-cobertura-de-workflow">5. Profundidade e Cobertura de Workflow</h2>
+<h2 id="5-depth-and-coverage-of-workflow">5. Depth and Coverage of Workflow</h2>
 <ul>
-<li>Avaliação fase a fase: {tabela ou lista}</li>
-<li>Qualidade dos checkpoints: {evidenciado}</li>
-<li>Estimativa de cobertura de edge cases: {%} — faltando: {lista}</li>
+<li>Phase-by-phase evaluation: {table or list}</li>
+<li>Checkpoint quality: {evidenciado}</li>
+<li>Estimated coverage of edge cases: {%} — missing: {list}</li>
 </ul>
-<h2 id="6-correo-tcnica-e-robustez">6. Correção Técnica e Robustez</h2>
+<h2 id="6-technical-correction-and-robustness">6. Technical Correction and Robustness</h2>
 <ul>
-<li>Exemplos/comandos validados: {lista com pass/fail + justificativa}</li>
-<li>Issues de correção encontrados: {evidenciado, com referência de seção}</li>
+<li>Validated examples/commands: {list with pass/fail + justification}</li>
+<li>Correction issues found: {evidenciado, with reference to section}</li>
 </ul>
-<h2 id="7-universalidade-e-portabilidade">7. Universalidade e Portabilidade</h2>
+<h2 id="7-universality-and-portability">7. Universality and Portability</h2>
 <ul>
-<li>Lock-ins de ambiente: {lista}</li>
-<li>Comportamento fora do ambiente assumido: {gracioso / falha silenciosa / desconhecido}</li>
+<li>Environment lock-ins: {list}</li>
+<li>Behavior outside the assumed environment: {amusing / silent failure / unknown}</li>
 </ul>
-<h2 id="8-manutenibilidade">8. Manutenibilidade</h2>
+<h2 id="8-maintainability">8. Maintainability</h2>
 <ul>
-<li>Disciplina de versionamento: {evidenciado}</li>
-<li>Modularidade (seções atualizáveis isoladamente?): {evidenciado}</li>
-<li>Risco de rot externo (horizonte de 12 meses): {lista + likelihood}</li>
+<li>Versioning discipline: {evidenciado}</li>
+<li>Modularity (sections updatable independently?): {evidenciado}</li>
+<li>Risk of external rot (12-month horizon): {list + likelihood}</li>
 </ul>
-<h2 id="9-ergonomia-para-o-agente-executor">9. Ergonomia para o Agente Executor</h2>
+<h2 id="9-ergonomics-for-the-executor-agent">9. Ergonomics for the Executor Agent</h2>
 <ul>
-<li>Acionabilidade sem inferência: {0-10}</li>
-<li>Adequação de densidade/tamanho: {evidenciado}</li>
-<li>Confiança excessiva no julgamento do modelo executor: {evidenciado}</li>
+<li>Actionability without inference: {0-10}</li>
+<li>Adequacy of density/size: {evidenciado}</li>
+<li>Excessive trust in the executor model's judgment: {evidenciado}</li>
 </ul>
-<h2 id="10-matriz-de-risco">10. Matriz de Risco</h2>
-<div class="table-wrapper"><table><tr><th>Risco</th><th>Likelihood</th><th>Impacto</th><th>Mitigação (ref)</th></tr><tr><td></td><td></td><td></td><td>→ ver §13</td></tr></table></div>
+<h2 id="10-risk-matrix">10. Risk Matrix</h2>
+<div class="table-wrapper"><table><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation (ref)</th></tr><tr><td></td><td></td><td></td><td>→ see §13</td></tr></table></div>
 <h2 id="11-pros">11. Pros</h2>
 <ul>
 <li>{bullet evidenciado}</li>
 </ul>
 <h2 id="12-cons">12. Cons</h2>
 <ul>
-<li>{bullet evidenciado} → mitigado em §13</li>
+<li>{bullet evidenciado} → mitigated in §13</li>
 </ul>
-<h2 id="13-mitigaes-e-recomendaes">13. Mitigações e Recomendações</h2>
+<h2 id="13-mitigations-and-recommendations">13. Mitigations and Recommendations</h2>
 <h3 id="quick-wins--1h">Quick wins (< 1h)</h3>
 <ul>
-<li>{edição concreta e específica}</li>
+<li>{concrete and specific edit}</li>
 </ul>
-<h3 id="mdio-estrutural-mas-escopado">Médio (estrutural mas escopado)</h3>
+<h3 id="medium-structurally-but-scoped">Medium (structurally but scoped)</h3>
 <ul>
-<li>{edição concreta e específica}</li>
+<li>{concrete and specific edit}</li>
 </ul>
-<h3 id="estrutural-nvel-de-redesign">Estrutural (nível de redesign)</h3>
+<h3 id="structural-redesign-level">Structural (redesign level)</h3>
 <ul>
-<li>{edição concreta e específica}</li>
+<li>{concrete and specific edit}</li>
 </ul>
 <h2 id="14-scoring-breakdown">14. Scoring Breakdown</h2>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Peso</th><th>Score (0-10)</th><th>Ponderado</th></tr><tr><td>Semantic Triggering Precision</td><td>20%</td><td></td><td></td></tr><tr><td>Aplicabilidade / Clareza de Fronteira</td><td>10%</td><td></td><td></td></tr><tr><td>Profundidade e Cobertura</td><td>15%</td><td></td><td></td></tr><tr><td>Correção Técnica</td><td>15%</td><td></td><td></td></tr><tr><td>Universalidade / Portabilidade</td><td>10%</td><td></td><td></td></tr><tr><td>Manutenibilidade</td><td>10%</td><td></td><td></td></tr><tr><td>Ergonomia do Agente Executor</td><td>10%</td><td></td><td></td></tr><tr><td>Perfil de Risco (invertido)</td><td>10%</td><td></td><td></td></tr><tr><td><strong>Total</strong></td><td>100%</td><td></td><td><strong>{X}/100</strong></td></tr></table></div>
-<h2 id="15-veredito-final">15. Veredito Final</h2>
-<p>{2-3 frases, diretas, sem hedging. Declarar explicitamente se esta skill é segura para auto-load em um registry de produção hoje.}</p>
+<div class="table-wrapper"><table><tr><th>Category</th><th>Weight</th><th>Score (0-10)</th><th>Weighted</th></tr><tr><td>Semantic Triggering Precision</td><td>20%</td><td></td><td></td></tr><tr><td>Applicability / Border Clarity</td><td>10%</td><td></td><td></td></tr><tr><td>Depth and Coverage</td><td>15%</td><td></td><td></td></tr><tr><td>Technical Correction</td><td>15%</td><td></td><td></td></tr><tr><td>Universality / Portability</td><td>10%</td><td></td><td></td></tr><tr><td>Maintainability</td><td>10%</td><td></td><td></td></tr><tr><td>Executor Agent Ergonomics</td><td>10%</td><td></td><td></td></tr><tr><td>Risk Profile (inverted)</td><td>10%</td><td></td><td></td></tr><tr><td><strong>Total</strong></td><td>100%</td><td></td><td><strong>{X}/100</strong></td></tr></table></div>
+<h2 id="15-final-verdict">15. Final Verdict</h2>
+<p>{2-3 sentences, direct, without hedging. Explicitly declare whether this skill is safe for auto-load in a production registry today.}</p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

@@ -411,26 +411,34 @@
   </nav>
   <div class="content">
     <hr>
-<p>implementation_status: PENDENTE ---</p>
+<p>id: ADR-{{id}} type: adr title: "{{title}}" created: {{date}} updated: {{date}} implementation_status: PENDING tier: 0</p>
+<h1 id="adr-simple-template">ADR Simple Template</h1>
+<hr>
 <h1 id="adr-id-title">ADR-{{id}}: {{title}}</h1>
+<blockquote>Tier 0 — ADR Light. Standalone by design: does not generate BP nor TODO. If this decision grows in scope, promote to Tier 1 (Trinity) instead of inflating this document.</blockquote>
 <h2 id="status">Status</h2>
 <p>{{status}}</p>
-<h2 id="data">Data</h2>
+<h2 id="date">Date</h2>
 <p>{{date}}</p>
-<h2 id="contexto">Contexto</h2>
+<h2 id="context">Context</h2>
 <p>{{context}}</p>
-<h2 id="deciso">Decisão</h2>
+<h2 id="decision">Decision</h2>
 <p>{{decision}}</p>
-<h2 id="consequncias">Consequências</h2>
-<h3 id="positivas">Positivas</h3>
+<h2 id="alternatives-considered">Alternatives Considered</h2>
+<ul>
+<li>{{alt_a_short}}</li>
+<li>{{alt_b_short}}</li>
+</ul>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
 <ul>
 <li>{{positive_1}}</li>
 </ul>
-<h3 id="negativas">Negativas</h3>
+<h3 id="negative">Negative</h3>
 <ul>
 <li>{{negative_1}}</li>
 </ul>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li>{{reference}}</li>
 </ul>

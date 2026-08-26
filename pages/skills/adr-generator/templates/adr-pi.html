@@ -411,60 +411,65 @@
   </nav>
   <div class="content">
     <hr>
-<p>id: ADR-XXX-PI type: pi title: Implementation Plan - [Título da Decisão] created: YYYY-MM-DD updated: YYYY-MM-DD adr_ref: ADR-XXX ---</p>
-<h1 id="adr-xxx-pi-implementation-plan---ttulo-da-deciso">ADR-XXX-PI: Implementation Plan - [Título da Decisão]</h1>
-<blockquote>Referência: <a href="./ADR-XXX.md">ADR-XXX</a> | <a href="./ADR-XXX-TODO.md">ADR-XXX-TODO</a></blockquote>
-<h2 id="1-viso-geral-overview">1. Visão Geral (Overview)</h2>
-<p>Breve sumário do objetivo técnico deste plano. O que o agente autônomo está prestes a codificar e por quê?</p>
-<h2 id="2-padres-de-aceitao-e-qualidade-quality-standards">2. Padrões de Aceitação e Qualidade (Quality Standards)</h2>
+<p>id: ADR-{{id}}-PI type: pi title: "Implementation Plan - {{title}}" created: {{date}} updated: {{date}} adr_ref: ADR-{{id}} ---</p>
+<h1 id="adr-id-pi-implementation-plan---title">ADR-{{id}}-PI: Implementation Plan - {{title}}</h1>
+<blockquote>Reference: <a href="./ADR-{{id}}.md">ADR-{{id}}</a> | <a href="./ADR-{{id}}-TODO.md">ADR-{{id}}-TODO</a>
+
+This artifact only exists in Tiers 2 and 3 (SOTA Quad / Direct Emergency).
+If you are in Tier 0 or 1, stop at the Tríade — do not generate this file.</blockquote>
+<h2 id="1-overview">1. Overview</h2>
+<p>Brief summary of the technical objective of this plan. What autonomous agent is about to code and why?</p>
+<h2 id="2-quality-standards">2. Quality Standards</h2>
 <ul>
-<li><strong>Test Coverage:</strong> Exigência de cobertura (ex: > 90% para a nova feature).</li>
-<li><strong>Linter/Typing:</strong> Padrão a ser respeitado (ex: Strict mypy, ruff).</li>
-<li><strong>Design Patterns:</strong> Padrões a serem aplicados (ex: Repository Pattern, Strategy).</li>
+<li><strong>Test Coverage:</strong> Coverage requirement (e.g., > 90% for the new feature).</li>
+<li><strong>Linter/Typing:</strong> Standard to be followed (e.g., Strict mypy, ruff).</li>
+<li><strong>Design Patterns:</strong> Patterns to be applied (e.g., Repository Pattern, Strategy).</li>
 </ul>
-<h2 id="3-plano-de-execuo-granular-tdd--step-by-step">3. Plano de Execução Granular (TDD & Step-by-Step)</h2>
-<p>A implementação deve ser dividida em passos lógicos, auto-contidos e validados por testes ANTES da implementação do código-fonte (TDD).</p>
-<h3 id="fase-abc-nome-da-fase">Fase [A/B/C]: [Nome da Fase]</h3>
-<h4 id="passo-xy-ttulo-do-passo---ex-criar-abstrao-de-repositrio">Passo [X.Y]: [Título do Passo - Ex: Criar Abstração de Repositório]</h4>
-<p><strong>1. TDD Specs (O que testar primeiro):</strong></p>
+<h2 id="3-granular-execution-plan-tdd--step-by-step">3. Granular Execution Plan (TDD & Step-by-Step)</h2>
+<p>Implementation must be divided into logical, self-contained steps, validated by tests before implementing the source code (TDD).</p>
+<h3 id="phase-abc-phase-name">Phase [A/B/C]: [Phase Name]</h3>
+<h4 id="step-xy-step-title---eg-create-repository-abstraction">Step [X.Y]: [Step Title - e.g., Create Repository Abstraction]</h4>
+<p><strong>1. TDD Specs (What to test first):</strong></p>
 <ul>
-<li><strong>Arquivo de Teste:</strong> <code>tests/caminho/para/test_arquivo.py</code></li>
-<li><strong>Mocks Necessários:</strong> Ex: Mock do banco de dados, Fixtures.</li>
-<li><strong>Asserções Esperadas:</strong> O que caracteriza o sucesso deste teste? (Ex: Deve levantar exceção X quando Y ocorrer).</li>
-<li><strong>Comando de Teste:</strong> <code>pytest tests/caminho/para/test_arquivo.py -v</code></li>
+<li><strong>Test File:</strong> <code>tests/path/to/test_file.py</code></li>
+<li><strong>Required Mocks:</strong> e.g., Mock database, Fixtures.</li>
+<li><strong>Expected Assertions:</strong> What characterizes the success of this test? (e.g., Must raise exception X when Y occurs).</li>
+<li><strong>Test Command:</strong> <code>pytest tests/path/to/test_file.py -v</code></li>
 </ul>
-<p><strong>2. Code Specs (Implementação da regra de negócio):</strong></p>
+<p><strong>2. Code Specs (Implementation of business rule):</strong></p>
 <ul>
-<li><strong>Arquivos Afetados:</strong> <code>src/caminho/para/arquivo.py</code></li>
-<li><strong>Assinaturas/Interfaces:</strong></li>
+<li><strong>Affected Files:</strong> <code>src/path/to/file.py</code></li>
+<li><strong>Signatures/Interfaces:</strong></li>
 </ul>
-<pre data-lang="python"><code>  class INomeDaInterface(Protocol):
-      async def metodo_x(self, param: str) -&gt; bool: ...</code></pre>
+<pre data-lang="python"><code>  class InterfaceName(Protocol):
+      async def method_x(self, param: str) -&gt; bool: ...</code></pre>
 <ul>
-<li><strong>Lógica e Constantes:</strong> Instruções precisas sobre como preencher a lógica.</li>
+<li><strong>Logic and Constants:</strong> Precise instructions on how to fill in the logic.</li>
 </ul>
-<p><strong>3. Integração e Comandos de Terminal:</strong></p>
+<p><strong>3. Integration and Terminal Commands:</strong></p>
 <ul>
-<li>Bibliotecas a instalar: <code>pip install lib-X</code></li>
-<li>Geração de types/migrations: <code>alembic revision --autogenerate -m "..."</code></li>
+<li>Libraries to install: <code>pip install lib-X</code></li>
+<li>Generation of types/migrations: <code>alembic revision --autogenerate -m "..."</code></li>
 </ul>
-<p><strong>4. Edge Cases e Rollback (Prevenção de Falhas):</strong></p>
+<p><strong>4. Edge Cases and Rollback (Failure Prevention):</strong></p>
 <ul>
-<li>O que o agente deve fazer se a biblioteca X não estiver na versão correta?</li>
-<li>O que fazer se o teste falhar por falta de dependência circular? (Plano de Rollback / Fix).</li>
+<li>What should the agent do if library X is not in the correct version?</li>
+<li>What to do if the test fails due to a circular dependency? (Rollback/Fix Plan).</li>
 </ul>
 <hr>
-<p><em>(Repetir a estrutura de "Passo X.Y" para cada micro-tarefa da fase correspondente no arquivo TODO).</em></p>
-<h2 id="4-validao-contnua-continuous-validation">4. Validação Contínua (Continuous Validation)</h2>
-<p>Comandos exatos que o agente deve rodar no terminal para validar que o contrato de execução inteiro (build, lint, test) não foi quebrado após a conclusão de todos os passos:</p>
+<p><em>(Repeat the "Step X.Y" structure for each micro-task in the corresponding phase in the TODO file. As in the TODO, the number of Phases and Steps is elastic — follow the real scope, not a fixed count.)</em></p>
+<h2 id="4-continuous-validation">4. Continuous Validation</h2>
+<p>Exact commands that the agent must run in the terminal to validate that the entire execution contract (build, lint, test) has not been broken after completing all steps:</p>
 <pre data-lang="bash"><code># 1. Typecheck
 mypy src/
 
 # 2. Linting
 ruff check src/
 
-# 3. Test Suite da Feature
-pytest tests/caminho/da/feature/</code></pre>
+# 3. Feature Test Suite
+pytest tests/path/to/feature/</code></pre>
+<h2 id="5-handoff-for-closure">5. Handoff for Closure</h2>
+<p>After completing all steps and Continuous Validation passes, this PI is ready to turn into an input for the Evidence Record (ER) generated by <code>implementation</code> or <code>adr-archive</code> — do not close the Decision Set by marking the TODO as completed (see Phase 5 of the SKILL.md in the adr-generator).</p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

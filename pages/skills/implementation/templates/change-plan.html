@@ -411,60 +411,60 @@
   </nav>
   <div class="content">
     <h1 id="change-plan">Change Plan</h1>
-<blockquote>Plano interno de execução construído a partir da análise de dependências do TODO.</blockquote>
+<blockquote>Internal execution plan built from the analysis of dependencies of the TODO.</blockquote>
 <hr>
-<h2 id="identificao">Identificação</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>ADR</td><td>{{adr_path}}</td></tr><tr><td>Data de geração</td><td>{{date}}</td></tr><tr><td>Total de tarefas</td><td>{{total_tasks}}</td></tr><tr><td>Estimativa total</td><td>{{total_estimate}}</td></tr></table></div>
+<h2 id="identification">Identification</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>ADR</td><td>{{adr_path}}</td></tr><tr><td>Date of generation</td><td>{{date}}</td></tr><tr><td>Total tasks</td><td>{{total_tasks}}</td></tr><tr><td>Total estimate</td><td>{{total_estimate}}</td></tr></table></div>
 <hr>
-<h2 id="dag-de-execuo">DAG de Execução</h2>
+<h2 id="execution-dag">Execution DAG</h2>
 <pre data-lang="mermaid"><code>graph LR
 {{#each dag_nodes}}
     {{id}}[{{label}}]{{#if edges}} --&gt; {{target}}{{/if}}
 {{/each}}</code></pre>
-<h3 id="legenda">Legenda</h3>
-<div class="table-wrapper"><table><tr><th>Cor</th><th>Significado</th></tr><tr><td>⬜</td><td>Pendente</td></tr><tr><td>🔄</td><td>Em andamento</td></tr><tr><td>✅</td><td>Concluído</td></tr><tr><td>❌</td><td>Bloqueado</td></tr></table></div>
+<h3 id="legend">Legend</h3>
+<div class="table-wrapper"><table><tr><th>Color</th><th>Meaning</th></tr><tr><td>⬜</td><td>Pending</td></tr><tr><td>🔄</td><td>In progress</td></tr><tr><td>✅</td><td>Completed</td></tr><tr><td>❌</td><td>Blocked</td></tr></table></div>
 <hr>
-<h2 id="ordem-de-execuo">Ordem de Execução</h2>
-<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Dependências</th><th>Tempo Est.</th></tr></table></div>
+<h2 id="execution-order">Execution Order</h2>
+<div class="table-wrapper"><table><tr><th>Phase</th><th>Tasks</th><th>Dependencies</th><th>Estimated Time</th></tr></table></div>
 <p>{{#each phases}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{tasks}}</th><th>{{dependencies}}</th><th>{{estimate}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="tarefas-detalhadas">Tarefas Detalhadas</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Estado</th><th>Dependências</th><th>Prioridade</th><th>Estimativa</th><th>Arquivos</th></tr></table></div>
+<h2 id="detailed-tasks">Detailed Tasks</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Task</th><th>Status</th><th>Dependencies</th><th>Priority</th><th>Estimate</th><th>Files</th></tr></table></div>
 <p>{{#each tasks}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{name}}</th><th>{{status}}</th><th>{{deps}}</th><th>{{priority}}</th><th>{{estimate}}</th><th>{{files}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="tarefas-paralelizveis">Tarefas Paralelizáveis</h2>
-<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas que podem rodar em paralelo</th></tr></table></div>
+<h2 id="parallelizable-tasks">Parallelizable Tasks</h2>
+<div class="table-wrapper"><table><tr><th>Phase</th><th>Tasks that can run in parallel</th></tr></table></div>
 <p>{{#each parallel_tasks}}</p>
 <div class="table-wrapper"><table><tr><th>{{phase}}</th><th>{{tasks}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="pontos-de-verificao">Pontos de Verificação</h2>
-<div class="table-wrapper"><table><tr><th>Após Tarefa</th><th>Verificar</th><th>Critério</th></tr></table></div>
+<h2 id="checkpoints">Checkpoints</h2>
+<div class="table-wrapper"><table><tr><th>After Task</th><th>Verify</th><th>Criterion</th></tr></table></div>
 <p>{{#each checkpoints}}</p>
 <div class="table-wrapper"><table><tr><th>{{after_task}}</th><th>{{check}}</th><th>{{criterion}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="estimativa-detalhada">Estimativa Detalhada</h2>
-<div class="table-wrapper"><table><tr><th>Componente</th><th>Tempo Est.</th><th>Notas</th></tr><tr><td>Tarefas de infraestrutura</td><td>{{infra_estimate}}</td><td>Criação de estrutura</td></tr><tr><td>Tarefas de implementação</td><td>{{impl_estimate}}</td><td>Código principal</td></tr><tr><td>Tarefas de validação</td><td>{{validation_estimate}}</td><td>Testes e verificação</td></tr><tr><td>Tarefas de documentação</td><td>{{docs_estimate}}</td><td>Atualização de docs</td></tr><tr><td>Buffer (20%)</td><td>{{buffer}}</td><td>Imprevistos</td></tr><tr><td><strong>Total</strong></td><td><strong>{{total}}</strong></td><td></td></tr></table></div>
+<h2 id="detailed-estimate">Detailed Estimate</h2>
+<div class="table-wrapper"><table><tr><th>Component</th><th>Estimated Time</th><th>Notes</th></tr><tr><td>Infrastructure tasks</td><td>{{infra_estimate}}</td><td>Creating structure</td></tr><tr><td>Implementation tasks</td><td>{{impl_estimate}}</td><td>Main code</td></tr><tr><td>Validation tasks</td><td>{{validation_estimate}}</td><td>Tests and verification</td></tr><tr><td>Documentation tasks</td><td>{{docs_estimate}}</td><td>Updating docs</td></tr><tr><td>Buffer (20%)</td><td>{{buffer}}</td><td>Unforeseen events</td></tr><tr><td><strong>Total</strong></td><td><strong>{{total}}</strong></td><td></td></tr></table></div>
 <hr>
-<h2 id="riscos-do-plano">Riscos do Plano</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Risco</th><th>Impacto no Plano</th><th>Mitigação</th></tr></table></div>
+<h2 id="plan-risks">Plan Risks</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Risk</th><th>Impact on Plan</th><th>Mitigation</th></tr></table></div>
 <p>{{#each plan_risks}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{risk}}</th><th>{{impact}}</th><th>{{mitigation}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="validao-do-plano">Validação do Plano</h2>
+<h2 id="plan-validation">Plan Validation</h2>
 <ul>
-<li>[ ] DAG construído sem ciclos</li>
-<li>[ ] Todas as tarefas têm dependências definidas</li>
-<li>[ ] Estimativas somam ao total esperado</li>
-<li>[ ] Tarefas paralelizáveis são realmente independentes</li>
-<li>[ ] Pontos de verificação cobrem tarefas críticas</li>
-<li>[ ] Riscos do plano documentados</li>
+<li>[ ] DAG constructed without cycles</li>
+<li>[ ] All tasks have defined dependencies</li>
+<li>[ ] Estimates sum to the expected total</li>
+<li>[ ] Parallelizable tasks are truly independent</li>
+<li>[ ] Checkpoints cover critical tasks</li>
+<li>[ ] Plan risks are documented</li>
 </ul>
   </div>
 <footer>

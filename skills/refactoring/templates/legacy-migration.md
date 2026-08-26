@@ -1,132 +1,132 @@
-# Plano de Migração de Legado
+# Legacy Migration Plan
 
-## Visão Geral
+## Overview
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Sistema Legado | {legacy-system-name} |
-| Responsável | {your-name} |
-| Data de Início | {start-date} |
-| Data Prevista de Conclusão | {target-date} |
-| Status | Planejada/Em andamento/Concluída |
+| Legacy System | {legacy-system-name} |
+| Responsible | {your-name} |
+| Start Date | {start-date} |
+| Target Completion Date | {target-date} |
+| Status | Planned/In Progress/Completed |
 
-## Contexto
+## Context
 
-### Por que migrar?
-- {reason 1: manutenção difícil}
-- {reason 2: dependências desatualizadas}
-- {reason 3: performance inadequada}
+### Why Migrate?
+- {reason 1: difficult maintenance}
+- {reason 2: outdated dependencies}
+- {reason 3: inadequate performance}
 
-### Dependências do Sistema
+### System Dependencies
 - {service 1}: {description}
 - {service 2}: {description}
 - {database}: {type and version}
 
-## Estratégia de Migração
+## Migration Strategy
 
-### Abordagem: Strangler Fig
+### Approach: Strangler Fig
 
 ```
-Fase 1: Criar abstração
+Phase 1: Create Abstraction
 ┌─────────────────────────┐
 │  API Gateway / Facade   │
 ├─────────────┬───────────┤
-│   Legado    │  Novo     │
+│   Legacy    │  New     │
 │  (100%)     │  (0%)     │
 └─────────────┴───────────┘
 
-Fase 2: Migrar módulo a módulo
+Phase 2: Migrate Module by Module
 ┌─────────────────────────┐
 │  API Gateway / Facade   │
 ├─────────────┬───────────┤
-│   Legado    │  Novo     │
+│   Legacy    │  New     │
 │  (70%)      │  (30%)    │
 └─────────────┴───────────┘
 
-Fase 3: Completar migração
+Phase 3: Complete Migration
 ┌─────────────────────────┐
 │  API Gateway / Facade   │
 ├─────────────┬───────────┤
-│   Legado    │  Novo     │
+│   Legacy    │  New     │
 │  (0%)       │  (100%)   │
 └─────────────┴───────────┘
 ```
 
-## Fases de Migração
+## Migration Phases
 
-### Fase 1: Preparação
+### Phase 1: Preparation
 
-**Duração estimada:** {weeks}
+**Estimated Duration:** {weeks}
 
-- [ ] Mapear todas as rotas/endpoints do legado
-- [ ] Identificar dependências externas
-- [ ] Criar testes de caracterização
-- [ ] Configurar ambiente de desenvolvimento para novo sistema
-- [ ] Definir interface de migração
+- [ ] Map all legacy routes/endpoints
+- [ ] Identify external dependencies
+- [ ] Create characterization tests
+- [ ] Configure development environment for new system
+- [ ] Define migration interface
 
-### Fase 2: Módulo {module-1}
+### Phase 2: Module {module-1}
 
-**Duração estimada:** {weeks}
+**Estimated Duration:** {weeks}
 
-- [ ] Extrair interface do módulo
-- [ ] Implementar novo módulo
-- [ ] Criar testes para novo módulo
-- [ ] Configurar feature flag
-- [ ] Redirecionar 10% do tráfego
-- [ ] Monitorar por {days} dias
-- [ ] Redirecionar 100% do tráfego
-- [ ] Remover código legado do módulo
+- [ ] Extract interface from module
+- [ ] Implement new module
+- [ ] Create tests for new module
+- [ ] Configure feature flag
+- [ ] Redirect 10% of traffic
+- [ ] Monitor for {days} days
+- [ ] Redirect 100% of traffic
+- [ ] Remove legacy code from module
 
-### Fase 3: Módulo {module-2}
+### Phase 3: Module {module-2}
 
-**Duração estimada:** {weeks}
+**Estimated Duration:** {weeks}
 
-- [ ] Extrair interface do módulo
-- [ ] Implementar novo módulo
-- [ ] Criar testes para novo módulo
-- [ ] Configurar feature flag
-- [ ] Redirecionar 10% do tráfego
-- [ ] Monitorar por {days} dias
-- [ ] Redirecionar 100% do tráfego
-- [ ] Remover código legado do módulo
+- [ ] Extract interface from module
+- [ ] Implement new module
+- [ ] Create tests for new module
+- [ ] Configure feature flag
+- [ ] Redirect 10% of traffic
+- [ ] Monitor for {days} days
+- [ ] Redirect 100% of traffic
+- [ ] Remove legacy code from module
 
-### Fase 4: Limpeza
+### Phase 4: Cleanup
 
-**Duração estimada:** {weeks}
+**Estimated Duration:** {weeks}
 
-- [ ] Remover código legado restante
-- [ ] Remover dependências legadas
-- [ ] Atualizar documentação
-- [ ] Remover feature flags
-- [ ] Fechar issues de migração
+- [ ] Remove remaining legacy code
+- [ ] Remove legacy dependencies
+- [ ] Update documentation
+- [ ] Remove feature flags
+- [ ] Close migration issues
 
-## Riscos e Mitigações
+## Risks and Mitigations
 
-| Risco | Impacto | Probabilidade | Mitigação |
+| Risk | Impact | Probability | Mitigation |
 |-------|---------|---------------|-----------|
-| Dados inconsistentes | Alto | Média | Sincronização durante migração |
-| Performance degradation | Médio | Baixa | Benchmark antes/depois |
-| Perda de funcionalidade | Alto | Baixa | Testes de caracterização completos |
-| Resistência da equipe | Médio | Média | Treinamento e documentação |
+| Inconsistent Data | High | Medium | Synchronization during migration |
+| Performance Degradation | Medium | Low | Benchmark before/after |
+| Loss of Functionality | High | Low | Complete characterization tests |
+| Team Resistance | Medium | Medium | Training and documentation |
 
-## Critérios de Sucesso
+## Success Criteria
 
-- [ ] Todos os módulos migrados
-- [ ] Testes automatizados cobrindo novo sistema
-- [ ] Performance igual ou melhor que legado
-- [ ] Zero regressões em produção
-- [ ] Documentação atualizada
-- [ ] Time treinado no novo sistema
+- [ ] All modules migrated
+- [ ] Automated tests covering new system
+- [ ] Performance equal to or better than legacy
+- [ ] Zero regressions in production
+- [ ] Updated documentation
+- [ ] Team trained on new system
 
 ## Rollback Plan
 
-1. Desativar feature flag para novo módulo
-2. Redirecionar tráfego todo para legado
-3. Investigar causa da falha
-4. Corrigir e tentar novamente
+1. Disable feature flag for new module
+2. Redirect all traffic to legacy
+3. Investigate cause of failure
+4. Correct and try again
 
-## Referências
+## References
 
 - [Strangler Fig Pattern](https://martinfowler.com/bliki/StranglerFigApplication.html)
 - [Branch by Abstraction](https://martinfowler.com/bliki/branchByAbstraction.html)
-- `refactoring` - para técnicas de refatoração incremental
+- `refactoring` - for incremental refactoring techniques

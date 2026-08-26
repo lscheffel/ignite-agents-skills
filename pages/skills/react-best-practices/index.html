@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>react-best-practices — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; react-best-practices</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: react-best-practices version: 1.0.0 description: 'Use when the user needs React-specific patterns — hooks, component composition, Server Components, error boundaries, rendering optimization, and testing strategies. Triggers: hooks design, component composition, Server vs Client component decision, error boundary placement, context optimization, rendering performance.' domain: frontend-ux triggers:</p>
+<ul>
+<li>react-best-practices</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>react-best-practices</li>
+<li>frontend-ux</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="react-best-practices">React Best Practices</h1>
+<h2 id="overview">Overview</h2>
+<p>Apply modern React patterns to build maintainable, performant, and testable applications. This skill covers React 18/19 features including Server Components, hooks best practices, component composition, error boundaries, Suspense, context optimization, and rendering performance. It complements the senior-frontend skill with React-specific depth.</p>
+<p><strong>Announce at start:</strong> "I'm using the react-best-practices skill for React-specific patterns."</p>
+<hr>
+<h2 id="phase-1-analyze-component-requirements">Phase 1: Analyze Component Requirements</h2>
+<p><strong>Goal:</strong> Understand the component's responsibility and data requirements before coding.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Identify the component's single responsibility</li>
+<li>Determine data requirements (server vs client data)</li>
+<li>Choose Server Component (default) or Client Component</li>
+<li>Identify state management needs</li>
+<li>Plan error and loading states</li>
+</ol>
+<h3 id="server-vs-client-decision-table">Server vs Client Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Need</th><th>Component Type</th><th>Reason</th></tr><tr><td>Direct data fetching (DB, API)</td><td>Server (default)</td><td>No client JS, faster</td></tr><tr><td>Event handlers (onClick, onChange)</td><td>Client (<code>'use client'</code>)</td><td>Needs browser interactivity</td></tr><tr><td>useState / useReducer</td><td>Client</td><td>State requires client runtime</td></tr><tr><td>useEffect / useLayoutEffect</td><td>Client</td><td>Side effects require client</td></tr><tr><td>Browser APIs (window, localStorage)</td><td>Client</td><td>Server has no browser</td></tr><tr><td>Third-party libs using client features</td><td>Client</td><td>Library requires client</td></tr><tr><td>No interactivity needed</td><td>Server (default)</td><td>Smaller bundle, faster</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] Component responsibility is defined (single purpose)</li>
+<li>[ ] Server vs Client decision is made with rationale</li>
+<li>[ ] Data requirements are mapped</li>
+</ul>
+<hr>
+<h2 id="phase-2-implement-with-appropriate-patterns">Phase 2: Implement with Appropriate Patterns</h2>
+<p><strong>Goal:</strong> Apply the correct React patterns for the component's needs.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Apply appropriate composition pattern</li>
+<li>Implement hooks correctly</li>
+<li>Add error boundaries and Suspense</li>
+<li>Optimize rendering where profiling shows need</li>
+<li>Write tests that verify behavior</li>
+</ol>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] Patterns match the component's actual needs</li>
+<li>[ ] No unnecessary complexity (no premature optimization)</li>
+<li>[ ] Tests cover user-visible behavior</li>
+</ul>
+<hr>
+<h2 id="phase-3-test-and-verify">Phase 3: Test and Verify</h2>
+<p><strong>Goal:</strong> Verify component behavior through tests.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Write tests using accessible queries</li>
+<li>Test user interactions and outcomes</li>
+<li>Test error and loading states</li>
+<li>Verify accessibility</li>
+</ol>
+<h3 id="query-priority-react-testing-library">Query Priority (React Testing Library)</h3>
+<div class="table-wrapper"><table><tr><th>Priority</th><th>Query</th><th>Use For</th></tr><tr><td>1st</td><td><code>getByRole</code></td><td>Any element with ARIA role</td></tr><tr><td>2nd</td><td><code>getByLabelText</code></td><td>Form fields</td></tr><tr><td>3rd</td><td><code>getByPlaceholderText</code></td><td>Fields without labels</td></tr><tr><td>4th</td><td><code>getByText</code></td><td>Non-interactive elements</td></tr><tr><td>Last</td><td><code>getByTestId</code></td><td>When nothing else works</td></tr></table></div>
+<h3 id="stop--testing-complete-when">STOP — Testing complete when:</h3>
+<ul>
+<li>[ ] User interactions produce expected outcomes</li>
+<li>[ ] Error states are tested</li>
+<li>[ ] Accessibility checks pass</li>
+</ul>
+<hr>
+<h2 id="hooks-best-practices">Hooks Best Practices</h2>
+<h3 id="usestate">useState</h3>
+<pre data-lang="typescript"><code>// Functional updates for state based on previous state
+setCount(prev =&gt; prev + 1);
+
+// Lazy initialization for expensive initial values
+const [data, setData] = useState(() =&gt; computeExpensiveInitialValue());
+
+// Group related state
+const [form, setForm] = useState({ name: &#x27;&#x27;, email: &#x27;&#x27;, role: &#x27;user&#x27; });</code></pre>
+<h3 id="useeffect">useEffect</h3>
+<h4 id="dependency-array-rules">Dependency Array Rules</h4>
+<ul>
+<li>Include ALL values from component scope that change over time</li>
+<li>Functions inside effect should be defined inside effect or wrapped in useCallback</li>
+<li>Never lie about dependencies (ESLint: <code>react-hooks/exhaustive-deps</code>)</li>
+</ul>
+<h4 id="cleanup-pattern">Cleanup Pattern</h4>
+<pre data-lang="typescript"><code>useEffect(() =&gt; {
+  const controller = new AbortController();
+  async function fetchData() {
+    try {
+      const res = await fetch(url, { signal: controller.signal });
+      const data = await res.json();
+      setData(data);
+    } catch (e) {
+      if (e.name !== &#x27;AbortError&#x27;) setError(e);
+    }
+  }
+  fetchData();
+  return () =&gt; controller.abort();
+}, [url]);</code></pre>
+<h4 id="when-not-to-use-useeffect">When NOT to Use useEffect</h4>
+<div class="table-wrapper"><table><tr><th>Instead of useEffect for...</th><th>Use This</th></tr><tr><td>Data fetching</td><td>React Query, SWR, or Server Components</td></tr><tr><td>Transforming data</td><td>Compute during render</td></tr><tr><td>User events</td><td>Event handlers</td></tr><tr><td>Syncing external stores</td><td><code>useSyncExternalStore</code></td></tr></table></div>
+<h3 id="custom-hooks-rules">Custom Hooks Rules</h3>
+<ul>
+<li>Name starts with <code>use</code></li>
+<li>Encapsulate reusable stateful logic</li>
+<li>One hook per concern</li>
+<li>Return object (not array) for > 2 values</li>
+</ul>
+<pre data-lang="typescript"><code>function useDebounce&lt;T&gt;(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() =&gt; {
+    const timer = setTimeout(() =&gt; setDebouncedValue(value), delay);
+    return () =&gt; clearTimeout(timer);
+  }, [value, delay]);
+  return debouncedValue;
+}</code></pre>
+<hr>
+<h2 id="component-composition-patterns">Component Composition Patterns</h2>
+<h3 id="compound-components">Compound Components</h3>
+<pre data-lang="typescript"><code>function Tabs({ children, defaultValue }: TabsProps) {
+  const [activeTab, setActiveTab] = useState(defaultValue);
+  return (
+    &lt;TabsContext.Provider value={{ activeTab, setActiveTab }}&gt;
+      &lt;div role=&quot;tablist&quot;&gt;{children}&lt;/div&gt;
+    &lt;/TabsContext.Provider&gt;
+  );
+}
+
+Tabs.Tab = function Tab({ value, children }: TabProps) {
+  const { activeTab, setActiveTab } = useTabsContext();
+  return (
+    &lt;button role=&quot;tab&quot; aria-selected={activeTab === value} onClick={() =&gt; setActiveTab(value)}&gt;
+      {children}
+    &lt;/button&gt;
+  );
+};
+
+Tabs.Panel = function Panel({ value, children }: PanelProps) {
+  const { activeTab } = useTabsContext();
+  if (activeTab !== value) return null;
+  return &lt;div role=&quot;tabpanel&quot;&gt;{children}&lt;/div&gt;;
+};</code></pre>
+<h3 id="composition-decision-table">Composition Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>Use When</th><th>Example</th></tr><tr><td>Compound Components</td><td>Related components sharing implicit state</td><td>Tabs, Accordion, Menu</td></tr><tr><td>Slots (Children)</td><td>Complex content layout</td><td>Card with Header/Body/Footer</td></tr><tr><td>Render Props</td><td>Child needs parent data for flexible rendering</td><td>DataFetcher with custom render</td></tr><tr><td>Higher-Order Component</td><td>Cross-cutting concerns (legacy)</td><td>withAuth, withTheme</td></tr><tr><td>Custom Hook</td><td>Reusable stateful logic without UI</td><td>useDebounce, useLocalStorage</td></tr></table></div>
+<h3 id="slots-pattern">Slots Pattern</h3>
+<pre data-lang="typescript"><code>// Prefer composition over props for complex content
+// Bad
+&lt;Card title=&quot;Hello&quot; subtitle=&quot;World&quot; icon={&lt;Star /&gt;} actions={&lt;Button&gt;Edit&lt;/Button&gt;} /&gt;
+
+// Good
+&lt;Card&gt;
+  &lt;Card.Header&gt;
+    &lt;Card.Icon&gt;&lt;Star /&gt;&lt;/Card.Icon&gt;
+    &lt;Card.Title&gt;Hello&lt;/Card.Title&gt;
+  &lt;/Card.Header&gt;
+  &lt;Card.Actions&gt;
+    &lt;Button&gt;Edit&lt;/Button&gt;
+  &lt;/Card.Actions&gt;
+&lt;/Card&gt;</code></pre>
+<hr>
+<h2 id="error-boundaries">Error Boundaries</h2>
+<h3 id="placement-strategy-decision-table">Placement Strategy Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Level</th><th>Purpose</th><th>Example</th></tr><tr><td>Route level</td><td>Catch page-level crashes</td><td><code>error.tsx</code> in Next.js</td></tr><tr><td>Feature level</td><td>Isolate feature failures</td><td>Wrap each major section</td></tr><tr><td>Data level</td><td>Wrap async data components</td><td>Around Suspense boundaries</td></tr><tr><td>Never leaf level</td><td>Too granular, adds noise</td><td>Do not wrap individual buttons</td></tr></table></div>
+<hr>
+<h2 id="suspense">Suspense</h2>
+<pre data-lang="typescript"><code>// Nested Suspense for granular loading
+&lt;Suspense fallback={&lt;PageSkeleton /&gt;}&gt;
+  &lt;Header /&gt;
+  &lt;Suspense fallback={&lt;SidebarSkeleton /&gt;}&gt;
+    &lt;Sidebar /&gt;
+  &lt;/Suspense&gt;
+  &lt;Suspense fallback={&lt;ContentSkeleton /&gt;}&gt;
+    &lt;MainContent /&gt;
+  &lt;/Suspense&gt;
+&lt;/Suspense&gt;</code></pre>
+<hr>
+<h2 id="context-optimization">Context Optimization</h2>
+<h3 id="problem-context-causes-unnecessary-re-renders">Problem: Context causes unnecessary re-renders</h3>
+<h3 id="solution-decision-table">Solution Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Technique</th><th>Use When</th><th>Example</th></tr><tr><td>Split contexts by frequency</td><td>Some values update often, some rarely</td><td>ThemeContext (rare) vs UIStateContext (frequent)</td></tr><tr><td>Memoize context value</td><td>Provider re-renders with same data</td><td><code>useMemo(() => ({ state, dispatch }), [state])</code></td></tr><tr><td>Use selectors (Zustand/Jotai)</td><td>Need fine-grained subscriptions</td><td><code>useStore(state => state.user.name)</code></td></tr><tr><td>Lift state up</td><td>Only parent needs to re-render</td><td>Pass data as props to memoized children</td></tr></table></div>
+<hr>
+<h2 id="rendering-optimization">Rendering Optimization</h2>
+<h3 id="memoization-decision-table">Memoization Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Technique</th><th>Use When</th><th>Do NOT Use When</th></tr><tr><td><code>React.memo</code></td><td>Renders often with same props AND re-render is expensive</td><td>Props change every render</td></tr><tr><td><code>useMemo</code></td><td>Expensive computation OR referential equality for deps</td><td>Simple calculations</td></tr><tr><td><code>useCallback</code></td><td>Stable function ref for memoized children</td><td>Function not passed as prop</td></tr><tr><td>None (default)</td><td>Always start here</td><td>Premature optimization</td></tr></table></div>
+<p><strong>Rule:</strong> Profile BEFORE memoizing. Premature memoization is the most common React anti-pattern.</p>
+<h3 id="virtualization">Virtualization</h3>
+<p>For lists > 100 items:</p>
+<pre data-lang="typescript"><code>import { useVirtualizer } from &#x27;@tanstack/react-virtual&#x27;;</code></pre>
+<hr>
+<h2 id="server-component-rules">Server Component Rules</h2>
+<ul>
+<li>Cannot use hooks</li>
+<li>Cannot use browser APIs</li>
+<li>Cannot pass functions as props to Client Components</li>
+<li>CAN import and render Client Components</li>
+<li>CAN pass serializable data to Client Components</li>
+</ul>
+<pre data-lang="typescript"><code>// Server Component — fetches data directly
+async function UserProfile({ userId }: { userId: string }) {
+  const user = await db.user.findUnique({ where: { id: userId } });
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{user.name}&lt;/h1&gt;
+      &lt;UserActions userId={userId} /&gt; {/* Client Component child */}
+    &lt;/div&gt;
+  );
+}
+
+// Client Component — handles interactivity
+&#x27;use client&#x27;;
+function UserActions({ userId }: { userId: string }) {
+  const [isFollowing, setIsFollowing] = useState(false);
+  return &lt;Button onClick={() =&gt; toggleFollow(userId)}&gt;Follow&lt;/Button&gt;;
+}</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td><code>useEffect</code> for data fetching</td><td>Race conditions, no cache, no dedup</td><td>React Query or Server Components</td></tr><tr><td>Prop drilling > 2 levels</td><td>Tight coupling, maintenance pain</td><td>Composition, context, or Zustand</td></tr><tr><td>Storing derived state</td><td>State that can be computed is unnecessary state</td><td>Compute during render</td></tr><tr><td><code>useEffect</code> to sync state from props</td><td>Unnecessary effect, stale closures</td><td>Derive during render or use key prop</td></tr><tr><td>Monolithic components (> 200 lines)</td><td>Hard to read, test, maintain</td><td>Extract sub-components</td></tr><tr><td>Index as key for dynamic lists</td><td>Incorrect reconciliation, stale state</td><td>Stable unique ID</td></tr><tr><td>Direct DOM manipulation</td><td>Bypasses React reconciliation</td><td>Use refs sparingly, prefer state</td></tr><tr><td>Testing state values directly</td><td>Implementation detail, breaks on refactor</td><td>Test user-visible outcomes</td></tr><tr><td>Memoizing everything</td><td>Adds complexity, often slower</td><td>Profile first, optimize second</td></tr></table></div>
+<hr>
+<h2 id="documentation-lookup-context7">Documentation Lookup (Context7)</h2>
+<p>Use <code>mcp__context7__resolve-library-id</code> then <code>mcp__context7__query-docs</code> for up-to-date docs. Returned docs override memorized knowledge.</p>
+<ul>
+<li><code>react</code> — for hooks, context, suspense, server components, or React 19+ changes</li>
+<li><code>next.js</code> — for App Router patterns, data fetching, or server actions</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>senior-frontend</code></td><td>Frontend skill uses React patterns from this skill</td></tr><tr><td><code>testing-strategy</code></td><td>React testing follows the strategy pyramid</td></tr><tr><td><code>clean-code</code></td><td>Component code follows clean code principles</td></tr><tr><td><code>performance-optimization</code></td><td>React rendering optimization follows measurement methodology</td></tr><tr><td><code>webapp-testing</code></td><td>E2E tests validate React component behavior</td></tr><tr><td><code>code-review</code></td><td>Review checks for React anti-patterns</td></tr><tr><td><code>acceptance-testing</code></td><td>UI acceptance criteria drive component tests</td></tr></table></div>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Apply these patterns based on the specific React version, project structure, and team conventions. The principles are consistent, but implementation details may vary. Always profile before optimizing.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

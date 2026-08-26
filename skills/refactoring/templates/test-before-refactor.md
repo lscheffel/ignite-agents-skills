@@ -1,51 +1,51 @@
-# Testes Antes de Refatorar
+# Pre-Refactoring Tests
 
-## Visão Geral
+## Overview
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Módulo | {module-path} |
-| Responsável | {your-name} |
-| Data | {date} |
-| Status | Em andamento/Concluído |
+| Module | {module-path} |
+| Responsible | {your-name} |
+| Date | {date} |
+| Status | In Progress/Completed |
 
-## Contexto
+## Context
 
-### Código a ser refatorado
-- **Arquivo(s):** {file-paths}
-- **Função/Classe:** {function-or-class-name}
-- **Code Smell identificado:** {code-smell}
+### Code to be Refactored
+- **Files:** {file-paths}
+- **Function/Class:** {function-or-class-name}
+- **Identified Code Smell:** {code-smell}
 
-### Por que testar primeiro?
-- Código sem cobertura de testes
-- Refatoração sem safety net é arriscada
-- Testes documentam comportamento atual
+### Why Test First?
+- Code without test coverage
+- Refactoring without a safety net is risky
+- Tests document current behavior
 
-## Plano de Testes
+## Testing Plan
 
-### Testes de Caracterização
+### Characterization Tests
 
-Testes que documentam comportamento atual, sem validar se é "correto":
+Tests that document current behavior without validating if it's "correct":
 
 ```typescript
-// Caracterização - documentar comportamento existente
+// Characterization - document current behavior
 describe('{module-name} - Characterization', () => {
   it('should return X when input is Y', () => {
     // Arrange
-    const input = { /* dados reais do caso de uso */ };
+    const input = { /* actual usage data */ };
     
     // Act
     const result = functionUnderTest(input);
     
-    // Assert - documentar comportamento atual
+    // Assert - document current behavior
     expect(result).toBe({expected-output});
   });
 });
 ```
 
-### Testes de Unidade
+### Unit Tests
 
-Testes que validam lógica específica:
+Tests that validate specific logic:
 
 ```typescript
 describe('{module-name} - Unit', () => {
@@ -62,9 +62,9 @@ describe('{module-name} - Unit', () => {
 });
 ```
 
-### Testes de Integração
+### Integration Tests
 
-Testes que validam pontos de integração:
+Tests that validate integration points:
 
 ```typescript
 describe('{module-name} - Integration', () => {
@@ -83,40 +83,40 @@ describe('{module-name} - Integration', () => {
 });
 ```
 
-## Checklist de Execução
+## Execution Checklist
 
-### Antes de criar testes
-- [ ] Código fonte identificado e acessível
-- [ ] Dependências mapeadas
-- [ ] Casos de uso principais documentados
+### Before Creating Tests
+- [ ] Source code identified and accessible
+- [ ] Dependencies mapped
+- [ ] Primary use cases documented
 
-### Criando testes
-- [ ] Testes de caracterização criados para comportamento atual
-- [ ] Testes unitários criados para lógica principal
-- [ ] Testes de integração criados para pontos de integração
-- [ ] Todos os testes passam
+### Creating Tests
+- [ ] Characterization tests created for current behavior
+- [ ] Unit tests created for main logic
+- [ ] Integration tests created for integration points
+- [ ] All tests pass
 
-### Validação
-- [ ] Testes cobrem caminho feliz
-- [ ] Testes cobrem caminhos de erro
-- [ ] Testes cobrem edge cases conhecidos
-- [ ] Nenhum teste depende de estado externo
-- [ ] Testes são independentes entre si
+### Validation
+- [ ] Tests cover happy path
+- [ ] Tests cover error paths
+- [ ] Tests cover known edge cases
+- [ ] No test depends on external state
+- [ ] Tests are independent of each other
 
 ### Commit
-- [ ] Testes commitados ANTES da refatoração
-- [ ] Mensagem de commit clara: "test: add characterization tests for {module}"
-- [ ] CI passando com novos testes
+- [ ] Tests committed BEFORE refactoring
+- [ ] Commit message clear: "test: add characterization tests for {module}"
+- [ ] CI passing with new tests
 
-## Métricas
+## Metrics
 
-| Métrica | Antes | Depois | Meta |
+| Metric | Before | After | Target |
 |---------|-------|--------|------|
-| Cobertura de linhas | {before}% | {after}% | >= 80% |
-| Cobertura de branches | {before}% | {after}% | >= 70% |
-| Número de testes | {before} | {after} | - |
+| Line coverage | {before}% | {after}% | >= 80% |
+| Branch coverage | {before}% | {after}% | >= 70% |
+| Number of tests | {before} | {after} | - |
 
-## Referências
+## References
 
-- `testing` - para padrões de testes
+- `testing` - for testing standards
 - [Characterization Tests](https://martinfowler.com/bliki/CharacterizationTest.html)

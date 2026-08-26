@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>seo-optimizer — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; seo-optimizer</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: seo-optimizer version: 1.0.0 description: 'Use when the user needs technical SEO audits, meta tag optimization, structured data markup, Core Web Vitals improvement, or search engine visibility enhancement. Trigger conditions: site audit request, meta tag review, Schema.org implementation, page speed optimization, indexability issues, sitemap or robots.txt configuration, hreflang setup, Open Graph or Twitter Card tags, rich snippet eligibility.' domain: domain-stack triggers:</p>
+<ul>
+<li>seo-optimizer</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>seo-optimizer</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="seo-optimizer">SEO Optimizer</h1>
+<h2 id="overview">Overview</h2>
+<p>Optimize websites for search engine visibility through technical SEO, on-page optimization, structured data implementation, and Core Web Vitals performance tuning. This skill covers crawlability, indexability, meta tag strategy, Schema.org markup, sitemap generation, canonical URL management, internationalization (hreflang), and performance optimization for Google's ranking signals.</p>
+<p>Apply this skill whenever a site needs better organic search performance, whether for a single page audit or a full-site overhaul.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-technical-audit">Phase 1: Technical Audit</h3>
+<ol>
+<li>Crawl the site (Screaming Frog, Sitebulb, or custom script)</li>
+<li>Check robots.txt and XML sitemap validity</li>
+<li>Identify crawl errors, redirect chains, and broken links</li>
+<li>Verify canonical URLs and duplicate content handling</li>
+<li>Assess mobile-friendliness and responsive design</li>
+<li>Check HTTPS implementation and mixed content</li>
+<li>Evaluate page load performance (Core Web Vitals)</li>
+</ol>
+<blockquote><strong>STOP — Do NOT proceed to Phase 2 until audit findings are documented and prioritized.</strong></blockquote>
+<h3 id="phase-2-on-page-optimization">Phase 2: On-Page Optimization</h3>
+<ol>
+<li>Audit title tags (unique, 50-60 chars, keyword placement)</li>
+<li>Review meta descriptions (unique, 150-160 chars, compelling CTAs)</li>
+<li>Analyze heading hierarchy (single H1, logical H2-H6 structure)</li>
+<li>Optimize image alt text and file names</li>
+<li>Review internal linking structure and anchor text</li>
+<li>Check URL structure (short, descriptive, hyphenated)</li>
+<li>Validate Open Graph and Twitter Card tags</li>
+</ol>
+<blockquote><strong>STOP — Do NOT proceed to Phase 3 until on-page changes are implemented and verified.</strong></blockquote>
+<h3 id="phase-3-structured-data-implementation">Phase 3: Structured Data Implementation</h3>
+<ol>
+<li>Identify applicable Schema.org types for content</li>
+<li>Implement JSON-LD structured data</li>
+<li>Validate with Google Rich Results Test</li>
+<li>Test for rich snippet eligibility</li>
+<li>Monitor Search Console for structured data errors</li>
+</ol>
+<blockquote><strong>STOP — Do NOT proceed to Phase 4 until structured data passes validation.</strong></blockquote>
+<h3 id="phase-4-monitoring-and-iteration">Phase 4: Monitoring and Iteration</h3>
+<ol>
+<li>Set up Google Search Console monitoring</li>
+<li>Track Core Web Vitals over time</li>
+<li>Monitor indexation status and coverage</li>
+<li>Review search performance (clicks, impressions, CTR, position)</li>
+<li>Set up alerts for crawl errors and ranking drops</li>
+</ol>
+<h2 id="audit-priority-decision-table">Audit Priority Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Finding</th><th>Severity</th><th>Fix Priority</th><th>Impact</th></tr><tr><td>No HTTPS / mixed content</td><td>Critical</td><td>Immediate</td><td>Ranking penalty, trust signals</td></tr><tr><td>Missing canonical URLs</td><td>Critical</td><td>Immediate</td><td>Duplicate content dilution</td></tr><tr><td>Broken redirect chains (3+ hops)</td><td>High</td><td>This sprint</td><td>Crawl budget waste, link equity loss</td></tr><tr><td>Missing or duplicate title tags</td><td>High</td><td>This sprint</td><td>CTR drop, ranking confusion</td></tr><tr><td>No structured data</td><td>Medium</td><td>Next sprint</td><td>Missing rich snippets</td></tr><tr><td>Missing alt text on images</td><td>Medium</td><td>Next sprint</td><td>Accessibility and image search loss</td></tr><tr><td>Suboptimal Core Web Vitals</td><td>Medium</td><td>Next sprint</td><td>Ranking signal, user experience</td></tr><tr><td>Missing hreflang tags (multi-language)</td><td>Low</td><td>Backlog</td><td>Geo-targeting issues</td></tr><tr><td>Non-descriptive URL slugs</td><td>Low</td><td>Backlog</td><td>Minor ranking and CTR effect</td></tr></table></div>
+<h2 id="meta-tag-reference">Meta Tag Reference</h2>
+<h3 id="essential-meta-tags">Essential Meta Tags</h3>
+<pre data-lang="html"><code>&lt;head&gt;
+  &lt;!-- Primary --&gt;
+  &lt;title&gt;Primary Keyword - Secondary Keyword | Brand Name&lt;/title&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;Compelling 150-160 char description with target keyword and clear value proposition.&quot;&gt;
+  &lt;link rel=&quot;canonical&quot; href=&quot;https://example.com/page&quot;&gt;
+
+  &lt;!-- Robots --&gt;
+  &lt;meta name=&quot;robots&quot; content=&quot;index, follow&quot;&gt;
+  &lt;!-- or noindex, nofollow for pages that shouldn&#x27;t be indexed --&gt;
+
+  &lt;!-- Viewport (mobile) --&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+
+  &lt;!-- Open Graph --&gt;
+  &lt;meta property=&quot;og:type&quot; content=&quot;website&quot;&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;Page Title for Social Sharing&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;Description optimized for social sharing.&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://example.com/og-image.jpg&quot;&gt;
+  &lt;meta property=&quot;og:url&quot; content=&quot;https://example.com/page&quot;&gt;
+  &lt;meta property=&quot;og:site_name&quot; content=&quot;Brand Name&quot;&gt;
+
+  &lt;!-- Twitter Card --&gt;
+  &lt;meta name=&quot;twitter:card&quot; content=&quot;summary_large_image&quot;&gt;
+  &lt;meta name=&quot;twitter:title&quot; content=&quot;Page Title&quot;&gt;
+  &lt;meta name=&quot;twitter:description&quot; content=&quot;Twitter-optimized description.&quot;&gt;
+  &lt;meta name=&quot;twitter:image&quot; content=&quot;https://example.com/twitter-image.jpg&quot;&gt;
+
+  &lt;!-- Internationalization --&gt;
+  &lt;link rel=&quot;alternate&quot; hreflang=&quot;en&quot; href=&quot;https://example.com/en/page&quot;&gt;
+  &lt;link rel=&quot;alternate&quot; hreflang=&quot;de&quot; href=&quot;https://example.com/de/page&quot;&gt;
+  &lt;link rel=&quot;alternate&quot; hreflang=&quot;x-default&quot; href=&quot;https://example.com/page&quot;&gt;
+&lt;/head&gt;</code></pre>
+<h3 id="meta-tag-optimization-matrix">Meta Tag Optimization Matrix</h3>
+<div class="table-wrapper"><table><tr><th>Element</th><th>Max Length</th><th>Priority Keywords</th><th>Common Mistakes</th></tr><tr><td>Title tag</td><td>50-60 chars</td><td>Front-load primary keyword</td><td>Too long, keyword stuffing, duplicate</td></tr><tr><td>Meta description</td><td>150-160 chars</td><td>Include CTA and keyword</td><td>Missing, duplicate, no CTA</td></tr><tr><td>H1</td><td>N/A (single per page)</td><td>Primary keyword variation</td><td>Multiple H1s, missing H1</td></tr><tr><td>URL slug</td><td>3-5 words</td><td>Target keyword</td><td>Too long, parameters, underscores</td></tr><tr><td>Image alt</td><td>125 chars</td><td>Descriptive, keyword if natural</td><td>Empty, "image of...", keyword stuffing</td></tr><tr><td>OG title</td><td>60-90 chars</td><td>Engaging, shareable</td><td>Same as title tag (missed opportunity)</td></tr></table></div>
+<h2 id="structured-data-json-ld">Structured Data (JSON-LD)</h2>
+<h3 id="article">Article</h3>
+<pre data-lang="html"><code>&lt;script type=&quot;application/ld+json&quot;&gt;
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;Article&quot;,
+  &quot;headline&quot;: &quot;How to Optimize Core Web Vitals&quot;,
+  &quot;author&quot;: {
+    &quot;@type&quot;: &quot;Person&quot;,
+    &quot;name&quot;: &quot;Jane Smith&quot;,
+    &quot;url&quot;: &quot;https://example.com/authors/jane-smith&quot;
+  },
+  &quot;datePublished&quot;: &quot;2026-03-01&quot;,
+  &quot;dateModified&quot;: &quot;2026-03-15&quot;,
+  &quot;image&quot;: &quot;https://example.com/images/article-hero.jpg&quot;,
+  &quot;publisher&quot;: {
+    &quot;@type&quot;: &quot;Organization&quot;,
+    &quot;name&quot;: &quot;Example Blog&quot;,
+    &quot;logo&quot;: {
+      &quot;@type&quot;: &quot;ImageObject&quot;,
+      &quot;url&quot;: &quot;https://example.com/logo.png&quot;
+    }
+  },
+  &quot;description&quot;: &quot;A comprehensive guide to improving LCP, FID, and CLS scores.&quot;
+}
+&lt;/script&gt;</code></pre>
+<h3 id="product">Product</h3>
+<pre data-lang="html"><code>&lt;script type=&quot;application/ld+json&quot;&gt;
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;Product&quot;,
+  &quot;name&quot;: &quot;Widget Pro&quot;,
+  &quot;description&quot;: &quot;Professional-grade widget for enterprise use.&quot;,
+  &quot;image&quot;: &quot;https://example.com/widget-pro.jpg&quot;,
+  &quot;brand&quot;: { &quot;@type&quot;: &quot;Brand&quot;, &quot;name&quot;: &quot;WidgetCo&quot; },
+  &quot;offers&quot;: {
+    &quot;@type&quot;: &quot;Offer&quot;,
+    &quot;price&quot;: &quot;49.99&quot;,
+    &quot;priceCurrency&quot;: &quot;USD&quot;,
+    &quot;availability&quot;: &quot;https://schema.org/InStock&quot;,
+    &quot;url&quot;: &quot;https://example.com/widget-pro&quot;
+  },
+  &quot;aggregateRating&quot;: {
+    &quot;@type&quot;: &quot;AggregateRating&quot;,
+    &quot;ratingValue&quot;: &quot;4.7&quot;,
+    &quot;reviewCount&quot;: &quot;312&quot;
+  }
+}
+&lt;/script&gt;</code></pre>
+<h3 id="faq-page">FAQ Page</h3>
+<pre data-lang="html"><code>&lt;script type=&quot;application/ld+json&quot;&gt;
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;FAQPage&quot;,
+  &quot;mainEntity&quot;: [
+    {
+      &quot;@type&quot;: &quot;Question&quot;,
+      &quot;name&quot;: &quot;What is Core Web Vitals?&quot;,
+      &quot;acceptedAnswer&quot;: {
+        &quot;@type&quot;: &quot;Answer&quot;,
+        &quot;text&quot;: &quot;Core Web Vitals are a set of metrics that measure real-world user experience for loading, interactivity, and visual stability.&quot;
+      }
+    }
+  ]
+}
+&lt;/script&gt;</code></pre>
+<h3 id="schema-type-decision-guide">Schema Type Decision Guide</h3>
+<div class="table-wrapper"><table><tr><th>Content Type</th><th>Schema Type</th><th>Rich Result</th></tr><tr><td>Blog post</td><td>Article</td><td>Article snippet</td></tr><tr><td>Product page</td><td>Product</td><td>Price, rating, availability</td></tr><tr><td>FAQ section</td><td>FAQPage</td><td>Expandable Q&A</td></tr><tr><td>How-to guide</td><td>HowTo</td><td>Step-by-step snippet</td></tr><tr><td>Recipe</td><td>Recipe</td><td>Image, time, rating</td></tr><tr><td>Event</td><td>Event</td><td>Date, location, price</td></tr><tr><td>Local business</td><td>LocalBusiness</td><td>Map pack, hours</td></tr><tr><td>Software</td><td>SoftwareApplication</td><td>Rating, price</td></tr><tr><td>Breadcrumbs</td><td>BreadcrumbList</td><td>Breadcrumb trail</td></tr><tr><td>Video</td><td>VideoObject</td><td>Thumbnail, duration</td></tr></table></div>
+<h2 id="core-web-vitals">Core Web Vitals</h2>
+<h3 id="metrics-and-thresholds">Metrics and Thresholds</h3>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Good</th><th>Needs Improvement</th><th>Poor</th><th>Measures</th></tr><tr><td>LCP (Largest Contentful Paint)</td><td><= 2.5s</td><td><= 4.0s</td><td>> 4.0s</td><td>Loading performance</td></tr><tr><td>INP (Interaction to Next Paint)</td><td><= 200ms</td><td><= 500ms</td><td>> 500ms</td><td>Interactivity</td></tr><tr><td>CLS (Cumulative Layout Shift)</td><td><= 0.1</td><td><= 0.25</td><td>> 0.25</td><td>Visual stability</td></tr></table></div>
+<h3 id="lcp-optimization">LCP Optimization</h3>
+<pre data-lang="html"><code>&lt;!-- Preload hero image --&gt;
+&lt;link rel=&quot;preload&quot; as=&quot;image&quot; href=&quot;/hero.webp&quot; fetchpriority=&quot;high&quot;&gt;
+
+&lt;!-- Use modern image formats --&gt;
+&lt;picture&gt;
+  &lt;source srcset=&quot;/hero.avif&quot; type=&quot;image/avif&quot;&gt;
+  &lt;source srcset=&quot;/hero.webp&quot; type=&quot;image/webp&quot;&gt;
+  &lt;img src=&quot;/hero.jpg&quot; alt=&quot;Hero description&quot; width=&quot;1200&quot; height=&quot;600&quot;
+       fetchpriority=&quot;high&quot; decoding=&quot;async&quot;&gt;
+&lt;/picture&gt;</code></pre>
+<h3 id="cls-prevention">CLS Prevention</h3>
+<pre data-lang="css"><code>/* Always set dimensions on images and video */
+img, video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+/* Reserve space for dynamic content */
+.ad-slot {
+  min-height: 250px;
+}
+
+/* Avoid inserting content above existing content */
+.notification-bar {
+  position: fixed; /* doesn&#x27;t shift layout */
+}</code></pre>
+<h3 id="inp-optimization">INP Optimization</h3>
+<pre data-lang="javascript"><code>// Break long tasks with yield
+async function processLargeDataset(data) {
+  for (let i = 0; i &lt; data.length; i++) {
+    processItem(data[i]);
+    if (i % 100 === 0) {
+      await new Promise(resolve =&gt; setTimeout(resolve, 0)); // yield to main thread
+    }
+  }
+}
+
+// Use requestIdleCallback for non-critical work
+requestIdleCallback(() =&gt; {
+  loadAnalytics();
+  initNonCriticalFeatures();
+});</code></pre>
+<h2 id="xml-sitemap">XML Sitemap</h2>
+<h3 id="generation-pattern">Generation Pattern</h3>
+<pre data-lang="xml"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://example.com/&lt;/loc&gt;
+    &lt;lastmod&gt;2026-03-15&lt;/lastmod&gt;
+    &lt;changefreq&gt;daily&lt;/changefreq&gt;
+    &lt;priority&gt;1.0&lt;/priority&gt;
+  &lt;/url&gt;
+  &lt;url&gt;
+    &lt;loc&gt;https://example.com/products&lt;/loc&gt;
+    &lt;lastmod&gt;2026-03-14&lt;/lastmod&gt;
+    &lt;changefreq&gt;weekly&lt;/changefreq&gt;
+    &lt;priority&gt;0.8&lt;/priority&gt;
+  &lt;/url&gt;
+&lt;/urlset&gt;</code></pre>
+<h3 id="sitemap-best-practices">Sitemap Best Practices</h3>
+<ul>
+<li>Maximum 50,000 URLs per sitemap file</li>
+<li>Use sitemap index for larger sites</li>
+<li>Include only canonical, indexable URLs</li>
+<li>Update <code>lastmod</code> only when content genuinely changes</li>
+<li>Submit via Google Search Console and robots.txt</li>
+</ul>
+<h2 id="robotstxt-template">robots.txt Template</h2>
+<pre><code>User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /search?
+Disallow: /*?sort=
+Disallow: /*?filter=
+
+Sitemap: https://example.com/sitemap.xml</code></pre>
+<h2 id="nextjs--react-seo-patterns">Next.js / React SEO Patterns</h2>
+<h3 id="nextjs-metadata-api-app-router">Next.js Metadata API (App Router)</h3>
+<pre data-lang="typescript"><code>import type { Metadata } from &#x27;next&#x27;;
+
+export const metadata: Metadata = {
+  title: {
+    template: &#x27;%s | Brand Name&#x27;,
+    default: &#x27;Brand Name - Tagline&#x27;,
+  },
+  description: &#x27;Site-wide default description.&#x27;,
+  openGraph: {
+    type: &#x27;website&#x27;,
+    locale: &#x27;en_US&#x27;,
+    url: &#x27;https://example.com&#x27;,
+    siteName: &#x27;Brand Name&#x27;,
+  },
+  twitter: {
+    card: &#x27;summary_large_image&#x27;,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: &#x27;https://example.com&#x27;,
+  },
+};</code></pre>
+<h3 id="dynamic-metadata-per-page">Dynamic Metadata per Page</h3>
+<pre data-lang="typescript"><code>export async function generateMetadata({ params }): Promise&lt;Metadata&gt; {
+  const product = await getProduct(params.slug);
+
+  return {
+    title: product.name,
+    description: product.description.slice(0, 160),
+    openGraph: {
+      title: product.name,
+      description: product.description.slice(0, 200),
+      images: [{ url: product.image, width: 1200, height: 630 }],
+    },
+  };
+}</code></pre>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Keyword stuffing in titles/content</td><td>Triggers spam filters, reduces CTR</td><td>Use primary keyword once naturally, add variations</td></tr><tr><td>Same title/description across pages</td><td>Duplicate content signals, wasted opportunity</td><td>Unique, page-specific meta for every indexable URL</td></tr><tr><td>Blocking CSS/JS in robots.txt</td><td>Googlebot cannot render pages</td><td>Allow all rendering resources</td></tr><tr><td>Structured data mismatching page content</td><td>Google penalties, rich snippet removal</td><td>Schema must reflect visible content exactly</td></tr><tr><td>Redirect chains > 2 hops</td><td>Crawl budget waste, link equity loss</td><td>Redirect directly to final destination</td></tr><tr><td>JS-only navigation without SSR links</td><td>Crawler cannot discover pages</td><td>Server-render navigation links</td></tr><tr><td>Ignoring Core Web Vitals</td><td>Ranking signal degradation</td><td>Profile and optimize LCP, INP, CLS</td></tr><tr><td>Missing canonical URLs</td><td>Duplicate content penalties</td><td>Set canonical on every indexable page</td></tr><tr><td>Over-optimized anchor text</td><td>Unnatural link patterns trigger penalties</td><td>Use descriptive, varied anchor text</td></tr><tr><td>Hiding content with CSS for SEO</td><td>Cloaking violation</td><td>All SEO content must be visible to users</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip the technical audit because "the site looks fine" -- crawl it.</li>
+<li>Do NOT add structured data without validating it passes the Rich Results Test.</li>
+<li>Do NOT assume meta tags are correct without checking every page type.</li>
+<li>Do NOT deploy SEO changes without before/after measurement.</li>
+<li>Do NOT optimize for search engines at the expense of user experience.</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>content-creator</code></td><td>SEO informs keyword targeting and headline strategy for marketing content</td></tr><tr><td><code>content-research-writer</code></td><td>Research-backed content needs SEO-optimized structure and meta tags</td></tr><tr><td><code>senior-frontend</code></td><td>Core Web Vitals optimization requires frontend performance tuning</td></tr><tr><td><code>performance-optimization</code></td><td>Page speed directly affects LCP and INP scores</td></tr><tr><td><code>deployment</code></td><td>SEO changes need proper cache invalidation and redirect configuration</td></tr><tr><td><code>tech-docs-generator</code></td><td>Documentation sites need sitemap, canonical, and structured data setup</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the optimization strategy to the site's technology stack, content type, and competitive landscape. Technical SEO fundamentals and structured data best practices are strongly recommended; specific implementation patterns vary by framework.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

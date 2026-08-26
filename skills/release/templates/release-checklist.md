@@ -1,23 +1,23 @@
 # Release Checklist Template
 
-## Pré-Release
+## Pre-Release
 
-- [ ] CHANGELOG.md atualizado
-- [ ] Versão bumpada
-- [ ] Testes passam
-- [ ] Lint passa
-- [ ] Build funciona
+- [ ] CHANGELOG.md updated
+- [ ] Version bumped
+- [ ] Tests pass
+- [ ] Lint passes
+- [ ] Build functions
 - [ ] Security scan
 
-## Publicação
+## Publication
 
-- [ ] Tag criada
+- [ ] Tag created
 - [ ] npm publish
 - [ ] Docker push
 - [ ] GitHub Release
 
-## Pós-Release
+## Post-Release
 
-- [ ] Usuários notificados
-- [ ] Documentação atualizada
-- [ ] Versão para dev incrementada
+- [ ] Users notified
+- [ ] Documentation updated
+- [ ] Version for dev incremented

@@ -1,40 +1,40 @@
-# Exemplo: Especificação REST CRUD — Gestão de Produtos
+# Example: REST CRUD Specification — Product Management
 
-## Contexto
+## Context
 
-API para gestão de catálogo de produtos em e-commerce. Backend: Express + TypeScript + PostgreSQL.
+API for product catalog management in e-commerce. Backend: Express + TypeScript + PostgreSQL.
 
-## Contrato
+## Contract
 
-### Recursos
+### Resources
 
-| Recurso | URL | Método | Descrição |
+| Resource | URL | Method | Description |
 |---------|-----|--------|-----------|
-| Produto | `/api/v1/products` | GET | Lista produtos (paginado) |
-| Produto | `/api/v1/products/:id` | GET | Detalhes de um produto |
-| Produto | `/api/v1/products` | POST | Cria produto |
-| Produto | `/api/v1/products/:id` | PUT | Atualiza produto completo |
-| Produto | `/api/v1/products/:id` | PATCH | Atualização parcial |
-| Produto | `/api/v1/products/:id` | DELETE | Remove produto |
-| Categorias | `/api/v1/products/:id/categories` | GET | Lista categorias do produto |
-| Categorias | `/api/v1/products/:id/categories` | POST | Adiciona categoria |
+| Product | `/api/v1/products` | GET | List products (paginated) |
+| Product | `/api/v1/products/:id` | GET | Product details |
+| Product | `/api/v1/products` | POST | Create product |
+| Product | `/api/v1/products/:id` | PUT | Update product completely |
+| Product | `/api/v1/products/:id` | PATCH | Partial update |
+| Product | `/api/v1/products/:id` | DELETE | Remove product |
+| Categories | `/api/v1/products/:id/categories` | GET | List product categories |
+| Categories | `/api/v1/products/:id/categories` | POST | Add category |
 
-### Schema do Produto
+### Product Schema
 
 ```typescript
 interface Product {
   id: string;           // UUID v4
-  name: string;         // 3-200 caracteres
-  description: string;  // máx 5000 caracteres
-  price: number;        // > 0, máx 2 casas decimais
-  sku: string;          // único, regex: ^[A-Z]{3}-\d{4}$
+  name: string;         // 3-200 characters
+  description: string;  // max 5000 characters
+  price: number;        // > 0, max 2 decimal places
+  sku: string;          // unique, regex: ^[A-Z]{3}-\d{4}$
   status: 'active' | 'inactive' | 'draft';
   created_at: string;   // ISO 8601
   updated_at: string;   // ISO 8601
 }
 ```
 
-### Paginação
+### Pagination
 
 ```
 GET /api/v1/products?page=1&limit=20&sort=created_at&order=desc
@@ -45,19 +45,19 @@ Response Headers:
   Link: </api/v1/products?page=2&limit=20>; rel="next"
 ```
 
-### Formato de Erro (RFC 7807)
+### Error Format (RFC 7807)
 
 ```json
 {
   "type": "https://api.example.com/errors/validation",
-  "title": "Dados inválidos",
+  "title": "Invalid data",
   "status": 422,
-  "detail": "O campo 'price' deve ser maior que 0",
+  "detail": "The 'price' field must be greater than 0",
   "instance": "/api/v1/products",
   "errors": [
     {
       "field": "price",
-      "message": "deve ser maior que 0",
+      "message": "must be greater than 0",
       "rejected_value": -5
     }
   ]
@@ -66,7 +66,7 @@ Response Headers:
 
 ### Status Codes
 
-| Método | Sucesso | Erro Comum |
+| Method | Success | Common Error |
 |--------|---------|------------|
 | GET | 200 OK | 404 Not Found |
 | POST | 201 Created | 422 Unprocessable Entity |
@@ -74,21 +74,21 @@ Response Headers:
 | PATCH | 200 OK | 404 Not Found, 422 Unprocessable |
 | DELETE | 204 No Content | 404 Not Found |
 
-### Versionamento
+### Versioning
 
 - URL path: `/api/v1/products`
-- Header aceito: `Accept: application/vnd.api.v1+json`
-- Breaking changes requerem nova versão (v2)
-- Non-breaking changes (campos novos) vão para versão atual
+- Accepted header: `Accept: application/vnd.api.v1+json`
+- Breaking changes require new version (v2)
+- Non-breaking changes (new fields) go to current version
 
-### Idempotência
+### Idempotence
 
-- PUT e DELETE são idempotentes por design
-- POST aceita header `Idempotency-Key: <uuid>` para prevenir duplicação
-- Chave de idempotência expira após 24h
+- PUT and DELETE are idempotent by design
+- POST accepts `Idempotency-Key: <uuid>` header to prevent duplication
+- Idempotency key expires after 24 hours
 
-### Autenticação
+### Authentication
 
-- Bearer token via header `Authorization: Bearer <token>`
-- Rate limiting: 100 req/min por usuário
-- Endpoints de escrita requerem role `admin` ou `editor`
+- Bearer token via `Authorization: Bearer <token>` header
+- Rate limiting: 100 req/min per user
+- Write endpoints require `admin` or `editor` role

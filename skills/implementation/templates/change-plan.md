@@ -1,21 +1,21 @@
 # Change Plan
 
-> Plano interno de execução construído a partir da análise de dependências do TODO.
+> Internal execution plan built from the analysis of dependencies of the TODO.
 
 ---
 
-## Identificação
+## Identification
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
 | ADR | {{adr_path}} |
-| Data de geração | {{date}} |
-| Total de tarefas | {{total_tasks}} |
-| Estimativa total | {{total_estimate}} |
+| Date of generation | {{date}} |
+| Total tasks | {{total_tasks}} |
+| Total estimate | {{total_estimate}} |
 
 ---
 
-## DAG de Execução
+## Execution DAG
 
 ```mermaid
 graph LR
@@ -24,30 +24,30 @@ graph LR
 {{/each}}
 ```
 
-### Legenda
+### Legend
 
-| Cor | Significado |
-|-----|-------------|
-| ⬜ | Pendente |
-| 🔄 | Em andamento |
-| ✅ | Concluído |
-| ❌ | Bloqueado |
+| Color | Meaning |
+|-------|---------|
+| ⬜ | Pending |
+| 🔄 | In progress |
+| ✅ | Completed |
+| ❌ | Blocked |
 
 ---
 
-## Ordem de Execução
+## Execution Order
 
-| Fase | Tarefas | Dependências | Tempo Est. |
-|------|---------|--------------|------------|
+| Phase | Tasks | Dependencies | Estimated Time |
+|------|---------|--------------|----------------|
 {{#each phases}}
 | {{number}} | {{tasks}} | {{dependencies}} | {{estimate}} |
 {{/each}}
 
 ---
 
-## Tarefas Detalhadas
+## Detailed Tasks
 
-| # | Tarefa | Estado | Dependências | Prioridade | Estimativa | Arquivos |
+| # | Task | Status | Dependencies | Priority | Estimate | Files |
 |---|--------|--------|--------------|------------|------------|----------|
 {{#each tasks}}
 | {{number}} | {{name}} | {{status}} | {{deps}} | {{priority}} | {{estimate}} | {{files}} |
@@ -55,9 +55,9 @@ graph LR
 
 ---
 
-## Tarefas Paralelizáveis
+## Parallelizable Tasks
 
-| Fase | Tarefas que podem rodar em paralelo |
+| Phase | Tasks that can run in parallel |
 |------|--------------------------------------|
 {{#each parallel_tasks}}
 | {{phase}} | {{tasks}} |
@@ -65,9 +65,9 @@ graph LR
 
 ---
 
-## Pontos de Verificação
+## Checkpoints
 
-| Após Tarefa | Verificar | Critério |
+| After Task | Verify | Criterion |
 |-------------|-----------|----------|
 {{#each checkpoints}}
 | {{after_task}} | {{check}} | {{criterion}} |
@@ -75,22 +75,22 @@ graph LR
 
 ---
 
-## Estimativa Detalhada
+## Detailed Estimate
 
-| Componente | Tempo Est. | Notas |
+| Component | Estimated Time | Notes |
 |------------|------------|-------|
-| Tarefas de infraestrutura | {{infra_estimate}} | Criação de estrutura |
-| Tarefas de implementação | {{impl_estimate}} | Código principal |
-| Tarefas de validação | {{validation_estimate}} | Testes e verificação |
-| Tarefas de documentação | {{docs_estimate}} | Atualização de docs |
-| Buffer (20%) | {{buffer}} | Imprevistos |
+| Infrastructure tasks | {{infra_estimate}} | Creating structure |
+| Implementation tasks | {{impl_estimate}} | Main code |
+| Validation tasks | {{validation_estimate}} | Tests and verification |
+| Documentation tasks | {{docs_estimate}} | Updating docs |
+| Buffer (20%) | {{buffer}} | Unforeseen events |
 | **Total** | **{{total}}** | |
 
 ---
 
-## Riscos do Plano
+## Plan Risks
 
-| # | Risco | Impacto no Plano | Mitigação |
+| # | Risk | Impact on Plan | Mitigation |
 |---|-------|------------------|-----------|
 {{#each plan_risks}}
 | {{number}} | {{risk}} | {{impact}} | {{mitigation}} |
@@ -98,11 +98,11 @@ graph LR
 
 ---
 
-## Validação do Plano
+## Plan Validation
 
-- [ ] DAG construído sem ciclos
-- [ ] Todas as tarefas têm dependências definidas
-- [ ] Estimativas somam ao total esperado
-- [ ] Tarefas paralelizáveis são realmente independentes
-- [ ] Pontos de verificação cobrem tarefas críticas
-- [ ] Riscos do plano documentados
+- [ ] DAG constructed without cycles
+- [ ] All tasks have defined dependencies
+- [ ] Estimates sum to the expected total
+- [ ] Parallelizable tasks are truly independent
+- [ ] Checkpoints cover critical tasks
+- [ ] Plan risks are documented

@@ -411,83 +411,95 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: observability description: Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting. Use quando configurar monitoramento, investigar incidentes ou implementar observabilidade em microsserviços. version: 2.0.0 tags: [observability, logging, metrics, tracing, alerting] related_skills: [testing, release, governance] ---</p>
+<p>name: observability version: 2.0.0 description: Comprehensive guide to system observability in production. Defines standards for structured logging, metrics, distributed tracing, and alerting. Use when configuring monitoring, investigating incidents, or implementing observability in microservices. domain: architecture-systems triggers:</p>
+<ul>
+<li>observability</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>observability</li>
+<li>logging</li>
+<li>metrics</li>
+<li>tracing</li>
+<li>alerting</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="observability">Observability</h1>
-<p>Guia completo para observabilidade de sistemas em produção.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Comprehensive guide to system observability in production.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Sistema em produção precisa de monitoramento</li>
-<li>Precisa investigar incidentes ou bugs em produção</li>
-<li>Quer implementar logging estruturado</li>
-<li>Precisa definir métricas e SLAs</li>
-<li>Quer configurar alertas acionáveis</li>
-<li>Precisa de tracing distribuído em microsserviços</li>
+<li>System in production requires monitoring</li>
+<li>Need to investigate incidents or bugs in production</li>
+<li>Want to implement structured logging</li>
+<li>Need to define metrics and SLAs</li>
+<li>Want to configure actionable alerts</li>
+<li>Need distributed tracing in microservices</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Projeto em fase de protótipo (sem requisitos de observabilidade)</li>
-<li>Sistema single-server sem necessidade de tracing</li>
-<li>Logs simples de debug em desenvolvimento</li>
+<li>Project in prototype phase (without observability requirements)</li>
+<li>Single-server system without tracing needs</li>
+<li>Simple debug logs in development</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>testing</code> — para testar instrumentação e mocks de métricas</li>
-<li><code>release</code> — para métricas de deploy e rollback</li>
-<li><code>governance</code> — para políticas de retenção de logs e compliance</li>
+<li><code>testing</code> — for testing instrumentation and metric mocks</li>
+<li><code>release</code> — for metrics of deploy and rollback</li>
+<li><code>governance</code> — for policies of log retention and compliance</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Sistema em produção] --&gt; B{O que aconteceu?}
-    B --&gt;|Preciso de logs| C[Logging]
-    B --&gt;|Preciso de dados quantitativos| D[Métricas]
-    B --&gt;|Preciso entender fluxo| E[Tracing]
-    B --&gt;|Preciso de notificação| F[Alerting]
+    A[System in production] --&gt; B{What happened?}
+    B --&gt;|Need logs| C[Logging]
+    B --&gt;|Need quantitative data| D[Metrics]
+    B --&gt;|Need to understand flow| E[Tracing]
+    B --&gt;|Need notification| F[Alerting]
     
-    C --&gt; C1[Como está o estado?]
-    C1 --&gt; C2[Logs estruturados]
-    C2 --&gt; C3[Níveis apropriados]
+    C --&gt; C1[How is the state?]
+    C1 --&gt; C2[Structured logs]
+    C2 --&gt; C3[Adequate levels]
     
-    D --&gt; D1{Como está?}
-    D1 --&gt;|Disponibilidade| D2[SLA/SLO]
-    D1 --&gt;|Performance| D3[Latência/Throughput]
-    D1 --&gt;|Erros| D4[Taxa de erro]
+    D --&gt; D1{How is it?}
+    D1 --&gt;|Availability| D2[SLA/SLO]
+    D1 --&gt;|Performance| D3[Latency/Throughput]
+    D1 --&gt;|Errors| D4[Error rate]
     
-    E --&gt; E1{Por quê?}
-    E1 --&gt;|Fluxo distribuído| E2[Trace propagation]
-    E1 --&gt;|Dependências| E3[Service map]
+    E --&gt; E1{Why?}
+    E1 --&gt;|Distributed flow| E2[Trace propagation]
+    E1 --&gt;|Dependencies| E3[Service map]
     
-    F --&gt; F1[Alertas acionáveis]
+    F --&gt; F1[Actionable alerts]
     F1 --&gt; F2[Runbooks]
-    F2 --&gt; F3[Escalonamento]</code></pre>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="os-3-pilares-da-observabilidade">Os 3 Pilares da Observabilidade</h3>
-<div class="table-wrapper"><table><tr><th>Pilar</th><th>O que responde</th><th>Exemplo</th></tr><tr><td><strong>Logging</strong></td><td>O que aconteceu?</td><td>"Erro de conexão com DB"</td></tr><tr><td><strong>Metrics</strong></td><td>Como está o sistema?</td><td>"99.9% disponibilidade"</td></tr><tr><td><strong>Tracing</strong></td><td>Por que aconteceu?</td><td>"Request falhou no service B"</td></tr></table></div>
-<h3 id="nveis-de-log">Níveis de Log</h3>
-<div class="table-wrapper"><table><tr><th>Nível</th><th>Uso</th><th>Exemplo</th></tr><tr><td><code>ERROR</code></td><td>Falha que precisa de ação</td><td>"DB connection failed"</td></tr><tr><td><code>WARN</code></td><td>Anormalidade sem falha</td><td>"Retrying request"</td></tr><tr><td><code>INFO</code></td><td>Evento significativo</td><td>"User created"</td></tr><tr><td><code>DEBUG</code></td><td>Detalhes para debug</td><td>"Query executed: SELECT *..."</td></tr></table></div>
-<h3 id="mtricas-red-method">Métricas (RED Method)</h3>
+    F2 --&gt; F3[Escalation]</code></pre>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
+<h3 id="the-3-pillars-of-observability">The 3 Pillars of Observability</h3>
+<div class="table-wrapper"><table><tr><th>Pillar</th><th>What it answers</th><th>Example</th></tr><tr><td><strong>Logging</strong></td><td>What happened?</td><td>"DB connection failed"</td></tr><tr><td><strong>Metrics</strong></td><td>How is the system?</td><td>"99.9% availability"</td></tr><tr><td><strong>Tracing</strong></td><td>Why did it happen?</td><td>"Request failed in service B"</td></tr></table></div>
+<h3 id="log-levels">Log Levels</h3>
+<div class="table-wrapper"><table><tr><th>Level</th><th>Use</th><th>Example</th></tr><tr><td><code>ERROR</code></td><td>Failure requiring action</td><td>"DB connection failed"</td></tr><tr><td><code>WARN</code></td><td>Anomaly without failure</td><td>"Retrying request"</td></tr><tr><td><code>INFO</code></td><td>Significant event</td><td>"User created"</td></tr><tr><td><code>DEBUG</code></td><td>Details for debugging</td><td>"Query executed: SELECT *..."</td></tr></table></div>
+<h3 id="metrics-red-method">Metrics (RED Method)</h3>
 <ul>
-<li><strong>Rate</strong>: Taxa de requisições por segundo</li>
-<li><strong>Errors</strong>: Taxa de erros</li>
-<li><strong>Duration</strong>: Latência das requisições (p50, p95, p99)</li>
+<li><strong>Rate</strong>: Requests per second rate</li>
+<li><strong>Errors</strong>: Error rate</li>
+<li><strong>Duration</strong>: Request latency (p50, p95, p99)</li>
 </ul>
 <h3 id="tracing">Tracing</h3>
 <ul>
-<li><strong>Trace ID</strong>: Identificador único por request</li>
-<li><strong>Span</strong>: Unidade de trabalho dentro de um trace</li>
-<li><strong>Parent Span</strong>: Span que originou outro</li>
+<li><strong>Trace ID</strong>: Unique identifier per request</li>
+<li><strong>Span</strong>: Unit of work within a trace</li>
+<li><strong>Parent Span</strong>: Span that originated another</li>
 </ul>
 <h2 id="workflow">Workflow</h2>
-<h3 id="workflow-1-implementar-logging-estruturado">Workflow 1: Implementar Logging Estruturado</h3>
+<h3 id="workflow-1-implement-structured-logging">Workflow 1: Implement Structured Logging</h3>
 <ol>
-<li>Escolha formato de log (JSON recomendado):</li>
+<li>Choose log format (JSON recommended):</li>
 </ol>
-<pre data-lang="bash"><code>   # Exemplo com pino (Node.js)
+<pre data-lang="bash"><code>   # Example with pino (Node.js)
    import pino from &#x27;pino&#x27;;
    const logger = pino({ level: &#x27;info&#x27; });</code></pre>
 <ol>
-<li>Defina campos obrigatórios no template <code>templates/logging-spec.md</code></li>
-<li>Implemente logger centralizado:</li>
+<li>Define required fields in <code>templates/logging-spec.md</code></li>
+<li>Implement centralized logger:</li>
 </ol>
 <pre data-lang="typescript"><code>   // src/lib/logger.ts
    export const logger = pino({
@@ -495,15 +507,15 @@
      formatters: { level: (label) =&gt; ({ level: label }) },
    });</code></pre>
 <ol>
-<li>Substitua todos <code>console.log</code> por logger</li>
-<li><strong>Checkpoint</strong>: Todos os logs usam formato estruturado</li>
+<li>Replace all <code>console.log</code> with logger</li>
+<li><strong>Checkpoint</strong>: All logs use structured format</li>
 </ol>
-<h3 id="workflow-2-configurar-mtricas-e-slas">Workflow 2: Configurar Métricas e SLAs</h3>
+<h3 id="workflow-2-configure-metrics-and-slas">Workflow 2: Configure Metrics and SLAs</h3>
 <ol>
-<li>Defina SLAs no template <code>templates/metrics-sla.md</code></li>
-<li>Configure coletor de métricas (Prometheus/DataDog):</li>
+<li>Define SLAs in <code>templates/metrics-sla.md</code></li>
+<li>Configure metric collector (Prometheus/DataDog):</li>
 </ol>
-<pre data-lang="typescript"><code>   // Exemplo com prom-client
+<pre data-lang="typescript"><code>   // Example with prom-client
    const httpRequestDuration = new Histogram({
      name: &#x27;http_request_duration_seconds&#x27;,
      help: &#x27;Duration of HTTP requests&#x27;,
@@ -511,19 +523,19 @@
      buckets: [0.1, 0.5, 1, 2, 5],
    });</code></pre>
 <ol>
-<li>Instrumente endpoints principais</li>
+<li>Instrument main endpoints</li>
 <li>Configure dashboards (Grafana/DataDog)</li>
-<li><strong>Checkpoint</strong>: Métricas visíveis no dashboard</li>
+<li><strong>Checkpoint</strong>: Metrics visible in dashboard</li>
 </ol>
-<h3 id="workflow-3-implementar-tracing-distribudo">Workflow 3: Implementar Tracing Distribuído</h3>
+<h3 id="workflow-3-implement-distributed-tracing">Workflow 3: Implement Distributed Tracing</h3>
 <ol>
-<li>Configure propagador de trace (OpenTelemetry):</li>
+<li>Configure trace propagator (OpenTelemetry):</li>
 </ol>
 <pre data-lang="typescript"><code>   import { NodeTracerProvider } from &#x27;@opentelemetry/sdk-trace-node&#x27;;
    const provider = new NodeTracerProvider();
    provider.register();</code></pre>
 <ol>
-<li>Instrumente serviços com spans:</li>
+<li>Instrument services with spans:</li>
 </ol>
 <pre data-lang="typescript"><code>   const span = tracer.startSpan(&#x27;process-order&#x27;);
    try {
@@ -536,14 +548,14 @@
      span.end();
    }</code></pre>
 <ol>
-<li>Configure exportador (Jaeger/Zipkin)</li>
-<li>Adicione contexto entre serviços (headers)</li>
-<li><strong>Checkpoint</strong>: Traces visíveis no Jaeger/Zipkin</li>
+<li>Configure exporter (Jaeger/Zipkin)</li>
+<li>Add context between services (headers)</li>
+<li><strong>Checkpoint</strong>: Traces visible in Jaeger/Zipkin</li>
 </ol>
-<h3 id="workflow-4-criar-alertas-acionveis">Workflow 4: Criar Alertas Acionáveis</h3>
+<h3 id="workflow-4-create-actionable-alerts">Workflow 4: Create Actionable Alerts</h3>
 <ol>
-<li>Defina regras no template <code>templates/alert-rules.md</code></li>
-<li>Implemente alertas com runbook:</li>
+<li>Define rules in <code>templates/alert-rules.md</code></li>
+<li>Implement alerts with runbook:</li>
 </ol>
 <pre data-lang="yaml"><code>   # alert-rules.yml
    - alert: HighErrorRate
@@ -552,139 +564,139 @@
      labels:
        severity: critical
      annotations:
-       summary: &quot;Taxa de erro &gt; 5%&quot;
+       summary: &quot;Error rate &gt; 5%&quot;
        runbook_url: &quot;https://wiki/runbooks/high-error-rate&quot;</code></pre>
 <ol>
-<li>Configure notificações (PagerDuty/Slack)</li>
-<li>Teste alertas com cenários simulados</li>
-<li><strong>Checkpoint</strong>: Alertas disparam e notificam corretamente</li>
+<li>Configure notifications (PagerDuty/Slack)</li>
+<li>Test alerts with simulated scenarios</li>
+<li><strong>Checkpoint</strong>: Alerts fire and notify correctly</li>
 </ol>
-<h3 id="workflow-5-investigar-incidente">Workflow 5: Investigar Incidente</h3>
+<h3 id="workflow-5-investigate-incident">Workflow 5: Investigate Incident</h3>
 <ol>
-<li>Identifique alerta disparado</li>
-<li>Acesse dashboard de métricas</li>
-<li>Use trace ID para rastrear request problemático</li>
-<li>Analise logs correlacionados</li>
-<li>Documente causa raiz</li>
-<li><strong>Checkpoint</strong>: Incidente resolvido e documentado</li>
+<li>Identify triggered alert</li>
+<li>Access metric dashboard</li>
+<li>Use trace ID to track problematic request</li>
+<li>Analyze correlated logs</li>
+<li>Document root cause</li>
+<li><strong>Checkpoint</strong>: Incident resolved and documented</li>
 </ol>
 <h2 id="templates">Templates</h2>
 <h3 id="logging-specmd">logging-spec.md</h3>
-<p>Localização: <code>templates/logging-spec.md</code></p>
-<p>Especificação de logging estruturado. Define formato, campos obrigatórios e níveis.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/logging-spec.md</code></p>
+<p>Structured logging specification. Defines format, required fields, and levels.</p>
+<p><strong>Use:</strong></p>
 <pre data-lang="bash"><code>cp templates/logging-spec.md docs/logging-spec.md</code></pre>
 <h3 id="metrics-slamd">metrics-sla.md</h3>
-<p>Localização: <code>templates/metrics-sla.md</code></p>
-<p>Template para definir métricas RED e SLAs/SLOs do sistema.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/metrics-sla.md</code></p>
+<p>Template for defining metrics RED and SLAs/SLOs of the system.</p>
+<p><strong>Use:</strong></p>
 <pre data-lang="bash"><code>cp templates/metrics-sla.md docs/metrics-sla.md</code></pre>
 <h3 id="alert-rulesmd">alert-rules.md</h3>
-<p>Localização: <code>templates/alert-rules.md</code></p>
-<p>Template para regras de alerta com severidade e runbooks.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/alert-rules.md</code></p>
+<p>Template for alert rules with severity and runbooks.</p>
+<p><strong>Use:</strong></p>
 <pre data-lang="bash"><code>cp templates/alert-rules.md docs/alert-rules.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="log-com-dados-sensveis">Log com Dados Sensíveis</h4>
-<p><strong>O que é:</strong> Logs contendo senhas, tokens, CPFs ou dados pessoais. <strong>Por que é ruim:</strong> Violação de LGPD/GDPR, risco de vazamento. <strong>Como evitar:</strong> Use mascaramento e sanitize dados antes de logar. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - loga senha e token
+<h3 id="critical">Critical</h3>
+<h4 id="log-with-sensitive-data">Log with Sensitive Data</h4>
+<p><strong>What is it:</strong> Logs containing passwords, tokens, CPFs, or personal data. <strong>Why is it bad:</strong> Violation of LGPD/GDPR, risk of leakage. <strong>How to avoid:</strong> Use masking and sanitize data before logging. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - logs password and token
 logger.info({ user: &#x27;john&#x27;, password: &#x27;secret123&#x27;, token: &#x27;abc123&#x27; });
 
-// ✅ CORRETO - sanitiza dados sensíveis
+// ✅ RIGHT - sanitizes sensitive data
 logger.info({ user: &#x27;john&#x27;, password: &#x27;***&#x27;, token: &#x27;***&#x27; });</code></pre>
-<h4 id="alerta-sem-ao-definida">Alerta sem Ação Definida</h4>
-<p><strong>O que é:</strong> Alerta dispara mas ninguém sabe o que fazer. <strong>Por que é ruim:</strong> Alerta é ignorado, time perde confiança. <strong>Como evitar:</strong> Sempre inclua runbook com passos claros. <strong>Exemplo:</strong></p>
-<pre data-lang="yaml"><code># ❌ ERRADO - sem runbook
+<h4 id="alert-without-defined-action">Alert without Defined Action</h4>
+<p><strong>What is it:</strong> Alert fires but nobody knows what to do. <strong>Why is it bad:</strong> Alert is ignored, team loses trust. <strong>How to avoid:</strong> Always include runbook with clear steps. <strong>Example:</strong></p>
+<pre data-lang="yaml"><code># ❌ WRONG - without runbook
 - alert: HighCPU
   expr: cpu_usage &gt; 90
 
-# ✅ CORRETO - com runbook
+# ✅ RIGHT - with runbook
 - alert: HighCPU
   expr: cpu_usage &gt; 90
   annotations:
     runbook_url: &quot;https://wiki/runbooks/high-cpu&quot;
-    steps: &quot;1. Verificar processos 2. Escalar se necessário&quot;</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="log-sem-contexto">Log sem Contexto</h4>
-<p><strong>O que é:</strong> Logs sem identificador de request, usuário ou ambiente. <strong>Por que é ruim:</strong> Impossível correlacionar eventos em microsserviços. <strong>Como evitar:</strong> Sempre inclua trace_id, user_id e environment. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - sem contexto
+    steps: &quot;1. Check processes 2. Scale if necessary&quot;</code></pre>
+<h3 id="medium">Medium</h3>
+<h4 id="log-without-context">Log without Context</h4>
+<p><strong>What is it:</strong> Logs without request ID, user ID, or environment. <strong>Why is it bad:</strong> Impossible to correlate events in microservices. <strong>How to avoid:</strong> Always include trace ID, user ID, and environment. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - without context
 logger.error(&#x27;Failed to process order&#x27;);
 
-// ✅ CORRETO - com contexto
+// ✅ RIGHT - with context
 logger.error({ traceId, userId, environment: &#x27;prod&#x27; }, &#x27;Failed to process order&#x27;);</code></pre>
-<h4 id="mtricas-sem-dimenso-temporal">Métricas sem Dimensão Temporal</h4>
-<p><strong>O que é:</strong> Métricas sem série temporal ou agregação adequada. <strong>Por que é ruim:</strong> Impossível identificar tendências ou comparar períodos. <strong>Como evitar:</strong> Use contadores, histogramas e séries temporais. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - apenas último valor
+<h4 id="metrics-without-temporal-dimension">Metrics without Temporal Dimension</h4>
+<p><strong>What is it:</strong> Metrics without time series or adequate aggregation. <strong>Why is it bad:</strong> Impossible to identify trends or compare periods. <strong>How to avoid:</strong> Use counters, histograms, and time series. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - only last value
 gauge.set(errorCount);
 
-// ✅ CORRETO - com contagem e taxa
+// ✅ RIGHT - with count and rate
 counter.inc({ status: &#x27;error&#x27; });
 const errorRate = counter.rate({ status: &#x27;error&#x27; });</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="consolelog-em-produo">console.log em Produção</h4>
-<p><strong>O que é:</strong> Uso de <code>console.log</code> em código de produção. <strong>Por que é ruim:</strong> Sem estrutura, sem níveis, difícil de filtrar. <strong>Como evitar:</strong> Use biblioteca de logging estruturado. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO
+<h3 id="low">Low</h3>
+<h4 id="consolelog-in-production">console.log in Production</h4>
+<p><strong>What is it:</strong> Use of <code>console.log</code> in production code. <strong>Why is it bad:</strong> Unstructured, no levels, hard to filter. <strong>How to avoid:</strong> Use structured logging library. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG
 console.log(&#x27;User created:&#x27;, user);
 
-// ✅ CORRETO
+// ✅ RIGHT
 logger.info({ userId: user.id, action: &#x27;user_created&#x27; });</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-logging">Checklist de Logging</h3>
+<h3 id="logging-checklist">Logging Checklist</h3>
 <ul>
-<li>[ ] Logs em formato JSON estruturado</li>
-<li>[ ] Níveis de log apropriados (ERROR, WARN, INFO, DEBUG)</li>
-<li>[ ] Campos obrigatórios: timestamp, level, message, service</li>
-<li>[ ] Campos de contexto: trace_id, user_id, environment</li>
-<li>[ ] Dados sensíveis mascarados</li>
-<li>[ ] Retenção de logs definida</li>
-<li>[ ] Logs centralizados (ELK/Datadog)</li>
+<li>[ ] Logs in JSON structured format</li>
+<li>[ ] Log levels adequate (ERROR, WARN, INFO, DEBUG)</li>
+<li>[ ] Required fields: timestamp, level, message, service</li>
+<li>[ ] Context fields: trace ID, user ID, environment</li>
+<li>[ ] Sensitive data masked</li>
+<li>[ ] Log retention defined</li>
+<li>[ ] Centralized logs (ELK/Datadog)</li>
 </ul>
-<h3 id="checklist-de-mtricas">Checklist de Métricas</h3>
+<h3 id="metrics-checklist">Metrics Checklist</h3>
 <ul>
-<li>[ ] Métricas RED implementadas (Rate, Errors, Duration)</li>
-<li>[ ] SLAs/SLOs documentados</li>
-<li>[ ] Dashboards configurados</li>
-<li>[ ] Métricas de negócio definidas</li>
-<li>[ ] Retenção de métricas definida</li>
-<li>[ ] Alertas baseados em métricas</li>
+<li>[ ] RED metrics implemented (Rate, Errors, Duration)</li>
+<li>[ ] SLAs/SLOs documented</li>
+<li>[ ] Dashboards configured</li>
+<li>[ ] Business metrics defined</li>
+<li>[ ] Metric retention defined</li>
+<li>[ ] Alerts based on metrics</li>
 </ul>
-<h3 id="checklist-de-tracing">Checklist de Tracing</h3>
+<h3 id="tracing-checklist">Tracing Checklist</h3>
 <ul>
-<li>[ ] Trace propagation configurado entre serviços</li>
-<li>[ ] Spans instrumentados nos pontos principais</li>
-<li>[ ] Contexto propagado via headers</li>
-<li>[ ] Exportador configurado (Jaeger/Zipkin)</li>
-<li>[ ] Sampling rate definido</li>
+<li>[ ] Trace propagation configured between services</li>
+<li>[ ] Spans instrumented in main points</li>
+<li>[ ] Context propagated via headers</li>
+<li>[ ] Exporter configured (Jaeger/Zipkin)</li>
+<li>[ ] Sampling rate defined</li>
 </ul>
-<h3 id="checklist-de-alertas">Checklist de Alertas</h3>
+<h3 id="alert-checklist">Alert Checklist</h3>
 <ul>
-<li>[ ] Alertas têm severidade definida</li>
-<li>[ ] Runbooks anexados a cada alerta</li>
-<li>[ ] Escalonamento configurado</li>
-<li>[ ] Testes de alertas realizados</li>
-<li>[ ] Alertas review periódico (quarterly)</li>
+<li>[ ] Alerts have defined severity</li>
+<li>[ ] Runbooks attached to each alert</li>
+<li>[ ] Escalation configured</li>
+<li>[ ] Alert tests performed</li>
+<li>[ ] Alert review periodic (quarterly)</li>
 </ul>
-<h3 id="checklist-de-incidente">Checklist de Incidente</h3>
+<h3 id="incident-checklist">Incident Checklist</h3>
 <ul>
-<li>[ ] Alerta identificado e confirmado</li>
-<li>[ ] Dashboard analisado</li>
-<li>[ ] Trace ID rastreado</li>
-<li>[ ] Logs correlacionados</li>
-<li>[ ] Causa raiz identificada</li>
-<li>[ ] Documentação pós-incidente</li>
+<li>[ ] Triggered alert identified and confirmed</li>
+<li>[ ] Dashboard analyzed</li>
+<li>[ ] Trace ID tracked</li>
+<li>[ ] Correlated logs analyzed</li>
+<li>[ ] Root cause identified</li>
+<li>[ ] Post-incident documentation</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="alto-volume-de-logs">Alto Volume de Logs</h3>
-<p><strong>Situação:</strong> Sistema gera milhões de logs por minuto. <strong>Solução:</strong> Use sampling, levels apropriados e compressão. <strong>Exceção:</strong> Logs de auditoria não devem ser sampled.</p>
-<pre data-lang="typescript"><code>// Sampling para debug
+<h3 id="high-log-volume">High Log Volume</h3>
+<p><strong>Situation:</strong> System generates millions of logs per minute. <strong>Solution:</strong> Use sampling, adequate levels, and compression. <strong>Exception:</strong> Audit logs should not be sampled.</p>
+<pre data-lang="typescript"><code>// Sampling for debugging
 const logger = pino({
   level: &#x27;info&#x27;,
-  // Apenas 10% dos logs DEBUG
+  // Only 10% of DEBUG logs
   base: { sampleRate: process.env.NODE_ENV === &#x27;prod&#x27; ? 0.1 : 1 },
 });</code></pre>
-<h3 id="tracing-em-microsservios-assncronos">Tracing em Microsserviços Assíncronos</h3>
-<p><strong>Situação:</strong> Eventos via Kafka/RabbitMQ sem request HTTP. <strong>Solução:</strong> Propague trace context via message headers. <strong>Exceção:</strong> Consumers batch podem precisar de trace separado.</p>
+<h3 id="tracing-in-asynchronous-microservices">Tracing in Asynchronous Microservices</h3>
+<p><strong>Situation:</strong> Events via Kafka/RabbitMQ without HTTP request. <strong>Solution:</strong> Propagate trace context via message headers. <strong>Exception:</strong> Consumers batch may need separate trace.</p>
 <pre data-lang="typescript"><code>// Producer
 const headers = { &#x27;trace-id&#x27;: span.context().traceId };
 await kafka.produce({ topic: &#x27;orders&#x27;, message: data, headers });
@@ -692,25 +704,25 @@ await kafka.produce({ topic: &#x27;orders&#x27;, message: data, headers });
 // Consumer
 const traceId = message.headers[&#x27;trace-id&#x27;];
 const span = tracer.startSpan(&#x27;process-order&#x27;, { traceId });</code></pre>
-<h3 id="correlao-entre-servios">Correlação entre Serviços</h3>
-<p><strong>Situação:</strong> Logs de diferentes serviços não correlacionados. <strong>Solução:</strong> Use trace_id como campo comum e propague via headers. <strong>Exceção:</strong> Serviços legados sem suporte a tracing.</p>
-<pre data-lang="typescript"><code>// Middleware para propagar trace_id
+<h3 id="correlation-between-services">Correlation between Services</h3>
+<p><strong>Situation:</strong> Logs from different services not correlated. <strong>Solution:</strong> Use trace ID as common field and propagate via headers. <strong>Exception:</strong> Legacy services without tracing support.</p>
+<pre data-lang="typescript"><code>// Middleware to propagate trace ID
 app.use((req, res, next) =&gt; {
   const traceId = req.headers[&#x27;x-trace-id&#x27;] || generateTraceId();
   req.traceId = traceId;
   res.setHeader(&#x27;x-trace-id&#x27;, traceId);
   next();
 });</code></pre>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://opentelemetry.io/">OpenTelemetry</a></li>
 <li><a href="https://prometheus.io/">Prometheus</a></li>
 <li><a href="https://grafana.com/">Grafana</a></li>
 <li><a href="https://www.jaegertracing.io/">Jaeger</a></li>
 <li><a href="https://www.structuredlogging.org/">Structured Logging</a></li>
-<li><code>testing</code> — para testar instrumentação</li>
-<li><code>release</code> — para métricas de deploy</li>
-<li><code>governance</code> — para políticas de retenção</li>
+<li><code>testing</code> — for testing instrumentation</li>
+<li><code>release</code> — for metrics of deploy</li>
+<li><code>governance</code> — for policies of retention</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

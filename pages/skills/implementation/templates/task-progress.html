@@ -411,61 +411,61 @@
   </nav>
   <div class="content">
     <h1 id="task-progress">Task Progress</h1>
-<blockquote>Progresso individual de uma tarefa durante a execução governada.</blockquote>
+<blockquote>Individual task progress during governed execution.</blockquote>
 <hr>
-<h2 id="identificao">Identificação</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tarefa</td><td>{{task_name}}</td></tr><tr><td>Número</td><td>{{task_number}}</td></tr><tr><td>TODO</td><td>{{todo_path}}</td></tr><tr><td>Data início</td><td>{{start_date}}</td></tr></table></div>
+<h2 id="identification">Identification</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Task</td><td>{{task_name}}</td></tr><tr><td>Number</td><td>{{task_number}}</td></tr><tr><td>TODO</td><td>{{todo_path}}</td></tr><tr><td>Start Date</td><td>{{start_date}}</td></tr></table></div>
 <hr>
-<h2 id="estado">Estado</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Estado atual</td><td>{{current_state}}</td></tr><tr><td>Data início</td><td>{{start_date}}</td></tr><tr><td>Data término</td><td>{{end_date}}</td></tr><tr><td>Duração</td><td>{{duration}}</td></tr><tr><td>Tentativas</td><td>{{attempts}}</td></tr></table></div>
-<h3 id="transies-de-estado">Transições de Estado</h3>
-<div class="table-wrapper"><table><tr><th>Data</th><th>De</th><th>Para</th><th>Motivo</th></tr></table></div>
+<h2 id="state">State</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Current State</td><td>{{current_state}}</td></tr><tr><td>Start Date</td><td>{{start_date}}</td></tr><tr><td>End Date</td><td>{{end_date}}</td></tr><tr><td>Duration</td><td>{{duration}}</td></tr><tr><td>Attempts</td><td>{{attempts}}</td></tr></table></div>
+<h3 id="state-transitions">State Transitions</h3>
+<div class="table-wrapper"><table><tr><th>Date</th><th>From</th><th>To</th><th>Reason</th></tr></table></div>
 <p>{{#each transitions}}</p>
 <div class="table-wrapper"><table><tr><th>{{date}}</th><th>{{from}}</th><th>{{to}}</th><th>{{reason}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="descrio-da-tarefa">Descrição da Tarefa</h2>
+<h2 id="task-description">Task Description</h2>
 <p>{{task_description}}</p>
 <hr>
-<h2 id="dependncias">Dependências</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Dependência</th><th>Estado</th><th>Pode iniciar?</th></tr></table></div>
+<h2 id="dependencies">Dependencies</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Dependency</th><th>State</th><th>Can Start?</th></tr></table></div>
 <p>{{#each dependencies}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{dependency}}</th><th>{{status}}</th><th>{{can_start}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="alteraes-realizadas">Alterações Realizadas</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Arquivo</th><th>Tipo</th><th>Descrição</th><th>Linhas</th></tr></table></div>
+<h2 id="changes-made">Changes Made</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>File</th><th>Type</th><th>Description</th><th>Lines</th></tr></table></div>
 <p>{{#each changes}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{file}}</th><th>{{type}}</th><th>{{description}}</th><th>{{lines}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="validaes">Validações</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Validação</th><th>Resultado</th><th>Tentativa</th><th>Timestamp</th><th>Observações</th></tr></table></div>
+<h2 id="validations">Validations</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Validation</th><th>Result</th><th>Attempt</th><th>Timestamp</th><th>Notes</th></tr></table></div>
 <p>{{#each validations}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{validation}}</th><th>{{result}}</th><th>{{attempt}}</th><th>{{timestamp}}</th><th>{{notes}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="bloqueadores">Bloqueadores</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Bloqueador</th><th>Data Identificação</th><th>Data Resolução</th><th>Ação</th></tr></table></div>
+<h2 id="blockers">Blockers</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Blocker</th><th>Identification Date</th><th>Resolution Date</th><th>Action</th></tr></table></div>
 <p>{{#each blockers}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{blocker}}</th><th>{{identified}}</th><th>{{resolved}}</th><th>{{action}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="critrios-de-aceite">Critérios de Aceite</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Critério</th><th>Atendido</th><th>Evidência</th></tr></table></div>
+<h2 id="acceptance-criteria">Acceptance Criteria</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Criterion</th><th>Met</th><th>Evidence</th></tr></table></div>
 <p>{{#each acceptance_criteria}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{criterion}}</th><th>{{met}}</th><th>{{evidence}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="observaes">Observações</h2>
+<h2 id="notes">Notes</h2>
 <p>{{#each notes}}</p>
 <ul>
 <li>{{note}}</li>
 </ul>
 <p>{{/each}}</p>
 <hr>
-<h2 id="resumo">Resumo</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Tarefa concluída</td><td>{{completed}}</td></tr><tr><td>Validações passaram</td><td>{{validations_passed}}</td></tr><tr><td>Documentação atualizada</td><td>{{docs_updated}}</td></tr><tr><td>Próxima tarefa</td><td>{{next_task}}</td></tr></table></div>
+<h2 id="summary">Summary</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Task Completed</td><td>{{completed}}</td></tr><tr><td>Validations Passed</td><td>{{validations_passed}}</td></tr><tr><td>Documentation Updated</td><td>{{docs_updated}}</td></tr><tr><td>Next Task</td><td>{{next_task}}</td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

@@ -1,22 +1,22 @@
 # Security Policy
 
-## Versões Suportadas
+## Supported Versions
 
-| Versão | Suportada |
-|--------|-----------|
-| {última} | ✅ |
-| {anterior} | ✅ |
-| < {antiga} | ❌ |
+| Version | Supported |
+|---------|------------|
+| {latest} | ✅ |
+| {previous} | ✅ |
+| < {old} | ❌ |
 
-## Reportando Vulnerabilidades
+## Reporting Vulnerabilities
 
-Envie email para {email} com:
-- Descrição da vulnerabilidade
-- Passos para reproduzir
-- Impacto potencial
+Send an email to {email} with:
+- Vulnerability description
+- Steps to reproduce
+- Potential impact
 
-## Divulgação Responsiva
+## Responsible Disclosure
 
-- Confirmaremos em 48h
-- Corrigiremos em 7 dias
-- Credito ao descobridor
+- We will confirm within 48 hours
+- We will fix within 7 days
+- Credit to the discoverer

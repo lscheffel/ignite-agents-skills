@@ -1,49 +1,64 @@
 ---
-implementation_status: PENDENTE
+id: ADR-{{id}}
+type: adr
+title: "{{title}}"
+created: {{date}}
+updated: {{date}}
+implementation_status: IN_PROGRESS
+tier: X
+follow_up_deadline: {{follow_up_date}}
+# ADR Emergency Template
 ---
 
 # ADR-{{id}}: {{title}}
 
+> Tier X — ADR Flash (Hotfix Post-Event). Reserved for P0 incidents where the
+> code has already been or is being written before there is time to document.
+> **Follow-up mandatory:** promote this ADR to a complete Triad (ADR + BP +
+> TODO) via Phase 4 (Auto-Repair) by `{{follow_up_date}}`. Until then, treat
+> as governance debt of high priority 🔴.
+
 ## Status
-Implementado (emergencial)
+Accepted (emergency) — pending promotion to Triad
 
 ## Data
 {{date}}
 
-## Contexto
+## Context
 
-### Diagnóstico
+### Diagnosis
 
-| Capacidade | Status | Evidence |
+| Capacity | Status | Evidence |
 |------------|--------|----------|
 | {{capability}} | ❌ | {{evidence}} |
 
-### Consequências da Lacuna
+### Consequences of the Gap
 
 - {{consequence_1}}
 - {{consequence_2}}
 
-## Decisão
+## Decision
 
 {{decision}}
 
-### Implementação Imediata
+### Immediate Implementation
 
 ```
 {{implementation_steps}}
 ```
 
-## Consequências
+## Consequences
 
-### Positivas
+### Positive
 - {{positive_1}}
 
-### Negativas
+### Negative
 - {{negative_1}}
 
-### Riscos
-- **Risco**: {{risk}}
-  - **Mitigação**: {{mitigation}}
+### Risks
+- **Risk**: {{risk}}
+  - **Mitigation**: {{mitigation}}
 
-## Referências
+## References
 - {{reference}}
+- Follow-up (Phase 4 Auto-Repair): (pending until {{follow_up_date}})

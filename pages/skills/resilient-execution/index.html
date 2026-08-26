@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>resilient-execution — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; resilient-execution</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: resilient-execution version: 1.0.0 description: Use when a task fails, an approach does not work, when encountering errors during implementation, or when tempted to say "I cannot do this" - ensures retry with at least 3 genuinely different approaches before escalating domain: domain-stack triggers:</p>
+<ul>
+<li>resilient-execution</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>resilient-execution</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="resilient-execution">Resilient Execution</h1>
+<h2 id="overview">Overview</h2>
+<p>The resilient-execution skill prevents premature failure by enforcing a minimum of 3 genuinely different approaches before escalating to the user. It provides a structured error classification system, an approach cascade methodology, and transparent logging of each attempt. Without this skill, agents give up too early — with it, they systematically exhaust alternatives and only escalate with full evidence.</p>
+<p><strong>Announce at start:</strong> "I'm using the resilient-execution skill — I will try multiple approaches before escalating."</p>
+<hr>
+<h2 id="phase-1-error-classification">Phase 1: Error Classification</h2>
+<p>When an approach fails, immediately classify the error before retrying:</p>
+<div class="table-wrapper"><table><tr><th>Error Type</th><th>Definition</th><th>Indicators</th><th>Correct Response</th></tr><tr><td><strong>Transient</strong></td><td>Temporary infrastructure failure</td><td>Network timeout, rate limit, 503 error, lock contention</td><td>Wait briefly, retry the same approach</td></tr><tr><td><strong>Environmental</strong></td><td>Missing or misconfigured dependency</td><td>Module not found, wrong version, missing env var, permission denied</td><td>Fix the environment, then retry same approach</td></tr><tr><td><strong>Logical</strong></td><td>Wrong approach or incorrect assumption</td><td>Wrong output, unexpected behavior, type mismatch, wrong API usage</td><td>Rethink the approach entirely</td></tr><tr><td><strong>Fundamental</strong></td><td>Genuinely impossible with available tools</td><td>API does not exist, hardware limitation, missing capability</td><td>Escalate to user with evidence</td></tr></table></div>
+<p><HARD-GATE> You MUST try at least 3 different approaches before telling the user something cannot be done. "I tried and it didn't work" is not acceptable without evidence of 3 genuine attempts with meaningfully different strategies. </HARD-GATE></p>
+<blockquote><strong>STOP: Classify the error before choosing your next approach. Wrong classification leads to wasted retries.</strong></blockquote>
+<hr>
+<h2 id="phase-2-approach-cascade">Phase 2: Approach Cascade</h2>
+<p>Execute the cascade systematically. Each attempt must be a genuinely different strategy.</p>
+<pre><code>Attempt 1: Primary approach (most direct solution)
+    | fails
+    v
+Classify error -&gt; Can same approach work with a fix?
+    | YES -&gt; Fix and retry (does NOT count as a new attempt)
+    | NO  -&gt; Proceed to Attempt 2
+    v
+Attempt 2: Alternative approach 1 (different technique)
+    | fails
+    v
+Classify error -&gt; Is this fundamentally blocked?
+    | YES -&gt; Proceed directly to escalation
+    | NO  -&gt; Proceed to Attempt 3
+    v
+Attempt 3: Alternative approach 2 (different path entirely)
+    | fails
+    v
+Circuit breaker -&gt; Present findings to user with full evidence</code></pre>
+<h3 id="for-each-attempt-log">For Each Attempt, Log:</h3>
+<pre data-lang="markdown"><code>### Attempt N: [Approach Name]
+**Strategy:** [what makes this different from previous attempts]
+**What I tried:** [specific description with commands/code]
+**What happened:** [exact error or unexpected result]
+**Why it failed:** [root cause analysis]
+**Classification:** [Transient / Environmental / Logical / Fundamental]
+**What to try next:** [reasoning for next approach]</code></pre>
+<blockquote><strong>STOP: Log every attempt before moving to the next. Do NOT skip logging — it is evidence for the escalation report.</strong></blockquote>
+<hr>
+<h2 id="phase-3-alternative-approach-selection">Phase 3: Alternative Approach Selection</h2>
+<p>When the primary approach fails, select the next approach using this decision table:</p>
+<div class="table-wrapper"><table><tr><th>Failure Type</th><th>Strategy 1</th><th>Strategy 2</th><th>Strategy 3</th></tr><tr><td>Library/API does not work</td><td>Different library</td><td>Direct implementation (no library)</td><td>Shell command / external tool</td></tr><tr><td>Algorithm produces wrong result</td><td>Different algorithm</td><td>Decompose into smaller steps</td><td>Simplify constraints, solve easier version</td></tr><tr><td>Permission/access denied</td><td>Different access method</td><td>Escalate with manual steps</td><td>Work around via alternative path</td></tr><tr><td>Tool limitation</td><td>Different tool</td><td>Combine multiple tools</td><td>Provide manual instructions</td></tr><tr><td>Integration failure</td><td>Mock the dependency</td><td>Use alternative interface</td><td>Isolate and test components separately</td></tr><tr><td>Performance issue</td><td>Different data structure</td><td>Batch/stream processing</td><td>Approximate solution</td></tr></table></div>
+<h3 id="alternative-strategy-hierarchy">Alternative Strategy Hierarchy</h3>
+<p>Try these in order of preference:</p>
+<ol>
+<li><strong>Different tool</strong> — use a different library, API, or command</li>
+<li><strong>Different algorithm</strong> — solve the same problem a different way</li>
+<li><strong>Decompose</strong> — break the problem into smaller, solvable parts</li>
+<li><strong>Simplify</strong> — remove constraints and solve a simpler version first</li>
+<li><strong>Work around</strong> — achieve the goal through a different path entirely</li>
+<li><strong>Manual steps</strong> — provide clear instructions the user can follow themselves</li>
+</ol>
+<hr>
+<h2 id="phase-4-escalation-report">Phase 4: Escalation Report</h2>
+<p>After 3 genuine attempts with different approaches, produce this report:</p>
+<pre data-lang="markdown"><code>## Execution Report
+
+I tried 3 different approaches to [goal]:
+
+### Attempt 1: [Approach Name]
+**Strategy:** [description]
+**Result:** Failed because [specific reason]
+**Error:** [exact error message or unexpected output]
+
+### Attempt 2: [Approach Name]
+**Strategy:** [description]
+**Result:** Failed because [specific reason]
+**Error:** [exact error message or unexpected output]
+
+### Attempt 3: [Approach Name]
+**Strategy:** [description]
+**Result:** Failed because [specific reason]
+**Error:** [exact error message or unexpected output]
+
+### Root Cause Analysis
+[Why all three approaches failed — identify the common blocker]
+
+### Recommended Next Steps
+- **Option A:** [what the user could try]
+- **Option B:** [alternative path]
+- **Option C:** [if applicable]
+
+### What I Need From You to Proceed
+[Specific ask — access, information, permission, or decision]</code></pre>
+<blockquote><strong>STOP: Do NOT escalate without this report. The user needs evidence that 3 genuine attempts were made.</strong></blockquote>
+<hr>
+<h2 id="decision-table-when-retries-count-as-genuine">Decision Table: When Retries Count as "Genuine"</h2>
+<div class="table-wrapper"><table><tr><th>Counts as Genuine Attempt</th><th>Does NOT Count</th></tr><tr><td>Different library or tool</td><td>Same library with different import</td></tr><tr><td>Different algorithm or data structure</td><td>Same algorithm with tweaked parameters</td></tr><tr><td>Different architectural approach</td><td>Same approach with minor code changes</td></tr><tr><td>Manual workaround vs automated</td><td>Same automation with retry loop</td></tr><tr><td>Breaking problem into sub-problems</td><td>Same monolithic approach with logging added</td></tr><tr><td>Using an entirely different API</td><td>Same API with different authentication method (unless auth was the error)</td></tr></table></div>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>What NOT to Do</th><th>Why It Fails</th><th>What to Do Instead</th></tr><tr><td>Retry the same approach 3 times and call it "3 attempts"</td><td>Same approach = same failure. Not genuine alternatives.</td><td>Each attempt must use a meaningfully different strategy</td></tr><tr><td>Give up after 1 failure</td><td>Misses 2+ viable approaches</td><td>Always try at least 3 genuinely different approaches</td></tr><tr><td>Skip error classification</td><td>Without classification, you retry wrong things</td><td>Classify BEFORE choosing next approach</td></tr><tr><td>Hide failed attempts from the user</td><td>User cannot help without context</td><td>Log and report every attempt transparently</td></tr><tr><td>Escalate without trying manual workaround</td><td>Many things that fail in automation work manually</td><td>Always consider manual steps as Approach 3</td></tr><tr><td>Blame the platform without investigation</td><td>"Platform limitation" is often wrong</td><td>Search for workarounds before declaring impossible</td></tr><tr><td>Fix environment issues and count as new attempt</td><td>Fixing env + retrying same approach is 1 attempt</td><td>Only count genuinely different strategies</td></tr><tr><td>Skip logging intermediate attempts</td><td>Loses evidence trail, cannot produce escalation report</td><td>Log every attempt immediately</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<div class="table-wrapper"><table><tr><th>Thought</th><th>Reality</th></tr><tr><td>"This genuinely cannot be done"</td><td>Have you tried 3 different approaches? Probably not.</td></tr><tr><td>"The error is clear, I know what is wrong"</td><td>Clear errors can have hidden root causes. Investigate.</td></tr><tr><td>"I have already tried everything"</td><td>List what you tried. There are always more options.</td></tr><tr><td>"The user should fix this themselves"</td><td>Provide a manual path, but try 3 approaches first.</td></tr><tr><td>"This is a platform limitation"</td><td>Limitations often have workarounds. Search for them.</td></tr><tr><td>"The same error keeps happening"</td><td>Same error with different approaches = different root cause. Classify.</td></tr><tr><td>"This is taking too long"</td><td>Giving up takes longer when the user has to start over.</td></tr><tr><td>"A simpler version would not be useful"</td><td>A working simple version beats a broken complex one.</td></tr></table></div>
+<blockquote><strong>Do NOT escalate without 3 genuine attempts. Period.</strong></blockquote>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>circuit-breaker</code></td><td>Activated after resilient-execution exhausts retries at the loop level</td></tr><tr><td><code>task-management</code></td><td>Invokes resilient-execution when a task step fails</td></tr><tr><td><code>self-learning</code></td><td>Records failure patterns to avoid repeating them in future sessions</td></tr><tr><td><code>planning</code></td><td>Uses failure history to choose more robust approaches</td></tr><tr><td><code>auto-improvement</code></td><td>Tracks retry success rates and approach effectiveness</td></tr><tr><td><code>verification-before-completion</code></td><td>Invokes resilient-execution if verification fails</td></tr></table></div>
+<hr>
+<h2 id="concrete-examples">Concrete Examples</h2>
+<h3 id="example-file-parsing-failure">Example: File Parsing Failure</h3>
+<pre><code>Attempt 1: JSON.parse() on the file
+  Result: SyntaxError — file contains comments (JSONC format)
+  Classification: Logical — wrong parser for this format
+
+Attempt 2: Strip comments with regex, then JSON.parse()
+  Result: Failed — nested block comments not handled
+  Classification: Logical — regex too simple for comment stripping
+
+Attempt 3: Use `jsonc-parser` library (handles JSONC natively)
+  Result: Success — file parsed correctly</code></pre>
+<h3 id="example-api-integration-failure">Example: API Integration Failure</h3>
+<pre><code>Attempt 1: Direct HTTP request to API endpoint
+  Result: 403 Forbidden — authentication required
+  Classification: Environmental — missing auth config
+
+  Fix: Add API key from .env
+  Result: 429 Too Many Requests — rate limited
+  Classification: Transient — wait and retry
+  Result: 200 OK but response format changed from docs
+  Classification: Logical — API version mismatch
+
+Attempt 2: Use official SDK instead of raw HTTP
+  Result: SDK throws &quot;unsupported region&quot; error
+  Classification: Environmental — region config needed
+
+Attempt 3: Use GraphQL endpoint instead of REST
+  Result: Success — GraphQL endpoint supports all regions</code></pre>
+<hr>
+<h2 id="key-principles">Key Principles</h2>
+<ul>
+<li><strong>Never give up silently</strong> — always show what was tried</li>
+<li><strong>Genuine alternatives</strong> — each attempt must be a meaningfully different approach, not the same thing with minor tweaks</li>
+<li><strong>Root cause analysis</strong> — understand WHY before trying the next approach</li>
+<li><strong>Learn from failure</strong> — update memory with what did not work and why</li>
+<li><strong>Transparent</strong> — show the user your reasoning at each step</li>
+<li><strong>Classify first</strong> — error type determines whether to retry same approach or try a new one</li>
+</ul>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — The 3-attempt minimum is a HARD-GATE. Error classification is mandatory before each retry. The escalation report format must be followed exactly. Do not relax these requirements regardless of perceived simplicity.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

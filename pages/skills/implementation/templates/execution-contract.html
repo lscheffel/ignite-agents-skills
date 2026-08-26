@@ -411,62 +411,62 @@
   </nav>
   <div class="content">
     <h1 id="execution-contract">Execution Contract</h1>
-<blockquote>Contrato obrigatório que valida se todos os artefatos necessários estão presentes antes da execução.</blockquote>
+<blockquote>Mandatory contract that validates the presence of all necessary artifacts before execution.</blockquote>
 <hr>
-<h2 id="identificao">Identificação</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>ADR</td><td>{{adr_path}}</td></tr><tr><td>Blueprint</td><td>{{blueprint_path}}</td></tr><tr><td>TODO</td><td>{{todo_path}}</td></tr><tr><td>Data de geração</td><td>{{date}}</td></tr><tr><td>Responsável</td><td>{{agent_name}}</td></tr></table></div>
+<h2 id="identification">Identification</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>ADR</td><td>{{adr_path}}</td></tr><tr><td>Blueprint</td><td>{{blueprint_path}}</td></tr><tr><td>TODO</td><td>{{todo_path}}</td></tr><tr><td>Generation Date</td><td>{{date}}</td></tr><tr><td>Responsible Agent</td><td>{{agent_name}}</td></tr></table></div>
 <hr>
-<h2 id="artefatos">Artefatos</h2>
-<div class="table-wrapper"><table><tr><th>Artefato</th><th>Path</th><th>Status</th><th>Coerente</th></tr><tr><td>ADR</td><td>{{adr_path}}</td><td>{{adr_status}}</td><td>{{adr_coherent}}</td></tr><tr><td>Blueprint</td><td>{{blueprint_path}}</td><td>{{bp_exists}}</td><td>{{bp_coherent}}</td></tr><tr><td>TODO</td><td>{{todo_path}}</td><td>{{todo_exists}}</td><td>{{todo_coherent}}</td></tr></table></div>
-<h3 id="validao-de-coerncia">Validação de Coerência</h3>
+<h2 id="artifacts">Artifacts</h2>
+<div class="table-wrapper"><table><tr><th>Artifact</th><th>Path</th><th>Status</th><th>Coherent</th></tr><tr><td>ADR</td><td>{{adr_path}}</td><td>{{adr_status}}</td><td>{{adr_coherent}}</td></tr><tr><td>Blueprint</td><td>{{blueprint_path}}</td><td>{{bp_exists}}</td><td>{{bp_coherent}}</td></tr><tr><td>TODO</td><td>{{todo_path}}</td><td>{{todo_exists}}</td><td>{{todo_coherent}}</td></tr></table></div>
+<h3 id="coherence-validation">Coherence Validation</h3>
 <ul>
-<li>[ ] ADR contém seção "Decisão" preenchida</li>
-<li>[ ] Blueprint contém tarefas documentadas</li>
-<li>[ ] TODO contém tarefas com estados</li>
-<li>[ ] Tarefas do Blueprint existem no TODO</li>
-<li>[ ] Dependências no TODO são consistentes com Blueprint</li>
+<li>[ ] ADR contains filled "Decision" section</li>
+<li>[ ] Blueprint contains documented tasks</li>
+<li>[ ] TODO contains tasks with states</li>
+<li>[ ] Blueprint tasks exist in TODO</li>
+<li>[ ] TODO dependencies are consistent with Blueprint</li>
 </ul>
 <hr>
-<h2 id="ambiente">Ambiente</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Branch atual</td><td>{{branch_name}}</td></tr><tr><td>Workspace limpo</td><td>{{workspace_clean}}</td></tr><tr><td>Commit HEAD</td><td>{{head_commit}}</td></tr><tr><td>Diretório de trabalho</td><td>{{working_dir}}</td></tr></table></div>
-<h3 id="validao-do-ambiente">Validação do Ambiente</h3>
+<h2 id="environment">Environment</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Current Branch</td><td>{{branch_name}}</td></tr><tr><td>Clean Workspace</td><td>{{workspace_clean}}</td></tr><tr><td>Commit HEAD</td><td>{{head_commit}}</td></tr><tr><td>Working Directory</td><td>{{working_dir}}</td></tr></table></div>
+<h3 id="environment-validation">Environment Validation</h3>
 <ul>
-<li>[ ] Branch não é main/master (ou há PR aberto)</li>
-<li>[ ] Sem alterações não commitadas (git status limpo)</li>
-<li>[ ] Todos os arquivos impactados existem no workspace</li>
-<li>[ ] Branch está atualizada com remote (sem divergência)</li>
+<li>[ ] Branch is not main/master (or PR is open)</li>
+<li>[ ] No uncommitted changes (git status clean)</li>
+<li>[ ] All impacted files exist in workspace</li>
+<li>[ ] Branch is up-to-date with remote (no divergence)</li>
 </ul>
 <hr>
-<h2 id="arquivos-impactados">Arquivos Impactados</h2>
-<div class="table-wrapper"><table><tr><th>Arquivo</th><th>Tipo de Mudança</th><th>Skill Relacionada</th></tr></table></div>
+<h2 id="affected-files">Affected Files</h2>
+<div class="table-wrapper"><table><tr><th>File</th><th>Type of Change</th><th>Related Skill</th></tr></table></div>
 <p>{{#each affected_files}}</p>
 <div class="table-wrapper"><table><tr><th>{{path}}</th><th>{{change_type}}</th><th>{{related_skill}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="critrios-de-aceite">Critérios de Aceite</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Critério</th><th>Verificável</th></tr></table></div>
+<h2 id="acceptance-criteria">Acceptance Criteria</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Criterion</th><th>Verifiable</th></tr></table></div>
 <p>{{#each acceptance_criteria}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{criterion}}</th><th>{{verifiable}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="critrios-de-rollback">Critérios de Rollback</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Critério</th><th>Critério de Ativação</th></tr></table></div>
+<h2 id="rollback-criteria">Rollback Criteria</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Criterion</th><th>Trigger Criterion</th></tr></table></div>
 <p>{{#each rollback_criteria}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{criterion}}</th><th>{{trigger}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="validao-final">Validação Final</h2>
+<h2 id="final-validation">Final Validation</h2>
 <ul>
-<li>[ ] Todos os campos obrigatórios estão preenchidos</li>
-<li>[ ] Todos os artefatos existem e estão coerentes</li>
-<li>[ ] Ambiente está limpo e pronto para execução</li>
-<li>[ ] Critérios de aceite estão definidos e verificáveis</li>
-<li>[ ] Critérios de rollback estão definidos</li>
-<li>[ ] Contrato aprovado pelo agente executor</li>
+<li>[ ] All mandatory fields are filled</li>
+<li>[ ] All artifacts exist and are coherent</li>
+<li>[ ] Environment is clean and ready for execution</li>
+<li>[ ] Acceptance criteria are defined and verifiable</li>
+<li>[ ] Rollback criteria are defined</li>
+<li>[ ] Contract approved by executing agent</li>
 </ul>
 <hr>
-<h2 id="assinatura">Assinatura</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Contrato validado em</td><td>{{validation_date}}</td></tr><tr><td>Status</td><td>{{contract_status}}</td></tr><tr><td>Próximo passo</td><td>{{next_step}}</td></tr></table></div>
+<h2 id="signature">Signature</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Contract validated on</td><td>{{validation_date}}</td></tr><tr><td>Status</td><td>{{contract_status}}</td></tr><tr><td>Next Step</td><td>{{next_step}}</td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

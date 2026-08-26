@@ -410,90 +410,92 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">implementation</a> &rsaquo; checklists &rsaquo; post-execution</div>
   </nav>
   <div class="content">
-    <h1 id="checklist-de-ps-execuo">Checklist de Pós-Execução</h1>
-<blockquote>Executar este checklist após concluir toda a implementação governada.</blockquote>
+    <h1 id="post-implementation-checklist">Post-Implementation Checklist</h1>
+<blockquote>Execute this checklist after completing the entire governed implementation.</blockquote>
 <hr>
-<h2 id="1-validao-de-tarefas">1. Validação de Tarefas</h2>
+<h2 id="1-task-validation">1. Task Validation</h2>
 <ul>
-<li>[ ] Todas as tarefas do TODO estão marcadas como "Concluído"</li>
-<li>[ ] Nenhuma tarefa está marcada como "Bloqueado"</li>
-<li>[ ] Nenhuma tarefa está marcada como "Em andamento"</li>
-<li>[ ] Tarefas "Adiadas" têm justificativa documentada</li>
+<li>[ ] All TODO tasks are marked as "Completed"</li>
+<li>[ ] No task is marked as "Blocked"</li>
+<li>[ ] No task is marked as "In Progress"</li>
+<li>[ ] "Deferred" tasks have documented justification</li>
 </ul>
 <hr>
-<h2 id="2-validao-de-build">2. Validação de Build</h2>
+<h2 id="2-build-validation">2. Build Validation</h2>
 <ul>
-<li>[ ] Build principal passa sem erros</li>
-<li>[ ] Build de tipos passa sem erros (typecheck)</li>
-<li>[ ] Não há warnings novos não justificados</li>
+<li>[ ] Main build passes without errors</li>
+<li>[ ] Typecheck build passes without errors</li>
+<li>[ ] No new, unjustified warnings</li>
 </ul>
 <hr>
-<h2 id="3-validao-de-qualidade">3. Validação de Qualidade</h2>
+<h2 id="3-quality-validation">3. Quality Validation</h2>
 <ul>
-<li>[ ] Lint passa sem erros</li>
-<li>[ ] Formatação está consistente</li>
-<li>[ ] Não há code smells introduzidos</li>
+<li>[ ] Lint passes without errors</li>
+<li>[ ] Formatting is consistent</li>
+<li>[ ] No code smells were introduced</li>
+<li>[ ] <strong>Isolated Scope:</strong> No files or refactorings outside the contract were included</li>
 </ul>
 <hr>
-<h2 id="4-validao-de-testes">4. Validação de Testes</h2>
+<h2 id="4-test-validation">4. Test Validation</h2>
 <ul>
-<li>[ ] Testes unitários passam</li>
-<li>[ ] Testes de integração passam (se aplicável)</li>
-<li>[ ] Cobertura de testes não diminuiu</li>
-<li>[ ] Novos testes foram adicionados para novas funcionalidades</li>
+<li>[ ] Unit tests pass</li>
+<li>[ ] Integration tests pass (if applicable)</li>
+<li>[ ] Test coverage did not decrease</li>
+<li>[ ] New tests were added for new features</li>
 </ul>
 <hr>
-<h2 id="5-validao-de-documentao">5. Validação de Documentação</h2>
+<h2 id="5-documentation-validation">5. Documentation Validation</h2>
 <ul>
-<li>[ ] ADR está atualizada com status de implementação</li>
-<li>[ ] Blueprint está sincronizado com código implementado</li>
-<li>[ ] TODO reflete estado real (todas as tarefas concluídas)</li>
-<li>[ ] README foi atualizado (se aplicável)</li>
-<li>[ ] CHANGELOG foi atualizado (se aplicável)</li>
-<li>[ ] <code>related_skills</code> foram atualizados (se aplicável)</li>
+<li>[ ] ADR is updated with implementation status</li>
+<li>[ ] Blueprint is synchronized with implemented code</li>
+<li>[ ] TODO reflects real state (all tasks completed)</li>
+<li>[ ] README was updated (if applicable)</li>
+<li>[ ] CHANGELOG was updated (if applicable)</li>
+<li>[ ] <code>related_skills</code> were updated (if applicable)</li>
 </ul>
 <hr>
-<h2 id="6-validao-de-registry">6. Validação de Registry</h2>
+<h2 id="6-registry--technical-debt-validation">6. Registry & Technical Debt Validation</h2>
 <ul>
-<li>[ ] <code>skills/index.json</code> foi atualizado (se nova skill)</li>
-<li>[ ] <code>validate-index.sh</code> passa</li>
-<li>[ ] <code>validate-skill.sh</code> passa para nova skill</li>
-<li>[ ] Todos os paths no <code>index.json</code> são válidos</li>
+<li>[ ] Incident technical debt discovered was registered in <code>docs/governance/tech-debt-registry.json</code></li>
+<li>[ ] <code>skills/index.json</code> was updated (if new skill)</li>
+<li>[ ] <code>validate-index.sh</code> passes</li>
+<li>[ ] <code>validate-skill.sh</code> passes for new skill</li>
+<li>[ ] All paths in <code>index.json</code> are valid</li>
 </ul>
 <hr>
-<h2 id="7-validao-de-git">7. Validação de Git</h2>
+<h2 id="7-git-validation">7. Git Validation</h2>
 <ul>
-<li>[ ] Todos os commits seguem Conventional Commits</li>
-<li>[ ] Nenhum segredo ou credencial foi commitado</li>
-<li>[ ] Branch está limpa e pronta para PR</li>
-<li>[ ] Mensagens de commit são descritivas</li>
+<li>[ ] All commits follow Conventional Commits</li>
+<li>[ ] No secrets or credentials were committed</li>
+<li>[ ] Branch is clean and ready for PR</li>
+<li>[ ] Commit messages are descriptive</li>
 </ul>
 <hr>
-<h2 id="8-validao-de-riscos">8. Validação de Riscos</h2>
+<h2 id="8-risk-validation">8. Risk Validation</h2>
 <ul>
-<li>[ ] Riscos remanescentes foram documentados</li>
-<li>[ ] Dívida técnica criada foi documentada</li>
-<li>[ ] Recomendações futuras foram registradas</li>
+<li>[ ] Remaining risks were documented</li>
+<li>[ ] Created/Discovered technical debt was registered in <code>tech-debt-registry.json</code></li>
+<li>[ ] Future recommendations were registered</li>
 </ul>
 <hr>
 <h2 id="9-execution-report">9. Execution Report</h2>
 <ul>
-<li>[ ] Execution Report foi gerado a partir do template</li>
-<li>[ ] Todos os campos obrigatórios foram preenchidos</li>
-<li>[ ] Relatório inclui lições aprendidas</li>
-<li>[ ] Relatório inclui métricas de implementação</li>
+<li>[ ] Execution Report was generated from the template (or via gatekeeper algorithmic <code>audit.py</code>)</li>
+<li>[ ] All mandatory fields were filled</li>
+<li>[ ] Report includes lessons learned</li>
+<li>[ ] Report includes implementation metrics</li>
 </ul>
 <hr>
-<h2 id="10-validao-final">10. Validação Final</h2>
+<h2 id="10-final-validation">10. Final Validation</h2>
 <ul>
-<li>[ ] <code>validate-index.sh</code> passa para todas as skills</li>
-<li>[ ] <code>validate-skill.sh</code> passa para todas as skills</li>
-<li>[ ] Nenhum <code>related_skills</code> aponta para skill inexistente</li>
-<li>[ ] Workspace está limpo</li>
+<li>[ ] <code>validate-index.sh</code> passes for all skills</li>
+<li>[ ] <code>validate-skill.sh</code> passes for all skills</li>
+<li>[ ] No <code>related_skills</code> point to non-existent skill</li>
+<li>[ ] Workspace is clean</li>
 </ul>
 <hr>
-<h2 id="aprovao-final">Aprovação Final</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Checklist completo</td><td>✅/❌</td></tr><tr><td>Validações passaram</td><td>✅/❌</td></tr><tr><td>Documentação sincronizada</td><td>✅/❌</td></tr><tr><td>Implementation Report gerado</td><td>✅/❌</td></tr><tr><td>Implementação considerada concluída</td><td>✅/❌</td></tr></table></div>
+<h2 id="final-approval">Final Approval</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Checklist complete</td><td>✅/❌</td></tr><tr><td>Validations passed</td><td>✅/❌</td></tr><tr><td>Documentation synchronized</td><td>✅/❌</td></tr><tr><td>Technical debts registered</td><td>✅/❌</td></tr><tr><td>Implementation Report generated</td><td>✅/❌</td></tr><tr><td>Implementation considered complete</td><td>✅/❌</td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

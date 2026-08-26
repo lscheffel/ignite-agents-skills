@@ -411,48 +411,70 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: release description: Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico. version: 2.0.0 tags: [release, versioning, changelog, deploy, rollback] related_skills: [git, governance, implementation] ---</p>
+<p>name: release version: 2.0.0 description: Guide for release management and versioning. Defines release process, changelog, tag, deploy, and rollback. Use when preparing releases, publishing packages, or managing semantic versioning. domain: core-governance triggers:</p>
+<ul>
+<li>release</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>release</li>
+<li>versioning</li>
+<li>changelog</li>
+<li>deploy</li>
+<li>rollback</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="release">Release</h1>
-<p>Guia para gestão de releases e versionamento.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Guide for release management and versioning.</p>
+<h2 id="deterministic-execution-rules">Deterministic Execution Rules</h2>
+<blockquote>[!IMPORTANT]
+<strong>UNINTERRUPTIBLE EXECUTION PROTOCOL (HARD GATE)</strong>
+When triggering <code>/release</code>, the agent <strong>MUST NEVER STOP</strong> in the middle of the process or declare the task complete before <strong>ALL THREE PHASES</strong> (Prepare, Validate, and Publish Remotely) are executed continuously in the same turn.</blockquote>
+<h3 id="unconditional-requirements">Unconditional Requirements:</h3>
+<ol>
+<li><strong>Branch Assignment</strong>: If the release is initiated from a feature branch (<code>feat/...</code>), the agent <strong>MUST</strong> merge the branch into <code>main</code> (or master) before pushing remotely.</li>
+<li><strong>Remote Push Mandatory</strong>: The release <strong>IS ONLY</strong> considered complete after <code>git push origin main --tags</code> and <code>gh release create</code> (or remote channel publication).</li>
+<li><strong>Forbidden Partial Completion</strong>: Creating a local commit/tag and responding without pushing to the remote repository constitutes non-compliance.</li>
+</ol>
+<h2 id="decision-tree">Decision Tree</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Precisa preparar uma release</li>
-<li>Precisa publicar pacote npm/docker</li>
-<li>Precisa gerenciar versionamento semântico</li>
-<li>Precisa fazer rollback de release</li>
-<li>Precisa atualizar CHANGELOG</li>
+<li>Need to prepare a release</li>
+<li>Need to publish an npm/docker package</li>
+<li>Need to manage semantic versioning</li>
+<li>Need to perform a release rollback</li>
+<li>Need to update the CHANGELOG</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Protótipo sem versionamento</li>
-<li>Projeto sem deploy automatizado</li>
-<li>Hotfix urgente (use skill git)</li>
+<li>Prototype without versioning</li>
+<li>Project without automated deployment</li>
+<li>Urgent hotfix (use <code>git</code> skill)</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>git</code> — para tags e branching</li>
-<li><code>governance</code> — para processo de aprovação</li>
+<li><code>git</code> — for tags and branching</li>
+<li><code>governance</code> — for approval process</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Tipo de Release?] --&gt;|npm package| B[npm]
+    A[Release Type?] --&gt;|npm package| B[npm]
     A --&gt;|Docker image| C[Docker]
     A --&gt;|GitHub Release| D[GitHub]
     A --&gt;|Custom| E[Manual]
     B --&gt;|Patch| F[1.0.1]
     B --&gt;|Minor| G[1.1.0]
     B --&gt;|Major| H[2.0.0]
-    C --&gt;|Tag semântica| I[v1.2.0]
+    C --&gt;|Semantic Tag| I[v1.2.0]
     C --&gt;|Latest| J[latest]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-preparar-release">Fase 1: Preparar Release</h3>
+<h3 id="phase-1-prepare-release">Phase 1: Prepare Release</h3>
 <ol>
-<li>Atualize CHANGELOG.md:</li>
+<li>Update CHANGELOG.md:</li>
 </ol>
 <pre data-lang="markdown"><code>   ## [Unreleased]
    ### Added
-   - Nova funcionalidade X
+   - New feature X
    
    ## [1.2.0] - 2024-01-15
    ### Added
@@ -460,110 +482,110 @@
    ### Fixed
    - Bug Y</code></pre>
 <ol>
-<li>Bump versão em package.json:</li>
+<li>Bump version in package.json:</li>
 </ol>
-<pre data-lang="bash"><code>   npm version minor  # ou major/patch</code></pre>
+<pre data-lang="bash"><code>   npm version minor  # or major/patch</code></pre>
 <ol>
-<li>Atualize versão em outros arquivos:</li>
+<li>Update version in other files:</li>
 </ol>
 <ul>
-<li>package-lock.json (automático)</li>
-<li>Dockerfile (se aplicável)</li>
-<li>Helm chart (se aplicável)</li>
+<li>package-lock.json (automatic)</li>
+<li>Dockerfile (if applicable)</li>
+<li>Helm chart (if applicable)</li>
 </ul>
 <ol>
-<li><strong>Checkpoint</strong>: Versão bumpada e CHANGELOG atualizado</li>
+<li><strong>Checkpoint</strong>: Version bumped and CHANGELOG updated</li>
 </ol>
-<h3 id="fase-2-validar-release">Fase 2: Validar Release</h3>
+<h3 id="phase-2-validate-release">Phase 2: Validate Release</h3>
 <ol>
-<li>Execute todos os testes:</li>
+<li>Run all tests:</li>
 </ol>
 <pre data-lang="bash"><code>   npm test
    npm run test:integration
    npm run test:e2e</code></pre>
 <ol>
-<li>Execute lint:</li>
+<li>Run lint:</li>
 </ol>
 <pre data-lang="bash"><code>   npm run lint</code></pre>
 <ol>
-<li>Execute build:</li>
+<li>Run build:</li>
 </ol>
 <pre data-lang="bash"><code>   npm run build</code></pre>
 <ol>
-<li>Verifique security:</li>
+<li>Verify security:</li>
 </ol>
 <pre data-lang="bash"><code>   npm audit</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Todos os checks passam</li>
+<li><strong>Checkpoint</strong>: All checks pass</li>
 </ol>
-<h3 id="fase-3-publicar-release">Fase 3: Publicar Release</h3>
+<h3 id="phase-3-publish-release">Phase 3: Publish Release</h3>
 <ol>
-<li>Commit das mudanças:</li>
+<li>Commit changes:</li>
 </ol>
 <pre data-lang="bash"><code>   git add .
    git commit -m &quot;chore(release): prepare v1.2.0&quot;</code></pre>
 <ol>
-<li>Crie tag:</li>
+<li>Create tag:</li>
 </ol>
 <pre data-lang="bash"><code>   git tag -a v1.2.0 -m &quot;Release v1.2.0&quot;</code></pre>
 <ol>
-<li>Push com tags:</li>
+<li>Push with tags:</li>
 </ol>
 <pre data-lang="bash"><code>   git push origin main --tags</code></pre>
 <ol>
-<li>Publicar npm (se aplicável):</li>
+<li>Publish npm (if applicable):</li>
 </ol>
 <pre data-lang="bash"><code>   npm publish</code></pre>
 <ol>
-<li>Publicar Docker (se aplicável):</li>
+<li>Publish Docker (if applicable):</li>
 </ol>
 <pre data-lang="bash"><code>   docker build -t myimage:v1.2.0 .
    docker push myimage:v1.2.0</code></pre>
 <ol>
-<li>Criar GitHub Release:</li>
+<li>Create GitHub Release:</li>
 </ol>
 <pre data-lang="bash"><code>   gh release create v1.2.0 --generate-notes</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Release publicada em todos os canais</li>
+<li><strong>Checkpoint</strong>: Release published in all channels</li>
 </ol>
-<h3 id="fase-4-rollback">Fase 4: Rollback</h3>
+<h3 id="phase-4-rollback">Phase 4: Rollback</h3>
 <ol>
-<li>Identifique versão estável anterior:</li>
+<li>Identify previous stable version:</li>
 </ol>
 <pre data-lang="bash"><code>   git tag | grep -E &quot;^v[0-9]&quot; | tail -5</code></pre>
 <ol>
-<li>Crie branch de rollback:</li>
+<li>Create rollback branch:</li>
 </ol>
 <pre data-lang="bash"><code>   git checkout -b rollback/v1.2.0-20240115 v1.1.0</code></pre>
 <ol>
-<li>Documente motivo:</li>
+<li>Document reason:</li>
 </ol>
-<pre data-lang="bash"><code>   echo &quot;Rollback v1.2.0 - motivo: memory leak&quot; &gt; ROLLBACK.md</code></pre>
+<pre data-lang="bash"><code>   echo &quot;Rollback v1.2.0 - reason: memory leak&quot; &gt; ROLLBACK.md</code></pre>
 <ol>
-<li>Publique rollback:</li>
+<li>Publish rollback:</li>
 </ol>
 <pre data-lang="bash"><code>   git tag v1.2.0-rollback-20240115
    git push origin rollback/v1.2.0-20240115 --tags</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Rollback publicado e documentado</li>
+<li><strong>Checkpoint</strong>: Rollback published and documented</li>
 </ol>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="versionamento-semntico">Versionamento Semântico</h3>
-<p>Formato: <code>MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]</code></p>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
+<h3 id="semantic-versioning">Semantic Versioning</h3>
+<p>Format: <code>MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]</code></p>
 <ul>
-<li><strong>MAJOR</strong>: mudanças incompatíveis (breaking changes)</li>
-<li><strong>MINOR</strong>: funcionalidades novas, retrocompatível</li>
-<li><strong>PATCH</strong>: correções de bug, retrocompatível</li>
-<li><strong>PRERELEASE</strong>: alpha, beta, rc</li>
-<li><strong>BUILD</strong>: metadados de build</li>
+<li><strong>MAJOR</strong>: Incompatible changes (breaking changes)</li>
+<li><strong>MINOR</strong>: New features, backward compatible</li>
+<li><strong>PATCH</strong>: Bug fixes, backward compatible</li>
+<li><strong>PRERELEASE</strong>: Alpha, beta, rc</li>
+<li><strong>BUILD</strong>: Build metadata</li>
 </ul>
 <h3 id="changelog-format">Changelog Format</h3>
-<p>Siga <a href="https://keepachangelog.com/">Keep a Changelog</a>:</p>
+<p>Follow <a href="https://keepachangelog.com/">Keep a Changelog</a>:</p>
 <pre data-lang="markdown"><code># Changelog
 
 ## [Unreleased]
 ### Added
-- Nova funcionalidade
+- New feature
 
 ## [1.2.0] - 2024-01-15
 ### Added
@@ -575,129 +597,129 @@
 [1.2.0]: https://github.com/.../compare/v1.1.0...v1.2.0</code></pre>
 <h2 id="templates">Templates</h2>
 <h3 id="changelog-entrymd">changelog-entry.md</h3>
-<p>Localização: <code>templates/changelog-entry.md</code></p>
-<p>Template para entrada de changelog.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code># Adicione ao CHANGELOG.md
+<p>Location: <code>templates/changelog-entry.md</code></p>
+<p>Template for changelog entry.</p>
+<p><strong>Usage:</strong></p>
+<pre data-lang="bash"><code># Add to CHANGELOG.md
 ## [Unreleased]
 ### Added
-- {{descrição da mudança}}</code></pre>
+- {{change description}}</code></pre>
 <h3 id="release-checklistmd">release-checklist.md</h3>
-<p>Localização: <code>templates/release-checklist.md</code></p>
-<p>Checklist de validação pré-release.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/release-checklist.md</code></p>
+<p>Checklist for release validation.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/release-checklist.md docs/release-checklist.md</code></pre>
 <h3 id="rollback-planmd">rollback-plan.md</h3>
-<p>Localização: <code>templates/rollback-plan.md</code></p>
-<p>Template para plano de rollback.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/rollback-plan.md</code></p>
+<p>Template for rollback plan.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/rollback-plan.md docs/rollback-plan.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="release-sem-changelog">Release sem Changelog</h4>
-<p><strong>O que é:</strong> Publicar release sem atualizar CHANGELOG.md. <strong>Por que é ruim:</strong> Usuários não sabem o que mudou, dificulta upgrade. <strong>Como evitar:</strong> Sempre atualize CHANGELOG antes do release. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="release-without-changelog">Release without Changelog</h4>
+<p><strong>What is it:</strong> Publishing release without updating CHANGELOG.md. <strong>Why is it bad:</strong> Users don't know what changed, makes upgrade difficult. <strong>How to avoid:</strong> Always update CHANGELOG before release. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 git tag v1.2.0
 git push --tags
 npm publish
 
-# ✅ CORRETO
-# Atualizar CHANGELOG.md
+# ✅ RIGHT
+# Update CHANGELOG.md
 git add CHANGELOG.md
 git commit -m &quot;docs: update changelog&quot;
 git tag v1.2.0
 git push --tags
 npm publish</code></pre>
-<h4 id="breaking-change-sem-major-bump">Breaking Change sem Major Bump</h4>
-<p><strong>O que é:</strong> Mudança que quebra API sem incrementar MAJOR. <strong>Por que é ruim:</strong> Quebra projetos dos usuários, perde confiança. <strong>Como evitar:</strong> SEMPRE major bump para breaking changes. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-# Remover campo user.email sem major bump
+<h4 id="breaking-change-without-major-bump">Breaking Change without Major Bump</h4>
+<p><strong>What is it:</strong> Change that breaks API without incrementing MAJOR. <strong>Why is it bad:</strong> Breaks user projects, loses trust. <strong>How to avoid:</strong> ALWAYS major bump for breaking changes. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+# Remove user.email without major bump
 npm version minor
 
-# ✅ CORRETO
-# Remover campo user.email
+# ✅ RIGHT
+# Remove user.email
 npm version major</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="release-sem-testes">Release sem Testes</h4>
-<p><strong>O que é:</strong> Publicar release sem executar testes completos. <strong>Por que é ruim:</strong> Bugs em produção, rollback necessário. <strong>Como evitar:</strong> CI obrigatório antes do release. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="release-without-tests">Release without Tests</h4>
+<p><strong>What is it:</strong> Publishing release without running complete tests. <strong>Why is it bad:</strong> Bugs in production, rollback necessary. <strong>How to avoid:</strong> CI mandatory before release. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 npm version minor
 git push --tags
 npm publish
 
-# ✅ CORRETO
+# ✅ RIGHT
 npm test
 npm run test:e2e
 npm version minor
 git push --tags
 npm publish</code></pre>
-<h4 id="tag-duplicada">Tag Duplicada</h4>
-<p><strong>O que é:</strong> Criar tag com mesmo nome de release anterior. <strong>Por que é ruim:</strong> Confusão, impossível rastrear histórico. <strong>Como evitar:</strong> Delete tag antes de recriar, ou use suffix. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-git tag v1.2.0  # já existe
-git push --tags  # erro
+<h4 id="duplicate-tag">Duplicate Tag</h4>
+<p><strong>What is it:</strong> Creating tag with same name as previous release. <strong>Why is it bad:</strong> Confusion, impossible to track history. <strong>How to avoid:</strong> Delete tag before recreating, or use suffix. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+git tag v1.2.0  # already exists
+git push --tags  # error
 
-# ✅ CORRETO
+# ✅ RIGHT
 git tag -d v1.2.0
 git tag v1.2.0
 git push --tags</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="release-sem-notas">Release sem Notas</h4>
-<p><strong>O que é:</strong> Release sem descrição do que mudou. <strong>Por que é ruim:</strong> Usuários não sabem se devem atualizar. <strong>Como evitar:</strong> Use <code>gh release create --generate-notes</code> ou escreva manualmente. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+<h3 id="-low">🟢 Low</h3>
+<h4 id="release-without-notes">Release without Notes</h4>
+<p><strong>What is it:</strong> Release without description of what changed. <strong>Why is it bad:</strong> Users don't know if they should update. <strong>How to avoid:</strong> Use <code>gh release create --generate-notes</code> or write manually. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 git tag v1.2.0
 git push --tags
 
-# ✅ CORRETO
+# ✅ RIGHT
 gh release create v1.2.0 --title &quot;v1.2.0&quot; --notes &quot;Bug fixes and performance improvements&quot;</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-pr-release">Checklist Pré-Release</h3>
+<h3 id="pre-release-checklist">Pre-Release Checklist</h3>
 <ul>
-<li>[ ] CHANGELOG.md atualizado</li>
-<li>[ ] Versão bumpada em package.json</li>
-<li>[ ] Todos os testes passam</li>
-<li>[ ] Lint passa</li>
-<li>[ ] Build passa</li>
-<li>[ ] npm audit sem vulnerabilidades altas</li>
-<li>[ ] Documentação atualizada</li>
-<li>[ ] README.md atualizado (se necessário)</li>
+<li>[ ] CHANGELOG.md updated</li>
+<li>[ ] Version bumped in package.json</li>
+<li>[ ] All tests pass</li>
+<li>[ ] Lint passes</li>
+<li>[ ] Build passes</li>
+<li>[ ] npm audit without high vulnerabilities</li>
+<li>[ ] Documentation updated</li>
+<li>[ ] README.md updated (if necessary)</li>
 </ul>
-<h3 id="checklist-ps-release">Checklist Pós-Release</h3>
+<h3 id="post-release-checklist">Post-Release Checklist</h3>
 <ul>
-<li>[ ] Tag criada e push</li>
-<li>[ ] npm publish (se aplicável)</li>
-<li>[ ] Docker push (se aplicável)</li>
-<li>[ ] GitHub Release criado</li>
-<li>[ ] Slack/Discord notificado</li>
-<li>[ ] Versão atualizada para próximo dev</li>
+<li>[ ] Tag created and pushed</li>
+<li>[ ] npm publish (if applicable)</li>
+<li>[ ] Docker push (if applicable)</li>
+<li>[ ] GitHub Release created</li>
+<li>[ ] Slack/Discord notified</li>
+<li>[ ] Version updated for next dev</li>
 </ul>
-<h3 id="checklist-de-rollback">Checklist de Rollback</h3>
+<h3 id="rollback-checklist">Rollback Checklist</h3>
 <ul>
-<li>[ ] Versão problemática identificada</li>
-<li>[ ] Versão anterior estável identificada</li>
-<li>[ ] Branch de rollback criada</li>
-<li>[ ] Rollback publicado</li>
-<li>[ ] Usuários notificados</li>
-<li>[ ] Issue criada para bug root cause</li>
+<li>[ ] Problematic version identified</li>
+<li>[ ] Previous stable version identified</li>
+<li>[ ] Rollback branch created</li>
+<li>[ ] Rollback published</li>
+<li>[ ] Users notified</li>
+<li>[ ] Issue created for root cause bug</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="breaking-change-no-documentado">Breaking Change não Documentado</h3>
-<p><strong>Situação:</strong> Release contém breaking change sem documentação. <strong>Solução:</strong> Reverta imediatamente, publique correção documentada. <strong>Exceção:</strong> Se breaking é intencional e documentado em alpha/beta.</p>
-<pre data-lang="bash"><code># Documentar breaking change
+<h3 id="undocumented-breaking-change">Undocumented Breaking Change</h3>
+<p><strong>Situation:</strong> Release contains breaking change without documentation. <strong>Solution:</strong> Revert immediately, publish correction documented. <strong>Exception:</strong> If breaking is intentional and documented in alpha/beta.</p>
+<pre data-lang="bash"><code># Document breaking change
 echo &quot;BREAKING: user.email removed, use user.primaryEmail&quot; &gt;&gt; CHANGELOG.md</code></pre>
-<h3 id="hotfix-durante-release">Hotfix Durante Release</h3>
-<p><strong>Situação:</strong> Bug crítico encontrado enquanto prepara release. <strong>Solução:</strong> Pausar release, fazer hotfix, depois continuar. <strong>Exceção:</strong> Se hotfix é pequeno, pode incluir no release.</p>
-<pre data-lang="bash"><code># Hotfix durante release
+<h3 id="hotfix-during-release">Hotfix During Release</h3>
+<p><strong>Situation:</strong> Critical bug found while preparing release. <strong>Solution:</strong> Pause release, make hotfix, then continue. <strong>Exception:</strong> If hotfix is small, can include in release.</p>
+<pre data-lang="bash"><code># Hotfix during release
 git checkout -b hotfix/critical-bug main
-# ... corrigir ...
+# ... fix ...
 git checkout release/v1.2.0
 git merge hotfix/critical-bug</code></pre>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://keepachangelog.com/">Keep a Changelog</a></li>
 <li><a href="https://semver.org/">Semantic Versioning</a></li>
-<li><code>git</code> — para tags e branching</li>
-<li><code>governance</code> — para processo de aprovação</li>
+<li><code>git</code> — for tags and branching</li>
+<li><code>governance</code> — for approval process</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

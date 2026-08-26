@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>clean-code — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; clean-code</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: clean-code version: 1.0.0 description: 'Use when the user needs code quality review, refactoring guidance, SOLID principles application, or help identifying and fixing code smells. Triggers: code smell detection, refactoring planning, naming convention review, complexity reduction, DRY analysis, error handling improvement.' domain: engineering-quality triggers:</p>
+<ul>
+<li>clean-code</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>clean-code</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="clean-code">Clean Code</h1>
+<h2 id="overview">Overview</h2>
+<p>Apply clean code principles to produce readable, maintainable, and testable software. This skill covers SOLID principles, DRY application, code smell identification, refactoring patterns, naming conventions, error handling, and complexity management. Based on the works of Robert C. Martin, Martin Fowler, and Kent Beck.</p>
+<p><strong>Announce at start:</strong> "I'm using the clean-code skill to improve code quality."</p>
+<hr>
+<h2 id="phase-1-analyze-current-code">Phase 1: Analyze Current Code</h2>
+<p><strong>Goal:</strong> Read and understand the code in full context before changing anything.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Read the code in its full context (not just the snippet)</li>
+<li>Identify the code's responsibility and purpose</li>
+<li>Measure cyclomatic complexity</li>
+<li>Map coupling and dependencies</li>
+<li>Note any existing tests</li>
+</ol>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] Code is read in full context</li>
+<li>[ ] Purpose and responsibility are understood</li>
+<li>[ ] Complexity hotspots are identified</li>
+<li>[ ] Existing test coverage is known</li>
+</ul>
+<hr>
+<h2 id="phase-2-identify-code-smells">Phase 2: Identify Code Smells</h2>
+<p><strong>Goal:</strong> Catalog all code smells using the reference tables below.</p>
+<h3 id="bloaters">Bloaters</h3>
+<div class="table-wrapper"><table><tr><th>Smell</th><th>Detection</th><th>Refactoring</th></tr><tr><td>Long Method</td><td>> 30 lines</td><td>Extract Method</td></tr><tr><td>Large Class</td><td>> 300 lines or > 5 responsibilities</td><td>Extract Class</td></tr><tr><td>Long Parameter List</td><td>> 3 parameters</td><td>Introduce Parameter Object</td></tr><tr><td>Data Clumps</td><td>Same params appear together</td><td>Extract Class</td></tr><tr><td>Primitive Obsession</td><td>Primitives instead of small objects</td><td>Replace with Value Object</td></tr></table></div>
+<h3 id="object-orientation-abusers">Object-Orientation Abusers</h3>
+<div class="table-wrapper"><table><tr><th>Smell</th><th>Detection</th><th>Refactoring</th></tr><tr><td>Switch Statements</td><td>Switch on type</td><td>Replace with Polymorphism</td></tr><tr><td>Parallel Inheritance</td><td>Every subclass requires parallel subclass</td><td>Merge hierarchies</td></tr><tr><td>Refused Bequest</td><td>Subclass ignores inherited methods</td><td>Replace Inheritance with Delegation</td></tr></table></div>
+<h3 id="change-preventers">Change Preventers</h3>
+<div class="table-wrapper"><table><tr><th>Smell</th><th>Detection</th><th>Refactoring</th></tr><tr><td>Divergent Change</td><td>One class changed for multiple reasons</td><td>Extract Class (SRP)</td></tr><tr><td>Shotgun Surgery</td><td>One change touches many classes</td><td>Move Method, Inline Class</td></tr></table></div>
+<h3 id="dispensables">Dispensables</h3>
+<div class="table-wrapper"><table><tr><th>Smell</th><th>Detection</th><th>Refactoring</th></tr><tr><td>Dead Code</td><td>Unreachable or unused</td><td>Remove</td></tr><tr><td>Speculative Generality</td><td>Unused abstractions "just in case"</td><td>Collapse Hierarchy, Remove</td></tr><tr><td>Comments explaining bad code</td><td>Comments compensating for unclear code</td><td>Rename, Extract Method</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] All code smells are cataloged</li>
+<li>[ ] Each smell has a priority (high/medium/low)</li>
+<li>[ ] Refactoring approach is identified for each</li>
+</ul>
+<hr>
+<h2 id="phase-3-apply-refactoring">Phase 3: Apply Refactoring</h2>
+<p><strong>Goal:</strong> Apply refactoring patterns one at a time, verifying tests after each.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Apply ONE refactoring at a time</li>
+<li>Run tests after each change</li>
+<li>If any test fails, revert immediately</li>
+<li>Continue until code is clean</li>
+<li>Review naming, structure, and documentation</li>
+</ol>
+<h3 id="stop--refactoring-complete-when">STOP — Refactoring complete when:</h3>
+<ul>
+<li>[ ] All high-priority smells are resolved</li>
+<li>[ ] All tests pass after each change</li>
+<li>[ ] No behavior was changed during refactoring</li>
+<li>[ ] Code is readable to a new team member</li>
+</ul>
+<hr>
+<h2 id="solid-principles">SOLID Principles</h2>
+<h3 id="s--single-responsibility-principle">S — Single Responsibility Principle</h3>
+<p>A class/module should have one, and only one, reason to change.</p>
+<p><strong>Smell:</strong> A class that changes for multiple unrelated reasons. <strong>Fix:</strong> Extract responsibilities into separate classes.</p>
+<h3 id="o--openclosed-principle">O — Open/Closed Principle</h3>
+<p>Open for extension, closed for modification.</p>
+<p><strong>Smell:</strong> Switch statements that grow with new types. <strong>Fix:</strong> Polymorphism, strategy pattern, or plugin architecture.</p>
+<h3 id="l--liskov-substitution-principle">L — Liskov Substitution Principle</h3>
+<p>Subtypes must be substitutable for their base types.</p>
+<p><strong>Smell:</strong> Subclass overrides method to throw "not supported." <strong>Fix:</strong> Restructure hierarchy; prefer composition over inheritance.</p>
+<h3 id="i--interface-segregation-principle">I — Interface Segregation Principle</h3>
+<p>No client should depend on methods it does not use.</p>
+<p><strong>Smell:</strong> Interfaces with many methods; implementors leave some as no-ops. <strong>Fix:</strong> Split into smaller, focused interfaces.</p>
+<h3 id="d--dependency-inversion-principle">D — Dependency Inversion Principle</h3>
+<p>Depend on abstractions, not concretions.</p>
+<p><strong>Smell:</strong> High-level modules importing low-level modules directly. <strong>Fix:</strong> Inject dependencies via interfaces/abstract classes.</p>
+<hr>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<h3 id="rules">Rules</h3>
+<div class="table-wrapper"><table><tr><th>Element</th><th>Convention</th><th>Example</th></tr><tr><td>Variables</td><td>Nouns describing what they hold</td><td><code>userCount</code>, not <code>n</code></td></tr><tr><td>Booleans</td><td>Prefixed with is/has/can/should</td><td><code>isActive</code>, <code>hasPermission</code></td></tr><tr><td>Functions</td><td>Verbs describing what they do</td><td><code>calculateTotal</code>, <code>fetchUsers</code></td></tr><tr><td>Constants</td><td>UPPER_SNAKE_CASE</td><td><code>MAX_RETRY_COUNT</code></td></tr><tr><td>Classes</td><td>PascalCase nouns</td><td><code>UserRepository</code>, <code>PaymentService</code></td></tr><tr><td>Interfaces</td><td>Describe capability</td><td><code>Serializable</code>, <code>Cacheable</code></td></tr></table></div>
+<h3 id="name-length-guidelines">Name Length Guidelines</h3>
+<div class="table-wrapper"><table><tr><th>Scope</th><th>Length</th><th>Example</th></tr><tr><td>Loop counters</td><td>1-2 chars</td><td><code>i</code>, <code>j</code> (tiny loops only)</td></tr><tr><td>Lambda params</td><td>1-3 chars when context clear</td><td><code>users.filter(u => u.active)</code></td></tr><tr><td>Local variables</td><td>Short but descriptive</td><td><code>total</code>, <code>result</code></td></tr><tr><td>Function names</td><td>Medium, descriptive</td><td><code>calculateMonthlyRevenue</code></td></tr><tr><td>Class names</td><td>As long as needed</td><td><code>AuthenticationTokenValidator</code></td></tr></table></div>
+<hr>
+<h2 id="function-guidelines">Function Guidelines</h2>
+<h3 id="size-and-structure">Size and Structure</h3>
+<ul>
+<li>Functions should do one thing</li>
+<li>Ideal: 5-15 lines (excluding boilerplate)</li>
+<li>Maximum: 30 lines (beyond this, extract)</li>
+<li>Maximum parameters: 3 (beyond this, use options object)</li>
+</ul>
+<h3 id="guard-clauses-early-return">Guard Clauses (Early Return)</h3>
+<pre data-lang="typescript"><code>// Bad: nested conditions
+function getDiscount(user) {
+  if (user) {
+    if (user.isPremium) {
+      if (user.orderCount &gt; 10) {
+        return 0.2;
+      }
+    }
+  }
+  return 0;
+}
+
+// Good: guard clauses
+function getDiscount(user) {
+  if (!user) return 0;
+  if (!user.isPremium) return 0;
+  if (user.orderCount &lt;= 10) return 0;
+  return 0.2;
+}</code></pre>
+<hr>
+<h2 id="error-handling-patterns">Error Handling Patterns</h2>
+<h3 id="decision-table">Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Approach</th><th>Use When</th><th>Example</th></tr><tr><td>Result type</td><td>Functional style, expected failures</td><td><code>Result<T, E></code> return type</td></tr><tr><td>Specific exceptions</td><td>OOP style, exceptional cases</td><td><code>throw new ValidationError(...)</code></td></tr><tr><td>Error codes</td><td>C-style APIs, cross-language</td><td>Return code + message</td></tr><tr><td>Option/Maybe</td><td>Value may or may not exist</td><td><code>Option<User></code></td></tr></table></div>
+<h3 id="result-type-pattern">Result Type Pattern</h3>
+<pre data-lang="typescript"><code>type Result&lt;T, E = Error&gt; =
+  | { success: true; data: T }
+  | { success: false; error: E };
+
+function parseConfig(raw: string): Result&lt;Config, ParseError&gt; {
+  try {
+    const config = JSON.parse(raw);
+    if (!isValidConfig(config)) {
+      return { success: false, error: new ParseError(&#x27;Invalid config structure&#x27;) };
+    }
+    return { success: true, data: config };
+  } catch {
+    return { success: false, error: new ParseError(&#x27;Invalid JSON&#x27;) };
+  }
+}</code></pre>
+<h3 id="error-handling-never-list">Error Handling Never List</h3>
+<ul>
+<li>Never catch and swallow errors silently</li>
+<li>Never use exceptions for control flow</li>
+<li>Never return null to indicate an error</li>
+<li>Never log and rethrow without adding context</li>
+</ul>
+<hr>
+<h2 id="complexity-metrics">Complexity Metrics</h2>
+<div class="table-wrapper"><table><tr><th>Range</th><th>Risk Level</th><th>Action</th></tr><tr><td>1-5</td><td>Low</td><td>No action needed</td></tr><tr><td>6-10</td><td>Moderate</td><td>Consider refactoring</td></tr><tr><td>11-20</td><td>High</td><td>Should refactor</td></tr><tr><td>21+</td><td>Critical</td><td>Must refactor</td></tr></table></div>
+<h3 id="reducing-complexity">Reducing Complexity</h3>
+<ol>
+<li>Extract complex conditions into named booleans</li>
+<li>Replace nested conditionals with guard clauses</li>
+<li>Use polymorphism instead of type checking</li>
+<li>Decompose into smaller functions</li>
+<li>Use lookup tables instead of switch/if chains</li>
+</ol>
+<hr>
+<h2 id="dry-application-decision-table">DRY Application Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Apply DRY?</th><th>Rationale</th></tr><tr><td>Exact duplication of logic</td><td>Yes</td><td>Same logic should live in one place</td></tr><tr><td>Three or more occurrences</td><td>Yes</td><td>Rule of Three confirms the pattern</td></tr><tr><td>Two occurrences only</td><td>Wait</td><td>May be coincidental similarity</td></tr><tr><td>Similar structure, different purpose</td><td>No</td><td>Different reasons to change</td></tr><tr><td>Abstracting adds more complexity</td><td>No</td><td>Clarity over DRY</td></tr></table></div>
+<hr>
+<h2 id="comment-philosophy">Comment Philosophy</h2>
+<h3 id="good-comments">Good Comments</h3>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Example</th></tr><tr><td>Why (reasoning)</td><td><code>// Use binary search because list is pre-sorted and >10K items</code></td></tr><tr><td>Legal</td><td>Copyright, license headers</td></tr><tr><td>TODO with ticket</td><td><code>// TODO(PROJ-123): Add rate limiting</code></td></tr><tr><td>Warning</td><td><code>// WARNING: This is not thread-safe</code></td></tr><tr><td>Public API docs</td><td>JSDoc/TSDoc for public interfaces</td></tr></table></div>
+<h3 id="bad-comments-remove-and-fix-code-instead">Bad Comments (remove and fix code instead)</h3>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Example</th></tr><tr><td>Restating code</td><td><code>// increment counter</code> before <code>counter++</code></td></tr><tr><td>Commented-out code</td><td>Use version control instead</td></tr><tr><td>Journal comments</td><td>Use git log instead</td></tr><tr><td>Closing brace comments</td><td><code>} // end if</code></td></tr></table></div>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Premature abstraction</td><td>DRYing code that differs in intent</td><td>Wait for Rule of Three</td></tr><tr><td>God classes</td><td>Know everything, do everything</td><td>Split by responsibility (SRP)</td></tr><tr><td>Feature envy</td><td>Method uses another class's data more than its own</td><td>Move method to the data owner</td></tr><tr><td>Stringly typed data</td><td>Strings where enums/types belong</td><td>Define proper types</td></tr><tr><td>Magic numbers</td><td>Unclear meaning, error-prone</td><td>Named constants</td></tr><tr><td>Boolean trap</td><td>Function with boolean params that change behavior</td><td>Use named options or separate functions</td></tr><tr><td>Over-engineering</td><td>Abstractions for problems that do not exist</td><td>YAGNI — You Ain't Gonna Need It</td></tr></table></div>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>code-review</code></td><td>Review identifies code smells for clean-code to resolve</td></tr><tr><td><code>test-driven-development</code></td><td>TDD ensures behavior preservation during refactoring</td></tr><tr><td><code>senior-frontend</code></td><td>Frontend components follow clean code principles</td></tr><tr><td><code>senior-backend</code></td><td>Backend services follow SOLID and clean architecture</td></tr><tr><td><code>performance-optimization</code></td><td>Clean code enables easier performance optimization</td></tr><tr><td><code>systematic-debugging</code></td><td>Clean code is easier to debug</td></tr></table></div>
+<hr>
+<h2 id="immutability-preferences">Immutability Preferences</h2>
+<ul>
+<li>Default to <code>const</code> (JavaScript/TypeScript)</li>
+<li>Use <code>readonly</code> properties and <code>ReadonlyArray</code></li>
+<li>Prefer spread/destructuring over mutation</li>
+<li>Use immutable update patterns for state</li>
+<li>Only mutate when performance profiling demands it</li>
+</ul>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Apply principles based on context. Not every function needs to be 5 lines; not every pattern needs to be SOLID. Use judgment and optimize for team readability over theoretical purity.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

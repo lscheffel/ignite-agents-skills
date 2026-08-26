@@ -411,22 +411,22 @@
   </nav>
   <div class="content">
     <h1 id="example-multi-agent-decomposition">Example: Multi-Agent Decomposition</h1>
-<p>Exemplo de decomposição de tarefa complexa em multi-agente.</p>
-<h2 id="tarefa-original">Tarefa Original</h2>
-<p>"Analisar repositório, identificar code smells, sugerir refatorações e gerar relatório"</p>
-<h2 id="decomposio">Decomposição</h2>
+<p>Example of complex task decomposition in multi-agent systems.</p>
+<h2 id="original-task">Original Task</h2>
+<p>"Analyze repository, identify code smells, suggest refactorings, and generate report"</p>
+<h2 id="decomposition">Decomposition</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Analisar Repositório] --&gt; B[Identificar Code Smells]
-    B --&gt; C1[Sugerir Refatorações - Design]
-    B --&gt; C2[Sugerir Refatorações - Performance]
-    B --&gt; C3[Sugerir Refatorações - Segurança]
-    C1 --&gt; D[Consolidar Sugestões]
+    A[Analyze Repository] --&gt; B[Identify Code Smells]
+    B --&gt; C1[Suggest Refactorings - Design]
+    B --&gt; C2[Suggest Refactorings - Performance]
+    B --&gt; C3[Suggest Refactorings - Security]
+    C1 --&gt; D[Consolidate Suggestions]
     C2 --&gt; D
     C3 --&gt; D
-    D --&gt; E[Gerar Relatório]</code></pre>
-<h2 id="papis">Papéis</h2>
-<div class="table-wrapper"><table><tr><th>Agente</th><th>Papel</th><th>Modelo</th></tr><tr><td>Scanner</td><td>Specialist</td><td>Standard</td></tr><tr><td>Design Analyzer</td><td>Specialist</td><td>Advanced</td></tr><tr><td>Performance Analyzer</td><td>Specialist</td><td>Standard</td></tr><tr><td>Security Analyzer</td><td>Specialist</td><td>Advanced</td></tr><tr><td>Consolidator</td><td>Specialist</td><td>Standard</td></tr><tr><td>Report Generator</td><td>Formatter</td><td>Lightweight</td></tr></table></div>
-<h2 id="contratos">Contratos</h2>
+    D --&gt; E[Generate Report]</code></pre>
+<h2 id="roles">Roles</h2>
+<div class="table-wrapper"><table><tr><th>Agent</th><th>Role</th><th>Model</th></tr><tr><td>Scanner</td><td>Specialist</td><td>Standard</td></tr><tr><td>Design Analyzer</td><td>Specialist</td><td>Advanced</td></tr><tr><td>Performance Analyzer</td><td>Specialist</td><td>Standard</td></tr><tr><td>Security Analyzer</td><td>Specialist</td><td>Advanced</td></tr><tr><td>Consolidator</td><td>Specialist</td><td>Standard</td></tr><tr><td>Report Generator</td><td>Formatter</td><td>Lightweight</td></tr></table></div>
+<h2 id="contracts">Contracts</h2>
 <h3 id="scanner--analyzer">Scanner → Analyzer</h3>
 <pre data-lang="yaml"><code>input:
   schema: RepositoryScan
@@ -467,18 +467,18 @@ output:
     - name: priorities
       type: array
       required: true</code></pre>
-<h2 id="execuo">Execução</h2>
+<h2 id="execution">Execution</h2>
 <ol>
-<li>Scanner analisa repositório (paralelo)</li>
-<li>3 Analyzers processam code smells (paralelo - fan-out)</li>
-<li>Consolidator agrega sugestões (fan-in)</li>
-<li>Report Generator formata relatório</li>
+<li>Scanner analyzes repository (parallel)</li>
+<li>3 Analyzers process code smells (parallel - fan-out)</li>
+<li>Consolidator aggregates suggestions (fan-in)</li>
+<li>Report Generator formats report</li>
 </ol>
-<h2 id="resultado">Resultado</h2>
+<h2 id="result">Result</h2>
 <ul>
-<li>Tempo total: 45s (vs 180s sequencial)</li>
-<li>Custo: $0.12 (vs $0.45 com modelo único avançado)</li>
-<li>Qualidade: 95% code smells identificados</li>
+<li>Total time: 45s (vs 180s sequential)</li>
+<li>Cost: $0.12 (vs $0.45 with single advanced model)</li>
+<li>Quality: 95% code smells identified</li>
 </ul>
   </div>
 <footer>

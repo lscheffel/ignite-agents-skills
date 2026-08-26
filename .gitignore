@@ -32,3 +32,11 @@ npm-debug.log*
 tmp/
 temp/
 *.tmp
+
+# Python & Ephemeral Local Data
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+.local/
+

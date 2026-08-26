@@ -1,60 +1,60 @@
-# Especificação de Logging
+# Logging Specification
 
-## Visão Geral
-Documento de referência para logging estruturado no projeto.
+## Overview
+Reference document for structured logging in the project.
 
-## Formato
-Todos os logs devem ser emitidos em formato JSON.
+## Format
+All logs must be emitted in JSON format.
 
-## Campos Obrigatórios
+## Required Fields
 
-| Campo | Tipo | Descrição | Exemplo |
-|-------|------|-----------|---------|
-| `timestamp` | ISO 8601 | Momento do evento | `2025-01-15T10:30:00Z` |
-| `level` | string | Nível do log | `info`, `error`, `warn`, `debug` |
-| `message` | string | Mensagem descritiva | `User created successfully` |
-| `service` | string | Nome do serviço | `user-service` |
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `timestamp` | ISO 8601 | Event timestamp | `2025-01-15T10:30:00Z` |
+| `level` | string | Log level | `info`, `error`, `warn`, `debug` |
+| `message` | string | Descriptive message | `User created successfully` |
+| `service` | string | Service name | `user-service` |
 
-## Campos de Contexto
+## Context Fields
 
-| Campo | Tipo | Descrição | Exemplo |
-|-------|------|-----------|---------|
-| `traceId` | string | ID do trace distribuído | `abc123def456` |
-| `userId` | string | ID do usuário (quando aplicável) | `user_123` |
-| `environment` | string | Ambiente de execução | `production`, `staging` |
-| `requestId` | string | ID da requisição | `req_789` |
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `traceId` | string | Distributed trace ID | `abc123def456` |
+| `userId` | string | User ID (when applicable) | `user_123` |
+| `environment` | string | Execution environment | `production`, `staging` |
+| `requestId` | string | Request ID | `req_789` |
 
-## Níveis de Log
+## Log Levels
 
 ### ERROR
-- **Uso:** Falhas que precisam de ação imediata
-- **Exemplos:** Falha de conexão, timeout, erro de validação crítica
-- **Ação:** Investigar imediatamente
+- **Usage:** Critical failures requiring immediate action
+- **Examples:** Connection failure, timeout, critical validation error
+- **Action:** Investigate immediately
 
 ### WARN
-- **Uso:** Anormalidades sem falha
-- **Exemplos:** Retry, fallback, depreciação
-- **Ação:** Monitorar, pode precisar de ação futura
+- **Usage:** Anomalies without failure
+- **Examples:** Retry, fallback, deprecation
+- **Action:** Monitor, may require future action
 
 ### INFO
-- **Uso:** Eventos significativos do negócio
-- **Exemplos:** Criação de usuário, pagamento processado
-- **Ação:** Auditoria e rastreabilidade
+- **Usage:** Significant business events
+- **Examples:** User creation, payment processing
+- **Action:** Audit and trackability
 
 ### DEBUG
-- **Uso:** Detalhes para desenvolvimento
-- **Exemplos:** Query SQL, payloads, variáveis
-- **Ação:** Apenas em ambiente de dev/staging
+- **Usage:** Development details
+- **Examples:** SQL queries, payloads, variables
+- **Action:** Only in dev/staging environments
 
-## Sanitização de Dados
+## Data Sanitization
 
-### Dados que NUNCA devem ser logados:
-- Senhas ou tokens de autenticação
-- Dados pessoais (CPF, RG, email completo)
-- Números de cartão de crédito
-- Chaves de API
+### Data that MUST NOT be logged:
+- Passwords or authentication tokens
+- Personal data (CPF, RG, full email)
+- Credit card numbers
+- API keys
 
-### Regras de Sanitização:
+### Sanitization Rules:
 ```typescript
 function sanitize(data: Record<string, any>): Record<string, any> {
   const sensitiveFields = ['password', 'token', 'secret', 'cpf', 'creditCard'];
@@ -70,9 +70,9 @@ function sanitize(data: Record<string, any>): Record<string, any> {
 }
 ```
 
-## Exemplos
+## Examples
 
-### Log de Request
+### Request Log
 ```json
 {
   "timestamp": "2025-01-15T10:30:00Z",
@@ -87,7 +87,7 @@ function sanitize(data: Record<string, any>): Record<string, any> {
 }
 ```
 
-### Log de Erro
+### Error Log
 ```json
 {
   "timestamp": "2025-01-15T10:30:00Z",
@@ -101,18 +101,18 @@ function sanitize(data: Record<string, any>): Record<string, any> {
 }
 ```
 
-## Configuração por Ambiente
+## Environment Configuration
 
-| Ambiente | Nível | Retenção | Destino |
-|----------|-------|----------|---------|
-| Development | debug | 7 dias | Console |
-| Staging | info | 30 dias | ELK Stack |
-| Production | info | 90 dias | ELK + S3 |
+| Environment | Level | Retention | Destination |
+|-------------|-------|----------|-------------|
+| Development | debug | 7 days | Console |
+| Staging | info | 30 days | ELK Stack |
+| Production | info | 90 days | ELK + S3 |
 
-## Checklist de Implementação
-- [ ] Logger centralizado configurado
-- [ ] Formato JSON definido
-- [ ] Campos obrigatórios implementados
-- [ ] Sanitização de dados sensíveis
-- [ ] Níveis de log configurados por ambiente
-- [ ] Retenção de logs documentada
+## Implementation Checklist
+- [ ] Centralized logger configured
+- [ ] JSON format defined
+- [ ] Required fields implemented
+- [ ] Sensitive data sanitized
+- [ ] Log levels configured by environment
+- [ ] Log retention documented

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mobile-design — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; mobile-design</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: mobile-design version: 1.0.0 description: 'Use when the user needs mobile app design and development patterns for React Native, Flutter, or SwiftUI — including platform HIG compliance, gestures, and offline-first architecture. Triggers: user says "mobile", "iOS", "Android", "React Native", "Flutter", "SwiftUI", "app design", "mobile navigation", "touch targets", "offline-first".' domain: frontend-ux triggers:</p>
+<ul>
+<li>mobile-design</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>mobile-design</li>
+<li>frontend-ux</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="mobile-design">Mobile Design</h1>
+<h2 id="overview">Overview</h2>
+<p>Design and build mobile applications that feel native on each platform. This skill covers React Native, Flutter, and SwiftUI with deep knowledge of platform-specific Human Interface Guidelines (Apple HIG) and Material Design, gesture handling, responsive layouts, offline-first patterns, and app store submission requirements.</p>
+<h2 id="phase-1-platform-analysis">Phase 1: Platform Analysis</h2>
+<ol>
+<li>Identify target platforms (iOS, Android, both)</li>
+<li>Choose framework (React Native, Flutter, SwiftUI, or cross-platform)</li>
+<li>Review platform-specific design guidelines</li>
+<li>Define navigation architecture</li>
+<li>Map offline requirements</li>
+</ol>
+<p><strong>STOP — Present platform and framework recommendation with rationale before design.</strong></p>
+<h3 id="framework-selection-decision-table">Framework Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Requirement</th><th>React Native</th><th>Flutter</th><th>SwiftUI</th><th>Kotlin/Compose</th></tr><tr><td>iOS only</td><td>Possible</td><td>Possible</td><td>Best</td><td>No</td></tr><tr><td>Android only</td><td>Possible</td><td>Possible</td><td>No</td><td>Best</td></tr><tr><td>Cross-platform</td><td>Good</td><td>Best</td><td>No</td><td>No</td></tr><tr><td>Native performance critical</td><td>OK</td><td>Good</td><td>Best</td><td>Best</td></tr><tr><td>Existing React web team</td><td>Best</td><td>Learning curve</td><td>Learning curve</td><td>Learning curve</td></tr><tr><td>Complex animations</td><td>Good</td><td>Best</td><td>Good</td><td>Good</td></tr><tr><td>Rapid prototyping</td><td>Good</td><td>Good</td><td>Best (iOS)</td><td>OK</td></tr><tr><td>Large existing codebase (JS)</td><td>Best</td><td>Rewrite</td><td>Rewrite</td><td>Rewrite</td></tr></table></div>
+<h2 id="phase-2-design-implementation">Phase 2: Design Implementation</h2>
+<ol>
+<li>Build component library with platform variants</li>
+<li>Implement navigation (tab bar, stack, drawer)</li>
+<li>Handle safe areas and notches</li>
+<li>Add gesture recognizers</li>
+<li>Implement responsive layouts for phone/tablet</li>
+</ol>
+<p><strong>STOP — Present navigation architecture and component inventory for review.</strong></p>
+<h3 id="platform-specific-hig-compliance">Platform-Specific HIG Compliance</h3>
+<h4 id="apple-human-interface-guidelines">Apple Human Interface Guidelines</h4>
+<div class="table-wrapper"><table><tr><th>Area</th><th>Guideline</th></tr><tr><td>Navigation</td><td>UINavigationController (push/pop), tab bars at bottom (max 5)</td></tr><tr><td>Typography</td><td>SF Pro / SF Pro Rounded, support Dynamic Type (all 11 sizes)</td></tr><tr><td>Safe Areas</td><td>Respect <code>safeAreaInsets</code> — never under notch/home indicator</td></tr><tr><td>Gestures</td><td>Swipe-back for navigation, long press for context menus</td></tr><tr><td>Haptics</td><td>UIFeedbackGenerator (impact, selection, notification)</td></tr><tr><td>Colors</td><td>Semantic system colors (<code>label</code>, <code>secondaryLabel</code>, <code>systemBackground</code>)</td></tr><tr><td>Modals</td><td>Sheets (<code>.sheet</code>, <code>.fullScreenCover</code>) with drag-to-dismiss</td></tr><tr><td>Lists</td><td>Grouped inset for settings, plain for content feeds</td></tr><tr><td>Icons</td><td>SF Symbols library (5000+ icons, variable weight/size)</td></tr></table></div>
+<h4 id="material-design-android">Material Design (Android)</h4>
+<div class="table-wrapper"><table><tr><th>Area</th><th>Guideline</th></tr><tr><td>Navigation</td><td>Bottom navigation bar, navigation drawer, top app bar</td></tr><tr><td>Typography</td><td>Roboto / product font, Material type scale</td></tr><tr><td>Edge-to-edge</td><td>Draw behind system bars, handle window insets</td></tr><tr><td>Gestures</td><td>Predictive back gesture (Android 14+), swipe-to-dismiss</td></tr><tr><td>Haptics</td><td>HapticFeedbackConstants (click, long press, keyboard)</td></tr><tr><td>Colors</td><td>Material You dynamic color from wallpaper, tonal palettes</td></tr><tr><td>Components</td><td>FAB, snackbar, bottom sheet, chips</td></tr><tr><td>Motion</td><td>Shared element transitions, container transform</td></tr></table></div>
+<h3 id="cross-platform-pattern-decision-table">Cross-Platform Pattern Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Feature</th><th>iOS Pattern</th><th>Android Pattern</th></tr><tr><td>Back navigation</td><td>Swipe from left edge</td><td>System back button</td></tr><tr><td>Primary action</td><td>Right nav bar button</td><td>FAB</td></tr><tr><td>Alerts</td><td>UIAlertController</td><td>MaterialAlertDialog</td></tr><tr><td>Loading</td><td>UIActivityIndicator</td><td>CircularProgressIndicator</td></tr><tr><td>Segmented</td><td>UISegmentedControl</td><td>Tabs / Chips</td></tr><tr><td>Date picker</td><td>Wheel picker</td><td>Calendar picker</td></tr><tr><td>Pull to refresh</td><td>Native support</td><td>SwipeRefreshLayout</td></tr><tr><td>Context menu</td><td>Long press + haptic</td><td>Long press + popup</td></tr></table></div>
+<h3 id="safe-area-handling">Safe Area Handling</h3>
+<h4 id="react-native">React Native</h4>
+<pre data-lang="jsx"><code>import { SafeAreaView, useSafeAreaInsets } from &#x27;react-native-safe-area-context&#x27;;
+
+function Screen() {
+  const insets = useSafeAreaInsets();
+  return (
+    &lt;View style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}&gt;
+      {/* Content */}
+    &lt;/View&gt;
+  );
+}</code></pre>
+<h4 id="flutter">Flutter</h4>
+<pre data-lang="dart"><code>Widget build(BuildContext context) {
+  return Scaffold(
+    body: SafeArea(
+      child: // Content
+    ),
+  );
+}</code></pre>
+<h4 id="swiftui">SwiftUI</h4>
+<pre data-lang="swift"><code>var body: some View {
+  VStack {
+    // Content automatically respects safe areas
+  }
+  .ignoresSafeArea(.keyboard) // Only ignore keyboard if needed
+}</code></pre>
+<h3 id="gesture-navigation-patterns">Gesture Navigation Patterns</h3>
+<div class="table-wrapper"><table><tr><th>Gesture</th><th>Usage</th><th>Min Target</th></tr><tr><td>Tap</td><td>Primary action</td><td>44x44pt</td></tr><tr><td>Long press</td><td>Context menu / secondary action</td><td>44x44pt</td></tr><tr><td>Swipe horizontal</td><td>Navigation, dismiss, reveal actions</td><td>Full row</td></tr><tr><td>Swipe vertical</td><td>Scroll, pull-to-refresh, dismiss sheet</td><td>Full area</td></tr><tr><td>Pinch</td><td>Zoom images/maps</td><td>Content area</td></tr><tr><td>Pan/Drag</td><td>Reorder, move elements</td><td>Drag handle</td></tr></table></div>
+<h3 id="touch-target-rules">Touch Target Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Value</th></tr><tr><td>Minimum size (iOS)</td><td>44x44pt</td></tr><tr><td>Minimum size (Android)</td><td>48x48dp</td></tr><tr><td>Minimum spacing</td><td>8pt between targets</td></tr><tr><td>Visual vs touch</td><td>Visual can be smaller; use padding for touch area</td></tr><tr><td>Primary actions</td><td>Bottom 1/3 of screen (thumb zone)</td></tr></table></div>
+<h2 id="phase-3-platform-polish">Phase 3: Platform Polish</h2>
+<ol>
+<li>Platform-specific animations and transitions</li>
+<li>Haptic feedback integration</li>
+<li>App icon and launch screen</li>
+<li>Dark mode and Dynamic Type support</li>
+<li>App store metadata and screenshots</li>
+</ol>
+<p><strong>STOP — Test on physical devices before declaring complete.</strong></p>
+<h3 id="responsive-layout-decision-table">Responsive Layout Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Form Factor</th><th>Layout</th><th>Navigation</th></tr><tr><td>Phone Portrait</td><td>Single column</td><td>Bottom tabs</td></tr><tr><td>Phone Landscape</td><td>Single column or split</td><td>Side tabs</td></tr><tr><td>Tablet Portrait</td><td>Two columns</td><td>Sidebar</td></tr><tr><td>Tablet Landscape</td><td>Three columns</td><td>Persistent sidebar</td></tr></table></div>
+<h4 id="react-native-responsive">React Native Responsive</h4>
+<pre data-lang="javascript"><code>import { useWindowDimensions } from &#x27;react-native&#x27;;
+
+function useResponsive() {
+  const { width } = useWindowDimensions();
+  return {
+    isPhone: width &lt; 768,
+    isTablet: width &gt;= 768 &amp;&amp; width &lt; 1024,
+    isDesktop: width &gt;= 1024,
+    columns: width &lt; 768 ? 1 : width &lt; 1024 ? 2 : 3,
+  };
+}</code></pre>
+<h4 id="flutter-responsive">Flutter Responsive</h4>
+<pre data-lang="dart"><code>class ResponsiveLayout extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth &lt; 600) return MobileLayout();
+        if (constraints.maxWidth &lt; 1200) return TabletLayout();
+        return DesktopLayout();
+      },
+    );
+  }
+}</code></pre>
+<h3 id="offline-first-architecture">Offline-First Architecture</h3>
+<div class="table-wrapper"><table><tr><th>Layer</th><th>Pattern</th><th>Implementation</th></tr><tr><td>Data</td><td>Local-first</td><td>SQLite/Realm as primary store, server as sync target</td></tr><tr><td>Updates</td><td>Optimistic</td><td>Apply locally, sync in background</td></tr><tr><td>Conflicts</td><td>Resolution strategy</td><td>Last-write-wins or field-level merge</td></tr><tr><td>Queue</td><td>Persistent ops</td><td>Store pending operations, retry on connectivity</td></tr><tr><td>Cache</td><td>Stale-while-revalidate</td><td>Serve cached, refresh in background</td></tr></table></div>
+<h4 id="implementation-checklist">Implementation Checklist</h4>
+<ul>
+<li>[ ] Network status detection and UI indicator</li>
+<li>[ ] Local database for all critical data</li>
+<li>[ ] Operation queue for pending writes</li>
+<li>[ ] Retry logic with exponential backoff</li>
+<li>[ ] Conflict detection and resolution strategy</li>
+<li>[ ] Cache invalidation policy</li>
+<li>[ ] Sync status indicator in UI</li>
+<li>[ ] Graceful degradation for network-only features</li>
+</ul>
+<h3 id="app-store-guidelines-summary">App Store Guidelines Summary</h3>
+<div class="table-wrapper"><table><tr><th>Requirement</th><th>Apple App Store</th><th>Google Play Store</th></tr><tr><td>Screenshots</td><td>6.7" and 5.5" required, 12.9" iPad</td><td>Min 2, max 8 per device</td></tr><tr><td>App icon</td><td>1024x1024px, no alpha, no corners</td><td>512x512px, adaptive recommended</td></tr><tr><td>Privacy</td><td>Nutrition labels required</td><td>Data safety section required</td></tr><tr><td>Review time</td><td>24-48 hours typical</td><td>Hours to days</td></tr><tr><td>Common rejections</td><td>Crashes, placeholder content</td><td>Policy violations, crashes</td></tr></table></div>
+<h3 id="performance-targets">Performance Targets</h3>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Target</th></tr><tr><td>Cold start</td><td>< 2 seconds</td></tr><tr><td>Screen transition</td><td>< 300ms</td></tr><tr><td>Touch response</td><td>< 100ms</td></tr><tr><td>Scroll FPS</td><td>60fps (no drops)</td></tr><tr><td>Memory usage</td><td>< 200MB baseline</td></tr><tr><td>App size</td><td>< 50MB download</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Web patterns in mobile (hover states)</td><td>No hover on touch devices</td><td>Use press/tap states</td></tr><tr><td>Tiny touch targets (< 44pt)</td><td>Frustrating, accessibility fail</td><td>Minimum 44x44pt touch area</td></tr><tr><td>iOS-styled buttons on Android</td><td>Feels foreign, confuses users</td><td>Use platform-native components</td></tr><tr><td>Fixed layouts for one screen size</td><td>Breaks on tablets and foldables</td><td>Responsive layouts with breakpoints</td></tr><tr><td>Blocking main thread with I/O</td><td>UI freezes, ANR dialogs</td><td>Async I/O, background threads</td></tr><tr><td>Not handling keyboard appearance</td><td>Content hidden behind keyboard</td><td>Adjust layout on keyboard show</td></tr><tr><td>Assuming constant connectivity</td><td>App crashes or hangs offline</td><td>Offline-first architecture</td></tr><tr><td>Pixel values instead of dp/pt</td><td>Different sizes on different screens</td><td>Use density-independent units</td></tr><tr><td>Skipping haptic feedback</td><td>App feels cheap and unresponsive</td><td>Add haptics for key interactions</td></tr></table></div>
+<h2 id="documentation-lookup-context7">Documentation Lookup (Context7)</h2>
+<p>Use <code>mcp__context7__resolve-library-id</code> then <code>mcp__context7__query-docs</code> for up-to-date docs. Returned docs override memorized knowledge.</p>
+<ul>
+<li><code>react-native</code> — for component API, navigation, or platform-specific modules</li>
+<li><code>flutter</code> — for widget catalog, state management, or platform channels</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>ui-ux-pro-max</code></td><td>Color palettes, typography, UX guidelines</td></tr><tr><td><code>ui-design-system</code></td><td>Design tokens adapted for mobile</td></tr><tr><td><code>canvas-design</code></td><td>Mobile data visualization and charts</td></tr><tr><td><code>ux-researcher-designer</code></td><td>Mobile usability testing</td></tr><tr><td><code>senior-frontend</code></td><td>React Native component implementation</td></tr><tr><td><code>deployment</code></td><td>App store submission pipeline</td></tr><tr><td><code>performance-optimization</code></td><td>Mobile performance profiling</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt patterns to the chosen framework and target platforms. Platform-specific guidelines should be followed when targeting a single platform; cross-platform apps may blend conventions thoughtfully.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

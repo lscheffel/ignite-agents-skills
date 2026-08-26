@@ -53,12 +53,12 @@ for skill_dir in "$SKILLS_DIR"/*/; do
     related_json="[]"
   fi
 
-  # Collect all files (SKILL.md + templates/ + examples/ + checklists/)
+  # Collect all files (excluding __pycache__, .pyc, .DS_Store)
   files_json="[]"
   while IFS= read -r -d '' file; do
     rel_path="${file#$skill_dir}"
     files_json=$(echo "$files_json" | jq --arg f "$rel_path" '. + [$f]')
-  done < <(find "$skill_dir" -type f -print0 | sort -z)
+  done < <(find "$skill_dir" -type f -not -path "*/__pycache__/*" -not -name "*.pyc" -not -name ".DS_Store" -print0 | sort -z)
 
   # Build skill entry
   entry=$(jq -n \
@@ -79,8 +79,15 @@ done
 skills_array=$(echo "$skills_array" | jq 'sort_by(.name)')
 
 # Build final index.json
-# Read version from README.md (format: **vX.Y.Z)
-index_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1)
+# Read version from README.md (supports **vX.Y.Z or version-vX.Y.Z)
+index_version=$(grep -oP 'version-v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1 || true)
+if [ -z "$index_version" ]; then
+  index_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1 || true)
+fi
+if [ -z "$index_version" ]; then
+  index_version="2.5.0"
+fi
+
 jq -n \
   --argjson skills "$skills_array" \
   --arg version "$index_version" \

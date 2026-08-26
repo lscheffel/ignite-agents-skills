@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-025-PI.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../index.html">Skills</a>
+      <a href="../readme.html">README</a>
+      <a href="../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-025-PI.html</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>id: ADR-025-PI type: pi title: "Implementation Plan - Ingestão Hierárquica Multi-Asset de Skills (Skill Bundles)" created: "2026-08-24" updated: "2026-08-24" adr_ref: ADR-025 ---</p>
+<h1 id="adr-025-pi-implementation-plan---ingesto-hierrquica-multi-asset-de-skills-skill-bundles">ADR-025-PI: Implementation Plan - Ingestão Hierárquica Multi-Asset de Skills (Skill Bundles)</h1>
+<blockquote>Referência: <a href="./ADR-025-hierarchical-multi-asset-ingestion.md">ADR-025</a> | <a href="./ADR-025-TODO.md">ADR-025-TODO</a></blockquote>
+<hr>
+<h2 id="1-viso-geral-overview">1. Visão Geral (Overview)</h2>
+<p>Este plano estabelece os passos de engenharia de software para implementar a ingestão hierárquica tipada de ativos de skills (<code>references/</code>, <code>templates/</code>, <code>scripts/</code>) com parent linking (<code>parent_skill_id</code>), parsing especializado contra poluição vetorial, damping factor multiplicativo no reranking e payload XML enriquecido no servidor MCP e CLI.</p>
+<hr>
+<h2 id="2-padres-de-aceitao-e-qualidade-quality-standards">2. Padrões de Aceitação e Qualidade (Quality Standards)</h2>
+<ul>
+<li><strong>Zero Ruído Vetorial:</strong> Scripts executáveis não devem ter seu código procedural indexado linha a linha. Apenas docstrings, cabeçalhos de comentários, constantes e flags de uso (<code>--help</code> / <code>USAGE</code>) são vetorizadas.</li>
+<li><strong>Isolamento e Invariante de Linhagem:</strong> Todo chunk derivado de subpasta possui <code>parent_skill_id</code> preenchido obrigatoriamente apontando para a skill-mãe.</li>
+<li><strong>Retrocompatibilidade:</strong> Bundles contendo apenas <code>SKILL.md</code> permanecem 100% funcionais com <code>asset_type = 'skill_root'</code> e damping <code>1.00</code>.</li>
+<li><strong>Test Coverage:</strong> Suíte unitária dedicada cobrindo 100% dos novos métodos do parser e deserialização MCP.</li>
+<li><strong>Portabilidade:</strong> Resolução dinâmica via <code>os.path</code> sem caminhos hardcoded.</li>
+</ul>
+<hr>
+<h2 id="3-plano-de-execuo-granular-tdd--step-by-step">3. Plano de Execução Granular (TDD & Step-by-Step)</h2>
+<h3 id="fase-a-esquema-de-dados--parser-seletivo-de-ativos">Fase A: Esquema de Dados & Parser Seletivo de Ativos</h3>
+<h4 id="passo-a11-atualizao-do-schema-ddl-do-banco-sqlite">Passo A1.1: Atualização do Schema DDL do Banco SQLite</h4>
+<ul>
+<li><strong>Arquivos Afetados:</strong> <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/skills_rag_indexer.py">.github/scripts/skills_rag_indexer.py</a></li>
+<li><strong>Alterações:</strong></li>
+</ul>
+<pre data-lang="python"><code>  # Na criação da tabela skill_chunks:
+  cur.execute(&quot;&quot;&quot;
+  CREATE TABLE IF NOT EXISTS skill_chunks (
+      chunk_id TEXT PRIMARY KEY,
+      skill_id TEXT NOT NULL,
+      parent_skill_id TEXT NOT NULL,
+      asset_type TEXT NOT NULL DEFAULT &#x27;skill_root&#x27;,
+      file_path TEXT NOT NULL DEFAULT &#x27;SKILL.md&#x27;,
+      section_title TEXT NOT NULL,
+      chunk_text TEXT NOT NULL,
+      chunk_tokens INTEGER NOT NULL,
+      vector_embedding TEXT NOT NULL,
+      vector_embedding_2048 TEXT,
+      FOREIGN KEY (skill_id) REFERENCES skills(id)
+  );
+  &quot;&quot;&quot;)</code></pre>
+<h4 id="passo-a12-implementao-da-classe-assetparser">Passo A1.2: Implementação da Classe <code>AssetParser</code></h4>
+<ul>
+<li><strong>Arquivos Afetados:</strong> <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/skills_rag_indexer.py">.github/scripts/skills_rag_indexer.py</a></li>
+<li><strong>Assinaturas:</strong></li>
+</ul>
+<pre data-lang="python"><code>  class AssetParser:
+      @staticmethod
+      def parse_markdown(file_path: str) -&gt; List[Dict[str, str]]:
+          &quot;&quot;&quot;Extrai seções baseadas em headers ## e ###&quot;&quot;&quot;
+          ...
+          
+      @staticmethod
+      def parse_script(file_path: str) -&gt; Dict[str, str]:
+          &quot;&quot;&quot;Extrai docstring, comentários de cabeçalho e flags USAGE/help&quot;&quot;&quot;
+          ...
+          
+      @staticmethod
+      def parse_template(file_path: str) -&gt; Dict[str, str]:
+          &quot;&quot;&quot;Extrai cabeçalho descritivo e esqueleto do template&quot;&quot;&quot;
+          ...</code></pre>
+<h4 id="passo-a13-varredura-de-pastas-de-sub-ativos-no-skillsragindexer">Passo A1.3: Varredura de Pastas de Sub-ativos no <code>SkillsRAGIndexer</code></h4>
+<ul>
+<li><strong>Arquivos Afetados:</strong> <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/skills_rag_indexer.py">.github/scripts/skills_rag_indexer.py</a></li>
+<li><strong>Lógica:</strong></li>
+<li>Varre <code>references/*.md</code> $\rightarrow$ <code>asset_type: "reference"</code>.</li>
+<li>Varre <code>templates/*</code> $\rightarrow$ <code>asset_type: "template"</code>.</li>
+<li>Varre <code>scripts/*</code> $\rightarrow$ <code>asset_type: "script_doc"</code>.</li>
+<li>Para cada ativo, gera <code>skill_id = f"{parent_id}:{asset_type}:{asset_name}"</code> e vincula <code>parent_skill_id = parent_id</code>.</li>
+</ul>
+<hr>
+<h3 id="fase-b-damping-factor-ponderado--payload-tipado">Fase B: Damping Factor Ponderado & Payload Tipado</h3>
+<h4 id="passo-b11-adaptao-de-consultas-e-damping-no-skillsdatabase">Passo B1.1: Adaptação de Consultas e Damping no <code>SkillsDatabase</code></h4>
+<ul>
+<li><strong>Arquivos Afetados:</strong> <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/skills_mcp_server.py">.github/scripts/skills_mcp_server.py</a>, <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/skills_router.py">.github/scripts/skills_router.py</a></li>
+<li><strong>Lógica de Damping:</strong></li>
+</ul>
+<pre data-lang="python"><code>  DAMPING_FACTORS = {
+      &quot;skill_root&quot;: 1.00,
+      &quot;reference&quot;: 0.85,
+      &quot;template&quot;: 0.80,
+      &quot;script_doc&quot;: 0.75
+  }
+  
+  # Aplicação no score híbrido:
+  damping = DAMPING_FACTORS.get(c.get(&quot;asset_type&quot;, &quot;skill_root&quot;), 1.00)
+  c[&quot;confidence_percent&quot;] = round(c[&quot;confidence_percent&quot;] * damping, 1)</code></pre>
+<h4 id="passo-b12-serializao-xml-enriquecida">Passo B1.2: Serialização XML Enriquecida</h4>
+<ul>
+<li><strong>Arquivos Afetados:</strong> <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/skills_mcp_server.py">.github/scripts/skills_mcp_server.py</a></li>
+<li><strong>Formato Emitido:</strong></li>
+</ul>
+<pre data-lang="xml"><code>  &lt;active_skill id=&quot;{skill_id}&quot; parent=&quot;{parent_skill_id}&quot; type=&quot;{asset_type}&quot; path=&quot;{file_path}&quot; confidence=&quot;{conf}%&quot;&gt;
+    {chunk_content}
+  &lt;/active_skill&gt;</code></pre>
+<hr>
+<h3 id="fase-c-sute-de-testes--auditoria">Fase C: Suíte de Testes & Auditoria</h3>
+<h4 id="passo-c11-criao-de-testraghierarchicalpy">Passo C1.1: Criação de <code>test_rag_hierarchical.py</code></h4>
+<ul>
+<li><strong>Arquivo de Teste:</strong> <a href="file:///home/loupan/.gemini/config/skills/.github/scripts/tests/test_rag_hierarchical.py">.github/scripts/tests/test_rag_hierarchical.py</a></li>
+<li><strong>Casos de Teste Obrigatórios:</strong></li>
+</ul>
+<ol>
+<li><code>test_asset_parser_python_script</code>: Extração de docstring sem código procedural.</li>
+<li><code>test_asset_parser_template</code>: Extração de esqueleto SQL/JSON.</li>
+<li><code>test_parent_linking_and_schema</code>: Invariante de <code>parent_skill_id</code> e colunas no SQLite.</li>
+<li><code>test_damping_factor_scoring</code>: Priorização de <code>skill_root</code> vs promoção de <code>template</code> sob intenção explícita.</li>
+<li><code>test_mcp_xml_typed_payload</code>: Validação dos atributos <code>type</code>, <code>parent</code> e <code>path</code> no XML de saída.</li>
+</ol>
+<hr>
+<h2 id="4-validao-contnua-continuous-validation">4. Validação Contínua (Continuous Validation)</h2>
+<p>Comandos a serem executados no encerramento:</p>
+<pre data-lang="bash"><code># 1. Execução do pipeline de indexação multi-asset
+python3 .github/scripts/skills_rag_indexer.py
+
+# 2. Execução da suíte completa de testes (5 suítes)
+python3 .github/scripts/tests/test_rag_quad_sota.py &amp;&amp; \
+python3 .github/scripts/tests/test_rag_federated.py &amp;&amp; \
+python3 .github/scripts/tests/test_mcp_bootstrap.py &amp;&amp; \
+python3 .github/scripts/tests/test_mcp_telemetry.py &amp;&amp; \
+python3 .github/scripts/tests/test_rag_hierarchical.py
+
+# 3. Auditoria Forense
+python3 .github/scripts/audit_engine.py</code></pre>
+<hr>
+<h2 id="5-handoff-para-fechamento">5. Handoff para Fechamento</h2>
+<p>Após a conclusão da implementação e aprovação de todos os testes, o Decision Set será finalizado com a emissão de <a href="../adr/ADR-025-ER.html">docs/adr/ADR-025-ER.md</a> e arquivado pelo Janitor (<code>adr-archive</code>).</p>
+<hr>
+<p><em>Documento gerado em 2026-08-24. Referência: ADR-025.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

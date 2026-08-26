@@ -411,22 +411,22 @@
   </nav>
   <div class="content">
     <h1 id="example-adr-archive-workflow">Example: ADR Archive Workflow</h1>
-<blockquote>Exemplo completo de uso da skill <code>adr-archive</code> para arquivar ADR-007</blockquote>
+<blockquote>Complete usage example of the <code>adr-archive</code> skill for archiving ADR-007</blockquote>
 <hr>
-<h2 id="cenrio">Cenário</h2>
-<p>ADR-007 (AGENTS.md Generator) foi implementada com:</p>
+<h2 id="scenario">Scenario</h2>
+<p>ADR-007 (AGENTS.md Generator) was implemented with:</p>
 <ul>
-<li><code>docs/adr/ADR-007.md</code> — ADR principal</li>
+<li><code>docs/adr/ADR-007.md</code> — Main ADR</li>
 <li><code>docs/adr/ADR-007-BP.md</code> — Blueprint</li>
-<li><code>docs/adr/ADR-007-TODO.md</code> — TODO 100% completo</li>
+<li><code>docs/adr/ADR-007-TODO.md</code> — 100% complete TODO</li>
 <li><code>docs/adr/ADR-007-PI.md</code> — Implementation Plan (Tier 2)</li>
-<li><code>docs/adr/ADR-007-ER.md</code> — Execution Report na raiz</li>
+<li><code>docs/adr/ADR-007-ER.md</code> — Execution Report in the root</li>
 </ul>
 <hr>
-<h2 id="passo-1-auditoria-zero-tokens">Passo 1: Auditoria (Zero Tokens)</h2>
+<h2 id="step-1-audit-zero-tokens">Step 1: Audit (Zero Tokens)</h2>
 <pre data-lang="bash"><code>cd /home/loupan/projetosVS/ignite-agents-skills
 python3 skills/adr-archive/scripts/audit.py .</code></pre>
-<p><strong>Output esperado:</strong></p>
+<p><strong>Expected Output:</strong></p>
 <pre><code>🔍 ADR Archive Audit — 2026-07-15
 =====================================
 
@@ -441,16 +441,16 @@ python3 skills/adr-archive/scripts/audit.py .</code></pre>
 
 📝 Report: docs/reports/adr-archive-report-20260715.md</code></pre>
 <hr>
-<h2 id="passo-2-ler-relatrio">Passo 2: Ler Relatório</h2>
+<h2 id="step-2-read-report">Step 2: Read Report</h2>
 <pre data-lang="bash"><code>cat docs/reports/adr-archive-report-20260715.md</code></pre>
-<p><strong>Trecho do relatório:</strong></p>
-<pre data-lang="markdown"><code>## Flags de Ação
-| Flag | ADR | Descrição | Ação Requerida |
-|------|-----|-----------|----------------|
+<p><strong>Report Excerpt:</strong></p>
+<pre data-lang="markdown"><code>## Action Flags
+| Flag | ADR | Description | Required Action |
+|------|-----|-------------|-----------------|
 | READY_TO_ARCHIVE | ADR-007 | ADR-007-ER.md exists, TODO complete | python3 audit.py . --archive ADR-007 |
 | READY_TO_ARCHIVE | ADR-008 | ADR-008-ER.md exists, TODO complete | python3 audit.py . --archive ADR-008 |</code></pre>
 <hr>
-<h2 id="passo-3-arquivar">Passo 3: Arquivar</h2>
+<h2 id="step-3-archive">Step 3: Archive</h2>
 <pre data-lang="bash"><code>python3 skills/adr-archive/scripts/audit.py . --archive ADR-007
 python3 skills/adr-archive/scripts/audit.py . --archive ADR-008</code></pre>
 <p><strong>Output:</strong></p>
@@ -464,23 +464,23 @@ python3 skills/adr-archive/scripts/audit.py . --archive ADR-008</code></pre>
    Kept: ADR-008-ER.md in root
    Updated: docs/adr/INDEX.md</code></pre>
 <hr>
-<h2 id="passo-4-verificar">Passo 4: Verificar</h2>
+<h2 id="step-4-verify">Step 4: Verify</h2>
 <pre data-lang="bash"><code>ls -la docs/adr/
-# Deve mostrar apenas ERs + ADRs ativas (se houver)
+# Should show only ERs + active ADRs (if any)
 
 ls -la docs/adr/archive/
-# Deve mostrar ADR-007*, ADR-008*
+# Should show ADR-007*, ADR-008*
 
 cat docs/adr/INDEX.md
-# Seção &quot;Archived ADRs&quot; deve incluir ADR-007 e ADR-008</code></pre>
+# &quot;Archived ADRs&quot; section should include ADR-007 and ADR-008</code></pre>
 <hr>
-<h2 id="passo-5-deploy-gh-pages-governana">Passo 5: Deploy gh-pages (Governança)</h2>
+<h2 id="step-5-deploy-gh-pages-governance">Step 5: Deploy gh-pages (Governance)</h2>
 <pre data-lang="bash"><code>git checkout gh-pages
 git merge master
 git push origin gh-pages
 git checkout master</code></pre>
 <hr>
-<p><em>Exemplo: <code>skills/adr-archive/examples/archive-workflow.md</code></em></p>
+<p><em>Example: <code>skills/adr-archive/examples/archive-workflow.md</code></em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

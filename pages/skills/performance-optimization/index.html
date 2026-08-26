@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>performance-optimization — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; performance-optimization</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: performance-optimization version: 1.0.0 description: 'Use when optimizing application performance, reducing load times, improving database queries, meeting performance budgets, or diagnosing bottlenecks in web applications or APIs. Triggers: slow page loads, poor Web Vitals, database timeouts, large bundle size, user-reported sluggishness, scaling preparation.' domain: engineering-quality triggers:</p>
+<ul>
+<li>performance-optimization</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>performance-optimization</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="performance-optimization">Performance Optimization</h1>
+<h2 id="overview">Overview</h2>
+<p>Systematically identify and resolve performance bottlenecks using measurement-driven methodology. This skill enforces a strict MEASURE-IDENTIFY-OPTIMIZE-VERIFY cycle, preventing premature optimization and speculation. Every optimization must produce measurable improvement or be reverted.</p>
+<p><strong>Announce at start:</strong> "I'm using the performance-optimization skill to diagnose and resolve bottlenecks."</p>
+<hr>
+<h2 id="phase-1-measure-establish-baseline">Phase 1: MEASURE (Establish Baseline)</h2>
+<p><strong>Goal:</strong> Capture real metrics before changing anything.</p>
+<h3 id="actions">Actions</h3>
+<pre data-lang="bash"><code># Web: Lighthouse CI
+npx lighthouse https://your-app.com --output=json --output-path=baseline.json
+
+# API: load test with k6
+k6 run --out json=baseline.json loadtest.js
+
+# Database: slow query log
+# PostgreSQL: SET log_min_duration_statement = 100;  -- log queries &gt; 100ms</code></pre>
+<p>Record these numbers. They are the baseline against which improvement is measured.</p>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] Baseline metrics are captured and saved</li>
+<li>[ ] Specific metric targets are defined (e.g., LCP < 2.5s)</li>
+<li>[ ] Measurement methodology is documented (so it can be repeated)</li>
+</ul>
+<hr>
+<h2 id="phase-2-identify-find-the-actual-bottleneck">Phase 2: IDENTIFY (Find the Actual Bottleneck)</h2>
+<p><strong>Goal:</strong> Use profiling tools to find WHERE time is spent. Do NOT guess.</p>
+<h3 id="profiling-tool-selection-table">Profiling Tool Selection Table</h3>
+<div class="table-wrapper"><table><tr><th>Layer</th><th>Tool</th><th>What It Shows</th></tr><tr><td>Frontend rendering</td><td>React DevTools Profiler, Chrome Performance tab</td><td>Component render times</td></tr><tr><td>Network</td><td>Chrome Network tab, WebPageTest</td><td>Request waterfall, TTFB</td></tr><tr><td>JavaScript</td><td>Chrome Performance tab, <code>console.time()</code></td><td>Function execution time</td></tr><tr><td>Node.js server</td><td><code>--prof</code> flag, clinic.js, 0x</td><td>CPU flame graphs</td></tr><tr><td>Database</td><td><code>EXPLAIN ANALYZE</code>, pg_stat_statements</td><td>Query plans, slow queries</td></tr><tr><td>Memory</td><td>Chrome Memory tab, heapdump</td><td>Allocation patterns, leaks</td></tr><tr><td>Bundle size</td><td>webpack-bundle-analyzer, vite-bundle-visualizer</td><td>Module sizes</td></tr></table></div>
+<p>The bottleneck is almost never where you assume it is. Measure first.</p>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] Profiling tool appropriate to the layer has been used</li>
+<li>[ ] Specific bottleneck is identified with data</li>
+<li>[ ] Bottleneck accounts for a significant portion of the problem</li>
+</ul>
+<hr>
+<h2 id="phase-3-optimize-fix-the-identified-bottleneck">Phase 3: OPTIMIZE (Fix the Identified Bottleneck)</h2>
+<p><strong>Goal:</strong> Apply the targeted fix. Change ONE thing at a time.</p>
+<h3 id="optimization-decision-table">Optimization Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Bottleneck Type</th><th>Optimization Approach</th><th>Example</th></tr><tr><td>Large bundle</td><td>Code splitting, tree shaking, dynamic imports</td><td><code>React.lazy(() => import('./HeavyComponent'))</code></td></tr><tr><td>Slow API response</td><td>Caching, query optimization, pagination</td><td>Add Redis cache with 5min TTL</td></tr><tr><td>Slow database query</td><td>Add index, optimize query plan, materialized view</td><td><code>CREATE INDEX idx_user_email ON users(email)</code></td></tr><tr><td>Excessive re-renders</td><td>Memoization, virtualization, state restructuring</td><td><code>React.memo</code>, <code>useMemo</code></td></tr><tr><td>Large images</td><td>Compression, lazy loading, responsive images</td><td><code><img loading="lazy" srcset="..."></code></td></tr><tr><td>Slow TTFB</td><td>Server-side caching, CDN, edge rendering</td><td>Stale-while-revalidate pattern</td></tr><tr><td>Memory leak</td><td>Fix event listener cleanup, weak references</td><td>Proper <code>useEffect</code> cleanup</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-4-until">STOP — Do NOT proceed to Phase 4 until:</h3>
+<ul>
+<li>[ ] Only ONE change has been made</li>
+<li>[ ] Change directly targets the identified bottleneck</li>
+<li>[ ] No unrelated changes were made alongside the optimization</li>
+</ul>
+<hr>
+<h2 id="phase-4-verify-measure-again">Phase 4: VERIFY (Measure Again)</h2>
+<p><strong>Goal:</strong> Re-run the exact same measurement from Phase 1.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Run the same profiling/measurement as Phase 1</li>
+<li>Compare results:</li>
+</ol>
+<ul>
+<li>Did the metric improve?</li>
+<li>By how much?</li>
+<li>Did any other metrics regress?</li>
+</ul>
+<ol>
+<li><strong>If improvement is not measurable, REVERT the change.</strong></li>
+</ol>
+<p>Optimization that cannot be measured is not optimization.</p>
+<h3 id="stop--verification-complete-when">STOP — Verification complete when:</h3>
+<ul>
+<li>[ ] Same measurement methodology used as Phase 1</li>
+<li>[ ] Improvement is quantified (e.g., "LCP reduced from 3.2s to 2.1s")</li>
+<li>[ ] No regressions in other metrics</li>
+<li>[ ] If no improvement: change reverted</li>
+</ul>
+<hr>
+<h2 id="caching-strategy-decision-table">Caching Strategy Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Cache Type</th><th>Use When</th><th>TTL Guidance</th><th>Invalidation</th></tr><tr><td><strong>In-memory (LRU)</strong></td><td>Single-instance, hot data, computed values</td><td>Seconds to minutes</td><td>Eviction policy</td></tr><tr><td><strong>Redis/Memcached</strong></td><td>Multi-instance, shared cache, sessions</td><td>Minutes to hours</td><td>Event-based or TTL</td></tr><tr><td><strong>CDN</strong></td><td>Static assets, public pages, API responses</td><td>Hours to days</td><td>Deploy-triggered purge</td></tr><tr><td><strong>Browser</strong></td><td>Repeat visits, static resources</td><td>Days to months (versioned)</td><td>Cache-busting hash</td></tr></table></div>
+<h3 id="cache-control-headers">Cache-Control Headers</h3>
+<pre><code># Immutable assets (hashed filenames)
+Cache-Control: public, max-age=31536000, immutable
+
+# API responses (cacheable but must revalidate)
+Cache-Control: public, max-age=0, must-revalidate
+ETag: &quot;abc123&quot;
+
+# Private user data
+Cache-Control: private, no-store
+
+# Stale-while-revalidate (fast response + background refresh)
+Cache-Control: public, max-age=60, stale-while-revalidate=300</code></pre>
+<hr>
+<h2 id="bundle-optimization-techniques">Bundle Optimization Techniques</h2>
+<div class="table-wrapper"><table><tr><th>Technique</th><th>Impact</th><th>Implementation</th></tr><tr><td>Route-level code splitting</td><td>High</td><td><code>React.lazy()</code> + <code>Suspense</code> per route</td></tr><tr><td>Tree shaking</td><td>High</td><td>ES modules only, <code>sideEffects: false</code></td></tr><tr><td>Dynamic imports</td><td>Medium</td><td><code>await import('heavy-lib')</code> on user action</td></tr><tr><td>Image optimization</td><td>High</td><td>next/image, WebP/AVIF, responsive srcset</td></tr><tr><td>Font optimization</td><td>Medium</td><td><code>next/font</code>, <code>font-display: swap</code>, subset</td></tr><tr><td>Dependency replacement</td><td>Medium</td><td>day.js for moment.js, lodash-es for lodash</td></tr></table></div>
+<h3 id="bundle-analysis-commands">Bundle Analysis Commands</h3>
+<pre data-lang="bash"><code># Webpack
+npx webpack-bundle-analyzer stats.json
+
+# Vite
+npx vite-bundle-visualizer
+
+# Next.js
+ANALYZE=true next build</code></pre>
+<hr>
+<h2 id="database-query-tuning">Database Query Tuning</h2>
+<h3 id="index-optimization">Index Optimization</h3>
+<pre data-lang="sql"><code>-- Find missing indexes (PostgreSQL)
+SELECT schemaname, tablename, seq_scan, idx_scan
+FROM pg_stat_user_tables
+WHERE seq_scan &gt; idx_scan
+ORDER BY seq_scan DESC;</code></pre>
+<h3 id="index-rules">Index Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Explanation</th></tr><tr><td>Index WHERE, JOIN, ORDER BY columns</td><td>These are the columns the DB searches</td></tr><tr><td>Equality columns first in composite index</td><td>Most selective filtering first</td></tr><tr><td>Range columns last in composite index</td><td>Less selective, applied after equality</td></tr><tr><td>Remove unused indexes</td><td>They slow down writes</td></tr><tr><td>Use partial indexes for filtered queries</td><td>Smaller index, faster lookups</td></tr></table></div>
+<h3 id="query-plan-red-flags">Query Plan Red Flags</h3>
+<div class="table-wrapper"><table><tr><th>Red Flag in EXPLAIN ANALYZE</th><th>Meaning</th><th>Fix</th></tr><tr><td><strong>Seq Scan</strong> on large table</td><td>Full table scan</td><td>Add index</td></tr><tr><td><strong>Nested Loop</strong> with many rows</td><td>O(n*m) join</td><td>Add index or restructure query</td></tr><tr><td><strong>Sort</strong> with high memory</td><td>Sorting in memory</td><td>Add index matching ORDER BY</td></tr><tr><td>Actual rows >> estimated rows</td><td>Stale statistics</td><td>Run ANALYZE</td></tr><tr><td><strong>Hash Join</strong> with large build</td><td>Memory-intensive</td><td>Ensure join columns are indexed</td></tr></table></div>
+<hr>
+<h2 id="web-vitals-targets">Web Vitals Targets</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Good</th><th>Needs Work</th><th>Poor</th></tr><tr><td><strong>LCP</strong> (Largest Contentful Paint)</td><td>< 2.5s</td><td>2.5-4s</td><td>> 4s</td></tr><tr><td><strong>INP</strong> (Interaction to Next Paint)</td><td>< 200ms</td><td>200-500ms</td><td>> 500ms</td></tr><tr><td><strong>CLS</strong> (Cumulative Layout Shift)</td><td>< 0.1</td><td>0.1-0.25</td><td>> 0.25</td></tr></table></div>
+<h3 id="web-vitals-optimization-table">Web Vitals Optimization Table</h3>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Optimization</th><th>Implementation</th></tr><tr><td>LCP</td><td>Preload LCP resource</td><td><code><link rel="preload"></code> or <code>fetchpriority="high"</code></td></tr><tr><td>LCP</td><td>Inline critical CSS</td><td>Extract above-fold CSS inline</td></tr><tr><td>LCP</td><td>Optimize TTFB</td><td>CDN, edge rendering, server caching</td></tr><tr><td>INP</td><td>Break long tasks</td><td><code>requestIdleCallback</code>, <code>scheduler.yield()</code></td></tr><tr><td>INP</td><td>Debounce input handlers</td><td>100-300ms debounce on expensive handlers</td></tr><tr><td>INP</td><td>Web Workers</td><td>Move computation off main thread</td></tr><tr><td>CLS</td><td>Explicit dimensions</td><td>Set <code>width</code>/<code>height</code> on images and videos</td></tr><tr><td>CLS</td><td>Reserve space for dynamic content</td><td>Placeholder sizing for ads, embeds</td></tr><tr><td>CLS</td><td>Use transform animations</td><td>Avoid layout-triggering properties</td></tr></table></div>
+<hr>
+<h2 id="load-testing">Load Testing</h2>
+<h3 id="test-types">Test Types</h3>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Users</th><th>Duration</th><th>Purpose</th></tr><tr><td>Smoke</td><td>1-2</td><td>1 minute</td><td>Verify test works</td></tr><tr><td>Load</td><td>Expected traffic</td><td>10-30 min</td><td>Normal performance</td></tr><tr><td>Stress</td><td>2-3x expected</td><td>10-30 min</td><td>Find breaking point</td></tr><tr><td>Soak</td><td>Normal load</td><td>2-8 hours</td><td>Find memory leaks</td></tr></table></div>
+<h3 id="key-metrics">Key Metrics</h3>
+<ul>
+<li>Response time percentiles (p50, p95, p99) — not averages</li>
+<li>Error rate under load</li>
+<li>Throughput (requests per second)</li>
+<li>Resource utilization (CPU, memory, connections)</li>
+</ul>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Optimizing without measuring</td><td>You do not know what to fix</td><td>MEASURE first, always</td></tr><tr><td>Premature optimization</td><td>Wastes time on non-bottlenecks</td><td>Profile to find actual bottleneck</td></tr><tr><td>Memoizing everything</td><td>Adds complexity without proven benefit</td><td>Profile first, memoize second</td></tr><tr><td>Caching without invalidation strategy</td><td>Stale data causes bugs</td><td>Define invalidation before adding cache</td></tr><tr><td>Optimizing averages instead of percentiles</td><td>Averages hide tail latency</td><td>Track p95 and p99</td></tr><tr><td>Multiple optimizations at once</td><td>Cannot attribute improvement</td><td>One change at a time</td></tr><tr><td>Keeping optimizations that do not measurably help</td><td>Dead code and complexity</td><td>Revert if no measurable improvement</td></tr><tr><td>Adding indexes without checking query patterns</td><td>Unused indexes slow writes</td><td>Check slow query log first</td></tr></table></div>
+<hr>
+<h2 id="subagent-dispatch-opportunities">Subagent Dispatch Opportunities</h2>
+<div class="table-wrapper"><table><tr><th>Task Pattern</th><th>Dispatch To</th><th>When</th></tr><tr><td>Profiling different system layers concurrently</td><td><code>Agent</code> tool with <code>subagent_type="Explore"</code> (one per layer)</td><td>When analyzing frontend, backend, and database independently</td></tr><tr><td>Bundle analysis and tree-shaking review</td><td><code>Agent</code> tool with <code>subagent_type="general-purpose"</code></td><td>When frontend bundle size is a concern</td></tr><tr><td>Database query optimization analysis</td><td><code>Agent</code> tool dispatching <code>database-architect</code> agent</td><td>When slow queries are identified across multiple tables</td></tr></table></div>
+<p>Follow the <code>dispatching-parallel-agents</code> skill protocol when dispatching.</p>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>senior-frontend</code></td><td>Frontend performance uses bundle and Web Vitals optimization</td></tr><tr><td><code>senior-backend</code></td><td>Backend performance uses caching and query tuning</td></tr><tr><td><code>testing-strategy</code></td><td>Load tests are part of the testing pyramid</td></tr><tr><td><code>code-review</code></td><td>Review checks for performance regressions</td></tr><tr><td><code>systematic-debugging</code></td><td>Performance issues follow the same investigation methodology</td></tr><tr><td><code>acceptance-testing</code></td><td>Performance targets become acceptance criteria</td></tr></table></div>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the depth of optimization to the project context. The MEASURE-IDENTIFY-OPTIMIZE-VERIFY cycle is mandatory for every optimization. Revert any change that does not produce measurable improvement.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

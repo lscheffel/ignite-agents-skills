@@ -1,17 +1,17 @@
 # Agent Role Card
 
-Card de papel do agente para orquestração multi-agente.
+Multi-Agent Orchestrator Agent Role Card.
 
-## Informações do Agente
+## Agent Information
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| **Nome** | `{agent_name}` |
-| **Papel** | `{role: orchestrator, specialist, reviewer, formatter}` |
-| **Modelo** | `{model: lightweight, standard, advanced}` |
-| **Responsabilidade** | `{responsibility}` |
+| **Name** | `{agent_name}` |
+| **Role** | `{role: orchestrator, specialist, reviewer, formatter}` |
+| **Model** | `{model: lightweight, standard, advanced}` |
+| **Responsibility** | `{responsibility}` |
 
-## Contrato I/O
+## I/O Contract
 
 ### Input
 
@@ -43,31 +43,31 @@ fields:
     description: {description}
 ```
 
-## Validação
+## Validation
 
-- [ ] Input válido antes de executar
-- [ ] Output válido após executar
-- [ ] Erros tratados conforme fallback
+- [ ] Valid input before execution
+- [ ] Valid output after execution
+- [ ] Errors handled according to fallback
 
 ## Fallback
 
-| Cenário | Ação |
+| Scenario | Action |
 |---------|------|
-| Input inválido | `{fallback_action}` |
+| Invalid input | `{fallback_action}` |
 | Timeout | `{fallback_action}` |
-| Output inválido | `{fallback_action}` |
-| Erro inesperado | `{fallback_action}` |
+| Invalid output | `{fallback_action}` |
+| Unexpected error | `{fallback_action}` |
 
-## Dependências
+## Dependencies
 
-- **Depende de**: `{upstream_agents}`
-- **Alimenta**: `{downstream_agents}`
-- **Paralelo com**: `{parallel_agents}`
+- **Depends on**: `{upstream_agents}`
+- **Feeds**: `{downstream_agents}`
+- **Parallel with**: `{parallel_agents}`
 
-## Métricas
+## Metrics
 
-| Métrica | Target |
+| Metric | Target |
 |---------|--------|
-| Taxa de sucesso | `{success_rate}` |
-| Latência média | `{latency}` |
-| Custo estimado | `{cost}` |
+| Success rate | `{success_rate}` |
+| Average latency | `{latency}` |
+| Estimated cost | `{cost}` |

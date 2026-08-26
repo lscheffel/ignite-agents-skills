@@ -411,60 +411,72 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: governance description: Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs. Use quando definir processos de equipe, implementar governance-as-code ou padronizar workflows de desenvolvimento. version: 2.0.0 tags: [governance, branching, code-review, process, team] related_skills: [git, release, repo-bootstrap, implementation, skill-audit-bulletin] ---</p>
+<p>name: governance version: 2.0.0 description: Define governance guidelines for repositories and teams. Covers review, approval, branching strategy, semantic versioning, and issue/PR management processes. Use when defining team processes, implementing governance-as-code, or standardizing development workflows. domain: core-governance triggers:</p>
+<ul>
+<li>governance</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>governance</li>
+<li>branching</li>
+<li>code-review</li>
+<li>process</li>
+<li>team</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="governance">Governance</h1>
-<p>Define diretrizes de governança para projetos e equipes.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Define governance guidelines for projects and teams.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Precisa definir processos de equipe</li>
-<li>Precisa configurar branch protection</li>
-<li>Precisa padronizar branching strategy</li>
-<li>Precisa configurar CODEOWNERS</li>
-<li>Precisa criar processo de revisão e aprovação</li>
+<li>You need to define team processes</li>
+<li>You need to configure branch protection</li>
+<li>You need to standardize branching strategy</li>
+<li>You need to configure CODEOWNERS</li>
+<li>You need to create a review and approval process</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Projeto pessoal sem colaboração</li>
-<li>Repositório somente leitura</li>
-<li>Projeto sem CI/CD</li>
+<li>The project is personal and has no collaboration</li>
+<li>The repository is read-only</li>
+<li>The project has no CI/CD</li>
 </ul>
-<h3 id="modos-de-colaborao">Modos de Colaboração</h3>
-<h4 id="solo--agentes-recomendado-para-projetos-individuais-com-ia">Solo + Agentes (recomendado para projetos individuais com IA)</h4>
+<h3 id="collaboration-modes">Collaboration Modes</h3>
+<h4 id="solo--agents-recommended-for-individual-projects-with-ai">Solo + Agents (Recommended for individual projects with AI)</h4>
 <ul>
-<li><strong>Operador solo</strong> trabalha com <strong>time de agentes de IA</strong> como colaboradores</li>
-<li>Branch protection ainda se aplica: agentes devem trabalhar em branches isoladas</li>
-<li>SemVer obrigatório: cada mudança significativa gera nova tag</li>
-<li>Processo:</li>
+<li><strong>Solo operator</strong> works with <strong>AI agents</strong> as collaborators</li>
+<li>Branch protection still applies: agents must work in isolated branches</li>
+<li>SemVer is mandatory: each significant change generates a new tag</li>
+<li>Process:</li>
 </ul>
-<pre><code>  Branch de trabalho → Implementação → Validação 100% → Merge → gh-pages sync → Tag SemVer</code></pre>
+<pre><code>  Work branch → Implementation → 100% Validation → Merge → gh-pages sync → Tag SemVer</code></pre>
 <ul>
-<li>Skills relacionadas: <code>implementation</code>, <code>adr-generator</code>, <code>agent-orchestration</code></li>
+<li>Related skills: <code>implementation</code>, <code>adr-generator</code>, <code>agent-orchestration</code></li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>git</code> — para padrões de commits e branches</li>
-<li><code>release</code> — para versionamento semântico</li>
-<li><code>repo-bootstrap</code> — para arquivos de governança iniciais</li>
+<li><code>git</code> — for commit and branch standards</li>
+<li><code>release</code> — for semantic versioning</li>
+<li><code>repo-bootstrap</code> — for initial governance files</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Preciso de governança?] --&gt;|Equipe pequena| B[Trunk-Based]
-    A --&gt;|Equipe grande| C[GitFlow]
+    A[Do you need governance?] --&gt;|Small team| B[Trunk-Based]
+    A --&gt;|Large team| C[GitFlow]
     A --&gt;|Open Source| D[GitHub Flow]
-    A --&gt;|Configurar| E[Branch Protection]
-    E --&gt;|Quem revisa| F[CODEOWNERS]
+    A --&gt;|Configure| E[Branch Protection]
+    E --&gt;|Who reviews| F[CODEOWNERS]
     E --&gt;|Status checks| G[CI Required]
     E --&gt;|Merge method| H[Squash vs Rebase]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-configurar-branch-protection">Fase 1: Configurar Branch Protection</h3>
+<h3 id="phase-1-configure-branch-protection">Phase 1: Configure Branch Protection</h3>
 <ol>
-<li>Acesse Settings > Branches no GitHub/GitLab</li>
-<li>Adicione regra para <code>main</code>:</li>
+<li>Access Settings > Branches on GitHub/GitLab</li>
+<li>Add rule for <code>main</code>:</li>
 </ol>
 <pre><code>   Branch name pattern: main</code></pre>
 <ol>
-<li>Configure proteções:</li>
+<li>Configure protections:</li>
 </ol>
 <ul>
 <li>[x] Require pull request reviews before merging</li>
@@ -472,242 +484,242 @@
 <li>[x] Require status checks to pass before merging</li>
 <li>[ ] Require branches to be up to date before merging</li>
 <li>[x] Include administrators</li>
-<li>[x] Allow force pushes (desmarque)</li>
-<li>[x] Allow deletions (desmarque)</li>
+<li>[x] Allow force pushes (uncheck)</li>
+<li>[x] Allow deletions (uncheck)</li>
 </ul>
 <ol>
-<li><strong>Checkpoint</strong>: Crie branch de teste e tente push direto para main (deve falhar)</li>
+<li><strong>Checkpoint</strong>: Create a test branch and try to push directly to main (should fail)</li>
 </ol>
-<h3 id="fase-2-configurar-codeowners">Fase 2: Configurar CODEOWNERS</h3>
+<h3 id="phase-2-configure-codeowners">Phase 2: Configure CODEOWNERS</h3>
 <ol>
-<li>Crie arquivo <code>.github/CODEOWNERS</code>:</li>
+<li>Create file <code>.github/CODEOWNERS</code>:</li>
 </ol>
 <pre data-lang="bash"><code>   mkdir -p .github
    cp templates/codeowners .github/CODEOWNERS</code></pre>
 <ol>
-<li>Edite com equipes do projeto:</li>
+<li>Edit with project teams:</li>
 </ol>
-<pre><code>   * @minha-equipe/core
-   /src/domain/ @minha-equipe/domain</code></pre>
+<pre><code>   * @my-team/core
+   /src/domain/ @my-team/domain</code></pre>
 <ol>
-<li>Commit e push:</li>
+<li>Commit and push:</li>
 </ol>
 <pre data-lang="bash"><code>   git add .github/CODEOWNERS
    git commit -m &quot;docs(governance): add CODEOWNERS&quot;</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Crie PR e verifique se CODEOWNERS são notificados</li>
+<li><strong>Checkpoint</strong>: Create a PR and verify CODEOWNERS are notified</li>
 </ol>
-<h3 id="fase-3-processo-de-pr-completo">Fase 3: Processo de PR Completo</h3>
+<h3 id="phase-3-complete-pr-process">Phase 3: Complete PR Process</h3>
 <ol>
-<li>Crie branch a partir de <code>main</code> ou <code>develop</code>:</li>
+<li>Create a branch from <code>main</code> or <code>develop</code>:</li>
 </ol>
-<pre data-lang="bash"><code>   git checkout -b feature/nova-funcionalidade</code></pre>
+<pre data-lang="bash"><code>   git checkout -b feature/new-feature</code></pre>
 <ol>
-<li>Faça commits pequenos e focados:</li>
+<li>Make small and focused commits:</li>
 </ol>
 <pre data-lang="bash"><code>   git commit -m &quot;feat: add user validation&quot;</code></pre>
 <ol>
-<li>Abra PR com descrição completa:</li>
+<li>Open a PR with a complete description:</li>
 </ol>
 <pre data-lang="bash"><code>   gh pr create --title &quot;feat: add user validation&quot; \
      --body-file templates/pull-request-template.md</code></pre>
 <ol>
-<li>Aguarde CI verde:</li>
+<li>Wait for CI to be green:</li>
 </ol>
 <pre data-lang="bash"><code>   gh pr checks --watch</code></pre>
 <ol>
-<li>Responda aos reviews</li>
-<li><strong>Checkpoint</strong>: PR aprovado e CI verde</li>
+<li>Respond to reviews</li>
+<li><strong>Checkpoint</strong>: PR approved and CI green</li>
 </ol>
-<h3 id="fase-4-release-management">Fase 4: Release Management</h3>
+<h3 id="phase-4-release-management">Phase 4: Release Management</h3>
 <ol>
-<li>Atualize CHANGELOG.md</li>
-<li>Crie branch de release (se GitFlow):</li>
+<li>Update CHANGELOG.md</li>
+<li>Create a release branch (if using GitFlow):</li>
 </ol>
 <pre data-lang="bash"><code>   git checkout -b release/v1.2.0</code></pre>
 <ol>
-<li>Bump versão em package.json</li>
-<li>Merge após aprovação</li>
-<li>Crie tag:</li>
+<li>Bump version in package.json</li>
+<li>Merge after approval</li>
+<li>Create a tag:</li>
 </ol>
 <pre data-lang="bash"><code>   git tag v1.2.0
    git push --tags</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Release publicada e documentada</li>
+<li><strong>Checkpoint</strong>: Release published and documented</li>
 </ol>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
 <h3 id="branching-strategy">Branching Strategy</h3>
-<h4 id="gitflow-recomendado-para-releases-agendadas">GitFlow (recomendado para releases agendadas)</h4>
+<h4 id="gitflow-recommended-for-scheduled-releases">GitFlow (Recommended for scheduled releases)</h4>
 <ul>
-<li><code>main</code>: código em produção</li>
-<li><code>develop</code>: branch de integração</li>
-<li><code>feature/*</code>: novas features</li>
-<li><code>release/*</code>: preparação de release</li>
-<li><code>hotfix/*</code>: correções urgentes</li>
+<li><code>main</code>: production code</li>
+<li><code>develop</code>: integration branch</li>
+<li><code>feature/*</code>: new features</li>
+<li><code>release/*</code>: release preparation</li>
+<li><code>hotfix/*</code>: urgent fixes</li>
 </ul>
-<h4 id="trunk-based-recomendado-para-cicd-contnuo">Trunk-Based (recomendado para CI/CD contínuo)</h4>
+<h4 id="trunk-based-recommended-for-continuous-cicd">Trunk-Based (Recommended for continuous CI/CD)</h4>
 <ul>
-<li><code>main</code>: trunk sempre deployável</li>
-<li><code>feature/*</code>: branches curtas (< 1 dia)</li>
-<li>Commits pequenos e frequentes</li>
+<li><code>main</code>: trunk always deployable</li>
+<li><code>feature/*</code>: short-lived branches (< 1 day)</li>
+<li>Small and frequent commits</li>
 </ul>
-<h4 id="github-flow-recomendado-para-open-source">GitHub Flow (recomendado para open source)</h4>
+<h4 id="github-flow-recommended-for-open-source">GitHub Flow (Recommended for open source)</h4>
 <ul>
-<li><code>main</code>: branch principal</li>
-<li>Branches curtas</li>
-<li>PR obrigatório</li>
-<li>Deploy automático após merge</li>
+<li><code>main</code>: main branch</li>
+<li>Short-lived branches</li>
+<li>PR required</li>
+<li>Automatic deploy after merge</li>
 </ul>
-<h3 id="versionamento-semntico">Versionamento Semântico</h3>
-<p>Formato: <code>MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]</code></p>
+<h3 id="semantic-versioning">Semantic Versioning</h3>
+<p>Format: <code>MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]</code></p>
 <ul>
-<li><strong>MAJOR</strong>: mudanças incompatíveis</li>
-<li><strong>MINOR</strong>: funcionalidades novas, retrocompatível</li>
-<li><strong>PATCH</strong>: correções, retrocompatível</li>
+<li><strong>MAJOR</strong>: incompatible changes</li>
+<li><strong>MINOR</strong>: new features, backward compatible</li>
+<li><strong>PATCH</strong>: fixes, backward compatible</li>
 </ul>
-<h3 id="processo-de-pr">Processo de PR</h3>
+<h3 id="pr-process">PR Process</h3>
 <ol>
-<li>Feature branch a partir de <code>main</code> ou <code>develop</code></li>
-<li>Commits pequenos e focados</li>
-<li>Abre PR com descrição completa</li>
-<li>Pelo menos 1 aprovação (2 para mudanças arquiteturais)</li>
-<li>CI verde (lint, testes, build)</li>
-<li>Merge com squash ou rebase</li>
+<li>Feature branch from <code>main</code> or <code>develop</code></li>
+<li>Small and focused commits</li>
+<li>Open a PR with a complete description</li>
+<li>At least 1 approval (2 for architectural changes)</li>
+<li>CI green (lint, tests, build)</li>
+<li>Merge with squash or rebase</li>
 </ol>
 <h2 id="templates">Templates</h2>
 <h3 id="pull-request-templatemd">pull-request-template.md</h3>
-<p>Localização: <code>templates/pull-request-template.md</code></p>
-<p>Template para descrição de Pull Request.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/pull-request-template.md</code></p>
+<p>Template for PR descriptions.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/pull-request-template.md .github/PULL_REQUEST_TEMPLATE.md</code></pre>
 <h3 id="issue-templatemd">issue-template.md</h3>
-<p>Localização: <code>templates/issue-template.md</code></p>
-<p>Template para criação de issues.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/issue-template.md</code></p>
+<p>Template for issue creation.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/issue-template.md .github/ISSUE_TEMPLATE.md</code></pre>
 <h3 id="codeowners">codeowners</h3>
-<p>Localização: <code>templates/codeowners</code></p>
-<p>Configuração de CODEOWNERS para revisão automática.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/codeowners</code></p>
+<p>Configuration for automatic CODEOWNERS review.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>mkdir -p .github
 cp templates/codeowners .github/CODEOWNERS</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="approve-sem-review">Approve sem Review</h4>
-<p><strong>O que é:</strong> Aprovar PR sem ler código ou sem entender mudanças. <strong>Por que é ruim:</strong> Bugs e problemas de arquitetura entram no codebase. <strong>Como evitar:</strong> Sempre leia diff completo, execute localmente. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-PR aberto às 14:00
-Aprovado às 14:05 sem comentários
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="approve-without-review">Approve without Review</h4>
+<p><strong>What is it:</strong> Approving a PR without reading the code or understanding the changes. <strong>Why is it bad:</strong> Bugs and architectural problems enter the codebase. <strong>How to avoid:</strong> Always read the complete diff, execute locally. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+PR opened at 14:00
+Approved at 14:05 without comments
 
-# ✅ CORRETO
-PR aberto às 14:00
-Review às 14:30 com 3 comentários
-Discussão e ajustes
-Aprovado às 15:30</code></pre>
-<h4 id="merge-com-ci-vermelho">Merge com CI Vermelho</h4>
-<p><strong>O que é:</strong> Merge de PR mesmo com CI falhando. <strong>Por que é ruim:</strong> Quebra main/develop, deploy falha. <strong>Como evitar:</strong> Nunca merge com CI vermelho, resolva primeiro. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+# ✅ RIGHT
+PR opened at 14:00
+Reviewed at 14:30 with 3 comments
+Discussion and adjustments
+Approved at 15:30</code></pre>
+<h4 id="merge-with-red-ci">Merge with Red CI</h4>
+<p><strong>What is it:</strong> Merging a PR even with CI failing. <strong>Why is it bad:</strong> Breaks main/develop, deploy fails. <strong>How to avoid:</strong> Never merge with red CI, resolve first. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 CI: failing
 git merge --no-ff feature/branch
 
-# ✅ CORRETO
+# ✅ RIGHT
 CI: failing
-# Investigar e corrigir
+# Investigate and fix
 CI: passing
 git merge --no-ff feature/branch</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="branch-sem-pr">Branch sem PR</h4>
-<p><strong>O que é:</strong> Trabalhar diretamente em main ou develop sem PR. <strong>Por que é ruim:</strong> Nenhuma revisão, histórico de decisões perdido. <strong>Como evitar:</strong> Sempre crie PR, mesmo para mudanças pequenas. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="branch-without-pr">Branch without PR</h4>
+<p><strong>What is it:</strong> Working directly on main or develop without a PR. <strong>Why is it bad:</strong> No review, historical decision loss. <strong>How to avoid:</strong> Always create a PR, even for small changes. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 git checkout main
 git add .
 git commit -m &quot;fix: quick fix&quot;
 
-# ✅ CORRETO
+# ✅ RIGHT
 git checkout -b fix/quick-fix
 git add .
 git commit -m &quot;fix: quick fix&quot;
 gh pr create</code></pre>
-<h4 id="review-superficial">Review Superficial</h4>
-<p><strong>O que é:</strong> Review que só comenta formatação, não lógica. <strong>Por que é ruim:</strong> Problemas de arquitetura e bugs não são detectados. <strong>Como evitar:</strong> Use checklist de review, foque em lógica e segurança. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Missing semicolon&quot; (único comentário)
+<h4 id="superficial-review">Superficial Review</h4>
+<p><strong>What is it:</strong> Review that only comments on formatting, not logic. <strong>Why is it bad:</strong> Architectural and bug problems are not detected. <strong>How to avoid:</strong> Use a review checklist, focus on logic and security. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+&quot;Missing semicolon&quot; (only comment)
 
-# ✅ CORRETO
+# ✅ RIGHT
 &quot;Consider extracting this logic to a service for testability&quot;
 &quot;Missing null check for user.email&quot;
 &quot;Good use of early return pattern&quot;</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="pr-sem-descrio">PR sem Descrição</h4>
-<p><strong>O que é:</strong> PR criado sem descrição ou com descrição genérica. <strong>Por que é ruim:</strong> Revisores não entendem contexto, demora review. <strong>Como evitar:</strong> Use template, preencha todos os campos. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-Título: &quot;fix&quot;
-Descrição: &quot;fix bug&quot;
+<h3 id="-low">🟢 Low</h3>
+<h4 id="pr-without-description">PR without Description</h4>
+<p><strong>What is it:</strong> PR created without a description or with a generic description. <strong>Why is it bad:</strong> Reviewers do not understand the context, review takes longer. <strong>How to avoid:</strong> Use a template, fill in all fields. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+Title: &quot;fix&quot;
+Description: &quot;fix bug&quot;
 
-# ✅ CORRETO
-Título: &quot;fix(auth): handle expired JWT token&quot;
-Descrição: &quot;Implementa renovação automática de token expirado...&quot;</code></pre>
+# ✅ RIGHT
+Title: &quot;fix(auth): handle expired JWT token&quot;
+Description: &quot;Implement automatic token renewal...&quot;</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-pr">Checklist de PR</h3>
+<h3 id="pr-checklist">PR Checklist</h3>
 <ul>
-<li>[ ] Título claro e descritivo</li>
-<li>[ ] Descrição explica o que e por que</li>
-<li>[ ] Screenshots incluídos (se UI)</li>
-<li>[ ] Checklist preenchido</li>
-<li>[ ] Testes adicionados</li>
-<li>[ ] Coverage mantido</li>
-<li>[ ] Lint passa</li>
-<li>[ ] Build passa</li>
+<li>[ ] Clear and descriptive title</li>
+<li>[ ] Description explains what and why</li>
+<li>[ ] Screenshots included (if UI)</li>
+<li>[ ] Checklist completed</li>
+<li>[ ] Tests added</li>
+<li>[ ] Coverage maintained</li>
+<li>[ ] Lint passes</li>
+<li>[ ] Build passes</li>
 </ul>
-<h3 id="checklist-de-release">Checklist de Release</h3>
+<h3 id="release-checklist">Release Checklist</h3>
 <ul>
-<li>[ ] CHANGELOG.md atualizado</li>
-<li>[ ] Versão bumpada</li>
-<li>[ ] Todos os testes passam</li>
-<li>[ ] Documentação atualizada</li>
-<li>[ ] Tag criada</li>
-<li>[ ] Release publicada</li>
+<li>[ ] CHANGELOG.md updated</li>
+<li>[ ] Version bumped</li>
+<li>[ ] All tests pass</li>
+<li>[ ] Documentation updated</li>
+<li>[ ] Tag created</li>
+<li>[ ] Release published</li>
 </ul>
-<h3 id="checklist-de-onboarding">Checklist de Onboarding</h3>
+<h3 id="onboarding-checklist">Onboarding Checklist</h3>
 <ul>
-<li>[ ] Acesso ao repositório concedido</li>
-<li>[ ] CODEOWNERS configurado</li>
-<li>[ ] Branch protection explicada</li>
-<li>[ ] Processo de PR treinado</li>
-<li>[ ] CI/CD explicado</li>
+<li>[ ] Repository access granted</li>
+<li>[ ] CODEOWNERS configured</li>
+<li>[ ] Branch protection explained</li>
+<li>[ ] PR process trained</li>
+<li>[ ] CI/CD explained</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="hotfix-em-produo">Hotfix em Produção</h3>
-<p><strong>Situação:</strong> Bug crítico precisa ser corrigido imediatamente. <strong>Solução:</strong> Use branch hotfix, merge direto para main e develop. <strong>Exceção:</strong> Se bug não é crítico, use processo normal.</p>
+<h3 id="hotfix-in-production">Hotfix in Production</h3>
+<p><strong>Situation:</strong> Critical bug needs to be fixed immediately. <strong>Solution:</strong> Use a hotfix branch, merge directly to main and develop. <strong>Exception:</strong> If the bug is not critical, use the normal process.</p>
 <pre data-lang="bash"><code># Hotfix
 git checkout -b hotfix/critical-bug main
-# ... corrigir ...
+# ... fix ...
 git commit -m &quot;fix: critical bug&quot;
 git checkout main
 git merge --no-ff hotfix/critical-bug
 git tag v1.2.1
-# Merge para develop também
+# Merge to develop also
 git checkout develop
 git merge --no-ff hotfix/critical-bug</code></pre>
-<h3 id="revert-de-release">Revert de Release</h3>
-<p><strong>Situação:</strong> Release quebrou produção, precisa reverter. <strong>Solução:</strong> Crie branch de revert com tag especial. <strong>Exceção:</strong> Se bug é pequeno, hotfix pode ser suficiente.</p>
+<h3 id="revert-of-release">Revert of Release</h3>
+<p><strong>Situation:</strong> Release broke production, needs to be reverted. <strong>Solution:</strong> Create a revert branch with a special tag. <strong>Exception:</strong> If the bug is small, a hotfix may be sufficient.</p>
 <pre data-lang="bash"><code># Revert
 git revert --no-commit v1.2.0
 git commit -m &quot;revert(release): v1.2.0 - breaks production&quot;
 git tag v1.2.0-rollback-20240115</code></pre>
-<h3 id="contributor-externo">Contributor Externo</h3>
-<p><strong>Situação:</strong> Pull Request de contribuinte externo. <strong>Solução:</strong> Review mais rigoroso, verificar segurança e licença. <strong>Exceção:</strong> Contribuinte já conhecido e confiável.</p>
-<pre data-lang="bash"><code># Checklist adicional para externos
-- [ ] Verificar histórico do contribuinte
-- [ ] Revisar dependências novas
-- [ ] Verificar licença de código incluído
-- [ ] Testes adicionais para mudanças externas</code></pre>
-<h2 id="referncias">Referências</h2>
+<h3 id="external-contributor">External Contributor</h3>
+<p><strong>Situation:</strong> Pull Request from an external contributor. <strong>Solution:</strong> More rigorous review, check security and license. <strong>Exception:</strong> Known and trusted contributor.</p>
+<pre data-lang="bash"><code># Additional checklist for externals
+- [ ] Verify contributor history
+- [ ] Review new dependencies
+- [ ] Check code license included
+- [ ] Additional tests for external changes</code></pre>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://guides.github.com/introduction/flow/">GitHub Flow</a></li>
 <li><a href="https://semver.org/">Semantic Versioning</a></li>
-<li><code>git</code> — para padrões de commits</li>
-<li><code>release</code> — para processo de release</li>
+<li><code>git</code> — for commit and branch standards</li>
+<li><code>release</code> — for semantic versioning</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

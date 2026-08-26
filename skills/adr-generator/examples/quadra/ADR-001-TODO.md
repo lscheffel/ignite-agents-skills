@@ -1,25 +1,25 @@
 ---
 id: ADR-001-TODO
 type: todo
-title: Execução - Implementação do JWT
+title: Execution - JWT Implementation
 created: 2026-01-01
 updated: 2026-01-01
 adr_ref: ADR-001
 ---
 
-# ADR-001-TODO: Execução - Implementação do JWT
+# ADR-001-TODO: Execution - JWT Implementation
 
-> Referência: [ADR-001](./ADR-001.md) | Status: ⬜ PENDENTE
+> Reference: [ADR-001](./ADR-001.md) | Status: ⬜ PENDING
 
-## Fase A: Core Authentication
+## Phase A: Core Authentication
 
-### A1: Criação do JWT Service
+### A1: JWT Service Creation
 
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
+| # | Task | Status | Priority | Dependencies | Estimation |
 |---|--------|--------|------------|--------------|------------|
-| A1.1 | Criar JWT Adapter com PyJWT | ⬜ | 🔴 | — | 4h |
-| A1.2 | Implementar Auth Middleware | ⬜ | 🔴 | A1.1 | 3h |
+| A1.1 | Create JWT Adapter with PyJWT | ⬜ | 🔴 | — | 4h |
+| A1.2 | Implement Auth Middleware | ⬜ | 🔴 | A1.1 | 3h |
 
 **Checkpoint A1:**
-- [ ] PyJWT instalado.
-- [ ] Endpoints retornando 401 para requests sem token.
+- [ ] PyJWT installed.
+- [ ] Endpoints returning 401 for requests without token.

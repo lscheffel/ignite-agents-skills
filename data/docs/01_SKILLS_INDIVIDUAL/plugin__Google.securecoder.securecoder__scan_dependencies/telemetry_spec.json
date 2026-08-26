@@ -1,0 +1,25 @@
+{
+  "asset_id": "plugin__Google.securecoder.securecoder__scan_dependencies",
+  "asset_name": "scan_dependencies",
+  "category": "plugin_skill",
+  "telemetry_metrics": {
+    "schema_tokens": 280,
+    "prompt_overhead_tokens": 867,
+    "estimated_payload_return_bytes": 3471,
+    "estimated_payload_return_tokens": 867,
+    "estimated_latency_ms": 110,
+    "p95_latency_ms": 240,
+    "timeout_seconds": 30,
+    "max_concurrency": 15,
+    "side_effects": "Read-Only / Pure Logic"
+  },
+  "cost_model": {
+    "cost_per_1k_invocations_usd": 0.13,
+    "context_cache_efficiency": "N/A (Ultra-Lightweight)"
+  },
+  "governance_thresholds": {
+    "circuit_breaker_error_rate_threshold": "5%",
+    "consecutive_failures_trip": 3,
+    "cooldown_seconds": 15
+  }
+}

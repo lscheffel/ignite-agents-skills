@@ -1,13 +1,13 @@
-# Exemplo: Release Process
+# Example: Release Process
 
-## Pré-Release
+## Pre-Release
 ```bash
-# Atualizar CHANGELOG
+# Update CHANGELOG
 ## [1.2.0] - 2024-01-15
 ### Added
-- Social login com Google
+- Google social login
 
-# Bump versão
+# Bump version
 npm version minor
 ```
 
@@ -21,7 +21,7 @@ npm publish
 gh release create v1.2.0
 ```
 
-## Resultado
-- Release publicada
-- CHANGELOG atualizado
-- Usuários notificados
+## Result
+- Release published
+- CHANGELOG updated
+- Users notified

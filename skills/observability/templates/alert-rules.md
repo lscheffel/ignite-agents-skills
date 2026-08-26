@@ -1,17 +1,17 @@
-# Regras de Alerta
+# Alert Rules
 
-## Visão Geral
-Documento de referência para regras de alerta com severidade e runbooks.
+## Overview
+Reference document for alert rules with severity and runbooks.
 
-## Severidade
+## Severity
 
-| Severidade | Descrição | Tempo de Resposta | Notificação |
-|------------|-----------|-------------------|-------------|
-| **Critical** | Sistema indisponível ou dados corrompidos | 5 minutos | PagerDuty + Slack |
-| **Warning** | Degradção de performance ou risco iminente | 30 minutos | Slack |
-| **Info** | Evento significativo sem impacto | Próximo business day | Email |
+| Severity | Description | Response Time | Notification |
+|----------|-------------|----------------|---------------|
+| **Critical** | System unavailable or data corrupted | 5 minutes | PagerDuty + Slack |
+| **Warning** | Performance degradation or imminent risk | 30 minutes | Slack |
+| **Info** | Significant event with no impact | Next business day | Email |
 
-## Regras de Alerta
+## Alert Rules
 
 ### Critical
 
@@ -23,14 +23,14 @@ Documento de referência para regras de alerta com severidade e runbooks.
   labels:
     severity: critical
   annotations:
-    summary: "Taxa de erro > 5%"
-    description: "Taxa de erro de {{ $value | humanizePercentage }} nos últimos 5 minutos"
+    summary: "Error rate > 5%"
+    description: "Error rate of {{ $value | humanizePercentage }} in the last 5 minutes"
     runbook_url: "https://wiki/runbooks/high-error-rate"
     steps: |
-      1. Verificar logs de erro no Kibana
-      2. Identificar endpoint com maior taxa de erro
-      3. Verificar dependências externas
-      4. Escalar se necessário
+      1. Check error logs in Kibana
+      2. Identify the endpoint with the highest error rate
+      3. Check external dependencies
+      4. Scale if necessary
 ```
 
 #### ServiceDown
@@ -41,14 +41,14 @@ Documento de referência para regras de alerta com severidade e runbooks.
   labels:
     severity: critical
   annotations:
-    summary: "Serviço indisponível"
-    description: "Serviço {{ $labels.instance }} está down há mais de 1 minuto"
+    summary: "Service unavailable"
+    description: "Service {{ $labels.instance }} has been down for more than 1 minute"
     runbook_url: "https://wiki/runbooks/service-down"
     steps: |
-      1. Verificar se o processo está rodando
-      2. Verificar recursos do sistema (CPU, memória, disco)
-      3. Verificar logs de startup
-      4. Reiniciar serviço se necessário
+      1. Check if the process is running
+      2. Check system resources (CPU, memory, disk)
+      3. Check startup logs
+      4. Restart the service if necessary
 ```
 
 ### Warning
@@ -61,14 +61,14 @@ Documento de referência para regras de alerta com severidade e runbooks.
   labels:
     severity: warning
   annotations:
-    summary: "Latência p99 > 1s"
-    description: "Latência p99 de {{ $value }}s nos últimos 5 minutos"
+    summary: "p99 latency > 1s"
+    description: "p99 latency of {{ $value }}s in the last 5 minutes"
     runbook_url: "https://wiki/runbooks/high-latency"
     steps: |
-      1. Verificar dashboards de performance
-      2. Identificar queries lentas
-      3. Verificar conexões com banco de dados
-      4. Considerar escalar horizontalmente
+      1. Check performance dashboards
+      2. Identify slow queries
+      3. Check database connections
+      4. Consider horizontal scaling
 ```
 
 #### HighMemoryUsage
@@ -79,14 +79,14 @@ Documento de referência para regras de alerta com severidade e runbooks.
   labels:
     severity: warning
   annotations:
-    summary: "Uso de memória > 1GB"
-    description: "Serviço {{ $labels.instance }} usando {{ $value }}MB de memória"
+    summary: "Memory usage > 1GB"
+    description: "Service {{ $labels.instance }} using {{ $value }}MB of memory"
     runbook_url: "https://wiki/runbooks/high-memory"
     steps: |
-      1. Verificar se há memory leak
-      2. Analisar heap dumps
-      3. Verificar configurações de GC
-      4. Considerar aumentar memória ou escalar
+      1. Check for memory leaks
+      2. Analyze heap dumps
+      3. Check GC configurations
+      4. Consider increasing memory or scaling
 ```
 
 ### Info
@@ -98,72 +98,72 @@ Documento de referência para regras de alerta com severidade e runbooks.
   labels:
     severity: info
   annotations:
-    summary: "Deploy realizado"
-    description: "Versão {{ $labels.version }} implantada em {{ $labels.environment }}"
+    summary: "Deploy completed"
+    description: "Version {{ $labels.version }} deployed in {{ $labels.environment }}"
 ```
 
 ## Runbooks
 
 ### Runbook: HighErrorRate
-1. **Investigar**
-   - Acesse Kibana e filtre por erros 5xx
-   - Identifique o endpoint com maior taxa de erro
-   - Verifique se há padrão (horário, usuário, região)
+1. **Investigate**
+   - Access Kibana and filter by 5xx errors
+   - Identify the endpoint with the highest error rate
+   - Check for patterns (time, user, region)
 
-2. **Diagnosticar**
-   - Verifique logs do serviço afetado
-   - Analise traces para identificar onde o erro ocorre
-   - Verifique dependências externas (DB, cache, APIs)
+2. **Diagnose**
+   - Check logs of the affected service
+   - Analyze traces to identify where the error occurs
+   - Check external dependencies (DB, cache, APIs)
 
-3. **Resolver**
-   - Se erro de dependência: verificar status do serviço externo
-   - Se erro de código: hotfix ou rollback
-   - Se erro de infra: escalar ou reiniciar
+3. **Resolve**
+   - If error is due to dependency: check status of external service
+   - If error is due to code: hotfix or rollback
+   - If error is due to infrastructure: scale or restart
 
-4. **Documentar**
-   - Registre incidente no post-mortem
-   - Atualize runbook se necessário
-   - Crie task para correção definitiva
+4. **Document**
+   - Record incident in post-mortem
+   - Update runbook if necessary
+   - Create task for definitive correction
 
 ### Runbook: ServiceDown
-1. **Verificar Status**
+1. **Check Status**
    ```bash
-   # Verificar se processo está rodando
+   # Check if process is running
    ps aux | grep <service-name>
    
-   # Verificar portas
+   # Check ports
    netstat -tlnp | grep <port>
    ```
 
-2. **Verificar Logs**
+2. **Check Logs**
    ```bash
-   # Últimas linhas de log
+   # Last lines of log
    tail -100 /var/log/<service>/error.log
    ```
 
-3. **Reiniciar**
+3. **Restart**
    ```bash
-   # Reiniciar serviço
+   # Restart service
    systemctl restart <service-name>
    ```
 
-4. **Monitorar**
-   - Acompanhe métricas após reinício
-   - Verifique se erros persistem
+4. **Monitor**
+   - Monitor metrics after restart
+   - Check if errors persist
 
-## Escalonamento
+## Escalation
 
-| Nível | Tempo | Responsável | Contato |
-|-------|-------|-------------|---------|
+| Level | Time | Responsible | Contact |
+|-------|------|-------------|---------|
 | L1 | 0-5 min | On-call | PagerDuty |
 | L2 | 5-15 min | Tech Lead | Slack #incidents |
 | L3 | 15-30 min | Engineering Manager | Phone |
 | L4 | 30+ min | VP Engineering | Executive |
 
-## Checklist de Alertas
-- [ ] Alertas definidos com severidade
-- [ ] Runbooks anexados a cada alerta
-- [ ] Escalonamento configurado
-- [ ] Notificações testadas
-- [ ] Alertas review quarterly
-- [ ] Freqüência de alertas monitorada
+## Alert Checklist
+- [ ] Alerts defined with severity
+- [ ] Runbooks attached to each alert
+- [ ] Escalation configured
+- [ ] Notifications tested
+- [ ] Alerts reviewed quarterly
+- [ ] Frequency of alerts monitored

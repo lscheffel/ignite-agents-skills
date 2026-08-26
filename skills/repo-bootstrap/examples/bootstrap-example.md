@@ -1,6 +1,6 @@
-# Exemplo: Repo Bootstrap
+# Example: Repo Bootstrap
 
-## Estrutura Criada
+## Created Structure
 ```
 my-service/
 ├── README.md
@@ -21,16 +21,16 @@ my-service/
     └── infrastructure/
 ```
 
-## Comandos
+## Commands
 ```bash
-# Criar estrutura
+# Create structure
 mkdir -p docs/{adr,api,architecture}
 mkdir -p .github/workflows
 
-# Copiar templates
+# Copy templates
 cp templates/*.md .
 cp templates/ci.yml .github/workflows/
 ```
 
-## Resultado
-Repo pronto para desenvolvimento com todos os arquivos de governança.
+## Result
+Repo ready for development with all governance files in place.

@@ -1,260 +1,279 @@
 ---
 name: security-review
-description: Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras. Use quando revisar código por segurança, auditar dependências ou validar práticas de criptografia.
-version: 2.0.0
-tags: [security, vulnerabilities, secrets, cryptography, dependencies]
-related_skills: [governance, architecture-review-kilo, testing]
+version: 1.0.0
+description: 'Use when reviewing code for security vulnerabilities, implementing authentication
+  or authorization, handling user input, managing secrets, or auditing dependencies
+  for known CVEs. Triggers: auth implementation, input handling, secrets management,
+  dependency audit, pre-deployment security check, OWASP compliance review.'
+domain: engineering-quality
+triggers:
+- security-review
+tags:
+- security-review
+- engineering-quality
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Security Review
 
-Realiza revisões de segurança abrangentes em código, focando em vulnerabilidades reais e práticas seguras.
+## Overview
 
-## Quando Usar
+Systematically review code for security vulnerabilities, apply secure coding patterns, and ensure applications follow defense-in-depth principles. This skill covers the OWASP Top 10, authentication pattern selection, input validation, secrets management, dependency auditing, security headers, and threat modeling.
 
-### Use quando:
-- Revisando código novo antes de merge
-- Auditando dependências por CVEs conhecidos
-- Validando implementações de criptografia (AES-GCM, scrypt, BIP39)
-- Investigando potenciais vazamento de secrets
-- Preparando release de aplicação sensível
-- Verificando conformidade com OWASP Top 10
+**Announce at start:** "I'm using the security-review skill to assess security posture."
 
-### Não use quando:
-- Bug fix trivial sem impacto de segurança
-- Refatoração puramente estética
-- Documentação ou README
-- Apenas testes unitários (use `testing`)
+---
 
-### Skills relacionadas:
-- `governance` — processos de aprovação e branching
-- `architecture-review-kilo` — revisão de design e padrões
-- `testing` — validação funcional
+## Phase 1: Scope and Threat Assessment
 
-## Decision Tree
+**Goal:** Identify the attack surface and prioritize review areas.
 
-```mermaid
-graph TD
-    A[Código para revisar] -->|Contém segredos/creds?| B[Secret Scanning]
-    A -->|Interpola dados?| C[Injeção SQL/NoSQL/XSS]
-    A -->|Usa criptografia?| D[Revisão de Criptografia]
-    A -->|Tem dependências?| E[Dependency Audit]
-    A -->|Expõe API?| F[Modelagem de Ameaça]
-    B --> G[Remover e rotacionar]
-    C --> H[Parametrizar queries]
-    D --> I[Validar parâmetros KDF/nonce]
-    E --> J[Atualizar/remover pacotes]
-    F --> K[STRIDE simplificado]
+### Actions
+
+1. Identify all user-facing endpoints and input surfaces
+2. Map authentication and authorization boundaries
+3. List external dependencies and their trust levels
+4. Identify sensitive data flows (PII, credentials, payment)
+5. Determine compliance requirements (SOC 2, GDPR, HIPAA)
+
+### STOP — Do NOT proceed to Phase 2 until:
+- [ ] Attack surface is mapped
+- [ ] Sensitive data flows are identified
+- [ ] Compliance requirements are known
+
+---
+
+## Phase 2: OWASP Top 10 Audit
+
+**Goal:** Systematically check against each OWASP category.
+
+### OWASP Top 10 Checklist (2021)
+
+| # | Category | Key Check | Pass/Fail |
+|---|----------|-----------|-----------|
+| 1 | **Broken Access Control** | Authorization verified on every endpoint, deny by default | |
+| 2 | **Cryptographic Failures** | No plaintext secrets, strong algorithms (AES-256, bcrypt) | |
+| 3 | **Injection** | Parameterized queries, no string concatenation for SQL/commands | |
+| 4 | **Insecure Design** | Threat model exists, rate limiting, abuse cases considered | |
+| 5 | **Security Misconfiguration** | No defaults in production, minimal permissions, error messages leak nothing | |
+| 6 | **Vulnerable Components** | Dependencies audited, no known CVEs, update policy in place | |
+| 7 | **Auth Failures** | MFA available, passwords hashed, session management secure | |
+| 8 | **Data Integrity Failures** | Verify signatures, validate CI/CD pipeline integrity | |
+| 9 | **Logging Failures** | Log auth events, access control failures, input validation failures | |
+| 10 | **SSRF** | Validate/allowlist URLs, no internal network access from user input | |
+
+### STOP — Do NOT proceed to Phase 3 until:
+- [ ] All 10 categories are checked
+- [ ] Findings are documented with severity
+
+---
+
+## Phase 3: Deep Review by Category
+
+**Goal:** Apply detailed security patterns to identified issues.
+
+### Auth Pattern Selection Table
+
+| Pattern | Use When | Key Requirements |
+|---------|----------|-----------------|
+| **JWT** | Stateless APIs, microservices, mobile backends | RS256 for multi-service; access token 15min max; HttpOnly cookies |
+| **Session-based** | Traditional web apps, server-rendered pages | Server-side storage; HttpOnly + Secure + SameSite cookies; CSRF tokens |
+| **OAuth2/OIDC** | Third-party login, SSO, delegated auth | Authorization Code + PKCE; validate ID token claims; server-side token storage |
+| **Passkeys/WebAuthn** | Passwordless, high-security apps | Phishing-resistant; store public keys only; support multiple per account |
+
+### JWT Security Checklist
+
+| Aspect | Guidance |
+|--------|----------|
+| Signing | RS256 (asymmetric) for multi-service, HS256 for single service |
+| Expiry | Access token: 15 minutes max. Refresh token: 7 days max |
+| Storage | HttpOnly cookie (web) or secure storage (mobile). Never localStorage |
+| Refresh | Rotate refresh tokens on use, invalidate on logout |
+| Payload | Minimal claims (sub, exp, iat, roles). No sensitive data |
+
+### Input Validation Patterns
+
+**Allow-List Validation** (always prefer over block-list):
+```python
+# Good: allow-list
+ALLOWED_SORT_FIELDS = {'name', 'created_at', 'price'}
+if sort_field not in ALLOWED_SORT_FIELDS:
+    raise ValidationError("Invalid sort field")
+
+# Bad: block-list (always incomplete)
+BLOCKED_CHARS = ['<', '>', '"']
 ```
 
-## Conceitos Fundamentais
+**Parameterized Queries** (never concatenate user input):
+```python
+# Good: parameterized
+cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
 
-### Threat Categories (OWASP Top 10 2021)
-
-| Categoria | Descrição | Onde procurar |
-|-----------|-----------|---------------|
-| A01: Broken Access Control | Controle de acesso inadequado | Endpoints, middleware, rotas |
-| A02: Cryptographic Failures | Erros de criptografia | Chaves, nonces, algoritmos |
-| A03: Injection | Injeção de código | Queries, templates, eval |
-| A04: Insecure Design | Design inseguro | Arquitetura, fluxos |
-| A05: Security Misconfiguration | Configuração incorreta | .env, headers, CORS |
-| A06: Vulnerable Components | Componentes vulneráveis | package.json, lock files |
-| A07: Auth Failures | Falhas de autenticação | Login, sessões, tokens |
-
-### Criptografia — Parâmetros Críticos
-
-**AES-GCM:**
-- Nonce: 12 bytes, NUNCA reutilizado para a mesma chave
-- Tag: 16 bytes (autenticação)
-- Key: 256 bits para AES-256
-
-**scrypt (KDF):**
-- N (CPU/memory cost): ≥16384 (2^14)
-- r (block size): ≥8
-- p (parallelization): ≥1
-- Salt: ≥16 bytes aleatórios
-
-**BIP39 (mnemonic):**
-- Entropy: 128-256 bits
-- Wordlist: inglês ou português (não misturar)
-- PBKDF2 com ≥2048 iterações
-
-## Workflow
-
-### Workflow 1: Secret Scanning
-
-**Objetivo:** Detectar credenciais, chaves e segredos expostos no código.
-
-1. Buscar padrões de secrets:
-   - API keys: `sk_live_`, `pk_live_`, `AKIA`, `ghp_`
-   - Passwords: `password =`, `passwd =`, `secret =`
-   - Tokens: `bearer `, `token =`, `jwt `
-2. Verificar arquivos `.env` e `.env.*`
-3. Verificar `.gitignore` cobre arquivos sensíveis
-4. Verificar se testes usam valores hardcoded
-5. Verificar logs por dados sensíveis (PII, tokens)
-6. **Checkpoint**: Nenhum secret encontrado ou todos são placeholders
-
-### Workflow 2: Revisão de Dependências
-
-**Objetivo:** Identificar dependências com vulnerabilidades conhecidas.
-
-1. Executar `npm audit` / `yarn audit` / `pip audit` / `cargo audit`
-2. Verificar CVEs em dependências diretas
-3. Verificar dependências transitivas
-4. Avaliar se dependências abandonadas
-5. Verificar licenças (GPL em código proprietário)
-6. **Checkpoint**: Zero vulnerabilidades críticas, <5 warnings
-
-### Workflow 3: Validação de Criptografia
-
-**Objetivo:** Garantir implementações criptográficas corretas.
-
-1. Verificar algoritmos usados (não MD5, SHA1 para hashes de senha)
-2. Validar parâmetros AES-GCM (nonce, tag, key size)
-3. Validar parâmetros scrypt/KDF (N, r, p, salt)
-4. Verificar se chaves estão hardcoded
-5. Verificar se nonce é reutilizado
-6. Verificar timing attacks em comparações
-7. **Checkpoint**: Parâmetros criptográficos válidos
-
-### Workflow 4: Modelagem de Ameaça Leve
-
-**Objetivo:** Identificar vetores de ataque para endpoints e fluxos.
-
-1. Listar endpoints/expostos
-2. Para cada endpoint, aplicar STRIDE simplificado:
-   - **S**poofing: Autenticação Adequada?
-   - **T**ampering: Integridade Protegida?
-   - **R**epudiation: Audit Trail?
-   - **I**nformation Disclosure: Dados Sensíveis Expostos?
-   - **D**enial of Service: Rate Limiting?
-   - **E**levation of Privilege: Controle de Acesso?
-3. Classificar risco (Crítico/Médio/Baixo)
-4. **Checkpoint**: Todos os endpoints avaliados
-
-### Workflow 5: Relatório de Vulnerabilidade
-
-**Objetivo:** Documentar achados de forma acionável.
-
-1. Para cada vulnerabilidade encontrada:
-   - Título descritivo
-   - Severidade (🔴 Crítico, 🟡 Médio, 🟢 Baixo)
-   - Localização exata (arquivo + linha)
-   - Descrição do impacto
-   - PoC ou código vulnerável
-   - Recomendação de correção
-   - Referência (CWE, OWASP, CVE)
-2. Classificar por severidade
-3. **Checkpoint**: Relatório completo e acionável
-
-## Templates
-
-### security-checklist.md
-Localização: `templates/security-checklist.md`
-
-Checklist abrangente de segurança para revisão de código. Cobere secrets, dependências, criptografia, autenticação, autorização e validação de entrada.
-
-### threat-model.md
-Localização: `templates/threat-model.md`
-
-Modelo de ameaça simplificado baseado em STRIDE. Listar endpoints, aplicar categorias, classificar risco.
-
-### vulnerability-report.md
-Localização: `templates/vulnerability-report.md`
-
-Template para relatório de vulnerabilidade com severidade, localização, impacto e recomendação.
-
-## Anti-patterns
-
-### 🔴 Crítico
-
-#### Nonce Reuso em AES-GCM
-**O que é:** Usar o mesmo nonce para criptografar diferentes mensagens com a mesma chave.
-**Por que é ruim:** Permite recuperação da chave via XOR das streams de cifra.
-**Como evitar:** Gerar nonce aleatório de 12 bytes para cada operação; armazenar com o ciphertext.
-**Exemplo:**
-```
-# ❌ ERRADO
-const nonce = Buffer.from('fixed-nonce-12'); // sempre igual
-cipher.update(data, 'utf8', 'hex', nonce);
-
-# ✅ CORRETO
-const nonce = crypto.randomBytes(12); // único por operação
-cipher.update(data, 'utf8', 'hex', nonce);
+# Bad: SQL injection vulnerability
+cursor.execute(f"SELECT * FROM users WHERE id = {user_id}")
 ```
 
-#### KDF com Parâmetros Fracos
-**O que é:** Usar scrypt/bcrypt com parâmetros abaixo do recomendado.
-**Por que é ruim:** Torna o brute-force viável com hardware moderno.
-**Como evitar:** scrypt N≥16384, r≥8, p≥1; bcrypt work factor≥12.
-**Exemplo:**
+### File Upload Validation
+
+- Validate MIME type server-side (not just extension)
+- Enforce file size limits
+- Generate random filenames (never use user-supplied names)
+- Store uploads outside the web root
+- Scan for malware if accepting from untrusted users
+
+### STOP — Do NOT proceed to Phase 4 until:
+- [ ] All identified issues have remediation recommendations
+- [ ] Auth patterns are correctly applied
+- [ ] Input validation is comprehensive
+
+---
+
+## Phase 4: Infrastructure and Dependency Hardening
+
+**Goal:** Secure the deployment environment and supply chain.
+
+### Secrets Management Rules
+
+| Environment | Method |
+|-------------|--------|
+| Development | `.env` files (git-ignored) |
+| CI/CD | Pipeline secrets (GitHub Secrets, GitLab CI vars) |
+| Production | Secrets manager (AWS Secrets Manager, Vault, GCP Secret Manager) |
+
+### Secrets Never List
+
+- Never hard-code secrets in source code
+- Never commit `.env` files to git
+- Never log secrets (even at debug level)
+- Never pass secrets as command-line arguments
+- Never use the same secrets across environments
+
+### Dependency Auditing Commands
+
+```bash
+# Node.js
+npm audit
+npx socket-security audit
+
+# Python
+pip-audit
+safety check
+
+# Go
+govulncheck ./...
+
+# Rust
+cargo audit
 ```
-# ❌ ERRADO
-scrypt.sync(password, salt, { N: 1024, r: 1, p: 1 });
 
-# ✅ CORRETO
-scrypt.sync(password, salt, { N: 16384, r: 8, p: 1 });
-```
+### Security Headers
 
-#### Timing Attack em Comparações
-**O que é:** Comparar tokens com `===` que faz curto-circuito no primeiro byte diferente.
-**Por que é ruim:** Permite inferir o valor correto byte a byte.
-**Como evitar:** Usar `crypto.timingSafeEqual()` para comparações de tokens.
+| Header | Value | Purpose |
+|--------|-------|---------|
+| `Content-Security-Policy` | `default-src 'self'` (customize per app) | Prevents XSS, data injection |
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains` | Forces HTTPS |
+| `X-Content-Type-Options` | `nosniff` | Prevents MIME sniffing |
+| `X-Frame-Options` | `DENY` or `SAMEORIGIN` | Prevents clickjacking |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | Controls referer leakage |
+| `Permissions-Policy` | Disable unused APIs | Limits browser feature access |
 
-### 🟡 Médio
+### CORS Rules
 
-#### Hardcoded Secrets em Testes
-**O que é:** Colocar chaves reais em arquivos de teste.
-**Por que é ruim:** Pode vazar para repositórios públicos.
-**Como evitar:** Usar variáveis de ambiente ou mocks.
+- Never use `Access-Control-Allow-Origin: *` with credentials
+- Allowlist specific origins
+- Restrict allowed methods and headers to what is needed
 
-#### `.env` Commitado sem `.gitignore`
-**O que é:** Arquivo .env com credenciais reais no version control.
-**Por que é ruim:** Histórico do git preserva credenciais mesmo após remoção.
-**Como evitar:** Adicionar `.env*` ao `.gitignore`; usar `.env.example` sem valores.
+---
 
-### 🟢 Baixo
+## Phase 5: Threat Modeling (STRIDE)
 
-#### Logs com Dados Sensíveis
-**O que é:** Logar PII, tokens ou senhas em logs de produção.
-**Por que é ruim:** Violação de privacidade e compliance (LGPD, GDPR).
-**Como evitar:** Máscarar dados sensíveis antes de logar.
+**Goal:** For new features or significant changes, walk through each threat category.
 
-## Checklists
+| Threat | Question | Mitigation |
+|--------|----------|-----------|
+| **Spoofing** | Can an attacker pretend to be someone else? | Strong authentication, MFA |
+| **Tampering** | Can data be modified without detection? | Integrity checks, signatures |
+| **Repudiation** | Can a user deny performing an action? | Audit logging |
+| **Information Disclosure** | Can sensitive data leak through errors, logs, or side channels? | Error sanitization, encryption |
+| **Denial of Service** | Can the system be overwhelmed? | Rate limits, resource quotas |
+| **Elevation of Privilege** | Can a user gain permissions they should not have? | Least privilege, RBAC |
 
-### Checklist de Revisão de Segurança
-Localização: `checklists/security-review.md`
+For each identified threat:
+1. Document the threat and attack vector
+2. Assess likelihood and impact
+3. Define mitigations
+4. Verify mitigations are implemented and tested
 
-Executar antes de merge de código com impacto de segurança. Valida secrets, dependências, criptografia, autenticação e validação de entrada.
+---
 
-## Edge Cases
+## Decision Table: Security Review Depth
 
-### Biblioteca de Criptografia Descontinuada
-**Situação:** Projeto usa biblioteca de criptografia que não recebe atualizações.
-**Solução:** Migrar para alternativa maintida (ex: `crypto` nativo do Node.js).
-**Exceção:** Se a biblioteca é battle-tested e o uso é limitado, documentar risco aceito.
+| Change Type | Review Depth | Focus Areas |
+|-------------|-------------|-------------|
+| Auth/session changes | Full STRIDE + OWASP | All categories |
+| User input handling | Injection + validation focus | OWASP 1, 3, 10 |
+| Dependency update | CVE scan + changelog review | OWASP 6 |
+| API endpoint addition | Access control + input validation | OWASP 1, 3, 5 |
+| Config/infrastructure | Secrets + headers + misconfig | OWASP 2, 5 |
+| File upload feature | Injection + SSRF + malware | OWASP 3, 10 |
 
-### Dependência com CVE em Dependência Transitiva
-**Situação:** `npm audit` reporta CVE em pacote que é dependência de dependência.
-**Solução:** Verificar se o código afetado é realmente usado; se sim, atualizar ou fazer override.
-**Exceção:** Se o CVE afeta feature não utilizada, documentar e marcar como aceito.
+---
 
-### Aplicação com Múltiplos Algoritmos de Hash
-**Situação:** Código usa SHA-256 para uma coisa e bcrypt para outra.
-**Solução:** Verificar se cada algoritmo é adequado para seu caso de uso (não usar hash genérico para senhas).
-**Exceção:** SHA-256 para checksums de integridade é aceitável.
+## Anti-Patterns / Common Mistakes
 
-### Secret em Variável de Ambiente mas Não em `.env.example`
-**Situação:** Código lê de `process.env.API_KEY` mas `.env.example` não lista essa variável.
-**Solução:** Adicionar ao `.env.example` com valor placeholder; documentar no README.
-**Exceção:** Nenhuma — toda variável de ambiente deve estar documentada.
+| Anti-Pattern | Why It Is Wrong | Correct Approach |
+|-------------|----------------|-----------------|
+| Client-side only validation | Easily bypassed | Always validate server-side |
+| Storing tokens in localStorage | XSS can steal them | Use HttpOnly cookies |
+| Block-list input validation | Always incomplete | Use allow-list validation |
+| Generic error messages in production | May leak internal details | Sanitize errors, log details server-side |
+| Same secrets across environments | Breach of one compromises all | Unique secrets per environment |
+| Ignoring dependency CVEs | Known vulnerabilities are actively exploited | Audit and update regularly |
+| CORS wildcard with credentials | Defeats CORS protection entirely | Allowlist specific origins |
+| Logging sensitive data | Log exposure creates data breach | Never log secrets, PII, or tokens |
 
-## Referências
+---
 
-- [OWASP Top 10 2021](https://owasp.org/Top10/)
-- [CWE/SANS Top 25](https://cwe.mitre.org/top25/)
-- [Node.js Crypto](https://nodejs.org/api/crypto.html)
-- [Skill governance](../governance/SKILL.md)
-- [Skill architecture-review-kilo](../architecture-review-kilo/SKILL.md)
-- [Skill testing](../testing/SKILL.md)
+## Secrets Rotation Schedule
+
+| Secret Type | Rotation Frequency | After Suspected Compromise |
+|------------|-------------------|--------------------------|
+| API keys | Every 90 days | Immediately |
+| Database passwords | Every 90 days | Immediately |
+| Encryption keys | Annually (support key versioning) | Immediately |
+| JWT signing keys | Every 6 months | Immediately |
+| OAuth client secrets | Every 90 days | Immediately |
+
+---
+
+## Subagent Dispatch Opportunities
+
+| Task Pattern | Dispatch To | When |
+|---|---|---|
+| Scanning different OWASP categories in parallel | `Agent` tool with `subagent_type="Explore"` (one per category) | When reviewing a large codebase across multiple vulnerability types |
+| Authentication flow analysis | `Agent` tool with `subagent_type="general-purpose"` | When auth implementation spans multiple files/services |
+| Dependency vulnerability scanning | `Bash` tool with `run_in_background=true` | When running `npm audit` or similar tools concurrently |
+
+Follow the `dispatching-parallel-agents` skill protocol when dispatching.
+
+---
+
+## Integration Points
+
+| Skill | Relationship |
+|-------|-------------|
+| `code-review` | Security findings are Critical category issues |
+| `senior-backend` | Backend hardening follows security review findings |
+| `senior-fullstack` | Auth implementation follows security patterns |
+| `acceptance-testing` | Security requirements become acceptance criteria |
+| `performance-optimization` | Rate limiting serves both security and performance |
+| `systematic-debugging` | Security incidents trigger debugging workflow |
+
+---
+
+## Skill Type
+
+**FLEXIBLE** — Adapt the depth of review to the change type using the decision table. The OWASP checklist and STRIDE analysis are strongly recommended for any auth or input-handling changes. Secrets management rules are non-negotiable.

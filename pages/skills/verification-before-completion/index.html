@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>verification-before-completion — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; verification-before-completion</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: verification-before-completion version: 1.0.0 description: Use before claiming any task is complete, any feature works, or any bug is fixed - enforces fresh verification evidence through a 5-step HARD-GATE protocol that prevents false completion claims domain: engineering-quality triggers:</p>
+<ul>
+<li>verification-before-completion</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>verification-before-completion</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="verification-before-completion">Verification Before Completion</h1>
+<h2 id="overview">Overview</h2>
+<p>The verification-before-completion skill is the terminal checkpoint for every task in the toolkit. It enforces a strict 5-step protocol that requires running fresh verification commands, reading their full output, and confirming results match the completion claim. Without this skill, agents make unverified claims that lead to broken code in production — with it, every completion claim is backed by evidence.</p>
+<hr>
+<h2 id="iron-law">Iron Law</h2>
+<p><strong>NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE.</strong></p>
+<p>You cannot say "it works," "it's done," "the bug is fixed," or "the feature is complete" without running verification commands and reading their output in this session. Cached results, previous runs, and assumptions do not count.</p>
+<hr>
+<h2 id="phase-1-identify-verification-commands">Phase 1: Identify Verification Commands</h2>
+<p>Before running anything, explicitly list what needs to pass for this specific task:</p>
+<div class="table-wrapper"><table><tr><th>Verification Type</th><th>Example Commands</th><th>When Required</th></tr><tr><td>Unit tests</td><td><code>npm test</code>, <code>pytest</code>, <code>go test ./...</code>, <code>cargo test</code>, <code>php artisan test</code></td><td>Always</td></tr><tr><td>Integration tests</td><td><code>npm run test:integration</code>, <code>pytest tests/integration/</code></td><td>When applicable</td></tr><tr><td>Type checking</td><td><code>tsc --noEmit</code>, <code>mypy .</code>, <code>pyright</code>, <code>phpstan analyse</code></td><td>When project uses type checking</td></tr><tr><td>Linting</td><td><code>eslint .</code>, <code>ruff check .</code>, <code>golint ./...</code>, <code>php-cs-fixer fix --dry-run</code></td><td>Always</td></tr><tr><td>Build</td><td><code>npm run build</code>, <code>cargo build</code>, <code>go build ./...</code></td><td>Always</td></tr><tr><td>Format check</td><td><code>prettier --check .</code>, <code>black --check .</code>, <code>gofmt -l .</code>, <code>pint --test</code></td><td>When project uses formatters</td></tr></table></div>
+<p><strong>Action:</strong> List which of these apply to the current project. Not all projects have all types. Be explicit about what you will run and why.</p>
+<blockquote><strong>STOP: Do NOT proceed to running commands until you have identified ALL applicable verification types.</strong></blockquote>
+<hr>
+<h2 id="phase-2-run-commands-fresh">Phase 2: Run Commands Fresh</h2>
+<p>Execute every verification command identified in Phase 1.</p>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Rationale</th></tr><tr><td>Run AFTER the latest code change</td><td>Pre-change results are stale</td></tr><tr><td>Run the FULL suite, not a subset</td><td>Subset runs miss regressions</td></tr><tr><td>Do NOT rely on cached results</td><td>Code changed since last run</td></tr><tr><td>Do NOT skip commands because "they passed earlier"</td><td>Earlier is not now</td></tr><tr><td>If a command takes >5 minutes, note it</td><td>Explain what was run instead</td></tr></table></div>
+<blockquote><strong>STOP: All commands must complete before proceeding to Phase 3.</strong></blockquote>
+<hr>
+<h2 id="phase-3-read-full-output">Phase 3: Read Full Output</h2>
+<p>Read the entire output of each verification command. Pay attention to:</p>
+<div class="table-wrapper"><table><tr><th>Output Element</th><th>What to Look For</th><th>Why It Matters</th></tr><tr><td>Exit code</td><td>Non-zero = failure</td><td>Even if output looks ok, non-zero means something failed</td></tr><tr><td>Test count</td><td>Expected number of tests ran? Any skipped?</td><td>Skipped tests = untested code</td></tr><tr><td>Warning messages</td><td>New warnings not present before</td><td>Warnings become errors; they indicate degradation</td></tr><tr><td>Deprecation notices</td><td>Deprecated API usage</td><td>Future breakage risk</td></tr><tr><td>Performance indicators</td><td>Unusually slow tests</td><td>May indicate performance regression</td></tr><tr><td>Error messages</td><td>Any error, even if tests "pass"</td><td>Some frameworks report errors alongside passing tests</td></tr></table></div>
+<blockquote><strong>STOP: Do NOT proceed if you have not read the full output of every command.</strong></blockquote>
+<hr>
+<h2 id="phase-4-verify-output-matches-claim">Phase 4: Verify Output Matches Claim</h2>
+<p>Ask yourself these questions. ALL must be "yes" to proceed:</p>
+<div class="table-wrapper"><table><tr><th>Question</th><th>If "No" or "Unsure"</th></tr><tr><td>Do ALL tests pass (not just the ones I wrote)?</td><td>Fix failing tests before claiming done</td></tr><tr><td>Does the build succeed without errors?</td><td>Fix build errors</td></tr><tr><td>Does the type checker find no errors?</td><td>Fix type errors</td></tr><tr><td>Does the linter pass?</td><td>Fix lint errors</td></tr><tr><td>Are there any NEW warnings that were not there before?</td><td>Investigate and fix or explicitly justify</td></tr><tr><td>Did the full suite run (not just a subset)?</td><td>Run the full suite</td></tr><tr><td>Is the test count what I expected?</td><td>Investigate skipped or missing tests</td></tr></table></div>
+<blockquote><strong>STOP: If ANY answer is "no" or "unsure", go back to fix and restart from Phase 1. Do NOT proceed to Phase 5.</strong></blockquote>
+<hr>
+<h2 id="phase-5-claim-completion-with-evidence">Phase 5: Claim Completion with Evidence</h2>
+<p>Only now may you say the task is complete. Include this evidence:</p>
+<pre><code>VERIFICATION EVIDENCE
+=====================
+Task: [what was being done]
+Date: [timestamp]
+
+Commands Run:
+  [x] Tests:      [command] -&gt; [result: X passed, Y failed, Z skipped]
+  [x] Build:      [command] -&gt; [result: success/failure]
+  [x] Lint:       [command] -&gt; [result: X errors, Y warnings]
+  [x] Type-check: [command] -&gt; [result: X errors]
+  [x] Format:     [command] -&gt; [result: clean/X files to format]
+
+All Green?  [x] YES  [ ] NO
+New warnings introduced?  [ ] YES  [x] NO
+
+Completion claim: [specific claim, e.g., &quot;Feature X is implemented and all tests pass&quot;]</code></pre>
+<blockquote><strong>STOP: This is the end of the verification protocol. Only claims with this evidence are valid.</strong></blockquote>
+<hr>
+<h2 id="decision-table-what-counts-as-fresh-evidence">Decision Table: What Counts as "Fresh" Evidence</h2>
+<div class="table-wrapper"><table><tr><th>Counts as Fresh</th><th>Does NOT Count as Fresh</th></tr><tr><td>Ran command after the latest code change</td><td>Ran before the latest code change</td></tr><tr><td>Full test suite executed</td><td>Subset of tests executed</td></tr><tr><td>Output read and analyzed</td><td>Output skimmed or ignored</td></tr><tr><td>All verification types run</td><td>Only tests run (no lint, no build)</td></tr><tr><td>Command run in current session</td><td>Recalled from memory of a previous session</td></tr><tr><td>Actual command output available</td><td>"I remember it passed"</td></tr></table></div>
+<hr>
+<h2 id="decision-table-edge-cases">Decision Table: Edge Cases</h2>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Protocol</th></tr><tr><td>Full suite takes >5 minutes</td><td>Run related tests + smoke suite. Note that full suite was not run. Recommend CI run before merge.</td></tr><tr><td>No automated tests exist</td><td>Note as significant risk. Perform manual verification with documented steps. Recommend adding tests as follow-up. At minimum, verify code compiles/runs.</td></tr><tr><td>Tests are flaky</td><td>Re-run failing test in isolation. If it passes alone, note flakiness. Verify your changes did not introduce it. Do NOT use flakiness as excuse to skip.</td></tr><tr><td>Only config change</td><td>Config changes are #1 cause of outages. Full verification required.</td></tr><tr><td>Single line change</td><td>One-line changes cause production outages. Full verification required.</td></tr><tr><td>Refactoring only</td><td>Existing tests must still pass. Run full suite.</td></tr></table></div>
+<hr>
+<h2 id="common-failure-patterns">Common Failure Patterns</h2>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>What Happens</th><th>Why It Is Dangerous</th></tr><tr><td>Tests pass but lint fails</td><td>Code works but has quality issues</td><td>Lint failures often indicate real problems (unused vars, unreachable code)</td></tr><tr><td>Tests pass but build fails</td><td>Test environment differs from build</td><td>Production deployments will fail</td></tr><tr><td>Tests pass but type-check fails</td><td>Runtime works but types are wrong</td><td>Bugs hiding behind <code>any</code> types, wrong interfaces</td></tr><tr><td>Tests pass in isolation but fail together</td><td>Shared state between tests</td><td>Flaky CI, unreliable test suite</td></tr><tr><td>Manual testing passes but automated fails</td><td>Manual test missed edge cases</td><td>The automated test is right</td></tr><tr><td>Tests pass but new warnings appeared</td><td>Something degraded</td><td>Warnings become errors over time</td></tr><tr><td>Subset of tests pass</td><td>Only ran related tests</td><td>Regression in unrelated area possible</td></tr><tr><td>Tests pass but coverage decreased</td><td>New code is not tested</td><td>Untested code is unverified code</td></tr><tr><td>Old test run used as evidence</td><td>Results are stale</td><td>Code changed since that run</td></tr><tr><td>"It compiled, so it works"</td><td>Compilation is necessary but not sufficient</td><td>Compiled code can still be wrong</td></tr></table></div>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>What NOT to Do</th><th>Why It Fails</th><th>What to Do Instead</th></tr><tr><td>Claim done without running tests</td><td>Unverified code breaks in production</td><td>Run all verification commands fresh</td></tr><tr><td>Use "it passed earlier" as evidence</td><td>Code changed since then</td><td>Run fresh after every change</td></tr><tr><td>Skip lint because "it is just warnings"</td><td>Warnings indicate real problems</td><td>Fix warnings or explicitly justify each one</td></tr><tr><td>Run only the tests you wrote</td><td>Misses regressions in other areas</td><td>Run the full suite</td></tr><tr><td>Read test output partially</td><td>Missed failures hidden in output</td><td>Read every line of output</td></tr><tr><td>Use manual testing as sole evidence</td><td>Manual testing is incomplete and unrepeatable</td><td>Run automated verification</td></tr><tr><td>Verify once, then make "small" additional changes</td><td>Those changes are unverified</td><td>Re-verify after every change</td></tr><tr><td>Suppress warnings without comment</td><td>Hides real issues</td><td>If truly false positive, add suppression comment explaining why</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<div class="table-wrapper"><table><tr><th>Excuse</th><th>Reality</th></tr><tr><td>"I only changed one line"</td><td>One-line changes cause production outages. Verify.</td></tr><tr><td>"The tests passed 5 minutes ago"</td><td>You made changes since then. Run them again.</td></tr><tr><td>"I have tested this pattern before"</td><td>This is a different instance. Verify this specific one.</td></tr><tr><td>"The change is obviously correct"</td><td>Obvious changes fail more often because they are not verified.</td></tr><tr><td>"Running tests takes too long"</td><td>Not running tests takes longer when the bug reaches production.</td></tr><tr><td>"I will verify after I submit"</td><td>You will not. And if verification fails, you will undo and redo.</td></tr><tr><td>"It is just a config change"</td><td>Config changes are the #1 cause of outages. Verify.</td></tr><tr><td>"The linter warnings are false positives"</td><td>Review each one. Suppress with comment if truly false.</td></tr><tr><td>"The type errors are in unrelated code"</td><td>They might interact. Run the full check.</td></tr><tr><td>"I tested it manually"</td><td>Manual testing is incomplete and unrepeatable. Run automated verification.</td></tr></table></div>
+<blockquote><strong>Do NOT claim completion without Phase 5 evidence. There are zero exceptions.</strong></blockquote>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>When Verification Is Required</th></tr><tr><td><code>test-driven-development</code></td><td>After completing RED-GREEN-REFACTOR cycle for a feature</td></tr><tr><td><code>systematic-debugging</code></td><td>After applying a bug fix</td></tr><tr><td><code>executing-plans</code></td><td>After each task and after each batch</td></tr><tr><td><code>subagent-driven-development</code></td><td>After implementer delivers (via <code>Agent</code> tool), after reviewers approve</td></tr><tr><td><code>code-review</code></td><td>Before approving any code review</td></tr><tr><td><code>resilient-execution</code></td><td>Before marking any task as complete</td></tr><tr><td><code>autonomous-loop</code></td><td>Before setting EXIT_SIGNAL to true</td></tr><tr><td><code>finishing-a-development-branch</code></td><td>Before merge or PR creation</td></tr></table></div>
+<h3 id="integration-flow">Integration Flow</h3>
+<pre><code>[Do the work using other skills]
+    |
+    v
+[Think you are done?]
+    |
+    v
+[Invoke verification-before-completion]
+    |
+    +-- All checks pass -&gt; Claim completion with Phase 5 evidence
+    |
+    +-- Any check fails -&gt; Fix and re-verify (do NOT claim completion)</code></pre>
+<hr>
+<h2 id="enforcement-by-other-skills">Enforcement by Other Skills</h2>
+<p>This skill is invoked by ALL other skills at completion time. It is not optional. It is a terminal checkpoint — called at the end of work, never at the beginning.</p>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — The 5-step protocol is a HARD-GATE. Every step must be executed in order. No step may be skipped. No completion claim is valid without Phase 5 evidence. Do not relax these requirements for any reason.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

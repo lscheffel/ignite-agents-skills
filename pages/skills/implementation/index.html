@@ -411,341 +411,305 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: implementation description: Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução, implementa com validação contínua e gera Execution Report. Use quando implementar uma ADR já aprovada. version: 2.0.0 tags:</p>
+<p>name: implementation version: 2.2.1 description: Executes previously planned changes in a governed and incremental manner, closing the SDLC cycle based on Agent Skills. domain: domain-stack triggers:</p>
+<ul>
+<li>implementation</li>
+<li>implement adr</li>
+<li>execute adr</li>
+<li>executar adr</li>
+<li>apply blueprint</li>
+<li>apply quadra</li>
+<li>sdlc execution</li>
+<li>execucao adr</li>
+</ul>
+<p>tags:</p>
 <ul>
 <li>implementation</li>
 <li>execution</li>
 <li>artifact-driven</li>
 <li>sdlc</li>
 <li>governance</li>
+<li>tech-debt</li>
 </ul>
 <p>related_skills:</p>
 <ul>
-<li>adr-archive</li>
 <li>adr-generator</li>
-<li>writing-plans</li>
-<li>planning</li>
-<li>testing</li>
-<li>git</li>
-<li>documentation</li>
-<li>governance</li>
-<li>release</li>
-<li>architecture-review-kilo</li>
-<li>ddd</li>
+<li>adr-archive</li>
+<li>agent-planning-execution</li>
+<li>testing-mastery</li>
+<li>git-workflow</li>
+<li>technical-documentation</li>
 </ul>
-<hr>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: "2026-08-26" ---</p>
 <h1 id="implementation">Implementation</h1>
-<p>Executa mudanças previamente planejadas de forma governada e incremental, fechando o ciclo do SDLC baseado em Agent Skills.</p>
-<h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
-<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Executes previously planned changes in a governed and incremental manner, closing the SDLC cycle based on Agent Skills.</p>
+<h2 id="-token-optimization-skip-consolidated--frozen-adrs">⚠️ Token Optimization (Skip Consolidated & Frozen ADRs)</h2>
+<p>When you need to sweep ADRs from the repository to get context, <strong>FIRST</strong> read <code>docs/adr/ADR-INDEX.md</code> or perform a <code>grep</code> on the frontmatter of ADRs. You are <strong>PROHIBITED</strong> from reading the complete content (via <code>view_file</code> or <code>cat</code>) of any file with the tag <code>implementation_status: CONSOLIDATED</code> or <code>implementation_status: FROZEN</code> (or located in the <code>docs/adr/frozen/</code> directory). Apply the 'SKIP' summary to these files. Frozen ADRs (<code>FROZEN</code>) are approved for the future but are out of active scope and should not be implemented or reconciled until explicit user thawing.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Existe uma ADR aprovada (status "Aceito") que precisa ser implementada</li>
-<li>Existe um Blueprint e TODO associados à ADR</li>
-<li>Precisa de execução padronizada e reproduzível entre diferentes agentes</li>
-<li>Precisa de rastreabilidade completa durante a implementação</li>
-<li>Precisa de Execution Report ao término</li>
+<li>There is an approved ADR (status "Accepted") that needs to be implemented</li>
+<li>There is a Blueprint and TODO associated with the ADR</li>
+<li>Standardized and reproducible execution is required between different agents</li>
+<li>Complete traceability is required during implementation</li>
+<li>Execution Report is required at the end</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Ainda não existe ADR (use <code>adr-generator</code> primeiro)</li>
-<li>Precisa de planejamento (use <code>writing-plans</code> ou <code>planning</code>)</li>
-<li>A mudança é trivial (< 1 arquivo, < 30min) e não justifica governança</li>
-<li>Precisa de apenas um commit sem validação intermediária</li>
+<li>There is no ADR yet (use <code>adr-generator</code> first)</li>
+<li>Only code planning tasks without ADR are required (use <code>agent-planning-execution</code>)</li>
+<li>The change is trivial (< 1 file, < 30 minutes) and does not justify governance</li>
+<li>Only a single commit without intermediate validation is required</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>adr-generator</code> — gera as ADRs que esta skill consome</li>
-<li><code>writing-plans</code> — gera Blueprints e TODOs que esta skill consome</li>
-<li><code>testing</code> — executa testes durante validação contínua</li>
-<li><code>git</code> — cria commits seguindo Conventional Commits</li>
-<li><code>documentation</code> — atualiza documentação durante implementação</li>
-<li><code>governance</code> — respeita processos de revisão e aprovação</li>
+<li><code>adr-generator</code> — generates ADRs that this skill consumes</li>
+<li><code>adr-archive</code> — audits, archives, generates the Evidence Record (ER.md), and synchronizes technical debt</li>
+<li><code>agent-planning-execution</code> — manages task decomposition and execution planning</li>
+<li><code>testing-mastery</code> — executes tests during continuous validation</li>
+<li><code>git-workflow</code> — manages commits and worktrees</li>
+<li><code>technical-documentation</code> — updates documentation during implementation</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Mudança solicitada] --&gt;|Existe ADR?| B{ADR encontrada}
-    B --&gt;|Não| C[Usar adr-generator primeiro]
-    B --&gt;|Sim| D{Existe Blueprint?}
-    D --&gt;|Não| E[Usar writing-plans primeiro]
-    D --&gt;|Sim| F{Existe TODO?}
-    F --&gt;|Não| G[Usar writing-plans para gerar TODO]
-    F --&gt;|Sim| H{Execution Contract passa?}
-    H --&gt;|Não| I[Corrigir artefatos antes de continuar]
-    H --&gt;|Sim| J[Iniciar Execution Loop]
-    J --&gt; K[Selecionar tarefa via DAG]
-    K --&gt; L[Executar alteração]
-    L --&gt; M[Validar: build + lint + test]
-    M --&gt;|Falhou| N[Corrigir e re-validar]
-    M --&gt;|Passou| O[Atualizar documentação]
-    O --&gt; P[Atualizar TODO]
-    P --&gt; Q{Mais tarefas?}
-    Q --&gt;|Sim| K
-    Q --&gt;|Não| R[Gerar Execution Report]</code></pre>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+    A[Change requested] --&gt;|Is there an ADR?| B{ADR found}
+    B --&gt;|No| C[Use adr-generator first]
+    B --&gt;|Yes| D{Is there a Blueprint?}
+    D --&gt;|No| E[Use adr-generator for Blueprint]
+    D --&gt;|Yes| F{Is there a TODO?}
+    F --&gt;|No| G[Use adr-generator for TODO]
+    F --&gt;|Yes| H{Execution Contract passes? (including depends_on)}
+    H --&gt;|No| I[Correct artifacts/dependencies before continuing]
+    H --&gt;|Yes| J[Start Execution Loop]
+    J --&gt; K[Select task via DAG]
+    K --&gt; L[Execute change]
+    L --&gt; M[Validate: build + lint + test]
+    M --&gt;|Found out-of-scope debt?| TD[Register via audit.py --register-debt]
+    TD --&gt; M
+    M --&gt;|Failed| N[Correct and re-validate]
+    M --&gt;|Passed| O[Update documentation]
+    O --&gt; P[Update TODO]
+    P --&gt; Q{More tasks?}
+    Q --&gt;|Yes| K
+    Q --&gt;|No| R[audit.py --archive ADR-XXX: Auto-generate ER.md and archive]</code></pre>
+<h2 id="key-concepts">Key Concepts</h2>
 <h3 id="execution-contract">Execution Contract</h3>
-<p>Contrato obrigatório que valida se todos os artefatos necessários estão presentes e coerentes antes de qualquer alteração.</p>
-<p><strong>Campos do contrato:</strong></p>
+<p>A mandatory contract that validates whether all necessary artifacts are present and consistent before any change.</p>
+<p><strong>Contract fields:</strong></p>
 <ul>
-<li>ADR: path, status, decisão</li>
-<li>Blueprint: path, tarefas listadas</li>
-<li>TODO: path, tarefas com estados</li>
-<li>PI (Implementation Plan): path, passos granulares (TDD) <strong>[Opcional / Recomendado]</strong></li>
-<li>Branch: nome, estado limpo</li>
-<li>Workspace: sem alterações não commitadas</li>
-<li>Arquivos impactados: lista extraída do PI</li>
-<li>Critérios de aceite: extraídos do TODO e do PI</li>
-<li>Critérios de rollback: definidos no Blueprint</li>
+<li>ADR: path, status, decision</li>
+<li>Inter-ADR dependencies (<code>depends_on</code>): confirms that all prerequisite ADRs have a consolidated ER.md</li>
+<li>Blueprint: path, listed tasks</li>
+<li>TODO: path, tasks with states</li>
+<li>PI (Implementation Plan): path, granular steps (TDD) <strong>[Optional/Recommended]</strong></li>
+<li>Branch: name, clean state</li>
+<li>Workspace: no uncommitted changes</li>
+<li>Affected files: extracted from PI</li>
+<li>Acceptance criteria: extracted from TODO and PI</li>
+<li>Rollback criteria: defined in the Blueprint</li>
 </ul>
-<p><strong>Regra de Auto-Repair:</strong> Se a Tríade (ADR, BP, TODO) ou o PI estiverem ausentes, malformados ou divergirem dos templates padrão, a skill não deve abortar. O agente deve acionar a skill <code>adr-generator</code> (ou <code>writing-plans</code>) em modo <strong>Retroactive Governance</strong> para gerar ou refatorar os artefatos faltantes antes de iniciar a execução.</p>
+<p><strong>Auto-Repair Rule:</strong> If the Triad (ADR, BP, TODO) or PI is missing, malformed, or diverges from the standard templates, the skill should not abort. The agent should invoke the <code>adr-generator</code> skill in <strong>Retroactive Governance</strong> mode to generate or refactor missing artifacts before starting execution.</p>
 <h3 id="artifact-resolution">Artifact Resolution</h3>
-<p>Processo de descoberta e correlação automática dos documentos envolvidos na mudança.</p>
-<p><strong>Algoritmo:</strong></p>
+<p>The process of automatic discovery and correlation of involved documents.</p>
+<p><strong>Algorithm:</strong></p>
 <ol>
-<li>Buscar <code>ADR-XXX.md</code> no diretório <code>docs/adr/</code></li>
-<li>Derivar paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code> e <code>ADR-XXX-PI.md</code></li>
-<li>Verificar existência de cada artefato (PI é opcional, mas gera execução legacy se ausente)</li>
-<li>Extrair <code>related_skills</code> do frontmatter</li>
-<li>Mapear arquivos impactados a partir do PI</li>
-<li>Retornar mapa consolidado</li>
+<li>Search for <code>ADR-XXX.md</code> in the <code>docs/adr/</code> directory</li>
+<li>Derive paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>, <code>ADR-XXX-PI.md</code></li>
+<li>Verify existence of each artifact (PI is optional, but generates legacy execution if absent)</li>
+<li>Extract <code>depends_on</code> and <code>related_skills</code> from the frontmatter</li>
+<li>Map affected files from the PI</li>
+<li>Return consolidated <strong>Artifact Map</strong></li>
 </ol>
 <h3 id="execution-loop">Execution Loop</h3>
-<p>Modelo incremental de execução. O loop tenta consumir o PI (Implementation Plan) em passos granulares (TDD). Se o PI não existir, o loop opera em modo <strong>Legacy</strong>, consumindo diretamente as tarefas macro do TODO:</p>
+<p>The incremental execution model. The loop attempts to consume the PI (Implementation Plan) in granular steps (TDD). If the PI does not exist, the loop operates in <strong>Legacy</strong> mode, consuming directly the macro tasks from the TODO:</p>
 <ol>
-<li><strong>Ler</strong> o plano detalhado no <code>ADR-XXX-PI.md</code> (ou o <code>ADR-XXX-TODO.md</code> no modo Legacy)</li>
-<li><strong>Selecionar</strong> tarefa (via DAG, respeitando dependências)</li>
-<li><strong>Executar</strong> alteração no código seguindo os passos prescritos (micro-tarefas no PI ou macro-escopo no TODO)</li>
-<li><strong>Validar</strong> (build, lint, typecheck, testes)</li>
-<li><strong>Atualizar</strong> documentação afetada</li>
-<li><strong>Marcar</strong> tarefa como concluída no PI e refletir o progresso no TODO</li>
-<li><strong>Reavaliar</strong> dependências (próximas tarefas podem iniciar)</li>
+<li><strong>Read</strong> the detailed plan in <code>ADR-XXX-PI.md</code> (or the <code>ADR-XXX-TODO.md</code> in Legacy mode)</li>
+<li><strong>Select</strong> task (via DAG, respecting dependencies)</li>
+<li><strong>Execute</strong> the change in the code following the exact steps (TDD in the PI or macro-scope in the TODO)</li>
+<li><strong>Validate</strong> (build, lint, typecheck, tests)</li>
+<li><strong>Update</strong> affected documentation</li>
+<li><strong>Mark</strong> task as completed in the PI and reflect progress in the TODO</li>
+<li><strong>Re-evaluate</strong> dependencies (next tasks can start)</li>
 </ol>
-<p><strong>Regras:</strong></p>
+<p><strong>Rules:</strong></p>
 <ul>
-<li>Máximo 1 tarefa "Em andamento" por vez</li>
-<li>Tarefa só inicia se todas as dependências estão "Concluído"</li>
-<li>Se validação falhar, tarefa vai para "Bloqueado" até correção</li>
-<li>Big Bang é estritamente proibido</li>
+<li>Maximum 1 task "In progress" at a time</li>
+<li>Task only starts if all dependencies are "Completed"</li>
+<li>If validation fails, task goes to "Blocked" until correction</li>
+<li>Big Bang is strictly prohibited</li>
+<li><strong>Scope Isolation & Tech Debt Offloading:</strong> It is strictly forbidden to perform peripheral refactoring or alter files outside the scope of the current ADR/TODO/PI. Any opportunity for improvement, indirect coupling, or legacy code found during execution <strong>MUST</strong> be registered via the Janitor's CLI:</li>
 </ul>
+<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
 <h3 id="change-lifecycle">Change Lifecycle</h3>
-<p>Modelo formal do ciclo de vida de uma mudança:</p>
-<pre><code>ADR → Blueprint → TODO → PI → Execution Contract → Artifact Resolution
-  → Implementation → Validation → Documentation Update → Execution Report</code></pre>
+<p>The formal model of a change's lifecycle:</p>
+<pre><code>ADR → Blueprint → TODO → PI → Execution Contract (Inter-ADR Validation) → Artifact Resolution
+  → Incremental Implementation → Validation (Scope Isolation &amp; Debt Offloading)
+  → Documentation Update → Algorithmic Evidence Record &amp; Archival (audit.py)</code></pre>
 <h2 id="workflow">Workflow</h2>
 <h3 id="workflow-1-artifact-resolution">Workflow 1: Artifact Resolution</h3>
-<p><strong>Objetivo:</strong> Descobrir e correlacionar todos os artefatos envolvidos.</p>
+<p><strong>Objective:</strong> Discover and correlate all involved artifacts.</p>
 <ol>
-<li>Identificar a ADR de referência (por nome ou contexto)</li>
-<li>Derivar paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>, <code>ADR-XXX-PI.md</code></li>
-<li>Verificar existência de cada artefato</li>
-<li>Ler frontmatter da ADR para extrair status e decisão</li>
-<li>Ler Blueprint para extrair fases macro</li>
-<li>Ler TODO para extrair estados macro</li>
-<li>Ler PI para extrair tarefas granulares e código</li>
-<li>Mapear <code>related_skills</code> do frontmatter</li>
-<li>Extrair arquivos impactados do PI</li>
-<li>Retornar <strong>Artifact Map</strong> consolidado</li>
-<li><strong>Checkpoint</strong>: Todos os artefatos existem e estão coerentes</li>
+<li>Identify the reference ADR (by name or context)</li>
+<li>Derive paths: <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>, <code>ADR-XXX-PI.md</code></li>
+<li>Verify existence of each artifact</li>
+<li>Read frontmatter of the ADR to extract status, decision, and <code>depends_on</code></li>
+<li>Read Blueprint to extract macro phases</li>
+<li>Read TODO to extract macro states</li>
+<li>Read PI to extract granular tasks and code</li>
+<li>Map <code>related_skills</code> from the frontmatter</li>
+<li>Extract affected files from the PI</li>
+<li>Return <strong>Artifact Map</strong> consolidated</li>
+<li><strong>Checkpoint:</strong> All artifacts exist and are consistent</li>
 </ol>
 <h3 id="workflow-2-execution-contract">Workflow 2: Execution Contract</h3>
-<p><strong>Objetivo:</strong> Validar que a implementação pode iniciar com segurança.</p>
+<p><strong>Objective:</strong> Validate that implementation can start safely.</p>
 <ol>
-<li>Carregar Artifact Map (Workflow 1)</li>
-<li>Validar se a ADR, BP e TODO existem e são coerentes.</li>
-<li>Se faltar artefatos ou os templates estiverem desatualizados, <strong>pause a validação e inicie o Auto-Repair</strong>:</li>
+<li>Load Artifact Map (Workflow 1)</li>
+<li><strong>Inter-ADR Validation (<code>depends_on</code>):</strong> Verify if all ADRs listed in <code>depends_on</code> have their respective consolidated ER.md in <code>docs/adr/</code> or <code>docs/adr/archive/</code>. If any dependency is pending, <strong>STOP</strong> and report blockage.</li>
+<li>Validate if ADR, BP, and TODO exist and are consistent.</li>
+<li>If artifacts or templates are missing or outdated, <strong>pause validation and initiate Auto-Repair:</strong></li>
 </ol>
 <ul>
-<li>Acione a skill <code>adr-generator</code> para aplicar a governança retroativa (Retroactive Governance).</li>
+<li>Invoke the <code>adr-generator</code> skill to apply retroactive governance (Retroactive Governance).</li>
 </ul>
 <ol>
-<li>Verificar se o PI existe (Opcional, mas altera o workflow para Zen-Mode ou Legacy).</li>
-<li>Validar que o PI (se existir) contém passos TDD ou que o TODO (se Legacy) contém tarefas.</li>
-<li>Validar branch atual (não main/master sem PR)</li>
-<li>Validar workspace limpo (sem uncommitted changes)</li>
-<li>Validar que arquivos impactados existem</li>
-<li>Extrair critérios de aceite do TODO e PI</li>
-<li>Extrair critérios de rollback do Blueprint</li>
-<li>Gerar <code>execution-contract.md</code> preenchido</li>
-<li><strong>Checkpoint</strong>: Contrato assinado (todos os campos válidos)</li>
+<li>Verify if PI exists (Optional, but changes the workflow to Zen-Mode or Legacy).</li>
+<li>Validate if PI (if exists) contains TDD steps or if TODO (if Legacy) contains tasks.</li>
+<li>Validate branch (not main/master without PR)</li>
+<li>Validate workspace clean (no uncommitted changes)</li>
+<li>Validate affected files exist</li>
+<li>Extract acceptance criteria from TODO and PI</li>
+<li>Extract rollback criteria from Blueprint</li>
+<li>Generate <code>execution-contract.md</code> filled</li>
+<li><strong>Checkpoint:</strong> Contract signed (all fields valid and dependencies satisfied)</li>
 </ol>
 <h3 id="workflow-3-dependency-analysis--execution-plan">Workflow 3: Dependency Analysis & Execution Plan</h3>
-<p><strong>Objetivo:</strong> Construir DAG e plano de execução.</p>
+<p><strong>Objective:</strong> Build DAG and execution plan.</p>
 <ol>
-<li>Ler PI e extrair todas as micro-tarefas</li>
-<li>Ler dependências de cada tarefa no PI</li>
-<li>Construir grafo dirigido acíclico (DAG)</li>
-<li>Detectar ciclos (se existir, reportar erro e interromper)</li>
-<li>Topological sort para ordem de execução</li>
-<li>Identificar tarefas paralelizáveis (sem dependência entre si)</li>
-<li>Gerar <code>change-plan.md</code> com DAG e ordem</li>
-<li>Estimar tempo total a partir das estimativas do TODO</li>
-<li><strong>Checkpoint</strong>: DAG válido, sem ciclos, ordem definida</li>
+<li>Read PI and extract all micro-tasks</li>
+<li>Read dependencies of each task in the PI</li>
+<li>Construct directed acyclic graph (DAG)</li>
+<li>Detect cycles (if any, report error and interrupt)</li>
+<li>Topological sort for execution order</li>
+<li>Identify parallelizable tasks (no dependency between them)</li>
+<li>Generate <code>change-plan.md</code> with DAG and order</li>
+<li>Estimate total time from TODO estimates</li>
+<li><strong>Checkpoint:</strong> Valid DAG, no cycles, order defined</li>
 </ol>
 <h3 id="workflow-4-incremental-execution">Workflow 4: Incremental Execution</h3>
-<p><strong>Objetivo:</strong> Executar tarefas uma a uma com validação.</p>
-<p>Para cada tarefa na ordem do DAG (derivada do PI ou do TODO, se Legacy):</p>
+<p><strong>Objective:</strong> Execute tasks one by one with validation.</p>
+<p>For each task in the DAG order (derived from PI or TODO, if Legacy):</p>
 <ol>
-<li>Verificar que todas as dependências estão "Concluído"</li>
-<li>Marcar tarefa como "Em andamento" (no PI e no TODO simultaneamente se Zen-Mode, ou apenas no TODO se Legacy)</li>
-<li>Gerar <code>task-progress.md</code> para a tarefa</li>
-<li>Ler passos exatos (TDD no PI) ou inferir implementação (TODO no Legacy)</li>
-<li>Executar as alterações no código exatamente como prescritas ou inferidas</li>
-<li>Executar validação contínua (Workflow 5)</li>
-<li>Se validação passar:</li>
+<li>Verify that all dependencies are "Completed"</li>
+<li>Mark task as "In progress" (in PI and TODO simultaneously if Zen-Mode, or only in TODO if Legacy)</li>
+<li>Generate <code>task-progress.md</code> for the task</li>
+<li>Read exact steps (TDD in PI) or infer implementation (TODO in Legacy)</li>
+<li>Execute changes in the code exactly as prescribed or inferred</li>
+<li>Execute continuous validation (Workflow 5)</li>
+<li><strong>Scope Isolation:</strong> If during execution peripheral refactoring or files outside the scope are detected:</li>
 </ol>
 <ul>
-<li>Atualizar documentação afetada</li>
-<li>Marcar tarefa como "Concluído" no PI e atualizar TODO</li>
-<li>Atualizar <code>task-progress.md</code></li>
+<li>Register the incidental debt via CLI:</li>
+</ul>
+<p><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"</code></p>
+<ul>
+<li><strong>DO NOT</strong> alter peripheral code in the current task.</li>
 </ul>
 <ol>
-<li>Se validação falhar:</li>
+<li>If validation passes:</li>
 </ol>
 <ul>
-<li>Analisar causa raiz</li>
-<li>Corrigir</li>
-<li>Re-executar validação</li>
-<li>Se não corrigir em 3 tentativas: marcar "Bloqueado"</li>
+<li>Update affected documentation</li>
+<li>Mark task as "Completed" in PI and update TODO</li>
+<li>Update <code>task-progress.md</code></li>
 </ul>
 <ol>
-<li>Reavaliar dependências (tarefas dependentes podem iniciar)</li>
-<li><strong>Checkpoint</strong>: Tarefa concluída, TODO atualizado</li>
+<li>If validation fails:</li>
+</ol>
+<ul>
+<li>Analyze root cause</li>
+<li>Correct</li>
+<li>Re-execute validation</li>
+<li>If not corrected in 3 attempts: mark "Blocked"</li>
+</ul>
+<ol>
+<li>Re-evaluate dependencies (next tasks can start)</li>
+<li><strong>Checkpoint:</strong> Task completed, TODO updated</li>
 </ol>
 <h3 id="workflow-5-continuous-validation">Workflow 5: Continuous Validation</h3>
-<p><strong>Objetivo:</strong> Validar estado do projeto após cada alteração.</p>
-<p><strong>Sequência de validação (quando aplicável):</strong></p>
+<p><strong>Objective:</strong> Validate project state after each change.</p>
+<p><strong>Validation sequence (when applicable):</strong></p>
 <ol>
-<li><strong>Build</strong>: <code>npm run build</code> / <code>cargo build</code> / equivalente</li>
-<li><strong>Lint</strong>: <code>npm run lint</code> / <code>cargo clippy</code> / equivalente</li>
-<li><strong>Typecheck</strong>: <code>npm run typecheck</code> / <code>cargo check</code> / equivalente</li>
-<li><strong>Testes unitários</strong>: <code>npm run test</code> / <code>cargo test</code> / equivalente</li>
-<li><strong>Testes de integração</strong>: se existirem</li>
-<li><strong>Validação arquitetural</strong>: verificar consistência com ADR</li>
-<li><strong>Validação documental</strong>: verificar que docs estão atualizados</li>
+<li><strong>Build</strong>: <code>npm run build</code> / <code>cargo build</code> / equivalent</li>
+<li><strong>Lint</strong>: <code>npm run lint</code> / <code>cargo clippy</code> / equivalent</li>
+<li><strong>Typecheck</strong>: <code>npm run typecheck</code> / <code>cargo check</code> / equivalent</li>
+<li><strong>Unit tests</strong>: <code>npm run test</code> / <code>cargo test</code> / equivalent</li>
+<li><strong>Integration tests</strong>: if present</li>
+<li><strong>Architectural validation</strong>: verify consistency with ADR</li>
+<li><strong>Document validation</strong>: verify that docs are updated</li>
 </ol>
-<p><strong>Regra:</strong> Se qualquer passo falhar, a tarefa não pode ser marcada como "Concluído".</p>
+<p><strong>Rule:</strong> If any step fails, the task cannot be marked as "Completed".</p>
 <h3 id="workflow-6-documentation-synchronization">Workflow 6: Documentation Synchronization</h3>
-<p><strong>Objetivo:</strong> Garantir que documentação está sincronizada com código.</p>
-<p>Após cada tarefa concluída:</p>
+<p><strong>Objective:</strong> Ensure documentation is synchronized with code.</p>
+<p>After each completed task:</p>
 <ol>
-<li>Verificar se a alteração impacta ADRs existentes</li>
-<li>Se sim, atualizar a ADR com novas informações</li>
-<li>Verificar se o Blueprint precisa de ajustes</li>
-<li>Se sim, atualizar o Blueprint</li>
-<li>Verificar se README precisa de atualização</li>
-<li>Se sim, atualizar README</li>
-<li>Verificar se <code>related_skills</code> de outras skills precisam de ajuste</li>
-<li><strong>Checkpoint</strong>: Nenhuma documentação divergente do código</li>
+<li>Verify if the change impacts existing ADRs</li>
+<li>If so, update the ADR with new information</li>
+<li>Verify if the Blueprint needs adjustments</li>
+<li>If so, update the Blueprint</li>
+<li>Verify if README needs updating</li>
+<li>If so, update README</li>
+<li>Verify if new debts were discharged in the registry via <code>--register-debt</code></li>
+<li>Verify if <code>related_skills</code> of other skills need adjustments</li>
+<li><strong>Checkpoint:</strong> No divergent documentation from code</li>
 </ol>
 <h3 id="workflow-7-progress-tracking">Workflow 7: Progress Tracking</h3>
-<p><strong>Objetivo:</strong> Manter TODO sincronizado durante toda a implementação.</p>
-<p><strong>Estados permitidos:</strong></p>
-<div class="table-wrapper"><table><tr><th>Estado</th><th>Descrição</th><th>Transições</th></tr><tr><td>⬜ Pendente</td><td>Tarefa não iniciada</td><td>→ Em andamento</td></tr><tr><td>🔄 Em andamento</td><td>Tarefa em execução</td><td>→ Concluído, Bloqueado</td></tr><tr><td>✅ Concluído</td><td>Tarefa finalizada com sucesso</td><td>—</td></tr><tr><td>❌ Bloqueado</td><td>Tarefa impedida</td><td>→ Em andamento, Pendente</td></tr><tr><td>⏸️ Pausado</td><td>Tarefa adiada voluntariamente</td><td>→ Pendente</td></tr></table></div>
-<p><strong>Regras:</strong></p>
+<p><strong>Objective:</strong> Maintain TODO synchronized throughout implementation.</p>
+<p><strong>Allowed states:</strong></p>
+<div class="table-wrapper"><table><tr><th>State</th><th>Description</th><th>Transitions</th></tr><tr><td>⬜ Pending</td><td>Task not initiated</td><td>→ In progress</td></tr><tr><td>🔄 In progress</td><td>Task in execution</td><td>→ Completed, Blocked</td></tr><tr><td>✅ Completed</td><td>Task finalized with success</td><td>—</td></tr><tr><td>❌ Blocked</td><td>Task impeded</td><td>→ In progress, Pending</td></tr><tr><td>⏸️ Paused</td><td>Task voluntarily delayed</td><td>→ Pending</td></tr></table></div>
+<p><strong>Rules:</strong></p>
 <ul>
-<li>Máximo 1 tarefa "Em andamento" por vez</li>
-<li>"Concluído" só após validação bem-sucedida</li>
-<li>"Bloqueado" requer justificativa</li>
-<li>Estado deve ser atualizado no TODO imediatamente</li>
+<li>Maximum 1 task "In progress" at a time</li>
+<li>"Completed" only after successful validation</li>
+<li>"Blocked" requires justification</li>
+<li>State must be updated in TODO immediately</li>
 </ul>
-<h3 id="workflow-8-final-audit--handoff-gatekeeper-restrito">Workflow 8: Final Audit & Handoff (GATEKEEPER RESTRITO)</h3>
-<p><strong>Objetivo:</strong> Invocar a auditoria para fechamento de ciclo e geração indireta do Execution Report.</p>
-<p><HARD-GATE> <strong>PROIBIÇÃO ABSOLUTA DE GERAR ARQUIVOS <code>ER.md</code> DIRETAMENTE.</strong> Você (agente) está ESTRITAMENTE PROIBIDO de criar, editar ou mockar qualquer arquivo que termine em <code>*-ER.md</code>. A geração do Execution Report agora é de competência EXCLUSIVA do gatekeeper algorítmico (<code>audit.py</code> / <code>adr-archive</code>). </HARD-GATE></p>
-<p><strong>Passo Final (Obrigatório):</strong></p>
+<h3 id="workflow-8-final-audit--handoff-gatekeeper-restricted">Workflow 8: Final Audit & Handoff (GATEKEEPER RESTRICTED)</h3>
+<p><strong>Objective:</strong> Invoke the auditor to close the cycle and generate the Execution Report algorithmically.</p>
+<p><HARD-GATE> <strong>ABSOLUTE PROHIBITION ON GENERATING <code>ER.md</code> FILES MANUALLY.</strong> You (agent) are <strong>STRICLY PROHIBITED</strong> from creating, editing, or mocking any files that end in <code>*-ER.md</code>. The generation of the complete, consistent, and structured Evidence Record is the <strong>EXCLUSIVE</strong> responsibility of the algorithmic gatekeeper (<code>audit.py</code> / <code>adr-archive</code>). </HARD-GATE></p>
+<p><strong>Final Step (Mandatory):</strong></p>
 <ol>
-<li>Você deve <strong>tocar fisicamente</strong> o arquivo <code>TODO.md</code> (ou <code>*-PI.md</code>) e marcar os checkboxes das tarefas concluídas com <code>- [x]</code>.</li>
-<li>Após finalizar todas as marcações, <strong>NÃO</strong> gere o ER. Em vez disso, você <strong>DEVE OBRIGATORIAMENTE</strong> rodar o motor de auditoria executando o comando no terminal:</li>
+<li>You must <strong>physically touch</strong> the <code>TODO.md</code> (or <code>*-PI.md</code>) file and mark completed tasks with <code>- [x]</code> or <code>✅</code>.</li>
+<li>After finalizing all markings, <strong>DO NOT</strong> create the ER manually. Instead, execute the archival and generation algorithmically:</li>
 </ol>
-<p><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></p>
+<pre data-lang="bash"><code>   python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
+<p><em>The script will verify tasks, auto-generate the <code>ADR-XXX-ER.md</code> with all evidence, metrics, and tables in the root, and move the Triad of work to <code>docs/adr/archive/</code>.</em></p>
 <ol>
-<li>Após o comando rodar, leia a saída do terminal e o relatório gerado na pasta <code>docs/reports</code>. Apresente um resumo claro e direto para o usuário informando o veredito do Janitor (ex: se o sistema aprovou o arquivamento e gerou o ER, ou se ainda há débitos a corrigir).</li>
+<li>Read the terminal output and the generated report in <code>docs/reports/</code>. Present the final verdict and the consolidated Decision Set to the user.</li>
 </ol>
-<h2 id="templates">Templates</h2>
-<h3 id="execution-contractmd">execution-contract.md</h3>
-<p>Localização: <code>templates/execution-contract.md</code></p>
-<p>Contrato obrigatório que deve ser preenchido e validado antes de qualquer alteração. Contém artefatos, ambiente, critérios de aceite e rollback.</p>
-<h3 id="execution-reportmd">execution-report.md</h3>
-<p>Localização: <code>templates/execution-report.md</code></p>
-<p>Relatório final gerado ao término da implementação. Documenta tarefas concluídas, validações, riscos e recomendações.</p>
-<h3 id="change-planmd">change-plan.md</h3>
-<p>Localização: <code>templates/change-plan.md</code></p>
-<p>Plano interno de execução com DAG de dependências, ordem de execução e estimativas.</p>
-<h3 id="rollback-reportmd">rollback-report.md</h3>
-<p>Localização: <code>templates/rollback-report.md</code></p>
-<p>Relatório produzido quando uma implementação requer reversão. Documenta motivo, tarefas revertidas e ações corretivas.</p>
-<h3 id="task-progressmd">task-progress.md</h3>
-<p>Localização: <code>templates/task-progress.md</code></p>
-<p>Progresso individual de cada tarefa durante a execução. Rastreia estado, alterações, validações e bloqueadores.</p>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="executar-sem-execution-contract">Executar sem Execution Contract</h4>
-<p><strong>O que é:</strong> Iniciar alterações sem validar que ADR, Blueprint e TODO existem e estão coerentes. <strong>Por que é ruim:</strong> Pode levar a implementação inconsistente com a decisão arquitetural. <strong>Como evitar:</strong> Sempre rodar Artifact Resolution e Contract. Se faltarem arquivos, inicie o processo de <strong>Auto-Repair</strong> com <code>adr-generator</code>. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Vou implementar a ADR-005 agora&quot; (sem verificar se Blueprint existe)
-
-# ✅ CORRETO
-1. Gerar Artifact Map
-2. Faltou BP? → Auto-Repair via adr-generator
-3. Validar Execution Contract
-4. Iniciar execução</code></pre>
-<h4 id="big-bang-implementation">Big Bang Implementation</h4>
-<p><strong>O que é:</strong> Implementar todas as tarefas de uma vez sem validação intermediária. <strong>Por que é ruim:</strong> Se algo falhar, não há ponto de retorno claro; dificulta rollback. <strong>Como evitar:</strong> Seguir o Execution Loop estritamente — uma tarefa por vez. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-Modificar 15 arquivos de uma vez, commitar tudo junto
-
-# ✅ CORRETO
-Tarefa 1 → validar → commit
-Tarefa 2 → validar → commit
-Tarefa 3 → validar → commit</code></pre>
-<h4 id="ignorar-falha-de-validao">Ignorar Falha de Validação</h4>
-<p><strong>O que é:</strong> Prosseguir com tarefa seguinte quando build/test/lint falhou na tarefa atual. <strong>Por que é ruim:</strong> Acumula erros; cada tarefa depende do estado anterior. <strong>Como evitar:</strong> Se validação falhar, corrigir antes de avançar. Sem exceções. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;O teste falhou, mas vou continuar e corrigir depois&quot;
-
-# ✅ CORRETO
-&quot;O teste falhou → analisar causa → corrigir → re-testar → só então avançar&quot;</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="atualizar-cdigo-sem-atualizar-documentao">Atualizar código sem atualizar documentação</h4>
-<p><strong>O que é:</strong> Implementar alteração mas esquecer de sincronizar ADR, Blueprint ou README. <strong>Por que é ruim:</strong> Documentação fica desatualizada; perde rastreabilidade. <strong>Como evitar:</strong> Workflow 6 (Documentation Synchronization) deve rodar após cada tarefa.</p>
-<h4 id="executar-tarefas-fora-da-ordem-do-dag">Executar tarefas fora da ordem do DAG</h4>
-<p><strong>O que é:</strong> Pular dependências e executar tarefa que depende de outra não concluída. <strong>Por que é ruim:</strong> Pode causar erros de compilação, lógica inconsistente. <strong>Como evitar:</strong> Respeitar topological sort do DAG; verificar dependências antes de cada tarefa.</p>
-<h4 id="marcar-tarefa-como-concludo-sem-validao">Marcar tarefa como "Concluído" sem validação</h4>
-<p><strong>O que é:</strong> Declarar tarefa pronta sem rodar build/test/lint. <strong>Por que é ruim:</strong> Tarefa pode conter erros silenciosos. <strong>Como evitar:</strong> Workflow 5 (Continuous Validation) é obrigatório antes de marcar "Concluído".</p>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="no-gerar-execution-report">Não gerar Execution Report</h4>
-<p><strong>O que é:</strong> Finalizar implementação sem produzir relatório. <strong>Por que é ruim:</strong> Perde-se oportunidade de documentar lições e riscos. <strong>Como evitar:</strong> Sempre gerar relatório ao término, mesmo para mudanças simples.</p>
-<h4 id="estimativas-muito-otimistas-no-change-plan">Estimativas muito otimistas no change-plan</h4>
-<p><strong>O que é:</strong> Subestimar tempo de tarefas no DAG. <strong>Por que é ruim:</strong> Cria expectativa irreal; pode levar a pressão desnecessária. <strong>Como evitar:</strong> Usar estimativas do TODO como base; adicionar buffer de 20%.</p>
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="drive-by-refactoring--scope-violation">Drive-by Refactoring / Scope Violation</h4>
+<p><strong>What is it:</strong> Performing changes and refactoring in peripheral files or modules not predicted in the ADR/TODO/PI contract. <strong>Why is it bad:</strong> Causes hidden regressions, invalidates the execution DAG, hinders code review, and breaks SDLC traceability. <strong>How to avoid:</strong> Apply the rule of <em>Tech Debt Offloading</em>: register the incidental debt via <code>audit.py . --register-debt</code> and continue focusing on the scope of the active ADR.</p>
+<h4 id="execute-without-validating-inter-adr-dependencies">Execute without Validating Inter-ADR Dependencies</h4>
+<p><strong>What is it:</strong> Starting the implementation of an ADR whose <code>depends_on</code> field lists ADRs not yet consolidated. <strong>Why is it bad:</strong> Implements on non-existent or incomplete premises. <strong>How to avoid:</strong> Respect the gate of Workflow 2 — all ADRs in <code>depends_on</code> must have a consolidated ER.md.</p>
+<h4 id="mocking-the-evidence-record-ermd-manually">Mocking the Evidence Record (ER.md) Manually</h4>
+<p><strong>What is it:</strong> The agent trying to write or edit files ending in <code>*-ER.md</code>. <strong>Why is it bad:</strong> Violates the algorithmic gatekeeper and produces inconsistent certificates without machine validation. <strong>How to avoid:</strong> Always delegate ER generation to <code>audit.py --archive ADR-XXX</code> or <code>audit.py --generate-er ADR-XXX</code>.</p>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-pr-execuo">Checklist de Pré-Execução</h3>
-<p>Localização: <code>checklists/pre-execution.md</code></p>
-<p>Executar antes de iniciar qualquer implementação. Valida artefatos, coerência, ambiente, arquivos impactados, critérios e dependências.</p>
-<h3 id="checklist-de-ps-execuo">Checklist de Pós-Execução</h3>
-<p>Localização: <code>checklists/post-execution.md</code></p>
-<p>Executar após concluir toda a implementação. Valida tarefas, build, qualidade, testes, documentação, registry, git, riscos e relatório.</p>
-<h2 id="edge-cases">Edge Cases</h2>
-<h3 id="adr-com-status-proposto-no-aceito">ADR com status "Proposto" (não "Aceito")</h3>
-<p><strong>Situação:</strong> O usuário quer implementar uma ADR que ainda não foi formalmente aceita. <strong>Solução:</strong> Alertar que a ADR não está aceita; pedir confirmação explícita antes de prosseguir. <strong>Exceção:</strong> Em contexto de prototipação, "Proposto" pode ser suficiente.</p>
-<h3 id="blueprint-incompleto-tarefas-sem-dependncias">Blueprint incompleto (tarefas sem dependências)</h3>
-<p><strong>Situação:</strong> O Blueprint existe mas não documenta dependências entre tarefas. <strong>Solução:</strong> Assumir que tarefas sem dependência explícita são independentes; construir DAG com base no que está disponível. <strong>Exceção:</strong> Se mais de 50% das tarefas não têm dependências, alertar sobre possível incompletude.</p>
-<h3 id="todo-com-tarefas-desatualizadas">TODO com tarefas desatualizadas</h3>
-<p><strong>Situação:</strong> O TODO não reflete o estado atual do código (tarefas já executadas manualmente). <strong>Solução:</strong> Antes de iniciar, verificar estado real do código contra o TODO; atualizar estados antes de construir DAG. <strong>Exceção:</strong> Nenhuma — TODO deve sempre estar sincronizado antes de execução.</p>
-<h3 id="implementao-com-mltiplas-adrs">Implementação com múltiplas ADRs</h3>
-<p><strong>Situação:</strong> A mudança envolve mais de uma ADR (ex: ADR-004 + ADR-005). <strong>Solução:</strong> Criar um Execution Contract para cada ADR; executar sequencialmente (uma ADR por vez); ou criar um "meta-contracto" se as ADRs são acopladas. <strong>Exceção:</strong> Se as ADRs são totalmente independentes, podem ser executadas em paralelo (worktrees separados).</p>
-<h3 id="rollback-durante-execuo">Rollback durante execução</h3>
-<p><strong>Situação:</strong> Tarefa executada causou problema que requer rollback. <strong>Solução:</strong> Gerar <code>rollback-report.md</code>, reverter commits da tarefa, marcar tarefa como "Bloqueado", analisar causa raiz. <strong>Exceção:</strong> Se o rollback corrompe o estado, interromper toda a implementação.</p>
-<h3 id="agente-sem-acesso-a-comandos-de-buildtest">Agente sem acesso a comandos de build/test</h3>
-<p><strong>Situação:</strong> O agente não consegue rodar <code>npm test</code>, <code>cargo build</code>, etc. <strong>Solução:</strong> Pular validação automatizada; marcar tarefa como "Concluído com ressalva"; documentar no Execution Report que validação manual é necessária. <strong>Exceção:</strong> Nenhuma — neste caso, o Execution Report deve indicar claramente a ausência de validação.</p>
-<h2 id="referncias">Referências</h2>
+<h3 id="pre-execution-checklist">Pre-execution Checklist</h3>
+<p>Location: <code>checklists/pre-execution.md</code></p>
+<p>Execute before starting any implementation. Validates artifacts, consistency, environment, inter-ADR dependencies, criteria, and dependencies.</p>
+<h3 id="post-execution-checklist">Post-execution Checklist</h3>
+<p>Location: <code>checklists/post-execution.md</code></p>
+<p>Execute after completing all implementation. Validates tasks, build, quality, tests, documentation, registry, git, risks, and handoff to <code>audit.py</code>.</p>
+<h2 id="references">References</h2>
 <ul>
-<li><a href="../../adr/ADR-005.html">ADR-005: Introdução da Skill implementation</a></li>
-<li><a href="../../adr/ADR-005-BP.html">ADR-005-BP: Blueprint detalhado</a></li>
-<li><a href="../../adr/ADR-002.html">ADR-002: Ultra-High Quality Grade</a></li>
 <li><a href="../../skills/adr-generator/index.html">Skill adr-generator</a></li>
-<li><a href="../../skills/writing-plans/index.html">Skill writing-plans</a></li>
-<li><a href="../../skills/testing/index.html">Skill testing</a></li>
-<li><a href="../../skills/governance/index.html">Skill governance</a></li>
+<li><a href="../../skills/adr-archive/index.html">Skill adr-archive</a></li>
+<li><a href="../../skills/agent-planning-execution/index.html">Skill agent-planning-execution</a></li>
+<li><a href="../../skills/technical-documentation/index.html">Skill technical-documentation</a></li>
+<li><a href="../../skills/testing-mastery/index.html">Skill testing-mastery</a></li>
+<li><a href="../../skills/git-workflow/index.html">Skill git-workflow</a></li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

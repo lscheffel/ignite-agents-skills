@@ -410,14 +410,14 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">release</a> &rsaquo; examples &rsaquo; release-process</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-release-process">Exemplo: Release Process</h1>
-<h2 id="pr-release">Pré-Release</h2>
-<pre data-lang="bash"><code># Atualizar CHANGELOG
+    <h1 id="example-release-process">Example: Release Process</h1>
+<h2 id="pre-release">Pre-Release</h2>
+<pre data-lang="bash"><code># Update CHANGELOG
 ## [1.2.0] - 2024-01-15
 ### Added
-- Social login com Google
+- Google social login
 
-# Bump versão
+# Bump version
 npm version minor</code></pre>
 <h2 id="release">Release</h2>
 <pre data-lang="bash"><code>git add .
@@ -426,11 +426,11 @@ git tag v1.2.0
 git push origin main --tags
 npm publish
 gh release create v1.2.0</code></pre>
-<h2 id="resultado">Resultado</h2>
+<h2 id="result">Result</h2>
 <ul>
-<li>Release publicada</li>
-<li>CHANGELOG atualizado</li>
-<li>Usuários notificados</li>
+<li>Release published</li>
+<li>CHANGELOG updated</li>
+<li>Users notified</li>
 </ul>
   </div>
 <footer>

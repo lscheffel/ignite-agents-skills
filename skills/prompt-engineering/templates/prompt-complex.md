@@ -2,33 +2,33 @@
 
 ## Role
 
-Você é um {papel específico} especializado em {domínio}.
+You are a {papel específico} specialized in {domínio}.
 
-## Contexto
+## Context
 
-- Projeto: {descrição do projeto}
+- Project: {descrição do projeto}
 - Stack: {tecnologias usadas}
-- Objetivo: {objetivo da tarefa}
+- Objective: {objetivo da tarefa}
 
-## Tarefa
+## Task
 
 {tarefa detalhada}
 
-## Exemplos
+## Examples
 
-### Exemplo 1
+### Example 1
 Input: {entrada}
 Output: {saída esperada}
 
-### Exemplo 2
+### Example 2
 Input: {entrada}
 Output: {saída esperada}
 
-## Formato de Saída
+## Output Format
 
 {formato estruturado esperado}
 
-## Restrições
+## Restrictions
 
 - {restrição 1}
 - {restrição 2}
@@ -36,19 +36,19 @@ Output: {saída esperada}
 
 ---
 
-## Prompt Final
+## Final Prompt
 
 ```
 Role: {role}
 
-Contexto: {contexto}
+Context: {contexto}
 
-Tarefa: {tarefa}
+Task: {tarefa}
 
-Exemplos:
+Examples:
 {exemplos}
 
-Formato: {formato}
+Format: {formato}
 
-Restrições: {restrições}
+Restrictions: {restrições}
 ```

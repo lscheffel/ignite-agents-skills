@@ -411,11 +411,11 @@
   </nav>
   <div class="content">
     <h1 id="handoff-protocol">Handoff Protocol</h1>
-<p>Protocolo de handoff entre agentes de IA.</p>
-<h2 id="identificao">Identificação</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td><strong>Handoff ID</strong></td><td><code>{handoff_id}</code></td></tr><tr><td><strong>Agente Origem</strong></td><td><code>{source_agent}</code></td></tr><tr><td><strong>Agente Destino</strong></td><td><code>{target_agent}</code></td></tr><tr><td><strong>Descrição</strong></td><td><code>{description}</code></td></tr></table></div>
-<h2 id="contrato-de-dados">Contrato de Dados</h2>
-<h3 id="schema-de-input">Schema de Input</h3>
+<p>Handoff protocol between AI agents.</p>
+<h2 id="identification">Identification</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td><strong>Handoff ID</strong></td><td><code>{handoff_id}</code></td></tr><tr><td><strong>Source Agent</strong></td><td><code>{source_agent}</code></td></tr><tr><td><strong>Target Agent</strong></td><td><code>{target_agent}</code></td></tr><tr><td><strong>Description</strong></td><td><code>{description}</code></td></tr></table></div>
+<h2 id="data-contract">Data Contract</h2>
+<h3 id="input-schema">Input Schema</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;object&quot;,
   &quot;required&quot;: [&quot;{required_field_1}&quot;, &quot;{required_field_2}&quot;],
@@ -430,7 +430,7 @@
     }
   }
 }</code></pre>
-<h3 id="schema-de-output">Schema de Output</h3>
+<h3 id="output-schema">Output Schema</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;object&quot;,
   &quot;required&quot;: [&quot;{required_field_1}&quot;],
@@ -441,23 +441,23 @@
     }
   }
 }</code></pre>
-<h2 id="regras-de-validao">Regras de Validação</h2>
+<h2 id="validation-rules">Validation Rules</h2>
 <ol>
 <li><strong>Input validation</strong>: <code>{validation_rules}</code></li>
 <li><strong>Output validation</strong>: <code>{validation_rules}</code></li>
 <li><strong>Timeout</strong>: <code>{timeout_seconds}s</code></li>
 <li><strong>Max retries</strong>: <code>{max_retries}</code></li>
 </ol>
-<h2 id="processo-de-handoff">Processo de Handoff</h2>
-<pre><code>1. Agente origem completa tarefa
-2. Valida output com schema
-3. Serializa dados no formato contratado
-4. Envia para agente destino
-5. Agente destino valida input
-6. Se válido: processa tarefa
-7. Se inválido: aciona fallback</code></pre>
+<h2 id="handoff-process">Handoff Process</h2>
+<pre><code>1. Source agent completes task
+2. Validates output with schema
+3. Serializes data in contracted format
+4. Sends to target agent
+5. Target agent validates input
+6. If valid: processes task
+7. If invalid: triggers fallback</code></pre>
 <h2 id="fallback">Fallback</h2>
-<div class="table-wrapper"><table><tr><th>Erro</th><th>Ação</th></tr><tr><td>Schema inválido</td><td>Rejeitar e retornar erro estruturado</td></tr><tr><td>Timeout</td><td>Retry com backoff exponencial</td></tr><tr><td>Agente indisponível</td><td>Usar agente alternativo</td></tr><tr><td>Dados corrompidos</td><td>Solicitar reprocessamento</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Error</th><th>Action</th></tr><tr><td>Invalid schema</td><td>Reject and return structured error</td></tr><tr><td>Timeout</td><td>Retry with exponential backoff</td></tr><tr><td>Agent unavailable</td><td>Use alternative agent</td></tr><tr><td>Corrupted data</td><td>Request reprocessing</td></tr></table></div>
 <h2 id="logging">Logging</h2>
 <pre data-lang="json"><code>{
   &quot;timestamp&quot;: &quot;{ISO8601}&quot;,
@@ -470,12 +470,12 @@
 }</code></pre>
 <h2 id="checklist">Checklist</h2>
 <ul>
-<li>[ ] Schema de input definido</li>
-<li>[ ] Schema de output definido</li>
-<li>[ ] Validação implementada</li>
-<li>[ ] Fallback documentado</li>
-<li>[ ] Logging configurado</li>
-<li>[ ] Teste de handoff executado</li>
+<li>[ ] Input schema defined</li>
+<li>[ ] Output schema defined</li>
+<li>[ ] Validation implemented</li>
+<li>[ ] Fallback documented</li>
+<li>[ ] Logging configured</li>
+<li>[ ] Handoff test executed</li>
 </ul>
   </div>
 <footer>

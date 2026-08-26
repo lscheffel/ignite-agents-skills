@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>email-composer — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; email-composer</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: email-composer version: 1.0.0 description: 'Use when the user needs professional email drafting, tone adjustment, template creation, or communication strategy for business correspondence. Trigger conditions: draft professional email, adjust email tone, create email template, write cold outreach, compose follow-up, draft escalation email, write apology email, craft meeting request, compose status update, plan email communication strategy.' domain: domain-stack triggers:</p>
+<ul>
+<li>email-composer</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>email-composer</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="email-composer">Email Composer</h1>
+<h2 id="overview">Overview</h2>
+<p>Draft clear, effective professional emails with appropriate tone, structure, and purpose. This skill covers business correspondence, cold outreach, follow-ups, escalations, apologies, negotiations, internal communications, and stakeholder updates. Includes tone calibration, cultural sensitivity, and templates for common business scenarios.</p>
+<p>Apply this skill whenever professional email communication needs to be drafted, refined, or strategized.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-context-assessment">Phase 1: Context Assessment</h3>
+<ol>
+<li>Identify the recipient(s) and their relationship to the sender</li>
+<li>Determine the email's primary purpose (inform, request, persuade, respond)</li>
+<li>Assess the appropriate formality level (see tone matrix)</li>
+<li>Consider cultural and organizational norms</li>
+<li>Identify any sensitive topics requiring careful framing</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin drafting without knowing the recipient, purpose, and tone level.</strong></blockquote>
+<h3 id="phase-2-structure-planning">Phase 2: Structure Planning</h3>
+<ol>
+<li>Craft a clear, specific subject line</li>
+<li>Plan the opening (context-setting or relationship acknowledgment)</li>
+<li>Organize the body (one idea per paragraph, most important first)</li>
+<li>Define the call to action or next steps</li>
+<li>Choose an appropriate sign-off</li>
+</ol>
+<blockquote><strong>STOP — Do NOT draft the full email without a subject line and clear CTA defined.</strong></blockquote>
+<h3 id="phase-3-drafting">Phase 3: Drafting</h3>
+<ol>
+<li>Write using the selected tone and formality level</li>
+<li>Keep paragraphs short (2-4 sentences maximum)</li>
+<li>Use bullet points for multiple items or action items</li>
+<li>Bold or highlight key dates, deadlines, or decisions</li>
+<li>Include all necessary context without over-explaining</li>
+</ol>
+<blockquote><strong>STOP — Do NOT send without completing the review phase.</strong></blockquote>
+<h3 id="phase-4-review">Phase 4: Review</h3>
+<ol>
+<li>Read aloud for natural flow and tone</li>
+<li>Check that the subject line matches the content</li>
+<li>Verify all names, dates, and attachments are correct</li>
+<li>Ensure the CTA is clear and actionable</li>
+<li>Consider how the email reads if forwarded out of context</li>
+</ol>
+<h2 id="email-type-decision-table">Email Type Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Structure</th><th>Tone</th><th>Key Element</th></tr><tr><td>Status update to stakeholders</td><td>Inverted Pyramid</td><td>Professional</td><td>Bold status indicator, bullet points</td></tr><tr><td>Request for approval/decision</td><td>BLUF</td><td>Professional</td><td>Recommendation first, supporting data</td></tr><tr><td>Delivering bad news</td><td>Sandwich</td><td>Formal</td><td>Empathy, explanation, constructive close</td></tr><tr><td>Meeting request</td><td>Direct</td><td>Professional-Friendly</td><td>Agenda items, time options</td></tr><tr><td>Cold outreach</td><td>Personalized Hook</td><td>Professional</td><td>Specific observation about recipient</td></tr><tr><td>Follow-up (no response)</td><td>Gentle Reminder</td><td>Professional</td><td>Easy options, graceful out</td></tr><tr><td>Escalation</td><td>Structured Report</td><td>Formal</td><td>Impact, attempts made, specific ask</td></tr><tr><td>Apology</td><td>Acknowledgment + Action</td><td>Formal</td><td>Honest explanation, preventive measures</td></tr><tr><td>Internal team update</td><td>Quick Update</td><td>Friendly Professional</td><td>Brevity, action items highlighted</td></tr><tr><td>Negotiation</td><td>Collaborative</td><td>Professional</td><td>Shared interests, multiple options</td></tr></table></div>
+<h2 id="tone-calibration-matrix">Tone Calibration Matrix</h2>
+<div class="table-wrapper"><table><tr><th>Tone Level</th><th>When to Use</th><th>Characteristics</th><th>Example Opening</th></tr><tr><td><strong>Formal</strong></td><td>C-suite, legal, first contact with executives</td><td>No contractions, full titles, structured</td><td>"Dear Ms. Chen, I am writing to formally request..."</td></tr><tr><td><strong>Professional</strong></td><td>Standard business, cross-team, clients</td><td>Contractions ok, warm but focused</td><td>"Hi Sarah, I wanted to follow up on our conversation..."</td></tr><tr><td><strong>Friendly Professional</strong></td><td>Familiar colleagues, regular collaborators</td><td>Casual openings, personality shows</td><td>"Hey team, quick update on the launch timeline..."</td></tr><tr><td><strong>Casual</strong></td><td>Close teammates, informal updates</td><td>Conversational, emoji acceptable</td><td>"Just a heads up — the deploy is going out at 3pm"</td></tr></table></div>
+<h3 id="tone-adjustment-signals">Tone Adjustment Signals</h3>
+<div class="table-wrapper"><table><tr><th>Signal</th><th>Shift Toward</th></tr><tr><td>Bad news, rejection, complaint</td><td>More formal, more empathetic</td></tr><tr><td>Good news, congratulations</td><td>Warmer, more enthusiastic</td></tr><tr><td>Urgency, deadline</td><td>More direct, shorter sentences</td></tr><tr><td>Sensitive/political topic</td><td>More formal, more careful word choice</td></tr><tr><td>Follow-up after no response</td><td>Slightly more formal, provide easy out</td></tr></table></div>
+<h2 id="email-structure-patterns">Email Structure Patterns</h2>
+<h3 id="the-inverted-pyramid-default">The Inverted Pyramid (Default)</h3>
+<pre><code>Subject: [Action Required] Q3 Budget Approval — Due Friday
+
+Hi Maria,
+
+[BOTTOM LINE FIRST]
+I need your approval on the Q3 budget by Friday, March 19.
+
+[CONTEXT]
+The finance team reviewed our proposal and approved the
+$240K allocation with one change: marketing spend shifted
+from Q3 to Q4.
+
+[DETAILS]
+Key changes from the original proposal:
+- Marketing: $80K → $60K (Q3), $20K moved to Q4
+- Engineering: unchanged at $120K
+- Operations: $40K (new line item for tooling)
+
+[ACTION]
+Could you review the attached spreadsheet and reply with
+your approval? Happy to jump on a quick call if you have
+questions.
+
+Thanks,
+Alex</code></pre>
+<h3 id="the-bluf-bottom-line-up-front">The BLUF (Bottom Line Up Front)</h3>
+<pre><code>Subject: Decision Needed: Vendor Selection for Auth Service
+
+Hi team,
+
+RECOMMENDATION: Go with Auth0 (Option B).
+
+Here&#x27;s why:
+1. 40% lower total cost over 3 years
+2. Better compliance certifications (SOC2, HIPAA)
+3. Faster integration timeline (2 weeks vs. 6 weeks)
+
+Full comparison attached. Please reply by Thursday with
+your vote or concerns.</code></pre>
+<h3 id="the-sandwich-difficult-messages">The Sandwich (Difficult Messages)</h3>
+<pre><code>[Positive/Neutral Opening]
+Thank you for the thorough proposal on the new dashboard.
+The data visualization approach is exactly what we needed.
+
+[Difficult Content]
+After reviewing with the team, we&#x27;ve identified some concerns
+with the timeline and resource allocation that we need to
+address before moving forward...
+
+[Constructive/Forward-Looking Close]
+I&#x27;d love to schedule 30 minutes this week to work through
+these together. I&#x27;m confident we can find an approach that
+works for everyone.</code></pre>
+<h2 id="templates-for-common-scenarios">Templates for Common Scenarios</h2>
+<h3 id="meeting-request">Meeting Request</h3>
+<pre><code>Subject: Meeting Request: [Topic] — [Suggested Date/Time]
+
+Hi [Name],
+
+I&#x27;d like to schedule [duration] to discuss [topic].
+
+Specifically, I&#x27;d like to cover:
+- [Agenda item 1]
+- [Agenda item 2]
+
+Would [date/time option 1] or [date/time option 2] work
+for you? Happy to adjust to your availability.
+
+Best,
+[Name]</code></pre>
+<h3 id="project-status-update">Project Status Update</h3>
+<pre><code>Subject: [Project Name] Status Update — Week of [Date]
+
+Hi [stakeholders],
+
+**Status: On Track** (or At Risk / Blocked)
+
+**Completed this week:**
+- [Accomplishment 1]
+- [Accomplishment 2]
+
+**In progress:**
+- [Task 1] — expected completion [date]
+- [Task 2] — expected completion [date]
+
+**Blockers/Risks:**
+- [Blocker] — [mitigation plan or help needed]
+
+**Next week&#x27;s priorities:**
+- [Priority 1]
+- [Priority 2]
+
+Let me know if you have questions or want to discuss any
+of these items.
+
+[Name]</code></pre>
+<h3 id="escalation-email">Escalation Email</h3>
+<pre><code>Subject: [Escalation] [Issue] — Impact on [Project/Deadline]
+
+Hi [Manager/Stakeholder],
+
+I&#x27;m escalating [issue] because [reason — timeline impact,
+blocked dependencies, unresolved after N attempts].
+
+**Background:**
+[2-3 sentences of context]
+
+**Impact if unresolved:**
+- [Consequence 1 with timeline]
+- [Consequence 2]
+
+**What I&#x27;ve tried:**
+- [Attempt 1 — outcome]
+- [Attempt 2 — outcome]
+
+**What I need:**
+[Specific ask — decision, resource, intervention]
+
+**Recommended next step:**
+[Your suggestion]
+
+I&#x27;m available to discuss this at your earliest convenience.
+
+[Name]</code></pre>
+<h3 id="apology--mistake-acknowledgment">Apology / Mistake Acknowledgment</h3>
+<pre><code>Subject: Regarding [Issue] — Our Apology and Next Steps
+
+Hi [Name],
+
+I want to apologize for [specific issue]. This fell short
+of the standard you should expect from us.
+
+**What happened:**
+[Brief, honest explanation — no excuses]
+
+**What we&#x27;re doing about it:**
+- [Immediate fix]
+- [Preventive measure for the future]
+
+**What this means for you:**
+[Any impact, compensation, or timeline adjustment]
+
+I take full responsibility for this and am committed to
+making it right. Please don&#x27;t hesitate to reach out if
+you have any concerns.
+
+Sincerely,
+[Name]</code></pre>
+<h3 id="cold-outreach">Cold Outreach</h3>
+<pre><code>Subject: [Personalized hook — reference their work/company]
+
+Hi [Name],
+
+I noticed [specific observation about their company/role/content].
+[One sentence connecting their situation to your offering.]
+
+[Company/Product] helps [target audience] [achieve outcome].
+For example, [brief case study or metric].
+
+Would you be open to a 15-minute call to explore whether
+this could help [their company]? No pressure either way.
+
+Best,
+[Name]
+[Title, Company]</code></pre>
+<h3 id="follow-up-after-no-response">Follow-Up After No Response</h3>
+<pre><code>Subject: Re: [Original Subject]
+
+Hi [Name],
+
+I wanted to follow up on my email from [date] about [topic].
+
+I understand you&#x27;re busy — would it help if I:
+- [Simplified option A]
+- [Alternative option B]
+- [Easy opt-out: &quot;Let me know if this isn&#x27;t a priority
+   right now and I&#x27;ll circle back later&quot;]
+
+[Name]</code></pre>
+<h2 id="subject-line-best-practices">Subject Line Best Practices</h2>
+<h3 id="formula">Formula</h3>
+<pre><code>[Action Tag] + [Specific Topic] + [Context/Deadline]
+
+Examples:
+&quot;[Action Required] Q3 Budget Approval — Due March 19&quot;
+&quot;[FYI] New Deploy Process Starting Monday&quot;
+&quot;[Decision Needed] Vendor Selection by EOW&quot;
+&quot;[Update] Sprint 12 Retro Notes&quot;
+&quot;[Blocked] API Integration — Need Access Keys&quot;</code></pre>
+<h3 id="subject-line-rules">Subject Line Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Good</th><th>Bad</th></tr><tr><td>Be specific</td><td>"Q3 Marketing Budget: $80K Reallocation"</td><td>"Budget Update"</td></tr><tr><td>Include action if needed</td><td>"[Review Required] PR #342"</td><td>"Please look at this"</td></tr><tr><td>Keep under 50 chars</td><td>"Launch timeline shifted to April 3"</td><td>"Update regarding the potential shift in our product launch timeline"</td></tr><tr><td>No ALL CAPS</td><td>"[Urgent] Server outage in prod"</td><td>"URGENT SERVER DOWN!!!"</td></tr><tr><td>Match the content</td><td>"Meeting recap: 3 action items"</td><td>"Great chat today!"</td></tr></table></div>
+<h2 id="cultural-considerations">Cultural Considerations</h2>
+<div class="table-wrapper"><table><tr><th>Context</th><th>Adjustment</th></tr><tr><td>East Asian business culture</td><td>More formal, acknowledge hierarchy, indirect negative feedback</td></tr><tr><td>German business culture</td><td>Direct and precise, titles important (Herr/Frau), structured</td></tr><tr><td>US startup culture</td><td>Casual, first names, brief, action-oriented</td></tr><tr><td>UK business culture</td><td>Polite hedging ("I wonder if...", "Perhaps we might...")</td></tr><tr><td>Cross-timezone</td><td>State timezone explicitly, suggest multiple options</td></tr><tr><td>Non-native English speakers</td><td>Simpler vocabulary, shorter sentences, avoid idioms</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Burying the ask at the bottom</td><td>Reader may never reach it</td><td>Lead with the request (BLUF)</td></tr><tr><td>Reply-all unnecessarily</td><td>Clutters inboxes, annoys recipients</td><td>Reply only to those who need to act</td></tr><tr><td>Passive-aggressive tone</td><td>Damages relationships and trust</td><td>Be direct and professional</td></tr><tr><td>Long emails requiring mobile scrolling</td><td>Recipients skip or defer</td><td>Keep to 5-8 sentences for mobile</td></tr><tr><td>Vague subject lines ("Quick question")</td><td>Gets deprioritized or lost</td><td>Include topic and action needed</td></tr><tr><td>Too many asks for too many people</td><td>Diffusion of responsibility</td><td>One primary ask per email</td></tr><tr><td>No deadline ("when you get a chance")</td><td>Means never</td><td>Specify date and time</td></tr><tr><td>CC-ing manager without telling recipient</td><td>Perceived as hostile escalation</td><td>Mention it in the email or tell them first</td></tr><tr><td>Humor or sarcasm in text</td><td>Misinterpreted without vocal tone</td><td>Save humor for in-person</td></tr><tr><td>Sending emotional emails immediately</td><td>Regret and reputation damage</td><td>Wait 30 minutes before sending</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip the context assessment because "it's just a quick email" -- every email represents you.</li>
+<li>Do NOT draft without a defined CTA -- even "FYI" emails should state what you expect.</li>
+<li>Do NOT send without the read-aloud review, especially for sensitive emails.</li>
+<li>Do NOT use a casual tone with someone you haven't corresponded with before.</li>
+<li>Do NOT send an escalation email without documenting what you have already tried.</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>content-creator</code></td><td>Brand voice and copywriting frameworks apply to marketing emails</td></tr><tr><td><code>content-research-writer</code></td><td>Research summaries inform executive briefing emails</td></tr><tr><td><code>docx-processing</code></td><td>Generated documents attach to emails</td></tr><tr><td><code>pdf-processing</code></td><td>Generated PDF reports attach to emails</td></tr><tr><td><code>xlsx-processing</code></td><td>Spreadsheet attachments accompany data-driven emails</td></tr><tr><td><code>llm-as-judge</code></td><td>Evaluate email tone and clarity against rubric</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt tone, structure, and formality to the relationship, organizational culture, and communication purpose. The BLUF structure and clear subject line practices are strongly recommended for all professional correspondence.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -1,0 +1,4030 @@
+{
+  "metadata": {
+    "title": "SOTA Forensic Asset Manifest",
+    "generated_at": "2026-08-24T22:08:30.578425+00:00",
+    "omission_rate": "0.00%",
+    "total_assets": 81,
+    "persistence_target": "/data/docs/"
+  },
+  "assets": {
+    "adr-archive": {
+      "id": "adr-archive",
+      "name": "adr-archive",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/adr-archive",
+      "primary_sha256": "4b52a30d9de5d619d00cd1ec931891c8654087337e0bc15e6996fd17f46daee0",
+      "total_files": 10,
+      "total_bytes": 93646,
+      "total_tokens": 22152,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "4b52a30d9de5d619d00cd1ec931891c8654087337e0bc15e6996fd17f46daee0",
+          "bytes": 4258,
+          "tokens": 1048
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/examples/ADR-997-TODO.md",
+          "relpath": "examples/ADR-997-TODO.md",
+          "sha256": "8dff686e34695a98bbe15083935d4f6adce33506908fc4641e4704280202b002",
+          "bytes": 344,
+          "tokens": 83
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/examples/ADR-998-TODO.md",
+          "relpath": "examples/ADR-998-TODO.md",
+          "sha256": "c47752794162fcd908dd1abd49c2e9c355f10831947779ec483f710eef9d5de4",
+          "bytes": 297,
+          "tokens": 71
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/examples/ADR-999-TODO.md",
+          "relpath": "examples/ADR-999-TODO.md",
+          "sha256": "d4e62993d1714b51adef0fd4f7d322e007f494183e58610442eb0c86196f524a",
+          "bytes": 265,
+          "tokens": 64
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/examples/archive-workflow.md",
+          "relpath": "examples/archive-workflow.md",
+          "sha256": "195da391b69ca42e68be0ec6d20d453beb32a019f6515a111f8f58ebd71d9487",
+          "bytes": 2427,
+          "tokens": 594
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/scripts/audit.py",
+          "relpath": "scripts/audit.py",
+          "sha256": "dc295a58687ba686c540d1aa419b40e9cdc68f0796e264c8e29d11fe074a4973",
+          "bytes": 34859,
+          "tokens": 8661
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/scripts/__pycache__/audit.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/audit.cpython-313.pyc",
+          "sha256": "a3d81804dbd2ca45dc69f580b50efbcc181c195c131709a9ad026344305ed3b4",
+          "bytes": 47015,
+          "tokens": 10603
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/templates/archive-checklist.md",
+          "relpath": "templates/archive-checklist.md",
+          "sha256": "e11a6113592e2cf88772f08916241df48259eefb36bc3e0a3a951b08436f916c",
+          "bytes": 1823,
+          "tokens": 447
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/templates/audit-report.md",
+          "relpath": "templates/audit-report.md",
+          "sha256": "872e92f294297081e873ce2640720c5e54882725efac9aceb10e9893b26b443f",
+          "bytes": 1891,
+          "tokens": 466
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-archive/templates/tech-debt-registry.template.json",
+          "relpath": "templates/tech-debt-registry.template.json",
+          "sha256": "30b76cd4b39ec335b8578e45f6ec0a76273cea7d65baa37a2669c6c1f526bda8",
+          "bytes": 467,
+          "tokens": 115
+        }
+      ],
+      "global_score": 86.7,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "adr-generator": {
+      "id": "adr-generator",
+      "name": "adr-generator",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/adr-generator",
+      "primary_sha256": "a10f2ec6dd0bc96583c4257c0c5dae7168c14abd5eabb2513b9aefd944e11555",
+      "total_files": 13,
+      "total_bytes": 40317,
+      "total_tokens": 9810,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "a10f2ec6dd0bc96583c4257c0c5dae7168c14abd5eabb2513b9aefd944e11555",
+          "bytes": 19685,
+          "tokens": 4791
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/examples/README.md",
+          "relpath": "examples/README.md",
+          "sha256": "33b69564fae50f8e7d224b4768299330bfb88fca89a4a0c2a3b74f1e5b9ef5ba",
+          "bytes": 1294,
+          "tokens": 312
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/examples/database-choice.md",
+          "relpath": "examples/database-choice.md",
+          "sha256": "e88a9b08ff095c67db9a5d8974cd5f403bdf8c1177c81b46b8afd454b7cf13e0",
+          "bytes": 726,
+          "tokens": 176
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/examples/quadra/ADR-001-BP.md",
+          "relpath": "examples/quadra/ADR-001-BP.md",
+          "sha256": "ab1cdd348b0dcede0e2e61b85ac0cdb1b5415735f1411b2f11d6ee50daaaf558",
+          "bytes": 921,
+          "tokens": 225
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/examples/quadra/ADR-001-PI.md",
+          "relpath": "examples/quadra/ADR-001-PI.md",
+          "sha256": "d3ecf80a09a36fe5c52919147c8a3d8c1ca1a004c9dc2d5b040f282c694ff3c1",
+          "bytes": 3569,
+          "tokens": 878
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/examples/quadra/ADR-001-TODO.md",
+          "relpath": "examples/quadra/ADR-001-TODO.md",
+          "sha256": "10d7b59d22437df0ecc91e3c7d25ca589b641ff7e1082b0563605e844b5a3a5c",
+          "bytes": 676,
+          "tokens": 162
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/examples/quadra/ADR-001.md",
+          "relpath": "examples/quadra/ADR-001.md",
+          "sha256": "ae9eb659ae78214d06ee6faf68d21358cde9968acc4d57155281da05b337219f",
+          "bytes": 1461,
+          "tokens": 356
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/templates/adr-bp.md",
+          "relpath": "templates/adr-bp.md",
+          "sha256": "7fb9d3edc2cb6d6d71975dd29d4fd437dffb389772d9500e4aa5e66854136c3d",
+          "bytes": 3205,
+          "tokens": 780
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/templates/adr-emergency.md",
+          "relpath": "templates/adr-emergency.md",
+          "sha256": "1ae870d809a0f79adbf334e202978d92240eeaeedfb0d0894267c522d4ee258e",
+          "bytes": 1215,
+          "tokens": 295
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/templates/adr-pi.md",
+          "relpath": "templates/adr-pi.md",
+          "sha256": "e73b3f3da760966775476fa8ec67751435ae6cd1b8c26cb53039035fa5e2c2f9",
+          "bytes": 3166,
+          "tokens": 772
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/templates/adr-simple.md",
+          "relpath": "templates/adr-simple.md",
+          "sha256": "9776bf12099b9d243f3b9ac30e9cdf093fd08cf23951a7d38cfb628b2a2465ec",
+          "bytes": 602,
+          "tokens": 148
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/templates/adr-todo.md",
+          "relpath": "templates/adr-todo.md",
+          "sha256": "d291398dd977cba96ef1d5131bf8820d519da4b14eaeab36a4a68040f4722c95",
+          "bytes": 2359,
+          "tokens": 562
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/adr-generator/templates/adr.md",
+          "relpath": "templates/adr.md",
+          "sha256": "4afd91ca7a277e95a8cd59e70731cdeefc4bdf2b6f395981cb2a413110e5609f",
+          "bytes": 1438,
+          "tokens": 353
+        }
+      ],
+      "global_score": 92.0,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "agent-development": {
+      "id": "agent-development",
+      "name": "agent-development",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/agent-development",
+      "primary_sha256": "e5eb33376b83568c24b58afb74c5573027e5d72bed5047c8f1d9acb27a8872ee",
+      "total_files": 1,
+      "total_bytes": 11318,
+      "total_tokens": 2827,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-development/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "e5eb33376b83568c24b58afb74c5573027e5d72bed5047c8f1d9acb27a8872ee",
+          "bytes": 11318,
+          "tokens": 2827
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "agent-orchestration": {
+      "id": "agent-orchestration",
+      "name": "agent-orchestration",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/agent-orchestration",
+      "primary_sha256": "9662d1bb416f38a278504114784358792aa8168c9fcd73168a41bec262ae8afb",
+      "total_files": 8,
+      "total_bytes": 21190,
+      "total_tokens": 5196,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "9662d1bb416f38a278504114784358792aa8168c9fcd73168a41bec262ae8afb",
+          "bytes": 10913,
+          "tokens": 2668
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/examples/fan-out-fan-in.md",
+          "relpath": "examples/fan-out-fan-in.md",
+          "sha256": "553ac0b7934972c7a2e757d1d253745808f57067e8a5e2365a2d57f3961f4d08",
+          "bytes": 1068,
+          "tokens": 263
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/examples/multi-agent-decomposition.md",
+          "relpath": "examples/multi-agent-decomposition.md",
+          "sha256": "e7c2082fd6c92b9fd8945796da2f741c8456f7e2dc71409334b2d1b5c02a07a6",
+          "bytes": 2011,
+          "tokens": 495
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/checklists/post-execution.md",
+          "relpath": "checklists/post-execution.md",
+          "sha256": "780b20f161b9be5c3554199ba2e3af3e74a552f2fe54c059e1b2995819ba62e9",
+          "bytes": 769,
+          "tokens": 187
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/checklists/pre-flight.md",
+          "relpath": "checklists/pre-flight.md",
+          "sha256": "f70d4c7e4ac7b2a2cd2dcc48f56e5cdb401ababd3719eae9fd4e112974bc2113",
+          "bytes": 951,
+          "tokens": 233
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/templates/agent-role-card.md",
+          "relpath": "templates/agent-role-card.md",
+          "sha256": "590ca5e51acfa8e46e36d554d4c24fca7dd657af3134216e31126e653ba06b84",
+          "bytes": 1526,
+          "tokens": 376
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/templates/handoff-protocol.md",
+          "relpath": "templates/handoff-protocol.md",
+          "sha256": "e5fdfe98f0e46e0b9de8a327bfbfe25430e711c1dab7fbbe15851ee442c152b7",
+          "bytes": 1963,
+          "tokens": 487
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-orchestration/templates/routing-decision.md",
+          "relpath": "templates/routing-decision.md",
+          "sha256": "550e51af81fd2777a3c9f876e2e35730b58179c115e3731704c232444b1df004",
+          "bytes": 1989,
+          "tokens": 487
+        }
+      ],
+      "global_score": 92.0,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "agent-planning-execution": {
+      "id": "agent-planning-execution",
+      "name": "agent-planning-execution",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/agent-planning-execution",
+      "primary_sha256": "5981798c40f2a094e2b4e37a9c744985afcbbc9fad3380060eddaadc9434f564",
+      "total_files": 1,
+      "total_bytes": 93026,
+      "total_tokens": 23086,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/agent-planning-execution/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "5981798c40f2a094e2b4e37a9c744985afcbbc9fad3380060eddaadc9434f564",
+          "bytes": 93026,
+          "tokens": 23086
+        }
+      ],
+      "global_score": 88.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "agents-md-management": {
+      "id": "agents-md-management",
+      "name": "agents-md-management",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/agents-md-management",
+      "primary_sha256": "19f08f68e500e9863609a303da37c94cba13361750859750035fced8453a47bd",
+      "total_files": 1,
+      "total_bytes": 16936,
+      "total_tokens": 4162,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/agents-md-management/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "19f08f68e500e9863609a303da37c94cba13361750859750035fced8453a47bd",
+          "bytes": 16936,
+          "tokens": 4162
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "api-design": {
+      "id": "api-design",
+      "name": "api-design",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/api-design",
+      "primary_sha256": "6be7d11d1deff247f7cf1778f35c190a303d2160a19c8ce480864a0b12d2294e",
+      "total_files": 7,
+      "total_bytes": 29899,
+      "total_tokens": 7389,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "6be7d11d1deff247f7cf1778f35c190a303d2160a19c8ce480864a0b12d2294e",
+          "bytes": 10507,
+          "tokens": 2566
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/examples/error-handling-contract.md",
+          "relpath": "examples/error-handling-contract.md",
+          "sha256": "a058550cbd3b4a79f0ad2ffbe15dbca2e56f6d704fa3ee00b0fc3bef7af066c9",
+          "bytes": 2953,
+          "tokens": 729
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/examples/python-flask-rest.md",
+          "relpath": "examples/python-flask-rest.md",
+          "sha256": "5eae67740a63925df39c76dbf556a23f768b246aaee9a27f3d5c35d31df20d81",
+          "bytes": 2219,
+          "tokens": 548
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/examples/rest-crud-spec.md",
+          "relpath": "examples/rest-crud-spec.md",
+          "sha256": "7aea4d9200301dfa086c34c50c0ef55362db435b4db47f2d4b763553fb9b0999",
+          "bytes": 2719,
+          "tokens": 672
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/templates/api-versioning.md",
+          "relpath": "templates/api-versioning.md",
+          "sha256": "4f79b6b7d0b6101955221ed9789397ca028fd8c5398068266d2921168c49df83",
+          "bytes": 3994,
+          "tokens": 998
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/templates/endpoint-spec.md",
+          "relpath": "templates/endpoint-spec.md",
+          "sha256": "13b30843f6d96237b457948e5e5adb977c352c46983b02b402b9b9895bd479bd",
+          "bytes": 3569,
+          "tokens": 892
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/api-design/templates/error-contract.md",
+          "relpath": "templates/error-contract.md",
+          "sha256": "20280a7f37a7a178e97a6b4a93922c0240a151898c52ee6f0e30c713b76c9a50",
+          "bytes": 3938,
+          "tokens": 984
+        }
+      ],
+      "global_score": 92.0,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "architecture-review": {
+      "id": "architecture-review",
+      "name": "architecture-review",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/architecture-review",
+      "primary_sha256": "e2b1e54e1b86a9677c1006e3c45bd2b7fc089916aab48d31dc627e2bcbde1942",
+      "total_files": 4,
+      "total_bytes": 14212,
+      "total_tokens": 3461,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/architecture-review/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "e2b1e54e1b86a9677c1006e3c45bd2b7fc089916aab48d31dc627e2bcbde1942",
+          "bytes": 12048,
+          "tokens": 2937
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/architecture-review/examples/god-class-refactor.md",
+          "relpath": "examples/god-class-refactor.md",
+          "sha256": "ef74f0cd04346874af163416bdb27f15f3c07d4f19ecae62ca94efffced9df1c",
+          "bytes": 520,
+          "tokens": 126
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/architecture-review/templates/architecture-review-report.md",
+          "relpath": "templates/architecture-review-report.md",
+          "sha256": "f822da6bd946a61057d5a8bb5dcce9757d8d9627d11e6ecf39d06a103acc4c9a",
+          "bytes": 1193,
+          "tokens": 289
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/architecture-review/templates/tech-debt-item.md",
+          "relpath": "templates/tech-debt-item.md",
+          "sha256": "53a75f71b1905be653e34e22b766f09f3123591f9af08d286067ee435040ce19",
+          "bytes": 451,
+          "tokens": 109
+        }
+      ],
+      "global_score": 92.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "artifacts-builder": {
+      "id": "artifacts-builder",
+      "name": "artifacts-builder",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/artifacts-builder",
+      "primary_sha256": "e40dc0c1a28d84bc9d02a429af0ec2d9ccf5289776aa6520e6905f2aede60a20",
+      "total_files": 1,
+      "total_bytes": 9704,
+      "total_tokens": 2423,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/artifacts-builder/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "e40dc0c1a28d84bc9d02a429af0ec2d9ccf5289776aa6520e6905f2aede60a20",
+          "bytes": 9704,
+          "tokens": 2423
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "brainstorming": {
+      "id": "brainstorming",
+      "name": "brainstorming",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/brainstorming",
+      "primary_sha256": "39458b64d11520ad59466eb6383b7b60c2b6e7a5ca22e7c621302c7646e0264a",
+      "total_files": 8,
+      "total_bytes": 76644,
+      "total_tokens": 19112,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "39458b64d11520ad59466eb6383b7b60c2b6e7a5ca22e7c621302c7646e0264a",
+          "bytes": 12240,
+          "tokens": 3041
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/spec-document-reviewer-prompt.md",
+          "relpath": "spec-document-reviewer-prompt.md",
+          "sha256": "95a0a195de9d984be2fffa95bab16fc8c563bc296a9cfc5e9c29cb3ece0d7457",
+          "bytes": 1747,
+          "tokens": 435
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/visual-companion.md",
+          "relpath": "visual-companion.md",
+          "sha256": "3321a044c777d03d7177df41c77bb83155ff2a6d0c16b8a3d752426d29f14ea8",
+          "bytes": 13084,
+          "tokens": 3251
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/scripts/frame-template.html",
+          "relpath": "scripts/frame-template.html",
+          "sha256": "6a8a4e58bd6a44b904e2e3c57de774481d909204597e1498de53f1b2fecc4c4e",
+          "bytes": 8094,
+          "tokens": 2023
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/scripts/helper.js",
+          "relpath": "scripts/helper.js",
+          "sha256": "43c6d69954a46ec34a2a262bcc62a9a7e83e839c739f199cb72646d397c686e3",
+          "bytes": 5615,
+          "tokens": 1401
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/scripts/server.cjs",
+          "relpath": "scripts/server.cjs",
+          "sha256": "2d2961ea8d11f56c5f4c3a1a68d22709efa5d7601a2246d8c880774e7e9e8412",
+          "bytes": 25693,
+          "tokens": 6420
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/scripts/start-server.sh",
+          "relpath": "scripts/start-server.sh",
+          "sha256": "a4e5ae84275bcaacd2f84345afeabe59cf7b00ba080e123da7cc1fb226f12847",
+          "bytes": 6908,
+          "tokens": 1726
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/brainstorming/scripts/stop-server.sh",
+          "relpath": "scripts/stop-server.sh",
+          "sha256": "0b5ccbbd57f62d3ed88993f7940b5ee0e5c0fc9b21c550c623da4f6292e47daf",
+          "bytes": 3263,
+          "tokens": 815
+        }
+      ],
+      "global_score": 87.7,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "cap": {
+      "id": "cap",
+      "name": "cap",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/cap",
+      "primary_sha256": "8c679ba99064c45dc6c03f6b9fda9cad5c129de8b1f0abdd252febdc4fde2c3d",
+      "total_files": 1,
+      "total_bytes": 5960,
+      "total_tokens": 1481,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/cap/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "8c679ba99064c45dc6c03f6b9fda9cad5c129de8b1f0abdd252febdc4fde2c3d",
+          "bytes": 5960,
+          "tokens": 1481
+        }
+      ],
+      "global_score": 92.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "changelog-generator": {
+      "id": "changelog-generator",
+      "name": "changelog-generator",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/changelog-generator",
+      "primary_sha256": "1d929f58d87e6348510cfb6762688f299568218b114b291bbcb9192977df9f1c",
+      "total_files": 1,
+      "total_bytes": 3536,
+      "total_tokens": 881,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/changelog-generator/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "1d929f58d87e6348510cfb6762688f299568218b114b291bbcb9192977df9f1c",
+          "bytes": 3536,
+          "tokens": 881
+        }
+      ],
+      "global_score": 92.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "circuit-breaker": {
+      "id": "circuit-breaker",
+      "name": "circuit-breaker",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/circuit-breaker",
+      "primary_sha256": "ce7a7c2694d5be31a9a15677ed2f38d2427126cf77b433e8279fe0cb78dba295",
+      "total_files": 1,
+      "total_bytes": 13065,
+      "total_tokens": 3263,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/circuit-breaker/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "ce7a7c2694d5be31a9a15677ed2f38d2427126cf77b433e8279fe0cb78dba295",
+          "bytes": 13065,
+          "tokens": 3263
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "clean-code": {
+      "id": "clean-code",
+      "name": "clean-code",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/clean-code",
+      "primary_sha256": "3188bcdadf08017eb3859350ca03e1b654db64ce4de05b3bc11f2c4dbc4a76a3",
+      "total_files": 1,
+      "total_bytes": 10986,
+      "total_tokens": 2741,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/clean-code/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "3188bcdadf08017eb3859350ca03e1b654db64ce4de05b3bc11f2c4dbc4a76a3",
+          "bytes": 10986,
+          "tokens": 2741
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "code-review": {
+      "id": "code-review",
+      "name": "code-review",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/code-review",
+      "primary_sha256": "f4f727b9c4995d05e0c8e081f141b0611ad116565e992b8885426e4e93218f45",
+      "total_files": 1,
+      "total_bytes": 5735,
+      "total_tokens": 1421,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/code-review/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "f4f727b9c4995d05e0c8e081f141b0611ad116565e992b8885426e4e93218f45",
+          "bytes": 5735,
+          "tokens": 1421
+        }
+      ],
+      "global_score": 93.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "code-review-lite": {
+      "id": "code-review-lite",
+      "name": "code-review-lite",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/code-review-lite",
+      "primary_sha256": "715f7b8d98fd37ce230a0ebe042d757aee282e042dbf0d1d5a373519e25ee6ee",
+      "total_files": 3,
+      "total_bytes": 8890,
+      "total_tokens": 2207,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/code-review-lite/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "715f7b8d98fd37ce230a0ebe042d757aee282e042dbf0d1d5a373519e25ee6ee",
+          "bytes": 4236,
+          "tokens": 1058
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/code-review-lite/examples/review-session.md",
+          "relpath": "examples/review-session.md",
+          "sha256": "aa91cf8c876030c3e1dbf3f38414906ff3fe35e95d33cb49d06523a82136428f",
+          "bytes": 2759,
+          "tokens": 683
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/code-review-lite/templates/review-checklist.md",
+          "relpath": "templates/review-checklist.md",
+          "sha256": "050c4b6f9eafd1f715a28ecf5de96772dfd106e71573ae973a45ddf156abefba",
+          "bytes": 1895,
+          "tokens": 466
+        }
+      ],
+      "global_score": 93.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "code-review-workflow": {
+      "id": "code-review-workflow",
+      "name": "code-review-workflow",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/code-review-workflow",
+      "primary_sha256": "7d8beb3a2fb6dd59061b5223cd84d088f6eea3ac4f69251eccf3648566316bd7",
+      "total_files": 1,
+      "total_bytes": 9380,
+      "total_tokens": 2335,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/code-review-workflow/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "7d8beb3a2fb6dd59061b5223cd84d088f6eea3ac4f69251eccf3648566316bd7",
+          "bytes": 9380,
+          "tokens": 2335
+        }
+      ],
+      "global_score": 89.0,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "content-creator": {
+      "id": "content-creator",
+      "name": "content-creator",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/content-creator",
+      "primary_sha256": "da52e56bbeb672f7ab5d9bc58c21666ca289e70cc1c58d8129f011c3bf3510fb",
+      "total_files": 1,
+      "total_bytes": 11576,
+      "total_tokens": 2887,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/content-creator/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "da52e56bbeb672f7ab5d9bc58c21666ca289e70cc1c58d8129f011c3bf3510fb",
+          "bytes": 11576,
+          "tokens": 2887
+        }
+      ],
+      "global_score": 91.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "content-research-writer": {
+      "id": "content-research-writer",
+      "name": "content-research-writer",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/content-research-writer",
+      "primary_sha256": "90ba438dff7ad2cbdece7c1662dc0e00e69007f21a97e93a688d9dc7a868cc29",
+      "total_files": 1,
+      "total_bytes": 12770,
+      "total_tokens": 3190,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/content-research-writer/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "90ba438dff7ad2cbdece7c1662dc0e00e69007f21a97e93a688d9dc7a868cc29",
+          "bytes": 12770,
+          "tokens": 3190
+        }
+      ],
+      "global_score": 91.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "context7-mcp": {
+      "id": "context7-mcp",
+      "name": "context7-mcp",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/context7-mcp",
+      "primary_sha256": "5e076a3315e260337d307aedcda6976b5b14201ada13edcd08bbca4e16f66e6e",
+      "total_files": 1,
+      "total_bytes": 2395,
+      "total_tokens": 598,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/context7-mcp/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "5e076a3315e260337d307aedcda6976b5b14201ada13edcd08bbca4e16f66e6e",
+          "bytes": 2395,
+          "tokens": 598
+        }
+      ],
+      "global_score": 92.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "database-architecture": {
+      "id": "database-architecture",
+      "name": "database-architecture",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/database-architecture",
+      "primary_sha256": "328047bfa1742d74a5ee80fc0c4a3584446a52a16b47042a0c04020c11efb85b",
+      "total_files": 1,
+      "total_bytes": 28845,
+      "total_tokens": 7128,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/database-architecture/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "328047bfa1742d74a5ee80fc0c4a3584446a52a16b47042a0c04020c11efb85b",
+          "bytes": 28845,
+          "tokens": 7128
+        }
+      ],
+      "global_score": 89.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "ddd": {
+      "id": "ddd",
+      "name": "ddd",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/ddd",
+      "primary_sha256": "5e3b81e6c551e5f9b636d0b3c370541ff6aaf594475a348bc6df27fb464f2715",
+      "total_files": 8,
+      "total_bytes": 21576,
+      "total_tokens": 5339,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "5e3b81e6c551e5f9b636d0b3c370541ff6aaf594475a348bc6df27fb464f2715",
+          "bytes": 13271,
+          "tokens": 3267
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/examples/order-modeling.md",
+          "relpath": "examples/order-modeling.md",
+          "sha256": "b06ecf6fdbbf95d25a6d4bd8abf17d71225f380283c01ab317ed00f65446ea62",
+          "bytes": 776,
+          "tokens": 193
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/templates/aggregate-root.ts",
+          "relpath": "templates/aggregate-root.ts",
+          "sha256": "7c26199b1643341e0c6f374500a872629d25cfc0abdd7e2a3691d5325a6c6879",
+          "bytes": 1822,
+          "tokens": 455
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/templates/domain-event.ts",
+          "relpath": "templates/domain-event.ts",
+          "sha256": "c5b62ca8d1efd0e3e55a94f4d05f324d0370afeccdcb5e75b631907611ab5c31",
+          "bytes": 1003,
+          "tokens": 250
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/templates/domain-service.ts",
+          "relpath": "templates/domain-service.ts",
+          "sha256": "62816b779cec43d43f6e417db071da94605068d21f29237412f25ad4e26c082d",
+          "bytes": 1029,
+          "tokens": 257
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/templates/entity.ts",
+          "relpath": "templates/entity.ts",
+          "sha256": "7620813f4da062d98ff2fa72fea241c5efb17aa8cf9e84bad954cfcdbce6dba0",
+          "bytes": 770,
+          "tokens": 192
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/templates/repository.ts",
+          "relpath": "templates/repository.ts",
+          "sha256": "ea00af42d6dc8a4bb93827554c985ff57a85c4822d05ea41d35ba634c1a839b7",
+          "bytes": 1678,
+          "tokens": 419
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/ddd/templates/value-object.ts",
+          "relpath": "templates/value-object.ts",
+          "sha256": "c09c7319c0a05e33829de24c1aed95214490433fc0b1fd56c53d331c7aa80895",
+          "bytes": 1227,
+          "tokens": 306
+        }
+      ],
+      "global_score": 91.7,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "deployment": {
+      "id": "deployment",
+      "name": "deployment",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/deployment",
+      "primary_sha256": "76116604c1ecf1dc8710c3d7c35dc4c1246fbb1166e55d554ec17a62394b3a12",
+      "total_files": 1,
+      "total_bytes": 9405,
+      "total_tokens": 2270,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/deployment/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "76116604c1ecf1dc8710c3d7c35dc4c1246fbb1166e55d554ec17a62394b3a12",
+          "bytes": 9405,
+          "tokens": 2270
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "dispatching-parallel-agents": {
+      "id": "dispatching-parallel-agents",
+      "name": "dispatching-parallel-agents",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/dispatching-parallel-agents",
+      "primary_sha256": "bd234dde693007e3ea813362b31b92ff3acc2076d45805d87f31a74bb22381a6",
+      "total_files": 1,
+      "total_bytes": 13845,
+      "total_tokens": 3447,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/dispatching-parallel-agents/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "bd234dde693007e3ea813362b31b92ff3acc2076d45805d87f31a74bb22381a6",
+          "bytes": 13845,
+          "tokens": 3447
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "docx-processing": {
+      "id": "docx-processing",
+      "name": "docx-processing",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/docx-processing",
+      "primary_sha256": "14fa19ed65813530e868fee73519abc32b0fe36f92edcae2db51fd0c44d8d089",
+      "total_files": 1,
+      "total_bytes": 11797,
+      "total_tokens": 2943,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/docx-processing/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "14fa19ed65813530e868fee73519abc32b0fe36f92edcae2db51fd0c44d8d089",
+          "bytes": 11797,
+          "tokens": 2943
+        }
+      ],
+      "global_score": 90.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "email-composer": {
+      "id": "email-composer",
+      "name": "email-composer",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/email-composer",
+      "primary_sha256": "5fa46be264e161eb2acc26675e256e4e556b0687f17d5810e4c54be22175034d",
+      "total_files": 1,
+      "total_bytes": 13066,
+      "total_tokens": 3255,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/email-composer/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "5fa46be264e161eb2acc26675e256e4e556b0687f17d5810e4c54be22175034d",
+          "bytes": 13066,
+          "tokens": 3255
+        }
+      ],
+      "global_score": 91.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "find-skills": {
+      "id": "find-skills",
+      "name": "find-skills",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/find-skills",
+      "primary_sha256": "1d41fd2b6138ac2aef1d88646601f0ab9f67b0acb982f09fff12a5894a594b7b",
+      "total_files": 1,
+      "total_bytes": 5728,
+      "total_tokens": 1428,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/find-skills/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "1d41fd2b6138ac2aef1d88646601f0ab9f67b0acb982f09fff12a5894a594b7b",
+          "bytes": 5728,
+          "tokens": 1428
+        }
+      ],
+      "global_score": 92.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "git-workflow": {
+      "id": "git-workflow",
+      "name": "git-workflow",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/git-workflow",
+      "primary_sha256": "8eb2307b4e5168607e8abdd335df2d6a28e42ecab3b1f13d964a527b93221526",
+      "total_files": 1,
+      "total_bytes": 36430,
+      "total_tokens": 9046,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/git-workflow/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "8eb2307b4e5168607e8abdd335df2d6a28e42ecab3b1f13d964a527b93221526",
+          "bytes": 36430,
+          "tokens": 9046
+        }
+      ],
+      "global_score": 90.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "governance": {
+      "id": "governance",
+      "name": "governance",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/governance",
+      "primary_sha256": "9af21abbed3424a066c64857216b345b3b793e13f7416fc58504a904856787ec",
+      "total_files": 5,
+      "total_bytes": 12659,
+      "total_tokens": 3092,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/governance/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "9af21abbed3424a066c64857216b345b3b793e13f7416fc58504a904856787ec",
+          "bytes": 9930,
+          "tokens": 2425
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/governance/examples/branch-protection.md",
+          "relpath": "examples/branch-protection.md",
+          "sha256": "e7fbcc2c2d8fc35dd7ae5b0bf6cd94f8d8f8c531091a373d63054b1fc9a3988e",
+          "bytes": 461,
+          "tokens": 114
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/governance/templates/codeowners",
+          "relpath": "templates/codeowners",
+          "sha256": "7d64fb91d972cf82d3a7b88dd62c7a3614941befbaca0b4354ccf5b470e7017a",
+          "bytes": 697,
+          "tokens": 172
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/governance/templates/issue-template.md",
+          "relpath": "templates/issue-template.md",
+          "sha256": "5dea9902e362c64339be38e99bc1fcd79efacbce6847b351a5ad901b920035fd",
+          "bytes": 397,
+          "tokens": 96
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/governance/templates/pull-request-template.md",
+          "relpath": "templates/pull-request-template.md",
+          "sha256": "cd4bc68ee616de9127f2dc4a7f781d20bab52d833d976bf454af8564988d4f2c",
+          "bytes": 1174,
+          "tokens": 285
+        }
+      ],
+      "global_score": 92.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "implementation": {
+      "id": "implementation",
+      "name": "implementation",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/implementation",
+      "primary_sha256": "ca84465c18ed8658067224607dea0662d598672f3e9337c69ed3ffac9ace40eb",
+      "total_files": 10,
+      "total_bytes": 42663,
+      "total_tokens": 10380,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "ca84465c18ed8658067224607dea0662d598672f3e9337c69ed3ffac9ace40eb",
+          "bytes": 16504,
+          "tokens": 4025
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/examples/complex-change.md",
+          "relpath": "examples/complex-change.md",
+          "sha256": "808f5660236c6e3cf95c003389701d7382c325a23dfcdd363b556dd8311d7c03",
+          "bytes": 4572,
+          "tokens": 1108
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/examples/simple-change.md",
+          "relpath": "examples/simple-change.md",
+          "sha256": "7acc251cca148b17fcb74ed39ab8648ff84a02adc477db35890f92c9e6612ff4",
+          "bytes": 2867,
+          "tokens": 687
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/checklists/post-execution.md",
+          "relpath": "checklists/post-execution.md",
+          "sha256": "b04cbaeef23cedd639fbd4b12c52537d4bd9386dae22fb3acf6be9eecb9ec844",
+          "bytes": 2965,
+          "tokens": 713
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/checklists/pre-execution.md",
+          "relpath": "checklists/pre-execution.md",
+          "sha256": "c894ea62d5f7b3610c687c0b53be0b512c5c594bf1bccb9051573753302fa75a",
+          "bytes": 2740,
+          "tokens": 659
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/templates/change-plan.md",
+          "relpath": "templates/change-plan.md",
+          "sha256": "1213298d87d4f03bb296de542f836c4de363e6b9fa5b5704cc044ba07fa561e4",
+          "bytes": 2470,
+          "tokens": 603
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/templates/execution-contract.md",
+          "relpath": "templates/execution-contract.md",
+          "sha256": "0d72cc822016c859e4d4ef0a5238ea879305bfc29f0cf6c726c100fa8d82ae23",
+          "bytes": 2476,
+          "tokens": 605
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/templates/execution-report.md",
+          "relpath": "templates/execution-report.md",
+          "sha256": "f0764600996628d09770f7bccf87eb1cf8d381a693ed59d6e5c74c1033b23374",
+          "bytes": 3434,
+          "tokens": 843
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/templates/rollback-report.md",
+          "relpath": "templates/rollback-report.md",
+          "sha256": "85b37e765276b3c39509cb6e890b641947a101f85fec9295f5bae800c4041b32",
+          "bytes": 2469,
+          "tokens": 607
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/implementation/templates/task-progress.md",
+          "relpath": "templates/task-progress.md",
+          "sha256": "79da9cb109b579ea37b9c84ffb1b7f5c4c1e1518bb0fb2ca4c6504dd2c54eaf2",
+          "bytes": 2166,
+          "tokens": 530
+        }
+      ],
+      "global_score": 89.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "llm-as-judge": {
+      "id": "llm-as-judge",
+      "name": "llm-as-judge",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/llm-as-judge",
+      "primary_sha256": "e797d151dc51113dabd5ce7ff5bfb7149f658be77eed8db62b8e498cec518c3b",
+      "total_files": 1,
+      "total_bytes": 10075,
+      "total_tokens": 2514,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/llm-as-judge/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "e797d151dc51113dabd5ce7ff5bfb7149f658be77eed8db62b8e498cec518c3b",
+          "bytes": 10075,
+          "tokens": 2514
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp-builder": {
+      "id": "mcp-builder",
+      "name": "mcp-builder",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/mcp-builder",
+      "primary_sha256": "850c0fef0d64a838d9e969b3f6e6d5307b8dcb8188a740a765bfbb45b746daba",
+      "total_files": 1,
+      "total_bytes": 12380,
+      "total_tokens": 3089,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/mcp-builder/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "850c0fef0d64a838d9e969b3f6e6d5307b8dcb8188a740a765bfbb45b746daba",
+          "bytes": 12380,
+          "tokens": 3089
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mobile-design": {
+      "id": "mobile-design",
+      "name": "mobile-design",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/mobile-design",
+      "primary_sha256": "a72d852c65d339301f229da8ee3c6cadab770521ab5108f2157ce5c8851df0df",
+      "total_files": 1,
+      "total_bytes": 10355,
+      "total_tokens": 2584,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/mobile-design/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "a72d852c65d339301f229da8ee3c6cadab770521ab5108f2157ce5c8851df0df",
+          "bytes": 10355,
+          "tokens": 2584
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "observability": {
+      "id": "observability",
+      "name": "observability",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/observability",
+      "primary_sha256": "5ab2b1eb4cc15d9811222ce20b4693cf0ebbda84b5787a99840c71809b5b3b3c",
+      "total_files": 8,
+      "total_bytes": 29446,
+      "total_tokens": 7245,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "5ab2b1eb4cc15d9811222ce20b4693cf0ebbda84b5787a99840c71809b5b3b3c",
+          "bytes": 11807,
+          "tokens": 2897
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/examples/express-logging.ts",
+          "relpath": "examples/express-logging.ts",
+          "sha256": "7abd05d9ca98201e57d77dd9398b69e470521779574d6f4eb746f735b3205492",
+          "bytes": 1299,
+          "tokens": 324
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/examples/prometheus-metrics.ts",
+          "relpath": "examples/prometheus-metrics.ts",
+          "sha256": "49e095bdecc3c220c99284acd426135ce9b8908ba2632efdd750b274389a4724",
+          "bytes": 1662,
+          "tokens": 412
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/examples/tracing-setup.ts",
+          "relpath": "examples/tracing-setup.ts",
+          "sha256": "dd90916372dd10cc57ac861a8f06820758e768231ad42d303491098d0a0b689a",
+          "bytes": 2001,
+          "tokens": 500
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/checklists/observability-implementation.md",
+          "relpath": "checklists/observability-implementation.md",
+          "sha256": "78e9b8bf63c26adf97f419b5a1f63a4143d361a2ab81a669cb0d6ca6c1443c1f",
+          "bytes": 1458,
+          "tokens": 356
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/templates/alert-rules.md",
+          "relpath": "templates/alert-rules.md",
+          "sha256": "3bcc02b6f22945ad68081b139d7cae4e9f56e4b64623e7a1c411aa95a0dfc5e8",
+          "bytes": 4699,
+          "tokens": 1160
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/templates/logging-spec.md",
+          "relpath": "templates/logging-spec.md",
+          "sha256": "b588895fdfe61b288533c961e90ddb0e5db3f346f8d9671d4e16fa2eb9f0e5e7",
+          "bytes": 3203,
+          "tokens": 784
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/observability/templates/metrics-sla.md",
+          "relpath": "templates/metrics-sla.md",
+          "sha256": "e3969c05677f2ad775d41277f027d845bf78f5648494aadbbbad7a0522bf944e",
+          "bytes": 3317,
+          "tokens": 812
+        }
+      ],
+      "global_score": 91.7,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "pdf-processing": {
+      "id": "pdf-processing",
+      "name": "pdf-processing",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/pdf-processing",
+      "primary_sha256": "bf540c42607b4183ce0e9fca904ea7832c106d32d6d556014b878e90c4327df2",
+      "total_files": 1,
+      "total_bytes": 12402,
+      "total_tokens": 3097,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/pdf-processing/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "bf540c42607b4183ce0e9fca904ea7832c106d32d6d556014b878e90c4327df2",
+          "bytes": 12402,
+          "tokens": 3097
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "performance-optimization": {
+      "id": "performance-optimization",
+      "name": "performance-optimization",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/performance-optimization",
+      "primary_sha256": "fc111fde5e679b9b8b1c29700475d250d3e69bdca4488b3a92f31a80428ccc44",
+      "total_files": 2,
+      "total_bytes": 15947,
+      "total_tokens": 3983,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/performance-optimization/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "fc111fde5e679b9b8b1c29700475d250d3e69bdca4488b3a92f31a80428ccc44",
+          "bytes": 11474,
+          "tokens": 2865
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/performance-optimization/performance-budgets.md",
+          "relpath": "performance-budgets.md",
+          "sha256": "515c3f42541b9ab7043c431ddc1939b2321ad0c562c72aa889522e252129a93f",
+          "bytes": 4473,
+          "tokens": 1118
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "php-laravel-ecosystem": {
+      "id": "php-laravel-ecosystem",
+      "name": "php-laravel-ecosystem",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/php-laravel-ecosystem",
+      "primary_sha256": "a7612280491ea99ce209f91b06f7fe7f55f3d85db8c2a56f63ba5b610bbf63d3",
+      "total_files": 1,
+      "total_bytes": 49630,
+      "total_tokens": 12325,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/php-laravel-ecosystem/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "a7612280491ea99ce209f91b06f7fe7f55f3d85db8c2a56f63ba5b610bbf63d3",
+          "bytes": 49630,
+          "tokens": 12325
+        }
+      ],
+      "global_score": 88.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "product-spec-engineering": {
+      "id": "product-spec-engineering",
+      "name": "product-spec-engineering",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/product-spec-engineering",
+      "primary_sha256": "3c14868c22c296c41e6f30c65ee9ec795b3d5d62e77503e7a5bd1de54326633f",
+      "total_files": 1,
+      "total_bytes": 30477,
+      "total_tokens": 7558,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/product-spec-engineering/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "3c14868c22c296c41e6f30c65ee9ec795b3d5d62e77503e7a5bd1de54326633f",
+          "bytes": 30477,
+          "tokens": 7558
+        }
+      ],
+      "global_score": 88.2,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "prompt-engineering": {
+      "id": "prompt-engineering",
+      "name": "prompt-engineering",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/prompt-engineering",
+      "primary_sha256": "1a0d18089d89e16d9c5d0735138816e5608f9ba44614c183de283c4da79db3f2",
+      "total_files": 5,
+      "total_bytes": 10577,
+      "total_tokens": 2579,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/prompt-engineering/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "1a0d18089d89e16d9c5d0735138816e5608f9ba44614c183de283c4da79db3f2",
+          "bytes": 8444,
+          "tokens": 2061
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/prompt-engineering/examples/refactoring-prompt.md",
+          "relpath": "examples/refactoring-prompt.md",
+          "sha256": "84e312b3af736ddfd419f04130761030d1cfe055a39651ed16884571f250e28d",
+          "bytes": 568,
+          "tokens": 140
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/prompt-engineering/templates/prompt-complex.md",
+          "relpath": "templates/prompt-complex.md",
+          "sha256": "2a533cc9d976167c7e9530524b5408988e27ea4fc6827fc7ce5f4581f8719693",
+          "bytes": 651,
+          "tokens": 157
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/prompt-engineering/templates/prompt-evaluation.md",
+          "relpath": "templates/prompt-evaluation.md",
+          "sha256": "0067adcd3675a822113961022a1578262fffff476852d09cb4d7fd27f774f556",
+          "bytes": 576,
+          "tokens": 139
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/prompt-engineering/templates/prompt-simple.md",
+          "relpath": "templates/prompt-simple.md",
+          "sha256": "aba0234e5e86db6446e8f89db51d78a1435ec8824681faa908f17b76a1fb061c",
+          "bytes": 338,
+          "tokens": 82
+        }
+      ],
+      "global_score": 92.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "react-best-practices": {
+      "id": "react-best-practices",
+      "name": "react-best-practices",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/react-best-practices",
+      "primary_sha256": "c5a47d79063ce42902d53b2278d641392fc48b4c730a03c45a84e71475c11253",
+      "total_files": 1,
+      "total_bytes": 12153,
+      "total_tokens": 3033,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/react-best-practices/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "c5a47d79063ce42902d53b2278d641392fc48b4c730a03c45a84e71475c11253",
+          "bytes": 12153,
+          "tokens": 3033
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "refactoring": {
+      "id": "refactoring",
+      "name": "refactoring",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/refactoring",
+      "primary_sha256": "f1b1b399abab5e8e35ca95901865fddaba721cc2664207e99644e08c69fbd98e",
+      "total_files": 6,
+      "total_bytes": 24768,
+      "total_tokens": 5916,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/refactoring/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "f1b1b399abab5e8e35ca95901865fddaba721cc2664207e99644e08c69fbd98e",
+          "bytes": 11829,
+          "tokens": 2868
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/refactoring/examples/extract-method.ts",
+          "relpath": "examples/extract-method.ts",
+          "sha256": "74f800b16f71693571f795299b4c84b5c6deddd4e7e549a5fe56fc44c6f681fe",
+          "bytes": 1939,
+          "tokens": 481
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/refactoring/examples/strangler-fig.ts",
+          "relpath": "examples/strangler-fig.ts",
+          "sha256": "3f0cb0534b25a063ae479f461fbacbacbf52c008a0dda699b628dfb35f3a20f9",
+          "bytes": 1745,
+          "tokens": 434
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/refactoring/templates/legacy-migration.md",
+          "relpath": "templates/legacy-migration.md",
+          "sha256": "a41be7730911ba35e39e7f1d53f806259d335f664328bae9612849f554f70731",
+          "bytes": 4081,
+          "tokens": 864
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/refactoring/templates/refactoring-catalog.md",
+          "relpath": "templates/refactoring-catalog.md",
+          "sha256": "054176626c2c596ce905ab5be564361e647f3f138c6cd216afe1b168fa82beee",
+          "bytes": 2081,
+          "tokens": 507
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/refactoring/templates/test-before-refactor.md",
+          "relpath": "templates/test-before-refactor.md",
+          "sha256": "3b9d13a8a0680b75640316a2bb22101bcce7c81e8a80dd23d41331979da0cca4",
+          "bytes": 3093,
+          "tokens": 762
+        }
+      ],
+      "global_score": 92.4,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "release": {
+      "id": "release",
+      "name": "release",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/release",
+      "primary_sha256": "65575191fb96b005008b865f8fdd931faa345e1022294195b179d70aced24ddc",
+      "total_files": 7,
+      "total_bytes": 12281,
+      "total_tokens": 3016,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "65575191fb96b005008b865f8fdd931faa345e1022294195b179d70aced24ddc",
+          "bytes": 9165,
+          "tokens": 2251
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/examples/release-process.md",
+          "relpath": "examples/release-process.md",
+          "sha256": "4f7bd509fcd43cc53076b52e31cb73b4c933c529554d85844c549ea53e7ed16d",
+          "bytes": 413,
+          "tokens": 102
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/checklists/post-release.md",
+          "relpath": "checklists/post-release.md",
+          "sha256": "89b370a4d7cd485933232881beacc66ec9df744328c57837d3e4e300c0131416",
+          "bytes": 720,
+          "tokens": 176
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/checklists/pre-release.md",
+          "relpath": "checklists/pre-release.md",
+          "sha256": "c53ce0e5207726847aa3aa210848baf764ed4ce42405a8c56264c2b2a3bdd30d",
+          "bytes": 1062,
+          "tokens": 263
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/templates/changelog-entry.md",
+          "relpath": "templates/changelog-entry.md",
+          "sha256": "c4b033bff87235e349d54d74b5f2a898f820f4a20f57c94cbf4a47b1adbc0eaa",
+          "bytes": 187,
+          "tokens": 46
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/templates/release-checklist.md",
+          "relpath": "templates/release-checklist.md",
+          "sha256": "49edc1bff1dbb01757695cc294191d1b7d2dc8e79af9112a1ddbf8c50986974f",
+          "bytes": 382,
+          "tokens": 93
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/release/templates/rollback-plan.md",
+          "relpath": "templates/rollback-plan.md",
+          "sha256": "7cd9420e428544d2ce788af8c8438bb253f30f47a9a48d8938da46b6fff80bcf",
+          "bytes": 352,
+          "tokens": 85
+        }
+      ],
+      "global_score": 92.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "repo-bootstrap": {
+      "id": "repo-bootstrap",
+      "name": "repo-bootstrap",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/repo-bootstrap",
+      "primary_sha256": "5897f2a4206593969c566ce2934a39ac785194d382684c3bc5246d9792114012",
+      "total_files": 7,
+      "total_bytes": 10263,
+      "total_tokens": 2459,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "5897f2a4206593969c566ce2934a39ac785194d382684c3bc5246d9792114012",
+          "bytes": 6406,
+          "tokens": 1542
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/examples/bootstrap-example.md",
+          "relpath": "examples/bootstrap-example.md",
+          "sha256": "73f588e7fa0a0d4e0f288781c363c560dd3c5f694d9ca7b74960b8b55fb807df",
+          "bytes": 700,
+          "tokens": 148
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/templates/AGENTS.md",
+          "relpath": "templates/AGENTS.md",
+          "sha256": "a3c00c9594377eb216961f34a1424f95849accc4fdcd567025bcd30792fd8c42",
+          "bytes": 666,
+          "tokens": 156
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/templates/CONTRIBUTING.md",
+          "relpath": "templates/CONTRIBUTING.md",
+          "sha256": "0cf20ff5bf74c8d67589396da2f03ac7904bf82415ad4d38d1e2b82efff6c946",
+          "bytes": 434,
+          "tokens": 106
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/templates/README.md",
+          "relpath": "templates/README.md",
+          "sha256": "3c928b61f2dbfe3fa6bdfc0936e33c580cb400953baed25d77eeccca71e29baa",
+          "bytes": 468,
+          "tokens": 114
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/templates/SECURITY.md",
+          "relpath": "templates/SECURITY.md",
+          "sha256": "2f35547b637e2525a004825aa2443c26488f69b1d6dd9b9326493ccc8e04457c",
+          "bytes": 394,
+          "tokens": 95
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/repo-bootstrap/templates/ci.yml",
+          "relpath": "templates/ci.yml",
+          "sha256": "9cd570e8101383d746581c5237aa3028898836ee6c224a60e73ceba5a216bd75",
+          "bytes": 1195,
+          "tokens": 298
+        }
+      ],
+      "global_score": 92.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "resilient-execution": {
+      "id": "resilient-execution",
+      "name": "resilient-execution",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/resilient-execution",
+      "primary_sha256": "e4467c3bf4712bb6b1dc08e3c97bf9a921da663dac2e6d9d227b1fdc852141e8",
+      "total_files": 1,
+      "total_bytes": 11424,
+      "total_tokens": 2841,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/resilient-execution/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "e4467c3bf4712bb6b1dc08e3c97bf9a921da663dac2e6d9d227b1fdc852141e8",
+          "bytes": 11424,
+          "tokens": 2841
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "security-review": {
+      "id": "security-review",
+      "name": "security-review",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/security-review",
+      "primary_sha256": "f9b5f7f8098a2c218b890283c8da506aa8655edbd7b6321011b853b9b351c7a3",
+      "total_files": 7,
+      "total_bytes": 33104,
+      "total_tokens": 8171,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "f9b5f7f8098a2c218b890283c8da506aa8655edbd7b6321011b853b9b351c7a3",
+          "bytes": 10975,
+          "tokens": 2741
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/owasp-checklist.md",
+          "relpath": "owasp-checklist.md",
+          "sha256": "921263b5fe5c62db23eb45ca7a993eab059740cc2573237cc8db0817dc5920b1",
+          "bytes": 10750,
+          "tokens": 2687
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/examples/crypto-validation.md",
+          "relpath": "examples/crypto-validation.md",
+          "sha256": "e112d12f72432f4b02b8aafe87679451e9472e9447f2c480a34074c7f1c9f408",
+          "bytes": 4511,
+          "tokens": 1088
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/examples/dependency-audit.md",
+          "relpath": "examples/dependency-audit.md",
+          "sha256": "ec16b3fa03240f92aec581fc1b439a78a759590ff63a9f318ffda41c6b6f5276",
+          "bytes": 2672,
+          "tokens": 650
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/templates/security-checklist.md",
+          "relpath": "templates/security-checklist.md",
+          "sha256": "e941dd2f33b97322feb8d61356b635b78020a7290a2d7bf10faa0c34ca8a6ed7",
+          "bytes": 1381,
+          "tokens": 334
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/templates/threat-model.md",
+          "relpath": "templates/threat-model.md",
+          "sha256": "464389f891da30ff7dfc74b57ccfd685254ef644d7da028e216869dac703278c",
+          "bytes": 1808,
+          "tokens": 428
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/security-review/templates/vulnerability-report.md",
+          "relpath": "templates/vulnerability-report.md",
+          "sha256": "13f907dfc702bc83bba27e88af5f1137d6f520ee319f533e8414c76dfc54fe9e",
+          "bytes": 1007,
+          "tokens": 243
+        }
+      ],
+      "global_score": 90.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "seo-optimizer": {
+      "id": "seo-optimizer",
+      "name": "seo-optimizer",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/seo-optimizer",
+      "primary_sha256": "97006d4f078df3f7c0617438f209f74210dee686a4eda1e6fec43783d33c078a",
+      "total_files": 1,
+      "total_bytes": 14296,
+      "total_tokens": 3572,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/seo-optimizer/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "97006d4f078df3f7c0617438f209f74210dee686a4eda1e6fec43783d33c078a",
+          "bytes": 14296,
+          "tokens": 3572
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "skill-audit-bulletin": {
+      "id": "skill-audit-bulletin",
+      "name": "skill-audit-bulletin",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/skill-audit-bulletin",
+      "primary_sha256": "2ee7a56619a87fa755682ba54d3b643c4b72b47200d423e1fa7d6ec8e31dc2d3",
+      "total_files": 3,
+      "total_bytes": 24924,
+      "total_tokens": 6034,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-audit-bulletin/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "2ee7a56619a87fa755682ba54d3b643c4b72b47200d423e1fa7d6ec8e31dc2d3",
+          "bytes": 20800,
+          "tokens": 5033
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-audit-bulletin/examples/git-audit.md",
+          "relpath": "examples/git-audit.md",
+          "sha256": "acbdd98f483e8d108f00293f92c6aa91add00a46fcaff4f30e925cad94a11016",
+          "bytes": 889,
+          "tokens": 219
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-audit-bulletin/templates/audit-bulletin.md",
+          "relpath": "templates/audit-bulletin.md",
+          "sha256": "8cdd45c1af56ffd8f1313dfcf61853c20e7c6c8921cee767e8dc2da7b4f947a9",
+          "bytes": 3235,
+          "tokens": 782
+        }
+      ],
+      "global_score": 92.0,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "skill-creator": {
+      "id": "skill-creator",
+      "name": "skill-creator",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/skill-creator",
+      "primary_sha256": "b6e590a11d68e1d984833f1ea51a574f6243552655f5e1c2321fa3da5bd3ea41",
+      "total_files": 10,
+      "total_bytes": 78766,
+      "total_tokens": 19373,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/LICENSE",
+          "relpath": "LICENSE",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+          "bytes": 11357,
+          "tokens": 2839
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/LICENSE.txt",
+          "relpath": "LICENSE.txt",
+          "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+          "bytes": 11357,
+          "tokens": 2839
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "b6e590a11d68e1d984833f1ea51a574f6243552655f5e1c2321fa3da5bd3ea41",
+          "bytes": 11990,
+          "tokens": 2980
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/local.patch",
+          "relpath": "local.patch",
+          "sha256": "fb0c2b0add66237bb6fe06ae1c4f0fdd966e101db3c2cde7fb14582cec10aa67",
+          "bytes": 8518,
+          "tokens": 2128
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/scripts/init_skill.py",
+          "relpath": "scripts/init_skill.py",
+          "sha256": "2cabc8b3205648d11ca109e2edbf5ddea754043c2d17961779606befa3f4815e",
+          "bytes": 10846,
+          "tokens": 2694
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/scripts/package_skill.py",
+          "relpath": "scripts/package_skill.py",
+          "sha256": "692525dd8096aee51730ab142fb2605894a6f1a4135bcffebbf4f8ed3cf8715e",
+          "bytes": 3247,
+          "tokens": 806
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/scripts/quick_validate.py",
+          "relpath": "scripts/quick_validate.py",
+          "sha256": "41647b79d15e7e51b944d56843e9f87a33f4c66e64ded5964d1f95bad2fe634a",
+          "bytes": 2165,
+          "tokens": 541
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/scripts/__pycache__/init_skill.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/init_skill.cpython-313.pyc",
+          "sha256": "192d08b5d1d02f6c1ad1f4ad3386a32f89c5b8d42bc682ab1471f5f2ae486cb5",
+          "bytes": 12258,
+          "tokens": 2937
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/scripts/__pycache__/package_skill.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/package_skill.cpython-313.pyc",
+          "sha256": "af13790471764233862f569508f1f403b492793649bfff8f88b0de3b9880a34e",
+          "bytes": 4352,
+          "tokens": 998
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-creator/scripts/__pycache__/quick_validate.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/quick_validate.cpython-313.pyc",
+          "sha256": "76cb38aeaf1d7637949344bb92e0e0f759f77d435f47bb4522616eac03a0f89e",
+          "bytes": 2676,
+          "tokens": 611
+        }
+      ],
+      "global_score": 88.4,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "skill-discovery": {
+      "id": "skill-discovery",
+      "name": "skill-discovery",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/skill-discovery",
+      "primary_sha256": "103c464d295d1241045a4e9fd368514767e30d1c506f7bfd6912fabc04ef8a6b",
+      "total_files": 3,
+      "total_bytes": 19923,
+      "total_tokens": 4720,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-discovery/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "103c464d295d1241045a4e9fd368514767e30d1c506f7bfd6912fabc04ef8a6b",
+          "bytes": 2204,
+          "tokens": 551
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-discovery/scripts/discovery.py",
+          "relpath": "scripts/discovery.py",
+          "sha256": "59db3ad8da35cfb6cc888668e274bfbd33389fffa0b43625ec541f5cccab8706",
+          "bytes": 6847,
+          "tokens": 1705
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/skill-discovery/scripts/__pycache__/discovery.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/discovery.cpython-313.pyc",
+          "sha256": "a621d00427ab1edce2a9652e06dd0c28e8872cfcd640c8c9ec14f39fb5a19632",
+          "bytes": 10872,
+          "tokens": 2464
+        }
+      ],
+      "global_score": 92.2,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "subagent-driven-development": {
+      "id": "subagent-driven-development",
+      "name": "subagent-driven-development",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/subagent-driven-development",
+      "primary_sha256": "1d133b4a060d2390cf93ad31c7dbca8f0796d568b72d70104a2a44141ca280ed",
+      "total_files": 8,
+      "total_bytes": 43659,
+      "total_tokens": 10874,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "1d133b4a060d2390cf93ad31c7dbca8f0796d568b72d70104a2a44141ca280ed",
+          "bytes": 15197,
+          "tokens": 3788
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/code-quality-reviewer-prompt.md",
+          "relpath": "code-quality-reviewer-prompt.md",
+          "sha256": "5eab47c75cbab3b352c9f7e8ecf3c88db30b0daa1462ea6b43b472e2b84d3382",
+          "bytes": 8008,
+          "tokens": 2001
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/implementer-prompt.md",
+          "relpath": "implementer-prompt.md",
+          "sha256": "17ab90ea1f18ab8e678fd6b8544576b56939df9b6c93f5adff0374686fe51e11",
+          "bytes": 4161,
+          "tokens": 1036
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/spec-reviewer-prompt.md",
+          "relpath": "spec-reviewer-prompt.md",
+          "sha256": "21a78a9ff6a90afb9385a0c16c9c34c9b74a871e925c5e9472e94cefa59e1e65",
+          "bytes": 5034,
+          "tokens": 1254
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/task-reviewer-prompt.md",
+          "relpath": "task-reviewer-prompt.md",
+          "sha256": "2eb9d54373420de25bc0bd00635d3a3123a6c0eb30c881168e6f3348e2387331",
+          "bytes": 7919,
+          "tokens": 1962
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/scripts/review-package",
+          "relpath": "scripts/review-package",
+          "sha256": "0c0629f6e2c46fc8bf68dcfb8a247ab24eb548b7004fe494035e6fcba9b5cdfb",
+          "bytes": 1350,
+          "tokens": 337
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/scripts/sdd-workspace",
+          "relpath": "scripts/sdd-workspace",
+          "sha256": "9430befaff459ed862415b700c1a9efe45fd34838a684802a1d8320de0c3a007",
+          "bytes": 888,
+          "tokens": 221
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/subagent-driven-development/scripts/task-brief",
+          "relpath": "scripts/task-brief",
+          "sha256": "5380283f00bffa99ab82ae78482b7d248abe10655129c72ca7050bdc0b6a85e1",
+          "bytes": 1102,
+          "tokens": 275
+        }
+      ],
+      "global_score": 88.4,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "systematic-debugging": {
+      "id": "systematic-debugging",
+      "name": "systematic-debugging",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/systematic-debugging",
+      "primary_sha256": "6cd272131fe8ecef5873fc8b8097d119c1f7b2fb66c3b755a53d2a8f451e16ee",
+      "total_files": 11,
+      "total_bytes": 56243,
+      "total_tokens": 13824,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/CREATION-LOG.md",
+          "relpath": "CREATION-LOG.md",
+          "sha256": "c24733a5b1821bd6bed1fc950261f0b9f4e90097e0bbb96459d8179713730789",
+          "bytes": 4257,
+          "tokens": 1058
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "6cd272131fe8ecef5873fc8b8097d119c1f7b2fb66c3b755a53d2a8f451e16ee",
+          "bytes": 12325,
+          "tokens": 3004
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/condition-based-waiting-example.ts",
+          "relpath": "condition-based-waiting-example.ts",
+          "sha256": "40ae5ebe497fdf310200e43fe986552546d0a22837c0d39e855db1cfd33eb88e",
+          "bytes": 5054,
+          "tokens": 1263
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/condition-based-waiting.md",
+          "relpath": "condition-based-waiting.md",
+          "sha256": "e89fec8400d6cd50f43407cec9fab50976ba4d55d0ec2eb51c0bd68036b54c26",
+          "bytes": 3516,
+          "tokens": 874
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/defense-in-depth.md",
+          "relpath": "defense-in-depth.md",
+          "sha256": "ce2c0c8a3941e72a3a43de0850c870e00d6b35a15073bfc21065090492d56c94",
+          "bytes": 12648,
+          "tokens": 3033
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/find-polluter.sh",
+          "relpath": "find-polluter.sh",
+          "sha256": "6462747eae9b175ac145b78bcfaeab755654a75e32637f08eb633f065a9e1d7c",
+          "bytes": 1528,
+          "tokens": 379
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/root-cause-tracing.md",
+          "relpath": "root-cause-tracing.md",
+          "sha256": "26521558f97335288c8f8270679e8c3b442657d5c58f34a7cae4d52d9fbf78f0",
+          "bytes": 9387,
+          "tokens": 2333
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/test-academic.md",
+          "relpath": "test-academic.md",
+          "sha256": "fe2ba480d78ac0d686dc025f41c2a32a43d642bf533f91b0c6053a04d35d6486",
+          "bytes": 653,
+          "tokens": 163
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/test-pressure-1.md",
+          "relpath": "test-pressure-1.md",
+          "sha256": "0b6a915db0054577819834c79be9eb614e97bddba10d73768e1fbe91cfed048a",
+          "bytes": 1900,
+          "tokens": 474
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/test-pressure-2.md",
+          "relpath": "test-pressure-2.md",
+          "sha256": "b2030aeffba07050e8ad573ddf87486457c4a016a786bb326235bebd856f2016",
+          "bytes": 2283,
+          "tokens": 570
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/systematic-debugging/test-pressure-3.md",
+          "relpath": "test-pressure-3.md",
+          "sha256": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708",
+          "bytes": 2692,
+          "tokens": 673
+        }
+      ],
+      "global_score": 90.4,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "technical-documentation": {
+      "id": "technical-documentation",
+      "name": "technical-documentation",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/technical-documentation",
+      "primary_sha256": "0438fd5f969f3b274c4ea4d12d5595e08569bbd0189cc31fb58936e44780a401",
+      "total_files": 8,
+      "total_bytes": 25340,
+      "total_tokens": 6189,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "0438fd5f969f3b274c4ea4d12d5595e08569bbd0189cc31fb58936e44780a401",
+          "bytes": 12422,
+          "tokens": 3037
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/agents.template.md",
+          "relpath": "templates/agents.template.md",
+          "sha256": "1cd42add92e598581bf05922de49d55955c5a8ac949ffc5c92b6630d1b98e61f",
+          "bytes": 2540,
+          "tokens": 622
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/changelog.template.md",
+          "relpath": "templates/changelog.template.md",
+          "sha256": "0a6a015d583d0ee9d3245739535b4c367bac3658039daab05608998f3850dfd9",
+          "bytes": 839,
+          "tokens": 205
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/gemini.template.md",
+          "relpath": "templates/gemini.template.md",
+          "sha256": "580ac6212594d13eae3d10ca4441cfbe5dd9d1be5072791841eb0cd917429dba",
+          "bytes": 1299,
+          "tokens": 318
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/readme.template.md",
+          "relpath": "templates/readme.template.md",
+          "sha256": "a88d35ef10a8db250bbc7cf87c426bff37d2325fe702f434c28d6391033be4ba",
+          "bytes": 2799,
+          "tokens": 680
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/release-notes.template.md",
+          "relpath": "templates/release-notes.template.md",
+          "sha256": "36449f0b1809befa088720689b9abd8554d73a8dbb83e2e7b3d202160e91a6ed",
+          "bytes": 1148,
+          "tokens": 277
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/state.template.md",
+          "relpath": "templates/state.template.md",
+          "sha256": "19d649da5c5f1eefd5f40f4e7db56e3d16dd4e41c850cae863b628dc1064bc63",
+          "bytes": 1920,
+          "tokens": 468
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/technical-documentation/templates/usage.template.md",
+          "relpath": "templates/usage.template.md",
+          "sha256": "88f82acd4b8de837972fef6e5c84cdf8e036cc7fc9d7d0995a8f15e83be7e9d0",
+          "bytes": 2373,
+          "tokens": 582
+        }
+      ],
+      "global_score": 91.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "test-driven-development": {
+      "id": "test-driven-development",
+      "name": "test-driven-development",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/test-driven-development",
+      "primary_sha256": "3b0151df3380edf4815413d44ccde91d6865c415f85340f68dc6e57884e38e1c",
+      "total_files": 2,
+      "total_bytes": 23321,
+      "total_tokens": 5675,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/test-driven-development/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "3b0151df3380edf4815413d44ccde91d6865c415f85340f68dc6e57884e38e1c",
+          "bytes": 12373,
+          "tokens": 2938
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/test-driven-development/testing-anti-patterns.md",
+          "relpath": "testing-anti-patterns.md",
+          "sha256": "c4864ff11a26c15145cee1acb7f042bc278946cbb0737f49ad7cd1a58a1cff5a",
+          "bytes": 10948,
+          "tokens": 2737
+        }
+      ],
+      "global_score": 92.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "testing-mastery": {
+      "id": "testing-mastery",
+      "name": "testing-mastery",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/testing-mastery",
+      "primary_sha256": "cc00eb306fbe0c47f0420b2709750ce01f6c1dedfc67a3d322582de1ed564544",
+      "total_files": 1,
+      "total_bytes": 39330,
+      "total_tokens": 9628,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/testing-mastery/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "cc00eb306fbe0c47f0420b2709750ce01f6c1dedfc67a3d322582de1ed564544",
+          "bytes": 39330,
+          "tokens": 9628
+        }
+      ],
+      "global_score": 90.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "ui-ux-pro-max": {
+      "id": "ui-ux-pro-max",
+      "name": "ui-ux-pro-max",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/ui-ux-pro-max",
+      "primary_sha256": "3fe30de63983ea14eba0fe1aeec77cc05bd259502a6df11383ffd3d2d35046c7",
+      "total_files": 1,
+      "total_bytes": 54421,
+      "total_tokens": 13573,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/ui-ux-pro-max/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "3fe30de63983ea14eba0fe1aeec77cc05bd259502a6df11383ffd3d2d35046c7",
+          "bytes": 54421,
+          "tokens": 13573
+        }
+      ],
+      "global_score": 88.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "ux-researcher-designer": {
+      "id": "ux-researcher-designer",
+      "name": "ux-researcher-designer",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/ux-researcher-designer",
+      "primary_sha256": "e9cf2793254cf23cc7d3f8aae93e7b3c8e664d9104c0ada6a53498b813b74ec4",
+      "total_files": 1,
+      "total_bytes": 11932,
+      "total_tokens": 2979,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/ux-researcher-designer/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "e9cf2793254cf23cc7d3f8aae93e7b3c8e664d9104c0ada6a53498b813b74ec4",
+          "bytes": 11932,
+          "tokens": 2979
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "verification-before-completion": {
+      "id": "verification-before-completion",
+      "name": "verification-before-completion",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/verification-before-completion",
+      "primary_sha256": "d5e9b76db4623ac22e143b7452e58207f151abda81c7d286116b4e3e5bc08aac",
+      "total_files": 1,
+      "total_bytes": 11516,
+      "total_tokens": 2877,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/verification-before-completion/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "d5e9b76db4623ac22e143b7452e58207f151abda81c7d286116b4e3e5bc08aac",
+          "bytes": 11516,
+          "tokens": 2877
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "writing-skills": {
+      "id": "writing-skills",
+      "name": "writing-skills",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/writing-skills",
+      "primary_sha256": "83092ceb439c14cd07220e583eeb8d484192a17dbe6730cf41107f02fda4383a",
+      "total_files": 7,
+      "total_bytes": 49180,
+      "total_tokens": 12272,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "83092ceb439c14cd07220e583eeb8d484192a17dbe6730cf41107f02fda4383a",
+          "bytes": 10262,
+          "tokens": 2558
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/anthropic-best-practices.md",
+          "relpath": "anthropic-best-practices.md",
+          "sha256": "6c20c148de80dbf1e07ec57c93b5a955aa1be8cea0f177404eccb8e09df7985a",
+          "bytes": 4209,
+          "tokens": 1052
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/graphviz-conventions.dot",
+          "relpath": "graphviz-conventions.dot",
+          "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694",
+          "bytes": 5970,
+          "tokens": 1492
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/persuasion-principles.md",
+          "relpath": "persuasion-principles.md",
+          "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03",
+          "bytes": 5901,
+          "tokens": 1468
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/render-graphs.js",
+          "relpath": "render-graphs.js",
+          "sha256": "ccda971a87bb185f8febf81c56b556a20d026fa980c17b35fa3e8824fbb37852",
+          "bytes": 4857,
+          "tokens": 1214
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/testing-skills-with-subagents.md",
+          "relpath": "testing-skills-with-subagents.md",
+          "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade",
+          "bytes": 12558,
+          "tokens": 3133
+        },
+        {
+          "path": "/home/loupan/.gemini/config/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+          "relpath": "examples/CLAUDE_MD_TESTING.md",
+          "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0",
+          "bytes": 5423,
+          "tokens": 1355
+        }
+      ],
+      "global_score": 88.4,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "xlsx-processing": {
+      "id": "xlsx-processing",
+      "name": "xlsx-processing",
+      "category": "config_skill",
+      "path": "/home/loupan/.gemini/config/skills/xlsx-processing",
+      "primary_sha256": "cdc8905afd830e4b89f8d277985c70fc0f7b8a2f70c68306b84b9ceed96675e0",
+      "total_files": 1,
+      "total_bytes": 12034,
+      "total_tokens": 3006,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/skills/xlsx-processing/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "cdc8905afd830e4b89f8d277985c70fc0f7b8a2f70c68306b84b9ceed96675e0",
+          "bytes": 12034,
+          "tokens": 3006
+        }
+      ],
+      "global_score": 92.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__create_security_implementation_plan": {
+      "id": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "name": "create_security_implementation_plan",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/create_security_implementation_plan",
+      "primary_sha256": "c011415cac17dd61de3a2fab9b0e47d56311e01e5952f9fabf097d5019e5df7d",
+      "total_files": 1,
+      "total_bytes": 2498,
+      "total_tokens": 624,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/create_security_implementation_plan/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "c011415cac17dd61de3a2fab9b0e47d56311e01e5952f9fabf097d5019e5df7d",
+          "bytes": 2498,
+          "tokens": 624
+        }
+      ],
+      "global_score": 92.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__determine_threat_model": {
+      "id": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "name": "determine_threat_model",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/determine_threat_model",
+      "primary_sha256": "b5c3caf7bf77d7d742108382bec8113c59addc4f2b7492936cdb4bdd7dedc110",
+      "total_files": 1,
+      "total_bytes": 6882,
+      "total_tokens": 1716,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/determine_threat_model/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "b5c3caf7bf77d7d742108382bec8113c59addc4f2b7492936cdb4bdd7dedc110",
+          "bytes": 6882,
+          "tokens": 1716
+        }
+      ],
+      "global_score": 88.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__generate_security_audit_report": {
+      "id": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "name": "generate_security_audit_report",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/generate_security_audit_report",
+      "primary_sha256": "f0eebe87fc36c65d4458b16da25e7206bd8a5fc68f32d3141bf397c8e2c135fa",
+      "total_files": 1,
+      "total_bytes": 9056,
+      "total_tokens": 2263,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/generate_security_audit_report/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "f0eebe87fc36c65d4458b16da25e7206bd8a5fc68f32d3141bf397c8e2c135fa",
+          "bytes": 9056,
+          "tokens": 2263
+        }
+      ],
+      "global_score": 89.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__run_poc": {
+      "id": "plugin__Google.securecoder.securecoder__run_poc",
+      "name": "run_poc",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/run_poc",
+      "primary_sha256": "a2759a0d28960b5b23662091694ae2c4816625237224a1af652f6181d9595f0c",
+      "total_files": 1,
+      "total_bytes": 6826,
+      "total_tokens": 1704,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/run_poc/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "a2759a0d28960b5b23662091694ae2c4816625237224a1af652f6181d9595f0c",
+          "bytes": 6826,
+          "tokens": 1704
+        }
+      ],
+      "global_score": 88.6,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__run_security_scanner": {
+      "id": "plugin__Google.securecoder.securecoder__run_security_scanner",
+      "name": "run_security_scanner",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/run_security_scanner",
+      "primary_sha256": "a175789ae8df01d69c3f384715e4538f08c6ca6e12e2914a4147d3c0ebaa8a2c",
+      "total_files": 1,
+      "total_bytes": 10584,
+      "total_tokens": 2640,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/run_security_scanner/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "a175789ae8df01d69c3f384715e4538f08c6ca6e12e2914a4147d3c0ebaa8a2c",
+          "bytes": 10584,
+          "tokens": 2640
+        }
+      ],
+      "global_score": 89.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__scan_dependencies": {
+      "id": "plugin__Google.securecoder.securecoder__scan_dependencies",
+      "name": "scan_dependencies",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/scan_dependencies",
+      "primary_sha256": "875e0d316184c0fad80a8788a69474c14a2ca2d02a3cac1c97e798d095e74945",
+      "total_files": 1,
+      "total_bytes": 3471,
+      "total_tokens": 867,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/scan_dependencies/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "875e0d316184c0fad80a8788a69474c14a2ca2d02a3cac1c97e798d095e74945",
+          "bytes": 3471,
+          "tokens": 867
+        }
+      ],
+      "global_score": 90.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__securecoder_generation": {
+      "id": "plugin__Google.securecoder.securecoder__securecoder_generation",
+      "name": "securecoder_generation",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/securecoder_generation",
+      "primary_sha256": "17f561f6e65c2e11086f00f958c80d04c34ff2be7975ddd2047bb7cf51b53a17",
+      "total_files": 1,
+      "total_bytes": 24860,
+      "total_tokens": 6214,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/securecoder_generation/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "17f561f6e65c2e11086f00f958c80d04c34ff2be7975ddd2047bb7cf51b53a17",
+          "bytes": 24860,
+          "tokens": 6214
+        }
+      ],
+      "global_score": 88.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__Google.securecoder.securecoder__securecoder_persona": {
+      "id": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "name": "securecoder_persona",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/securecoder_persona",
+      "primary_sha256": "84cf92961f129151c2e45b03daa4e3cfa293c22ec8aaebc36a516f1c07f6e3be",
+      "total_files": 1,
+      "total_bytes": 4879,
+      "total_tokens": 1219,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/Google.securecoder.securecoder/skills/securecoder_persona/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "84cf92961f129151c2e45b03daa4e3cfa293c22ec8aaebc36a516f1c07f6e3be",
+          "bytes": 4879,
+          "tokens": 1219
+        }
+      ],
+      "global_score": 93.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__google-antigravity-sdk__google-antigravity-sdk": {
+      "id": "plugin__google-antigravity-sdk__google-antigravity-sdk",
+      "name": "google-antigravity-sdk",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk",
+      "primary_sha256": "1c7a531b6fed61ba901e09c2ec8c63efe6e43aba8e68952bd9fe67271b0ad4f2",
+      "total_files": 20,
+      "total_bytes": 50578,
+      "total_tokens": 12637,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "1c7a531b6fed61ba901e09c2ec8c63efe6e43aba8e68952bd9fe67271b0ad4f2",
+          "bytes": 4927,
+          "tokens": 1231
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/agent_skills.md",
+          "relpath": "examples/getting_started/agent_skills.md",
+          "sha256": "521f21cf7df6c486eacf0ca0391d25eacad54b50a12076df35bb70a2bec7c1ba",
+          "bytes": 1620,
+          "tokens": 405
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/app_data_dir_override.md",
+          "relpath": "examples/getting_started/app_data_dir_override.md",
+          "sha256": "020588605619a5c42548cdaa440eea99bd903f460ce2177493c31e8476e097f5",
+          "bytes": 1028,
+          "tokens": 257
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/custom_tool.md",
+          "relpath": "examples/getting_started/custom_tool.md",
+          "sha256": "eb6bfa624c0ad1384a609c689f4ed9923a1a024eb14802210c6c7f0414b21f51",
+          "bytes": 2998,
+          "tokens": 749
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/hello_world.md",
+          "relpath": "examples/getting_started/hello_world.md",
+          "sha256": "cfc7f1a9bf56166f62d98aa08e19c46285eb692c60d1de69ef541ae7669fbb87",
+          "bytes": 2646,
+          "tokens": 661
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/hooks.md",
+          "relpath": "examples/getting_started/hooks.md",
+          "sha256": "033c6b541220af9abff19cfe6268b7cf68839b40af4812c144f9935f0c75c849",
+          "bytes": 3096,
+          "tokens": 774
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/mcp_tools.md",
+          "relpath": "examples/getting_started/mcp_tools.md",
+          "sha256": "bdd8df6e5e630b7f31fc22f291e328a204ff2054daaa4b8adf26758541a0da9e",
+          "bytes": 1699,
+          "tokens": 424
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/multimodal.md",
+          "relpath": "examples/getting_started/multimodal.md",
+          "sha256": "a0adfdb1ad2ad942de9fe67afd21ee9b8857469c19368cec221d4dd128b63c90",
+          "bytes": 1845,
+          "tokens": 461
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/periodic_trigger.md",
+          "relpath": "examples/getting_started/periodic_trigger.md",
+          "sha256": "fa2e587ae0231f4ae3278ed2b5685476d424a5cd360efbfb621c74f20974e4d5",
+          "bytes": 2749,
+          "tokens": 687
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/persistence.md",
+          "relpath": "examples/getting_started/persistence.md",
+          "sha256": "0b8d190ad279ade6ad8beb4a00029850a53adf3c3d1d9f240a7691bdd9475e4f",
+          "bytes": 1448,
+          "tokens": 362
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/persona_config.md",
+          "relpath": "examples/getting_started/persona_config.md",
+          "sha256": "b664211d6cd8e823c3312224649148a52dc3959ff0a4c0a070f06d1b0520ef79",
+          "bytes": 2249,
+          "tokens": 562
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/structured_output.md",
+          "relpath": "examples/getting_started/structured_output.md",
+          "sha256": "e95c38f6171441f7884dbc176e6af1728d14e28f3282d6eb81d5a4abf566874f",
+          "bytes": 1378,
+          "tokens": 344
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/examples/getting_started/subagents.md",
+          "relpath": "examples/getting_started/subagents.md",
+          "sha256": "8794f2996943d2df2331ba35111cbecf528bc8752a2238c129cbe01c3fe9acac",
+          "bytes": 1056,
+          "tokens": 264
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/agent_configuration.md",
+          "relpath": "references/agent_configuration.md",
+          "sha256": "76ac3d51b6e9b9b84d4f7d32bee9f35665feb3160ed8b1d0747d72d073390d32",
+          "bytes": 2952,
+          "tokens": 738
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/architecture.md",
+          "relpath": "references/architecture.md",
+          "sha256": "9d447af790b4a3f3c26caf5bfe1222ee1107c22b3f745d528c5329b526b1bc87",
+          "bytes": 2289,
+          "tokens": 572
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/built_in_tools.md",
+          "relpath": "references/built_in_tools.md",
+          "sha256": "4468bfc0ebe848ac6e9953f7871a086bd0845658c5b2b506eeadce2ec9722fc6",
+          "bytes": 1512,
+          "tokens": 377
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/error_handling.md",
+          "relpath": "references/error_handling.md",
+          "sha256": "d55a96b34e235b92d11b67e7147e44dc24fe650b6b0fe5b643b76ae6954c7bf9",
+          "bytes": 3407,
+          "tokens": 851
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/mcp_integration.md",
+          "relpath": "references/mcp_integration.md",
+          "sha256": "0cb5baef503edf15f397e20292897852d4b0f866ffb8aa5ecbc1b16e6ac9d582",
+          "bytes": 3428,
+          "tokens": 857
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/observability.md",
+          "relpath": "references/observability.md",
+          "sha256": "6522cf554380a729008c7418e003cfff1282dd8ed099d0eca1bf5571c7c5c122",
+          "bytes": 2978,
+          "tokens": 744
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/google-antigravity-sdk/skills/google-antigravity-sdk/references/safety_policies.md",
+          "relpath": "references/safety_policies.md",
+          "sha256": "980a097ec15e212a881ebb77729ccc1cc3b058c2b57f510f1b99d1b734213c5b",
+          "bytes": 5273,
+          "tokens": 1317
+        }
+      ],
+      "global_score": 88.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__modern-web-guidance-plugin__chrome-extensions": {
+      "id": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "name": "chrome-extensions",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions",
+      "primary_sha256": "f16b2ef5c12538b76117c24076f22d436467e8ff5d18b4f5943226e87723f975",
+      "total_files": 22,
+      "total_bytes": 103785,
+      "total_tokens": 25793,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "f16b2ef5c12538b76117c24076f22d436467e8ff5d18b4f5943226e87723f975",
+          "bytes": 23856,
+          "tokens": 5918
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/webstore/chromewebstore-template.md",
+          "relpath": "references/webstore/chromewebstore-template.md",
+          "sha256": "18bd4a162d565eff3dc3d8ebcf292fb190ead52c28d88e876ffd322574adb385",
+          "bytes": 5356,
+          "tokens": 1328
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/webstore/privacy-policy.md",
+          "relpath": "references/webstore/privacy-policy.md",
+          "sha256": "70dda79e2d5e2d574b10c0121c2f9ea7ab6d644229af570d93c69042f2ef3f98",
+          "bytes": 4247,
+          "tokens": 1056
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/webstore/review-checklist.md",
+          "relpath": "references/webstore/review-checklist.md",
+          "sha256": "5d13e2a60b823f82411ec97c75736aa1395dc387e1354c0c05b52a109c22c45f",
+          "bytes": 7074,
+          "tokens": 1746
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/webstore/store-listing.md",
+          "relpath": "references/webstore/store-listing.md",
+          "sha256": "775aa1cb64d93eebafd9f38c8ddae63afe4ea9e83fc3a00cfe89eba20fccbc3b",
+          "bytes": 6739,
+          "tokens": 1674
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/api-calling.md",
+          "relpath": "references/extensions/api-calling.md",
+          "sha256": "dd213a00b36504209ade7ce6266f3f2e14fbbd31640cabad89c871919b9d320b",
+          "bytes": 2350,
+          "tokens": 587
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/auth-identity.md",
+          "relpath": "references/extensions/auth-identity.md",
+          "sha256": "0a79f08a39a1835b7b7b7bf95e05cd33c4e4691efe6b75b1c59057260101fbd0",
+          "bytes": 4036,
+          "tokens": 1007
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/content-scripts.md",
+          "relpath": "references/extensions/content-scripts.md",
+          "sha256": "9439394dc38f49ba1147cde2508741f16825f8659c2c97925b71abe6af104d6c",
+          "bytes": 3506,
+          "tokens": 874
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/context-menus.md",
+          "relpath": "references/extensions/context-menus.md",
+          "sha256": "8ece341374ce456e86dd7b9b30ce60ec961674c5a4a08e825b6854ec9ce3109f",
+          "bytes": 1529,
+          "tokens": 382
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/csp-sandbox.md",
+          "relpath": "references/extensions/csp-sandbox.md",
+          "sha256": "3169a8f2f636a912212cbd12636a58337b1df07b333ea5818aec6eea50398228",
+          "bytes": 4810,
+          "tokens": 1196
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/declarative-net-request.md",
+          "relpath": "references/extensions/declarative-net-request.md",
+          "sha256": "4b986713921da1a1e12dd68da5ee8684e43b8a084f323cced503bcb8dc8b8b03",
+          "bytes": 2794,
+          "tokens": 698
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/devtools.md",
+          "relpath": "references/extensions/devtools.md",
+          "sha256": "816bd0e240a6814713b59f045461c6c24e54502b302425abe463c34f932babf7",
+          "bytes": 2889,
+          "tokens": 718
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/icons.md",
+          "relpath": "references/extensions/icons.md",
+          "sha256": "a996281d5482fa145a7912c92f71fe4eb582a0e91e674f9fef02379aecb0fce3",
+          "bytes": 2756,
+          "tokens": 688
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/media-capture.md",
+          "relpath": "references/extensions/media-capture.md",
+          "sha256": "c6bddb3c51c0b0f36d302e7dfde9558dea5eb5febccda315e911119a6e08cea3",
+          "bytes": 4805,
+          "tokens": 1194
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/message-passing.md",
+          "relpath": "references/extensions/message-passing.md",
+          "sha256": "d4c4d84caa6761a5afb31f013ac780c2db157f3a14a23b6c0070730141dbf254",
+          "bytes": 4214,
+          "tokens": 1047
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/omnibox.md",
+          "relpath": "references/extensions/omnibox.md",
+          "sha256": "e310ccccc673bb4cb4c4ed42a8eb821af30e271145ee06db79f62649def4bd5c",
+          "bytes": 1819,
+          "tokens": 453
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/popup-ui.md",
+          "relpath": "references/extensions/popup-ui.md",
+          "sha256": "2a9567e5b431910702542707a09357f2031969238bda7807155dbecb1a317fb4",
+          "bytes": 2378,
+          "tokens": 593
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/prompt-api.md",
+          "relpath": "references/extensions/prompt-api.md",
+          "sha256": "f376c73354ec804dc00dc1e14d0fec8f19da79f5d7c141bd5a6b40d6e49e0330",
+          "bytes": 3835,
+          "tokens": 953
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/service-worker.md",
+          "relpath": "references/extensions/service-worker.md",
+          "sha256": "6149ec9e5a1185486ba7157d631a24525b41377d4d2c4af13058ea2f6e2715d1",
+          "bytes": 4591,
+          "tokens": 1139
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/side-panel.md",
+          "relpath": "references/extensions/side-panel.md",
+          "sha256": "7e6b68b9aff6532495b8d89af097bb3c0f72b3a329c92a598be3ca50a43ed15c",
+          "bytes": 4480,
+          "tokens": 1115
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/storage.md",
+          "relpath": "references/extensions/storage.md",
+          "sha256": "208736186cdc606d4d98efe64ea17f1087f13755415360d59035879e7580dde2",
+          "bytes": 1965,
+          "tokens": 490
+        },
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/chrome-extensions/references/extensions/tab-management.md",
+          "relpath": "references/extensions/tab-management.md",
+          "sha256": "f16f568aaa5015985a6fc03c748f2f85ab66284e510ed0e782f637f3ae492622",
+          "bytes": 3756,
+          "tokens": 937
+        }
+      ],
+      "global_score": 88.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "plugin__modern-web-guidance-plugin__modern-web-guidance": {
+      "id": "plugin__modern-web-guidance-plugin__modern-web-guidance",
+      "name": "modern-web-guidance",
+      "category": "plugin_skill",
+      "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/modern-web-guidance",
+      "primary_sha256": "a8cd81010a1388be0b34fb3eb5e86988754d6e602ee493dd16775f63c3c210fd",
+      "total_files": 1,
+      "total_bytes": 5551,
+      "total_tokens": 1386,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/config/plugins/modern-web-guidance-plugin/skills/modern-web-guidance/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "a8cd81010a1388be0b34fb3eb5e86988754d6e602ee493dd16775f63c3c210fd",
+          "bytes": 5551,
+          "tokens": 1386
+        }
+      ],
+      "global_score": 93.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "builtin__agy-customizations": {
+      "id": "builtin__agy-customizations",
+      "name": "agy-customizations",
+      "category": "builtin_skill",
+      "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations",
+      "primary_sha256": "4f8b0eab3c1420a73eddc48d4041b62178b8ba552a7d6b00d2412deab3a39315",
+      "total_files": 7,
+      "total_bytes": 28857,
+      "total_tokens": 7191,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "4f8b0eab3c1420a73eddc48d4041b62178b8ba552a7d6b00d2412deab3a39315",
+          "bytes": 5321,
+          "tokens": 1330
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/docs/hooks.md",
+          "relpath": "docs/hooks.md",
+          "sha256": "6c76fe162f89527b7494213f11fdb268eb508bfca22a7af61f86ced285340bf4",
+          "bytes": 10421,
+          "tokens": 2605
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/docs/json_configs.md",
+          "relpath": "docs/json_configs.md",
+          "sha256": "10a4cc3ecbe41708646ad9bc54a7bf18e5497ed447b55ec9e8d2eda6ef5a45e2",
+          "bytes": 3983,
+          "tokens": 995
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/docs/mcp_servers.md",
+          "relpath": "docs/mcp_servers.md",
+          "sha256": "418fada49bb8ed1f43438fd6a355e7f51092daa4d021eb2a43b19a1d1e2146bd",
+          "bytes": 2966,
+          "tokens": 741
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/docs/plugins.md",
+          "relpath": "docs/plugins.md",
+          "sha256": "41837ae5fbffec9bdd9d2f28a673d473d4fa6c1abb44a6ccc87ed0eb92ae5e25",
+          "bytes": 2453,
+          "tokens": 600
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/docs/rules.md",
+          "relpath": "docs/rules.md",
+          "sha256": "969a834145a09398b53cd63b7d473d8a915bf80928726650a6d2efc602e33bbe",
+          "bytes": 1063,
+          "tokens": 265
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/agy-customizations/docs/skills.md",
+          "relpath": "docs/skills.md",
+          "sha256": "c4eba3bc9a8775928704d1b7feede20871b25f8d427c6cd6757b7edd54b3ae60",
+          "bytes": 2650,
+          "tokens": 655
+        }
+      ],
+      "global_score": 85.8,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "builtin__antigravity_guide": {
+      "id": "builtin__antigravity_guide",
+      "name": "antigravity_guide",
+      "category": "builtin_skill",
+      "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/antigravity_guide",
+      "primary_sha256": "0999fc13d3091e8c2833019cc9ac9c2cadbe0df356bdc80700cd7da49915e6e7",
+      "total_files": 5,
+      "total_bytes": 15022,
+      "total_tokens": 3750,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/antigravity_guide/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "0999fc13d3091e8c2833019cc9ac9c2cadbe0df356bdc80700cd7da49915e6e7",
+          "bytes": 2955,
+          "tokens": 738
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/antigravity_guide/references/app.md",
+          "relpath": "references/app.md",
+          "sha256": "5adba0e3ca6dbf08d7ad1c2b136f88c067e175b454f0179fc7aa3c4783d9f5ab",
+          "bytes": 3852,
+          "tokens": 963
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/antigravity_guide/references/cli.md",
+          "relpath": "references/cli.md",
+          "sha256": "1499e0ac083227b88e74373d46672afccd1ffe31d0a5136bcc352fe72c582d2a",
+          "bytes": 1686,
+          "tokens": 421
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/antigravity_guide/references/ide.md",
+          "relpath": "references/ide.md",
+          "sha256": "e3da87b168f25f229a14a4547d7833e8e49191f1a85346f463c01f886a64693d",
+          "bytes": 3399,
+          "tokens": 847
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/antigravity_guide/references/sdk.md",
+          "relpath": "references/sdk.md",
+          "sha256": "a20587f3cedf7b8c6f7501f71fc7985d76c64007f7581690f68c0ffdc4357560",
+          "bytes": 3130,
+          "tokens": 781
+        }
+      ],
+      "global_score": 90.5,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "builtin__permissioned-github": {
+      "id": "builtin__permissioned-github",
+      "name": "permissioned-github",
+      "category": "builtin_skill",
+      "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/permissioned-github",
+      "primary_sha256": "25b1849d73ab81dce8495a7080169cf3f6686abb74797cc8512f6b837a1ff727",
+      "total_files": 1,
+      "total_bytes": 5565,
+      "total_tokens": 1391,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/builtin/skills/permissioned-github/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "25b1849d73ab81dce8495a7080169cf3f6686abb74797cc8512f6b837a1ff727",
+          "bytes": 5565,
+          "tokens": 1391
+        }
+      ],
+      "global_score": 89.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__chrome-devtools-mcp": {
+      "id": "mcp__chrome-devtools-mcp",
+      "name": "chrome-devtools-mcp",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/chrome-devtools-mcp",
+      "primary_sha256": "86a5db9d69b0eb0e32136fe951cef2334a6d8007f7740127cb367b7ebd620d2c",
+      "total_files": 3,
+      "total_bytes": 719,
+      "total_tokens": 178,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/chrome-devtools-mcp/evaluate.json",
+          "relpath": "evaluate.json",
+          "sha256": "86a5db9d69b0eb0e32136fe951cef2334a6d8007f7740127cb367b7ebd620d2c",
+          "bytes": 285,
+          "tokens": 71
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/chrome-devtools-mcp/navigate.json",
+          "relpath": "navigate.json",
+          "sha256": "52b5f8e04b3a50f234e6df6b63c5458883549b66e329d6e4be1dc73196dc5ff0",
+          "bytes": 251,
+          "tokens": 62
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/chrome-devtools-mcp/screenshot.json",
+          "relpath": "screenshot.json",
+          "sha256": "dc462416faf7bde00a5fede2bd72b1a34a8a08c58ada50903ee4e437d30bf332",
+          "bytes": 183,
+          "tokens": 45
+        }
+      ],
+      "global_score": 91.9,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__context7": {
+      "id": "mcp__context7",
+      "name": "context7",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/context7",
+      "primary_sha256": "ffbbb87c191c9e1e9d48278e404b3ded16fc6876a2c8f2bc4a204a98a6863a21",
+      "total_files": 3,
+      "total_bytes": 5221,
+      "total_tokens": 1302,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/context7/instructions.md",
+          "relpath": "instructions.md",
+          "sha256": "ffbbb87c191c9e1e9d48278e404b3ded16fc6876a2c8f2bc4a204a98a6863a21",
+          "bytes": 636,
+          "tokens": 158
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/context7/query-docs.json",
+          "relpath": "query-docs.json",
+          "sha256": "959b1d349e0f55b5f59b2874612eef7b21d243d420646c8a4153241a3a62ed91",
+          "bytes": 1689,
+          "tokens": 421
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/context7/resolve-library-id.json",
+          "relpath": "resolve-library-id.json",
+          "sha256": "2683d89527ceb00c71a3d0046abdfc0910184223f97ca7d9bf83689b223308fe",
+          "bytes": 2896,
+          "tokens": 723
+        }
+      ],
+      "global_score": 91.9,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__github-mcp-server": {
+      "id": "mcp__github-mcp-server",
+      "name": "github-mcp-server",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server",
+      "primary_sha256": "a8fe7a08b72ee2b8003618ad2ea0fdcf3d56928feb438cae348f4256158e2f8a",
+      "total_files": 27,
+      "total_bytes": 17603,
+      "total_tokens": 4391,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/add_issue_comment.json",
+          "relpath": "add_issue_comment.json",
+          "sha256": "a8fe7a08b72ee2b8003618ad2ea0fdcf3d56928feb438cae348f4256158e2f8a",
+          "bytes": 365,
+          "tokens": 91
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/create_branch.json",
+          "relpath": "create_branch.json",
+          "sha256": "730a7cdd3a6f45df6d64d823ffdd03c88dbc79b646ea2e6f3c517e909c135110",
+          "bytes": 590,
+          "tokens": 147
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/create_issue.json",
+          "relpath": "create_issue.json",
+          "sha256": "a125ca932c323b53bdf7d9a164098ec6dfc18798aaee9adef2c8f4fa4201befb",
+          "bytes": 483,
+          "tokens": 120
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/create_or_update_file.json",
+          "relpath": "create_or_update_file.json",
+          "sha256": "c68ea42d1903e8cb4defaf122f97671a393718adfc1fc4cf2bffafe60759ede1",
+          "bytes": 827,
+          "tokens": 206
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/create_pull_request.json",
+          "relpath": "create_pull_request.json",
+          "sha256": "108b3dedeb00f5b67fe709ae62d7516107f22783ab0938638e8402889b2c019e",
+          "bytes": 939,
+          "tokens": 234
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/create_pull_request_review.json",
+          "relpath": "create_pull_request_review.json",
+          "sha256": "1049165d157c0d2f64096e4abba8e6c564278c28990274772c22338ccd64f7ed",
+          "bytes": 1633,
+          "tokens": 408
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/create_repository.json",
+          "relpath": "create_repository.json",
+          "sha256": "d58c114fa693fb933c5da54bbab62ebac78fd0d00a046c53cff9b165316b87cc",
+          "bytes": 524,
+          "tokens": 131
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/fork_repository.json",
+          "relpath": "fork_repository.json",
+          "sha256": "b7759c67cd01387fb0552d0c653aae49b86c7f4884494c3c8790c17b01eec3d7",
+          "bytes": 526,
+          "tokens": 131
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_file_contents.json",
+          "relpath": "get_file_contents.json",
+          "sha256": "02c1dacd9ea4977fe3674c4058f02f53ecbb4972899fea0283b0eb87e6c57423",
+          "bytes": 556,
+          "tokens": 139
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_issue.json",
+          "relpath": "get_issue.json",
+          "sha256": "bcbcb65c3033639f79af22a971d07c37b099799f69db8452b5ef6cc6c85d6711",
+          "bytes": 346,
+          "tokens": 86
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_pull_request.json",
+          "relpath": "get_pull_request.json",
+          "sha256": "f9021bf6dc3449fd40d1b6573220609fe370d2055098053c0f80852a3bf551d7",
+          "bytes": 462,
+          "tokens": 115
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_pull_request_comments.json",
+          "relpath": "get_pull_request_comments.json",
+          "sha256": "69547d6473aba1b2fd643744ccbf780996c2d38de0e5debdf8cbdf9c98851668",
+          "bytes": 474,
+          "tokens": 118
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_pull_request_files.json",
+          "relpath": "get_pull_request_files.json",
+          "sha256": "c6e059392f9a95eb920df57292bf52a9ed1d1ae67545ddd6987e6445b12b7d25",
+          "bytes": 477,
+          "tokens": 119
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_pull_request_reviews.json",
+          "relpath": "get_pull_request_reviews.json",
+          "sha256": "c2a074343a11c8d7932ef640901abb1668657377b066dd9e26af1f10417d5d4f",
+          "bytes": 465,
+          "tokens": 116
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/get_pull_request_status.json",
+          "relpath": "get_pull_request_status.json",
+          "sha256": "297faa7a526bc3b5b9fe86c9ab978d6dcdc087a6482383f0fad48143117d4174",
+          "bytes": 494,
+          "tokens": 123
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/instructions.md",
+          "relpath": "instructions.md",
+          "sha256": "d2c62e8772d12fdcc0c52ea1c46907e0f969f4bce17f03f0254a23c721ed04a7",
+          "bytes": 1802,
+          "tokens": 450
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/list_commits.json",
+          "relpath": "list_commits.json",
+          "sha256": "60ad1d4fb9ae58f3b7dc7f39301dee96d07958280e7a8faa8dca6848289e3c0b",
+          "bytes": 377,
+          "tokens": 94
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/list_issues.json",
+          "relpath": "list_issues.json",
+          "sha256": "a229fd711d2d9c0674a8adcba9d7156648730838556c1eb2a27cbe9e28416a2b",
+          "bytes": 608,
+          "tokens": 152
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/list_pull_requests.json",
+          "relpath": "list_pull_requests.json",
+          "sha256": "665c8ae6a1e57362e50d66174dfdd2add5e819ccdbaa93f09798ce6e82867005",
+          "bytes": 1016,
+          "tokens": 254
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/merge_pull_request.json",
+          "relpath": "merge_pull_request.json",
+          "sha256": "707113131c162b70d0cec2dc27c0b38abb3edd8926ef787b0e54a74a20896037",
+          "bytes": 740,
+          "tokens": 185
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/push_files.json",
+          "relpath": "push_files.json",
+          "sha256": "8c0a0549e9d568df1fe71ee99ec5be9c90dfa2de3a3d65dae4cf2ae2cc5c626c",
+          "bytes": 788,
+          "tokens": 197
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/search_code.json",
+          "relpath": "search_code.json",
+          "sha256": "583d4a404b5b5226c9a032976b696082e91ff347d4f477e29214a0531a17f0e5",
+          "bytes": 387,
+          "tokens": 96
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/search_issues.json",
+          "relpath": "search_issues.json",
+          "sha256": "7077d58f6d81f86f4f402d8bb92f4c60ef5fa3991ae318f1b31ff8110d48f0b5",
+          "bytes": 610,
+          "tokens": 152
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/search_repositories.json",
+          "relpath": "search_repositories.json",
+          "sha256": "7779c2d65a1093961d3fd3e9dd573b9358af3a4beb9a958a1294412fd33336b5",
+          "bytes": 483,
+          "tokens": 120
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/search_users.json",
+          "relpath": "search_users.json",
+          "sha256": "6f01a97160d64a7db3a8b0329688e65057a15aec594e118484d1fd3b1ccf0a8d",
+          "bytes": 442,
+          "tokens": 110
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/update_issue.json",
+          "relpath": "update_issue.json",
+          "sha256": "47fb9ee109b3c448bad761631847de8552d0ec5dabc560b1479ac608e7dac621",
+          "bytes": 580,
+          "tokens": 145
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/github-mcp-server/update_pull_request_branch.json",
+          "relpath": "update_pull_request_branch.json",
+          "sha256": "a4a9ff87142d8dd2fb24feb19e600129acb6716c18bccd1fefd6e42dfdfb3570",
+          "bytes": 609,
+          "tokens": 152
+        }
+      ],
+      "global_score": 91.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__local-rag-lib": {
+      "id": "mcp__local-rag-lib",
+      "name": "local-rag-lib",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib",
+      "primary_sha256": "aa30d195355353491d619efbc863da7060ec8f40a7bbd179b4dea2662ec54709",
+      "total_files": 13,
+      "total_bytes": 4684,
+      "total_tokens": 1158,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ask_documents.json",
+          "relpath": "ask_documents.json",
+          "sha256": "aa30d195355353491d619efbc863da7060ec8f40a7bbd179b4dea2662ec54709",
+          "bytes": 449,
+          "tokens": 112
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/compare_documents.json",
+          "relpath": "compare_documents.json",
+          "sha256": "469366d310c6273fb541b6d608cdc7f500269baf76991b6a35d3c9ff41fc0cc0",
+          "bytes": 573,
+          "tokens": 142
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/delete_document.json",
+          "relpath": "delete_document.json",
+          "sha256": "a13c917dd506b3a33fdcb0d941ebd1ca1306b9b56c1026c13363a570be7a3369",
+          "bytes": 305,
+          "tokens": 75
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/hybrid_search.json",
+          "relpath": "hybrid_search.json",
+          "sha256": "023fb55205df55e4f82024bc27bc74299c41b0aab8c490494fc591c58f074716",
+          "bytes": 397,
+          "tokens": 98
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_file.json",
+          "relpath": "ingest_file.json",
+          "sha256": "39909deb49c33675e80d16ff1ed85bbd46481045615bd548251d3da72e4b9d84",
+          "bytes": 376,
+          "tokens": 93
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/inspect_chunk.json",
+          "relpath": "inspect_chunk.json",
+          "sha256": "62f055b56dd6df5c000b1050d02457a2fb90a21c6097e56d57b60b2eb7301501",
+          "bytes": 281,
+          "tokens": 69
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/keyword_search.json",
+          "relpath": "keyword_search.json",
+          "sha256": "5ec642746e0f5f04a93f6e7a3989242f62eb2b57bf52bb58920d108d105293ae",
+          "bytes": 331,
+          "tokens": 82
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/list_documents.json",
+          "relpath": "list_documents.json",
+          "sha256": "035a55194d6892faaeea8bfb6a207592abe212a8eb42af312fb97c7af5e4bb70",
+          "bytes": 207,
+          "tokens": 51
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/metadata_search.json",
+          "relpath": "metadata_search.json",
+          "sha256": "56c0c77711a4a807d0a2d9e21173dff3437cb73b9089e1e94439c5f03363558d",
+          "bytes": 465,
+          "tokens": 115
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/pipeline_stats.json",
+          "relpath": "pipeline_stats.json",
+          "sha256": "775da2a351f2c3a295a7b36a208917e401dbceb1a15da37525e9668e13ce78f5",
+          "bytes": 212,
+          "tokens": 52
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/search_documents.json",
+          "relpath": "search_documents.json",
+          "sha256": "6ba2960603138a5dc4f4015da2eb118a1bc09bf0baaac97e9c55f34b224a7b44",
+          "bytes": 385,
+          "tokens": 95
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/semantic_search.json",
+          "relpath": "semantic_search.json",
+          "sha256": "e7489fb7afcdb77e0d52adbab60b0555a8eddf1fc24248293298b4f4d5db5092",
+          "bytes": 334,
+          "tokens": 83
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/summarize_document.json",
+          "relpath": "summarize_document.json",
+          "sha256": "0bf776a212823352682fea6a2783775693548eb169e7787bead8f9feac926e69",
+          "bytes": 369,
+          "tokens": 91
+        }
+      ],
+      "global_score": 91.9,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__mui-mcp": {
+      "id": "mcp__mui-mcp",
+      "name": "mui-mcp",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp",
+      "primary_sha256": "4102a3ee196b27afcb57399f2a6879551f781c1e1f2ebb32dbc7adb50749ac32",
+      "total_files": 3,
+      "total_bytes": 8256,
+      "total_tokens": 2063,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp/fetchDocs.json",
+          "relpath": "fetchDocs.json",
+          "sha256": "4102a3ee196b27afcb57399f2a6879551f781c1e1f2ebb32dbc7adb50749ac32",
+          "bytes": 416,
+          "tokens": 104
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp/generateReactCode.json",
+          "relpath": "generateReactCode.json",
+          "sha256": "b869f0dd8fb3f523918d4ef9cbe968f289a2d968d10ca3a27945e4bec8b3b550",
+          "bytes": 1975,
+          "tokens": 493
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp/useMuiDocs.json",
+          "relpath": "useMuiDocs.json",
+          "sha256": "90079f5fd573bf645be54886a36974108d2a9b9592c04dcee79568c5e9f490f2",
+          "bytes": 5865,
+          "tokens": 1466
+        }
+      ],
+      "global_score": 91.1,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__notion-mcp-server": {
+      "id": "mcp__notion-mcp-server",
+      "name": "notion-mcp-server",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server",
+      "primary_sha256": "4c0d4b5587bf3d47efd0ef9792dfadac01f2537a1f4a2c081e26cf4da70671c8",
+      "total_files": 24,
+      "total_bytes": 74622,
+      "total_tokens": 18645,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-create-a-comment.json",
+          "relpath": "API-create-a-comment.json",
+          "sha256": "4c0d4b5587bf3d47efd0ef9792dfadac01f2537a1f4a2c081e26cf4da70671c8",
+          "bytes": 3099,
+          "tokens": 774
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-create-a-data-source.json",
+          "relpath": "API-create-a-data-source.json",
+          "sha256": "e67291cf7e5b47486a8cf6e803c755616ce26c98f0c273c760cf3b2ca7bd4fa1",
+          "bytes": 2882,
+          "tokens": 720
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-delete-a-block.json",
+          "relpath": "API-delete-a-block.json",
+          "sha256": "bca9fc6974b22d28eeda4eb96e6a2a2c5eb86805d8dbcfcbc3691eb014a3fdd0",
+          "bytes": 2576,
+          "tokens": 644
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-get-block-children.json",
+          "relpath": "API-get-block-children.json",
+          "sha256": "41460359d473f10fdd340ec32a3c839a9292c9459940b15efde0222ee925c8e7",
+          "bytes": 2962,
+          "tokens": 740
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-get-self.json",
+          "relpath": "API-get-self.json",
+          "sha256": "8453e0e7d669ffcb316e8454a2578904a27aec9f9592bba386f5f2906d07f71f",
+          "bytes": 2502,
+          "tokens": 625
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-get-user.json",
+          "relpath": "API-get-user.json",
+          "sha256": "f43ff01adaa4ffbd24ac3487f2f5a2c42050b928caa6d6ef685227a965e6f5a9",
+          "bytes": 2531,
+          "tokens": 632
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-get-users.json",
+          "relpath": "API-get-users.json",
+          "sha256": "c689884e48acd09b90ce269732e043d77716255114981c373752d2a639c7691b",
+          "bytes": 2828,
+          "tokens": 707
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-list-data-source-templates.json",
+          "relpath": "API-list-data-source-templates.json",
+          "sha256": "4e33a0638a8ae3c634a1c59d83830841ce68ebacc9fdb0998e276170cc872c33",
+          "bytes": 2701,
+          "tokens": 675
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-move-page.json",
+          "relpath": "API-move-page.json",
+          "sha256": "e42974481d22659dfeacee5c5f02ec29e18ce3903037ad7e7eaf0604a9e9daa7",
+          "bytes": 2670,
+          "tokens": 667
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-patch-block-children.json",
+          "relpath": "API-patch-block-children.json",
+          "sha256": "5751f4c85daa5b57188b7a0fe063b531061c6d1c61944e32a1a3f47b88b3c4e5",
+          "bytes": 3012,
+          "tokens": 753
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-patch-page.json",
+          "relpath": "API-patch-page.json",
+          "sha256": "e6f0ec4f41df7378f32bd0430483ff87732231936e027e9dcd8148c65b4eb715",
+          "bytes": 3831,
+          "tokens": 957
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-post-page.json",
+          "relpath": "API-post-page.json",
+          "sha256": "43dffa107dd606a95559556ceba5a7b5c9379a6b16d7f831f745211fa7313a65",
+          "bytes": 3506,
+          "tokens": 876
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-post-search.json",
+          "relpath": "API-post-search.json",
+          "sha256": "186c03918d7ec22aece8d7886c78de0947bc16b4f6103ce0839c47d4bb44ebd8",
+          "bytes": 4743,
+          "tokens": 1185
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-query-data-source.json",
+          "relpath": "API-query-data-source.json",
+          "sha256": "4bbce75828a584af55bcecc82b88429d19cbdbc939041874f4b415cc833cdd83",
+          "bytes": 3249,
+          "tokens": 812
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-a-block.json",
+          "relpath": "API-retrieve-a-block.json",
+          "sha256": "3fa8f7dee4aadf7f6ffdac6879be2eb056dc0850ed9f32ad89cf7d4a495457fe",
+          "bytes": 2580,
+          "tokens": 645
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-a-comment.json",
+          "relpath": "API-retrieve-a-comment.json",
+          "sha256": "a7de7214b87a0f4092e216d1b9249674ff7acc510d22dd9885fb429a2453e839",
+          "bytes": 2944,
+          "tokens": 736
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-a-data-source.json",
+          "relpath": "API-retrieve-a-data-source.json",
+          "sha256": "e41d3ee416bd5bb1c44dc996f5afd09c408dae12467a3f2db09c478aa270037c",
+          "bytes": 2610,
+          "tokens": 652
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-a-database.json",
+          "relpath": "API-retrieve-a-database.json",
+          "sha256": "81dc8a4e7edafab902af222c4f3850f431f6e694dc01a2e779fd5a2b059ca29d",
+          "bytes": 2595,
+          "tokens": 648
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-a-page-property.json",
+          "relpath": "API-retrieve-a-page-property.json",
+          "sha256": "8b4ddf2a18f789dec78843918518a285712a5e9fadf819dcdb112f506da411e4",
+          "bytes": 2999,
+          "tokens": 749
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-a-page.json",
+          "relpath": "API-retrieve-a-page.json",
+          "sha256": "e076405cd071cfc287f7ab50f61e6cfe029f314bdf2b01b309bc8b499c14fc3e",
+          "bytes": 2903,
+          "tokens": 725
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-retrieve-page-markdown.json",
+          "relpath": "API-retrieve-page-markdown.json",
+          "sha256": "bb2494e70a9197ef5807ceef2e5aa57aee5e624dae802e9b09f9b8c2b1aec03c",
+          "bytes": 3036,
+          "tokens": 759
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-update-a-block.json",
+          "relpath": "API-update-a-block.json",
+          "sha256": "1d34062543cb7666d1d232e44e22c07aa6d45bf7bbc390ba1c80a1ba6668544a",
+          "bytes": 3043,
+          "tokens": 760
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-update-a-data-source.json",
+          "relpath": "API-update-a-data-source.json",
+          "sha256": "ec0284df67f7c6a923d2081e047b8bb28656e72f5236ae95c4dab61132d9b2bf",
+          "bytes": 3029,
+          "tokens": 757
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/notion-mcp-server/API-update-page-markdown.json",
+          "relpath": "API-update-page-markdown.json",
+          "sha256": "0074df125e64e9126671345cebed55be1968a9e7436a747c84c12e6c99d6d24e",
+          "bytes": 5791,
+          "tokens": 1447
+        }
+      ],
+      "global_score": 89.7,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__puter": {
+      "id": "mcp__puter",
+      "name": "puter",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter",
+      "primary_sha256": "a7180ce4607cbb4319fbd7eac15402981aaa0c6c3787450fb8e870a3861ed803",
+      "total_files": 43,
+      "total_bytes": 34748,
+      "total_tokens": 8664,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/apps_check_name.json",
+          "relpath": "apps_check_name.json",
+          "sha256": "a7180ce4607cbb4319fbd7eac15402981aaa0c6c3787450fb8e870a3861ed803",
+          "bytes": 328,
+          "tokens": 82
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/apps_create.json",
+          "relpath": "apps_create.json",
+          "sha256": "7be3e1a3c3bcf38886de6f5a0bffe6c8f3626eda2b7266340e5ae160bb771c91",
+          "bytes": 2027,
+          "tokens": 506
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/apps_delete.json",
+          "relpath": "apps_delete.json",
+          "sha256": "b79d23f361fbdc2f7ab61ffcabeab7e791bb886c3224271ebfb286098221f7a5",
+          "bytes": 378,
+          "tokens": 94
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/apps_get.json",
+          "relpath": "apps_get.json",
+          "sha256": "54314997ddff0f7554ead1b86548f7d4ef1d5b90a18566861228b88790365f35",
+          "bytes": 695,
+          "tokens": 173
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/apps_list.json",
+          "relpath": "apps_list.json",
+          "sha256": "a7d42cd9227547d8f04213ba111f93902868a008cbc918666a2c668089a77bd5",
+          "bytes": 414,
+          "tokens": 103
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/apps_update.json",
+          "relpath": "apps_update.json",
+          "sha256": "42bf98c4b5b47daea55799d1f28127bde61304a3b8f50cd7e3070c57c6b971c8",
+          "bytes": 1425,
+          "tokens": 356
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_abort_upload.json",
+          "relpath": "fs_abort_upload.json",
+          "sha256": "a995094abde115d03885d04313af5039956fc1c53111c059abb65874e507debf",
+          "bytes": 368,
+          "tokens": 92
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_complete_upload.json",
+          "relpath": "fs_complete_upload.json",
+          "sha256": "85320651132c5dcb0eb1660d9a6e120ad255f89e8522cc328cb62e67ba3d56c2",
+          "bytes": 427,
+          "tokens": 106
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_copy.json",
+          "relpath": "fs_copy.json",
+          "sha256": "af696072d4195ab141fd321c25168879325a09371d78313dc85770764098209e",
+          "bytes": 1606,
+          "tokens": 401
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_delete.json",
+          "relpath": "fs_delete.json",
+          "sha256": "a56b669b62ab22e22bfa6fc28614cc3977b342d36607f274654b0389c73a7040",
+          "bytes": 743,
+          "tokens": 185
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_mkdir.json",
+          "relpath": "fs_mkdir.json",
+          "sha256": "615919cdf187efd8ad071f444b300e61bbd28c43a1aba423ff85bdd786016714",
+          "bytes": 682,
+          "tokens": 170
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_move.json",
+          "relpath": "fs_move.json",
+          "sha256": "1efde1746dad4a7f5f9c9d5f434cccff304aabdf06a7b5f80004d974b0c0deb8",
+          "bytes": 1803,
+          "tokens": 450
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_read_file.json",
+          "relpath": "fs_read_file.json",
+          "sha256": "4debd190742f792d1bcc9261737a17b58f0113f4222120e0eefcaeb4e358b9cc",
+          "bytes": 1098,
+          "tokens": 274
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_readdir.json",
+          "relpath": "fs_readdir.json",
+          "sha256": "516b4532fe89075da4fde2f00ef08ce157ad8f7eb5aaf5c52b8ef8667d727914",
+          "bytes": 568,
+          "tokens": 142
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_rename.json",
+          "relpath": "fs_rename.json",
+          "sha256": "8ee52cec49eb65224b6030d0b77a19d1c4203875fd3949c8481637275444f736",
+          "bytes": 769,
+          "tokens": 192
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_start_upload.json",
+          "relpath": "fs_start_upload.json",
+          "sha256": "ca288da041f01c645fc9254228fe1f0c10e33922a74bda5cefd88992948f400f",
+          "bytes": 2210,
+          "tokens": 551
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_stat.json",
+          "relpath": "fs_stat.json",
+          "sha256": "2c47e2406119c3d822099d607faf90521627bc88e46341d676b8a39e665c6158",
+          "bytes": 675,
+          "tokens": 168
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/fs_write_file.json",
+          "relpath": "fs_write_file.json",
+          "sha256": "fa6e01742847a32304e47ae47c72aae778c3d75124baee717272afeb70bbd3e6",
+          "bytes": 1345,
+          "tokens": 335
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/hosting_create.json",
+          "relpath": "hosting_create.json",
+          "sha256": "8970340c9b0267eb42d65ce4ddc3ee5b1c7feaec1eb91d26278286260f9a83aa",
+          "bytes": 1028,
+          "tokens": 257
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/hosting_delete.json",
+          "relpath": "hosting_delete.json",
+          "sha256": "e7005145e3c829d4ffb0a7879da73035653074702abdb46ac4c7e7dc15425f67",
+          "bytes": 439,
+          "tokens": 109
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/hosting_get.json",
+          "relpath": "hosting_get.json",
+          "sha256": "a946b80a9d104ca7fdbbea84f1278495a9b960b206986024c60cebbc27780521",
+          "bytes": 472,
+          "tokens": 118
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/hosting_list.json",
+          "relpath": "hosting_list.json",
+          "sha256": "894a9ebee7dbb832698d73317f04826bc81761035aa55a43bb6b8a253bbc5e46",
+          "bytes": 412,
+          "tokens": 103
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/hosting_update.json",
+          "relpath": "hosting_update.json",
+          "sha256": "6175e892271f68545aa1d8f3e5215a41b483e45f071473893a304c8261dfc1ff",
+          "bytes": 605,
+          "tokens": 151
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/instructions.md",
+          "relpath": "instructions.md",
+          "sha256": "23a59b4bf919e434c8842156ae9b20c0d3d43bec3c3b356652a0838713bf04d0",
+          "bytes": 522,
+          "tokens": 130
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_add.json",
+          "relpath": "kv_add.json",
+          "sha256": "7ed1c53d153a3f2ca90a9516b46a2843fdebdf15f235cb33d95cc8d9d3934619",
+          "bytes": 792,
+          "tokens": 197
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_decr.json",
+          "relpath": "kv_decr.json",
+          "sha256": "d53249edd9f994410c80abce95e8b5d0184d225a9210c7b4e5930eb2669b2e7b",
+          "bytes": 815,
+          "tokens": 203
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_del.json",
+          "relpath": "kv_del.json",
+          "sha256": "182e03a5b361076c90b7cc479f621432052023f2407a0a17c55c5a4fef95d5b5",
+          "bytes": 463,
+          "tokens": 115
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_expire.json",
+          "relpath": "kv_expire.json",
+          "sha256": "45ce740b8ec920a896f9e4d10152b1b2a5ccb52c4b78ba4d30c34b10b5e48be9",
+          "bytes": 587,
+          "tokens": 146
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_expire_at.json",
+          "relpath": "kv_expire_at.json",
+          "sha256": "5c3ff015c3af7fcb2d16c395cfe0eaa9684ab50ea9c2ef76b1824356e5323471",
+          "bytes": 605,
+          "tokens": 151
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_get.json",
+          "relpath": "kv_get.json",
+          "sha256": "22477d9fa74fd50a0b3251fc9219b47a65805cca165b653a1ebf92772aa43a5d",
+          "bytes": 615,
+          "tokens": 153
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_incr.json",
+          "relpath": "kv_incr.json",
+          "sha256": "c33c4dc62458eb53bd8d18d2ff8a41545b1039576e4ca406cb93ae83263b9162",
+          "bytes": 848,
+          "tokens": 212
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_list.json",
+          "relpath": "kv_list.json",
+          "sha256": "48ed183dc72767c5f623ce5312a88952a46c3a7ec817691e5634a400ede4a653",
+          "bytes": 1384,
+          "tokens": 345
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_remove.json",
+          "relpath": "kv_remove.json",
+          "sha256": "e5d8d7f166b1cab2f244b31d8f167047560445421aeb2d4cb17be0d385538fc8",
+          "bytes": 685,
+          "tokens": 171
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_set.json",
+          "relpath": "kv_set.json",
+          "sha256": "9ebcfeffac8cd149b1ee67924273a7b845f287bcf97c739284afdbfacab49490",
+          "bytes": 808,
+          "tokens": 202
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/kv_update.json",
+          "relpath": "kv_update.json",
+          "sha256": "c3a9d6c30a653bb4f6fbb7708469ba9e3422bb5bdc3601efdb26a20d3d093a3d",
+          "bytes": 817,
+          "tokens": 204
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/puter_docs_get.json",
+          "relpath": "puter_docs_get.json",
+          "sha256": "e4b218b92747a6aef753c920c68cfcdd20857ee33171b7d7444a874478b40789",
+          "bytes": 689,
+          "tokens": 171
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/puter_docs_index.json",
+          "relpath": "puter_docs_index.json",
+          "sha256": "b4c01dad9775d752d1c1a3496f77cd71af071026bc5d912074e98b074bf4cb72",
+          "bytes": 586,
+          "tokens": 146
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/whoami.json",
+          "relpath": "whoami.json",
+          "sha256": "71ce21dac824863a1c5bd78f9236798ad29c8d425f792d75dfc0ff94cad97a35",
+          "bytes": 459,
+          "tokens": 114
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/workers_create.json",
+          "relpath": "workers_create.json",
+          "sha256": "114d17804dd39aae5121b1c12f367423e8acf37ec68e1ed9f11680ba662833d9",
+          "bytes": 1531,
+          "tokens": 381
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/workers_delete.json",
+          "relpath": "workers_delete.json",
+          "sha256": "0e1fa03e416b199ddb1325627626e1e05ba826d08b2d11cb8c04bf84b93bc8d7",
+          "bytes": 394,
+          "tokens": 98
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/workers_exec.json",
+          "relpath": "workers_exec.json",
+          "sha256": "661bdddebf4384930f74cdbfe16bf873285b497a3636a83feda01b6808ee919d",
+          "bytes": 904,
+          "tokens": 226
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/workers_get.json",
+          "relpath": "workers_get.json",
+          "sha256": "6724187aa203753322ebab6b68b9a03d98a775a04a3a66ed96b41c7667c9d4aa",
+          "bytes": 402,
+          "tokens": 100
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/puter/workers_list.json",
+          "relpath": "workers_list.json",
+          "sha256": "c73ad97ebecea3832c6b0bd6b21751b213c1faf092e1b9e22f59b945cc5142a3",
+          "bytes": 325,
+          "tokens": 81
+        }
+      ],
+      "global_score": 87.3,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__skills-rag-mcp": {
+      "id": "mcp__skills-rag-mcp",
+      "name": "skills-rag-mcp",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp",
+      "primary_sha256": "d3a1894bb0b10773fac2d84bb2cf89a8c5efb838339b9120f466b8d00bcd8c82",
+      "total_files": 5,
+      "total_bytes": 2545,
+      "total_tokens": 629,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/get_skill_details.json",
+          "relpath": "get_skill_details.json",
+          "sha256": "d3a1894bb0b10773fac2d84bb2cf89a8c5efb838339b9120f466b8d00bcd8c82",
+          "bytes": 353,
+          "tokens": 87
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/instructions.md",
+          "relpath": "instructions.md",
+          "sha256": "21a97e1335467e30a9b4f0c6894cee0117c79b971db5f908bf9f66377a592864",
+          "bytes": 828,
+          "tokens": 204
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/list_skills_catalog.json",
+          "relpath": "list_skills_catalog.json",
+          "sha256": "699e6caa85e859bb9808c47c3d0a144041e08cc1ca446896d0b87b96791a8b0c",
+          "bytes": 340,
+          "tokens": 85
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/route_task.json",
+          "relpath": "route_task.json",
+          "sha256": "50070103220e8ba2cfb1bcdccc9755dd6b37d22cc5c791f21c89ab28e431cb9d",
+          "bytes": 437,
+          "tokens": 107
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/search_skills.json",
+          "relpath": "search_skills.json",
+          "sha256": "382806f2452f90294a387bd8933cf9a6e38715b09eb20ea8869f4293467f9a32",
+          "bytes": 587,
+          "tokens": 146
+        }
+      ],
+      "global_score": 91.9,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    }
+  }
+}

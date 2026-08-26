@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>php-laravel-ecosystem — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; php-laravel-ecosystem</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: php-laravel-ecosystem version: 1.0.0 description: Specialized development guidelines and best practices for PHP and the Laravel framework. domain: domain-stack triggers:</p>
+<ul>
+<li>php-laravel-ecosystem</li>
+<li>domain-stack</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>php-laravel-ecosystem</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="php--laravel-development-ecosystem">PHP & Laravel Development Ecosystem</h1>
+<p>Specialized development guidelines and best practices for PHP and the Laravel framework.</p>
+<h2 id="sub-domain--component-php-specialist">Sub-Domain / Component: <code>php-specialist</code></h2>
+<h1 id="php-specialist">PHP Specialist</h1>
+<h2 id="overview">Overview</h2>
+<p>Write modern, type-safe, and maintainable PHP 8.x code adhering to PSR standards and SOLID principles. This skill covers the full modern PHP toolchain: language features introduced in PHP 8.0 through 8.4, PSR interoperability standards, Composer dependency management, static analysis with PHPStan and Psalm, coding style enforcement with PHP CS Fixer and Pint, and architectural patterns that leverage the type system for correctness at compile time rather than runtime.</p>
+<p>Apply this skill whenever PHP code is being written, reviewed, or refactored in any framework or standalone context.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-environment-assessment">Phase 1: Environment Assessment</h3>
+<ol>
+<li>Identify PHP version from <code>composer.json</code> -> <code>require.php</code></li>
+<li>Review <code>composer.json</code> for autoloading strategy (PSR-4 namespaces)</li>
+<li>Check for static analysis configuration (<code>phpstan.neon</code>, <code>psalm.xml</code>)</li>
+<li>Identify coding standard tool (<code>pint.json</code>, <code>.php-cs-fixer.php</code>)</li>
+<li>Catalog existing patterns: enums, DTOs, value objects, interfaces</li>
+</ol>
+<blockquote><strong>STOP — Do NOT write code without knowing the PHP version and autoloading strategy.</strong></blockquote>
+<h3 id="phase-2-design">Phase 2: Design</h3>
+<ol>
+<li>Define interfaces and contracts before implementations</li>
+<li>Design value objects and DTOs with readonly properties</li>
+<li>Map domain concepts to backed enums where applicable</li>
+<li>Plan exception hierarchy for the domain</li>
+<li>Identify seams for dependency injection</li>
+</ol>
+<blockquote><strong>STOP — Do NOT implement without interfaces defined for key boundaries.</strong></blockquote>
+<h3 id="phase-3-implementation">Phase 3: Implementation</h3>
+<ol>
+<li>Write interfaces first — contracts before concrete classes</li>
+<li>Implement with constructor promotion, readonly properties, union/intersection types</li>
+<li>Use match expressions over switch; named arguments for clarity</li>
+<li>Leverage first-class callable syntax for functional composition</li>
+<li>Apply SOLID principles at every class boundary</li>
+</ol>
+<blockquote><strong>STOP — Do NOT skip strict_types declaration in any PHP file.</strong></blockquote>
+<h3 id="phase-4-quality-assurance">Phase 4: Quality Assurance</h3>
+<ol>
+<li>Run PHPStan at maximum achievable level (target level 9)</li>
+<li>Enforce coding style with PHP CS Fixer or Laravel Pint</li>
+<li>Verify type coverage — no <code>mixed</code> without justification</li>
+<li>Review for SOLID violations and code smells</li>
+<li>Confirm Composer autoload is optimized (<code>--classmap-authoritative</code>)</li>
+</ol>
+<h2 id="php-version-feature-decision-table">PHP Version Feature Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Feature</th><th>Minimum Version</th><th>Use When</th></tr><tr><td>Constructor promotion</td><td>8.0</td><td>Any class with constructor parameters</td></tr><tr><td>Named arguments</td><td>8.0</td><td>Functions with 3+ params or boolean flags</td></tr><tr><td>Match expressions</td><td>8.0</td><td>Any switch statement (strict, returns value)</td></tr><tr><td>Union types</td><td>8.0</td><td>Parameter accepts multiple types</td></tr><tr><td>Backed enums</td><td>8.1</td><td>Any set of named constants with values</td></tr><tr><td>Readonly properties</td><td>8.1</td><td>Immutable DTOs, value objects</td></tr><tr><td>Fibers</td><td>8.1</td><td>Async frameworks (rarely used directly)</td></tr><tr><td>First-class callables</td><td>8.1</td><td>Functional composition, array_map/filter</td></tr><tr><td>Readonly classes</td><td>8.2</td><td>All-readonly DTOs (shorthand)</td></tr><tr><td>DNF types</td><td>8.2</td><td>Complex union + intersection combinations</td></tr><tr><td>Override attribute</td><td>8.3</td><td>Overriding parent methods (safety check)</td></tr><tr><td>Property hooks</td><td>8.4</td><td>Computed properties without separate methods</td></tr></table></div>
+<h2 id="modern-php-8x-features">Modern PHP 8.x Features</h2>
+<h3 id="enums-php-81">Enums (PHP 8.1+)</h3>
+<pre data-lang="php"><code>// Backed enum with methods — replaces class constants and magic strings
+enum OrderStatus: string
+{
+    case Draft     = &#x27;draft&#x27;;
+    case Pending   = &#x27;pending&#x27;;
+    case Confirmed = &#x27;confirmed&#x27;;
+    case Shipped   = &#x27;shipped&#x27;;
+    case Delivered = &#x27;delivered&#x27;;
+    case Cancelled = &#x27;cancelled&#x27;;
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::Draft     =&gt; &#x27;Draft&#x27;,
+            self::Pending   =&gt; &#x27;Pending Review&#x27;,
+            self::Confirmed =&gt; &#x27;Confirmed&#x27;,
+            self::Shipped   =&gt; &#x27;Shipped&#x27;,
+            self::Delivered =&gt; &#x27;Delivered&#x27;,
+            self::Cancelled =&gt; &#x27;Cancelled&#x27;,
+        };
+    }
+
+    public function isFinal(): bool
+    {
+        return in_array($this, [self::Delivered, self::Cancelled], true);
+    }
+
+    /** @return list&lt;self&gt; */
+    public static function active(): array
+    {
+        return array_filter(self::cases(), fn (self $s) =&gt; ! $s-&gt;isFinal());
+    }
+}</code></pre>
+<h3 id="readonly-properties-and-classes-php-81--82">Readonly Properties and Classes (PHP 8.1 / 8.2)</h3>
+<pre data-lang="php"><code>// Readonly class — all properties are implicitly readonly
+readonly class Money
+{
+    public function __construct(
+        public int    $amount,
+        public string $currency,
+    ) {}
+
+    public function add(self $other): self
+    {
+        if ($this-&gt;currency !== $other-&gt;currency) {
+            throw new CurrencyMismatchException($this-&gt;currency, $other-&gt;currency);
+        }
+
+        return new self($this-&gt;amount + $other-&gt;amount, $this-&gt;currency);
+    }
+
+    public function isPositive(): bool
+    {
+        return $this-&gt;amount &gt; 0;
+    }
+}</code></pre>
+<h3 id="constructor-promotion">Constructor Promotion</h3>
+<pre data-lang="php"><code>class CreateUserAction
+{
+    public function __construct(
+        private readonly UserRepository $users,
+        private readonly Hasher         $hasher,
+        private readonly EventDispatcher $events,
+    ) {}
+
+    public function execute(CreateUserData $data): User
+    {
+        $user = $this-&gt;users-&gt;create([
+            &#x27;name&#x27;     =&gt; $data-&gt;name,
+            &#x27;email&#x27;    =&gt; $data-&gt;email,
+            &#x27;password&#x27; =&gt; $this-&gt;hasher-&gt;make($data-&gt;password),
+        ]);
+
+        $this-&gt;events-&gt;dispatch(new UserCreated($user));
+
+        return $user;
+    }
+}</code></pre>
+<h3 id="named-arguments">Named Arguments</h3>
+<pre data-lang="php"><code>// Improves readability for functions with many parameters or boolean flags
+$user = User::create(
+    name: $request-&gt;name,
+    email: $request-&gt;email,
+    isAdmin: false,
+    sendWelcomeEmail: true,
+);
+
+// Particularly valuable with optional parameters
+$response = Http::timeout(seconds: 30)
+    -&gt;retry(times: 3, sleepMilliseconds: 500, throw: true)
+    -&gt;get($url);</code></pre>
+<h3 id="match-expressions">Match Expressions</h3>
+<pre data-lang="php"><code>// match is strict (===), exhaustive, and returns a value
+$discount = match (true) {
+    $total &gt;= 10000 =&gt; 0.15,
+    $total &gt;= 5000  =&gt; 0.10,
+    $total &gt;= 1000  =&gt; 0.05,
+    default         =&gt; 0.00,
+};
+
+// Replaces switch with no fall-through risk
+$handler = match ($event::class) {
+    OrderPlaced::class   =&gt; new HandleOrderPlaced(),
+    PaymentFailed::class =&gt; new HandlePaymentFailed(),
+    default              =&gt; throw new UnhandledEventException($event),
+};</code></pre>
+<h3 id="union-and-intersection-types">Union and Intersection Types</h3>
+<pre data-lang="php"><code>// Union type — accepts either type
+function findUser(int|string $identifier): User
+{
+    return is_int($identifier)
+        ? User::findOrFail($identifier)
+        : User::where(&#x27;email&#x27;, $identifier)-&gt;firstOrFail();
+}
+
+// Intersection type — must satisfy all interfaces
+function processLoggableEntity(Loggable&amp;Serializable $entity): void
+{
+    $entity-&gt;log();
+    $data = $entity-&gt;serialize();
+}
+
+// DNF types (PHP 8.2) — combine union and intersection
+function handle((Renderable&amp;Countable)|string $content): string
+{
+    if (is_string($content)) {
+        return $content;
+    }
+
+    return $content-&gt;render();
+}</code></pre>
+<h3 id="first-class-callable-syntax-php-81">First-Class Callable Syntax (PHP 8.1+)</h3>
+<pre data-lang="php"><code>// Create closures from named functions
+$slugify = Str::slug(...);
+$titles  = array_map($slugify, $names);
+
+// Method references
+$validator = Validator::make(...);
+
+// Useful for pipeline / collection patterns
+$activeUsers = collect($users)
+    -&gt;filter(UserPolicy::isActive(...))
+    -&gt;map(UserTransformer::toArray(...))
+    -&gt;values();</code></pre>
+<h3 id="fibers-php-81">Fibers (PHP 8.1+)</h3>
+<pre data-lang="php"><code>// Fibers enable cooperative multitasking — foundation for async frameworks
+$fiber = new Fiber(function (): void {
+    $value = Fiber::suspend(&#x27;paused&#x27;);
+    echo &quot;Resumed with: {$value}&quot;;
+});
+
+$result = $fiber-&gt;start();        // Returns &#x27;paused&#x27;
+$fiber-&gt;resume(&#x27;hello world&#x27;);    // Prints: &quot;Resumed with: hello world&quot;
+
+// Practical use: async HTTP client internals, event loops (Revolt, ReactPHP)
+// Application developers rarely use Fiber directly — frameworks abstract it</code></pre>
+<h2 id="psr-standards">PSR Standards</h2>
+<div class="table-wrapper"><table><tr><th>PSR</th><th>Name</th><th>Relevance</th></tr><tr><td>PSR-1</td><td>Basic Coding Standard</td><td>Baseline: <code><?php</code> tag, UTF-8, namespace/class conventions</td></tr><tr><td>PSR-4</td><td>Autoloading</td><td>Map namespaces to directories in <code>composer.json</code> — mandatory</td></tr><tr><td>PSR-7</td><td>HTTP Message Interfaces</td><td>Immutable request/response objects for middleware pipelines</td></tr><tr><td>PSR-11</td><td>Container Interface</td><td>Dependency injection container interoperability</td></tr><tr><td>PSR-12</td><td>Extended Coding Style</td><td>Supersedes PSR-2: formatting, spacing, declarations</td></tr><tr><td>PSR-15</td><td>HTTP Server Middleware</td><td><code>MiddlewareInterface</code> and <code>RequestHandlerInterface</code></td></tr><tr><td>PSR-17</td><td>HTTP Factories</td><td>Create PSR-7 objects (RequestFactory, ResponseFactory)</td></tr><tr><td>PSR-18</td><td>HTTP Client</td><td><code>ClientInterface</code> for interoperable HTTP clients</td></tr></table></div>
+<h3 id="psr-4-autoloading">PSR-4 Autoloading</h3>
+<pre data-lang="json"><code>{
+    &quot;autoload&quot;: {
+        &quot;psr-4&quot;: {
+            &quot;App\\&quot;: &quot;app/&quot;,
+            &quot;Domain\\&quot;: &quot;src/Domain/&quot;
+        }
+    },
+    &quot;autoload-dev&quot;: {
+        &quot;psr-4&quot;: {
+            &quot;Tests\\&quot;: &quot;tests/&quot;
+        }
+    }
+}</code></pre>
+<p>Rule: namespace segment maps 1:1 to directory. <code>App\Http\Controllers\UserController</code> lives at <code>app/Http/Controllers/UserController.php</code>.</p>
+<h2 id="composer-dependency-management">Composer Dependency Management</h2>
+<h3 id="essential-commands">Essential Commands</h3>
+<div class="table-wrapper"><table><tr><th>Command</th><th>Purpose</th></tr><tr><td><code>composer require package/name</code></td><td>Add production dependency</td></tr><tr><td><code>composer require package/name --dev</code></td><td>Add development dependency</td></tr><tr><td><code>composer update --dry-run</code></td><td>Preview what would change</td></tr><tr><td><code>composer why package/name</code></td><td>Show why a package is installed</td></tr><tr><td><code>composer audit</code></td><td>Check for known security vulnerabilities</td></tr><tr><td><code>composer bump</code></td><td>Update version constraints to installed versions</td></tr><tr><td><code>composer validate --strict</code></td><td>Validate <code>composer.json</code> and <code>composer.lock</code></td></tr></table></div>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li>Always commit <code>composer.lock</code> — reproducible installs across environments</li>
+<li>Use <code>^</code> (caret) constraints: <code>"laravel/framework": "^12.0"</code> allows minor/patch updates</li>
+<li>Separate dev dependencies: testing, static analysis, and debug tools go in <code>require-dev</code></li>
+<li>Run <code>composer audit</code> in CI to catch known vulnerabilities</li>
+<li>Use <code>composer dump-autoload --classmap-authoritative</code> in production for speed</li>
+</ul>
+<h2 id="static-analysis">Static Analysis</h2>
+<h3 id="phpstan-levels">PHPStan Levels</h3>
+<div class="table-wrapper"><table><tr><th>Level</th><th>What It Checks</th></tr><tr><td>0</td><td>Basic: undefined variables, unknown classes, wrong function calls</td></tr><tr><td>1</td><td>+ possibly undefined variables, unknown methods on <code>$this</code></td></tr><tr><td>2</td><td>+ unknown methods on all expressions (not just <code>$this</code>)</td></tr><tr><td>3</td><td>+ return types verified</td></tr><tr><td>4</td><td>+ dead code, always-true/false conditions</td></tr><tr><td>5</td><td>+ argument types of function calls</td></tr><tr><td>6</td><td>+ missing typehints reported</td></tr><tr><td>7</td><td>+ union types checked exhaustively</td></tr><tr><td>8</td><td>+ nullable types checked strictly</td></tr><tr><td>9</td><td>+ <code>mixed</code> type is forbidden without explicit handling</td></tr></table></div>
+<h3 id="phpstan-configuration">PHPStan Configuration</h3>
+<pre data-lang="neon"><code># phpstan.neon
+parameters:
+    level: 9
+    paths:
+        - app
+        - src
+    excludePaths:
+        - app/Console/Kernel.php
+    ignoreErrors: []
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: true
+
+includes:
+    - vendor/larastan/larastan/extension.neon  # Laravel-specific rules</code></pre>
+<h3 id="php-cs-fixer--pint">PHP CS Fixer / Pint</h3>
+<pre data-lang="php"><code>// .php-cs-fixer.php — for non-Laravel projects
+return (new PhpCsFixer\Config())
+    -&gt;setRules([
+        &#x27;@PER-CS&#x27;            =&gt; true,
+        &#x27;strict_types&#x27;       =&gt; true,
+        &#x27;declare_strict_types&#x27; =&gt; true,
+        &#x27;ordered_imports&#x27;    =&gt; [&#x27;sort_algorithm&#x27; =&gt; &#x27;alpha&#x27;],
+        &#x27;no_unused_imports&#x27;  =&gt; true,
+        &#x27;trailing_comma_in_multiline&#x27; =&gt; true,
+    ])
+    -&gt;setFinder(
+        PhpCsFixer\Finder::create()-&gt;in([__DIR__ . &#x27;/src&#x27;, __DIR__ . &#x27;/tests&#x27;])
+    );</code></pre>
+<p>For Laravel projects, use Pint with a <code>pint.json</code> preset — it wraps PHP CS Fixer with Laravel-specific defaults.</p>
+<h2 id="solid-principles-in-php">SOLID Principles in PHP</h2>
+<div class="table-wrapper"><table><tr><th>Principle</th><th>Guideline</th><th>PHP Mechanism</th></tr><tr><td><strong>S</strong> — Single Responsibility</td><td>One reason to change per class</td><td>Action classes, small services</td></tr><tr><td><strong>O</strong> — Open/Closed</td><td>Extend behavior without modifying source</td><td>Interfaces, strategy pattern, enums</td></tr><tr><td><strong>L</strong> — Liskov Substitution</td><td>Subtypes must be substitutable for base types</td><td>Covariant returns, contravariant params</td></tr><tr><td><strong>I</strong> — Interface Segregation</td><td>Clients depend only on methods they use</td><td>Small, focused interfaces</td></tr><tr><td><strong>D</strong> — Dependency Inversion</td><td>Depend on abstractions, not concretions</td><td>Constructor injection, interface bindings</td></tr></table></div>
+<h3 id="dependency-inversion-example">Dependency Inversion Example</h3>
+<pre data-lang="php"><code>// Contract (abstraction)
+interface PaymentGateway
+{
+    public function charge(Money $amount, PaymentMethod $method): PaymentResult;
+}
+
+// Implementation (concretion) — can be swapped without changing consumers
+final class StripeGateway implements PaymentGateway
+{
+    public function __construct(private readonly StripeClient $client) {}
+
+    public function charge(Money $amount, PaymentMethod $method): PaymentResult
+    {
+        // Stripe-specific logic
+    }
+}
+
+// Consumer depends on abstraction only
+final class ProcessPaymentAction
+{
+    public function __construct(private readonly PaymentGateway $gateway) {}
+
+    public function execute(Order $order): PaymentResult
+    {
+        return $this-&gt;gateway-&gt;charge($order-&gt;total, $order-&gt;paymentMethod);
+    }
+}</code></pre>
+<h2 id="error-handling-patterns">Error Handling Patterns</h2>
+<h3 id="custom-exception-hierarchy">Custom Exception Hierarchy</h3>
+<pre data-lang="php"><code>// Base domain exception
+abstract class DomainException extends \RuntimeException {}
+
+// Specific exceptions with factory methods
+final class InsufficientFundsException extends DomainException
+{
+    public static function forAccount(Account $account, Money $required): self
+    {
+        return new self(sprintf(
+            &#x27;Account %s has %d %s but %d %s is required.&#x27;,
+            $account-&gt;id,
+            $account-&gt;balance-&gt;amount,
+            $account-&gt;balance-&gt;currency,
+            $required-&gt;amount,
+            $required-&gt;currency,
+        ));
+    }
+}</code></pre>
+<h3 id="result-pattern-error-as-value">Result Pattern (Error as Value)</h3>
+<pre data-lang="php"><code>/** @template T */
+readonly class Result
+{
+    /** @param T|null $value */
+    private function __construct(
+        public bool    $ok,
+        public mixed   $value = null,
+        public ?string $error = null,
+    ) {}
+
+    /** @param T $value */
+    public static function success(mixed $value): self
+    {
+        return new self(ok: true, value: $value);
+    }
+
+    public static function failure(string $error): self
+    {
+        return new self(ok: false, error: $error);
+    }
+}
+
+// Usage — caller must handle both paths
+$result = $action-&gt;execute($data);
+if (! $result-&gt;ok) {
+    return response()-&gt;json([&#x27;error&#x27; =&gt; $result-&gt;error], 422);
+}</code></pre>
+<h2 id="type-safety-patterns">Type Safety Patterns</h2>
+<h3 id="branded--opaque-types-via-readonly-classes">Branded / Opaque Types via Readonly Classes</h3>
+<pre data-lang="php"><code>// Prevent accidental mixing of IDs from different entities
+readonly class UserId
+{
+    public function __construct(public int $value) {}
+
+    public function equals(self $other): bool
+    {
+        return $this-&gt;value === $other-&gt;value;
+    }
+}
+
+readonly class OrderId
+{
+    public function __construct(public int $value) {}
+}
+
+// Compiler prevents: processOrder(new UserId(1)) when OrderId is expected
+function processOrder(OrderId $orderId): void { /* ... */ }</code></pre>
+<h3 id="generic-collections-via-phpstan-annotations">Generic Collections via PHPStan Annotations</h3>
+<pre data-lang="php"><code>/**
+ * @template T
+ * @implements \IteratorAggregate&lt;int, T&gt;
+ */
+final class TypedCollection implements \IteratorAggregate, \Countable
+{
+    /** @param list&lt;T&gt; $items */
+    public function __construct(private array $items = []) {}
+
+    /** @param T $item */
+    public function add(mixed $item): void
+    {
+        $this-&gt;items[] = $item;
+    }
+
+    /** @return \ArrayIterator&lt;int, T&gt; */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this-&gt;items);
+    }
+
+    public function count(): int
+    {
+        return count($this-&gt;items);
+    }
+}</code></pre>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Using <code>mixed</code> as escape hatch</td><td>Holes in type safety net</td><td>Narrow with union types or generics</td></tr><tr><td>Stringly-typed code</td><td>Runtime errors from typos</td><td>Use backed enums for named constants</td></tr><tr><td>God classes (many responsibilities)</td><td>Untestable, high coupling</td><td>Split into Action classes</td></tr><tr><td>Suppressing static analysis</td><td>Hides real bugs</td><td>Fix the issue, add <code>@phpstan-ignore</code> only with explanation</td></tr><tr><td>Missing <code>declare(strict_types=1)</code></td><td>Silent type coercion bugs</td><td>Add to every PHP file</td></tr><tr><td>Array-shaped domain data</td><td>No IDE support, no type safety</td><td>Use readonly DTOs or value objects</td></tr><tr><td>Service locator (<code>app()</code> in logic)</td><td>Hidden dependencies, untestable</td><td>Constructor injection</td></tr><tr><td>Catching <code>\Exception</code> broadly</td><td>Swallows unexpected errors</td><td>Catch specific exception types</td></tr><tr><td>Mutable value objects</td><td>Shared state bugs</td><td>Use <code>readonly</code> classes, return new instances</td></tr><tr><td>Ignoring <code>composer audit</code></td><td>Known vulnerabilities in production</td><td>Run in CI, treat as build failure</td></tr><tr><td>Deep inheritance (3+ levels)</td><td>Fragile base class problem</td><td>Prefer composition and interfaces</td></tr><tr><td>Classes not marked <code>final</code></td><td>Unintended extension</td><td>Default to <code>final</code>, open only when designed for it</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip <code>declare(strict_types=1)</code> because "it's just a small script" -- add it everywhere.</li>
+<li>Do NOT use <code>mixed</code> without a comment justifying why a narrower type is impossible.</li>
+<li>Do NOT suppress PHPStan errors without a written explanation of why the code is correct.</li>
+<li>Do NOT use the service locator pattern (<code>app()</code>) in business logic, even in Laravel.</li>
+<li>Do NOT skip interfaces for key boundaries because "there's only one implementation" -- there will be two.</li>
+</ul>
+<h2 id="documentation-lookup-context7">Documentation Lookup (Context7)</h2>
+<p>Use <code>mcp__context7__resolve-library-id</code> then <code>mcp__context7__query-docs</code> for up-to-date docs. Returned docs override memorized knowledge.</p>
+<ul>
+<li><code>php</code> — for language features, built-in functions, or PHP 8.x syntax</li>
+<li><code>composer</code> — for package management, autoloading, or scripts configuration</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>laravel-specialist</code></td><td>PHP 8.x features power Eloquent casts, enums, readonly DTOs, and typed collections</td></tr><tr><td><code>senior-backend</code></td><td>SOLID architecture, interface-driven design, error handling patterns</td></tr><tr><td><code>test-driven-development</code></td><td>PHPUnit/Pest testing with strong type assertions</td></tr><tr><td><code>clean-code</code></td><td>SOLID, DRY, code smell detection at the PHP level</td></tr><tr><td><code>security-review</code></td><td>Input validation, type coercion risks, dependency vulnerabilities</td></tr><tr><td><code>laravel-boost</code></td><td>AI-generated PHP code quality via guidelines and MCP tools</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the process phases to the scope of work. A single function may need only Phase 3 and 4. A new module or package should follow all four phases. Non-negotiable regardless of scope: <code>declare(strict_types=1)</code>, PHPStan compliance at the project's configured level, and PSR-4 autoloading.</p>
+<hr>
+<h2 id="sub-domain--component-laravel-specialist">Sub-Domain / Component: <code>laravel-specialist</code></h2>
+<h1 id="laravel-specialist">Laravel Specialist</h1>
+<h2 id="overview">Overview</h2>
+<p>Design, build, and maintain production-grade Laravel applications following the framework's conventions and best practices. This skill covers the full Laravel ecosystem: Eloquent ORM with advanced relationship patterns, Blade templating and Livewire interactivity, queue and event systems, middleware pipelines, service providers, Pest testing at every layer, and Artisan tooling for migrations, seeders, and factories.</p>
+<p>Apply this skill whenever Laravel is the application framework, whether greenfield or brownfield.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-context-discovery">Phase 1: Context Discovery</h3>
+<ol>
+<li>Identify Laravel version (<code>composer.json</code> -> <code>laravel/framework</code>)</li>
+<li>Scan <code>config/</code> for enabled packages and custom configuration</li>
+<li>Map existing models, relationships, and migration history</li>
+<li>Review <code>routes/</code> for API, web, console, and channel definitions</li>
+<li>Catalog installed first-party packages (Sanctum, Horizon, Telescope, Pulse, Pennant, Scout, Cashier)</li>
+<li>Check for Livewire, Inertia, or Blade-only frontend stack</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin architecture review without knowing the Laravel version and installed packages.</strong></blockquote>
+<h3 id="documentation-verification-protocol">Documentation Verification Protocol</h3>
+<p><strong>[HARD-GATE]</strong> When uncertain about any Laravel API — verify, don't guess. Use <code>mcp__context7__resolve-library-id</code> then <code>mcp__context7__query-docs</code> (preferred). Fallback: fetch from <code>https://github.com/laravel/docs</code>. For Livewire, Pest, Inertia — resolve each via context7 separately. Returned docs override memorized knowledge.</p>
+<h3 id="phase-2-architecture-review">Phase 2: Architecture Review</h3>
+<ol>
+<li>Verify directory structure follows Laravel conventions (see section below)</li>
+<li>Assess service provider registrations and deferred loading</li>
+<li>Review middleware stack ordering and grouping</li>
+<li>Evaluate queue connection configuration and worker topology</li>
+<li>Check caching strategy (config, route, view, application-level)</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin implementation until architecture gaps are documented.</strong></blockquote>
+<h3 id="phase-3-implementation">Phase 3: Implementation</h3>
+<ol>
+<li>Write migrations first — schema is the source of truth</li>
+<li>Build Eloquent models with relationships, scopes, casts, and accessors</li>
+<li>Implement business logic in dedicated Action or Service classes</li>
+<li>Create controllers (single-action or resourceful) bound to routes</li>
+<li>Add Form Requests for validation, Policies for authorization</li>
+<li>Wire events, listeners, and jobs for asynchronous workflows</li>
+</ol>
+<blockquote><strong>STOP — Do NOT skip Form Requests and Policies. Inline validation and authorization are anti-patterns.</strong></blockquote>
+<h3 id="phase-4-testing">Phase 4: Testing</h3>
+<ol>
+<li>Unit tests for isolated logic (Actions, Value Objects, Casts)</li>
+<li>Feature tests for HTTP endpoints and middleware behavior</li>
+<li>Browser tests with Laravel Dusk for critical user flows</li>
+<li>Database assertions with <code>assertDatabaseHas</code>, <code>assertSoftDeleted</code></li>
+<li>Queue and event fakes for side-effect verification</li>
+</ol>
+<blockquote><strong>STOP — Do NOT proceed to optimization without passing tests at all layers.</strong></blockquote>
+<h3 id="phase-5-optimization">Phase 5: Optimization</h3>
+<ol>
+<li>Apply eager loading to eliminate N+1 queries</li>
+<li>Cache expensive computations and config/route/view</li>
+<li>Index frequently-queried columns; use <code>EXPLAIN</code> to verify</li>
+<li>Profile with Telescope or Debugbar in development</li>
+<li>Configure Horizon for production queue monitoring</li>
+</ol>
+<h2 id="eloquent-patterns">Eloquent Patterns</h2>
+<h3 id="relationships">Relationships</h3>
+<div class="table-wrapper"><table><tr><th>Relationship</th><th>Method</th><th>Inverse</th><th>Use Case</th></tr><tr><td>One-to-One</td><td><code>hasOne</code></td><td><code>belongsTo</code></td><td>User -> Profile</td></tr><tr><td>One-to-Many</td><td><code>hasMany</code></td><td><code>belongsTo</code></td><td>Post -> Comments</td></tr><tr><td>Many-to-Many</td><td><code>belongsToMany</code></td><td><code>belongsToMany</code></td><td>User <-> Roles (pivot)</td></tr><tr><td>Has-Many-Through</td><td><code>hasManyThrough</code></td><td>—</td><td>Country -> Posts (through Users)</td></tr><tr><td>Polymorphic</td><td><code>morphMany</code> / <code>morphTo</code></td><td><code>morphTo</code></td><td>Comments on Posts and Videos</td></tr><tr><td>Many-to-Many Polymorphic</td><td><code>morphToMany</code></td><td><code>morphedByMany</code></td><td>Tags on Posts and Videos</td></tr></table></div>
+<h3 id="scopes">Scopes</h3>
+<pre data-lang="php"><code>// Local scope — reusable query constraint
+public function scopeActive(Builder $query): Builder
+{
+    return $query-&gt;where(&#x27;status&#x27;, &#x27;active&#x27;);
+}
+
+// Usage: User::active()-&gt;where(&#x27;role&#x27;, &#x27;admin&#x27;)-&gt;get();
+
+// Global scope — applied to all queries on the model
+protected static function booted(): void
+{
+    static::addGlobalScope(&#x27;published&#x27;, function (Builder $builder) {
+        $builder-&gt;whereNotNull(&#x27;published_at&#x27;);
+    });
+}</code></pre>
+<h3 id="accessors-mutators-and-casts">Accessors, Mutators, and Casts</h3>
+<pre data-lang="php"><code>// Attribute accessor/mutator (Laravel 11+ syntax)
+protected function fullName(): Attribute
+{
+    return Attribute::make(
+        get: fn () =&gt; &quot;{$this-&gt;first_name} {$this-&gt;last_name}&quot;,
+    );
+}
+
+// Custom cast
+protected function casts(): array
+{
+    return [
+        &#x27;options&#x27;    =&gt; AsCollection::class,
+        &#x27;address&#x27;    =&gt; AddressCast::class,
+        &#x27;status&#x27;     =&gt; OrderStatus::class,  // Backed enum
+        &#x27;metadata&#x27;   =&gt; &#x27;array&#x27;,
+        &#x27;is_active&#x27;  =&gt; &#x27;boolean&#x27;,
+        &#x27;amount&#x27;     =&gt; MoneyCast::class,
+    ];
+}</code></pre>
+<h3 id="query-optimization-with-eager-loading">Query Optimization with Eager Loading</h3>
+<pre data-lang="php"><code>// BAD — N+1 problem: 1 query for posts + N queries for authors
+$posts = Post::all();
+foreach ($posts as $post) {
+    echo $post-&gt;author-&gt;name;  // Triggers lazy load each iteration
+}
+
+// GOOD — Eager load: 2 queries total
+$posts = Post::with(&#x27;author&#x27;)-&gt;get();
+
+// Nested eager loading
+$posts = Post::with([&#x27;author&#x27;, &#x27;comments.user&#x27;])-&gt;get();
+
+// Constrained eager loading
+$posts = Post::with([&#x27;comments&#x27; =&gt; function ($query) {
+    $query-&gt;where(&#x27;approved&#x27;, true)-&gt;latest()-&gt;limit(5);
+}])-&gt;get();
+
+// Prevent lazy loading in development
+Model::preventLazyLoading(! app()-&gt;isProduction());</code></pre>
+<h2 id="blade-templates-and-livewire-components">Blade Templates and Livewire Components</h2>
+<h3 id="blade-conventions">Blade Conventions</h3>
+<ul>
+<li>Layouts: <code>resources/views/layouts/app.blade.php</code> using <code>@yield</code> / <code>@section</code> or component-based <code><x-app-layout></code></li>
+<li>Components: <code>resources/views/components/</code> — anonymous or class-based</li>
+<li>Partials: <code>@include('partials.sidebar')</code> for reusable fragments</li>
+<li>Use <code>{{ }}</code> for escaped output, <code>{!! !!}</code> only when HTML is explicitly trusted</li>
+<li>Prefer Blade directives (<code>@auth</code>, <code>@can</code>, <code>@env</code>) over raw PHP conditionals</li>
+</ul>
+<h3 id="livewire-patterns">Livewire Patterns</h3>
+<pre data-lang="php"><code>// Full-page Livewire component (Livewire 3+)
+#[Layout(&#x27;layouts.app&#x27;)]
+#[Title(&#x27;Dashboard&#x27;)]
+class Dashboard extends Component
+{
+    public string $search = &#x27;&#x27;;
+
+    #[Computed]
+    public function users(): LengthAwarePaginator
+    {
+        return User::where(&#x27;name&#x27;, &#x27;like&#x27;, &quot;%{$this-&gt;search}%&quot;)-&gt;paginate(15);
+    }
+
+    public function render(): View
+    {
+        return view(&#x27;livewire.dashboard&#x27;);
+    }
+}</code></pre>
+<h3 id="frontend-stack-decision-table">Frontend Stack Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Decision</th><th>Choose Livewire</th><th>Choose Inertia</th></tr><tr><td>Existing Blade codebase</td><td>Yes</td><td>No</td></tr><tr><td>SPA-like experience required</td><td>Partial (with wire:navigate)</td><td>Yes</td></tr><tr><td>Team has Vue/React expertise</td><td>No</td><td>Yes</td></tr><tr><td>Server-side rendering priority</td><td>Yes</td><td>Depends on adapter</td></tr><tr><td>Real-time reactivity</td><td>Yes (polling, streams)</td><td>Requires Echo setup</td></tr><tr><td>SEO-critical pages</td><td>Either works</td><td>Either works (SSR adapter)</td></tr></table></div>
+<h2 id="queue-job-and-event-patterns">Queue, Job, and Event Patterns</h2>
+<h3 id="job-design">Job Design</h3>
+<pre data-lang="php"><code>class ProcessInvoice implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public int $tries = 3;
+    public int $backoff = 60;
+    public int $timeout = 120;
+    public string $queue = &#x27;invoices&#x27;;
+
+    public function __construct(public readonly Invoice $invoice) {}
+
+    public function handle(PdfGenerator $generator): void
+    {
+        $generator-&gt;generate($this-&gt;invoice);
+    }
+
+    public function failed(Throwable $exception): void
+    {
+        // Notify admin, log to error tracker
+    }
+}</code></pre>
+<h3 id="event--listener-pattern">Event / Listener Pattern</h3>
+<pre data-lang="php"><code>// Dispatch event
+OrderPlaced::dispatch($order);
+
+// Listener (queued)
+class SendOrderConfirmation implements ShouldQueue
+{
+    public function handle(OrderPlaced $event): void
+    {
+        Mail::to($event-&gt;order-&gt;user)-&gt;send(new OrderConfirmationMail($event-&gt;order));
+    }
+}</code></pre>
+<h3 id="sync-vs-async-decision-table">Sync vs Async Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Task</th><th>Queued</th><th>Synchronous</th></tr><tr><td>Sending emails / notifications</td><td>Yes</td><td>Never in request cycle</td></tr><tr><td>PDF generation</td><td>Yes</td><td>Only if < 2s and user waits</td></tr><tr><td>Payment processing</td><td>Depends — webhook-driven preferred</td><td>If gateway responds < 5s</td></tr><tr><td>Cache warming</td><td>Yes</td><td>Never</td></tr><tr><td>Audit logging</td><td>Yes (high-volume) or Sync (low-volume)</td><td>If guaranteed delivery needed</td></tr><tr><td>Search indexing</td><td>Yes</td><td>Never</td></tr></table></div>
+<h2 id="middleware-and-service-providers">Middleware and Service Providers</h2>
+<h3 id="middleware-stack-ordering">Middleware Stack Ordering</h3>
+<p>Middleware order matters. The default stack in <code>bootstrap/app.php</code> (Laravel 11+):</p>
+<pre data-lang="php"><code>-&gt;withMiddleware(function (Middleware $middleware) {
+    $middleware-&gt;web(append: [
+        HandleInertiaRequests::class,  // After session, before response
+    ]);
+
+    $middleware-&gt;api(prepend: [
+        EnsureFrontendRequestsAreStateful::class,  // Sanctum SPA auth
+    ]);
+
+    $middleware-&gt;alias([
+        &#x27;role&#x27;     =&gt; EnsureUserHasRole::class,
+        &#x27;verified&#x27; =&gt; EnsureEmailIsVerified::class,
+    ]);
+})</code></pre>
+<h3 id="service-provider-best-practices">Service Provider Best Practices</h3>
+<ul>
+<li>Register bindings in <code>register()</code>, never resolve from the container there</li>
+<li>Boot logic (event listeners, route model binding, macros) goes in <code>boot()</code></li>
+<li>Use deferred providers for bindings that are not needed on every request</li>
+<li>Avoid heavy logic in providers — delegate to dedicated classes</li>
+</ul>
+<h2 id="testing-with-pest">Testing with Pest</h2>
+<h3 id="unit-test">Unit Test</h3>
+<pre data-lang="php"><code>test(&#x27;order total calculates tax correctly&#x27;, function () {
+    $order = Order::factory()-&gt;make([&#x27;subtotal&#x27; =&gt; 10000, &#x27;tax_rate&#x27; =&gt; 0.08]);
+
+    expect($order-&gt;total)-&gt;toBe(10800);
+});</code></pre>
+<h3 id="feature-test">Feature Test</h3>
+<pre data-lang="php"><code>test(&#x27;authenticated user can create a post&#x27;, function () {
+    $user = User::factory()-&gt;create();
+
+    $response = $this-&gt;actingAs($user)
+        -&gt;postJson(&#x27;/api/posts&#x27;, [
+            &#x27;title&#x27; =&gt; &#x27;My Post&#x27;,
+            &#x27;body&#x27;  =&gt; &#x27;Content here.&#x27;,
+        ]);
+
+    $response-&gt;assertCreated()
+        -&gt;assertJsonPath(&#x27;data.title&#x27;, &#x27;My Post&#x27;);
+
+    $this-&gt;assertDatabaseHas(&#x27;posts&#x27;, [
+        &#x27;user_id&#x27; =&gt; $user-&gt;id,
+        &#x27;title&#x27;   =&gt; &#x27;My Post&#x27;,
+    ]);
+});</code></pre>
+<h3 id="queue-and-event-fakes">Queue and Event Fakes</h3>
+<pre data-lang="php"><code>test(&#x27;placing an order dispatches confirmation job&#x27;, function () {
+    Queue::fake();
+
+    $order = Order::factory()-&gt;create();
+    PlaceOrder::dispatch($order);
+
+    Queue::assertPushed(SendOrderConfirmation::class, function ($job) use ($order) {
+        return $job-&gt;order-&gt;id === $order-&gt;id;
+    });
+});</code></pre>
+<h3 id="browser-test-dusk">Browser Test (Dusk)</h3>
+<pre data-lang="php"><code>test(&#x27;user can complete checkout flow&#x27;, function () {
+    $this-&gt;browse(function (Browser $browser) {
+        $browser-&gt;loginAs(User::factory()-&gt;create())
+            -&gt;visit(&#x27;/cart&#x27;)
+            -&gt;press(&#x27;Checkout&#x27;)
+            -&gt;waitForText(&#x27;Order Confirmed&#x27;)
+            -&gt;assertSee(&#x27;Thank you&#x27;);
+    });
+});</code></pre>
+<h2 id="artisan-commands-migrations-seeders-factories">Artisan Commands, Migrations, Seeders, Factories</h2>
+<h3 id="migration-conventions">Migration Conventions</h3>
+<pre data-lang="php"><code>// Always include down() for rollback capability
+public function up(): void
+{
+    Schema::create(&#x27;invoices&#x27;, function (Blueprint $table) {
+        $table-&gt;id();
+        $table-&gt;foreignId(&#x27;user_id&#x27;)-&gt;constrained()-&gt;cascadeOnDelete();
+        $table-&gt;string(&#x27;number&#x27;)-&gt;unique();
+        $table-&gt;integer(&#x27;amount&#x27;);          // Store money as cents
+        $table-&gt;string(&#x27;currency&#x27;, 3);
+        $table-&gt;string(&#x27;status&#x27;)-&gt;default(&#x27;draft&#x27;);
+        $table-&gt;timestamp(&#x27;due_at&#x27;)-&gt;nullable();
+        $table-&gt;timestamps();
+        $table-&gt;softDeletes();
+
+        $table-&gt;index([&#x27;user_id&#x27;, &#x27;status&#x27;]);
+    });
+}</code></pre>
+<h3 id="factory-patterns">Factory Patterns</h3>
+<pre data-lang="php"><code>class InvoiceFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            &#x27;user_id&#x27;  =&gt; User::factory(),
+            &#x27;number&#x27;   =&gt; $this-&gt;faker-&gt;unique()-&gt;numerify(&#x27;INV-####&#x27;),
+            &#x27;amount&#x27;   =&gt; $this-&gt;faker-&gt;numberBetween(1000, 100000),
+            &#x27;currency&#x27; =&gt; &#x27;USD&#x27;,
+            &#x27;status&#x27;   =&gt; &#x27;draft&#x27;,
+            &#x27;due_at&#x27;   =&gt; now()-&gt;addDays(30),
+        ];
+    }
+
+    public function paid(): static
+    {
+        return $this-&gt;state(fn () =&gt; [&#x27;status&#x27; =&gt; &#x27;paid&#x27;]);
+    }
+
+    public function overdue(): static
+    {
+        return $this-&gt;state(fn () =&gt; [
+            &#x27;status&#x27; =&gt; &#x27;sent&#x27;,
+            &#x27;due_at&#x27; =&gt; now()-&gt;subDays(7),
+        ]);
+    }
+}</code></pre>
+<h2 id="laravel-directory-structure-conventions">Laravel Directory Structure Conventions</h2>
+<pre><code>app/
+├── Actions/              # Single-purpose action classes
+├── Casts/                # Custom Eloquent casts
+├── Console/Commands/     # Artisan commands
+├── Enums/                # PHP backed enums
+├── Events/               # Event classes
+├── Exceptions/           # Custom exception classes
+├── Http/
+│   ├── Controllers/      # Resourceful or single-action controllers
+│   ├── Middleware/        # Request/response middleware
+│   └── Requests/         # Form Request validation
+├── Jobs/                 # Queued job classes
+├── Listeners/            # Event listener classes
+├── Mail/                 # Mailable classes
+├── Models/               # Eloquent models
+├── Notifications/        # Notification classes
+├── Observers/            # Model observers
+├── Policies/             # Authorization policies
+├── Providers/            # Service providers
+├── Rules/                # Custom validation rules
+├── Services/             # Domain service classes
+└── View/Components/      # Blade view components
+database/
+├── factories/            # Model factories
+├── migrations/           # Schema migrations (timestamped)
+└── seeders/              # Database seeders
+resources/views/
+├── components/           # Blade components
+├── layouts/              # Layout templates
+├── livewire/             # Livewire component views
+└── mail/                 # Email templates
+routes/
+├── api.php               # API routes
+├── channels.php          # Broadcast channels
+├── console.php           # Artisan closures
+└── web.php               # Web routes
+tests/
+├── Feature/              # Feature (integration) tests
+├── Unit/                 # Unit tests
+└── Browser/              # Dusk browser tests</code></pre>
+<h2 id="decision-tables">Decision Tables</h2>
+<h3 id="authentication-strategy">Authentication Strategy</h3>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Recommended Approach</th></tr><tr><td>SPA + same domain</td><td>Sanctum (cookie-based, CSRF)</td></tr><tr><td>SPA + different domain</td><td>Sanctum (token-based)</td></tr><tr><td>Mobile app</td><td>Sanctum (token-based)</td></tr><tr><td>Third-party API consumers</td><td>Passport (OAuth2)</td></tr><tr><td>Simple API tokens</td><td>Sanctum (plaintext hash)</td></tr><tr><td>Social login</td><td>Socialite + Sanctum</td></tr></table></div>
+<h3 id="caching-layer">Caching Layer</h3>
+<div class="table-wrapper"><table><tr><th>Data Type</th><th>Cache Driver</th><th>TTL</th><th>Invalidation</th></tr><tr><td>Config / routes / views</td><td>File (artisan cache)</td><td>Until next deploy</td><td><code>artisan optimize:clear</code></td></tr><tr><td>Database query results</td><td>Redis / Memcached</td><td>5-60 min</td><td>Event-driven or TTL</td></tr><tr><td>Full-page / fragment</td><td>Redis</td><td>1-15 min</td><td>Cache tags</td></tr><tr><td>Session data</td><td>Redis</td><td>Session lifetime</td><td>Automatic</td></tr><tr><td>Rate limiting</td><td>Redis</td><td>Window duration</td><td>Automatic</td></tr></table></div>
+<h3 id="file-storage">File Storage</h3>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Disk</th><th>Driver</th></tr><tr><td>User uploads (production)</td><td><code>s3</code></td><td>Amazon S3 / compatible</td></tr><tr><td>User uploads (local dev)</td><td><code>local</code></td><td>Local filesystem</td></tr><tr><td>Public assets</td><td><code>public</code></td><td>Local with symlink</td></tr><tr><td>Temporary files</td><td><code>local</code></td><td>Local, pruned by schedule</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Fat controllers</td><td>Untestable, unmaintainable business logic</td><td>Move logic to Action or Service classes</td></tr><tr><td>Raw SQL in controllers</td><td>SQL injection risk, not portable</td><td>Use Eloquent or Query Builder</td></tr><tr><td>Missing mass-assignment protection</td><td>Data manipulation vulnerabilities</td><td>Always define <code>$fillable</code> or <code>$guarded</code></td></tr><tr><td>Inline validation in controllers</td><td>Couples validation to HTTP layer</td><td>Use Form Requests</td></tr><tr><td>Jobs without retry/backoff config</td><td>Silent failures, no recovery</td><td>Configure <code>$tries</code>, <code>$backoff</code>, <code>failed()</code></td></tr><tr><td>Over-using global scopes</td><td>Hidden query behavior surprises developers</td><td>Prefer local scopes</td></tr><tr><td>Storing money as floats</td><td>Floating-point precision errors</td><td>Use integer cents, convert at presentation</td></tr><tr><td>Missing database indexes</td><td>Slow queries at scale</td><td>Add composite indexes for WHERE + ORDER BY</td></tr><tr><td>Secrets in config files</td><td>Credential leaks in version control</td><td>Use <code>.env</code> exclusively</td></tr><tr><td>Testing against production DB</td><td>Data corruption, unreliable tests</td><td>Use SQLite in-memory or dedicated test DB</td></tr><tr><td>Lazy loading in API responses</td><td>N+1 queries, slow API responses</td><td>Enable <code>preventLazyLoading()</code> in dev</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip migrations and edit the database directly -- migrations are the source of truth.</li>
+<li>Do NOT put business logic in controllers because "it's faster" -- use Action classes.</li>
+<li>Do NOT skip Form Requests because "the validation is simple" -- it always grows.</li>
+<li>Do NOT disable <code>preventLazyLoading()</code> because "it's annoying" -- fix the N+1 queries.</li>
+<li>Do NOT store money as floats because "the amounts are small" -- precision errors compound.</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>php-specialist</code></td><td>Modern PHP 8.x patterns underpin all Laravel code</td></tr><tr><td><code>laravel-boost</code></td><td>AI-assisted development guidelines and MCP tooling</td></tr><tr><td><code>senior-backend</code></td><td>API design, caching strategies, event-driven architecture</td></tr><tr><td><code>test-driven-development</code></td><td>Pest testing workflow with RED-GREEN-REFACTOR</td></tr><tr><td><code>database-schema-design</code></td><td>Migration planning, indexing strategy, data modeling</td></tr><tr><td><code>security-review</code></td><td>Sanctum/Passport configuration, CSRF, input validation</td></tr><tr><td><code>performance-optimization</code></td><td>Query profiling, cache tuning, queue worker scaling</td></tr><tr><td><code>deployment</code></td><td>Forge/Vapor/Envoyer deployment, <code>artisan optimize</code></td></tr><tr><td><code>context7 MCP</code></td><td>Fetches up-to-date Laravel docs when information is uncertain</td></tr><tr><td><code>laravel/docs</code> GitHub</td><td>Authoritative source for Laravel API reference</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the multi-phase process to the scope of work. A single model change may skip Phase 2 entirely, while a new module should follow all five phases. Core conventions (eager loading, Form Requests, Pest tests, migration-first schema changes) are non-negotiable regardless of scope.</p>
+<hr>
+<h2 id="sub-domain--component-laravel-boost">Sub-Domain / Component: <code>laravel-boost</code></h2>
+<h1 id="laravel-boost">Laravel Boost</h1>
+<h2 id="overview">Overview</h2>
+<p>Laravel Boost is an official Laravel package that accelerates AI-assisted development by providing composable guidelines, on-demand agent skills, an MCP (Model Context Protocol) server, and a documentation API with semantic search across 17,000+ Laravel-specific knowledge pieces. It bridges AI coding tools and the Laravel ecosystem, ensuring that AI agents generate high-quality, convention-compliant Laravel code.</p>
+<p>Apply this skill when setting up, configuring, or extending Laravel Boost in a project, or when integrating AI agents with a Laravel application.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-assessment">Phase 1: Assessment</h3>
+<ol>
+<li>Confirm Laravel version compatibility (10.x, 11.x, 12.x)</li>
+<li>Identify the AI IDE or agent in use (Cursor, Claude Code, Codex, Gemini CLI, GitHub Copilot, Junie)</li>
+<li>Check if an MCP configuration already exists (<code>.mcp.json</code>)</li>
+<li>Review existing guideline and skill customizations in <code>.ai/</code></li>
+</ol>
+<blockquote><strong>STOP — Do NOT install Boost without confirming Laravel version compatibility and target IDE.</strong></blockquote>
+<h3 id="phase-2-installation-and-configuration">Phase 2: Installation and Configuration</h3>
+<ol>
+<li>Install the package and run the installer</li>
+<li>Configure MCP server for the target IDE</li>
+<li>Set up automatic updates via Composer hooks</li>
+<li>Verify MCP tools are accessible from the AI agent</li>
+</ol>
+<blockquote><strong>STOP — Do NOT proceed until MCP server connectivity is verified with at least one tool call.</strong></blockquote>
+<h3 id="phase-3-customization">Phase 3: Customization</h3>
+<ol>
+<li>Add project-specific guidelines in <code>.ai/guidelines/</code></li>
+<li>Create domain-specific skills in <code>.ai/skills/</code></li>
+<li>Override built-in guidelines or skills where project conventions differ</li>
+<li>Register custom agents if extending to unsupported IDEs</li>
+</ol>
+<blockquote><strong>STOP — Do NOT override built-in guidelines unless project conventions genuinely differ from Laravel defaults.</strong></blockquote>
+<h3 id="phase-4-validation">Phase 4: Validation</h3>
+<ol>
+<li>Confirm MCP server responds to tool calls (Application Info, Database Schema, Search Docs)</li>
+<li>Verify guidelines load in the AI agent's context window</li>
+<li>Test skill activation for domain-relevant tasks</li>
+<li>Check that <code>boost:update</code> keeps resources current after dependency changes</li>
+</ol>
+<h2 id="ide-setup-decision-table">IDE Setup Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>IDE / Agent</th><th>Setup Method</th><th>Configuration File</th></tr><tr><td><strong>Claude Code</strong></td><td>CLI command</td><td><code>.mcp.json</code> (auto-generated)</td></tr><tr><td><strong>Codex</strong></td><td>CLI command</td><td><code>.mcp.json</code></td></tr><tr><td><strong>Gemini CLI</strong></td><td>CLI command</td><td><code>.mcp.json</code></td></tr><tr><td><strong>Cursor</strong></td><td>Command Palette GUI</td><td><code>.cursor/mcp.json</code></td></tr><tr><td><strong>GitHub Copilot</strong></td><td>Command Palette GUI</td><td><code>.mcp.json</code></td></tr><tr><td><strong>Junie</strong></td><td>Settings GUI</td><td><code>.mcp.json</code></td></tr><tr><td><strong>Custom / Unsupported</strong></td><td>Custom agent class</td><td>Manual MCP config</td></tr></table></div>
+<h2 id="installation">Installation</h2>
+<pre data-lang="bash"><code># Install as a development dependency
+composer require laravel/boost --dev
+
+# Run the installer — generates .mcp.json, guideline files, and boost.json
+php artisan boost:install</code></pre>
+<p>The installer generates:</p>
+<ul>
+<li><code>.mcp.json</code> — MCP server configuration for IDE integration</li>
+<li>Guideline files (<code>CLAUDE.md</code>, <code>AGENTS.md</code>, etc.) tailored to detected packages</li>
+<li><code>boost.json</code> — Boost configuration file</li>
+</ul>
+<h3 id="ide-specific-mcp-setup">IDE-Specific MCP Setup</h3>
+<div class="table-wrapper"><table><tr><th>IDE / Agent</th><th>Setup Command or Action</th></tr><tr><td><strong>Claude Code</strong></td><td><code>claude mcp add -s local -t stdio laravel-boost php artisan boost:mcp</code></td></tr><tr><td><strong>Codex</strong></td><td><code>codex mcp add laravel-boost -- php "artisan" "boost:mcp"</code></td></tr><tr><td><strong>Gemini CLI</strong></td><td><code>gemini mcp add -s project -t stdio laravel-boost php artisan boost:mcp</code></td></tr><tr><td><strong>Cursor</strong></td><td>Command Palette -> "Open MCP Settings" -> toggle on <code>laravel-boost</code></td></tr><tr><td><strong>GitHub Copilot</strong></td><td>Command Palette -> "MCP: List Servers" -> select <code>laravel-boost</code> -> "Start server"</td></tr><tr><td><strong>Junie</strong></td><td>Shift-Shift -> "MCP Settings" -> check <code>laravel-boost</code> -> Apply</td></tr></table></div>
+<h3 id="manual-mcp-configuration">Manual MCP Configuration</h3>
+<pre data-lang="json"><code>{
+    &quot;mcpServers&quot;: {
+        &quot;laravel-boost&quot;: {
+            &quot;command&quot;: &quot;php&quot;,
+            &quot;args&quot;: [&quot;artisan&quot;, &quot;boost:mcp&quot;]
+        }
+    }
+}</code></pre>
+<h3 id="keeping-resources-updated">Keeping Resources Updated</h3>
+<pre data-lang="bash"><code># Manual update after dependency changes
+php artisan boost:update
+
+# Automatic updates — add to composer.json scripts
+{
+    &quot;scripts&quot;: {
+        &quot;post-update-cmd&quot;: [
+            &quot;@php artisan boost:update --ansi&quot;
+        ]
+    }
+}</code></pre>
+<h2 id="mcp-server-tools">MCP Server Tools</h2>
+<p>Laravel Boost exposes the following tools through its MCP server, giving AI agents direct access to application context:</p>
+<div class="table-wrapper"><table><tr><th>Tool</th><th>Purpose</th><th>Typical Use</th></tr><tr><td><strong>Application Info</strong></td><td>Read PHP and Laravel versions, database engine, ecosystem packages, Eloquent models</td><td>Context discovery at session start</td></tr><tr><td><strong>Database Schema</strong></td><td>Read full database schema</td><td>Migration planning, model generation</td></tr><tr><td><strong>Database Query</strong></td><td>Execute queries against the database</td><td>Data inspection, debugging</td></tr><tr><td><strong>Database Connections</strong></td><td>Inspect available database connections</td><td>Multi-database configuration</td></tr><tr><td><strong>Search Docs</strong></td><td>Semantic search across Laravel documentation API</td><td>Finding best practices, API references</td></tr><tr><td><strong>Last Error</strong></td><td>Read the most recent application log error</td><td>Debugging workflow</td></tr><tr><td><strong>Read Log Entries</strong></td><td>Read last N log entries</td><td>Monitoring, debugging</td></tr><tr><td><strong>Browser Logs</strong></td><td>Read logs and errors from browser</td><td>Frontend debugging</td></tr><tr><td><strong>Get Absolute URL</strong></td><td>Convert relative path URIs to absolute URLs</td><td>Link generation</td></tr></table></div>
+<h2 id="ai-guidelines">AI Guidelines</h2>
+<p>Guidelines are composable instruction files loaded upfront into the AI agent's context, providing broad conventions and best practices.</p>
+<h3 id="available-built-in-guidelines">Available Built-in Guidelines</h3>
+<div class="table-wrapper"><table><tr><th>Package</th><th>Versions Supported</th></tr><tr><td>Laravel Framework</td><td>Core, 10.x, 11.x, 12.x</td></tr><tr><td>Livewire</td><td>Core, 2.x, 3.x, 4.x</td></tr><tr><td>Flux UI</td><td>Core, Free, Pro</td></tr><tr><td>Inertia</td><td>React, Vue, Svelte (1.x-3.x)</td></tr><tr><td>Tailwind CSS</td><td>Core, 3.x, 4.x</td></tr><tr><td>Pest</td><td>Core, 3.x, 4.x</td></tr><tr><td>PHPUnit, Pint, Sail, Pennant, Volt, Wayfinder, Folio, Herd, MCP</td><td>Core</td></tr></table></div>
+<h3 id="custom-guidelines">Custom Guidelines</h3>
+<p>Create <code>.blade.php</code> or <code>.md</code> files in <code>.ai/guidelines/</code>:</p>
+<pre><code>.ai/guidelines/team-conventions.md
+.ai/guidelines/billing/stripe-patterns.blade.php</code></pre>
+<p>Override a built-in guideline by matching its path:</p>
+<pre><code>.ai/guidelines/inertia-react/2/forms.blade.php</code></pre>
+<h3 id="third-party-package-guidelines">Third-Party Package Guidelines</h3>
+<p>Package authors can ship guidelines at:</p>
+<pre><code>resources/boost/guidelines/core.blade.php</code></pre>
+<h2 id="agent-skills">Agent Skills</h2>
+<p>Skills are on-demand knowledge modules activated only when relevant, reducing context window bloat.</p>
+<h3 id="available-built-in-skills">Available Built-in Skills</h3>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Domain</th></tr><tr><td><code>livewire-development</code></td><td>Livewire components and reactivity</td></tr><tr><td><code>inertia-react-development</code></td><td>Inertia.js with React</td></tr><tr><td><code>inertia-vue-development</code></td><td>Inertia.js with Vue</td></tr><tr><td><code>inertia-svelte-development</code></td><td>Inertia.js with Svelte</td></tr><tr><td><code>pest-testing</code></td><td>Pest test patterns</td></tr><tr><td><code>fluxui-development</code></td><td>Flux UI components</td></tr><tr><td><code>folio-routing</code></td><td>Folio page-based routing</td></tr><tr><td><code>tailwindcss-development</code></td><td>Tailwind CSS utility classes</td></tr><tr><td><code>volt-development</code></td><td>Volt single-file Livewire components</td></tr><tr><td><code>pennant-development</code></td><td>Pennant feature flags</td></tr><tr><td><code>wayfinder-development</code></td><td>Wayfinder type-safe routing</td></tr><tr><td><code>mcp-development</code></td><td>MCP server/tool development</td></tr></table></div>
+<h3 id="custom-skills">Custom Skills</h3>
+<p>Create <code>.ai/skills/{skill-name}/SKILL.md</code>:</p>
+<pre data-lang="markdown"><code>---
+name: invoice-management
+description: Build and work with invoice features including PDF generation and payment tracking.
+---
+
+# Invoice Management
+
+## When to use this skill
+Use when working with the invoicing module...</code></pre>
+<h3 id="guidelines-vs-skills-decision-table">Guidelines vs Skills Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Question</th><th>Guidelines</th><th>Skills</th></tr><tr><td>When is it loaded?</td><td>Always — upfront context</td><td>On-demand — when the task matches</td></tr><tr><td>How broad is the scope?</td><td>Foundational conventions</td><td>Focused implementation patterns</td></tr><tr><td>Impact on context window?</td><td>Constant (always present)</td><td>Minimal (loaded only when needed)</td></tr><tr><td>Best for?</td><td>Coding standards, package versions</td><td>Step-by-step implementation guides</td></tr><tr><td>Content changes often?</td><td>Rarely (stable conventions)</td><td>Frequently (evolving patterns)</td></tr><tr><td>Team-wide applicability?</td><td>High (everyone follows)</td><td>Varies (domain-specific)</td></tr></table></div>
+<h2 id="documentation-api">Documentation API</h2>
+<p>Boost provides semantic search across 17,000+ documentation pieces covering:</p>
+<div class="table-wrapper"><table><tr><th>Package</th><th>Versions</th></tr><tr><td>Laravel Framework</td><td>10.x, 11.x, 12.x</td></tr><tr><td>Filament</td><td>2.x, 3.x, 4.x, 5.x</td></tr><tr><td>Flux UI</td><td>2.x Free, 2.x Pro</td></tr><tr><td>Inertia</td><td>1.x, 2.x</td></tr><tr><td>Livewire</td><td>1.x, 2.x, 3.x, 4.x</td></tr><tr><td>Nova</td><td>4.x, 5.x</td></tr><tr><td>Pest</td><td>3.x, 4.x</td></tr><tr><td>Tailwind CSS</td><td>3.x, 4.x</td></tr></table></div>
+<p>The <code>Search Docs</code> MCP tool queries this API. Guidelines and skills automatically instruct agents to use it when they need implementation details.</p>
+<h2 id="when-to-use-vs-when-not-needed">When to Use vs When Not Needed</h2>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Use Laravel Boost?</th><th>Why</th></tr><tr><td>Laravel project with AI-assisted development</td><td>Yes</td><td>Primary use case</td></tr><tr><td>Team uses Cursor, Claude Code, Copilot, or other AI IDE</td><td>Yes</td><td>MCP integration improves output</td></tr><tr><td>Need consistent Laravel conventions across AI-generated code</td><td>Yes</td><td>Guidelines enforce standards</td></tr><tr><td>Non-Laravel PHP project</td><td>No</td><td>Boost is Laravel-specific</td></tr><tr><td>No AI coding tools in workflow</td><td>No</td><td>Boost's value is in AI agent integration</td></tr><tr><td>Production runtime performance optimization</td><td>No</td><td>Boost is dev-time only, not a runtime optimizer</td></tr><tr><td>Already have comprehensive custom AI prompts</td><td>Optional</td><td>Boost may supplement or replace them</td></tr></table></div>
+<h2 id="extending-boost">Extending Boost</h2>
+<h3 id="custom-agent-registration">Custom Agent Registration</h3>
+<p>For AI tools not supported out of the box:</p>
+<pre data-lang="php"><code>// In AppServiceProvider::boot()
+use Laravel\Boost\Boost;
+
+Boost::registerAgent(&#x27;custom-ide&#x27;, CustomAgent::class);</code></pre>
+<p>The custom agent class must extend <code>Laravel\Boost\Install\Agents\Agent</code> and implement the relevant interfaces:</p>
+<ul>
+<li><code>SupportsGuidelines</code> — for guideline file generation</li>
+<li><code>SupportsMcp</code> — for MCP server configuration</li>
+<li><code>SupportsSkills</code> — for skill file generation</li>
+</ul>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Installing in production</td><td>Boost is dev-time only, adds unnecessary overhead</td><td>Use <code>composer require --dev</code></td></tr><tr><td>Overriding every built-in guideline</td><td>Drifts from Laravel core team recommendations</td><td>Override only where project genuinely differs</td></tr><tr><td>Ignoring <code>boost:update</code></td><td>Guidelines fall out of sync with installed packages</td><td>Run after every <code>composer update</code></td></tr><tr><td>Overly broad custom skills</td><td>Wastes context window tokens when activated</td><td>Focus each skill on a single domain</td></tr><tr><td>Skipping MCP verification</td><td>Misconfigured MCP silently degrades AI agent quality</td><td>Test tool calls after installation</td></tr><tr><td>Not committing <code>.mcp.json</code></td><td>Team members get inconsistent AI agent experience</td><td>Commit to version control</td></tr><tr><td>Mixing guidelines and skills</td><td>Context window pollution with always-loaded content</td><td>Conventions in guidelines, patterns in skills</td></tr><tr><td>Not running installer after upgrade</td><td>Missing new guideline files and MCP tools</td><td>Run <code>php artisan boost:install</code> after major upgrades</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip MCP verification because "the install succeeded" -- test at least one tool call.</li>
+<li>Do NOT override built-in guidelines without a documented reason for the deviation.</li>
+<li>Do NOT create broad skills -- if it covers more than one domain, split it.</li>
+<li>Do NOT install Boost in production -- it is a <code>--dev</code> dependency exclusively.</li>
+<li>Do NOT forget to run <code>boost:update</code> after dependency changes -- stale guidelines degrade AI output.</li>
+</ul>
+<h2 id="documentation-lookup-context7">Documentation Lookup (Context7)</h2>
+<p>Use <code>mcp__context7__resolve-library-id</code> then <code>mcp__context7__query-docs</code> for up-to-date docs. Returned docs override memorized knowledge.</p>
+<ul>
+<li><code>laravel/framework</code> — for core Laravel APIs, configuration, or Artisan commands</li>
+<li><code>livewire</code> — for component lifecycle, wire directives, or Alpine.js integration</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>laravel-specialist</code></td><td>Boost guidelines and skills enhance AI-generated Laravel code quality</td></tr><tr><td><code>php-specialist</code></td><td>Boost respects PHP version and PSR standards in generated guidelines</td></tr><tr><td><code>mcp-builder</code></td><td>Boost's MCP server is an example of the MCP pattern; extend it for custom tools</td></tr><tr><td><code>self-learning</code></td><td>Boost's Application Info tool feeds project context into the learning phase</td></tr><tr><td><code>senior-backend</code></td><td>Boost's Database Schema and Query tools support backend architecture decisions</td></tr><tr><td><code>test-driven-development</code></td><td>Boost's Pest skill provides testing patterns for AI-generated tests</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the process phases to what the project needs. A new project requires full installation and IDE setup (Phases 1-4). An existing Boost installation may only need customization (Phase 3) or validation after a Laravel upgrade (Phase 4). The non-negotiable minimum: verify MCP server connectivity and confirm guidelines match installed package versions.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

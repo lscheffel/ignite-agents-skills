@@ -410,12 +410,12 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">observability</a> &rsaquo; templates &rsaquo; alert-rules</div>
   </nav>
   <div class="content">
-    <h1 id="regras-de-alerta">Regras de Alerta</h1>
-<h2 id="viso-geral">Visão Geral</h2>
-<p>Documento de referência para regras de alerta com severidade e runbooks.</p>
-<h2 id="severidade">Severidade</h2>
-<div class="table-wrapper"><table><tr><th>Severidade</th><th>Descrição</th><th>Tempo de Resposta</th><th>Notificação</th></tr><tr><td><strong>Critical</strong></td><td>Sistema indisponível ou dados corrompidos</td><td>5 minutos</td><td>PagerDuty + Slack</td></tr><tr><td><strong>Warning</strong></td><td>Degradção de performance ou risco iminente</td><td>30 minutos</td><td>Slack</td></tr><tr><td><strong>Info</strong></td><td>Evento significativo sem impacto</td><td>Próximo business day</td><td>Email</td></tr></table></div>
-<h2 id="regras-de-alerta">Regras de Alerta</h2>
+    <h1 id="alert-rules">Alert Rules</h1>
+<h2 id="overview">Overview</h2>
+<p>Reference document for alert rules with severity and runbooks.</p>
+<h2 id="severity">Severity</h2>
+<div class="table-wrapper"><table><tr><th>Severity</th><th>Description</th><th>Response Time</th><th>Notification</th></tr><tr><td><strong>Critical</strong></td><td>System unavailable or data corrupted</td><td>5 minutes</td><td>PagerDuty + Slack</td></tr><tr><td><strong>Warning</strong></td><td>Performance degradation or imminent risk</td><td>30 minutes</td><td>Slack</td></tr><tr><td><strong>Info</strong></td><td>Significant event with no impact</td><td>Next business day</td><td>Email</td></tr></table></div>
+<h2 id="alert-rules">Alert Rules</h2>
 <h3 id="critical">Critical</h3>
 <h4 id="higherrorrate">HighErrorRate</h4>
 <pre data-lang="yaml"><code>- alert: HighErrorRate
@@ -424,14 +424,14 @@
   labels:
     severity: critical
   annotations:
-    summary: &quot;Taxa de erro &gt; 5%&quot;
-    description: &quot;Taxa de erro de {{ $value | humanizePercentage }} nos últimos 5 minutos&quot;
+    summary: &quot;Error rate &gt; 5%&quot;
+    description: &quot;Error rate of {{ $value | humanizePercentage }} in the last 5 minutes&quot;
     runbook_url: &quot;https://wiki/runbooks/high-error-rate&quot;
     steps: |
-      1. Verificar logs de erro no Kibana
-      2. Identificar endpoint com maior taxa de erro
-      3. Verificar dependências externas
-      4. Escalar se necessário</code></pre>
+      1. Check error logs in Kibana
+      2. Identify the endpoint with the highest error rate
+      3. Check external dependencies
+      4. Scale if necessary</code></pre>
 <h4 id="servicedown">ServiceDown</h4>
 <pre data-lang="yaml"><code>- alert: ServiceDown
   expr: up{job=&quot;api-gateway&quot;} == 0
@@ -439,14 +439,14 @@
   labels:
     severity: critical
   annotations:
-    summary: &quot;Serviço indisponível&quot;
-    description: &quot;Serviço {{ $labels.instance }} está down há mais de 1 minuto&quot;
+    summary: &quot;Service unavailable&quot;
+    description: &quot;Service {{ $labels.instance }} has been down for more than 1 minute&quot;
     runbook_url: &quot;https://wiki/runbooks/service-down&quot;
     steps: |
-      1. Verificar se o processo está rodando
-      2. Verificar recursos do sistema (CPU, memória, disco)
-      3. Verificar logs de startup
-      4. Reiniciar serviço se necessário</code></pre>
+      1. Check if the process is running
+      2. Check system resources (CPU, memory, disk)
+      3. Check startup logs
+      4. Restart the service if necessary</code></pre>
 <h3 id="warning">Warning</h3>
 <h4 id="highlatency">HighLatency</h4>
 <pre data-lang="yaml"><code>- alert: HighLatency
@@ -455,14 +455,14 @@
   labels:
     severity: warning
   annotations:
-    summary: &quot;Latência p99 &gt; 1s&quot;
-    description: &quot;Latência p99 de {{ $value }}s nos últimos 5 minutos&quot;
+    summary: &quot;p99 latency &gt; 1s&quot;
+    description: &quot;p99 latency of {{ $value }}s in the last 5 minutes&quot;
     runbook_url: &quot;https://wiki/runbooks/high-latency&quot;
     steps: |
-      1. Verificar dashboards de performance
-      2. Identificar queries lentas
-      3. Verificar conexões com banco de dados
-      4. Considerar escalar horizontalmente</code></pre>
+      1. Check performance dashboards
+      2. Identify slow queries
+      3. Check database connections
+      4. Consider horizontal scaling</code></pre>
 <h4 id="highmemoryusage">HighMemoryUsage</h4>
 <pre data-lang="yaml"><code>- alert: HighMemoryUsage
   expr: process_resident_memory_bytes / 1024 / 1024 &gt; 1024
@@ -470,14 +470,14 @@
   labels:
     severity: warning
   annotations:
-    summary: &quot;Uso de memória &gt; 1GB&quot;
-    description: &quot;Serviço {{ $labels.instance }} usando {{ $value }}MB de memória&quot;
+    summary: &quot;Memory usage &gt; 1GB&quot;
+    description: &quot;Service {{ $labels.instance }} using {{ $value }}MB of memory&quot;
     runbook_url: &quot;https://wiki/runbooks/high-memory&quot;
     steps: |
-      1. Verificar se há memory leak
-      2. Analisar heap dumps
-      3. Verificar configurações de GC
-      4. Considerar aumentar memória ou escalar</code></pre>
+      1. Check for memory leaks
+      2. Analyze heap dumps
+      3. Check GC configurations
+      4. Consider increasing memory or scaling</code></pre>
 <h3 id="info">Info</h3>
 <h4 id="deploycompleted">DeployCompleted</h4>
 <pre data-lang="yaml"><code>- alert: DeployCompleted
@@ -485,78 +485,78 @@
   labels:
     severity: info
   annotations:
-    summary: &quot;Deploy realizado&quot;
-    description: &quot;Versão {{ $labels.version }} implantada em {{ $labels.environment }}&quot;</code></pre>
+    summary: &quot;Deploy completed&quot;
+    description: &quot;Version {{ $labels.version }} deployed in {{ $labels.environment }}&quot;</code></pre>
 <h2 id="runbooks">Runbooks</h2>
 <h3 id="runbook-higherrorrate">Runbook: HighErrorRate</h3>
 <ol>
-<li><strong>Investigar</strong></li>
+<li><strong>Investigate</strong></li>
 </ol>
 <ul>
-<li>Acesse Kibana e filtre por erros 5xx</li>
-<li>Identifique o endpoint com maior taxa de erro</li>
-<li>Verifique se há padrão (horário, usuário, região)</li>
+<li>Access Kibana and filter by 5xx errors</li>
+<li>Identify the endpoint with the highest error rate</li>
+<li>Check for patterns (time, user, region)</li>
 </ul>
 <ol>
-<li><strong>Diagnosticar</strong></li>
+<li><strong>Diagnose</strong></li>
 </ol>
 <ul>
-<li>Verifique logs do serviço afetado</li>
-<li>Analise traces para identificar onde o erro ocorre</li>
-<li>Verifique dependências externas (DB, cache, APIs)</li>
+<li>Check logs of the affected service</li>
+<li>Analyze traces to identify where the error occurs</li>
+<li>Check external dependencies (DB, cache, APIs)</li>
 </ul>
 <ol>
-<li><strong>Resolver</strong></li>
+<li><strong>Resolve</strong></li>
 </ol>
 <ul>
-<li>Se erro de dependência: verificar status do serviço externo</li>
-<li>Se erro de código: hotfix ou rollback</li>
-<li>Se erro de infra: escalar ou reiniciar</li>
+<li>If error is due to dependency: check status of external service</li>
+<li>If error is due to code: hotfix or rollback</li>
+<li>If error is due to infrastructure: scale or restart</li>
 </ul>
 <ol>
-<li><strong>Documentar</strong></li>
+<li><strong>Document</strong></li>
 </ol>
 <ul>
-<li>Registre incidente no post-mortem</li>
-<li>Atualize runbook se necessário</li>
-<li>Crie task para correção definitiva</li>
+<li>Record incident in post-mortem</li>
+<li>Update runbook if necessary</li>
+<li>Create task for definitive correction</li>
 </ul>
 <h3 id="runbook-servicedown">Runbook: ServiceDown</h3>
 <ol>
-<li><strong>Verificar Status</strong></li>
+<li><strong>Check Status</strong></li>
 </ol>
-<pre data-lang="bash"><code>   # Verificar se processo está rodando
+<pre data-lang="bash"><code>   # Check if process is running
    ps aux | grep &lt;service-name&gt;
    
-   # Verificar portas
+   # Check ports
    netstat -tlnp | grep &lt;port&gt;</code></pre>
 <ol>
-<li><strong>Verificar Logs</strong></li>
+<li><strong>Check Logs</strong></li>
 </ol>
-<pre data-lang="bash"><code>   # Últimas linhas de log
+<pre data-lang="bash"><code>   # Last lines of log
    tail -100 /var/log/&lt;service&gt;/error.log</code></pre>
 <ol>
-<li><strong>Reiniciar</strong></li>
+<li><strong>Restart</strong></li>
 </ol>
-<pre data-lang="bash"><code>   # Reiniciar serviço
+<pre data-lang="bash"><code>   # Restart service
    systemctl restart &lt;service-name&gt;</code></pre>
 <ol>
-<li><strong>Monitorar</strong></li>
+<li><strong>Monitor</strong></li>
 </ol>
 <ul>
-<li>Acompanhe métricas após reinício</li>
-<li>Verifique se erros persistem</li>
+<li>Monitor metrics after restart</li>
+<li>Check if errors persist</li>
 </ul>
-<h2 id="escalonamento">Escalonamento</h2>
-<div class="table-wrapper"><table><tr><th>Nível</th><th>Tempo</th><th>Responsável</th><th>Contato</th></tr><tr><td>L1</td><td>0-5 min</td><td>On-call</td><td>PagerDuty</td></tr><tr><td>L2</td><td>5-15 min</td><td>Tech Lead</td><td>Slack #incidents</td></tr><tr><td>L3</td><td>15-30 min</td><td>Engineering Manager</td><td>Phone</td></tr><tr><td>L4</td><td>30+ min</td><td>VP Engineering</td><td>Executive</td></tr></table></div>
-<h2 id="checklist-de-alertas">Checklist de Alertas</h2>
+<h2 id="escalation">Escalation</h2>
+<div class="table-wrapper"><table><tr><th>Level</th><th>Time</th><th>Responsible</th><th>Contact</th></tr><tr><td>L1</td><td>0-5 min</td><td>On-call</td><td>PagerDuty</td></tr><tr><td>L2</td><td>5-15 min</td><td>Tech Lead</td><td>Slack #incidents</td></tr><tr><td>L3</td><td>15-30 min</td><td>Engineering Manager</td><td>Phone</td></tr><tr><td>L4</td><td>30+ min</td><td>VP Engineering</td><td>Executive</td></tr></table></div>
+<h2 id="alert-checklist">Alert Checklist</h2>
 <ul>
-<li>[ ] Alertas definidos com severidade</li>
-<li>[ ] Runbooks anexados a cada alerta</li>
-<li>[ ] Escalonamento configurado</li>
-<li>[ ] Notificações testadas</li>
-<li>[ ] Alertas review quarterly</li>
-<li>[ ] Freqüência de alertas monitorada</li>
+<li>[ ] Alerts defined with severity</li>
+<li>[ ] Runbooks attached to each alert</li>
+<li>[ ] Escalation configured</li>
+<li>[ ] Notifications tested</li>
+<li>[ ] Alerts reviewed quarterly</li>
+<li>[ ] Frequency of alerts monitored</li>
 </ul>
   </div>
 <footer>

@@ -2,25 +2,25 @@
 
 Execute após concluir a release.
 
-## Validação
-- [ ] GitHub Pages build concluído com sucesso
-- [ ] Site acessível: https://lscheffel.github.io/ignite-agents-skills/
-- [ ] Skills listadas corretamente no site
-- [ ] Templates e examples acessíveis
+## Validation
+- [ ] GitHub Pages build completed successfully
+- [ ] Site accessible: https://lscheffel.github.io/ignite-agents-skills/
+- [ ] Skills listed correctly on the site
+- [ ] Templates and examples accessible
 
-## Comunicação
-- [ ] Release notes publicadas (se aplicável)
-- [ ] Equipe notificada (se aplicável)
+## Communication
+- [ ] Release notes published (if applicable)
+- [ ] Team notified (if applicable)
 
-## Limpeza
-- [ ] Branch de feature removida (se aplicável)
-- [ ] Issues/PRs vinculados fechados
-- [ ] `[Unreleased]` no CHANGELOG vazio para próxima release
+## Cleanup
+- [ ] Feature branch removed (if applicable)
+- [ ] Issues/PRs linked closed
+- [ ] `[Unreleased]` in CHANGELOG empty for next release
 
-## Monitoramento
-- [ ] Nenhum erro reportado nos primeiros 24h
-- [ ] CI continuando passando em todas as branches
+## Monitoring
+- [ ] No errors reported in the first 24 hours
+- [ ] CI continuing to pass on all branches
 
 ---
 
-*Checklist de pós-release para ignite-agents-skills.*
+*Post-release checklist for ignite-agents-skills.*

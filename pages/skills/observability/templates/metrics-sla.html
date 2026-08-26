@@ -410,111 +410,111 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">observability</a> &rsaquo; templates &rsaquo; metrics-sla</div>
   </nav>
   <div class="content">
-    <h1 id="mtricas-e-slas">Métricas e SLAs</h1>
-<h2 id="viso-geral">Visão Geral</h2>
-<p>Documento de referência para métricas RED e SLAs/SLOs do sistema.</p>
-<h2 id="mtricas-red">Métricas RED</h2>
-<h3 id="rate-taxa-de-requisies">Rate (Taxa de Requisições)</h3>
+    <h1 id="metrics-and-slas">Metrics and SLAs</h1>
+<h2 id="overview">Overview</h2>
+<p>Reference document for RED metrics and SLAs/SLOs of the system.</p>
+<h2 id="red-metrics">RED Metrics</h2>
+<h3 id="rate-request-rate">Rate (Request Rate)</h3>
 <ul>
-<li><strong>Métrica:</strong> Requisições por segundo</li>
-<li><strong>Fórmula:</strong> <code>rate(http_requests_total[5m])</code></li>
-<li><strong>Dimensões:</strong> method, route, status_code</li>
+<li><strong>Metric:</strong> Requests per second</li>
+<li><strong>Formula:</strong> <code>rate(http_requests_total[5m])</code></li>
+<li><strong>Dimensions:</strong> method, route, status_code</li>
 </ul>
-<h3 id="errors-taxa-de-erros">Errors (Taxa de Erros)</h3>
+<h3 id="errors-error-rate">Errors (Error Rate)</h3>
 <ul>
-<li><strong>Métrica:</strong> Requisições com erro por segundo</li>
-<li><strong>Fórmula:</strong> <code>rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m])</code></li>
-<li><strong>Dimensões:</strong> method, route, error_type</li>
+<li><strong>Metric:</strong> Error requests per second</li>
+<li><strong>Formula:</strong> <code>rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m])</code></li>
+<li><strong>Dimensions:</strong> method, route, error_type</li>
 </ul>
-<h3 id="duration-duraolatncia">Duration (Duração/Latência)</h3>
+<h3 id="duration-latency">Duration (Latency)</h3>
 <ul>
-<li><strong>Métrica:</strong> Tempo de resposta em segundos</li>
-<li><strong>Percentis:</strong> p50, p95, p99</li>
-<li><strong>Histograma buckets:</strong> 0.1s, 0.5s, 1s, 2s, 5s</li>
+<li><strong>Metric:</strong> Response time in seconds</li>
+<li><strong>Percentiles:</strong> p50, p95, p99</li>
+<li><strong>Histogram buckets:</strong> 0.1s, 0.5s, 1s, 2s, 5s</li>
 </ul>
-<h2 id="mtricas-de-negcio">Métricas de Negócio</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Descrição</th><th>Tipo</th><th>Exemplo</th></tr><tr><td><code>orders_created_total</code></td><td>Total de pedidos criados</td><td>Counter</td><td>Contagem por período</td></tr><tr><td><code>revenue_total</code></td><td>Receita total</td><td>Counter</td><td>Valor acumulado</td></tr><tr><td><code>active_users</code></td><td>Usuários ativos</td><td>Gauge</td><td>Valor atual</td></tr></table></div>
+<h2 id="business-metrics">Business Metrics</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Description</th><th>Type</th><th>Example</th></tr><tr><td><code>orders_created_total</code></td><td>Total orders created</td><td>Counter</td><td>Count by period</td></tr><tr><td><code>revenue_total</code></td><td>Total revenue</td><td>Counter</td><td>Accumulated value</td></tr><tr><td><code>active_users</code></td><td>Active users</td><td>Gauge</td><td>Current value</td></tr></table></div>
 <h2 id="slasslos">SLAs/SLOs</h2>
-<h3 id="disponibilidade">Disponibilidade</h3>
+<h3 id="availability">Availability</h3>
 <ul>
-<li><strong>SLO:</strong> 99.9% disponibilidade mensal</li>
-<li><strong>Cálculo:</strong> <code>(total - erros) / total * 100</code></li>
-<li><strong>Error Budget:</strong> 43 minutos de downtime por mês</li>
+<li><strong>SLO:</strong> 99.9% monthly availability</li>
+<li><strong>Calculation:</strong> <code>(total - errors) / total * 100</code></li>
+<li><strong>Error Budget:</strong> 43 minutes of downtime per month</li>
 </ul>
-<h3 id="latncia">Latência</h3>
+<h3 id="latency">Latency</h3>
 <ul>
 <li><strong>SLO:</strong> p99 < 500ms</li>
-<li><strong>Cálculo:</strong> <code>histogram_quantile(0.99, http_request_duration_seconds)</code></li>
-<li><strong>Exceção:</strong> Endpoints de upload podem ter latência maior</li>
+<li><strong>Calculation:</strong> <code>histogram_quantile(0.99, http_request_duration_seconds)</code></li>
+<li><strong>Exception:</strong> Upload endpoints may have higher latency</li>
 </ul>
 <h3 id="throughput">Throughput</h3>
 <ul>
-<li><strong>SLO:</strong> Suportar 1000 RPS</li>
-<li><strong>Cálculo:</strong> <code>max(rate(http_requests_total[5m]))</code></li>
-<li><strong>Monitoramento:</strong> Alerta quando > 80% da capacidade</li>
+<li><strong>SLO:</strong> Support 1000 RPS</li>
+<li><strong>Calculation:</strong> <code>max(rate(http_requests_total[5m]))</code></li>
+<li><strong>Monitoring:</strong> Alert when > 80% capacity</li>
 </ul>
 <h2 id="dashboards">Dashboards</h2>
-<h3 id="dashboard-de-sade-do-sistema">Dashboard de Saúde do Sistema</h3>
+<h3 id="system-health-dashboard">System Health Dashboard</h3>
 <ul>
-<li>Taxa de requisições (Rate)</li>
-<li>Taxa de erros (Errors)</li>
-<li>Latência (Duration)</li>
-<li>Uso de CPU/Memória</li>
+<li>Request rate (Rate)</li>
+<li>Error rate (Errors)</li>
+<li>Latency (Duration)</li>
+<li>CPU/Memory usage</li>
 </ul>
-<h3 id="dashboard-de-negcio">Dashboard de Negócio</h3>
+<h3 id="business-dashboard">Business Dashboard</h3>
 <ul>
-<li>Pedidos por minuto</li>
-<li>Receita acumulada</li>
-<li>Usuários ativos</li>
-<li>Conversão</li>
+<li>Orders per minute</li>
+<li>Accumulated revenue</li>
+<li>Active users</li>
+<li>Conversion rate</li>
 </ul>
-<h2 id="exemplos-de-implementao">Exemplos de Implementação</h2>
+<h2 id="implementation-examples">Implementation Examples</h2>
 <h3 id="counter-prometheus">Counter (Prometheus)</h3>
 <pre data-lang="typescript"><code>import { Counter } from &#x27;prom-client&#x27;;
 
 const httpRequestTotal = new Counter({
   name: &#x27;http_requests_total&#x27;,
-  help: &#x27;Total de requisições HTTP&#x27;,
+  help: &#x27;Total HTTP requests&#x27;,
   labelNames: [&#x27;method&#x27;, &#x27;route&#x27;, &#x27;status_code&#x27;],
 });
 
-// Uso
+// Usage
 httpRequestTotal.inc({ method: &#x27;GET&#x27;, route: &#x27;/api/users&#x27;, status_code: 200 });</code></pre>
 <h3 id="histogram-prometheus">Histogram (Prometheus)</h3>
 <pre data-lang="typescript"><code>import { Histogram } from &#x27;prom-client&#x27;;
 
 const httpRequestDuration = new Histogram({
   name: &#x27;http_request_duration_seconds&#x27;,
-  help: &#x27;Duração de requisições HTTP&#x27;,
+  help: &#x27;HTTP request duration&#x27;,
   labelNames: [&#x27;method&#x27;, &#x27;route&#x27;],
   buckets: [0.1, 0.5, 1, 2, 5],
 });
 
-// Uso
+// Usage
 const end = httpRequestDuration.startTimer({ method: &#x27;GET&#x27;, route: &#x27;/api/users&#x27; });
-// ... processar request
+// ... process request
 end();</code></pre>
 <h3 id="gauge-prometheus">Gauge (Prometheus)</h3>
 <pre data-lang="typescript"><code>import { Gauge } from &#x27;prom-client&#x27;;
 
 const activeConnections = new Gauge({
   name: &#x27;active_connections&#x27;,
-  help: &#x27;Conexões ativas&#x27;,
+  help: &#x27;Active connections&#x27;,
 });
 
-// Uso
-activeConnections.inc(); // Nova conexão
-activeConnections.dec(); // Conexão fechada</code></pre>
-<h2 id="alertas-baseados-em-mtricas">Alertas Baseados em Métricas</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Condição</th><th>Severidade</th></tr><tr><td>Error Rate</td><td>> 5% por 5min</td><td>Critical</td></tr><tr><td>Latência p99</td><td>> 1s por 5min</td><td>Warning</td></tr><tr><td>Disponibilidade</td><td>< 99.9%</td><td>Critical</td></tr><tr><td>Throughput</td><td>> 80% capacidade</td><td>Warning</td></tr></table></div>
-<h2 id="checklist-de-mtricas">Checklist de Métricas</h2>
+// Usage
+activeConnections.inc(); // New connection
+activeConnections.dec(); // Closed connection</code></pre>
+<h2 id="metric-based-alerts">Metric-Based Alerts</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Condition</th><th>Severity</th></tr><tr><td>Error Rate</td><td>> 5% for 5min</td><td>Critical</td></tr><tr><td>Latency p99</td><td>> 1s for 5min</td><td>Warning</td></tr><tr><td>Availability</td><td>< 99.9%</td><td>Critical</td></tr><tr><td>Throughput</td><td>> 80% capacity</td><td>Warning</td></tr></table></div>
+<h2 id="metric-checklist">Metric Checklist</h2>
 <ul>
-<li>[ ] Métricas RED implementadas</li>
-<li>[ ] Métricas de negócio definidas</li>
-<li>[ ] SLAs/SLOs documentados</li>
-<li>[ ] Dashboards configurados</li>
-<li>[ ] Alertas baseados em métricas</li>
-<li>[ ] Retenção de métricas definida</li>
+<li>[ ] RED metrics implemented</li>
+<li>[ ] Business metrics defined</li>
+<li>[ ] SLAs/SLOs documented</li>
+<li>[ ] Dashboards configured</li>
+<li>[ ] Metric-based alerts</li>
+<li>[ ] Metric retention defined</li>
 </ul>
   </div>
 <footer>

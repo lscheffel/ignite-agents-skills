@@ -1,72 +1,72 @@
 # ADR Archive Checklist Template
 
-> Checklist para validação antes de arquivar ADR
+> Checklist for validation before archiving ADR
 
 ---
 
-## Pré-requisitos de Arquivamento
+## Prerequisites for Archiving
 
-### ADR Principal
-- [ ] Status é "Implementado" ou "Aceito"
-- [ ] ADR tem data de arquivamento
-- [ ] Referências a BP, TODO, PI (se aplicável) atualizadas
+### Primary ADR
+- [ ] Status is "Implemented" or "Accepted"
+- [ ] ADR has an archiving date
+- [ ] References to BP, TODO, PI (if applicable) are up-to-date
 
 ### Blueprint (BP)
-- [ ] BP existe: `ADR-XXX-BP.md`
-- [ ] Todas as fases marcadas como concluídas
-- [ ] Critérios de aceitação atendidos
+- [ ] BP exists: `ADR-XXX-BP.md`
+- [ ] All phases are marked as completed
+- [ ] Acceptance criteria are met
 
 ### TODO
-- [ ] TODO existe: `ADR-XXX-TODO.md`
-- [ ] **Zero tarefas pendentes** (`[ ]` → todas `[x]`)
-- [ ] Todos os comandos de validação passam
+- [ ] TODO exists: `ADR-XXX-TODO.md`
+- [ ] **Zero pending tasks** (`[ ]` → all `[x]`)
+- [ ] All validation commands pass
 
-### Implementation Plan (PI) — se Tier 2/3
-- [ ] PI existe: `ADR-XXX-PI.md`
-- [ ] Tasks microscópicas todas concluídas
-- [ ] Testes TDD passando
+### Implementation Plan (PI) — if Tier 2/3
+- [ ] PI exists: `ADR-XXX-PI.md`
+- [ ] Microscopic tasks are all completed
+- [ ] TDD tests are passing
 
 ### Execution Report (ER)
-- [ ] ER existe na raiz: `docs/adr/ADR-XXX-ER.md`
-- [ ] ER documenta: o que foi feito, testes, métricas, lições
-- [ ] ER linkado no ADR principal
+- [ ] ER exists in the root: `docs/adr/ADR-XXX-ER.md`
+- [ ] ER documents: what was done, tests, metrics, lessons
+- [ ] ER is linked in the primary ADR
 
 ---
 
-## Validação de Execução
+## Execution Validation
 
-- [ ] `./scripts/archive-adrs.sh --dry-run` mostra ADR como "Ready to Archive"
-- [ ] Nenhuma flag `ARCHIVED_MISTAKE_RETURN` para esta ADR
-- [ ] Branch de trabalho mergeada para master
-- [ ] Tag SemVer criada (se feature completa)
+- [ ] `./scripts/archive-adrs.sh --dry-run` shows ADR as "Ready to Archive"
+- [ ] No `ARCHIVED_MISTAKE_RETURN` flag for this ADR
+- [ ] Work branch merged into master
+- [ ] SemVer tag created (if feature is complete)
 
 ---
 
-## Comando de Arquivamento
+## Archiving Command
 
 ```bash
 python3 audit.py . --archive ADR-XXX
-# OU
+# OR
 ./scripts/archive-adrs.sh
 ```
 
 ---
 
-## Pós-Arquivamento
+## Post-Archiving
 
-- [ ] `docs/adr/INDEX.md` atualizado (movido para "Archived ADRs")
-- [ ] ADR + BP + TODO + PI movidos para `docs/adr/archive/`
-- [ ] ER permanece em `docs/adr/` (raiz)
-- [ ] Deploy gh-pages sincronizado
+- [ ] `docs/adr/INDEX.md` updated (moved to "Archived ADRs")
+- [ ] ADR + BP + TODO + PI moved to `docs/adr/archive/`
+- [ ] ER remains in `docs/adr/` (root)
+- [ ] gh-pages deploy synchronized
 
 ---
 
-## Exceções (Não Arquivar)
+## Exceptions (Do Not Archive)
 
-- [ ] ADR com status "Proposto" ou "Em Progresso"
-- [ ] ADR com TODO contendo `[ ]` (pendências)
-- [ ] ADR sem ER na raiz (criar ER primeiro)
-- [ ] ADR marcando débito técnico ativo (manter visível)
+- [ ] ADR with status "Proposed" or "In Progress"
+- [ ] ADR with TODO containing `[ ]` (pending tasks)
+- [ ] ADR without ER in the root (create ER first)
+- [ ] ADR marking active technical debt (keep visible)
 
 ---
 

@@ -1,55 +1,55 @@
-# Exemplo: Mudança Simples (1-2 Tarefas)
+# Example: Simple Change (1-2 Tasks)
 
-> Exemplo de implementação governada para uma mudança pontual: adicionar validação de input em um endpoint.
-
----
-
-## Contexto
-
-- **ADR:** ADR-006 (proposta para adicionar validação de input)
-- **Blueprint:** ADR-006-BP.md (2 tarefas: criar middleware + integrar)
-- **TODO:** ADR-006-TODO.md (2 tarefas, sem dependências entre si)
+> Example of a governed implementation for a point change: adding input validation to an endpoint.
 
 ---
 
-## Fluxo Completo
+## Context
+
+- **ADR:** ADR-006 (proposed for adding input validation)
+- **Blueprint:** ADR-006-BP.md (2 tasks: create middleware + integrate)
+- **TODO:** ADR-006-TODO.md (2 tasks, no dependencies between them)
+
+---
+
+## Complete Flow
 
 ### 1. Artifact Resolution
 
 ```bash
-# Agente identifica os artefatos
+# Agent identifies artifacts
 ADR_PATH="docs/adr/ADR-006.md"
 BP_PATH="docs/adr/ADR-006-BP.md"
 TODO_PATH="docs/adr/ADR-006-TODO.md"
 ```
 
-**Resultado:**
-- ADR existe ✅
-- Blueprint existe ✅
-- TODO existe ✅
-- Coerência verificada ✅
+**Result:**
+- ADR exists ✅
+- Blueprint exists ✅
+- TODO exists ✅
+- Coherence verified ✅
 
 ---
 
 ### 2. Execution Contract
 
 ```markdown
-## Artefatos
-| Artefato | Status | Coerente |
+## Artifacts
+| Artifact | Status | Coherent |
 |----------|--------|----------|
-| ADR-006.md | Aceito | ✅ |
-| ADR-006-BP.md | Existente | ✅ |
-| ADR-006-TODO.md | Existente | ✅ |
+| ADR-006.md | Accepted | ✅ |
+| ADR-006-BP.md | Exists | ✅ |
+| ADR-006-TODO.md | Exists | ✅ |
 
-## Ambiente
-| Campo | Valor |
+## Environment
+| Field | Value |
 |-------|-------|
 | Branch | feature/input-validation |
-| Workspace limpo | Sim |
-| Arquivos impactados | src/middleware/validate.ts, src/routes/users.ts |
+| Clean Workspace | Yes |
+| Affected Files | src/middleware/validate.ts, src/routes/users.ts |
 ```
 
-**Contrato validado ✅**
+**Contract validated ✅**
 
 ---
 
@@ -57,90 +57,90 @@ TODO_PATH="docs/adr/ADR-006-TODO.md"
 
 ```mermaid
 graph LR
-    T1[ Criar middleware validate.ts] --> T2[Integrar no endpoint]
+    T1[Create validate.ts middleware] --> T2[Integrate into endpoint]
 ```
 
-**Ordem:** T1 → T2 (sequencial, T2 depende de T1)
+**Order:** T1 → T2 (sequential, T2 depends on T1)
 
 ---
 
 ### 4. Execution Loop
 
-#### Tarefa 1: Criar middleware validate.ts
+#### Task 1: Create validate.ts middleware
 
-**Estado:** ⬜ → 🔄 Em andamento
+**State:** ⬜ → 🔄 In progress
 
-**Alterações:**
+**Changes:**
 ```
-Criado: src/middleware/validate.ts (+45 linhas)
+Created: src/middleware/validate.ts (+45 lines)
 ```
 
-**Validações:**
-| Validação | Resultado | Tentativa |
-|-----------|-----------|-----------|
+**Validations:**
+| Validation | Result | Attempt |
+|-----------|--------|----------|
 | Build | ✅ | 1 |
 | Lint | ✅ | 1 |
 | Typecheck | ✅ | 1 |
 
-**Estado:** 🔄 → ✅ Concluído
+**State:** 🔄 → ✅ Completed
 
 ---
 
-#### Tarefa 2: Integrar no endpoint
+#### Task 2: Integrate into endpoint
 
-**Estado:** ⬜ → 🔄 Em andamento
+**State:** ⬜ → 🔄 In progress
 
-**Alterações:**
+**Changes:**
 ```
-Modificado: src/routes/users.ts (+3 linhas, -1 linha)
+Modified: src/routes/users.ts (+3 lines, -1 line)
 ```
 
-**Validações:**
-| Validação | Resultado | Tentativa |
-|-----------|-----------|-----------|
+**Validations:**
+| Validation | Result | Attempt |
+|-----------|--------|----------|
 | Build | ✅ | 1 |
 | Lint | ✅ | 1 |
 | Typecheck | ✅ | 1 |
-| Testes unitários | ✅ | 1 |
+| Unit Tests | ✅ | 1 |
 
-**Estado:** 🔄 → ✅ Concluído
+**State:** 🔄 → ✅ Completed
 
 ---
 
 ### 5. Documentation Synchronization
 
-- ADR-006.md: adicionada nota de implementação ✅
-- README.md: não requer atualização (feature interna)
+- ADR-006.md: added implementation note ✅
+- README.md: no update required (internal feature)
 
 ---
 
 ### 6. Execution Report
 
 ```markdown
-## Resumo
-| Campo | Valor |
+## Summary
+| Field | Value |
 |-------|-------|
-| Tarefas totais | 2 |
-| Concluídas | 2 |
-| Adiadas | 0 |
-| Bloqueadas | 0 |
-| Taxa de conclusão | 100% |
+| Total Tasks | 2 |
+| Completed | 2 |
+| Deferred | 0 |
+| Blocked | 0 |
+| Completion Rate | 100% |
 
-## Validações
-| Validação | Resultado |
-|-----------|-----------|
+## Validations
+| Validation | Result |
+|-----------|--------|
 | Build | ✅ |
 | Lint | ✅ |
 | Typecheck | ✅ |
-| Testes | ✅ |
+| Tests | ✅ |
 ```
 
-**Implementação concluída com sucesso ✅**
+**Implementation completed successfully ✅**
 
 ---
 
-## Lições
+## Lessons
 
-1. Mudanças simples (1-2 tarefas) podem ser executadas em um único ciclo
-2. Mesmo para mudanças simples, o Execution Contract garante que nada foi esquecido
-3. O relatório final documenta que a implementação foi validada
+1. Simple changes (1-2 tasks) can be executed in a single cycle
+2. Even for simple changes, the Execution Contract ensures nothing was overlooked
+3. The final report documents that the implementation was validated

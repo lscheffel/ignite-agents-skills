@@ -1,28 +1,28 @@
 # Example: ADR Archive Workflow
 
-> Exemplo completo de uso da skill `adr-archive` para arquivar ADR-007
+> Complete usage example of the `adr-archive` skill for archiving ADR-007
 
 ---
 
-## Cenário
+## Scenario
 
-ADR-007 (AGENTS.md Generator) foi implementada com:
-- `docs/adr/ADR-007.md` — ADR principal
+ADR-007 (AGENTS.md Generator) was implemented with:
+- `docs/adr/ADR-007.md` — Main ADR
 - `docs/adr/ADR-007-BP.md` — Blueprint
-- `docs/adr/ADR-007-TODO.md` — TODO 100% completo
+- `docs/adr/ADR-007-TODO.md` — 100% complete TODO
 - `docs/adr/ADR-007-PI.md` — Implementation Plan (Tier 2)
-- `docs/adr/ADR-007-ER.md` — Execution Report na raiz
+- `docs/adr/ADR-007-ER.md` — Execution Report in the root
 
 ---
 
-## Passo 1: Auditoria (Zero Tokens)
+## Step 1: Audit (Zero Tokens)
 
 ```bash
 cd /home/loupan/projetosVS/ignite-agents-skills
 python3 skills/adr-archive/scripts/audit.py .
 ```
 
-**Output esperado:**
+**Expected Output:**
 ```
 🔍 ADR Archive Audit — 2026-07-15
 =====================================
@@ -41,24 +41,24 @@ python3 skills/adr-archive/scripts/audit.py .
 
 ---
 
-## Passo 2: Ler Relatório
+## Step 2: Read Report
 
 ```bash
 cat docs/reports/adr-archive-report-20260715.md
 ```
 
-**Trecho do relatório:**
+**Report Excerpt:**
 ```markdown
-## Flags de Ação
-| Flag | ADR | Descrição | Ação Requerida |
-|------|-----|-----------|----------------|
+## Action Flags
+| Flag | ADR | Description | Required Action |
+|------|-----|-------------|-----------------|
 | READY_TO_ARCHIVE | ADR-007 | ADR-007-ER.md exists, TODO complete | python3 audit.py . --archive ADR-007 |
 | READY_TO_ARCHIVE | ADR-008 | ADR-008-ER.md exists, TODO complete | python3 audit.py . --archive ADR-008 |
 ```
 
 ---
 
-## Passo 3: Arquivar
+## Step 3: Archive
 
 ```bash
 python3 skills/adr-archive/scripts/audit.py . --archive ADR-007
@@ -80,22 +80,22 @@ python3 skills/adr-archive/scripts/audit.py . --archive ADR-008
 
 ---
 
-## Passo 4: Verificar
+## Step 4: Verify
 
 ```bash
 ls -la docs/adr/
-# Deve mostrar apenas ERs + ADRs ativas (se houver)
+# Should show only ERs + active ADRs (if any)
 
 ls -la docs/adr/archive/
-# Deve mostrar ADR-007*, ADR-008*
+# Should show ADR-007*, ADR-008*
 
 cat docs/adr/INDEX.md
-# Seção "Archived ADRs" deve incluir ADR-007 e ADR-008
+# "Archived ADRs" section should include ADR-007 and ADR-008
 ```
 
 ---
 
-## Passo 5: Deploy gh-pages (Governança)
+## Step 5: Deploy gh-pages (Governance)
 
 ```bash
 git checkout gh-pages
@@ -106,4 +106,4 @@ git checkout master
 
 ---
 
-*Exemplo: `skills/adr-archive/examples/archive-workflow.md`*
+*Example: `skills/adr-archive/examples/archive-workflow.md`*

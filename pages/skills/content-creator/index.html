@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>content-creator — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; content-creator</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: content-creator version: 1.0.0 description: 'Use when the user needs marketing copy, social media content, brand voice development, ad copy, newsletters, or persuasive writing for business audiences. Trigger conditions: social media post drafting, email campaign copy, landing page text, ad copy creation, brand voice definition, content calendar planning, headline writing, A/B test copy variations, newsletter composition.' domain: domain-stack triggers:</p>
+<ul>
+<li>content-creator</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>content-creator</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="content-creator">Content Creator</h1>
+<h2 id="overview">Overview</h2>
+<p>Create compelling marketing content across channels including social media, email campaigns, landing pages, ad copy, newsletters, and brand messaging. This skill covers brand voice development, audience targeting, copywriting frameworks (AIDA, PAS, BAB), platform-specific optimization, A/B testing copy, content calendars, and conversion-focused writing.</p>
+<p>Apply this skill whenever content must persuade, engage, or convert an audience through a specific marketing channel.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-brand-and-audience-analysis">Phase 1: Brand and Audience Analysis</h3>
+<ol>
+<li>Define or review the brand voice (tone, personality, values)</li>
+<li>Identify target audience personas (demographics, psychographics, pain points)</li>
+<li>Map the customer journey stage for this content</li>
+<li>Analyze competitor messaging and positioning</li>
+<li>Establish key differentiators and value propositions</li>
+</ol>
+<blockquote><strong>STOP — Do NOT create content without a defined brand voice and audience persona.</strong></blockquote>
+<h3 id="phase-2-content-strategy">Phase 2: Content Strategy</h3>
+<ol>
+<li>Determine content goal (awareness, engagement, conversion, retention)</li>
+<li>Select channel(s) and format(s)</li>
+<li>Identify primary and secondary keywords or themes</li>
+<li>Define call-to-action (CTA) for each piece</li>
+<li>Plan content cadence and publishing schedule</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin drafting without a clear goal and CTA for each piece.</strong></blockquote>
+<h3 id="phase-3-creation">Phase 3: Creation</h3>
+<ol>
+<li>Draft using appropriate copywriting framework (see decision table)</li>
+<li>Write multiple headline/hook variations (minimum 3)</li>
+<li>Adapt tone and length for each platform</li>
+<li>Create supporting visual direction or copy for images</li>
+<li>Include relevant hashtags, mentions, or links</li>
+</ol>
+<blockquote><strong>STOP — Do NOT publish without reviewing against brand voice checklist and platform guidelines.</strong></blockquote>
+<h3 id="phase-4-optimization">Phase 4: Optimization</h3>
+<ol>
+<li>A/B test headlines, CTAs, and opening lines</li>
+<li>Review for brand voice consistency</li>
+<li>Check readability (aim for grade 6-8 for general audiences)</li>
+<li>Verify compliance (disclosures, disclaimers, regulations)</li>
+<li>Schedule or publish with tracking parameters (UTMs)</li>
+</ol>
+<h2 id="copywriting-framework-decision-table">Copywriting Framework Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Framework</th><th>Why</th></tr><tr><td>Product launch, new feature announcement</td><td>AIDA</td><td>Builds from attention to action progressively</td></tr><tr><td>Audience aware of pain, needs motivation</td><td>PAS</td><td>Amplifies urgency before presenting solution</td></tr><tr><td>Transformation story, before/after</td><td>BAB</td><td>Visualizes the change your product enables</td></tr><tr><td>Testimonial-driven, social proof heavy</td><td>4Ps</td><td>Leverages proof as primary persuasion lever</td></tr><tr><td>Short-form (tweets, ads under 100 chars)</td><td>Hook + CTA</td><td>No room for frameworks -- lead with value</td></tr><tr><td>Email nurture sequence</td><td>PAS or BAB</td><td>Builds relationship over multiple touches</td></tr><tr><td>Landing page hero section</td><td>AIDA</td><td>Maps directly to hero, benefits, proof, CTA sections</td></tr></table></div>
+<h2 id="copywriting-frameworks">Copywriting Frameworks</h2>
+<h3 id="aida-attention-interest-desire-action">AIDA (Attention, Interest, Desire, Action)</h3>
+<pre><code>Attention: Hook that stops the scroll
+Interest:  Why this matters to the reader
+Desire:    Paint the transformation/benefit
+Action:    Clear, specific CTA</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code>Tired of spreadsheets that crash with 10,000 rows?        [Attention]
+Our engine handles 10 million rows in under a second.     [Interest]
+Imagine finishing your quarterly report in minutes,        [Desire]
+not hours.
+Start your free trial — no credit card required.           [Action]</code></pre>
+<h3 id="pas-problem-agitate-solution">PAS (Problem, Agitate, Solution)</h3>
+<pre><code>Problem:   Name the pain point directly
+Agitate:   Amplify the consequences of inaction
+Solution:  Present your offering as the resolution</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code>Your team wastes 6 hours/week on manual data entry.       [Problem]
+That&#x27;s 312 hours a year — enough to launch two new        [Agitate]
+products. What if you could get that time back?
+AutoFlow eliminates manual entry with AI-powered           [Solution]
+data capture. See it in action →</code></pre>
+<h3 id="bab-before-after-bridge">BAB (Before, After, Bridge)</h3>
+<pre><code>Before: Current painful state
+After:  Desired future state
+Bridge: How to get there (your product/service)</code></pre>
+<h3 id="4ps-promise-picture-proof-push">4Ps (Promise, Picture, Proof, Push)</h3>
+<pre><code>Promise: Bold claim or benefit
+Picture: Help reader visualize the outcome
+Proof:   Social proof, data, testimonials
+Push:    Urgency or clear next step</code></pre>
+<h2 id="platform-specific-guidelines">Platform-Specific Guidelines</h2>
+<h3 id="social-media-character-limits-and-best-practices">Social Media Character Limits and Best Practices</h3>
+<div class="table-wrapper"><table><tr><th>Platform</th><th>Ideal Length</th><th>Best Practices</th></tr><tr><td>Twitter/X</td><td>70-100 chars (engagement sweet spot)</td><td>Questions, threads, polls; 1-2 hashtags</td></tr><tr><td>LinkedIn</td><td>1300 chars (before "see more")</td><td>Professional tone, personal stories, carousels; 3-5 hashtags</td></tr><tr><td>Instagram caption</td><td>125 chars (before truncation)</td><td>Visual-first, emoji ok, 20-30 hashtags in comment</td></tr><tr><td>Facebook</td><td>40-80 chars (highest engagement)</td><td>Questions, storytelling, video preferred</td></tr><tr><td>TikTok caption</td><td>150 chars</td><td>Trending sounds, hooks in first 3 seconds</td></tr><tr><td>YouTube title</td><td>60 chars max</td><td>Keyword-front, emotional trigger, number</td></tr><tr><td>Email subject</td><td>30-50 chars</td><td>Personalization, curiosity gap, urgency</td></tr><tr><td>Blog headline</td><td>55-70 chars</td><td>How-to, numbered lists, power words</td></tr></table></div>
+<h3 id="post-structure-by-platform">Post Structure by Platform</h3>
+<pre><code># LinkedIn
+[Hook line — bold statement or question]
+
+[2-3 short paragraphs with line breaks]
+
+[Insight or lesson]
+
+[CTA — question to drive comments]
+
+#relevant #hashtags
+
+---
+
+# Twitter/X Thread
+1/ [Strong hook with the main insight]
+
+2/ [Context or background]
+
+3/ [Key point with evidence]
+
+4/ [Practical takeaway]
+
+5/ [CTA — follow, share, or reply]
+
+---
+
+# Instagram
+[First line = hook (shows in feed)]
+
+Full caption with story, value, or education.
+
+CTA: Save this post / Tag someone who needs this
+
+.
+.
+.
+#hashtags #in #comment #or #after #line #breaks</code></pre>
+<h2 id="brand-voice-framework">Brand Voice Framework</h2>
+<h3 id="voice-attributes-matrix">Voice Attributes Matrix</h3>
+<div class="table-wrapper"><table><tr><th>Attribute</th><th>We Are</th><th>We Are Not</th><th>Example</th></tr><tr><td>Tone</td><td>Confident</td><td>Arrogant</td><td>"Here's what works" not "We're the best"</td></tr><tr><td>Language</td><td>Clear</td><td>Simplistic</td><td>Explain complex topics simply</td></tr><tr><td>Humor</td><td>Witty</td><td>Sarcastic</td><td>Light wordplay, never at reader's expense</td></tr><tr><td>Formality</td><td>Professional</td><td>Stuffy</td><td>First person, contractions ok</td></tr><tr><td>Emotion</td><td>Empathetic</td><td>Manipulative</td><td>Acknowledge pain, don't exploit it</td></tr></table></div>
+<h3 id="voice-consistency-checklist">Voice Consistency Checklist</h3>
+<ul>
+<li>Would a real person say this out loud?</li>
+<li>Does it sound like the same person across all channels?</li>
+<li>Is the vocabulary level appropriate for the audience?</li>
+<li>Are we talking WITH the reader, not AT them?</li>
+<li>Does the tone match the content gravity (don't be playful about serious topics)?</li>
+</ul>
+<h2 id="headline-formulas">Headline Formulas</h2>
+<h3 id="proven-patterns">Proven Patterns</h3>
+<pre><code>How to [Achieve Desired Outcome] Without [Common Objection]
+[Number] [Adjective] Ways to [Achieve Goal] in [Timeframe]
+Why [Common Belief] Is Wrong (And What to Do Instead)
+The [Adjective] Guide to [Topic] for [Audience]
+[Number] Mistakes [Audience] Make with [Topic] (And How to Fix Them)
+What [Authority/Company] Taught Me About [Topic]
+[Topic]: [Subtitle That Adds Specificity]
+Stop [Bad Practice]. Start [Good Practice]. Here&#x27;s How.</code></pre>
+<h3 id="headline-testing-criteria">Headline Testing Criteria</h3>
+<div class="table-wrapper"><table><tr><th>Factor</th><th>Weight</th><th>Evaluation</th></tr><tr><td>Clarity</td><td>30%</td><td>Reader knows what they'll get</td></tr><tr><td>Specificity</td><td>25%</td><td>Numbers, outcomes, timeframes</td></tr><tr><td>Emotional trigger</td><td>20%</td><td>Curiosity, fear, aspiration</td></tr><tr><td>Relevance</td><td>15%</td><td>Matches audience pain points</td></tr><tr><td>Uniqueness</td><td>10%</td><td>Stands out from competitors</td></tr></table></div>
+<h2 id="email-copy-patterns">Email Copy Patterns</h2>
+<h3 id="welcome-email">Welcome Email</h3>
+<pre><code>Subject: Welcome to [Brand] — here&#x27;s your first win
+
+Hi [Name],
+
+You just made a great decision.
+
+Here&#x27;s one thing you can do right now to get the most
+out of [Product]:
+
+[Single, specific action with link]
+
+That&#x27;s it. One step. Takes 2 minutes.
+
+If you need anything, just reply to this email — a real
+human will answer.
+
+[Signature]</code></pre>
+<h3 id="promotional-email">Promotional Email</h3>
+<pre><code>Subject: [Benefit] — [Time Limitation]
+
+[Name], quick question:
+
+[Problem statement as a question?]
+
+We built [Product/Feature] to solve exactly that.
+
+Here&#x27;s what [Customer/Number] are saying:
+&quot;[Testimonial]&quot;
+
+[CTA Button: Get Started / Try Free / See How]
+
+[Urgency element if genuine]</code></pre>
+<h2 id="content-calendar-template">Content Calendar Template</h2>
+<div class="table-wrapper"><table><tr><th>Day</th><th>Platform</th><th>Content Type</th><th>Topic/Theme</th><th>CTA</th><th>Status</th></tr><tr><td>Mon</td><td>LinkedIn</td><td>Thought leadership</td><td>Industry trend</td><td>Comment</td><td>Draft</td></tr><tr><td>Tue</td><td>Twitter</td><td>Thread</td><td>How-to tip</td><td>Follow</td><td>Scheduled</td></tr><tr><td>Wed</td><td>Blog</td><td>Long-form article</td><td>Deep dive</td><td>Subscribe</td><td>Writing</td></tr><tr><td>Thu</td><td>Instagram</td><td>Carousel</td><td>Quick tips</td><td>Save</td><td>Design</td></tr><tr><td>Fri</td><td>Email</td><td>Newsletter</td><td>Weekly roundup</td><td>Read more</td><td>Template</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Writing for the brand, not the audience</td><td>Self-serving content gets ignored</td><td>Lead with audience pain points and desires</td></tr><tr><td>Same copy across all platforms</td><td>Ignores platform culture and format</td><td>Adapt tone, length, and structure per channel</td></tr><tr><td>Burying the CTA in long copy</td><td>Reader never reaches the ask</td><td>Put CTA early or make it impossible to miss</td></tr><tr><td>Leading with features, not benefits</td><td>"What it does" doesn't motivate action</td><td>Translate features into outcomes</td></tr><tr><td>Corporate jargon ("leverage", "synergy")</td><td>Feels inauthentic and impersonal</td><td>Use plain language a friend would use</td></tr><tr><td>No clear goal per content piece</td><td>Impossible to measure success</td><td>Define one measurable goal before drafting</td></tr><tr><td>Clickbait headlines</td><td>Erodes trust when content doesn't deliver</td><td>Promise only what the content provides</td></tr><tr><td>No A/B testing</td><td>Missing optimization opportunities</td><td>Test 2-3 headline and CTA variations</td></tr><tr><td>Missing UTM tracking parameters</td><td>Cannot attribute traffic to content</td><td>Add UTMs to every outbound link</td></tr><tr><td>Publishing without compliance check</td><td>Legal and regulatory risk</td><td>Review disclosures, disclaimers, and regulations</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip brand voice definition because "we know our voice" -- document it in the matrix.</li>
+<li>Do NOT publish content without a defined CTA, even for "awareness" posts.</li>
+<li>Do NOT reuse the same copy across platforms without adaptation.</li>
+<li>Do NOT write headlines without generating at least 3 variations to compare.</li>
+<li>Do NOT skip the readability check -- grade 6-8 is the target for general audiences.</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>seo-optimizer</code></td><td>Keywords and meta tag strategy inform content headlines and structure</td></tr><tr><td><code>content-research-writer</code></td><td>Research findings provide evidence for marketing claims</td></tr><tr><td><code>email-composer</code></td><td>Brand voice and templates feed directly into email campaigns</td></tr><tr><td><code>llm-as-judge</code></td><td>Evaluate content quality against brand voice rubric</td></tr><tr><td><code>frontend-ui-design</code></td><td>Landing page copy must align with visual hierarchy and CTA placement</td></tr><tr><td><code>senior-prompt-engineer</code></td><td>AI-generated copy benefits from structured prompt patterns</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt voice, format, and framework to the brand guidelines, target audience, and distribution channel. The copywriting frameworks and platform guidelines are recommendations; brand voice consistency is the non-negotiable.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -1,49 +1,49 @@
 # Security Checklist
 
-Use este checklist durante revisões de código para garantir práticas de segurança.
+Use this checklist during code reviews to ensure secure practices.
 
-## Secrets & Credenciais
+## Secrets & Credentials
 
-- [ ] Nenhum secret hardcoded no código
-- [ ] `.env` está no `.gitignore`
-- [ ] `.env.example` documenta todas as variáveis
-- [ ] Testes usam valores mock/placeholder
-- [ ] Logs não expõem dados sensíveis (PII, tokens)
+- [ ] No hardcoded secrets in code
+- [ ] `.env` is in `.gitignore`
+- [ ] `.env.example` documents all variables
+- [ ] Tests use mock/placeholder values
+- [ ] Logs do not expose sensitive data (PII, tokens)
 
-## Dependências
+## Dependencies
 
-- [ ] `npm audit` / `yarn audit` sem vulnerabilidades críticas
-- [ ] Dependências descontinuadas substituídas
-- [ ] Licenças compatíveis com o projeto
-- [ ] Lock file commitado
+- [ ] `npm audit` / `yarn audit` without critical vulnerabilities
+- [ ] Discontinued dependencies replaced
+- [ ] Licenses compatible with the project
+- [ ] Lock file committed
 
-## Criptografia
+## Encryption
 
-- [ ] Algoritmos adequados (não MD5/SHA1 para senhas)
-- [ ] AES-GCM: nonce único de 12 bytes por operação
+- [ ] Suitable algorithms (not MD5/SHA1 for passwords)
+- [ ] AES-GCM: unique 12-byte nonce per operation
 - [ ] scrypt: N≥16384, r≥8, p≥1
-- [ ] Chaves não hardcoded
-- [ ] Comparações usam `crypto.timingSafeEqual()`
+- [ ] Keys not hardcoded
+- [ ] Comparisons use `crypto.timingSafeEqual()`
 
-## Autenticação & Autorização
+## Authentication & Authorization
 
-- [ ] Endpoints autenticados verificados
-- [ ] Rate limiting implementado
-- [ ] Sessões expiram adequadamente
-- [ ] Tokens têm tempo de vida limitado
+- [ ] Authenticated endpoints verified
+- [ ] Rate limiting implemented
+- [ ] Sessions expire properly
+- [ ] Tokens have limited lifetimes
 
-## Validação de Entrada
+## Input Validation
 
-- [ ] Inputs sanitizados contra XSS
-- [ ] Queries parametrizadas (não concatenação)
-- [ ] Upload de arquivos validado (tipo, tamanho)
-- [ ] Headers de segurança presentes (CSP, HSTS)
+- [ ] Inputs sanitized against XSS
+- [ ] Parameterized queries (not concatenation)
+- [ ] File uploads validated (type, size)
+- [ ] Security headers present (CSP, HSTS)
 
-## Referências
+## References
 
 - [OWASP Top 10](https://owasp.org/Top10/)
 - [CWE/SANS Top 25](https://cwe.mitre.org/top25/)
 
 ---
 
-*Checklist de segurança para ignite-agents-skills.*
+*Security checklist for ignite-agents-skills.*

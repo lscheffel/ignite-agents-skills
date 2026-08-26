@@ -411,21 +411,11 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: code-review description: > Autonomous multi-agent code review runtime protocol with deterministic execution, semantic code analysis, consensus voting, immutable audit trails, supply-chain security verification and fail-closed governance enforcement.</p>
-<p>version: 4.0.0 maturity: autonomous-runtime classification: critical-governance-component</p>
-<p>owner: Architecture Governance Board</p>
-<p>tags:</p>
+<p>name: code-review version: 5.0.0 description: Unified code review engine supporting fast iterative review (mode: lite) and rigorous multi-agent consensus verification (mode: full). domain: engineering-quality triggers:</p>
 <ul>
 <li>code-review</li>
-<li>governance</li>
-<li>security</li>
-<li>autonomous-agents</li>
-<li>supply-chain</li>
-<li>audit</li>
-<li>compliance</li>
-</ul>
-<p>triggers:</p>
-<ul>
+<li>code-review-lite</li>
+<li>review_code</li>
 <li>task_completion</li>
 <li>feature_completion</li>
 <li>pre_commit</li>
@@ -433,46 +423,30 @@
 <li>release_candidate</li>
 <li>production_deployment</li>
 </ul>
-<p>required_before_merge: true audit_required: true consensus_required: true minimum_reviewers: 3</p>
-<p>capabilities:</p>
+<p>tags:</p>
 <ul>
-<li>semantic_analysis</li>
-<li>dependency_scanning</li>
-<li>security_review</li>
-<li>architecture_review</li>
-<li>performance_review</li>
-<li>audit_generation</li>
-<li>consensus_evaluation</li>
+<li>code-review</li>
+<li>governance</li>
+<li>security</li>
+<li>autonomous-agents</li>
+<li>fast-feedback</li>
+<li>audit</li>
+<li>compliance</li>
 </ul>
-<p>dependencies: external_tools:</p>
-<ul>
-<li>syft</li>
-<li>gitleaks</li>
-<li>pip-audit</li>
-<li>npm-audit</li>
-<li>cargo-audit</li>
-<li>grype</li>
-</ul>
-<p>integrations:</p>
-<ul>
-<li>planning</li>
-<li>acceptance-testing</li>
-<li>security-review</li>
-<li>self-learning</li>
-<li>verification-before-completion</li>
-</ul>
-<h2 id="skilltype-rigid">skill_type: RIGID</h2>
-<h1 id="code-review-v40">Code Review v4.0</h1>
-<h2 id="mission">Mission</h2>
-<p>Guarantee that no code reaches production without:</p>
-<ul>
-<li>specification compliance</li>
-<li>architectural compliance</li>
-<li>security compliance</li>
-<li>operational compliance</li>
-<li>supply-chain compliance</li>
-<li>audit traceability</li>
-</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-24' ---</p>
+<h1 id="unified-code-review-engine-v500">Unified Code Review Engine (v5.0.0)</h1>
+<p>This unified engine operates in two interchangeable modes of intensity:</p>
+<pre><code>                                  UNIFIED CODE REVIEW ENGINE
+                                                │
+                       ┌────────────────────────┴────────────────────────┐
+                       ▼                                                 ▼
+             [ MODE: LITE (Default) ]                           [ MODE: FULL (Audit) ]
+        - Fast Feedback (30-90s)                        - Multi-Agent Pipeline
+        - Logical Regression Checks                 - SBOM and Supply-Chain Security
+        - Immediate Security Sanity Checks              - Consensus Voting (Council)
+        - Vibe-coding and Iterative PRs                  - Audit Trail and Immutability</code></pre>
+<h2 id="mode-selection">Mode Selection</h2>
+<div class="table-wrapper"><table><tr><th>Mode</th><th>Typical Triggers</th><th>Average Time</th><th>Scope of Verification</th></tr><tr><td><strong><code>mode: lite</code></strong> <em>(Default)</em></td><td>"review this diff", "fast code review", "check if I broke something", iterative commits, vibe-coding.</td><td>~30-90s</td><td>Logical regressions, immediate security (OWASP Top 10), linting, testing, and alignment with the plan.</td></tr><tr><td><strong><code>mode: full</code></strong></td><td>"formal architecture review", "critical pre-merge", "release candidate", multi-agent audit.</td><td>~3-10 min</td><td>Formal verification of SBOM, supply-chain security, multi-agent council deliberation, consensus, and audit trail.</td></tr></table></div>
 <hr>
 <h1 id="runtime-principles">Runtime Principles</h1>
 <ol>
@@ -481,10 +455,21 @@
 <li>Defense in Depth</li>
 <li>Immutable Audit Trail</li>
 <li>Human Override</li>
-<li>Multi-Agent Consensus</li>
+<li>Multi-Agent Consensus (in Full Mode)</li>
 <li>No Raw Untrusted Context</li>
 <li>Fail Closed</li>
 </ol>
+<hr>
+<h2 id="operational-flow-lite-mode-fast-guardrail">Operational Flow: Lite Mode (Fast Guardrail)</h2>
+<p>When executed in <code>mode: lite</code>:</p>
+<ol>
+<li><strong>Delta Analysis:</strong> Inspect only recent <code>git diff</code> modifications.</li>
+<li><strong>Sanity Check:</strong> Verify if implicit assumptions were broken and if automated tests cover the change.</li>
+<li><strong>Security Sanity:</strong> Verify SQL injection, hardcoded credentials, XSS, and input validation.</li>
+<li><strong>Rapid Verdict:</strong> Return immediately with a list of improvements and approval/blocking in direct format.</li>
+</ol>
+<hr>
+<h2 id="operational-flow-full-mode-multi-agent-protocol">Operational Flow: Full Mode (Multi-Agent Protocol)</h2>
 <hr>
 <h1 id="runtime-state-machine">Runtime State Machine</h1>
 <pre data-lang="text"><code>INITIALIZED
@@ -574,7 +559,7 @@ ESCALATE_SECURITY</code></pre>
 <h1 id="phase-2--semantic-extraction">Phase 2 — Semantic Extraction</h1>
 <h2 id="allowed-artifacts">Allowed Artifacts</h2>
 <ul>
-<li>AST</li>
+<li>Abstract Syntax Tree (AST)</li>
 <li>Semantic Graph</li>
 <li>Code Property Graph</li>
 <li>Dependency Graph</li>

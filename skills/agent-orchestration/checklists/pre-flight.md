@@ -1,32 +1,32 @@
 # Pre-Flight Checklist
 
-Checklist antes de iniciar orquestração multi-agente.
+Multi-Agent Orchestration Checklist before initialization.
 
-## Decomposição
-- [ ] Tarefa decomposta em subtarefas claras
-- [ ] Dependências entre subtarefas mapeadas
-- [ ] Subtarefas independentes identificadas para paralelismo
+## Decomposition
+- [ ] Task decomposed into clear subtasks
+- [ ] Dependencies between subtasks mapped
+- [ ] Independent subtasks identified for parallelism
 
-## Papéis
-- [ ] Papel definido para cada agente
-- [ ] Card de papel preenchido para cada agente
-- [ ] Responsabilidades não se sobrepõem
+## Roles
+- [ ] Role defined for each agent
+- [ ] Role card filled in for each agent
+- [ ] Responsibilities do not overlap
 
-## Contratos
-- [ ] Contrato I/O definido para cada handoff
-- [ ] Schemas consistentes entre agentes
-- [ ] Validação implementada para cada contrato
-- [ ] Fallback definido para cada contrato
+## Contracts
+- [ ] I/O contract defined for each handoff
+- [ ] Schemas consistent across agents
+- [ ] Validation implemented for each contract
+- [ ] Fallback defined for each contract
 
-## Roteamento
-- [ ] Modelo selecionado para cada papel
-- [ ] Custo estimado documentado
-- [ ] Fallback de modelo definido
-- [ ] Throughput adequado
+## Routing
+- [ ] Model selected for each role
+- [ ] Estimated cost documented
+- [ ] Fallback model defined
+- [ ] Adequate throughput
 
-## Execução
-- [ ] Fan-out configurado para subtarefas independentes
-- [ ] Fan-in configurado para agregação
-- [ ] Gate de sincronização definido
-- [ ] Janela de contexto configurada
-- [ ] Logging configurado
+## Execution
+- [ ] Fan-out configured for independent subtasks
+- [ ] Fan-in configured for aggregation
+- [ ] Synchronization gate defined
+- [ ] Context window configured
+- [ ] Logging configured

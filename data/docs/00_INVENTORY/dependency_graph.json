@@ -1,0 +1,1971 @@
+{
+  "metadata": {
+    "title": "Directed Dependency & Coupling Graph",
+    "generated_at": "2026-08-24T22:08:30.830839+00:00",
+    "total_nodes": 81
+  },
+  "nodes": [
+    {
+      "id": "adr-archive",
+      "name": "adr-archive",
+      "category": "config_skill"
+    },
+    {
+      "id": "adr-generator",
+      "name": "adr-generator",
+      "category": "config_skill"
+    },
+    {
+      "id": "agent-development",
+      "name": "agent-development",
+      "category": "config_skill"
+    },
+    {
+      "id": "agent-orchestration",
+      "name": "agent-orchestration",
+      "category": "config_skill"
+    },
+    {
+      "id": "agent-planning-execution",
+      "name": "agent-planning-execution",
+      "category": "config_skill"
+    },
+    {
+      "id": "agents-md-management",
+      "name": "agents-md-management",
+      "category": "config_skill"
+    },
+    {
+      "id": "api-design",
+      "name": "api-design",
+      "category": "config_skill"
+    },
+    {
+      "id": "architecture-review",
+      "name": "architecture-review",
+      "category": "config_skill"
+    },
+    {
+      "id": "artifacts-builder",
+      "name": "artifacts-builder",
+      "category": "config_skill"
+    },
+    {
+      "id": "brainstorming",
+      "name": "brainstorming",
+      "category": "config_skill"
+    },
+    {
+      "id": "cap",
+      "name": "cap",
+      "category": "config_skill"
+    },
+    {
+      "id": "changelog-generator",
+      "name": "changelog-generator",
+      "category": "config_skill"
+    },
+    {
+      "id": "circuit-breaker",
+      "name": "circuit-breaker",
+      "category": "config_skill"
+    },
+    {
+      "id": "clean-code",
+      "name": "clean-code",
+      "category": "config_skill"
+    },
+    {
+      "id": "code-review",
+      "name": "code-review",
+      "category": "config_skill"
+    },
+    {
+      "id": "code-review-lite",
+      "name": "code-review-lite",
+      "category": "config_skill"
+    },
+    {
+      "id": "code-review-workflow",
+      "name": "code-review-workflow",
+      "category": "config_skill"
+    },
+    {
+      "id": "content-creator",
+      "name": "content-creator",
+      "category": "config_skill"
+    },
+    {
+      "id": "content-research-writer",
+      "name": "content-research-writer",
+      "category": "config_skill"
+    },
+    {
+      "id": "context7-mcp",
+      "name": "context7-mcp",
+      "category": "config_skill"
+    },
+    {
+      "id": "database-architecture",
+      "name": "database-architecture",
+      "category": "config_skill"
+    },
+    {
+      "id": "ddd",
+      "name": "ddd",
+      "category": "config_skill"
+    },
+    {
+      "id": "deployment",
+      "name": "deployment",
+      "category": "config_skill"
+    },
+    {
+      "id": "dispatching-parallel-agents",
+      "name": "dispatching-parallel-agents",
+      "category": "config_skill"
+    },
+    {
+      "id": "docx-processing",
+      "name": "docx-processing",
+      "category": "config_skill"
+    },
+    {
+      "id": "email-composer",
+      "name": "email-composer",
+      "category": "config_skill"
+    },
+    {
+      "id": "find-skills",
+      "name": "find-skills",
+      "category": "config_skill"
+    },
+    {
+      "id": "git-workflow",
+      "name": "git-workflow",
+      "category": "config_skill"
+    },
+    {
+      "id": "governance",
+      "name": "governance",
+      "category": "config_skill"
+    },
+    {
+      "id": "implementation",
+      "name": "implementation",
+      "category": "config_skill"
+    },
+    {
+      "id": "llm-as-judge",
+      "name": "llm-as-judge",
+      "category": "config_skill"
+    },
+    {
+      "id": "mcp-builder",
+      "name": "mcp-builder",
+      "category": "config_skill"
+    },
+    {
+      "id": "mobile-design",
+      "name": "mobile-design",
+      "category": "config_skill"
+    },
+    {
+      "id": "observability",
+      "name": "observability",
+      "category": "config_skill"
+    },
+    {
+      "id": "pdf-processing",
+      "name": "pdf-processing",
+      "category": "config_skill"
+    },
+    {
+      "id": "performance-optimization",
+      "name": "performance-optimization",
+      "category": "config_skill"
+    },
+    {
+      "id": "php-laravel-ecosystem",
+      "name": "php-laravel-ecosystem",
+      "category": "config_skill"
+    },
+    {
+      "id": "product-spec-engineering",
+      "name": "product-spec-engineering",
+      "category": "config_skill"
+    },
+    {
+      "id": "prompt-engineering",
+      "name": "prompt-engineering",
+      "category": "config_skill"
+    },
+    {
+      "id": "react-best-practices",
+      "name": "react-best-practices",
+      "category": "config_skill"
+    },
+    {
+      "id": "refactoring",
+      "name": "refactoring",
+      "category": "config_skill"
+    },
+    {
+      "id": "release",
+      "name": "release",
+      "category": "config_skill"
+    },
+    {
+      "id": "repo-bootstrap",
+      "name": "repo-bootstrap",
+      "category": "config_skill"
+    },
+    {
+      "id": "resilient-execution",
+      "name": "resilient-execution",
+      "category": "config_skill"
+    },
+    {
+      "id": "security-review",
+      "name": "security-review",
+      "category": "config_skill"
+    },
+    {
+      "id": "seo-optimizer",
+      "name": "seo-optimizer",
+      "category": "config_skill"
+    },
+    {
+      "id": "skill-audit-bulletin",
+      "name": "skill-audit-bulletin",
+      "category": "config_skill"
+    },
+    {
+      "id": "skill-creator",
+      "name": "skill-creator",
+      "category": "config_skill"
+    },
+    {
+      "id": "skill-discovery",
+      "name": "skill-discovery",
+      "category": "config_skill"
+    },
+    {
+      "id": "subagent-driven-development",
+      "name": "subagent-driven-development",
+      "category": "config_skill"
+    },
+    {
+      "id": "systematic-debugging",
+      "name": "systematic-debugging",
+      "category": "config_skill"
+    },
+    {
+      "id": "technical-documentation",
+      "name": "technical-documentation",
+      "category": "config_skill"
+    },
+    {
+      "id": "test-driven-development",
+      "name": "test-driven-development",
+      "category": "config_skill"
+    },
+    {
+      "id": "testing-mastery",
+      "name": "testing-mastery",
+      "category": "config_skill"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "name": "ui-ux-pro-max",
+      "category": "config_skill"
+    },
+    {
+      "id": "ux-researcher-designer",
+      "name": "ux-researcher-designer",
+      "category": "config_skill"
+    },
+    {
+      "id": "verification-before-completion",
+      "name": "verification-before-completion",
+      "category": "config_skill"
+    },
+    {
+      "id": "writing-skills",
+      "name": "writing-skills",
+      "category": "config_skill"
+    },
+    {
+      "id": "xlsx-processing",
+      "name": "xlsx-processing",
+      "category": "config_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "name": "create_security_implementation_plan",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "name": "determine_threat_model",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "name": "generate_security_audit_report",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__run_poc",
+      "name": "run_poc",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__run_security_scanner",
+      "name": "run_security_scanner",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__scan_dependencies",
+      "name": "scan_dependencies",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__securecoder_generation",
+      "name": "securecoder_generation",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "name": "securecoder_persona",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__google-antigravity-sdk__google-antigravity-sdk",
+      "name": "google-antigravity-sdk",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "name": "chrome-extensions",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "plugin__modern-web-guidance-plugin__modern-web-guidance",
+      "name": "modern-web-guidance",
+      "category": "plugin_skill"
+    },
+    {
+      "id": "builtin__agy-customizations",
+      "name": "agy-customizations",
+      "category": "builtin_skill"
+    },
+    {
+      "id": "builtin__antigravity_guide",
+      "name": "antigravity_guide",
+      "category": "builtin_skill"
+    },
+    {
+      "id": "builtin__permissioned-github",
+      "name": "permissioned-github",
+      "category": "builtin_skill"
+    },
+    {
+      "id": "mcp__chrome-devtools-mcp",
+      "name": "chrome-devtools-mcp",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__context7",
+      "name": "context7",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__github-mcp-server",
+      "name": "github-mcp-server",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__local-rag-lib",
+      "name": "local-rag-lib",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__mui-mcp",
+      "name": "mui-mcp",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__notion-mcp-server",
+      "name": "notion-mcp-server",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__puter",
+      "name": "puter",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__skills-rag-mcp",
+      "name": "skills-rag-mcp",
+      "category": "mcp_server"
+    }
+  ],
+  "edges": [
+    {
+      "source": "adr-archive",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-archive",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
+      "target": "adr-archive",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
+      "target": "agent-planning-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
+      "target": "architecture-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "circuit-breaker",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "dispatching-parallel-agents",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "mcp-builder",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-orchestration",
+      "target": "brainstorming",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-orchestration",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-orchestration",
+      "target": "prompt-engineering",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "adr-archive",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "brainstorming",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "circuit-breaker",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "dispatching-parallel-agents",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
+      "target": "api-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
+      "target": "git-workflow",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
+      "target": "repo-bootstrap",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
+      "target": "skill-audit-bulletin",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "api-design",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "api-design",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "architecture-review",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "architecture-review",
+      "target": "clean-code",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
+      "target": "mobile-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
+      "target": "ui-ux-pro-max",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "brainstorming",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "brainstorming",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "brainstorming",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "cap",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "cap",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "changelog-generator",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "changelog-generator",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
+      "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review",
+      "target": "code-review-lite",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-workflow",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-workflow",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-workflow",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-workflow",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "content-research-writer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "email-composer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "llm-as-judge",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "seo-optimizer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "clean-code",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "content-creator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "email-composer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "llm-as-judge",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "seo-optimizer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "mcp__context7",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "mcp__context7",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "database-architecture",
+      "target": "api-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "architecture-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "mcp__context7",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "mcp__context7",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "ddd",
+      "target": "architecture-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ddd",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "security-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
+      "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "content-research-writer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "email-composer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "pdf-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "xlsx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "content-creator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "content-research-writer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "docx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "llm-as-judge",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "pdf-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "xlsx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
+      "target": "react-best-practices",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "dispatching-parallel-agents",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "repo-bootstrap",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "agent-orchestration",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "repo-bootstrap",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "adr-archive",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "agent-orchestration",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "agent-planning-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "api-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "git-workflow",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "security-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
+      "target": "testing-mastery",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "agent-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "security-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "mcp__context7",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "mcp__context7",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "mobile-design",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "ui-ux-pro-max",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "ux-researcher-designer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "mcp__context7",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "mcp__context7",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "observability",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "observability",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "content-research-writer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "docx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "email-composer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "xlsx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "dispatching-parallel-agents",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "clean-code",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "mcp-builder",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "security-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "mcp__context7",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "mcp__context7",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "brainstorming",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "writing-skills",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "clean-code",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "mcp__context7",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "mcp__context7",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "refactoring",
+      "target": "architecture-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "release",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "repo-bootstrap",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "repo-bootstrap",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
+      "target": "circuit-breaker",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "dispatching-parallel-agents",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "content-creator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "content-research-writer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-audit-bulletin",
+      "target": "architecture-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-audit-bulletin",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-creator",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-creator",
+      "target": "mcp__puter",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "skill-discovery",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-discovery",
+      "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-discovery",
+      "target": "ui-ux-pro-max",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "dispatching-parallel-agents",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "technical-documentation",
+      "target": "adr-archive",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "technical-documentation",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "technical-documentation",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "technical-documentation",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "technical-documentation",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "llm-as-judge",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "security-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
+      "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "api-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "artifacts-builder",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "mobile-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
+      "target": "ux-researcher-designer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
+      "target": "llm-as-judge",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
+      "target": "mobile-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
+      "target": "ui-ux-pro-max",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
+      "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "docx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "email-composer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "pdf-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "target": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "target": "plugin__Google.securecoder.securecoder__run_security_scanner",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "target": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "target": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "target": "plugin__Google.securecoder.securecoder__run_poc",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "target": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "target": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "target": "plugin__Google.securecoder.securecoder__run_poc",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "target": "plugin__Google.securecoder.securecoder__run_security_scanner",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__run_poc",
+      "target": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__run_poc",
+      "target": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__run_poc",
+      "target": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_generation",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "plugin__Google.securecoder.securecoder__create_security_implementation_plan",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "plugin__Google.securecoder.securecoder__determine_threat_model",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "plugin__Google.securecoder.securecoder__generate_security_audit_report",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "plugin__Google.securecoder.securecoder__run_poc",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__Google.securecoder.securecoder__securecoder_persona",
+      "target": "plugin__Google.securecoder.securecoder__run_security_scanner",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__google-antigravity-sdk__google-antigravity-sdk",
+      "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "target": "plugin__modern-web-guidance-plugin__modern-web-guidance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__modern-web-guidance-plugin__modern-web-guidance",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "plugin__modern-web-guidance-plugin__modern-web-guidance",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "builtin__antigravity_guide",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "builtin__antigravity_guide",
+      "target": "mcp__puter",
+      "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "mcp__context7",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp__skills-rag-mcp",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp__skills-rag-mcp",
+      "target": "security-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp__skills-rag-mcp",
+      "target": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "relationship": "references_skill"
+    }
+  ]
+}

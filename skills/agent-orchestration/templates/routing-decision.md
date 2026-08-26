@@ -1,35 +1,35 @@
 # Routing Decision
 
-Decisão de roteamento de modelo para agentes.
+Model-based routing decision for agents.
 
-## Contexto
+## Context
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| **Tarefa** | `{task_description}` |
-| **Complexidade** | `{low, medium, high}` |
-| **Requisitos** | `{requirements}` |
+| **Task** | `{task_description}` |
+| **Complexity** | `{low, medium, high}` |
+| **Requirements** | `{requirements}` |
 
-## Matriz de Roteamento
+## Routing Matrix
 
-### Por Complexidade
+### By Complexity
 
-| Complexidade | Modelo | Custo | Latência | Uso |
-|-------------|--------|-------|----------|-----|
-| **Baixa** | `{lightweight_model}` | $ | Baixa | Extração, formatação, classificação simples |
-| **Média** | `{standard_model}` | $$ | Média | Análise, síntese, geração estruturada |
-| **Alta** | `{advanced_model}` | $$$ | Alta | Raciocínio complexo, código, arquitetura |
+| Complexity | Model | Cost | Latency | Use |
+|------------|--------|-------|----------|-----|
+| **Low** | `{lightweight_model}` | $ | Low | Extraction, simple formatting, and classification |
+| **Medium** | `{standard_model}` | $$ | Medium | Analysis, synthesis, and structured generation |
+| **High** | `{advanced_model}` | $$$ | High | Complex reasoning, code, and architecture |
 
-### Por Papel
+### By Role
 
-| Papel | Modelo Recomendado | Justificativa |
-|-------|-------------------|---------------|
-| **Orchestrator** | `{model}` | Precisa de raciocínio ampla |
-| **Specialist** | `{model}` | Precisa de expertise focada |
-| **Reviewer** | `{model}` | Precisa de atenção a detalhes |
-| **Formatter** | `{model}` | Tarefa simples, modelo leve |
+| Role | Recommended Model | Justification |
+|------|-------------------|---------------|
+| **Orchestrator** | `{model}` | Needs broad reasoning |
+| **Specialist** | `{model}` | Needs focused expertise |
+| **Reviewer** | `{model}` | Needs attention to detail |
+| **Formatter** | `{model}` | Simple task, lightweight model |
 
-## Decisão
+## Decision
 
 ```yaml
 selected_model: "{model_name}"
@@ -40,28 +40,28 @@ fallback_model: "{fallback_model_name}"
 fallback_reason: "{when_to_use_fallback}"
 ```
 
-## Cenários
+## Scenarios
 
-### Cenário 1: Extração de Dados
-- **Complexidade**: Baixa
-- **Modelo**: `{lightweight_model}`
-- **Justificativa**: Tarefa simples, não precisa de raciocínio complexo
+### Scenario 1: Data Extraction
+- **Complexity**: Low
+- **Model**: `{lightweight_model}`
+- **Justification**: Simple task, no complex reasoning needed
 
-### Cenário 2: Análise de Código
-- **Complexidade**: Média
-- **Modelo**: `{standard_model}`
-- **Justificativa**: Precisa entender contexto, mas não é trivial
+### Scenario 2: Code Analysis
+- **Complexity**: Medium
+- **Model**: `{standard_model}`
+- **Justification**: Needs to understand context, but not trivial
 
-### Cenário 3: Geração de Arquitetura
-- **Complexidade**: Alta
-- **Modelo**: `{advanced_model}`
-- **Justificativa**: Raciocínio complexo, múltiplas considerações
+### Scenario 3: Architecture Generation
+- **Complexity**: High
+- **Model**: `{advanced_model}`
+- **Justification**: Complex reasoning, multiple considerations
 
 ## Checklist
 
-- [ ] Complexidade avaliada
-- [ ] Modelo selecionado por complexidade
-- [ ] Custo estimado documentado
-- [ ] Fallback definido
-- [ ] Latência aceitável
-- [ ] Throughput adequado
+- [ ] Complexity evaluated
+- [ ] Model selected by complexity
+- [ ] Estimated cost documented
+- [ ] Fallback defined
+- [ ] Acceptable latency
+- [ ] Adequate throughput

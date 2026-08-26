@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agent-development — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; agent-development</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: agent-development version: 1.0.0 description: 'Use when the user needs to build AI agents — tool use patterns, memory management, planning strategies, multi-agent coordination, evaluation, and safety guardrails. Triggers: user says "agent", "build an agent", "tool use", "agent loop", "multi-agent", "memory management", "guardrails", "agent evaluation".' domain: agentic-workflow triggers:</p>
+<ul>
+<li>agent-development</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>agent-development</li>
+<li>agentic-workflow</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="agent-development">Agent Development</h1>
+<h2 id="overview">Overview</h2>
+<p>Design and build AI agents that effectively use tools, manage memory, plan multi-step tasks, coordinate with other agents, and operate within safety guardrails. This skill covers the full agent development lifecycle from architecture through evaluation, with emphasis on observable, testable, and safe agent behavior.</p>
+<h2 id="phase-1-agent-design">Phase 1: Agent Design</h2>
+<ol>
+<li>Define the agent's purpose and scope</li>
+<li>Identify required tools and capabilities</li>
+<li>Design memory architecture (short-term, long-term)</li>
+<li>Plan agent loop structure (observe, think, act)</li>
+<li>Define safety boundaries and guardrails</li>
+</ol>
+<p><strong>STOP — Present agent design to user for approval before implementation.</strong></p>
+<h3 id="agent-architecture-decision-table">Agent Architecture Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Agent Type</th><th>When to Use</th><th>Loop Pattern</th><th>Complexity</th></tr><tr><td>Single-turn tool user</td><td>Simple queries with tool calls</td><td>Request -> Tool -> Response</td><td>Low</td></tr><tr><td>ReAct agent</td><td>Multi-step reasoning tasks</td><td>Thought -> Action -> Observation -> loop</td><td>Medium</td></tr><tr><td>Plan-and-execute</td><td>Complex tasks with dependencies</td><td>Plan -> Execute steps -> Validate</td><td>Medium-High</td></tr><tr><td>Multi-agent orchestrator</td><td>Parallel/specialized sub-tasks</td><td>Dispatch -> Collect -> Synthesize</td><td>High</td></tr><tr><td>Autonomous loop (Ralph-style)</td><td>Long-running iterative development</td><td>Plan -> Build -> Verify -> Exit gate</td><td>High</td></tr></table></div>
+<h2 id="phase-2-implementation">Phase 2: Implementation</h2>
+<ol>
+<li>Build the agent loop with tool dispatch</li>
+<li>Implement memory management (context window, persistence)</li>
+<li>Add planning and decomposition logic</li>
+<li>Integrate error recovery and retry patterns</li>
+<li>Implement output validation</li>
+</ol>
+<p><strong>STOP — Run smoke tests on the agent loop before adding complexity.</strong></p>
+<h3 id="tool-use-patterns">Tool Use Patterns</h3>
+<h4 id="tool-definition-best-practices">Tool Definition Best Practices</h4>
+<div class="table-wrapper"><table><tr><th>Principle</th><th>Rule</th><th>Example</th></tr><tr><td>Clear naming</td><td>verb-noun format</td><td><code>search_documents</code>, <code>create_file</code></td></tr><tr><td>Detailed descriptions</td><td>Include when to use AND when NOT to use</td><td>"Use for keyword search. Do NOT use for semantic similarity."</td></tr><tr><td>Well-typed parameters</td><td>Descriptions and examples on every param</td><td><code>query: string // "e.g., 'user authentication'"</code></td></tr><tr><td>Predictable returns</td><td>Consistent format across tools</td><td>Always return <code>{ success, data, error }</code></td></tr><tr><td>Self-correcting errors</td><td>Help agent recover</td><td>"Invalid date format. Expected ISO 8601: YYYY-MM-DD"</td></tr></table></div>
+<h4 id="tool-selection-strategy">Tool Selection Strategy</h4>
+<pre><code>Given a task:
+1. Identify required information and actions
+2. Map to available tools
+3. Determine tool call order (dependencies)
+4. Execute with result validation
+5. Retry or try alternative tool on failure</code></pre>
+<h4 id="tool-design-principles">Tool Design Principles</h4>
+<ul>
+<li><strong>Composable</strong>: small tools that combine for complex tasks</li>
+<li><strong>Idempotent</strong>: safe to retry without side effects (where possible)</li>
+<li><strong>Observable</strong>: return enough context for the agent to verify success</li>
+<li><strong>Bounded</strong>: timeouts and size limits on all operations</li>
+<li><strong>Documented</strong>: every parameter and return value described</li>
+</ul>
+<h3 id="memory-management">Memory Management</h3>
+<h4 id="memory-type-decision-table">Memory Type Decision Table</h4>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Duration</th><th>Storage</th><th>Use Case</th></tr><tr><td>Working Memory</td><td>Current turn</td><td>Context window</td><td>Active reasoning</td></tr><tr><td>Short-term Memory</td><td>Current session</td><td>In-context or buffer</td><td>Recent conversation</td></tr><tr><td>Long-term Memory</td><td>Across sessions</td><td>Database/file</td><td>Learned patterns, user prefs</td></tr><tr><td>Episodic Memory</td><td>Specific events</td><td>Indexed store</td><td>Past task outcomes</td></tr><tr><td>Semantic Memory</td><td>Knowledge</td><td>Vector DB</td><td>Domain knowledge retrieval</td></tr></table></div>
+<h4 id="context-window-management">Context Window Management</h4>
+<pre><code>Strategy: Sliding window with importance-based retention
+
+1. Always retain: system prompt, tool definitions, current task
+2. Summarize: older conversation turns into compressed summaries
+3. Evict: least relevant context when approaching limit
+4. Retrieve: pull relevant long-term memory on demand
+
+Budget allocation:
+  System prompt + tools: ~20%
+  Current task context:  ~40%
+  Conversation history:  ~25%
+  Retrieved memory:      ~15%</code></pre>
+<h4 id="memory-update-triggers">Memory Update Triggers</h4>
+<div class="table-wrapper"><table><tr><th>Trigger</th><th>Action</th></tr><tr><td>User correction</td><td>Update learned patterns</td></tr><tr><td>Task completion</td><td>Store outcome and approach</td></tr><tr><td>Error recovery</td><td>Record what failed and what worked</td></tr><tr><td>New domain knowledge</td><td>Index for future retrieval</td></tr></table></div>
+<h3 id="planning-strategies">Planning Strategies</h3>
+<h4 id="hierarchical-task-decomposition">Hierarchical Task Decomposition</h4>
+<pre><code>1. Break high-level goal into sub-goals
+2. For each sub-goal, identify required actions
+3. Order actions by dependencies
+4. Execute with checkpoints between phases
+5. Re-plan if intermediate results change the approach</code></pre>
+<h4 id="react-pattern-reason--act">ReAct Pattern (Reason + Act)</h4>
+<pre><code>Thought: I need to find the user&#x27;s recent orders to answer their question.
+Action: search_orders(user_id=&quot;123&quot;, limit=5)
+Observation: Found 5 orders, most recent is #456 from yesterday.
+Thought: The user asked about order #456. I have the details now.
+Action: respond with order details</code></pre>
+<h4 id="plan-and-execute-pattern">Plan-and-Execute Pattern</h4>
+<pre><code>1. Create a complete plan before any action
+2. Execute each step, checking preconditions
+3. After each step, validate the result
+4. If a step fails, re-plan from current state
+5. Never modify the plan mid-step (finish or abort first)</code></pre>
+<h4 id="reflection-pattern">Reflection Pattern</h4>
+<pre><code>After completing a task:
+1. Was the result correct?
+2. Was the approach efficient?
+3. What could be improved?
+4. Should any memory be updated?</code></pre>
+<h2 id="phase-3-evaluation-and-safety">Phase 3: Evaluation and Safety</h2>
+<ol>
+<li>Build evaluation harness with test scenarios</li>
+<li>Measure accuracy, efficiency, and safety metrics</li>
+<li>Test edge cases and adversarial inputs</li>
+<li>Add monitoring and logging</li>
+<li>Implement circuit breakers for runaway behavior</li>
+</ol>
+<p><strong>STOP — All safety guardrails must be tested before deployment.</strong></p>
+<h3 id="multi-agent-coordination">Multi-Agent Coordination</h3>
+<h4 id="coordination-pattern-decision-table">Coordination Pattern Decision Table</h4>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>Description</th><th>Use When</th></tr><tr><td>Orchestrator</td><td>Central agent delegates to specialists</td><td>Clear task hierarchy</td></tr><tr><td>Pipeline</td><td>Agents process in sequence</td><td>Linear workflows</td></tr><tr><td>Debate</td><td>Agents propose and critique</td><td>Need diverse perspectives</td></tr><tr><td>Voting</td><td>Multiple agents, majority wins</td><td>Uncertainty in approach</td></tr><tr><td>Supervisor</td><td>One agent monitors others</td><td>Safety-critical tasks</td></tr></table></div>
+<h4 id="communication-protocol">Communication Protocol</h4>
+<pre><code>Agent-to-Agent message:
+{
+  &quot;from&quot;: &quot;planner&quot;,
+  &quot;to&quot;: &quot;executor&quot;,
+  &quot;type&quot;: &quot;task_assignment&quot;,
+  &quot;content&quot;: { &quot;task&quot;: &quot;...&quot;, &quot;context&quot;: &quot;...&quot;, &quot;constraints&quot;: &quot;...&quot; },
+  &quot;priority&quot;: &quot;high&quot;,
+  &quot;deadline&quot;: &quot;2025-01-15T10:00:00Z&quot;
+}</code></pre>
+<h4 id="coordination-rules">Coordination Rules</h4>
+<ul>
+<li>Define clear ownership boundaries</li>
+<li>Use structured messages between agents</li>
+<li>Implement deadlock detection</li>
+<li>Set timeouts for inter-agent communication</li>
+<li>Log all inter-agent messages for debugging</li>
+</ul>
+<h3 id="evaluation-framework">Evaluation Framework</h3>
+<h4 id="metrics-decision-table">Metrics Decision Table</h4>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>What It Measures</th><th>How to Measure</th><th>Target</th></tr><tr><td>Task Success Rate</td><td>Correct completions / total</td><td>Automated + human eval</td><td>> 90%</td></tr><tr><td>Efficiency</td><td>Steps vs optimal path</td><td>Step count comparison</td><td>< 2x optimal</td></tr><tr><td>Tool Accuracy</td><td>Correct tool calls / total</td><td>Log analysis</td><td>> 95%</td></tr><tr><td>Safety</td><td>Violations / total interactions</td><td>Guardrail checks</td><td>0 violations</td></tr><tr><td>Latency</td><td>Time to complete task</td><td>Wall clock</td><td>< SLA</td></tr><tr><td>Cost</td><td>Token usage per task</td><td>API usage tracking</td><td>Within budget</td></tr></table></div>
+<h4 id="evaluation-dataset-structure">Evaluation Dataset Structure</h4>
+<pre data-lang="json"><code>{
+  &quot;test_cases&quot;: [
+    {
+      &quot;id&quot;: &quot;tc_001&quot;,
+      &quot;input&quot;: &quot;Find all orders over $100 from last week&quot;,
+      &quot;expected_tools&quot;: [&quot;search_orders&quot;],
+      &quot;expected_output_contains&quot;: [&quot;order_id&quot;, &quot;amount&quot;],
+      &quot;category&quot;: &quot;retrieval&quot;,
+      &quot;difficulty&quot;: &quot;easy&quot;
+    }
+  ]
+}</code></pre>
+<h3 id="safety-guardrails">Safety Guardrails</h3>
+<h4 id="input-guardrails">Input Guardrails</h4>
+<ul>
+<li>Detect and reject prompt injection attempts</li>
+<li>Validate all user inputs before processing</li>
+<li>Rate limit requests per user/session</li>
+<li>Content filtering for harmful requests</li>
+</ul>
+<h4 id="output-guardrails">Output Guardrails</h4>
+<ul>
+<li>Validate tool call arguments before execution</li>
+<li>Check outputs for sensitive information (PII, secrets)</li>
+<li>Enforce response format constraints</li>
+<li>Prevent infinite tool call loops</li>
+</ul>
+<h4 id="operational-guardrails">Operational Guardrails</h4>
+<ul>
+<li>Maximum tool calls per task (circuit breaker)</li>
+<li>Maximum tokens per response</li>
+<li>Timeout for total task duration</li>
+<li>Escalation to human when confidence is low</li>
+<li>Audit logging for all actions</li>
+</ul>
+<h4 id="circuit-breaker-thresholds">Circuit Breaker Thresholds</h4>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Threshold</th><th>Action</th></tr><tr><td>Max tool calls per task</td><td>20</td><td>Stop execution, return error</td></tr><tr><td>Max consecutive errors</td><td>3</td><td>Stop, log, return graceful error</td></tr><tr><td>Max task duration</td><td>5 minutes</td><td>Timeout, return partial result</td></tr><tr><td>Max tokens generated</td><td>10,000</td><td>Stop generation</td></tr><tr><td>Pattern repeats</td><td>5 identical errors</td><td>Open circuit, alert operator</td></tr></table></div>
+<h3 id="prompt-engineering-for-agents">Prompt Engineering for Agents</h3>
+<h4 id="system-prompt-structure">System Prompt Structure</h4>
+<pre><code>1. Identity and purpose (who the agent is)
+2. Available tools (what it can do)
+3. Constraints (what it must not do)
+4. Output format (how to respond)
+5. Examples (few-shot demonstrations)
+6. Error handling (what to do when stuck)</code></pre>
+<h4 id="key-prompt-patterns">Key Prompt Patterns</h4>
+<ul>
+<li><strong>Scratchpad</strong>: encourage step-by-step reasoning before action</li>
+<li><strong>Self-correction</strong>: "If your first approach fails, try..."</li>
+<li><strong>Confidence calibration</strong>: "Only proceed if you are confident"</li>
+<li><strong>Graceful degradation</strong>: "If you cannot complete the task, explain why"</li>
+</ul>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Calling tools without reasoning</td><td>Wastes calls, misses context</td><td>Use ReAct pattern (think first)</td></tr><tr><td>No max iteration limit</td><td>Infinite loops, runaway costs</td><td>Set circuit breaker thresholds</td></tr><tr><td>Trusting all tool outputs</td><td>Corrupted data propagates</td><td>Validate tool results</td></tr><tr><td>Hardcoded tool sequences</td><td>No adaptability to failures</td><td>Dynamic tool selection based on state</td></tr><tr><td>No error recovery strategy</td><td>Agent gets stuck on first failure</td><td>Implement retry with alternatives</td></tr><tr><td>Apologizing instead of acting</td><td>Wastes user time</td><td>Take corrective action, then report</td></tr><tr><td>Over-reliance on single tool</td><td>Fragile if that tool fails</td><td>Provide fallback tools</td></tr><tr><td>No evaluation framework</td><td>Shipping blind, no quality signal</td><td>Build eval harness before deployment</td></tr><tr><td>Unlimited context growth</td><td>Context overflow, degraded quality</td><td>Implement memory management</td></tr></table></div>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>mcp-builder</code></td><td>MCP servers provide tools for agents</td></tr><tr><td><code>planning</code></td><td>Agent planning uses structured plan generation</td></tr><tr><td><code>autonomous-loop</code></td><td>Ralph-style loops are a specialized agent pattern</td></tr><tr><td><code>dispatching-parallel-agents</code></td><td>Multi-agent coordination pattern</td></tr><tr><td><code>circuit-breaker</code></td><td>Operational safety for agent loops</td></tr><tr><td><code>verification-before-completion</code></td><td>Agent output validation</td></tr><tr><td><code>test-driven-development</code></td><td>TDD for agent tool implementations</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the agent architecture, memory strategy, and coordination patterns to the specific use case. Safety guardrails and evaluation frameworks are strongly recommended for all production agents.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

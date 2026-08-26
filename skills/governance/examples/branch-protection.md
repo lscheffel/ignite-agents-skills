@@ -1,11 +1,11 @@
-# Exemplo: Configuração de Branch Protection
+# Example: Branch Protection Configuration
 
-## Antes
-- Push direto para main
-- Nenhum review obrigatório
-- CI opcional
+## Before
+- Direct push to main
+- No mandatory review
+- CI optional
 
-## Depois
+## After
 ```yaml
 # .github/branch-protection.yml
 branches:
@@ -18,7 +18,7 @@ branches:
       restrictions: null
 ```
 
-## Resultado
-- 0 pushes diretos para main
-- 100% dos PRs revisados
-- CI obrigatório
+## Result
+- 0 direct pushes to main
+- 100% of PRs reviewed
+- CI mandatory

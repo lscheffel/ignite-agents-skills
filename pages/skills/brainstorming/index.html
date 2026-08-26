@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>brainstorming — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; brainstorming</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: brainstorming version: 2.1.0 description: Structured collaborative ideation and design exploration engine. Transforms vague requirements and ideas into validated, documented designs before planning and implementation. domain: domain-stack triggers:</p>
+<ul>
+<li>brainstorming</li>
+<li>/brainstorm</li>
+<li>brainstorm</li>
+<li>exploring-ideas</li>
+<li>design-exploration</li>
+<li>ideation</li>
+<li>feature-ideation</li>
+<li>explorar-ideias</li>
+<li>brainstorming-ideas</li>
+<li>idea-exploration</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>brainstorming</li>
+<li>ideation</li>
+<li>design</li>
+<li>requirements</li>
+<li>planning</li>
+<li>governance</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>agent-planning-execution</li>
+<li>product-spec-engineering</li>
+<li>adr-generator</li>
+<li>architecture-review</li>
+<li>ux-researcher-designer</li>
+<li>implementation</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: "2026-08-26" ---</p>
+<h1 id="brainstorming-ideas-into-designs-sota-edition">Brainstorming Ideas Into Designs (SOTA Edition)</h1>
+<p>Structured collaborative exploration engine that transforms ambiguous ideas, goals, or feature requests into concrete, validated, and documented designs before planning or coding begins.</p>
+<hr>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use When:</h3>
+<ul>
+<li>The user describes a new feature, component, goal, or behavior modification with open-ended scope.</li>
+<li>Exploring alternative architectural approaches, libraries, or design trade-offs collaboratively.</li>
+<li>The user asks "how should we build X?", "what is the best approach for Y?", or invokes <code>/brainstorm</code>.</li>
+<li>Clarifying requirements, success criteria, constraints, and non-goals before formal planning.</li>
+</ul>
+<h3 id="do-not-use-when">Do Not Use When:</h3>
+<ul>
+<li>The task is a trivial 1-line bug fix with a known cause (use <code>systematic-debugging</code> or direct edit).</li>
+<li>Emergency P0 production incidents requiring immediate hotfix/rollback (use <code>systematic-debugging</code> or direct remediation).</li>
+<li>A complete, approved design or Architecture Decision Record (ADR) already exists (use <code>implementation</code>).</li>
+<li>The task requires executing an approved step-by-step implementation plan (use <code>agent-planning-execution</code>).</li>
+<li>Purely conducting competitive user research or usability testing (use <code>ux-researcher-designer</code>).</li>
+</ul>
+<h3 id="related-skills">Related Skills:</h3>
+<ul>
+<li><code>agent-planning-execution</code> — receives the approved design and decomposes it into executable roadmap tasks.</li>
+<li><code>adr-generator</code> — formalizes architectural choices into MADR-style Decision Records.</li>
+<li><code>product-spec-engineering</code> — converts high-level intent into formal Product Requirement Documents (PRDs).</li>
+<li><code>architecture-review</code> — reviews existing codebase architecture against SOLID and clean patterns.</li>
+<li><code>implementation</code> — executes planned changes with test verification.</li>
+</ul>
+<hr>
+<h2 id="decision-tree--5-phase-brainstorming-loop">Decision Tree & 5-Phase Brainstorming Loop</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Idea / Feature Request Received&quot;] --&gt; B[&quot;Phase 1: Context Loading &amp; Memory Inspection&quot;]
+    B --&gt; C[&quot;Phase 2: Socratic Idea Exploration (1 Question at a Time)&quot;]
+    C --&gt; D{&quot;Uncertainty Resolved?&quot;}
+    
+    D --&gt;|No| C
+    D --&gt;|Yes| E[&quot;Phase 3: Approach Exploration (2-3 Alternatives + Trade-offs)&quot;]
+    
+    E --&gt; F{&quot;Approach Selected by User?&quot;}
+    F --&gt;|No / Adjustments| E
+    F --&gt;|Yes| G[&quot;Phase 4: Incremental Design Presentation (Section-by-Section)&quot;]
+    
+    G --&gt; H{&quot;Design Approved?&quot;}
+    H --&gt;|Revisions Needed| G
+    H --&gt;|Approved| I[&quot;Phase 5: Document Design (docs/plans/) &amp; Transition&quot;]
+    
+    I --&gt; J[&quot;Handoff to agent-planning-execution / adr-generator&quot;]</code></pre>
+<hr>
+<h2 id="phase-1-context-loading">Phase 1: Context Loading</h2>
+<p><strong>Goal:</strong> Load existing project context before asking the user anything.</p>
+<ol>
+<li><strong>Check Memory Files</strong>: Read project context (<code>STATE.md</code>, <code>memory/</code>, <code>learned-patterns.md</code>).</li>
+<li><strong>Review Governance & Architecture</strong>: Inspect <code>AGENTS.md</code>, <code>README.md</code>, and relevant directory structures.</li>
+<li><strong>Inspect Prior Designs</strong>: Check <code>docs/plans/</code> or <code>docs/adr/</code> for related work.</li>
+<li><strong>Identify Hard Constraints</strong>: Tech stack, dependencies, database constraints, and deployment targets.</li>
+<li><strong>Summarize Knowns</strong>: Note what is already established — <strong>never</strong> re-ask the user for facts discoverable in the repository.</li>
+</ol>
+<pre data-lang="text"><code>STOP GATE — Do NOT proceed to Phase 2 until:
+[ ] Memory files and governance instructions (AGENTS.md / README.md) are loaded.
+[ ] Relevant codebase areas have been inspected.
+[ ] You can state what is already known about this domain.</code></pre>
+<hr>
+<h2 id="phase-2-idea-exploration">Phase 2: Idea Exploration</h2>
+<p><strong>Goal:</strong> Understand user intent through focused, one-at-a-time questions.</p>
+<ol>
+<li><strong>Ask ONE Question per Turn</strong>: Never overwhelm the user with multiple simultaneous questions.</li>
+<li><strong>Prefer Structured Choices</strong>: Use multiple-choice options when possible to accelerate alignment.</li>
+<li><strong>Define Non-Goals</strong>: Explicitly clarify what is <em>out of scope</em> for this iteration.</li>
+<li><strong>Convert Vague Answers to Testable Criteria</strong>: "Fast" → "< 200ms latency", "Easy" → "< 2 clicks".</li>
+</ol>
+<h3 id="question-flow-decision-table">Question Flow Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Target Area</th><th>Question Style</th><th>Example</th></tr><tr><td><strong>Core Purpose</strong></td><td>Open-ended</td><td>"What primary problem does this feature solve for the end user?"</td></tr><tr><td><strong>Scope Boundaries</strong></td><td>Multiple Choice</td><td>"Should this handle: (A) only authenticated users, (B) all visitors, or (C) role-based?"</td></tr><tr><td><strong>Technical Constraints</strong></td><td>Yes/No + Follow-up</td><td>"Does this operation need to support offline sync or background execution?"</td></tr><tr><td><strong>Trade-off Priority</strong></td><td>Forced Ranking</td><td>"Rank the primary drivers for this module: (1) Execution speed, (2) Simplicity, (3) Extensibility."</td></tr><tr><td><strong>Success Criteria</strong></td><td>Measurable Outcome</td><td>"What does the ideal success state look like? What is the primary happy path?"</td></tr><tr><td><strong>Non-Goals</strong></td><td>Explicit Exclusion</td><td>"What functionality should we explicitly NOT build in this first version?"</td></tr></table></div>
+<pre data-lang="text"><code>STOP GATE — Do NOT proceed to Phase 3 until:
+[ ] Core purpose and target audience are clear.
+[ ] Constraints (stack, performance, scope) are established.
+[ ] Success criteria and non-goals are explicitly documented.</code></pre>
+<hr>
+<h2 id="phase-3-approach-exploration">Phase 3: Approach Exploration</h2>
+<p><strong>Goal:</strong> Propose 2–3 distinct architectural approaches with trade-offs and a clear recommendation.</p>
+<h3 id="approach-comparison-format">Approach Comparison Format</h3>
+<pre data-lang="markdown"><code>### Approach A: [Name] (Recommended)
+- **Summary**: 2–3 sentences outlining the technical mechanism.
+- **Pros**: Concrete advantages (e.g., reuses existing components, zero new dependencies).
+- **Cons**: Known limitations or architectural trade-offs.
+- **Complexity**: Low / Medium / High
+- **Estimated Operational / Token Cost**: Minimal / Moderate / Heavy
+- **Risk**: Potential failure modes or edge-case costs.
+- **Rationale**: Why this approach is recommended given Phase 2 constraints.
+
+### Approach B: [Name]
+- **Summary**: Alternative pattern (e.g., dedicated microservice, external library).
+- **Pros &amp; Cons**: Key differentiators.
+- **Complexity / Risk**: Comparative evaluation.
+- **Estimated Operational / Token Cost**: Minimal / Moderate / Heavy
+
+### Approach C: [Name] (Optional)
+- **Summary**: Radical or minimal alternative.</code></pre>
+<pre data-lang="text"><code>STOP GATE — Do NOT proceed to Phase 4 until:
+[ ] At least 2 distinct approaches with explicit trade-offs are presented.
+[ ] A clear recommendation with rationale is provided.
+[ ] The user has explicitly selected or validated the preferred approach.</code></pre>
+<hr>
+<h2 id="phase-4-incremental-design-presentation">Phase 4: Incremental Design Presentation</h2>
+<p><strong>Goal:</strong> Present the detailed design in logical sections, validating each incrementally.</p>
+<h3 id="design-presentation-structure">Design Presentation Structure</h3>
+<ol>
+<li><strong>Architecture & High-Level Topology</strong>: Modules, boundaries, and system interactions.</li>
+<li><strong>Components & Contracts</strong>: Interface signatures, data schemas, and state management.</li>
+<li><strong>Data Flow & Sequence</strong>: How data moves end-to-end through the system.</li>
+<li><strong>Error Handling & Failure Modes</strong>: Edge cases, retry strategies, and user-facing error contracts.</li>
+<li><strong>Validation & Testing Strategy</strong>: Unit, integration, and acceptance criteria.</li>
+</ol>
+<p><em>Rule:</em> Present one or two related sections at a time. Ask for confirmation before moving to the next.</p>
+<pre data-lang="text"><code>STOP GATE — Do NOT proceed to Phase 5 until:
+[ ] All relevant design sections have been presented and validated.
+[ ] User feedback and adjustments have been incorporated.
+[ ] Complete design is coherent and addresses all stated requirements.</code></pre>
+<hr>
+<h2 id="phase-5-documentation--transition">Phase 5: Documentation & Transition</h2>
+<p><strong>Goal:</strong> Persist the design artifact and hand off cleanly to execution planning.</p>
+<ol>
+<li><strong>Persist Design Document</strong>: Write to <code>docs/plans/YYYY-MM-DD-<feature>-design.md</code>.</li>
+<li><strong>Record Architectural Decisions</strong>: If significant trade-offs were made, invoke <code>adr-generator</code> to create an ADR.</li>
+<li><strong>Update Agent Memory</strong>: Record new patterns and conventions in <code>STATE.md</code>.</li>
+<li><strong>Handoff</strong>: Transition to <code>agent-planning-execution</code> to generate the step-by-step task breakdown.</li>
+</ol>
+<h3 id="canonical-design-document-template">Canonical Design Document Template</h3>
+<pre data-lang="markdown"><code># [Feature / Topic] Design Document
+
+**Date:** YYYY-MM-DD  
+**Status:** Approved  
+**Selected Approach:** [Approach Name]  
+
+## 1. Problem Statement &amp; Objectives
+[Problem summary, target user, and measurable success criteria]
+
+## 2. Architecture &amp; Components
+[High-level structure, component roles, and interaction diagrams]
+</code></pre>
+<p>graph TD A["Input / Entrypoint"] --> B["Core Processing Module"] B --> C["Persistence / Output Layer"]</p>
+<pre><code>
+## 3. Data Flow &amp; Contracts
+[Schemas, interfaces, and state transitions]
+
+## 4. Error Handling &amp; Edge Cases
+[Failure handling, fallbacks, and recovery mechanisms]
+
+## 5. Non-Goals
+[Explicitly excluded features for this iteration]
+
+## 6. Next Steps
+Handoff to `agent-planning-execution` for work breakdown decomposition.</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="coding-before-design-approval-drive-by-coding">Coding Before Design Approval (Drive-by Coding)</h4>
+<ul>
+<li><strong>What is it:</strong> Writing code, scaffolding projects, or installing packages before the design is approved.</li>
+<li><strong>Why is it bad:</strong> Produces immediate technical debt, wasted tokens, and architectural rework.</li>
+<li><strong>How to avoid:</strong> Enforce the <code><HARD-GATE></code>: zero production code before design approval.</li>
+</ul>
+<h4 id="question-overload-interrogation-pattern">Question Overload (Interrogation Pattern)</h4>
+<ul>
+<li><strong>What is it:</strong> Asking 5+ open-ended questions in a single response.</li>
+<li><strong>Why is it bad:</strong> Overwhelms the user and leads to superficial, incomplete answers.</li>
+<li><strong>How to avoid:</strong> Ask exactly ONE focused question per turn, prioritizing multiple choice.</li>
+</ul>
+<h4 id="single-approach-anchor">Single-Approach Anchor</h4>
+<ul>
+<li><strong>What is it:</strong> Presenting only 1 implementation idea as if it were the only possible solution.</li>
+<li><strong>Why is it bad:</strong> Misses simpler or more performant alternatives.</li>
+<li><strong>How to avoid:</strong> Always propose 2–3 viable approaches with explicit pros/cons.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="monolithic-design-dump">Monolithic Design Dump</h4>
+<ul>
+<li><strong>What is it:</strong> Presenting a 500-line comprehensive specification in one massive message.</li>
+<li><strong>How to avoid:</strong> Break the design into logical sections and confirm each section incrementally.</li>
+</ul>
+<h4 id="skipping-context-loading">Skipping Context Loading</h4>
+<ul>
+<li><strong>What is it:</strong> Asking the user what stack or database is used when it is already in <code>package.json</code> / <code>README.md</code>.</li>
+<li><strong>How to avoid:</strong> Read codebase files and memory in Phase 1 first.</li>
+</ul>
+<hr>
+<h2 id="anti-rationalization-hard-gates">Anti-Rationalization Hard-Gates</h2>
+<p><HARD-GATE> Do NOT invoke any implementation skill, write production code, scaffold new packages, or modify existing source files until you have presented a design and the user has explicitly approved it. This applies to ALL creative or architectural requests regardless of perceived simplicity. </HARD-GATE></p>
+<p>If you catch yourself rationalizing:</p>
+<ul>
+<li><em>"The change seems too simple to brainstorm"</em> → Design can be concise (2 paragraphs), but must exist.</li>
+<li><em>"The user already knows what they want"</em> → Users know WHAT they want; brainstorming defines HOW to build it safely.</li>
+<li><em>"Let me just create the initial files first"</em> → Stop. Document the architecture first.</li>
+</ul>
+<hr>
+<h2 id="integration-matrix-with-canonical-catalog">Integration Matrix with Canonical Catalog</h2>
+<div class="table-wrapper"><table><tr><th>Canonical Skill</th><th>Phase</th><th>Integration Role</th></tr><tr><td><code>technical-documentation</code></td><td>Phase 1 & 5</td><td>Ingests <code>STATE.md</code> and repository pillars; updates persistent memory.</td></tr><tr><td><code>ux-researcher-designer</code></td><td>Phase 2</td><td>Provides user persona and journey insights for frontend features.</td></tr><tr><td><code>adr-generator</code></td><td>Phase 3 & 5</td><td>Converts selected architectural trade-offs into formal MADR decision sets.</td></tr><tr><td><code>agent-planning-execution</code></td><td>Phase 5</td><td>Receives approved design and creates the work breakdown structure (WBS).</td></tr><tr><td><code>implementation</code></td><td>Post-Design</td><td>Executes the planned tasks with test-driven verification.</td></tr></table></div>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

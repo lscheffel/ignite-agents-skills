@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>testing-mastery — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; testing-mastery</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: testing-mastery version: 1.0.0 description: Unified testing framework covering unit, integration, acceptance, webapp, and strategy testing. domain: engineering-quality triggers:</p>
+<ul>
+<li>testing-mastery</li>
+<li>engineering-quality</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>testing-mastery</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="testing-mastery--quality-assurance-hub">Testing Mastery & Quality Assurance Hub</h1>
+<p>Unified testing framework covering unit, integration, acceptance, webapp, and strategy testing.</p>
+<h2 id="sub-domain--component-testing">Sub-Domain / Component: <code>testing</code></h2>
+<h1 id="testing">Testing</h1>
+<p>Guia para escrita de testes automatizados robustos.</p>
+<h2 id="quando-usar">Quando Usar</h2>
+<h3 id="use-quando">Use quando:</h3>
+<ul>
+<li>Precisa escrever testes para nova funcionalidade</li>
+<li>Quer aumentar cobertura de testes existente</li>
+<li>Precisa definir estratégia de testes para projeto</li>
+<li>Quer padronizar testes entre equipes</li>
+<li>Precisa revisar qualidade de testes</li>
+</ul>
+<h3 id="no-use-quando">Não use quando:</h3>
+<ul>
+<li>Trabalhando em script muito simples (protótipo)</li>
+<li>Projeto sem suporte a testes automatizados</li>
+<li>Precisa de teste manual (UI/UX)</li>
+</ul>
+<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<ul>
+<li><code>ddd</code> — para testar agregados e entidades de domínio</li>
+<li><code>governance</code> — para políticas de coverage mínima</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Preciso de teste?] --&gt;|Unidade de lógica| B[Unitário]
+    A --&gt;|Integração entre módulos| C[Integração]
+    A --&gt;|Fluxo completo do usuário| D[E2E]
+    A --&gt;|Contrato de API| E[Contract]
+    B --&gt;|Classe pura| F[Mock dependencies]
+    B --&gt;|Função pura| G[Sem mocks]
+    C --&gt;|Database| H[Test DB separado]
+    C --&gt;|API externa| I[Mock server]
+    D --&gt;|Web UI| J[Playwright/Cypress]
+    D --&gt;|API| K[Supertest]</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="fase-1-escrever-teste-unitrio">Fase 1: Escrever Teste Unitário</h3>
+<ol>
+<li>Identifique a unidade a ser testada (classe, função, método)</li>
+<li>Crie arquivo de teste ao lado do código fonte:</li>
+</ol>
+<pre data-lang="bash"><code>   # Estrutura
+   src/
+   ├── services/
+   │   ├── user-service.ts
+   │   └── user-service.test.ts</code></pre>
+<ol>
+<li>Use o template <code>templates/unit-test.ts</code>:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/unit-test.ts src/services/user-service.test.ts</code></pre>
+<ol>
+<li>Preencha os placeholders do template</li>
+<li>Execute o teste:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test -- user-service.test.ts</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Teste passa e cobre caminho feliz</li>
+</ol>
+<h3 id="fase-2-escrever-teste-de-integrao">Fase 2: Escrever Teste de Integração</h3>
+<ol>
+<li>Identifique o ponto de integração (database, API, serviço externo)</li>
+<li>Configure ambiente de teste:</li>
+</ol>
+<pre data-lang="bash"><code>   # docker-compose.test.yml
+   services:
+     postgres:
+       image: postgres:15
+       environment:
+         POSTGRES_DB: test_db</code></pre>
+<ol>
+<li>Use o template <code>templates/integration-test.ts</code></li>
+<li>Configure setup/teardown no <code>beforeAll</code>/<code>afterAll</code></li>
+<li>Execute testes:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run test:integration</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Teste passa e verifica persistência</li>
+</ol>
+<h3 id="fase-3-escrever-teste-e2e">Fase 3: Escrever Teste E2E</h3>
+<ol>
+<li>Identifique o fluxo crítico do usuário</li>
+<li>Configure ambiente E2E:</li>
+</ol>
+<pre data-lang="bash"><code>   # .env.test
+   BASE_URL=http://localhost:3000</code></pre>
+<ol>
+<li>Use o template <code>templates/e2e-test.ts</code></li>
+<li>Adicione <code>data-testid</code> aos elementos UI:</li>
+</ol>
+<pre data-lang="html"><code>   &lt;button data-testid=&quot;submit-button&quot;&gt;Submit&lt;/button&gt;</code></pre>
+<ol>
+<li>Execute teste:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run test:e2e</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Fluxo completo funciona</li>
+</ol>
+<h3 id="fase-4-analisar-cobertura">Fase 4: Analisar Cobertura</h3>
+<ol>
+<li>Execute testes com coverage:</li>
+</ol>
+<pre data-lang="bash"><code>   npm run test:coverage</code></pre>
+<ol>
+<li>Abra relatório:</li>
+</ol>
+<pre data-lang="bash"><code>   open coverage/lcov-report/index.html</code></pre>
+<ol>
+<li>Identifique áreas sem cobertura</li>
+<li>Crie plano de cobertura:</li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/test-plan.md docs/test-plan.md</code></pre>
+<ol>
+<li><strong>Checkpoint</strong>: Coverage ≥ 80% para unidades</li>
+</ol>
+<h3 id="fase-5-refatorar-com-testes-como-safety-net">Fase 5: Refatorar com Testes como Safety Net</h3>
+<ol>
+<li>Execute todos os testes antes de refatorar:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test</code></pre>
+<ol>
+<li>Refatore código mantendo API pública</li>
+<li>Execute testes após cada mudança:</li>
+</ol>
+<pre data-lang="bash"><code>   npm test</code></pre>
+<ol>
+<li>Se teste quebra, revert ou ajuste refatoração</li>
+<li><strong>Checkpoint</strong>: Todos os testes passam após refatoração</li>
+</ol>
+<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h3 id="pirmide-de-testes">Pirâmide de Testes</h3>
+<pre><code>         /\
+        /  \      E2E (poucos, críticos)
+       /____\
+      /      \    Integração (médio)
+     /________\
+    /          \  Unitários (muitos)
+   /____________\</code></pre>
+<h3 id="aaa-pattern">AAA Pattern</h3>
+<pre data-lang="typescript"><code>it(&#x27;should return total when items provided&#x27;, () =&gt; {
+  // Arrange - preparar dados
+  const cart = new ShoppingCart();
+  const item = { id: 1, price: 100 };
+  
+  // Act - executar ação
+  cart.addItem(item);
+  const total = cart.getTotal();
+  
+  // Assert - verificar resultado
+  expect(total).toBe(100);
+});</code></pre>
+<h3 id="naming-convention">Naming Convention</h3>
+<p>Padrão: <code>should [expected behavior] when [condition]</code></p>
+<pre data-lang="typescript"><code>// ✅ CORRETO
+it(&#x27;should throw ValidationError when email is invalid&#x27;)
+it(&#x27;should return user when id exists&#x27;)
+it(&#x27;should calculate total when items provided&#x27;)
+
+// ❌ ERRADO
+it(&#x27;test user&#x27;)
+it(&#x27;email validation&#x27;)
+it(&#x27;works&#x27;)</code></pre>
+<h2 id="templates">Templates</h2>
+<h3 id="unit-testts">unit-test.ts</h3>
+<p>Localização: <code>templates/unit-test.ts</code></p>
+<p>Template para testes unitários com Vitest/Jest.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/unit-test.ts src/{module}/{module}.test.ts</code></pre>
+<h3 id="integration-testts">integration-test.ts</h3>
+<p>Localização: <code>templates/integration-test.ts</code></p>
+<p>Template para testes de integração com setup/teardown.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/integration-test.ts test/integration/{module}.test.ts</code></pre>
+<h3 id="e2e-testts">e2e-test.ts</h3>
+<p>Localização: <code>templates/e2e-test.ts</code></p>
+<p>Template para testes E2E com Playwright.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/e2e-test.ts e2e/{flow}.spec.ts</code></pre>
+<h3 id="test-planmd">test-plan.md</h3>
+<p>Localização: <code>templates/test-plan.md</code></p>
+<p>Template para planejar cobertura de testes.</p>
+<p><strong>Uso:</strong></p>
+<pre data-lang="bash"><code>cp templates/test-plan.md docs/test-plan.md</code></pre>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="test-leaky">Test Leaky</h4>
+<p><strong>O que é:</strong> Teste que depende de estado externo ou ordem de execução. <strong>Por que é ruim:</strong> Testes passam/falham aleatoriamente, impossível debug. <strong>Como evitar:</strong> Use setup/teardown, testes independentes. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - depende de banco real
+it(&#x27;should create user&#x27;, () =&gt; {
+  const user = userService.createUser({ name: &#x27;John&#x27; });
+  // espera que user.id seja 1 - pode falhar se outro teste rodou antes
+  expect(user.id).toBe(1);
+});
+
+// ✅ CORRETO - isolado
+it(&#x27;should create user&#x27;, async () =&gt; {
+  await setupTestDatabase();
+  const user = await userService.createUser({ name: &#x27;John&#x27; });
+  expect(user.id).toBeDefined();
+  await teardownTestDatabase();
+});</code></pre>
+<h4 id="mock-excessivo">Mock Excessivo</h4>
+<p><strong>O que é:</strong> Mockar tudo, incluindo código que deveria ser testado. <strong>Por que é ruim:</strong> Teste não valida integração real, falso positivo. <strong>Como evitar:</strong> Mock apenas dependências externas. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - mockando tudo
+const result = await jest.fn().mockReturnValue(&#x27;mocked&#x27;);
+
+// ✅ CORRETO - mockando apenas externo
+const httpClient = new MockHttpClient();
+const service = new UserService(httpClient);</code></pre>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="test-sem-assertion">Test Sem Assertion</h4>
+<p><strong>O que é:</strong> Teste que não verifica nada. <strong>Por que é ruim:</strong> Teste sempre passa, não detecta bugs. <strong>Como evitar:</strong> Sempre use expect(). <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+it(&#x27;should work&#x27;, () =&gt; {
+  userService.createUser({ name: &#x27;John&#x27; });
+});
+
+// ✅ CORRETO
+it(&#x27;should create user successfully&#x27;, () =&gt; {
+  const user = userService.createUser({ name: &#x27;John&#x27; });
+  expect(user.id).toBeDefined();
+  expect(user.name).toBe(&#x27;John&#x27;);
+});</code></pre>
+<h4 id="test-frgil">Test Frágil</h4>
+<p><strong>O que é:</strong> Teste que quebra com mudanças não relacionadas. <strong>Por que é ruim:</strong> Alto custo de manutenção. <strong>Como evitar:</strong> Use seletores estáveis, teste comportamento não implementação. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO - usa classe CSS que muda
+await page.click(&#x27;.btn-primary&#x27;);
+
+// ✅ CORRETO - usa data-testid estável
+await page.click(&#x27;[data-testid=&quot;submit-button&quot;]&#x27;);</code></pre>
+<h3 id="-baixo">🟢 Baixo</h3>
+<h4 id="test-com-lgica">Test com Lógica</h4>
+<p><strong>O que é:</strong> Teste que contém lógica condicional ou loops. <strong>Por que é ruim:</strong> Teste difícil de entender, pode ter bugs. <strong>Como evitar:</strong> Teste uma coisa, sem lógica. <strong>Exemplo:</strong></p>
+<pre data-lang="typescript"><code>// ❌ ERRADO
+it(&#x27;should validate users&#x27;, () =&gt; {
+  users.forEach(user =&gt; {
+    if (user.age &gt; 18) {
+      expect(validate(user)).toBe(true);
+    }
+  });
+});
+
+// ✅ CORRETO
+it(&#x27;should validate adult user&#x27;, () =&gt; {
+  const user = { name: &#x27;John&#x27;, age: 25 };
+  expect(validate(user)).toBe(true);
+});
+
+it(&#x27;should reject minor user&#x27;, () =&gt; {
+  const user = { name: &#x27;Jane&#x27;, age: 15 };
+  expect(validate(user)).toBe(false);
+});</code></pre>
+<h2 id="checklists">Checklists</h2>
+<h3 id="checklist-de-review-de-teste">Checklist de Review de Teste</h3>
+<ul>
+<li>[ ] Segue padrão AAA (Arrange, Act, Assert)</li>
+<li>[ ] Nome claro seguindo <code>should X when Y</code></li>
+<li>[ ] Um conceito por teste</li>
+<li>[ ] Teste caminho feliz</li>
+<li>[ ] Teste caminhos de erro</li>
+<li>[ ] Teste edge cases</li>
+<li>[ ] Mocks apenas para dependências externas</li>
+<li>[ ] Não tem lógica no teste</li>
+</ul>
+<h3 id="checklist-de-coverage">Checklist de Coverage</h3>
+<ul>
+<li>[ ] Coverage ≥ 80% para unidades</li>
+<li>[ ] Coverage ≥ 70% para integração</li>
+<li>[ ] Coverage ≥ 60% para E2E</li>
+<li>[ ] Nenhum arquivo com < 50% coverage</li>
+<li>[ ] Nenhum branch não coberto</li>
+<li>[ ] Nenhum path não coberto</li>
+</ul>
+<h3 id="checklist-de-ci">Checklist de CI</h3>
+<ul>
+<li>[ ] Testes rodam em CI</li>
+<li>[ ] Coverage é reportado</li>
+<li>[ ] Build falha se coverage < meta</li>
+<li>[ ] Testes paralelos habilitados</li>
+<li>[ ] Cache de dependências configurado</li>
+</ul>
+<h2 id="edge-cases">Edge Cases</h2>
+<h3 id="teste-dependente-de-ordem">Teste Dependente de Ordem</h3>
+<p><strong>Situação:</strong> Teste A passa apenas se executado antes do Teste B. <strong>Solução:</strong> Use <code>beforeEach</code>/<code>afterEach</code> para isolar estado. <strong>Exceção:</strong> Testes de migração de banco podem precisar de ordem.</p>
+<pre data-lang="typescript"><code>// Isolar estado entre testes
+beforeEach(() =&gt; {
+  jest.clearAllMocks();
+  testDb.clear();
+});</code></pre>
+<h3 id="flaky-test">Flaky Test</h3>
+<p><strong>Situação:</strong> Teste que passa/falha aleatoriamente. <strong>Solução:</strong> Identifique causa (timing, estado compartilhado, rede) e isole. <strong>Exceção:</strong> Testes com <code>setTimeout</code> para debounce podem ser flaky.</p>
+<pre data-lang="typescript"><code>// ❌ Pode ser flaky
+await button.click();
+expect(element).toBeVisible(); // timing issue
+
+// ✅ Mais estável
+await button.click();
+await page.waitForSelector(&#x27;[data-testid=&quot;element&quot;]&#x27;, { state: &#x27;visible&#x27; });
+expect(element).toBeVisible();</code></pre>
+<h3 id="teste-com-io-externo">Teste com I/O Externo</h3>
+<p><strong>Situação:</strong> Teste faz chamada real a API externa. <strong>Solução:</strong> Use mock server (MSW, nock) ou fixtures. <strong>Exceção:</strong> Testes de contrato podem precisar de I/O real.</p>
+<pre data-lang="typescript"><code>// Usar MSW para mockar API
+import { setupServer } from &#x27;msw/node&#x27;;
+const server = setupServer(
+  rest.get(&#x27;/api/users&#x27;, (req, res, ctx) =&gt; {
+    return res(ctx.json([{ id: 1, name: &#x27;John&#x27; }]));
+  })
+);</code></pre>
+<h2 id="referncias">Referências</h2>
+<ul>
+<li><a href="https://testing-library.com/">Testing Library</a></li>
+<li><a href="https://vitest.dev/">Vitest</a></li>
+<li><a href="https://playwright.dev/">Playwright</a></li>
+<li><code>ddd</code> — para testar agregados</li>
+<li><code>governance</code> — para políticas de CI/CD</li>
+</ul>
+<hr>
+<h2 id="sub-domain--component-testing-strategy">Sub-Domain / Component: <code>testing-strategy</code></h2>
+<h1 id="testing-strategy">Testing Strategy</h1>
+<h2 id="overview">Overview</h2>
+<p>Analyze the project context and recommend a comprehensive testing strategy. This skill selects appropriate frameworks, defines the testing pyramid, establishes coverage thresholds, and generates test configuration files. The goal is a repeatable, measurable testing foundation that the team can maintain.</p>
+<p><strong>Announce at start:</strong> "I'm using the testing-strategy skill to define the testing approach."</p>
+<hr>
+<h2 id="phase-1-analyze-project">Phase 1: Analyze Project</h2>
+<p><strong>Goal:</strong> Understand the current stack, existing tests, and CI setup before recommending anything.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Identify the tech stack (language, framework, runtime)</li>
+<li>Survey existing tests (what testing exists already?)</li>
+<li>Review CI/CD pipeline (how do tests run?)</li>
+<li>Measure current coverage levels</li>
+<li>Map external dependencies (services, databases, APIs)</li>
+</ol>
+<h3 id="discovery-commands">Discovery Commands</h3>
+<pre data-lang="bash"><code># Identify test files
+find . -name &quot;*.test.*&quot; -o -name &quot;*.spec.*&quot; | head -30
+
+# Check for test config
+ls vitest.config.* jest.config.* pytest.ini pyproject.toml .mocharc.* 2&gt;/dev/null
+
+# Check current coverage
+cat coverage/coverage-summary.json 2&gt;/dev/null || echo &quot;No coverage report found&quot;
+
+# Check CI config
+cat .github/workflows/*.yml 2&gt;/dev/null | head -50</code></pre>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] Tech stack is identified</li>
+<li>[ ] Existing test infrastructure is mapped</li>
+<li>[ ] CI pipeline status is known</li>
+<li>[ ] External dependencies are listed</li>
+</ul>
+<hr>
+<h2 id="phase-2-recommend-testing-pyramid">Phase 2: Recommend Testing Pyramid</h2>
+<p><strong>Goal:</strong> Select frameworks and define the pyramid ratios.</p>
+<h3 id="framework-selection-table">Framework Selection Table</h3>
+<div class="table-wrapper"><table><tr><th>Stack</th><th>Unit</th><th>Integration</th><th>E2E</th></tr><tr><td><strong>Node.js/TS</strong></td><td>Vitest</td><td>Vitest + Supertest</td><td>Playwright</td></tr><tr><td><strong>React/Next.js</strong></td><td>Vitest + Testing Library</td><td>Vitest + MSW</td><td>Playwright/Cypress</td></tr><tr><td><strong>Python</strong></td><td>pytest</td><td>pytest + httpx</td><td>Playwright</td></tr><tr><td><strong>Go</strong></td><td>testing + testify</td><td>testing + testcontainers</td><td>Playwright</td></tr><tr><td><strong>Rust</strong></td><td>cargo test</td><td>cargo test + testcontainers</td><td>-</td></tr><tr><td><strong>PHP/Laravel</strong></td><td>Pest/PHPUnit</td><td>Pest + HTTP tests</td><td>Playwright/Dusk</td></tr></table></div>
+<h3 id="testing-pyramid-ratios">Testing Pyramid Ratios</h3>
+<pre><code>        /\
+       /  \     E2E Tests (10%)
+      /    \    Critical user journeys only
+     /------\
+    /        \   Integration Tests (30%)
+   /          \  API endpoints, DB queries, service interactions
+  /------------\
+ /              \ Unit Tests (60%)
+/                \ Pure functions, business logic, utilities</code></pre>
+<h3 id="what-to-test-at-each-level">What to Test at Each Level</h3>
+<div class="table-wrapper"><table><tr><th>Level</th><th>Test These</th><th>Do NOT Test These</th></tr><tr><td><strong>Unit (60%)</strong></td><td>Pure functions, business logic, data transformations, validations, state management</td><td>Framework internals, third-party libraries</td></tr><tr><td><strong>Integration (30%)</strong></td><td>API endpoints, database queries, service-to-service calls, auth flows</td><td>Individual functions in isolation</td></tr><tr><td><strong>E2E (10%)</strong></td><td>Critical user journeys (signup, purchase), cross-browser, accessibility</td><td>Edge cases (handle at unit level)</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] Framework selection matches the tech stack</li>
+<li>[ ] Pyramid ratios are defined</li>
+<li>[ ] Testing scope at each level is documented</li>
+</ul>
+<hr>
+<h2 id="phase-3-define-coverage-thresholds">Phase 3: Define Coverage Thresholds</h2>
+<p><strong>Goal:</strong> Set realistic, enforceable coverage targets.</p>
+<h3 id="coverage-threshold-table">Coverage Threshold Table</h3>
+<div class="table-wrapper"><table><tr><th>Category</th><th>Minimum</th><th>Target</th><th>Notes</th></tr><tr><td>Overall</td><td>70%</td><td>85%</td><td>Lines covered</td></tr><tr><td>Critical paths</td><td>90%</td><td>95%</td><td>Auth, payments, data access</td></tr><tr><td>New code (PRs)</td><td>80%</td><td>90%</td><td>Enforced in CI</td></tr><tr><td>Utilities</td><td>95%</td><td>100%</td><td>Pure functions are easy to test</td></tr></table></div>
+<h3 id="threshold-selection-decision-table">Threshold Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Project Maturity</th><th>Overall Minimum</th><th>New Code Minimum</th><th>Rationale</th></tr><tr><td>Greenfield</td><td>80%</td><td>90%</td><td>Start high, maintain standard</td></tr><tr><td>Active (good coverage)</td><td>70%</td><td>85%</td><td>Maintain and improve</td></tr><tr><td>Legacy (low coverage)</td><td>50%</td><td>80%</td><td>Raise floor gradually</td></tr><tr><td>Prototype/MVP</td><td>60%</td><td>70%</td><td>Cover critical paths, accept gaps</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-4-until">STOP — Do NOT proceed to Phase 4 until:</h3>
+<ul>
+<li>[ ] Coverage thresholds are realistic for the project maturity</li>
+<li>[ ] Critical path coverage targets are defined</li>
+<li>[ ] CI enforcement strategy is decided</li>
+</ul>
+<hr>
+<h2 id="phase-4-generate-configuration">Phase 4: Generate Configuration</h2>
+<p><strong>Goal:</strong> Produce working test configuration files and CI integration.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Generate test runner config (<code>vitest.config.ts</code>, <code>jest.config.js</code>, <code>pytest.ini</code>)</li>
+<li>Configure coverage with thresholds</li>
+<li>Add test commands to CI workflow</li>
+<li>Set up test environment (<code>.env.test</code>, test databases)</li>
+</ol>
+<h3 id="example-vitest-config">Example: Vitest Config</h3>
+<pre data-lang="typescript"><code>import { defineConfig } from &#x27;vitest/config&#x27;;
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: &#x27;jsdom&#x27;,
+    coverage: {
+      provider: &#x27;v8&#x27;,
+      reporter: [&#x27;text&#x27;, &#x27;json&#x27;, &#x27;html&#x27;],
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 80,
+        statements: 80,
+      },
+    },
+    include: [&#x27;src/**/*.test.{ts,tsx}&#x27;],
+  },
+});</code></pre>
+<h3 id="stop--do-not-proceed-to-phase-5-until">STOP — Do NOT proceed to Phase 5 until:</h3>
+<ul>
+<li>[ ] Config files are syntactically valid</li>
+<li>[ ] Coverage thresholds match Phase 3 decisions</li>
+<li>[ ] CI integration commands are defined</li>
+</ul>
+<hr>
+<h2 id="phase-5-create-test-templates">Phase 5: Create Test Templates</h2>
+<p><strong>Goal:</strong> Provide example test files demonstrating project conventions.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Create a unit test example with Arrange-Act-Assert</li>
+<li>Create an integration test with setup/teardown</li>
+<li>Create mock/stub patterns for external dependencies</li>
+<li>Create test data factories/fixtures</li>
+<li>Create a snapshot test example (when appropriate)</li>
+</ol>
+<h3 id="stop--verification-gate-before-claiming-complete">STOP — Verification Gate before claiming complete:</h3>
+<ul>
+<li>[ ] Framework selection matches tech stack</li>
+<li>[ ] Coverage thresholds are realistic</li>
+<li>[ ] Test configuration files are valid</li>
+<li>[ ] Example tests actually run</li>
+<li>[ ] CI integration is configured</li>
+</ul>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Testing implementation details</td><td>Breaks on every refactor, provides false confidence</td><td>Test behavior and outcomes</td></tr><tr><td>Excessive mocking</td><td>Tests nothing real, mocks mask real failures</td><td>Mock at boundaries only</td></tr><tr><td>Brittle CSS selectors in E2E</td><td>Break with styling changes</td><td>Use data-testid or accessible roles</td></tr><tr><td>Test interdependence</td><td>Ordering failures, flaky in CI</td><td>Each test must run independently</td></tr><tr><td>Slow tests blocking CI</td><td>Developers skip running tests</td><td>Parallelize, use test databases, mock external APIs</td></tr><tr><td>Snapshot overuse</td><td>Snapshots approved without reading, stale baselines</td><td>Use for stable output only</td></tr><tr><td>No coverage enforcement in CI</td><td>Coverage degrades over time</td><td>Enforce thresholds in CI pipeline</td></tr><tr><td>Same coverage target everywhere</td><td>Utilities and critical paths differ</td><td>Use per-category thresholds</td></tr></table></div>
+<hr>
+<h2 id="decision-table-mock-strategy">Decision Table: Mock Strategy</h2>
+<div class="table-wrapper"><table><tr><th>Dependency Type</th><th>Mock Strategy</th><th>Example</th></tr><tr><td>External API</td><td>MSW / nock / responses</td><td>Third-party payment API</td></tr><tr><td>Database</td><td>Test database or in-memory</td><td>PostgreSQL test container</td></tr><tr><td>File system</td><td>Virtual FS or temp directory</td><td>File upload processing</td></tr><tr><td>Time/Date</td><td>Fake timers</td><td>Expiration logic</td></tr><tr><td>Environment vars</td><td>Override in test setup</td><td>Feature flags</td></tr><tr><td>Random/UUID</td><td>Seed or stub</td><td>ID generation</td></tr></table></div>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>test-driven-development</code></td><td>Strategy defines frameworks; TDD defines the cycle</td></tr><tr><td><code>acceptance-testing</code></td><td>Strategy includes acceptance test infrastructure</td></tr><tr><td><code>code-review</code></td><td>Review checks that tests follow the defined strategy</td></tr><tr><td><code>senior-frontend</code></td><td>Frontend testing uses strategy-selected frameworks</td></tr><tr><td><code>senior-backend</code></td><td>Backend testing uses strategy-selected frameworks</td></tr><tr><td><code>performance-optimization</code></td><td>Load tests are part of the overall testing strategy</td></tr><tr><td><code>webapp-testing</code></td><td>Playwright E2E tests follow strategy pyramid</td></tr></table></div>
+<hr>
+<h2 id="key-principles">Key Principles</h2>
+<ul>
+<li><strong>Test behavior, not implementation</strong> — what it does, not how</li>
+<li><strong>Fast feedback</strong> — unit tests should run in seconds</li>
+<li><strong>Deterministic</strong> — no flaky tests, no time-dependent logic</li>
+<li><strong>Readable</strong> — tests are documentation; make them clear</li>
+<li><strong>Maintainable</strong> — tests should help refactoring, not block it</li>
+</ul>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt framework selection and coverage thresholds to the project context. The five-phase process and testing pyramid structure are strongly recommended but can be scaled to project size.</p>
+<hr>
+<h2 id="sub-domain--component-acceptance-testing">Sub-Domain / Component: <code>acceptance-testing</code></h2>
+<h1 id="acceptance-testing">Acceptance Testing</h1>
+<h2 id="overview">Overview</h2>
+<p>Acceptance-driven backpressure connects specification acceptance criteria directly to test requirements, creating a validation chain that prevents premature completion claims. The system cannot cheat — you cannot claim a feature is done unless tests derived from spec acceptance criteria actually pass.</p>
+<p><strong>Announce at start:</strong> "I'm using the acceptance-testing skill to validate against specification criteria."</p>
+<hr>
+<h2 id="the-backpressure-chain">The Backpressure Chain</h2>
+<pre><code>+------------+     derives      +------------+     validates    +------------+
+|   SPECS    |----------------&gt;|   TESTS    |----------------&gt;|   CODE     |
+|            |                  |            |                  |            |
+| Acceptance |                  | Test cases |                  | Must pass  |
+| Criteria   |                  | from AC    |                  | all tests  |
++------------+                  +------------+                  +------------+
+      ^                                                              |
+      |                    backpressure                               |
+      +--------------------------------------------------------------+
+      If tests fail, implementation must change (not the spec or test)</code></pre>
+<hr>
+<h2 id="phase-1-extract-acceptance-criteria">Phase 1: Extract Acceptance Criteria</h2>
+<p><strong>Goal:</strong> From each specification file, extract all Given/When/Then acceptance criteria.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Locate all specification files (<code>specs/*.md</code>)</li>
+<li>Extract every acceptance criterion with its ID</li>
+<li>Document in structured format</li>
+</ol>
+<h3 id="example-extraction">Example Extraction</h3>
+<pre data-lang="markdown"><code>## From spec: 01-color-extraction.md
+
+### AC-1: Extract dominant colors
+- Given an uploaded image (PNG, JPG, or WebP)
+- When color extraction is triggered
+- Then 5-10 dominant colors are returned
+- And each color includes hex, RGB, and HSL representations
+
+### AC-2: Handle invalid images
+- Given a corrupted or unsupported file
+- When color extraction is attempted
+- Then an appropriate error is returned
+- And no partial results are produced</code></pre>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-2-until">STOP — HARD-GATE: Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] All spec files are located and read</li>
+<li>[ ] Every acceptance criterion is extracted with an ID</li>
+<li>[ ] Criteria are in Given/When/Then format</li>
+<li>[ ] No criteria are ambiguous (if ambiguous, clarify with spec author)</li>
+</ul>
+<hr>
+<h2 id="phase-2-derive-test-cases">Phase 2: Derive Test Cases</h2>
+<p><strong>Goal:</strong> Map every acceptance criterion to at least one test case.</p>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  HARD-GATE: Every acceptance criterion must have at least one   │
+│  corresponding test. No exceptions. If a criterion has no       │
+│  test, the feature is NOT complete.                             │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<h3 id="traceability-table">Traceability Table</h3>
+<div class="table-wrapper"><table><tr><th>Acceptance Criterion</th><th>Test Type</th><th>Test Description</th><th>Test File:Line</th></tr><tr><td>AC-1: Extract dominant colors</td><td>Integration</td><td>Upload valid image, verify 5-10 colors with hex/RGB/HSL</td><td>test/color.test.js:15</td></tr><tr><td>AC-2: Handle invalid images</td><td>Integration</td><td>Upload corrupted file, verify error, verify no partial data</td><td>test/color.test.js:42</td></tr></table></div>
+<h3 id="decision-table-test-type-for-acceptance-criteria">Decision Table: Test Type for Acceptance Criteria</h3>
+<div class="table-wrapper"><table><tr><th>Criterion Type</th><th>Test Type</th><th>Rationale</th></tr><tr><td>Data input/output behavior</td><td>Integration</td><td>Tests real data flow</td></tr><tr><td>Error handling behavior</td><td>Integration</td><td>Tests error paths end-to-end</td></tr><tr><td>Performance requirement</td><td>Load test</td><td>Requires measurement under load</td></tr><tr><td>UI behavior</td><td>E2E (Playwright)</td><td>Tests real browser interaction</td></tr><tr><td>Subjective quality</td><td>LLM-as-judge</td><td>Cannot be deterministically tested</td></tr><tr><td>Security requirement</td><td>Integration + security test</td><td>Tests authorization and input validation</td></tr></table></div>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-3-until">STOP — HARD-GATE: Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] Every acceptance criterion has at least one test mapped</li>
+<li>[ ] Test types are appropriate for the criterion type</li>
+<li>[ ] Test file locations are identified</li>
+</ul>
+<hr>
+<h2 id="phase-3-write-tests-before-implementation">Phase 3: Write Tests Before Implementation</h2>
+<p><strong>Goal:</strong> Write acceptance tests that will fail until the feature is correctly implemented.</p>
+<h3 id="actions">Actions</h3>
+<p>This phase integrates with <code>test-driven-development</code>:</p>
+<ol>
+<li>Write test from acceptance criterion (RED)</li>
+<li>Implement feature to pass test (GREEN)</li>
+<li>Refactor while keeping test green (REFACTOR)</li>
+</ol>
+<h3 id="behavioral-outcome-focus">Behavioral Outcome Focus</h3>
+<div class="table-wrapper"><table><tr><th>Verify This (Behavioral)</th><th>NOT This (Implementation)</th></tr><tr><td>"5-10 colors are returned"</td><td>"K-means runs with k=8"</td></tr><tr><td>"Response time < 200ms"</td><td>"Cache is hit on second call"</td></tr><tr><td>"Error message is user-friendly"</td><td>"CustomError class is thrown"</td></tr><tr><td>"Data persists across sessions"</td><td>"PostgreSQL INSERT executes"</td></tr><tr><td>"UI updates within 500ms"</td><td>"WebSocket message is received"</td></tr></table></div>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-4-until">STOP — HARD-GATE: Do NOT proceed to Phase 4 until:</h3>
+<ul>
+<li>[ ] All acceptance tests are written</li>
+<li>[ ] Tests fail before implementation (RED confirmed)</li>
+<li>[ ] Tests verify behavioral outcomes, not implementation details</li>
+</ul>
+<hr>
+<h2 id="phase-4-validation-gates">Phase 4: Validation Gates</h2>
+<p><strong>Goal:</strong> Before claiming any task complete, ALL gates must pass.</p>
+<div class="table-wrapper"><table><tr><th>Gate</th><th>Check</th><th>Tool</th><th>Required</th></tr><tr><td>Unit tests</td><td>All pass</td><td>Test runner</td><td>Always</td></tr><tr><td>Integration tests</td><td>All pass</td><td>Test runner</td><td>Always</td></tr><tr><td>Acceptance tests</td><td>All AC-derived tests pass</td><td>Test runner</td><td>Always</td></tr><tr><td>Build</td><td>Compiles without errors</td><td>Build tool</td><td>Always</td></tr><tr><td>Lint</td><td>No violations</td><td>Linter</td><td>Always</td></tr><tr><td>Typecheck</td><td>No type errors</td><td>Type checker</td><td>When applicable</td></tr></table></div>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  HARD-GATE: ACCEPTANCE                                         │
+│                                                                 │
+│  Cannot claim completion without ALL acceptance tests passing.  │
+│  If any acceptance test fails, the feature is NOT done.        │
+│  Fix the implementation, not the spec or the test.             │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-5-until">STOP — HARD-GATE: Do NOT proceed to Phase 5 until:</h3>
+<ul>
+<li>[ ] All validation gates pass</li>
+<li>[ ] Acceptance tests pass with green status</li>
+<li>[ ] No gates are skipped or marked as "will fix later"</li>
+</ul>
+<hr>
+<h2 id="phase-5-traceability-report">Phase 5: Traceability Report</h2>
+<p><strong>Goal:</strong> Produce a report linking every spec criterion to its test and result.</p>
+<h3 id="report-template">Report Template</h3>
+<pre data-lang="markdown"><code>## Acceptance Test Report
+
+| Spec | Criterion | Test | Status |
+|------|-----------|------|--------|
+| 01-color-extraction.md | AC-1: Extract dominant colors | test/color.test.js:15 | PASS |
+| 01-color-extraction.md | AC-2: Handle invalid images | test/color.test.js:42 | PASS |
+| 02-palette-rendering.md | AC-1: Render palette grid | test/palette.test.js:8 | PASS |
+
+### Summary
+- Total criteria: N
+- Tested: N
+- Passing: N
+- Failing: 0
+- Coverage: 100%</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Changing specs to match implementation</td><td>Defeats the purpose of specification</td><td>Fix the implementation, not the spec</td></tr><tr><td>Skipping edge case criteria</td><td>Edge cases cause production bugs</td><td>ALL acceptance criteria get tests</td></tr><tr><td>Testing implementation details</td><td>Brittle tests that break on refactor</td><td>Test observable behavioral outcomes</td></tr><tr><td>Claiming "tests pass" without acceptance tests</td><td>Unit tests alone are insufficient</td><td>Acceptance tests are a separate, required category</td></tr><tr><td>Writing acceptance tests after implementation</td><td>Tests shaped to pass, not to specify</td><td>Write BEFORE implementation (TDD)</td></tr><tr><td>Deferring acceptance tests to "later"</td><td>Later never comes</td><td>Write them in Phase 2, before coding</td></tr><tr><td>Marking failing tests as "known issues"</td><td>Hides incomplete implementation</td><td>Fix the code until tests pass</td></tr></table></div>
+<hr>
+<h2 id="rationalization-prevention">Rationalization Prevention</h2>
+<div class="table-wrapper"><table><tr><th>Excuse</th><th>Reality</th></tr><tr><td>"The unit tests cover this"</td><td>Unit tests test components in isolation; acceptance tests verify integrated behavior</td></tr><tr><td>"The spec is obvious, no need for formal tests"</td><td>Obvious specs still need verifiable tests</td></tr><tr><td>"We can manually verify this"</td><td>Manual verification is not repeatable or trustworthy</td></tr><tr><td>"The acceptance criteria are too vague to test"</td><td>Clarify the criteria; vague specs produce vague code</td></tr><tr><td>"This is just a cosmetic change"</td><td>Cosmetic changes can break layout, accessibility, and UX</td></tr></table></div>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>spec-writing</code></td><td>Acceptance criteria come from specs</td></tr><tr><td><code>test-driven-development</code></td><td>TDD cycle uses acceptance-derived tests</td></tr><tr><td><code>llm-as-judge</code></td><td>For subjective criteria that cannot be deterministically tested</td></tr><tr><td><code>verification-before-completion</code></td><td>Final verification includes acceptance test check</td></tr><tr><td><code>autonomous-loop</code></td><td>Exit gate requires acceptance tests passing</td></tr><tr><td><code>code-review</code></td><td>Review checks acceptance test coverage</td></tr><tr><td><code>planning</code></td><td>Plan includes acceptance test writing as explicit tasks</td></tr></table></div>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — The backpressure chain must not be bypassed. Every acceptance criterion must have a test. No completion without passing acceptance tests. Fix the implementation, not the spec or the test.</p>
+<hr>
+<h2 id="sub-domain--component-webapp-testing">Sub-Domain / Component: <code>webapp-testing</code></h2>
+<h1 id="web-app-testing">Web App Testing</h1>
+<h2 id="overview">Overview</h2>
+<p>Comprehensive web application testing using Playwright as the primary tool. This skill covers end-to-end testing workflows including screenshot capture for visual verification, browser console log analysis, user interaction simulation, visual regression testing, accessibility auditing with axe-core, network request mocking, and mobile viewport testing.</p>
+<p><strong>Announce at start:</strong> "I'm using the webapp-testing skill for Playwright-based web application testing."</p>
+<hr>
+<h2 id="phase-1-test-planning">Phase 1: Test Planning</h2>
+<p><strong>Goal:</strong> Identify what to test and set up the infrastructure.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Identify critical user flows to test</li>
+<li>Define test environments and viewports</li>
+<li>Set up test fixtures and data</li>
+<li>Configure Playwright project settings</li>
+<li>Establish visual baseline screenshots</li>
+</ol>
+<h3 id="user-flow-priority-decision-table">User Flow Priority Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Flow Type</th><th>Priority</th><th>Test Depth</th></tr><tr><td>Authentication (login/logout/register)</td><td>Critical</td><td>Full happy + error paths</td></tr><tr><td>Core business workflow (purchase, submit)</td><td>Critical</td><td>Full happy + error + edge cases</td></tr><tr><td>Navigation and routing</td><td>High</td><td>All major routes</td></tr><tr><td>Search and filtering</td><td>High</td><td>Common queries + empty state</td></tr><tr><td>Settings and profile</td><td>Medium</td><td>Happy path</td></tr><tr><td>Admin/back-office</td><td>Medium</td><td>Key operations only</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] Critical user flows are identified and prioritized</li>
+<li>[ ] Test environments and viewports are defined</li>
+<li>[ ] Playwright config is ready</li>
+<li>[ ] Test data strategy is defined</li>
+</ul>
+<hr>
+<h2 id="phase-2-test-implementation">Phase 2: Test Implementation</h2>
+<p><strong>Goal:</strong> Write tests using page object models and accessible locators.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Write page object models for key pages</li>
+<li>Implement end-to-end test scenarios</li>
+<li>Add visual regression snapshots</li>
+<li>Integrate accessibility checks</li>
+<li>Configure network mocking for isolated tests</li>
+</ol>
+<h3 id="playwright-configuration">Playwright Configuration</h3>
+<pre data-lang="typescript"><code>import { defineConfig, devices } from &#x27;@playwright/test&#x27;;
+
+export default defineConfig({
+  testDir: &#x27;./tests/e2e&#x27;,
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [
+    [&#x27;html&#x27;, { open: &#x27;never&#x27; }],
+    [&#x27;junit&#x27;, { outputFile: &#x27;test-results/junit.xml&#x27; }],
+  ],
+  use: {
+    baseURL: &#x27;http://localhost:3000&#x27;,
+    trace: &#x27;on-first-retry&#x27;,
+    screenshot: &#x27;only-on-failure&#x27;,
+    video: &#x27;retain-on-failure&#x27;,
+  },
+  projects: [
+    { name: &#x27;chromium&#x27;, use: { ...devices[&#x27;Desktop Chrome&#x27;] } },
+    { name: &#x27;firefox&#x27;, use: { ...devices[&#x27;Desktop Firefox&#x27;] } },
+    { name: &#x27;webkit&#x27;, use: { ...devices[&#x27;Desktop Safari&#x27;] } },
+    { name: &#x27;mobile-chrome&#x27;, use: { ...devices[&#x27;Pixel 5&#x27;] } },
+    { name: &#x27;mobile-safari&#x27;, use: { ...devices[&#x27;iPhone 13&#x27;] } },
+  ],
+  webServer: {
+    command: &#x27;npm run dev&#x27;,
+    url: &#x27;http://localhost:3000&#x27;,
+    reuseExistingServer: !process.env.CI,
+  },
+});</code></pre>
+<h3 id="page-object-model">Page Object Model</h3>
+<pre data-lang="typescript"><code>class LoginPage {
+  constructor(private page: Page) {}
+
+  readonly emailInput = this.page.getByLabel(&#x27;Email&#x27;);
+  readonly passwordInput = this.page.getByLabel(&#x27;Password&#x27;);
+  readonly submitButton = this.page.getByRole(&#x27;button&#x27;, { name: &#x27;Sign in&#x27; });
+  readonly errorMessage = this.page.getByRole(&#x27;alert&#x27;);
+
+  async login(email: string, password: string) {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitButton.click();
+  }
+
+  async expectError(message: string) {
+    await expect(this.errorMessage).toContainText(message);
+  }
+}</code></pre>
+<h3 id="locator-selection-decision-table">Locator Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Locator Type</th><th>Priority</th><th>When to Use</th></tr><tr><td><code>getByRole</code></td><td>1st choice</td><td>Any element with ARIA role (button, link, heading)</td></tr><tr><td><code>getByLabel</code></td><td>2nd choice</td><td>Form fields with labels</td></tr><tr><td><code>getByPlaceholder</code></td><td>3rd choice</td><td>Fields without visible labels</td></tr><tr><td><code>getByText</code></td><td>4th choice</td><td>Non-interactive visible text</td></tr><tr><td><code>getByTestId</code></td><td>Last resort</td><td>When no accessible locator works</td></tr><tr><td>CSS selector / XPath</td><td>Never</td><td>Breaks with styling changes</td></tr></table></div>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] Page object models exist for key pages</li>
+<li>[ ] Tests use accessible locators exclusively</li>
+<li>[ ] Visual baselines are established</li>
+<li>[ ] Accessibility checks are integrated</li>
+<li>[ ] Network mocking is configured for isolated tests</li>
+</ul>
+<hr>
+<h2 id="phase-3-ci-integration">Phase 3: CI Integration</h2>
+<p><strong>Goal:</strong> Configure reliable, fast test execution in CI.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Configure headless browser execution</li>
+<li>Set up screenshot artifact collection</li>
+<li>Configure retry and flake detection</li>
+<li>Add reporting (HTML report, JUnit XML)</li>
+<li>Set up visual diff review process</li>
+</ol>
+<h3 id="ci-configuration-checklist">CI Configuration Checklist</h3>
+<ul>
+<li>[ ] Tests run headless in CI</li>
+<li>[ ] Retries enabled (2 retries for CI)</li>
+<li>[ ] Screenshot and video artifacts collected on failure</li>
+<li>[ ] JUnit XML output for CI integration</li>
+<li>[ ] HTML report generated for manual review</li>
+<li>[ ] Visual diff snapshots reviewed before merge</li>
+</ul>
+<h3 id="stop--ci-integration-complete-when">STOP — CI integration complete when:</h3>
+<ul>
+<li>[ ] Tests run reliably in CI pipeline</li>
+<li>[ ] Artifacts are collected on failure</li>
+<li>[ ] Flaky tests are identified and fixed (not skipped)</li>
+</ul>
+<hr>
+<h2 id="screenshot-capture-patterns">Screenshot Capture Patterns</h2>
+<h3 id="full-page">Full Page</h3>
+<pre data-lang="typescript"><code>test(&#x27;homepage renders correctly&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/&#x27;);
+  await expect(page).toHaveScreenshot(&#x27;homepage.png&#x27;, {
+    fullPage: true,
+    maxDiffPixelRatio: 0.01,
+  });
+});</code></pre>
+<h3 id="element-level">Element-Level</h3>
+<pre data-lang="typescript"><code>test(&#x27;navigation bar matches design&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/&#x27;);
+  const nav = page.getByRole(&#x27;navigation&#x27;);
+  await expect(nav).toHaveScreenshot(&#x27;navbar.png&#x27;);
+});</code></pre>
+<h3 id="dynamic-content-masking">Dynamic Content Masking</h3>
+<pre data-lang="typescript"><code>test(&#x27;dashboard layout&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/dashboard&#x27;);
+  await expect(page).toHaveScreenshot(&#x27;dashboard.png&#x27;, {
+    mask: [
+      page.locator(&#x27;[data-testid=&quot;timestamp&quot;]&#x27;),
+      page.locator(&#x27;[data-testid=&quot;user-avatar&quot;]&#x27;),
+      page.locator(&#x27;.chart-container&#x27;),
+    ],
+    animations: &#x27;disabled&#x27;,
+  });
+});</code></pre>
+<hr>
+<h2 id="browser-log-analysis">Browser Log Analysis</h2>
+<pre data-lang="typescript"><code>test(&#x27;no console errors on page load&#x27;, async ({ page }) =&gt; {
+  const consoleErrors: string[] = [];
+
+  page.on(&#x27;console&#x27;, msg =&gt; {
+    if (msg.type() === &#x27;error&#x27;) consoleErrors.push(msg.text());
+  });
+  page.on(&#x27;pageerror&#x27;, error =&gt; {
+    consoleErrors.push(error.message);
+  });
+
+  await page.goto(&#x27;/&#x27;);
+  await page.waitForLoadState(&#x27;networkidle&#x27;);
+  expect(consoleErrors).toEqual([]);
+});</code></pre>
+<hr>
+<h2 id="accessibility-testing-with-axe-core">Accessibility Testing with axe-core</h2>
+<pre data-lang="typescript"><code>import AxeBuilder from &#x27;@axe-core/playwright&#x27;;
+
+test(&#x27;page has no accessibility violations&#x27;, async ({ page }) =&gt; {
+  await page.goto(&#x27;/&#x27;);
+  const results = await new AxeBuilder({ page })
+    .withTags([&#x27;wcag2a&#x27;, &#x27;wcag2aa&#x27;, &#x27;wcag21aa&#x27;])
+    .exclude(&#x27;.third-party-widget&#x27;)
+    .analyze();
+  expect(results.violations).toEqual([]);
+});</code></pre>
+<hr>
+<h2 id="network-request-mocking">Network Request Mocking</h2>
+<pre data-lang="typescript"><code>test(&#x27;displays users from API&#x27;, async ({ page }) =&gt; {
+  await page.route(&#x27;**/api/users&#x27;, async route =&gt; {
+    await route.fulfill({
+      status: 200,
+      contentType: &#x27;application/json&#x27;,
+      body: JSON.stringify([{ id: 1, name: &#x27;Alice&#x27; }, { id: 2, name: &#x27;Bob&#x27; }]),
+    });
+  });
+  await page.goto(&#x27;/users&#x27;);
+  await expect(page.getByText(&#x27;Alice&#x27;)).toBeVisible();
+});
+
+test(&#x27;handles API errors gracefully&#x27;, async ({ page }) =&gt; {
+  await page.route(&#x27;**/api/users&#x27;, route =&gt;
+    route.fulfill({ status: 500, body: &#x27;Internal Server Error&#x27; })
+  );
+  await page.goto(&#x27;/users&#x27;);
+  await expect(page.getByText(&#x27;Something went wrong&#x27;)).toBeVisible();
+});</code></pre>
+<hr>
+<h2 id="mobile-viewport-testing">Mobile Viewport Testing</h2>
+<pre data-lang="typescript"><code>test.describe(&#x27;mobile responsive&#x27;, () =&gt; {
+  test.use({ viewport: { width: 375, height: 667 } });
+
+  test(&#x27;hamburger menu works&#x27;, async ({ page }) =&gt; {
+    await page.goto(&#x27;/&#x27;);
+    await expect(page.getByRole(&#x27;navigation&#x27;)).not.toBeVisible();
+    await page.getByRole(&#x27;button&#x27;, { name: &#x27;Menu&#x27; }).click();
+    await expect(page.getByRole(&#x27;navigation&#x27;)).toBeVisible();
+  });
+});</code></pre>
+<hr>
+<h2 id="test-organization">Test Organization</h2>
+<pre><code>tests/
+  e2e/
+    auth/
+      login.spec.ts
+      register.spec.ts
+    checkout/
+      cart.spec.ts
+      payment.spec.ts
+    fixtures/
+      test-data.ts
+      auth.setup.ts
+    pages/
+      login.page.ts
+      dashboard.page.ts
+    utils/
+      helpers.ts</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>CSS selectors or XPath</td><td>Break with styling changes</td><td>Use accessible locators (role, label, text)</td></tr><tr><td><code>page.waitForTimeout()</code></td><td>Arbitrary delays, flaky</td><td>Use <code>expect().toBeVisible()</code> or similar</td></tr><tr><td>Testing third-party components in detail</td><td>Not your code to test</td><td>Test your integration, not their internals</td></tr><tr><td>Hardcoded test data</td><td>Breaks across environments</td><td>Use fixtures and factories</td></tr><tr><td>Tests depending on execution order</td><td>Fragile, hard to debug</td><td>Each test must be independent</td></tr><tr><td>Ignoring flaky tests</td><td>Erodes trust in test suite</td><td>Fix root cause or quarantine</td></tr><tr><td>Screenshots without masking dynamic content</td><td>Always different, always failing</td><td>Mask timestamps, avatars, charts</td></tr><tr><td>No accessibility checks</td><td>Missing critical quality gate</td><td>axe-core on every page</td></tr></table></div>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>senior-frontend</code></td><td>Frontend components are tested by E2E tests</td></tr><tr><td><code>testing-strategy</code></td><td>E2E tests are the top of the testing pyramid</td></tr><tr><td><code>acceptance-testing</code></td><td>User flow tests serve as acceptance tests</td></tr><tr><td><code>performance-optimization</code></td><td>Performance budgets can be verified in E2E</td></tr><tr><td><code>code-review</code></td><td>Review checks that tests use accessible locators</td></tr><tr><td><code>security-review</code></td><td>Security headers and auth flows tested in E2E</td></tr></table></div>
+<hr>
+<h2 id="quality-checklist">Quality Checklist</h2>
+<ul>
+<li>[ ] All critical user flows covered</li>
+<li>[ ] Tests use accessible locators (role, label, text)</li>
+<li>[ ] Network mocking for isolated tests</li>
+<li>[ ] Visual regression baselines reviewed and approved</li>
+<li>[ ] Accessibility scans on all pages</li>
+<li>[ ] Mobile viewport tests for responsive features</li>
+<li>[ ] No <code>waitForTimeout</code> (use proper assertions)</li>
+<li>[ ] CI pipeline configured with retries</li>
+<li>[ ] Screenshot artifacts collected on failure</li>
+<li>[ ] Flaky tests identified and fixed (not skipped)</li>
+</ul>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt test depth to the project's critical paths. The page object model pattern and accessible locators are strongly recommended. Accessibility checks are mandatory on every page. Visual regression baselines must be reviewed before merge.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

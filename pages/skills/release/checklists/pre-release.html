@@ -412,40 +412,40 @@
   <div class="content">
     <h1 id="pre-release-checklist">Pre-Release Checklist</h1>
 <p>Execute antes de iniciar qualquer release.</p>
-<h2 id="versionamento">Versionamento</h2>
+<h2 id="versioning">Versioning</h2>
 <ul>
-<li>[ ] Versão semântica incrementada corretamente (MAJOR.MINOR.PATCH)</li>
-<li>[ ] <code>index.json</code> reflete a nova versão</li>
-<li>[ ] <code>version</code> no frontmatter de todas as skills atualizada (se aplicável)</li>
+<li>[ ] Major, minor, and patch versions incremented correctly (MAJOR.MINOR.PATCH)</li>
+<li>[ ] <code>index.json</code> reflects the new version</li>
+<li>[ ] <code>version</code> in the frontmatter of all skills updated (if applicable)</li>
 </ul>
 <h2 id="changelog">CHANGELOG</h2>
 <ul>
-<li>[ ] Entrada <code>[Unreleased]</code> movida para nova versão</li>
-<li>[ ] Data da release atualizada</li>
-<li>[ ] Todas as mudanças documentadas (Added, Changed, Fixed, Removed)</li>
-<li>[ ] Formato Keep a Changelog mantido</li>
+<li>[ ] <code>[Unreleased]</code> entry moved to the new version</li>
+<li>[ ] Release date updated</li>
+<li>[ ] All changes documented (Added, Changed, Fixed, Removed)</li>
+<li>[ ] Keep a Changelog format maintained</li>
 </ul>
-<h2 id="qualidade">Qualidade</h2>
+<h2 id="quality">Quality</h2>
 <ul>
-<li>[ ] <code>validate-index.sh</code> passa: 0 erros</li>
-<li>[ ] <code>validate-skill.sh</code> passa para todas as skills: 0 erros</li>
-<li>[ ] Nenhum <code>related_skills</code> apontando para skill inexistente</li>
-<li>[ ] README.md atualizado com nova contagem de skills</li>
+<li>[ ] <code>validate-index.sh</code> passes: 0 errors</li>
+<li>[ ] <code>validate-skill.sh</code> passes for all skills: 0 errors</li>
+<li>[ ] No <code>related_skills</code> pointing to non-existent skills</li>
+<li>[ ] <code>README.md</code> updated with new skill count</li>
 </ul>
 <h2 id="git">Git</h2>
 <ul>
-<li>[ ] Branch limpa (sem uncommitted changes)</li>
-<li>[ ] Todos os commits seguem Conventional Commits</li>
-<li>[ ] Merge em master via PR (se aplicável)</li>
-<li>[ ] Tag criada: <code>v{MAJOR}.{MINOR}.{PATCH}</code></li>
+<li>[ ] Branch clean (no uncommitted changes)</li>
+<li>[ ] All commits follow Conventional Commits</li>
+<li>[ ] Merge into master via PR (if applicable)</li>
+<li>[ ] Tag created: <code>v{MAJOR}.{MINOR}.{PATCH}</code></li>
 </ul>
 <h2 id="deploy">Deploy</h2>
 <ul>
-<li>[ ] GitHub Pages build disparado</li>
-<li>[ ] Site atualizado com novas skills</li>
+<li>[ ] GitHub Pages build triggered</li>
+<li>[ ] Site updated with new skills</li>
 </ul>
 <hr>
-<p><em>Checklist de pré-release para ignite-agents-skills.</em></p>
+<p><em>Pre-release checklist for ignite-agents-skills.</em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

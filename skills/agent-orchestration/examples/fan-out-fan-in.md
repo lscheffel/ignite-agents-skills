@@ -1,19 +1,19 @@
 # Example: Fan-Out/Fan-In
 
-Exemplo de paralelismo com fan-out e fan-in.
+Example of parallelism with fan-out and fan-in.
 
-## Tarefa
+## Task
 
-"Processar 50 arquivos CSV e gerar consolidado"
+"Process 50 CSV files and generate consolidated output"
 
-## Padrão Sequencial (❌)
+## Sequential Pattern (❌)
 
+```markdown
+Agent processes: file1 → file2 → ... → file50
+Time: 50 x 2s = 100s
 ```
-Agente processa: arquivo1 → arquivo2 → ... → arquivo50
-Tempo: 50 x 2s = 100s
-```
 
-## Padrão Fan-Out/Fan-In (✅)
+## Fan-Out/Fan-In Pattern (✅)
 
 ```mermaid
 graph TD
@@ -27,10 +27,10 @@ graph TD
     B3 --> C
     B4 --> C
     B5 --> C
-    C --> D[Output: Consolidado]
+    C --> D[Output: Consolidated]
 ```
 
-## Implementação
+## Implementation
 
 ### Fan-Out
 
@@ -49,14 +49,14 @@ validation: schema-check
 timeout: 60s
 ```
 
-## Métricas
+## Metrics
 
-| Métrica | Sequencial | Paralelo |
+| Metric | Sequential | Parallel |
 |---------|-----------|----------|
-| Tempo | 100s | 22s |
-| Custo | $0.50 | $0.55 |
+| Time | 100s | 22s |
+| Cost | $0.50 | $0.55 |
 | Throughput | 0.5/s | 2.3/s |
 
 ## Trade-off
 
-Paralelismo aumenta custo levemente ($0.05) mas reduz tempo em 78%.
+Parallelism increases cost slightly ($0.05) but reduces time by 78%.

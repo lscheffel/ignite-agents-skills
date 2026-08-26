@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>writing-skills — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; writing-skills</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: writing-skills version: 1.0.0 description: Use when creating new skills, commands, or agent definitions for Claude Code, including writing SKILL.md files, defining triggers, and testing skill behavior domain: domain-stack triggers:</p>
+<ul>
+<li>writing-skills</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>writing-skills</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="writing-skills">Writing Skills</h1>
+<h2 id="overview">Overview</h2>
+<p>Create effective, well-tested Claude Code skills that trigger reliably, load efficiently, and produce consistent results. This skill enforces a TDD approach to skill creation — define test prompts first, write the minimal skill, then harden against misfire and rationalization.</p>
+<p><strong>This is a RIGID skill.</strong> Every step must be followed exactly. No shortcuts.</p>
+<h2 id="phase-1-define-test-prompts-red">Phase 1: Define Test Prompts (RED)</h2>
+<p><strong>[HARD-GATE]</strong> Before writing any skill content, define the prompts that should trigger it.</p>
+<p>Write 3-5 test prompts:</p>
+<div class="table-wrapper"><table><tr><th>#</th><th>Test Type</th><th>Purpose</th><th>Example</th></tr><tr><td>1</td><td>Obvious trigger</td><td>Should clearly match</td><td>"Create a new React component with tests"</td></tr><tr><td>2</td><td>Subtle trigger</td><td>Should also match</td><td>"I need a reusable button"</td></tr><tr><td>3</td><td>Near-miss</td><td>Should NOT match</td><td>"Review this component code"</td></tr><tr><td>4</td><td>Edge case</td><td>Define expected behavior</td><td>"Create a component and write its docs"</td></tr><tr><td>5</td><td>Ambiguous</td><td>Define which skill wins</td><td>"Set up the frontend"</td></tr></table></div>
+<p>Document expected behavior for each:</p>
+<pre><code>Test prompt: &quot;Create a new React component with tests&quot;
+Expected: Should trigger component-creation skill
+Should NOT trigger: testing-strategy, code-review, writing-skills</code></pre>
+<p>STOP — Do NOT proceed to Phase 2 until all test prompts are documented.</p>
+<h2 id="phase-2-write-minimal-skillmd-green">Phase 2: Write Minimal SKILL.md (GREEN)</h2>
+<p>Create the minimum skill definition that passes all test prompts from Phase 1.</p>
+<h3 id="required-structure">Required Structure</h3>
+<p>Every SKILL.md MUST contain ALL of these elements:</p>
+<div class="table-wrapper"><table><tr><th>Element</th><th>Required</th><th>Purpose</th></tr><tr><td>Frontmatter (<code>name</code>, <code>description</code>)</td><td>Yes</td><td>Identification and trigger matching</td></tr><tr><td>CSO-optimized description</td><td>Yes</td><td>Starts with "Use when...", lists trigger conditions</td></tr><tr><td>Overview (2-3 sentences)</td><td>Yes</td><td>Purpose and value</td></tr><tr><td>Multi-phase process with STOP markers</td><td>Yes</td><td>Numbered phases with clear actions</td></tr><tr><td>Decision tables</td><td>Yes</td><td>Tables for choosing between approaches</td></tr><tr><td>Anti-patterns / Common mistakes table</td><td>Yes</td><td>"What NOT to do" section</td></tr><tr><td>Anti-rationalization guards</td><td>Yes</td><td>HARD-GATE or "Do NOT skip" markers</td></tr><tr><td>Integration points table</td><td>Yes</td><td>How skill connects to other skills</td></tr><tr><td>Concrete examples</td><td>Yes</td><td>Code/command examples where non-obvious</td></tr><tr><td>Skill type declaration</td><td>Yes</td><td>RIGID or FLEXIBLE at the end</td></tr></table></div>
+<h3 id="frontmatter-rules">Frontmatter Rules</h3>
+<pre data-lang="yaml"><code>---
+name: skill-name          # lowercase with hyphens, unique identifier
+description: &quot;Use when [trigger conditions]&quot;  # Max 1024 chars
+---</code></pre>
+<p><strong>[HARD-GATE]</strong> The <code>description</code> field MUST start with "Use when".</p>
+<h3 id="cso-claude-search-optimization-rules">CSO (Claude Search Optimization) Rules</h3>
+<p>The <code>description</code> field determines when a skill is selected. Optimize it like a search query.</p>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Explanation</th></tr><tr><td>Start with "Use when..."</td><td>Trigger condition format</td></tr><tr><td>List specific conditions, not capabilities</td><td>What activates the skill, not what it teaches</td></tr><tr><td>Maximum 1024 characters</td><td>Be concise</td></tr><tr><td>Use action verbs</td><td>"creating", "debugging", "designing", "reviewing"</td></tr></table></div>
+<p><strong>Good:</strong></p>
+<pre data-lang="yaml"><code>description: &quot;Use when creating database migrations, designing table schemas, adding indexes, or optimizing SQL queries&quot;</code></pre>
+<p><strong>Bad:</strong></p>
+<pre data-lang="yaml"><code>description: &quot;A comprehensive guide to database design covering normalization, indexing, query optimization, and migration strategies&quot;</code></pre>
+<h3 id="trigger-condition-patterns">Trigger Condition Patterns</h3>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>Format</th><th>Example</th></tr><tr><td>Action-based</td><td>"Use when creating..., updating..., deleting..."</td><td>CRUD operations</td></tr><tr><td>Problem-based</td><td>"Use when debugging..., fixing..., resolving..."</td><td>Bug fixes</td></tr><tr><td>Artifact-based</td><td>"Use when working with Docker files, CI configs..."</td><td>File types</td></tr><tr><td>Phase-based</td><td>"Use when starting a project, finishing a feature..."</td><td>Workflow stage</td></tr></table></div>
+<p>STOP — Verify the description would match test prompts from Phase 1 before proceeding.</p>
+<h2 id="phase-3-harden-the-skill-refactor">Phase 3: Harden the Skill (REFACTOR)</h2>
+<p>Review and close loopholes:</p>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Question</th><th>Fix If Failing</th></tr><tr><td>Over-triggering</td><td>Does it match prompts it should NOT?</td><td>Narrow the description</td></tr><tr><td>Under-triggering</td><td>Does it miss valid prompts?</td><td>Add missing trigger conditions</td></tr><tr><td>Rationalization</td><td>Would an agent find a way to skip steps?</td><td>Add "Do NOT skip" constraints</td></tr><tr><td>Ambiguity</td><td>Are instructions interpretable multiple ways?</td><td>Make them concrete with examples</td></tr><tr><td>Token bloat</td><td>Is it over 500 lines?</td><td>Move reference material to separate files</td></tr><tr><td>Missing gates</td><td>Are there checkpoints between phases?</td><td>Add STOP markers</td></tr></table></div>
+<h3 id="token-efficiency-targets">Token Efficiency Targets</h3>
+<div class="table-wrapper"><table><tr><th>Skill Type</th><th>Target Lines</th><th>Strategy</th></tr><tr><td>Getting-started workflows</td><td>< 100 lines</td><td>Minimal steps</td></tr><tr><td>Frequently-loaded skills</td><td>< 200 lines</td><td>Tables over prose</td></tr><tr><td>Comprehensive reference skills</td><td>< 400 lines</td><td>Split into phases</td></tr><tr><td>Maximum allowed</td><td>500 lines</td><td>Move extras to separate files</td></tr></table></div>
+<h3 id="token-reduction-strategies">Token Reduction Strategies</h3>
+<ul>
+<li>Use tables instead of prose for structured information</li>
+<li>Use terse imperative sentences, not explanatory paragraphs</li>
+<li>Move reference material to separate files (loaded only when needed)</li>
+<li>Eliminate redundancy — say it once</li>
+<li>Use code examples only when the pattern is non-obvious</li>
+</ul>
+<p>STOP — Re-run test prompts mentally. Does the skill trigger correctly for all 5? Does it NOT trigger for near-misses?</p>
+<h2 id="phase-4-validate-and-save">Phase 4: Validate and Save</h2>
+<ol>
+<li>Verify all 10 required elements from Phase 2 are present</li>
+<li>Verify token budget is within target</li>
+<li>Verify STOP markers exist between phases</li>
+<li>Save the SKILL.md file</li>
+<li>Test by invoking the skill with each test prompt</li>
+</ol>
+<h3 id="validation-checklist">Validation Checklist</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Check</th><th>Status</th></tr><tr><td>1</td><td>Frontmatter has <code>name</code> and <code>description</code></td><td>[ ]</td></tr><tr><td>2</td><td>Description starts with "Use when"</td><td>[ ]</td></tr><tr><td>3</td><td>Overview is 2-3 sentences</td><td>[ ]</td></tr><tr><td>4</td><td>Phases are numbered with STOP markers</td><td>[ ]</td></tr><tr><td>5</td><td>Decision tables present (not prose)</td><td>[ ]</td></tr><tr><td>6</td><td>Anti-patterns table present</td><td>[ ]</td></tr><tr><td>7</td><td>Anti-rationalization guards present</td><td>[ ]</td></tr><tr><td>8</td><td>Integration points table present</td><td>[ ]</td></tr><tr><td>9</td><td>Concrete examples present</td><td>[ ]</td></tr><tr><td>10</td><td>Skill type declared (RIGID/FLEXIBLE)</td><td>[ ]</td></tr><tr><td>11</td><td>Under 500 lines total</td><td>[ ]</td></tr></table></div>
+<h2 id="skill-types-and-testing">Skill Types and Testing</h2>
+<h3 id="testing-by-skill-type">Testing by Skill Type</h3>
+<div class="table-wrapper"><table><tr><th>Skill Type</th><th>Test Method</th><th>What to Verify</th></tr><tr><td><strong>Technique</strong> (TDD, debugging)</td><td>Apply to problem X and unusual problem Y</td><td>Produces right steps; adapts correctly</td></tr><tr><td><strong>Pattern</strong> (design patterns)</td><td>Show code X (matches) and code Y (near-miss)</td><td>Identifies correctly; rejects correctly</td></tr><tr><td><strong>Reference</strong> (API docs, checklists)</td><td>Ask "what is the rule for X?" and "what about edge case Z?"</td><td>Finds right answer; handles gaps</td></tr><tr><td><strong>Discipline</strong> (security review)</td><td>Review correct code, then review under time pressure</td><td>Passes clean code; enforces all rules even under pressure</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Mistake</th><th>Why It Is Wrong</th><th>What To Do Instead</th></tr><tr><td>Description describes content, not triggers</td><td>Skill never gets selected</td><td>Start with "Use when..." and list trigger conditions</td></tr><tr><td>Too broad — triggers on everything</td><td>Useful for nothing</td><td>Narrow to specific actions and artifacts</td></tr><tr><td>Too long — 1000+ lines</td><td>Wastes context tokens every invocation</td><td>Stay under 500 lines; split reference material</td></tr><tr><td>Missing constraints</td><td>Agents rationalize skipping steps</td><td>Add "Do NOT" rules and HARD-GATE markers</td></tr><tr><td>Untested against real prompts</td><td>Will misfire in production</td><td>Write test prompts BEFORE writing the skill</td></tr><tr><td>External file dependencies</td><td>Fragile — files may not exist</td><td>Self-contained or check file existence first</td></tr><tr><td>Prose where tables work</td><td>Harder to scan, more tokens</td><td>Use tables for structured comparisons</td></tr><tr><td>No STOP markers between phases</td><td>Agent blasts through without checkpoints</td><td>Add STOP after each phase</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li><strong>[HARD-GATE]</strong> Do NOT write a skill without defining test prompts first (Phase 1)</li>
+<li><strong>[HARD-GATE]</strong> Do NOT omit the description field or use a non-"Use when" format</li>
+<li><strong>Do NOT skip</strong> the hardening phase — every skill needs rationalization review</li>
+<li><strong>Do NOT skip</strong> the validation checklist — all 11 items must pass</li>
+<li><strong>Do NOT</strong> create skills over 500 lines — split into skill + reference file</li>
+<li><strong>Do NOT</strong> use prose where a table would be clearer</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>self-learning</code></td><td>Skills are discovered and loaded via the skill system</td></tr><tr><td><code>auto-improvement</code></td><td>Tracks skill effectiveness and suggests improvements</td></tr><tr><td><code>spec-writing</code></td><td>Skills can be specified using JTBD methodology</td></tr><tr><td><code>code-review</code></td><td>Skills should be reviewed for quality before deployment</td></tr><tr><td><code>testing-strategy</code></td><td>Test prompts follow testing methodology</td></tr></table></div>
+<h2 id="concrete-example-complete-minimal-skill">Concrete Example: Complete Minimal Skill</h2>
+<pre data-lang="markdown"><code>---
+name: docker-setup
+description: &quot;Use when creating Dockerfiles, docker-compose configurations, or containerizing an application for development or production&quot;
+---
+
+# Docker Setup
+
+## Overview
+
+Guide the creation of Docker configurations for development and production environments. Produces Dockerfiles, docker-compose files, and .dockerignore with best practices.
+
+## Phase 1: Discovery
+[Ask about: runtime, ports, volumes, env vars, multi-stage needs]
+STOP — confirm requirements.
+
+## Phase 2: Generate Configuration
+[Create Dockerfile, docker-compose.yml, .dockerignore]
+STOP — present for review.
+
+## Phase 3: Verify
+[Build image, run container, verify health check]
+
+## Anti-Patterns
+| Mistake | Fix |
+|---------|-----|
+| Running as root | Use non-root USER |
+| No .dockerignore | Always create one |
+
+## Skill Type
+**Flexible**</code></pre>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>Rigid</strong> — The TDD approach (test prompts first), required structure elements, and validation checklist must be followed exactly. No elements may be skipped.</p>
+<h2 id="files">Arquivos</h2>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/CLAUDE_MD_TESTING.html">CLAUDE_MD_TESTING.md</a></li>
+</ul>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

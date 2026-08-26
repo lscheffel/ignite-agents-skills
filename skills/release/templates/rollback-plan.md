@@ -1,26 +1,26 @@
 # Rollback Plan Template
 
-## Versão Problemática
+## Problematic Version
 
 {v1.2.0}
 
-## Versão Estável Anterior
+## Previous Stable Version
 
 {v1.1.0}
 
-## Motivo do Rollback
+## Rollback Reason
 
-{Descrição do problema}
+{Problem Description}
 
-## Passos de Rollback
+## Rollback Steps
 
-1. Identificar commit/tag estável
-2. Criar branch de rollback
-3. Publicar rollback
-4. Notificar usuários
+1. Identify stable commit/tag
+2. Create rollback branch
+3. Publish rollback
+4. Notify users
 
-## Comunicação
+## Communication
 
-- Slack: {canal}
-- Email: {lista}
+- Slack: {channel}
+- Email: {list}
 - GitHub: {issue}

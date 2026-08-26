@@ -1,104 +1,107 @@
-# Checklist de Pós-Execução
+# Post-Implementation Checklist
 
-> Executar este checklist após concluir toda a implementação governada.
-
----
-
-## 1. Validação de Tarefas
-
-- [ ] Todas as tarefas do TODO estão marcadas como "Concluído"
-- [ ] Nenhuma tarefa está marcada como "Bloqueado"
-- [ ] Nenhuma tarefa está marcada como "Em andamento"
-- [ ] Tarefas "Adiadas" têm justificativa documentada
+> Execute this checklist after completing the entire governed implementation.
 
 ---
 
-## 2. Validação de Build
+## 1. Task Validation
 
-- [ ] Build principal passa sem erros
-- [ ] Build de tipos passa sem erros (typecheck)
-- [ ] Não há warnings novos não justificados
-
----
-
-## 3. Validação de Qualidade
-
-- [ ] Lint passa sem erros
-- [ ] Formatação está consistente
-- [ ] Não há code smells introduzidos
+- [ ] All TODO tasks are marked as "Completed"
+- [ ] No task is marked as "Blocked"
+- [ ] No task is marked as "In Progress"
+- [ ] "Deferred" tasks have documented justification
 
 ---
 
-## 4. Validação de Testes
+## 2. Build Validation
 
-- [ ] Testes unitários passam
-- [ ] Testes de integração passam (se aplicável)
-- [ ] Cobertura de testes não diminuiu
-- [ ] Novos testes foram adicionados para novas funcionalidades
-
----
-
-## 5. Validação de Documentação
-
-- [ ] ADR está atualizada com status de implementação
-- [ ] Blueprint está sincronizado com código implementado
-- [ ] TODO reflete estado real (todas as tarefas concluídas)
-- [ ] README foi atualizado (se aplicável)
-- [ ] CHANGELOG foi atualizado (se aplicável)
-- [ ] `related_skills` foram atualizados (se aplicável)
+- [ ] Main build passes without errors
+- [ ] Typecheck build passes without errors
+- [ ] No new, unjustified warnings
 
 ---
 
-## 6. Validação de Registry
+## 3. Quality Validation
 
-- [ ] `skills/index.json` foi atualizado (se nova skill)
-- [ ] `validate-index.sh` passa
-- [ ] `validate-skill.sh` passa para nova skill
-- [ ] Todos os paths no `index.json` são válidos
-
----
-
-## 7. Validação de Git
-
-- [ ] Todos os commits seguem Conventional Commits
-- [ ] Nenhum segredo ou credencial foi commitado
-- [ ] Branch está limpa e pronta para PR
-- [ ] Mensagens de commit são descritivas
+- [ ] Lint passes without errors
+- [ ] Formatting is consistent
+- [ ] No code smells were introduced
+- [ ] **Isolated Scope:** No files or refactorings outside the contract were included
 
 ---
 
-## 8. Validação de Riscos
+## 4. Test Validation
 
-- [ ] Riscos remanescentes foram documentados
-- [ ] Dívida técnica criada foi documentada
-- [ ] Recomendações futuras foram registradas
+- [ ] Unit tests pass
+- [ ] Integration tests pass (if applicable)
+- [ ] Test coverage did not decrease
+- [ ] New tests were added for new features
+
+---
+
+## 5. Documentation Validation
+
+- [ ] ADR is updated with implementation status
+- [ ] Blueprint is synchronized with implemented code
+- [ ] TODO reflects real state (all tasks completed)
+- [ ] README was updated (if applicable)
+- [ ] CHANGELOG was updated (if applicable)
+- [ ] `related_skills` were updated (if applicable)
+
+---
+
+## 6. Registry & Technical Debt Validation
+
+- [ ] Incident technical debt discovered was registered in `docs/governance/tech-debt-registry.json`
+- [ ] `skills/index.json` was updated (if new skill)
+- [ ] `validate-index.sh` passes
+- [ ] `validate-skill.sh` passes for new skill
+- [ ] All paths in `index.json` are valid
+
+---
+
+## 7. Git Validation
+
+- [ ] All commits follow Conventional Commits
+- [ ] No secrets or credentials were committed
+- [ ] Branch is clean and ready for PR
+- [ ] Commit messages are descriptive
+
+---
+
+## 8. Risk Validation
+
+- [ ] Remaining risks were documented
+- [ ] Created/Discovered technical debt was registered in `tech-debt-registry.json`
+- [ ] Future recommendations were registered
 
 ---
 
 ## 9. Execution Report
 
-- [ ] Execution Report foi gerado a partir do template
-- [ ] Todos os campos obrigatórios foram preenchidos
-- [ ] Relatório inclui lições aprendidas
-- [ ] Relatório inclui métricas de implementação
+- [ ] Execution Report was generated from the template (or via gatekeeper algorithmic `audit.py`)
+- [ ] All mandatory fields were filled
+- [ ] Report includes lessons learned
+- [ ] Report includes implementation metrics
 
 ---
 
-## 10. Validação Final
+## 10. Final Validation
 
-- [ ] `validate-index.sh` passa para todas as skills
-- [ ] `validate-skill.sh` passa para todas as skills
-- [ ] Nenhum `related_skills` aponta para skill inexistente
-- [ ] Workspace está limpo
+- [ ] `validate-index.sh` passes for all skills
+- [ ] `validate-skill.sh` passes for all skills
+- [ ] No `related_skills` point to non-existent skill
+- [ ] Workspace is clean
 
 ---
 
-## Aprovação Final
+## Final Approval
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Checklist completo | ✅/❌ |
-| Validações passaram | ✅/❌ |
-| Documentação sincronizada | ✅/❌ |
-| Implementation Report gerado | ✅/❌ |
-| Implementação considerada concluída | ✅/❌ |
+| Checklist complete | ✅/❌ |
+| Validations passed | ✅/❌ |
+| Documentation synchronized | ✅/❌ |
+| Technical debts registered | ✅/❌ |
+| Implementation Report generated | ✅/❌ |
+| Implementation considered complete | ✅/❌ |

@@ -1,57 +1,81 @@
 ---
 name: release
-description: Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback. Use quando preparar releases, publicar pacotes, ou gerenciar versionamento semântico.
 version: 2.0.0
-tags: [release, versioning, changelog, deploy, rollback]
-related_skills: [git, governance, implementation]
+description: Guide for release management and versioning. Defines release process,
+  changelog, tag, deploy, and rollback. Use when preparing releases, publishing packages,
+  or managing semantic versioning.
+domain: core-governance
+triggers:
+- release
+tags:
+- release
+- versioning
+- changelog
+- deploy
+- rollback
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Release
 
-Guia para gestão de releases e versionamento.
+Guide for release management and versioning.
 
-## Quando Usar
+## Deterministic Execution Rules
 
-### Use quando:
-- Precisa preparar uma release
-- Precisa publicar pacote npm/docker
-- Precisa gerenciar versionamento semântico
-- Precisa fazer rollback de release
-- Precisa atualizar CHANGELOG
+> [!IMPORTANT]
+> **UNINTERRUPTIBLE EXECUTION PROTOCOL (HARD GATE)**
+> When triggering `/release`, the agent **MUST NEVER STOP** in the middle of the process or declare the task complete before **ALL THREE PHASES** (Prepare, Validate, and Publish Remotely) are executed continuously in the same turn.
 
-### Não use quando:
-- Protótipo sem versionamento
-- Projeto sem deploy automatizado
-- Hotfix urgente (use skill git)
+### Unconditional Requirements:
+1. **Branch Assignment**: If the release is initiated from a feature branch (`feat/...`), the agent **MUST** merge the branch into `main` (or master) before pushing remotely.
+2. **Remote Push Mandatory**: The release **IS ONLY** considered complete after `git push origin main --tags` and `gh release create` (or remote channel publication).
+3. **Forbidden Partial Completion**: Creating a local commit/tag and responding without pushing to the remote repository constitutes non-compliance.
 
-### Skills relacionadas:
-- `git` — para tags e branching
-- `governance` — para processo de aprovação
+## Decision Tree
+
+### Use when:
+- Need to prepare a release
+- Need to publish an npm/docker package
+- Need to manage semantic versioning
+- Need to perform a release rollback
+- Need to update the CHANGELOG
+
+### Do not use when:
+- Prototype without versioning
+- Project without automated deployment
+- Urgent hotfix (use `git` skill)
+
+### Related Skills:
+- `git` — for tags and branching
+- `governance` — for approval process
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Tipo de Release?] -->|npm package| B[npm]
+    A[Release Type?] -->|npm package| B[npm]
     A -->|Docker image| C[Docker]
     A -->|GitHub Release| D[GitHub]
     A -->|Custom| E[Manual]
     B -->|Patch| F[1.0.1]
     B -->|Minor| G[1.1.0]
     B -->|Major| H[2.0.0]
-    C -->|Tag semântica| I[v1.2.0]
+    C -->|Semantic Tag| I[v1.2.0]
     C -->|Latest| J[latest]
 ```
 
 ## Workflow
 
-### Fase 1: Preparar Release
+### Phase 1: Prepare Release
 
-1. Atualize CHANGELOG.md:
+1. Update CHANGELOG.md:
    ```markdown
    ## [Unreleased]
    ### Added
-   - Nova funcionalidade X
+   - New feature X
    
    ## [1.2.0] - 2024-01-15
    ### Added
@@ -59,111 +83,111 @@ graph TD
    ### Fixed
    - Bug Y
    ```
-2. Bump versão em package.json:
+2. Bump version in package.json:
    ```bash
-   npm version minor  # ou major/patch
+   npm version minor  # or major/patch
    ```
-3. Atualize versão em outros arquivos:
-   - package-lock.json (automático)
-   - Dockerfile (se aplicável)
-   - Helm chart (se aplicável)
-4. **Checkpoint**: Versão bumpada e CHANGELOG atualizado
+3. Update version in other files:
+   - package-lock.json (automatic)
+   - Dockerfile (if applicable)
+   - Helm chart (if applicable)
+4. **Checkpoint**: Version bumped and CHANGELOG updated
 
-### Fase 2: Validar Release
+### Phase 2: Validate Release
 
-1. Execute todos os testes:
+1. Run all tests:
    ```bash
    npm test
    npm run test:integration
    npm run test:e2e
    ```
-2. Execute lint:
+2. Run lint:
    ```bash
    npm run lint
    ```
-3. Execute build:
+3. Run build:
    ```bash
    npm run build
    ```
-4. Verifique security:
+4. Verify security:
    ```bash
    npm audit
    ```
-5. **Checkpoint**: Todos os checks passam
+5. **Checkpoint**: All checks pass
 
-### Fase 3: Publicar Release
+### Phase 3: Publish Release
 
-1. Commit das mudanças:
+1. Commit changes:
    ```bash
    git add .
    git commit -m "chore(release): prepare v1.2.0"
    ```
-2. Crie tag:
+2. Create tag:
    ```bash
    git tag -a v1.2.0 -m "Release v1.2.0"
    ```
-3. Push com tags:
+3. Push with tags:
    ```bash
    git push origin main --tags
    ```
-4. Publicar npm (se aplicável):
+4. Publish npm (if applicable):
    ```bash
    npm publish
    ```
-5. Publicar Docker (se aplicável):
+5. Publish Docker (if applicable):
    ```bash
    docker build -t myimage:v1.2.0 .
    docker push myimage:v1.2.0
    ```
-6. Criar GitHub Release:
+6. Create GitHub Release:
    ```bash
    gh release create v1.2.0 --generate-notes
    ```
-7. **Checkpoint**: Release publicada em todos os canais
+7. **Checkpoint**: Release published in all channels
 
-### Fase 4: Rollback
+### Phase 4: Rollback
 
-1. Identifique versão estável anterior:
+1. Identify previous stable version:
    ```bash
    git tag | grep -E "^v[0-9]" | tail -5
    ```
-2. Crie branch de rollback:
+2. Create rollback branch:
    ```bash
    git checkout -b rollback/v1.2.0-20240115 v1.1.0
    ```
-3. Documente motivo:
+3. Document reason:
    ```bash
-   echo "Rollback v1.2.0 - motivo: memory leak" > ROLLBACK.md
+   echo "Rollback v1.2.0 - reason: memory leak" > ROLLBACK.md
    ```
-4. Publique rollback:
+4. Publish rollback:
    ```bash
    git tag v1.2.0-rollback-20240115
    git push origin rollback/v1.2.0-20240115 --tags
    ```
-5. **Checkpoint**: Rollback publicado e documentado
+5. **Checkpoint**: Rollback published and documented
 
-## Conceitos Fundamentais
+## Fundamental Concepts
 
-### Versionamento Semântico
+### Semantic Versioning
 
-Formato: `MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]`
+Format: `MAJOR.MINOR.PATCH[-PRERELEASE][+BUILD]`
 
-- **MAJOR**: mudanças incompatíveis (breaking changes)
-- **MINOR**: funcionalidades novas, retrocompatível
-- **PATCH**: correções de bug, retrocompatível
-- **PRERELEASE**: alpha, beta, rc
-- **BUILD**: metadados de build
+- **MAJOR**: Incompatible changes (breaking changes)
+- **MINOR**: New features, backward compatible
+- **PATCH**: Bug fixes, backward compatible
+- **PRERELEASE**: Alpha, beta, rc
+- **BUILD**: Build metadata
 
 ### Changelog Format
 
-Siga [Keep a Changelog](https://keepachangelog.com/):
+Follow [Keep a Changelog](https://keepachangelog.com/):
 
 ```markdown
 # Changelog
 
 ## [Unreleased]
 ### Added
-- Nova funcionalidade
+- New feature
 
 ## [1.2.0] - 2024-01-15
 ### Added
@@ -178,55 +202,55 @@ Siga [Keep a Changelog](https://keepachangelog.com/):
 ## Templates
 
 ### changelog-entry.md
-Localização: `templates/changelog-entry.md`
+Location: `templates/changelog-entry.md`
 
-Template para entrada de changelog.
+Template for changelog entry.
 
-**Uso:**
+**Usage:**
 ```bash
-# Adicione ao CHANGELOG.md
+# Add to CHANGELOG.md
 ## [Unreleased]
 ### Added
-- {{descrição da mudança}}
+- {{change description}}
 ```
 
 ### release-checklist.md
-Localização: `templates/release-checklist.md`
+Location: `templates/release-checklist.md`
 
-Checklist de validação pré-release.
+Checklist for release validation.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/release-checklist.md docs/release-checklist.md
 ```
 
 ### rollback-plan.md
-Localização: `templates/rollback-plan.md`
+Location: `templates/rollback-plan.md`
 
-Template para plano de rollback.
+Template for rollback plan.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/rollback-plan.md docs/rollback-plan.md
 ```
 
 ## Anti-patterns
 
-### 🔴 Crítico
+### 🔴 Critical
 
-#### Release sem Changelog
-**O que é:** Publicar release sem atualizar CHANGELOG.md.
-**Por que é ruim:** Usuários não sabem o que mudou, dificulta upgrade.
-**Como evitar:** Sempre atualize CHANGELOG antes do release.
-**Exemplo:**
+#### Release without Changelog
+**What is it:** Publishing release without updating CHANGELOG.md.
+**Why is it bad:** Users don't know what changed, makes upgrade difficult.
+**How to avoid:** Always update CHANGELOG before release.
+**Example:**
 ```
-# ❌ ERRADO
+# ❌ WRONG
 git tag v1.2.0
 git push --tags
 npm publish
 
-# ✅ CORRETO
-# Atualizar CHANGELOG.md
+# ✅ RIGHT
+# Update CHANGELOG.md
 git add CHANGELOG.md
 git commit -m "docs: update changelog"
 git tag v1.2.0
@@ -234,35 +258,35 @@ git push --tags
 npm publish
 ```
 
-#### Breaking Change sem Major Bump
-**O que é:** Mudança que quebra API sem incrementar MAJOR.
-**Por que é ruim:** Quebra projetos dos usuários, perde confiança.
-**Como evitar:** SEMPRE major bump para breaking changes.
-**Exemplo:**
+#### Breaking Change without Major Bump
+**What is it:** Change that breaks API without incrementing MAJOR.
+**Why is it bad:** Breaks user projects, loses trust.
+**How to avoid:** ALWAYS major bump for breaking changes.
+**Example:**
 ```
-# ❌ ERRADO
-# Remover campo user.email sem major bump
+# ❌ WRONG
+# Remove user.email without major bump
 npm version minor
 
-# ✅ CORRETO
-# Remover campo user.email
+# ✅ RIGHT
+# Remove user.email
 npm version major
 ```
 
-### 🟡 Médio
+### 🟡 Medium
 
-#### Release sem Testes
-**O que é:** Publicar release sem executar testes completos.
-**Por que é ruim:** Bugs em produção, rollback necessário.
-**Como evitar:** CI obrigatório antes do release.
-**Exemplo:**
+#### Release without Tests
+**What is it:** Publishing release without running complete tests.
+**Why is it bad:** Bugs in production, rollback necessary.
+**How to avoid:** CI mandatory before release.
+**Example:**
 ```
-# ❌ ERRADO
+# ❌ WRONG
 npm version minor
 git push --tags
 npm publish
 
-# ✅ CORRETO
+# ✅ RIGHT
 npm test
 npm run test:e2e
 npm version minor
@@ -270,94 +294,94 @@ git push --tags
 npm publish
 ```
 
-#### Tag Duplicada
-**O que é:** Criar tag com mesmo nome de release anterior.
-**Por que é ruim:** Confusão, impossível rastrear histórico.
-**Como evitar:** Delete tag antes de recriar, ou use suffix.
-**Exemplo:**
+#### Duplicate Tag
+**What is it:** Creating tag with same name as previous release.
+**Why is it bad:** Confusion, impossible to track history.
+**How to avoid:** Delete tag before recreating, or use suffix.
+**Example:**
 ```
-# ❌ ERRADO
-git tag v1.2.0  # já existe
-git push --tags  # erro
+# ❌ WRONG
+git tag v1.2.0  # already exists
+git push --tags  # error
 
-# ✅ CORRETO
+# ✅ RIGHT
 git tag -d v1.2.0
 git tag v1.2.0
 git push --tags
 ```
 
-### 🟢 Baixo
+### 🟢 Low
 
-#### Release sem Notas
-**O que é:** Release sem descrição do que mudou.
-**Por que é ruim:** Usuários não sabem se devem atualizar.
-**Como evitar:** Use `gh release create --generate-notes` ou escreva manualmente.
-**Exemplo:**
+#### Release without Notes
+**What is it:** Release without description of what changed.
+**Why is it bad:** Users don't know if they should update.
+**How to avoid:** Use `gh release create --generate-notes` or write manually.
+**Example:**
 ```
-# ❌ ERRADO
+# ❌ WRONG
 git tag v1.2.0
 git push --tags
 
-# ✅ CORRETO
+# ✅ RIGHT
 gh release create v1.2.0 --title "v1.2.0" --notes "Bug fixes and performance improvements"
 ```
 
 ## Checklists
 
-### Checklist Pré-Release
-- [ ] CHANGELOG.md atualizado
-- [ ] Versão bumpada em package.json
-- [ ] Todos os testes passam
-- [ ] Lint passa
-- [ ] Build passa
-- [ ] npm audit sem vulnerabilidades altas
-- [ ] Documentação atualizada
-- [ ] README.md atualizado (se necessário)
+### Pre-Release Checklist
+- [ ] CHANGELOG.md updated
+- [ ] Version bumped in package.json
+- [ ] All tests pass
+- [ ] Lint passes
+- [ ] Build passes
+- [ ] npm audit without high vulnerabilities
+- [ ] Documentation updated
+- [ ] README.md updated (if necessary)
 
-### Checklist Pós-Release
-- [ ] Tag criada e push
-- [ ] npm publish (se aplicável)
-- [ ] Docker push (se aplicável)
-- [ ] GitHub Release criado
-- [ ] Slack/Discord notificado
-- [ ] Versão atualizada para próximo dev
+### Post-Release Checklist
+- [ ] Tag created and pushed
+- [ ] npm publish (if applicable)
+- [ ] Docker push (if applicable)
+- [ ] GitHub Release created
+- [ ] Slack/Discord notified
+- [ ] Version updated for next dev
 
-### Checklist de Rollback
-- [ ] Versão problemática identificada
-- [ ] Versão anterior estável identificada
-- [ ] Branch de rollback criada
-- [ ] Rollback publicado
-- [ ] Usuários notificados
-- [ ] Issue criada para bug root cause
+### Rollback Checklist
+- [ ] Problematic version identified
+- [ ] Previous stable version identified
+- [ ] Rollback branch created
+- [ ] Rollback published
+- [ ] Users notified
+- [ ] Issue created for root cause bug
 
 ## Edge Cases
 
-### Breaking Change não Documentado
-**Situação:** Release contém breaking change sem documentação.
-**Solução:** Reverta imediatamente, publique correção documentada.
-**Exceção:** Se breaking é intencional e documentado em alpha/beta.
+### Undocumented Breaking Change
+**Situation:** Release contains breaking change without documentation.
+**Solution:** Revert immediately, publish correction documented.
+**Exception:** If breaking is intentional and documented in alpha/beta.
 
 ```bash
-# Documentar breaking change
+# Document breaking change
 echo "BREAKING: user.email removed, use user.primaryEmail" >> CHANGELOG.md
 ```
 
-### Hotfix Durante Release
-**Situação:** Bug crítico encontrado enquanto prepara release.
-**Solução:** Pausar release, fazer hotfix, depois continuar.
-**Exceção:** Se hotfix é pequeno, pode incluir no release.
+### Hotfix During Release
+**Situation:** Critical bug found while preparing release.
+**Solution:** Pause release, make hotfix, then continue.
+**Exception:** If hotfix is small, can include in release.
 
 ```bash
-# Hotfix durante release
+# Hotfix during release
 git checkout -b hotfix/critical-bug main
-# ... corrigir ...
+# ... fix ...
 git checkout release/v1.2.0
 git merge hotfix/critical-bug
 ```
 
-## Referências
+## References
 
 - [Keep a Changelog](https://keepachangelog.com/)
 - [Semantic Versioning](https://semver.org/)
-- `git` — para tags e branching
-- `governance` — para processo de aprovação
+- `git` — for tags and branching
+- `governance` — for approval process

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dispatching-parallel-agents — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; dispatching-parallel-agents</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: dispatching-parallel-agents version: 1.0.0 description: Use when a task has multiple independent subtasks that can be executed concurrently by separate agents. Triggers when decomposed work has 2+ subtasks with no data dependencies, when subtasks operate on different files or codebase sections, when serial execution time would be significantly longer than parallel, or when independent analyses or deliverables need concurrent generation. domain: agentic-workflow triggers:</p>
+<ul>
+<li>dispatching-parallel-agents</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>dispatching-parallel-agents</li>
+<li>agentic-workflow</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="dispatching-parallel-agents">Dispatching Parallel Agents</h1>
+<h2 id="overview">Overview</h2>
+<p>This skill coordinates multiple agents working concurrently on independent subtasks to reduce total execution time while maintaining correctness. It provides strict rules for identifying safe parallelization opportunities, writing focused agent prompts, and integrating results without conflicts. The key constraint is that no two agents may modify the same file.</p>
+<p><strong>Announce at start:</strong> "I'm using the dispatching-parallel-agents skill to run [N] independent tasks concurrently."</p>
+<h2 id="agent-tool-reference">Agent Tool Reference</h2>
+<p>All dispatch uses the <code>Agent</code> tool. Parameters:</p>
+<ul>
+<li><code>prompt</code> (required) — task description with full context</li>
+<li><code>description</code> (required) — short label (3-5 words)</li>
+<li><code>subagent_type</code> — <code>"Explore"</code> (codebase search), <code>"Plan"</code> (architecture), <code>"general-purpose"</code> (default)</li>
+<li><code>run_in_background</code> — <code>true</code> for async (you'll be notified on completion)</li>
+<li><code>model</code> — optional override: <code>"sonnet"</code>, <code>"opus"</code>, <code>"haiku"</code></li>
+</ul>
+<p><strong>Parallel:</strong> Multiple <code>Agent</code> calls in one message run concurrently. <strong>Background:</strong> <code>run_in_background=true</code> for non-blocking work. <strong>Named agents:</strong> Use <code>subagent_type</code> to reference installed agent templates (e.g., <code>"superpowers:code-reviewer"</code>).</p>
+<h2 id="trigger-conditions">Trigger Conditions</h2>
+<ul>
+<li>A task decomposes into 2+ subtasks with no data dependencies between them</li>
+<li>Each subtask operates on different files or different sections of the codebase</li>
+<li>The combined result can be assembled after all agents complete</li>
+<li>Total serial time would be significantly longer than parallel time</li>
+<li><code>/decompose</code> output reveals independent task clusters</li>
+</ul>
+<hr>
+<h2 id="phase-1-independence-verification">Phase 1: Independence Verification</h2>
+<p><strong>Goal:</strong> Confirm subtasks are truly independent and safe to parallelize.</p>
+<p>Every subtask must satisfy ALL four independence criteria:</p>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Question</th><th>If NO</th></tr><tr><td>No shared files</td><td>Do any two agents write to the same file?</td><td>Serialize those tasks</td></tr><tr><td>No shared mutable state</td><td>Does any agent depend on a side effect of another?</td><td>Serialize dependent tasks</td></tr><tr><td>Self-contained context</td><td>Can each agent work with only its own inputs?</td><td>Provide more context or serialize</td></tr><tr><td>Independent verification</td><td>Can each agent's output be validated alone?</td><td>Combine into single task</td></tr></table></div>
+<h3 id="parallelization-decision-table">Parallelization Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Parallelize?</th><th>Reason</th></tr><tr><td>Different files, different concerns</td><td>Yes</td><td>No conflict possible</td></tr><tr><td>Same module, different files</td><td>Yes (careful)</td><td>Verify no shared imports change</td></tr><tr><td>Same file, different sections</td><td>No</td><td>Merge conflicts inevitable</td></tr><tr><td>Task B uses Task A's output</td><td>No</td><td>Sequential dependency</td></tr><tr><td>Both read same files, write different</td><td>Yes</td><td>Reads are safe to parallelize</td></tr><tr><td>Both modify shared config file</td><td>No</td><td>Config conflicts</td></tr><tr><td>Independent test files</td><td>Yes</td><td>Tests are independent</td></tr><tr><td>One agent adds dep, another uses it</td><td>No</td><td>Package-level dependency</td></tr></table></div>
+<h3 id="when-not-to-parallelize">When NOT to Parallelize</h3>
+<ul>
+<li>Subtasks share mutable state or modify the same files</li>
+<li>Task B depends on the output of Task A</li>
+<li>The overhead of coordination exceeds the time saved</li>
+<li>A single agent can complete the work in under 30 seconds</li>
+<li>The task requires iterative refinement where each step informs the next</li>
+</ul>
+<p><strong>STOP — Do NOT dispatch agents (via the <code>Agent</code> tool) until:</strong></p>
+<ul>
+<li>[ ] All four independence criteria verified for every subtask pair</li>
+<li>[ ] No two agents write to the same file</li>
+<li>[ ] Each agent's context is self-contained</li>
+</ul>
+<hr>
+<h2 id="phase-2-prompt-construction">Phase 2: Prompt Construction</h2>
+<p><strong>Goal:</strong> Write focused, unambiguous prompts that prevent scope creep and conflicts.</p>
+<p>Each agent prompt MUST contain exactly four sections:</p>
+<h3 id="section-1-scope-what-to-do">Section 1: Scope (What to Do)</h3>
+<p>Be specific about the exact task, files, and expected changes.</p>
+<pre><code>SCOPE: Add structured JSON logging to all API route handlers in src/api/.
+Replace console.log calls with the logger from src/utils/logger.ts.
+Files to modify: src/api/users.ts, src/api/orders.ts, src/api/products.ts.</code></pre>
+<h3 id="section-2-context-everything-needed">Section 2: Context (Everything Needed)</h3>
+<p>Provide all information the agent needs without requiring it to explore.</p>
+<pre><code>CONTEXT:
+- Logger API: logger.info(message, metadata), logger.error(message, error)
+- Import: import { logger } from &#x27;../utils/logger&#x27;
+- Current pattern in files: console.log(&#x27;action&#x27;, data)
+- Target pattern: logger.info(&#x27;action&#x27;, { data, requestId: req.id })</code></pre>
+<h3 id="section-3-output-format-what-to-return">Section 3: Output Format (What to Return)</h3>
+<p>Define exactly what the agent should produce.</p>
+<pre><code>OUTPUT: For each modified file, return:
+1. The file path
+2. A summary of changes made
+3. Number of console.log calls replaced</code></pre>
+<h3 id="section-4-constraints-what-not-to-do">Section 4: Constraints (What NOT to Do)</h3>
+<p>Prevent scope creep and conflicts explicitly.</p>
+<pre><code>CONSTRAINTS:
+- Do NOT modify any files outside src/api/
+- Do NOT change the logger utility itself
+- Do NOT add new dependencies
+- Do NOT refactor function signatures
+- Do NOT modify test files
+- If you encounter an issue outside your scope, report it but do not fix it</code></pre>
+<h3 id="agent-prompt-template">Agent Prompt Template</h3>
+<pre><code>You are a focused agent with a single task.
+
+## Scope
+[Specific task description with exact files]
+
+## Context
+[All information needed to complete the task]
+[Relevant code patterns, APIs, conventions]
+
+## Output Format
+[Exact structure of what to return]
+
+## Constraints
+- Do NOT modify files outside: [list]
+- Do NOT change: [list things to leave alone]
+- Do NOT add dependencies
+- If you encounter an issue outside your scope, report it but do not fix it</code></pre>
+<h3 id="prompt-quality-checklist">Prompt Quality Checklist</h3>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Question</th></tr><tr><td>Scope is specific</td><td>Can the agent complete the task without guessing?</td></tr><tr><td>Context is complete</td><td>Does the agent need to explore the codebase? (should be no)</td></tr><tr><td>Output is defined</td><td>Will the agent return what you need to integrate?</td></tr><tr><td>Constraints are explicit</td><td>Are file boundaries and "do NOT" items clear?</td></tr></table></div>
+<p><strong>STOP — Do NOT dispatch (via the <code>Agent</code> tool) until:</strong></p>
+<ul>
+<li>[ ] Every prompt has all 4 sections</li>
+<li>[ ] No prompt requires the agent to explore beyond provided context</li>
+<li>[ ] File boundaries are explicit in every constraint section</li>
+</ul>
+<hr>
+<h2 id="phase-3-dispatch-and-monitor">Phase 3: Dispatch and Monitor</h2>
+<p><strong>Goal:</strong> Launch all agents (via the <code>Agent</code> tool) concurrently and track completion.</p>
+<ol>
+<li>Launch all agents concurrently by invoking multiple <code>Agent</code> tool calls in a single message</li>
+<li>Each agent works in isolation on its designated files</li>
+<li>Monitor for completion — wait for ALL agents to finish</li>
+<li>Collect outputs from every agent</li>
+</ol>
+<h3 id="dispatch-tracking-table">Dispatch Tracking Table</h3>
+<pre><code>| Agent | Task | Status | Files | Result |
+|-------|------|--------|-------|--------|
+| Agent 1 | Add logging to API | in_progress | src/api/*.ts | — |
+| Agent 2 | Update unit tests | in_progress | tests/unit/*.ts | — |
+| Agent 3 | Fix CSS layout | in_progress | src/styles/*.css | — |</code></pre>
+<h3 id="failure-handling-during-dispatch">Failure Handling During Dispatch</h3>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Action</th></tr><tr><td>One agent fails, others succeed</td><td>Retry failed agent independently (via the <code>Agent</code> tool)</td></tr><tr><td>Multiple agents fail independently</td><td>Retry each independently (via the <code>Agent</code> tool)</td></tr><tr><td>Agent reports out-of-scope issue</td><td>Note for post-integration review</td></tr><tr><td>Agent exceeds scope (modifies wrong files)</td><td>Reject output, re-dispatch (via the <code>Agent</code> tool) with stricter constraints</td></tr></table></div>
+<hr>
+<h2 id="phase-4-integration-and-verification">Phase 4: Integration and Verification</h2>
+<p><strong>Goal:</strong> Combine all agent outputs and verify the integrated result.</p>
+<ol>
+<li><strong>Collect outputs</strong> — Gather results from every agent</li>
+<li><strong>Check for conflicts</strong> — Verify no file was modified by multiple agents</li>
+<li><strong>Apply changes</strong> — Integrate all outputs into the codebase</li>
+<li><strong>Run integration checks</strong> — Execute the full test suite</li>
+<li><strong>Resolve issues</strong> — If integration fails, identify which agent's changes caused it</li>
+<li><strong>Commit atomically</strong> — All changes go in together or not at all</li>
+</ol>
+<h3 id="integration-verification-checklist">Integration Verification Checklist</h3>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Command</th><th>Must Pass</th></tr><tr><td>No file conflicts</td><td>Diff outputs for shared files</td><td>Yes</td></tr><tr><td>Tests pass</td><td>Full test suite</td><td>Yes</td></tr><tr><td>Build passes</td><td>Build command</td><td>Yes</td></tr><tr><td>Lint passes</td><td>Lint command</td><td>Yes</td></tr><tr><td>No regressions</td><td>Compare test count before/after</td><td>Yes</td></tr></table></div>
+<h3 id="integration-failure-decision-table">Integration Failure Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Failure Type</th><th>Diagnosis</th><th>Action</th></tr><tr><td>Test failure in Agent 1's files</td><td>Agent 1's changes have a bug</td><td>Re-dispatch Agent 1 (via the <code>Agent</code> tool) with test failure context</td></tr><tr><td>Test failure in unrelated files</td><td>Cross-cutting regression</td><td>Identify root cause, fix manually or re-dispatch (via the <code>Agent</code> tool)</td></tr><tr><td>Build failure</td><td>Import/type issue</td><td>Check which agent's changes caused it, fix</td></tr><tr><td>Merge conflict</td><td>Agents touched same file (should not happen)</td><td>Rollback, serialize those tasks</td></tr></table></div>
+<p><strong>STOP — Do NOT commit until:</strong></p>
+<ul>
+<li>[ ] All agent outputs collected</li>
+<li>[ ] No file conflicts detected</li>
+<li>[ ] Full test suite passes</li>
+<li>[ ] Build and lint pass</li>
+</ul>
+<hr>
+<h2 id="common-parallel-patterns">Common Parallel Patterns</h2>
+<h3 id="pattern-decision-table">Pattern Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>When to Use</th><th>Example</th></tr><tr><td>By Module</td><td>Independent modules or packages</td><td>One <code>Agent</code> call per microservice</td></tr><tr><td>By Layer</td><td>Layers touch different files</td><td>API agent, service agent, data agent</td></tr><tr><td>By Feature Area</td><td>Independent vertical slices</td><td>Auth agent, profile agent, billing agent</td></tr><tr><td>By Task Type</td><td>Code, tests, docs touch different files</td><td>Code agent, test agent, docs agent</td></tr></table></div>
+<h3 id="example-full-dispatch">Example: Full Dispatch</h3>
+<pre><code>TASK: &quot;Update the API to v2, add tests, and update OpenAPI spec&quot;
+
+AGENT 1 - API Routes:
+  Scope: Update route handlers in src/routes/v2/
+  Context: [v2 API spec, breaking changes list]
+  Output: Modified files list, breaking changes implemented
+  Constraints: Do NOT touch tests or docs
+
+AGENT 2 - Tests:
+  Scope: Write tests in tests/v2/
+  Context: [v2 API spec, test conventions, existing v1 tests as reference]
+  Output: New test files, coverage summary
+  Constraints: Do NOT modify source code
+
+AGENT 3 - OpenAPI Spec:
+  Scope: Update openapi/v2.yaml
+  Context: [v2 API spec, OpenAPI 3.1 format]
+  Output: Updated spec file
+  Constraints: Do NOT modify code or tests</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>Two agents modifying the same file</td><td>Merge conflicts, data loss</td><td>One file owner per <code>Agent</code> dispatch</td></tr><tr><td>Shared mutable state between agents</td><td>Race conditions, inconsistency</td><td>Eliminate shared state</td></tr><tr><td>Incomplete context in prompts</td><td>Agents explore and step on each other</td><td>Provide ALL needed context</td></tr><tr><td>Vague file boundaries</td><td>Agents guess scope, modify wrong files</td><td>Explicit file lists in constraints</td></tr><tr><td>No integration check after completion</td><td>Cross-cutting bugs go undetected</td><td>Full test suite after integration</td></tr><tr><td>Parallelizing sequential tasks</td><td>Agent B needs Agent A's output</td><td>Verify independence first</td></tr><tr><td>Not tracking which agent touched which file</td><td>Cannot diagnose integration failures</td><td>Maintain dispatch tracking table</td></tr><tr><td>Dispatching too many agents (10+)</td><td>Coordination overhead exceeds savings</td><td>2-5 <code>Agent</code> calls per dispatch round</td></tr><tr><td>Skipping rollback preparation</td><td>Cannot recover from integration failure</td><td>Keep pre-dispatch state recoverable</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<p><HARD-GATE> Do NOT dispatch agents (via the <code>Agent</code> tool) that modify the same file. Do NOT parallelize tasks with data dependencies. Do NOT skip integration verification. If independence criteria are not met, serialize the tasks. </HARD-GATE></p>
+<p>If you catch yourself thinking:</p>
+<ul>
+<li>"These agents probably won't conflict..." — Verify. Do not assume.</li>
+<li>"The integration will be fine..." — Run the full test suite. Always.</li>
+<li>"I can merge their changes to the same file manually..." — No. One file, one owner.</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th><th>When</th></tr><tr><td><code>task-decomposition</code></td><td>Upstream — identifies independent task clusters</td><td>Before dispatching</td></tr><tr><td><code>subagent-driven-development</code></td><td>Complementary — provides review gates</td><td>Quality gates for agent output</td></tr><tr><td><code>executing-plans</code></td><td>Upstream — may delegate independent tasks</td><td>During plan execution</td></tr><tr><td><code>verification-before-completion</code></td><td>Downstream — verifies integrated result</td><td>After integration</td></tr><tr><td><code>code-review</code></td><td>Downstream — reviews integrated changes</td><td>After all agents complete</td></tr><tr><td><code>resilient-execution</code></td><td>On failure — retries failed agents</td><td>When individual agents fail</td></tr></table></div>
+<hr>
+<h2 id="parallelism-safety-rules-summary">Parallelism Safety Rules Summary</h2>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Rationale</th></tr><tr><td>No two agents modify the same file</td><td>Prevents merge conflicts and race conditions</td></tr><tr><td>No shared mutable state</td><td>Eliminates data races</td></tr><tr><td>Each agent gets complete context</td><td>Prevents agents from exploring and stepping on each other</td></tr><tr><td>Define file boundaries explicitly</td><td>Makes ownership unambiguous</td></tr><tr><td>Review integration after completion</td><td>Catches cross-cutting issues</td></tr><tr><td>Atomic commit for all changes</td><td>All in or all out</td></tr><tr><td>Always have a rollback path</td><td>Keep pre-dispatch state recoverable</td></tr></table></div>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly. Independence verification is mandatory. All four prompt sections are mandatory. Integration verification is mandatory. No shortcuts on parallelism safety.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

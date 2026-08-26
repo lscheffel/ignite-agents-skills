@@ -411,58 +411,58 @@
   </nav>
   <div class="content">
     <h1 id="threat-model-template">Threat Model Template</h1>
-<p>Modelo de ameaça simplificado baseado em STRIDE.</p>
-<h2 id="informaes-do-sistema">Informações do Sistema</h2>
+<p>Simplified threat model based on STRIDE.</p>
+<h2 id="system-information">System Information</h2>
 <ul>
-<li><strong>Nome do sistema:</strong> {{system_name}}</li>
-<li><strong>Versão:</strong> {{version}}</li>
-<li><strong>Data:</strong> {{date}}</li>
-<li><strong>Revisor:</strong> {{reviewer}}</li>
+<li><strong>System Name:</strong> {{system_name}}</li>
+<li><strong>Version:</strong> {{version}}</li>
+<li><strong>Date:</strong> {{date}}</li>
+<li><strong>Reviewer:</strong> {{reviewer}}</li>
 </ul>
-<h2 id="endpointsexpostos">Endpoints/Expostos</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Endpoint/Componente</th><th>Descrição</th><th>Dados Sensíveis</th></tr><tr><td>1</td><td>{{endpoint_1}}</td><td>{{description_1}}</td><td>{{sensitive_1}}</td></tr><tr><td>2</td><td>{{endpoint_2}}</td><td>{{description_2}}</td><td>{{sensitive_2}}</td></tr></table></div>
-<h2 id="anlise-stride">Análise STRIDE</h2>
-<p>Para cada endpoint, avaliar:</p>
-<h3 id="spoofing-falsificao">Spoofing (Falsificação)</h3>
+<h2 id="endpointsexposed-components">Endpoints/Exposed Components</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Endpoint/Component</th><th>Description</th><th>Sensitive Data</th></tr><tr><td>1</td><td>{{endpoint_1}}</td><td>{{description_1}}</td><td>{{sensitive_1}}</td></tr><tr><td>2</td><td>{{endpoint_2}}</td><td>{{description_2}}</td><td>{{sensitive_2}}</td></tr></table></div>
+<h2 id="stride-analysis">STRIDE Analysis</h2>
+<p>For each endpoint, evaluate:</p>
+<h3 id="spoofing-falsification">Spoofing (Falsification)</h3>
 <ul>
-<li><strong>Pergunta:</strong> A autenticação é adequada?</li>
-<li><strong>Achados:</strong> {{findings_spoofing}}</li>
-<li><strong>Risco:</strong> 🔴 / 🟡 / 🟢</li>
+<li><strong>Question:</strong> Is authentication adequate?</li>
+<li><strong>Findings:</strong> {{findings_spoofing}}</li>
+<li><strong>Risk:</strong> 🔴 / 🟡 / 🟢</li>
 </ul>
-<h3 id="tampering-adulterao">Tampering (Adulteração)</h3>
+<h3 id="tampering-adulteration">Tampering (Adulteration)</h3>
 <ul>
-<li><strong>Pergunta:</strong> A integridade dos dados é protegida?</li>
-<li><strong>Achados:</strong> {{findings_tampering}}</li>
-<li><strong>Risco:</strong> 🔴 / 🟡 / 🟢</li>
+<li><strong>Question:</strong> Are data integrity protections in place?</li>
+<li><strong>Findings:</strong> {{findings_tampering}}</li>
+<li><strong>Risk:</strong> 🔴 / 🟡 / 🟢</li>
 </ul>
-<h3 id="repudiao-negao">Repudiação (Negação)</h3>
+<h3 id="repudiation-denial">Repudiation (Denial)</h3>
 <ul>
-<li><strong>Pergunta:</strong> Existe audit trail?</li>
-<li><strong>Achados:</strong> {{findings_repudiation}}</li>
-<li><strong>Risco:</strong> 🔴 / 🟡 / 🟢</li>
+<li><strong>Question:</strong> Is an audit trail present?</li>
+<li><strong>Findings:</strong> {{findings_repudiation}}</li>
+<li><strong>Risk:</strong> 🔴 / 🟡 / 🟢</li>
 </ul>
-<h3 id="information-disclosure-vazamento">Information Disclosure (Vazamento)</h3>
+<h3 id="information-disclosure-leakage">Information Disclosure (Leakage)</h3>
 <ul>
-<li><strong>Pergunta:</strong> Dados sensíveis estão expostos?</li>
-<li><strong>Achados:</strong> {{findings_disclosure}}</li>
-<li><strong>Risco:</strong> 🔴 / 🟡 / 🟢</li>
+<li><strong>Question:</strong> Are sensitive data exposed?</li>
+<li><strong>Findings:</strong> {{findings_disclosure}}</li>
+<li><strong>Risk:</strong> 🔴 / 🟡 / 🟢</li>
 </ul>
-<h3 id="denial-of-service-indisponibilidade">Denial of Service (Indisponibilidade)</h3>
+<h3 id="denial-of-service-unavailability">Denial of Service (Unavailability)</h3>
 <ul>
-<li><strong>Pergunta:</strong> Há rate limiting e proteção contra abuso?</li>
-<li><strong>Achados:</strong> {{findings_dos}}</li>
-<li><strong>Risco:</strong> 🔴 / 🟡 / 🟢</li>
+<li><strong>Question:</strong> Are rate limiting and abuse protection in place?</li>
+<li><strong>Findings:</strong> {{findings_dos}}</li>
+<li><strong>Risk:</strong> 🔴 / 🟡 / 🟢</li>
 </ul>
-<h3 id="elevation-of-privilege-privilgio">Elevation of Privilege (Privilégio)</h3>
+<h3 id="elevation-of-privilege-privilege-escalation">Elevation of Privilege (Privilege Escalation)</h3>
 <ul>
-<li><strong>Pergunta:</strong> O controle de acesso é adequado?</li>
-<li><strong>Achados:</strong> {{findings_elevation}}</li>
-<li><strong>Risco:</strong> 🔴 / 🟡 / 🟢</li>
+<li><strong>Question:</strong> Is access control adequate?</li>
+<li><strong>Findings:</strong> {{findings_elevation}}</li>
+<li><strong>Risk:</strong> 🔴 / 🟡 / 🟢</li>
 </ul>
-<h2 id="resumo-de-riscos">Resumo de Riscos</h2>
-<div class="table-wrapper"><table><tr><th>Severidade</th><th>Quantidade</th><th>Ações</th></tr><tr><td>🔴 Crítico</td><td>{{critical_count}}</td><td>Corrigir antes de merge</td></tr><tr><td>🟡 Médio</td><td>{{medium_count}}</td><td>Corrigir em sprint atual</td></tr><tr><td>🟢 Baixo</td><td>{{low_count}}</td><td>Documentar e planejar</td></tr></table></div>
+<h2 id="risk-summary">Risk Summary</h2>
+<div class="table-wrapper"><table><tr><th>Severity</th><th>Quantity</th><th>Actions</th></tr><tr><td>🔴 Critical</td><td>{{critical_count}}</td><td>Fix before merge</td></tr><tr><td>🟡 Medium</td><td>{{medium_count}}</td><td>Fix in current sprint</td></tr><tr><td>🟢 Low</td><td>{{low_count}}</td><td>Document and plan</td></tr></table></div>
 <hr>
-<p><em>Template de modelo de ameaça para ignite-agents-skills.</em></p>
+<p><em>Threat model template for ignite-agents-skills.</em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

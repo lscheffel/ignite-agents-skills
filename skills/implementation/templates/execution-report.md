@@ -1,28 +1,28 @@
 # Execution Report
 
-> Relatório final produzido ao término da implementação governada.
+> Final Report Produced at the End of Governed Implementation.
 
 ---
 
-## Resumo
+## Summary
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| ADR referência | {{adr_path}} |
-| Data de início | {{start_date}} |
-| Data de término | {{end_date}} |
-| Duração total | {{total_duration}} |
-| Tarefas totais | {{total_tasks}} |
-| Tarefas concluídas | {{completed_tasks}} |
-| Tarefas adiadas | {{deferred_tasks}} |
-| Tarefas bloqueadas | {{blocked_tasks}} |
-| Taxa de conclusão | {{completion_rate}} |
+| ADR Reference | {{adr_path}} |
+| Start Date | {{start_date}} |
+| End Date | {{end_date}} |
+| Total Duration | {{total_duration}} |
+| Total Tasks | {{total_tasks}} |
+| Completed Tasks | {{completed_tasks}} |
+| Deferred Tasks | {{deferred_tasks}} |
+| Blocked Tasks | {{blocked_tasks}} |
+| Completion Rate | {{completion_rate}} |
 
 ---
 
-## Tarefas Concluídas
+## Completed Tasks
 
-| # | Tarefa | Duração | Tentativas | Validações |
+| # | Task | Duration | Attempts | Validations |
 |---|--------|---------|------------|------------|
 {{#each completed}}
 | {{number}} | {{task}} | {{duration}} | {{attempts}} | {{validations}} |
@@ -30,9 +30,9 @@
 
 ---
 
-## Tarefas Adiadas
+## Deferred Tasks
 
-| # | Tarefa | Justificativa | Data Revisão |
+| # | Task | Justification | Review Date |
 |---|--------|---------------|--------------|
 {{#each deferred}}
 | {{number}} | {{task}} | {{reason}} | {{review_date}} |
@@ -40,9 +40,9 @@
 
 ---
 
-## Tarefas Bloqueadas
+## Blocked Tasks
 
-| # | Tarefa | Bloqueador | Ação Necessária |
+| # | Task | Blocker | Required Action |
 |---|--------|------------|-----------------|
 {{#each blocked}}
 | {{number}} | {{task}} | {{blocker}} | {{required_action}} |
@@ -50,21 +50,21 @@
 
 ---
 
-## Validações Executadas
+## Executed Validations
 
-| Validação | Resultado | Tentativa | Observações |
+| Validation | Result | Attempt | Notes |
 |-----------|-----------|-----------|-------------|
 | Build | {{build_result}} | {{build_attempt}} | {{build_notes}} |
 | Lint | {{lint_result}} | {{lint_attempt}} | {{lint_notes}} |
 | Typecheck | {{typecheck_result}} | {{typecheck_attempt}} | {{typecheck_notes}} |
-| Testes unitários | {{unit_test_result}} | {{unit_test_attempt}} | {{unit_test_notes}} |
-| Testes integração | {{integration_test_result}} | {{integration_test_attempt}} | {{integration_test_notes}} |
+| Unit Tests | {{unit_test_result}} | {{unit_test_attempt}} | {{unit_test_notes}} |
+| Integration Tests | {{integration_test_result}} | {{integration_test_attempt}} | {{integration_test_notes}} |
 
 ---
 
-## Alterações Realizadas
+## Implemented Changes
 
-| Arquivo | Tipo | Tarefa | Linhas Adicionadas | Linhas Removidas |
+| File | Type | Task | Added Lines | Removed Lines |
 |---------|------|--------|--------------------|--------------------|
 {{#each changes}}
 | {{file}} | {{type}} | {{task}} | {{added}} | {{removed}} |
@@ -72,9 +72,9 @@
 
 ---
 
-## Documentação Atualizada
+## Updated Documentation
 
-| Documento | Tipo de Atualização | Status |
+| Document | Type of Update | Status |
 |-----------|---------------------|--------|
 {{#each docs_updated}}
 | {{document}} | {{update_type}} | {{status}} |
@@ -82,9 +82,9 @@
 
 ---
 
-## Riscos Remanescentes
+## Remaining Risks
 
-| # | Risco | Impacto | Probabilidade | Mitigação Recomendada |
+| # | Risk | Impact | Probability | Recommended Mitigation |
 |---|-------|---------|---------------|----------------------|
 {{#each remaining_risks}}
 | {{number}} | {{risk}} | {{impact}} | {{probability}} | {{mitigation}} |
@@ -92,9 +92,9 @@
 
 ---
 
-## Dívida Técnica Criada
+## Technical Debt Created
 
-| # | Débito | Criticidade | Justificativa |
+| # | Debt | Criticality | Justification |
 |---|--------|-------------|---------------|
 {{#each tech_debt}}
 | {{number}} | {{debt}} | {{criticality}} | {{justification}} |
@@ -102,9 +102,9 @@
 
 ---
 
-## Recomendações Futuras
+## Future Recommendations
 
-| # | Recomendação | Prioridade | Contexto |
+| # | Recommendation | Priority | Context |
 |---|-------------|------------|----------|
 {{#each recommendations}}
 | {{number}} | {{recommendation}} | {{priority}} | {{context}} |
@@ -112,27 +112,27 @@
 
 ---
 
-## Métricas da Implementação
+## Implementation Metrics
 
-| Métrica | Valor |
+| Metric | Value |
 |---------|-------|
-| Tempo médio por tarefa | {{avg_time_per_task}} |
-| Número de rollbacks | {{rollback_count}} |
-| Número de correções durante execução | {{fix_count}} |
-| Cobertura de testes final | {{final_coverage}} |
+| Average Time per Task | {{avg_time_per_task}} |
+| Number of Rollbacks | {{rollback_count}} |
+| Number of Fixes During Execution | {{fix_count}} |
+| Final Test Coverage | {{final_coverage}} |
 
 ---
 
-## Conclusão
+## Conclusion
 
 {{conclusion}}
 
 ---
 
-## Assinatura
+## Signature
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Relatório gerado em | {{report_date}} |
-| Implementação considerada | {{implementation_status}} |
-| Próximos passos | {{next_steps}} |
+| Report Generated on | {{report_date}} |
+| Implementation Considered | {{implementation_status}} |
+| Next Steps | {{next_steps}} |

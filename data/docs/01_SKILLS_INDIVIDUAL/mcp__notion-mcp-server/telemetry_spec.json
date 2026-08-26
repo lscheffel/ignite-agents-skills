@@ -1,0 +1,25 @@
+{
+  "asset_id": "mcp__notion-mcp-server",
+  "asset_name": "notion-mcp-server",
+  "category": "mcp_server",
+  "telemetry_metrics": {
+    "schema_tokens": 600,
+    "prompt_overhead_tokens": 18645,
+    "estimated_payload_return_bytes": 4096,
+    "estimated_payload_return_tokens": 1024,
+    "estimated_latency_ms": 320,
+    "p95_latency_ms": 780,
+    "timeout_seconds": 60,
+    "max_concurrency": 15,
+    "side_effects": "External I/O"
+  },
+  "cost_model": {
+    "cost_per_1k_invocations_usd": 2.7967,
+    "context_cache_efficiency": "94%"
+  },
+  "governance_thresholds": {
+    "circuit_breaker_error_rate_threshold": "5%",
+    "consecutive_failures_trip": 3,
+    "cooldown_seconds": 15
+  }
+}

@@ -1,20 +1,20 @@
-# Exemplo: Modelagem DDD de Order
+# Example: DDD Modeling of Order
 
-## Antes
+## Before
 ```typescript
-// Order anêmico
+// Anemic Order
 class Order {
   id: string;
   items: any[];
   total: number;
   status: string;
-  // só getters/setters
+  // only getters/setters
 }
 ```
 
-## Depois
+## After
 ```typescript
-// Order rico
+// Rich Order
 class Order {
   private items: OrderItem[] = [];
   private status: OrderStatus = OrderStatus.Draft;
@@ -36,7 +36,7 @@ class Order {
 }
 ```
 
-## Resultado
-- Invariantes garantidas
-- Comportamento encapsulado
-- Testes mais simples
+## Result
+- Invariants ensured
+- Encapsulated behavior
+- Simpler tests

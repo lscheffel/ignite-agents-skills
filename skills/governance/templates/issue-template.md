@@ -1,27 +1,27 @@
 # Issue Template
 
-## Descrição
+## Description
 
-{Descrição clara do problema ou feature}
+{Clear description of the problem or feature}
 
-## Contexto
+## Context
 
-{Contexto adicional, screenshots, logs de erro}
+{Additional context, screenshots, error logs}
 
-## Critérios de Aceitação
+## Acceptance Criteria
 
-- [ ] Critério 1
-- [ ] Critério 2
-- [ ] Critério 3
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
 
-## Tarefas
+## Tasks
 
-- [ ] Tarefa 1
-- [ ] Tarefa 2
-- [ ] Tarefa 3
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
 
-## Labels Sugeridas
+## Suggested Labels
 
-- `bug` ou `feature`
-- `priority/high` ou `priority/low`
-- `good first issue` (se aplicável)
+- `bug` or `feature`
+- `priority/high` or `priority/low`
+- `good first issue` (if applicable)

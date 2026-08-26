@@ -1,37 +1,37 @@
 # AGENTS.md
 
-## Visão Geral
+## Overview
 
-Este projeto usa {tecnologia} com {padrão}.
+This project uses {technology} with {standard}.
 
-## Estrutura
+## Structure
 
 ```
 src/
-├── domain/        # Regras de negócio
-├── application/   # Casos de uso
-├── infrastructure/# Adaptadores externos
+├── domain/        # Business rules
+├── application/   # Use cases
+├── infrastructure/# External adapters
 └── interfaces/    # Controllers, APIs
 ```
 
-## Padrões
+## Standards
 
 - Use Conventional Commits
-- Mantenha coverage ≥ 80%
-- Testes em `test/`
-- Documentação em `docs/`
+- Maintain coverage ≥ 80%
+- Tests in `test/`
+- Documentation in `docs/`
 
-## Comandos
+## Commands
 
 ```bash
-npm run dev       # Desenvolvimento
-npm test          # Testes
+npm run dev       # Development
+npm test          # Tests
 npm run lint      # Lint
 npm run build     # Build
 ```
 
-## Skills Recomendadas
+## Recommended Skills
 
-- `git` — para commits e branches
-- `testing` — para testes
-- `ddd` — para modelagem de domínio
+- `git` — for commits and branches
+- `testing` — for testing
+- `ddd` — for domain modeling

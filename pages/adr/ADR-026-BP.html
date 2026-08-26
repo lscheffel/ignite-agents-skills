@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADR — ADR-026-BP.html — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../index.html">Skills</a>
+      <a href="../readme.html">README</a>
+      <a href="../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; ADR-026-BP.html</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>id: ADR-026-BP type: bp title: "Blueprint - Catálogo Canônico Unificado em Inglês (EN-US) via NVIDIA NIM" created: "2026-08-25" updated: "2026-08-25" adr_ref: ADR-026 ---</p>
+<h1 id="blueprint--adr-026-catlogo-cannico-unificado-em-ingls-en-us-via-nvidia-nim">Blueprint — ADR-026: Catálogo Canônico Unificado em Inglês (EN-US) via NVIDIA NIM</h1>
+<blockquote>Referência: <a href="./ADR-026.md">ADR-026</a></blockquote>
+<hr>
+<h2 id="1-viso-geral">1. Visão Geral</h2>
+<h3 id="objetivo">Objetivo</h3>
+<p>Padronizar o catálogo canônico de skills para EN-US via NVIDIA NIM (<code>nvidia/riva-translate-4b-instruct-v2</code>), com pipeline autônomo de tradução, preservação estrita de sintaxe (código, frontmatter, XML, <code>parent_skill_id</code>) e validação forense em dois estágios (AST estático + NIM Code Judge), maximizando compressão BPE e alinhamento semântico no Reranker Neural.</p>
+<h3 id="mtricas-de-sucesso">Métricas de Sucesso</h3>
+<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes (PT-BR)</th><th>Depois (EN-US)</th><th>Status</th></tr><tr><td><strong>Tokens por Documento (BPE Llama/cl100k)</strong></td><td><code>X</code></td><td><code>< X</code> (compressão média estimada ~15-25%)</td><td>⬜</td></tr><tr><td><strong>Precisão do Reranker em Consultas EN-US</strong></td><td>Base</td><td>Melhorada (alinhamento Cross-Encoder)</td><td>⬜</td></tr><tr><td><strong>Uniformidade Linguística do Catálogo</strong></td><td>Mista (PT/EN)</td><td>100% EN-US</td><td>⬜</td></tr><tr><td><strong>Sintaxe/Identificadores Intactos</strong></td><td>—</td><td>100% (AST + Code Judge)</td><td>⬜</td></tr><tr><td><strong>Suíte de Testes Automatizados</strong></td><td>6 suítes</td><td>7 suítes (6 regressão + 1 nova suíte unitária offline)</td><td>⬜</td></tr></table></div>
+<hr>
+<h2 id="2-estrutura-de-artefatos-afetados">2. Estrutura de Artefatos Afetados</h2>
+<pre data-lang="text"><code>.github/scripts/
+├── translate_catalog_nim.py             # Pipeline autônomo de tradução EN-US via NIM
+├── audit_engine.py                      # Auditoria estrutural de sub-ativos (pós-tradução)
+├── skills_rag_indexer.py                # Re-ingestão da base vetorial após tradução
+├── skills_mcp_server.py                 # Consultas RAG sobre o catálogo traduzido
+└── tests/
+    └── test_catalog_translation.py      # Testes unitários offline do módulo de tradução e sintaxe
+
+.local/skills_rag/
+└── translation_cache.sqlite3            # Cache de idempotência versionado (SHA256)
+
+docs/adr/
+├── ADR-026.md                           # Decisão arquitetural
+├── ADR-026-BP.md                        # Blueprint (este documento)
+├── ADR-026-TODO.md                      # Checklist operacional
+├── ADR-026-PI.md                        # Plano de injeção e rollback
+└── ADR-026-ER.md                        # Evidence Record (pós-execução)</code></pre>
+<hr>
+<h2 id="3-conceitos-chave-da-soluo">3. Conceitos-Chave da Solução</h2>
+<h3 id="31-cascata-de-modelos-com-tolerncia-a-falhas">3.1 Cascata de Modelos com Tolerância a Falhas</h3>
+<ul>
+<li><strong>Tradução:</strong> <code>nvidia/riva-translate-4b-instruct-v2</code> → <code>nvidia/nemotron-3.5-lightning-30b-a3b</code> → <code>meta/llama-3.1-8b-instruct</code>.</li>
+<li><strong>Code Judge:</strong> <code>deepseek-ai/deepseek-v4-flash-0731</code> → <code>meta/llama-3.3-70b-instruct</code> → <code>meta/llama-3.1-8b-instruct</code>.</li>
+<li><code>temperature=0.0</code> (determinística) + fallback automático.</li>
+</ul>
+<h3 id="32-preservao-estrita-de-sintaxe">3.2 Preservação Estrita de Sintaxe</h3>
+<ul>
+<li>Extração de blocos de código (<code> </code>`<code> </code>), frontmatter e tags XML → placeholders → tradução → restauração.</li>
+<li>Isolamento de código procedural de scripts; tradução apenas de docstrings/comentários.</li>
+<li>Comentários diretivos e metadados protegidos (<code># parent_skill_id:</code>, <code># type:</code>, etc.) são mantidos inalterados.</li>
+</ul>
+<h3 id="33-validao-forense-em-dois-estgios">3.3 Validação Forense em Dois Estágios</h3>
+<ul>
+<li><strong>Estágio A (estático):</strong> <code>ast.parse()</code> (Python) e <code>bash -n</code> (Shell).</li>
+<li><strong>Estágio B (NIM Code Judge):</strong> Comparação original vs traduzido, saída JSON, verificação de identificadores/indentação.</li>
+</ul>
+<h3 id="34-idempotncia-via-cache-versionado--metodologia-bpe">3.4 Idempotência via Cache Versionado & Metodologia BPE</h3>
+<ul>
+<li><code>translation_cache.sqlite3</code> chaveado por <code>SHA256(content + ":" + model_name + ":" + prompt_version)</code> para prevenir re-tradução desnecessária e garantir invalidação em caso de atualização de modelo ou prompt.</li>
+<li>Medição BPE calculada comparando a contagem de tokens pré e pós-tradução via tokenizer padrão Llama-3 / cl100k_base.</li>
+</ul>
+<hr>
+<h2 id="4-workflows-de-implementao">4. Workflows de Implementação</h2>
+<h3 id="workflow-1-criao-do-script-de-traduo-e-testes-unitrios">Workflow 1: Criação do Script de Tradução e Testes Unitários</h3>
+<ol>
+<li><strong>Passo 1.1:</strong> Implementar <code>init_cache()</code>, <code>detect_language()</code>, <code>extract_translatable_segments()</code>.</li>
+<li><strong>Passo 1.2:</strong> Implementar <code>call_nvidia_nim()</code> com cascata de fallback.</li>
+<li><strong>Passo 1.3:</strong> Implementar <code>protect_syntax()</code>/<code>restore_syntax()</code> e <code>extract_docstrings_and_comments()</code>.</li>
+<li><strong>Passo 1.4:</strong> Implementar <code>validate_python_ast()</code>, <code>validate_shell_syntax()</code>, <code>call_nim_code_judge()</code>, <code>validate_translation()</code>.</li>
+<li><strong>Passo 1.5:</strong> Implementar <code>process_file()</code> e <code>main()</code>.</li>
+<li><strong>Passo 1.6:</strong> Implementar suíte de testes unitários offline <code>.github/scripts/tests/test_catalog_translation.py</code>.</li>
+<li><strong>Checkpoint:</strong> <code>python3 .github/scripts/tests/test_catalog_translation.py</code> executa e passa 100% dos testes offline.</li>
+</ol>
+<h3 id="workflow-2-execuo-auditoria-e-re-indexao">Workflow 2: Execução, Auditoria e Re-indexação</h3>
+<ol>
+<li><strong>Passo 2.1:</strong> Executar tradução (<code>translate_catalog_nim.py</code>).</li>
+<li><strong>Passo 2.2:</strong> Executar <code>audit_engine.py</code> — validar 100% conformidade estrutural.</li>
+<li><strong>Passo 2.3:</strong> Executar <code>skills_rag_indexer.py --force</code> — re-ingestão vetorial.</li>
+<li><strong>Passo 2.4:</strong> Executar 7 suítes completas de testes automatizados.</li>
+<li><strong>Checkpoint:</strong> 100% dos testes passando e auditoria 100% conforme.</li>
+</ol>
+<h3 id="workflow-3-governana-e-fechamento">Workflow 3: Governança e Fechamento</h3>
+<ol>
+<li><strong>Passo 3.1:</strong> Gerar <code>ADR-026-ER.md</code> com métricas de compressão BPE.</li>
+<li><strong>Passo 3.2:</strong> Arquivar Decision Set em <code>docs/adr/archive/</code>.</li>
+<li><strong>Passo 3.3:</strong> Atualizar <code>ADR-INDEX.md</code> para <code>CONSOLIDADA | ARCHIVED_OK</code>.</li>
+<li><strong>Passo 3.4:</strong> Reconciliar 6 pilares documentais.</li>
+<li><strong>Checkpoint:</strong> Tag <code>v2.5.0</code> criada e commit atômico.</li>
+</ol>
+<hr>
+<h2 id="5-anti-patterns-especficos-desta-deciso">5. Anti-patterns Específicos desta Decisão</h2>
+<h3 id="-crtico">🔴 Crítico</h3>
+<h4 id="traduo-de-identificadores-e-cdigo-procedural">Tradução de Identificadores e Código Procedural</h4>
+<ul>
+<li><strong>O que é:</strong> Traduzir nomes de variáveis, funções, <code>parent_skill_id</code>, chaves de frontmatter ou código procedural.</li>
+<li><strong>Por que é ruim:</strong> Quebra compatibilidade com SQLite, MCP, AssetParser e o roteamento semântico.</li>
+<li><strong>Como evitar:</strong> Regex extract/restore + validação forense (AST + NIM Code Judge) com auto-rollback.</li>
+</ul>
+<h3 id="-mdio">🟡 Médio</h3>
+<h4 id="dependncia-de-langdetect-externo">Dependência de <code>langdetect</code> externo</h4>
+<ul>
+<li><strong>O que é:</strong> Usar biblioteca externa para detecção de idioma.</li>
+<li><strong>Por que é ruim:</strong> Quebra ambientes sem pip/internet (stdlib-only).</li>
+<li><strong>Como evitar:</strong> Heurística de stopwords PT/EN embutida.</li>
+</ul>
+<hr>
+<h2 id="6-checklists">6. Checklists</h2>
+<h3 id="checklist-de-pr-deploy">Checklist de Pré-Deploy</h3>
+<ul>
+<li>[ ] Cascata de modelos de tradução e judge configurada e verificada</li>
+<li>[ ] <code>protect_syntax</code>/<code>restore_syntax</code> testado com <code>.md</code>, <code>.py</code>, <code>.sh</code></li>
+<li>[ ] Validação AST (<code>ast.parse</code>) e <code>bash -n</code> funcionando</li>
+<li>[ ] NIM Code Judge retornando JSON <code>{"valid": bool}</code></li>
+<li>[ ] Testes unitários offline <code>test_catalog_translation.py</code> passando 100%</li>
+</ul>
+<h3 id="checklist-de-ps-deploy">Checklist de Pós-Deploy</h3>
+<ul>
+<li>[ ] Tradução executada sem erros (cache populado)</li>
+<li>[ ] <code>audit_engine.py</code> 100% conformidade</li>
+<li>[ ] 7 suítes completas de testes passando (6 regressão + 1 unitária)</li>
+<li>[ ] <code>ADR-026-ER.md</code> gerado com métricas BPE</li>
+<li>[ ] <code>ADR-026-ER.md</code> gerado com métricas BPE</li>
+</ul>
+<hr>
+<h2 id="7-edge-cases">7. Edge Cases</h2>
+<h3 id="arquivo-j-em-ingls">Arquivo Já em Inglês</h3>
+<ul>
+<li><strong>Situação:</strong> <code>.md</code> já em EN-US.</li>
+<li><strong>Solução:</strong> <code>detect_language()</code> retorna <code>en</code> → skip (não gasta API call).</li>
+</ul>
+<h3 id="script-sem-docstring">Script sem Docstring</h3>
+<ul>
+<li><strong>Situação:</strong> <code>.py</code> sem docstring.</li>
+<li><strong>Solução:</strong> Extração de comentários <code>#</code> de cabeçalho; se ausentes, skip sem tradução.</li>
+</ul>
+<h3 id="modelo-nim-indisponvel">Modelo NIM Indisponível</h3>
+<ul>
+<li><strong>Situação:</strong> Riva fora do ar.</li>
+<li><strong>Solução:</strong> Cascata de fallback; se todos falharem, manter original (não corromper).</li>
+</ul>
+<hr>
+<h2 id="8-skills-relacionadas">8. Skills Relacionadas</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relação com este Blueprint</th></tr><tr><td><code>adr-generator</code></td><td>Governança da Quadra SOTA e decisões arquiteturais</td></tr><tr><td><code>implementation</code></td><td>Execução governada dos workflows e DAG de tarefas</td></tr><tr><td><code>technical-documentation</code></td><td>Reconciliação dos 6 pilares documentais</td></tr><tr><td><code>testing-mastery</code></td><td>Estratégia de testes unitários e validação contínua</td></tr></table></div>
+<hr>
+<p><em>Documento gerado em 2026-08-25. Referência: ADR-026.</em></p>
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

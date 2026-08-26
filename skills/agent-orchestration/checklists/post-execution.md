@@ -1,27 +1,27 @@
 # Post-Execution Checklist
 
-Checklist após conclusão da orquestração multi-agente.
+Checklist after multi-agent orchestration completion.
 
-## Validação
-- [ ] Output final validado
-- [ ] Todos os handoffs concluídos com sucesso
-- [ ] Nenhum fallback ativado (ou todos documentados)
-- [ ] Consistência do output verificada
+## Validation
+- [ ] Validated final output
+- [ ] All handoffs completed successfully
+- [ ] No fallbacks activated (or all documented)
+- [ ] Output consistency verified
 
-## Métricas
-- [ ] Taxa de sucesso registrada
-- [ ] Latência por agente registrada
-- [ ] Custo real vs estimado comparado
-- [ ] Throughput medido
+## Metrics
+- [ ] Success rate recorded
+- [ ] Agent latency recorded
+- [ ] Real cost vs estimated cost compared
+- [ ] Throughput measured
 
-## Qualidade
-- [ ] Output atende requisitos originais
-- [ ] Nenhum dado perdido entre handoffs
-- [ ] Formato correto para consumo
-- [ ] Documentação atualizada
+## Quality
+- [ ] Output meets original requirements
+- [ ] No data lost between handoffs
+- [ ] Correct format for consumption
+- [ ] Documentation updated
 
-## Lições
-- [ ] Decisões de arquitetura documentadas
-- [ ] Problemas encontrados registrados
-- [ ] Oportunidades de melhoria identificadas
-- [ ] Padrões reutilizáveis extraídos
+## Lessons
+- [ ] Architecture decisions documented
+- [ ] Found problems recorded
+- [ ] Improvement opportunities identified
+- [ ] Reusable patterns extracted

@@ -411,46 +411,58 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: repo-bootstrap description: Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, estrutura de docs/ e exemplos de CI/CD. Use quando iniciar um novo repositório ou padronizar estrutura de projeto. version: 2.0.0 tags: [repository, scaffolding, boilerplate, governance, ci-cd] related_skills: [governance, documentation, git, skill-audit-bulletin] ---</p>
+<p>name: repo-bootstrap version: 2.0.0 description: 'Generates an initial repository structure with governance files: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, docs/ directory, and CI/CD examples. Use when initializing a new repository or standardizing project structure.' domain: core-governance triggers:</p>
+<ul>
+<li>repo-bootstrap</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>repository</li>
+<li>scaffolding</li>
+<li>boilerplate</li>
+<li>governance</li>
+<li>ci-cd</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="repo-bootstrap">Repo Bootstrap</h1>
-<p>Gera estrutura inicial padronizada para repositórios.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Generates a standardized initial repository structure.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Inicializando novo repositório</li>
-<li>Padronizando estrutura existente</li>
-<li>Criando template de projeto</li>
-<li>Onboarding de novos projetos</li>
+<li>Initializing a new repository</li>
+<li>Standardizing an existing structure</li>
+<li>Creating a project template</li>
+<li>Onboarding new projects</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Repositório já existe e está padronizado</li>
-<li>Projeto sem documentação necessária</li>
+<li>Repository already exists and is standardized</li>
+<li>Project does not require documentation</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>governance</code> — para processos de equipe</li>
-<li><code>documentation</code> — para padrões de docs</li>
-<li><code>git</code> — para .gitignore</li>
+<li><code>governance</code> — for team processes</li>
+<li><code>documentation</code> — for documentation standards</li>
+<li><code>git</code> — for .gitignore</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Tipo de Repo?] --&gt;|Aplicação| B[Monorepo]
-    A --&gt;|Biblioteca| C[Multi-repo]
+    A[Repository Type?] --&gt;|Application| B[Monorepo]
+    A --&gt;|Library| C[Multi-repo]
     A --&gt;|Open Source| D[Open Source]
-    A --&gt;|Interno| E[Interno]
+    A --&gt;|Internal| E[Internal]
     B --&gt;|Node.js| F[Node.js Template]
     B --&gt;|Python| G[Python Template]
     B --&gt;|Go| H[Go Template]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-criar-repositrio-do-zero">Fase 1: Criar Repositório do Zero</h3>
+<h3 id="phase-1-create-repository-from-scratch">Phase 1: Create Repository from Scratch</h3>
 <ol>
-<li>Crie estrutura:</li>
+<li>Create structure:</li>
 </ol>
 <pre data-lang="bash"><code>   mkdir -p docs/{adr,api,architecture}
    mkdir -p .github/workflows</code></pre>
 <ol>
-<li>Copie templates:</li>
+<li>Copy templates:</li>
 </ol>
 <pre data-lang="bash"><code>   cp templates/README.md README.md
    cp templates/CONTRIBUTING.md CONTRIBUTING.md
@@ -458,33 +470,33 @@
    cp templates/ci.yml .github/workflows/ci.yml
    cp templates/AGENTS.md AGENTS.md</code></pre>
 <ol>
-<li>Crie arquivos:</li>
+<li>Create files:</li>
 </ol>
 <pre data-lang="bash"><code>   touch CHANGELOG.md
    touch LICENSE</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Estrutura criada, git init</li>
+<li><strong>Checkpoint</strong>: Structure created, git init</li>
 </ol>
-<h3 id="fase-2-adicionar-governana-a-repo-existente">Fase 2: Adicionar Governança a Repo Existente</h3>
+<h3 id="phase-2-add-governance-to-existing-repository">Phase 2: Add Governance to Existing Repository</h3>
 <ol>
-<li>Verifique estrutura atual:</li>
+<li>Verify current structure:</li>
 </ol>
 <pre data-lang="bash"><code>   ls -la</code></pre>
 <ol>
-<li>Adicione arquivos faltando:</li>
+<li>Add missing files:</li>
 </ol>
-<pre data-lang="bash"><code>   # Para cada arquivo faltando
-   cp templates/{arquivo} ./{arquivo}</code></pre>
+<pre data-lang="bash"><code>   # For each missing file
+   cp templates/{file} ./{file}</code></pre>
 <ol>
-<li>Atualize README:</li>
+<li>Update README:</li>
 </ol>
-<pre data-lang="bash"><code>   # Adicione badges, links</code></pre>
+<pre data-lang="bash"><code>   # Add badges, links</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Governança adicionada</li>
+<li><strong>Checkpoint</strong>: Governance added</li>
 </ol>
-<h3 id="fase-3-configurar-cicd">Fase 3: Configurar CI/CD</h3>
+<h3 id="phase-3-configure-cicd">Phase 3: Configure CI/CD</h3>
 <ol>
-<li>Crie workflow:</li>
+<li>Create workflow:</li>
 </ol>
 <pre data-lang="bash"><code>   mkdir -p .github/workflows
    cp templates/ci.yml .github/workflows/ci.yml</code></pre>
@@ -493,14 +505,14 @@
 </ol>
 <pre data-lang="bash"><code>   # NPM_TOKEN, DOCKER_PASSWORD, etc.</code></pre>
 <ol>
-<li>Ative branch protection:</li>
+<li>Enable branch protection:</li>
 </ol>
 <pre data-lang="bash"><code>   # Settings &gt; Branches &gt; Add rule</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: CI/CD funcionando</li>
+<li><strong>Checkpoint</strong>: CI/CD functioning</li>
 </ol>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="estrutura-gerada">Estrutura Gerada</h3>
+<h2 id="key-concepts">Key Concepts</h2>
+<h3 id="generated-structure">Generated Structure</h3>
 <pre><code>repo/
 ├── README.md
 ├── AGENTS.md
@@ -517,122 +529,122 @@
 │   ├── adr/
 │   └── decisions/
 └── src/</code></pre>
-<h3 id="arquivos-gerados">Arquivos Gerados</h3>
+<h3 id="generated-files">Generated Files</h3>
 <h4 id="readmemd">README.md</h4>
 <ul>
-<li>Descrição do projeto</li>
-<li>Instalação</li>
-<li>Uso básico</li>
-<li>Como contribuir</li>
+<li>Project description</li>
+<li>Installation</li>
+<li>Basic usage</li>
+<li>Contributing guidelines</li>
 </ul>
 <h4 id="agentsmd">AGENTS.md</h4>
 <ul>
-<li>Instruções para agentes</li>
-<li>Padrões de código</li>
-<li>Comandos importantes</li>
+<li>Agent instructions</li>
+<li>Code standards</li>
+<li>Important commands</li>
 </ul>
 <h4 id="changelogmd">CHANGELOG.md</h4>
 <ul>
-<li>Formato Keep a Changelog</li>
-<li>Seções: Added, Changed, etc.</li>
+<li>Keep a Changelog format</li>
+<li>Sections: Added, Changed, etc.</li>
 </ul>
 <h2 id="templates">Templates</h2>
 <h3 id="readmemd">README.md</h3>
-<p>Localização: <code>templates/README.md</code></p>
-<p>Template para README de projeto.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/README.md</code></p>
+<p>Template for project README.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/README.md README.md</code></pre>
 <h3 id="contributingmd">CONTRIBUTING.md</h3>
-<p>Localização: <code>templates/CONTRIBUTING.md</code></p>
-<p>Template para contribuição.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/CONTRIBUTING.md</code></p>
+<p>Template for contributing guidelines.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/CONTRIBUTING.md CONTRIBUTING.md</code></pre>
 <h3 id="securitymd">SECURITY.md</h3>
-<p>Localização: <code>templates/SECURITY.md</code></p>
-<p>Política de segurança.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/SECURITY.md</code></p>
+<p>Security policy.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/SECURITY.md SECURITY.md</code></pre>
 <h3 id="ciyml">ci.yml</h3>
-<p>Localização: <code>templates/ci.yml</code></p>
-<p>Workflow de CI/CD.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/ci.yml</code></p>
+<p>CI/CD workflow.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/ci.yml .github/workflows/ci.yml</code></pre>
 <h3 id="agentsmd">AGENTS.md</h3>
-<p>Localização: <code>templates/AGENTS.md</code></p>
-<p>Instruções para agentes.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/AGENTS.md</code></p>
+<p>Agent instructions.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/AGENTS.md AGENTS.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="repo-sem-license">Repo sem LICENSE</h4>
-<p><strong>O que é:</strong> Repositório sem arquivo de licença. <strong>Por que é ruim:</strong> Uso não autorizado, problemas legais. <strong>Como evitar:</strong> Sempre inclua LICENSE. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-# Repo sem LICENSE
+<h3 id="critical">Critical</h3>
+<h4 id="repository-without-license">Repository without LICENSE</h4>
+<p><strong>What is it:</strong> Repository without a license file. <strong>Why is it bad:</strong> Unauthorized use, legal issues. <strong>How to avoid:</strong> Always include a LICENSE file. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+# Repository without LICENSE
 
-# ✅ CORRETO
-# MIT License no arquivo LICENSE</code></pre>
-<h4 id="repo-sem-gitignore">Repo sem .gitignore</h4>
-<p><strong>O que é:</strong> Repositório sem .gitignore. <strong>Por que é ruim:</strong> Arquivos sensíveis commitados, repo sujo. <strong>Como evitar:</strong> Use gitignore.io ou template. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-# .env commitado
+# ✅ CORRECT
+# MIT License in LICENSE file</code></pre>
+<h4 id="repository-without-gitignore">Repository without .gitignore</h4>
+<p><strong>What is it:</strong> Repository without a .gitignore file. <strong>Why is it bad:</strong> Sensitive files committed, repository dirty. <strong>How to avoid:</strong> Use gitignore.io or template. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+# .env committed
 
-# ✅ CORRETO
-# .gitignore inclui .env, node_modules, etc.</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="repo-sem-ci">Repo sem CI</h4>
-<p><strong>O que é:</strong> Repositório sem CI configurado. <strong>Por que é ruim:</strong> Bugs em produção, qualidade não verificada. <strong>Como evitar:</strong> Sempre configure CI. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-# Push direto para main
+# ✅ CORRECT
+# .gitignore includes .env, node_modules, etc.</code></pre>
+<h3 id="medium">Medium</h3>
+<h4 id="repository-without-ci">Repository without CI</h4>
+<p><strong>What is it:</strong> Repository without CI configured. <strong>Why is it bad:</strong> Bugs in production, quality not verified. <strong>How to avoid:</strong> Always configure CI. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+# Push directly to main
 
-# ✅ CORRETO
-# CI verifica lint, testes, build</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="repo-sem-badges">Repo sem Badges</h4>
-<p><strong>O que é:</strong> README sem badges de status. <strong>Por que é ruim:</strong> Usuários não sabem status. <strong>Como evitar:</strong> Adicione badges padrão. <strong>Exemplo:</strong></p>
+# ✅ CORRECT
+# CI verifies lint, tests, build</code></pre>
+<h3 id="low">Low</h3>
+<h4 id="repository-without-badges">Repository without Badges</h4>
+<p><strong>What is it:</strong> README without status badges. <strong>Why is it bad:</strong> Users do not know the status. <strong>How to avoid:</strong> Add standard badges. <strong>Example:</strong></p>
 <pre data-lang="markdown"><code>![CI](https://github.com/.../actions/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-repo-completeness">Checklist de Repo Completeness</h3>
+<h3 id="repository-completeness-checklist">Repository Completeness Checklist</h3>
 <ul>
-<li>[ ] README.md presente</li>
-<li>[ ] LICENSE presente</li>
-<li>[ ] .gitignore configurado</li>
-<li>[ ] CI/CD configurado</li>
-<li>[ ] AGENTS.md presente</li>
-<li>[ ] CONTRIBUTING.md presente</li>
-<li>[ ] SECURITY.md presente</li>
+<li>[ ] README.md present</li>
+<li>[ ] LICENSE present</li>
+<li>[ ] .gitignore configured</li>
+<li>[ ] CI/CD configured</li>
+<li>[ ] AGENTS.md present</li>
+<li>[ ] CONTRIBUTING.md present</li>
+<li>[ ] SECURITY.md present</li>
 </ul>
-<h3 id="checklist-de-ci-pipeline">Checklist de CI Pipeline</h3>
+<h3 id="ci-pipeline-checklist">CI Pipeline Checklist</h3>
 <ul>
-<li>[ ] Lint passa</li>
-<li>[ ] Testes passam</li>
-<li>[ ] Build funciona</li>
-<li>[ ] Coverage reportado</li>
+<li>[ ] Lint passes</li>
+<li>[ ] Tests pass</li>
+<li>[ ] Build functions</li>
+<li>[ ] Coverage reported</li>
 <li>[ ] Security scan</li>
 </ul>
-<h3 id="checklist-de-security-basics">Checklist de Security Basics</h3>
+<h3 id="security-basics-checklist">Security Basics Checklist</h3>
 <ul>
-<li>[ ] .env no .gitignore</li>
-<li>[ ] Secrets configurados</li>
-<li>[ ] LICENSE incluída</li>
-<li>[ ] SECURITY.md presente</li>
+<li>[ ] .env in .gitignore</li>
+<li>[ ] Secrets configured</li>
+<li>[ ] LICENSE included</li>
+<li>[ ] SECURITY.md present</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="fork-de-projeto-externo">Fork de Projeto Externo</h3>
-<p><strong>Situação:</strong> Fork de projeto sem estrutura padronizada. <strong>Solução:</strong> Mantenha compatibilidade, adicione AGENTS.md. <strong>Exceção:</strong> Se fork é totalmente novo, reestruture.</p>
-<pre data-lang="bash"><code># Manter estrutura original
-# Adicionar AGENTS.md para agentes</code></pre>
-<h3 id="monorepo-com-mltiplas-linguagens">Monorepo com Múltiplas Linguagens</h3>
-<p><strong>Situação:</strong> Monorepo com Node.js, Python, Go. <strong>Solução:</strong> Estrutura por serviço, CI multi-stage. <strong>Exceção:</strong> Se monolito é pequeno, unifique.</p>
+<h3 id="fork-of-external-project">Fork of External Project</h3>
+<p><strong>Situation:</strong> Fork of project without standardized structure. <strong>Solution:</strong> Maintain compatibility, add AGENTS.md. <strong>Exception:</strong> If fork is entirely new, restructure.</p>
+<pre data-lang="bash"><code># Maintain original structure
+# Add AGENTS.md for agents</code></pre>
+<h3 id="monorepo-with-multiple-languages">Monorepo with Multiple Languages</h3>
+<p><strong>Situation:</strong> Monorepo with Node.js, Python, Go. <strong>Solution:</strong> Structure by service, CI multi-stage. <strong>Exception:</strong> If monolito is small, unify.</p>
 <pre><code>packages/
 ├── api/     # Node.js
 ├── ml/      # Python
 └── cli/     # Go</code></pre>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
-<li><code>governance</code> — para processos</li>
-<li><code>documentation</code> — para padrões</li>
-<li><code>git</code> — para .gitignore</li>
+<li><code>governance</code> — for team processes</li>
+<li><code>documentation</code> — for documentation standards</li>
+<li><code>git</code> — for .gitignore</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

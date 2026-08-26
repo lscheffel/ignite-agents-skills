@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>systematic-debugging — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; systematic-debugging</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: systematic-debugging version: 1.0.0 description: 'Use when encountering bugs, unexpected behavior, test failures, or errors during development. Enforces a rigorous 4-phase investigation process that prevents shotgun debugging. Triggers: test failure, runtime error, unexpected behavior, production incident, performance regression.' domain: engineering-quality triggers:</p>
+<ul>
+<li>systematic-debugging</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>systematic-debugging</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="systematic-debugging">Systematic Debugging</h1>
+<h2 id="overview">Overview</h2>
+<p>Debugging is investigation, not experimentation. This skill enforces a rigorous 4-phase process — root cause investigation, pattern analysis, hypothesis testing, and architecture questioning — that prevents shotgun debugging and ensures every fix is understood before it is applied.</p>
+<p><strong>Announce at start:</strong> "I'm using the systematic-debugging skill to investigate this issue."</p>
+<hr>
+<h2 id="core-principle">Core Principle</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  HARD-GATE: NEVER GUESS. NEVER SHOTGUN DEBUG.                  │
+│  NEVER CHANGE CODE WITHOUT UNDERSTANDING WHY IT IS BROKEN.     │
+│                                                                 │
+│  You are a detective gathering evidence, not a gambler trying   │
+│  random fixes. If you are changing code without understanding   │
+│  the root cause, STOP immediately.                             │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<hr>
+<h2 id="phase-1-root-cause-investigation">Phase 1: Root Cause Investigation</h2>
+<p><strong>Goal:</strong> Understand exactly WHAT is happening, not what you think is happening.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li><strong>Read the error message carefully.</strong> The entire message. Every line. Including the stack trace.</li>
+<li><strong>Reproduce the bug.</strong> If you cannot reproduce it, you cannot fix it. Find the exact steps.</li>
+<li><strong>Gather evidence.</strong> Collect:</li>
+</ol>
+<ul>
+<li>Full error message and stack trace</li>
+<li>Input that triggers the bug</li>
+<li>Expected behavior vs actual behavior</li>
+<li>Environment details (versions, config, OS)</li>
+</ul>
+<ol>
+<li><strong>Check recent changes.</strong> What changed since this last worked?</li>
+</ol>
+<ul>
+<li>Recent commits (<code>git log</code>, <code>git diff</code>)</li>
+<li>Dependency updates</li>
+<li>Configuration changes</li>
+<li>Environment changes</li>
+</ul>
+<h3 id="evidence-gathering-checklist">Evidence Gathering Checklist</h3>
+<ul>
+<li>[ ] Full error message captured (not truncated)</li>
+<li>[ ] Stack trace read from bottom to top</li>
+<li>[ ] Bug reproduced reliably with specific steps</li>
+<li>[ ] Expected vs actual behavior documented</li>
+<li>[ ] Recent changes reviewed (<code>git log --oneline -20</code>)</li>
+<li>[ ] Relevant logs examined</li>
+</ul>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-2-until">STOP — HARD-GATE: Do NOT proceed to Phase 2 until:</h3>
+<ul>
+<li>[ ] You can reproduce the bug consistently</li>
+<li>[ ] You have the full error message and stack trace</li>
+<li>[ ] You know what changed recently</li>
+<li>[ ] You can describe the bug precisely (not vaguely)</li>
+</ul>
+<hr>
+<h2 id="phase-2-pattern-analysis">Phase 2: Pattern Analysis</h2>
+<p><strong>Goal:</strong> Narrow down WHERE the problem lives and WHEN it occurs.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li><strong>Find working examples.</strong> Does this feature work in other contexts? With other inputs? In other environments?</li>
+<li><strong>Compare working vs broken.</strong> What is different between the case that works and the case that does not?</li>
+<li><strong>Check dependencies.</strong> Are all required services/libraries/configs present and correct?</li>
+<li><strong>Isolate the scope.</strong> Can you reproduce with a minimal example? Strip away everything non-essential.</li>
+</ol>
+<h3 id="comparison-matrix">Comparison Matrix</h3>
+<p>Fill this out to identify the pattern:</p>
+<div class="table-wrapper"><table><tr><th>Factor</th><th>Working Case</th><th>Broken Case</th><th>Different?</th></tr><tr><td>Input data</td><td></td><td></td><td></td></tr><tr><td>Environment</td><td></td><td></td><td></td></tr><tr><td>Configuration</td><td></td><td></td><td></td></tr><tr><td>Dependencies</td><td></td><td></td><td></td></tr><tr><td>Timing/order</td><td></td><td></td><td></td></tr><tr><td>User/permissions</td><td></td><td></td><td></td></tr><tr><td>State/context</td><td></td><td></td><td></td></tr></table></div>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-3-until">STOP — HARD-GATE: Do NOT proceed to Phase 3 until:</h3>
+<ul>
+<li>[ ] You have identified at least one working case for comparison</li>
+<li>[ ] You have compared working vs broken and identified differences</li>
+<li>[ ] You have isolated the scope to the smallest reproducible case</li>
+<li>[ ] Dependencies have been verified (versions, availability, config)</li>
+</ul>
+<hr>
+<h2 id="phase-3-hypothesis-and-testing">Phase 3: Hypothesis and Testing</h2>
+<p><strong>Goal:</strong> Form ONE specific, testable hypothesis and verify it with the smallest possible change.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li><strong>Form ONE hypothesis.</strong> Based on evidence from Phases 1-2, what is the single most likely cause?</li>
+</ol>
+<ul>
+<li>State it explicitly: "The bug occurs because [specific cause]"</li>
+<li>If you cannot state it specifically, go back to Phase 1 or 2</li>
+</ul>
+<ol>
+<li><strong>Design a minimal test.</strong> What is the smallest change to confirm or deny this hypothesis?</li>
+</ol>
+<ul>
+<li>Prefer adding a test case over modifying production code</li>
+<li>Prefer logging/assertions over code changes</li>
+<li>Prefer reverting a change over writing new code</li>
+</ul>
+<ol>
+<li><strong>Apply the change and test.</strong></li>
+</ol>
+<ul>
+<li>Make ONLY the change needed to test the hypothesis</li>
+<li>Run the test suite</li>
+<li>Observe the result</li>
+</ul>
+<ol>
+<li><strong>Evaluate.</strong></li>
+</ol>
+<ul>
+<li>If CONFIRMED: proceed with the fix, write a regression test</li>
+<li>If DENIED: record what you learned, form a new hypothesis, return to step 1</li>
+</ul>
+<h3 id="hypothesis-log-template">Hypothesis Log Template</h3>
+<pre><code>Hypothesis #1: [description]
+Test: [what you did]
+Result: CONFIRMED / DENIED
+Learning: [what this taught you]
+
+Hypothesis #2: ...</code></pre>
+<h3 id="decision-table-hypothesis-testing-approach">Decision Table: Hypothesis Testing Approach</h3>
+<div class="table-wrapper"><table><tr><th>Hypothesis Type</th><th>Testing Method</th><th>Example</th></tr><tr><td>Recent code change caused it</td><td><code>git bisect</code> or revert commit</td><td>"The bug was introduced in commit abc123"</td></tr><tr><td>Data shape mismatch</td><td>Add logging/assertion</td><td>"The API returns null instead of array"</td></tr><tr><td>Race condition</td><td>Add timing logs or serialize</td><td>"Request B completes before request A"</td></tr><tr><td>Configuration error</td><td>Compare configs across environments</td><td>"Production uses different DB host"</td></tr><tr><td>Dependency version issue</td><td>Lock to known-good version</td><td>"Library 2.0 changed the API surface"</td></tr></table></div>
+<h3 id="stop--hard-gate-do-not-proceed-to-phase-4-unless">STOP — HARD-GATE: Do NOT proceed to Phase 4 unless:</h3>
+<ul>
+<li>[ ] You have tested at least 3 hypotheses and ALL were denied</li>
+<li>[ ] Each hypothesis was specific and testable</li>
+<li>[ ] Each test was minimal (one change at a time)</li>
+<li>[ ] You recorded learnings from each failed hypothesis</li>
+</ul>
+<hr>
+<h2 id="phase-4-architecture-questioning">Phase 4: Architecture Questioning</h2>
+<p><strong>Goal:</strong> If 3+ hypotheses have failed, the problem may be structural. Step back and question assumptions.</p>
+<p>This phase is triggered ONLY after Phase 3 has been attempted at least 3 times without success.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li><strong>Question your assumptions.</strong> What have you been assuming is true that might not be?</li>
+</ol>
+<ul>
+<li>Is the data shaped the way you think it is?</li>
+<li>Is the control flow what you expect?</li>
+<li>Are the types what you think they are?</li>
+<li>Is the API contract what you assumed?</li>
+</ul>
+<ol>
+<li><strong>Question the design.</strong> Is the current approach fundamentally flawed?</li>
+</ol>
+<ul>
+<li>Is there a race condition in the design?</li>
+<li>Is there a state management problem?</li>
+<li>Is there an incorrect abstraction?</li>
+<li>Are responsibilities misplaced?</li>
+</ul>
+<ol>
+<li><strong>Consider redesign.</strong> Sometimes the fix is not a patch but a restructuring.</li>
+</ol>
+<ul>
+<li>Can you simplify the design to eliminate the bug class entirely?</li>
+<li>Is there a pattern that handles this case better?</li>
+<li>Should you replace rather than fix?</li>
+</ul>
+<ol>
+<li><strong>Seek external input.</strong> If you are stuck:</li>
+</ol>
+<ul>
+<li>Explain the problem to someone else (rubber duck debugging)</li>
+<li>Search for known issues in dependencies</li>
+<li>Check if others have encountered similar problems</li>
+</ul>
+<h3 id="stop--hard-gate-do-not-continue-without">STOP — HARD-GATE: Do NOT continue without:</h3>
+<ul>
+<li>[ ] Written list of assumptions that were questioned</li>
+<li>[ ] Explicit decision: patch the current design OR redesign</li>
+<li>[ ] If redesigning: a plan before implementing</li>
+<li>[ ] If patching: a new hypothesis informed by the assumption review</li>
+</ul>
+<hr>
+<h2 id="debugging-decision-flowchart">Debugging Decision Flowchart</h2>
+<pre><code>Error encountered
+    |
+    v
+Can you reproduce it?
+    |
+    +-- NO --&gt; Gather more information (logs, user reports, monitoring)
+    |          Try different inputs, environments, timing
+    |          Do NOT proceed until reproducible
+    |
+    +-- YES -&gt; Read the FULL error message and stack trace
+               |
+               v
+         Is the cause obvious from the error?
+               |
+               +-- YES -&gt; Form hypothesis, test it (Phase 3)
+               |          Still write a regression test
+               |
+               +-- NO --&gt; Complete Phase 1 evidence gathering
+                          |
+                          v
+                    Find working case for comparison (Phase 2)
+                          |
+                          v
+                    Identify differences
+                          |
+                          v
+                    Form and test hypotheses (Phase 3)
+                          |
+                          +-- Fixed --&gt; Write regression test, verify
+                          |
+                          +-- 3+ failed hypotheses --&gt; Phase 4</code></pre>
+<hr>
+<h2 id="red-flags-table">Red Flags Table</h2>
+<div class="table-wrapper"><table><tr><th>Red Flag</th><th>What It Means</th><th>Action</th></tr><tr><td>Changing code without understanding the bug</td><td>Shotgun debugging</td><td>Go back to Phase 1</td></tr><tr><td>Fix works but you do not know why</td><td>Accidental fix, likely to regress</td><td>Investigate until you understand</td></tr><tr><td>Same bug keeps coming back</td><td>Root cause not addressed</td><td>Go to Phase 4, question design</td></tr><tr><td>Fix causes new bugs elsewhere</td><td>Unexpected coupling</td><td>Map dependencies before proceeding</td></tr><tr><td>"It works on my machine"</td><td>Environment difference</td><td>Go to Phase 2, comparison matrix</td></tr><tr><td>Fix requires more than 20 lines</td><td>Might be a design issue</td><td>Go to Phase 4</td></tr><tr><td>Debugging for 30+ minutes</td><td>Tunnel vision</td><td>Take a break, re-read evidence from Phase 1</td></tr><tr><td>Reading the same code repeatedly</td><td>Missing something fundamental</td><td>Get a fresh perspective, explain aloud</td></tr><tr><td>Multiple causes seem equally likely</td><td>Insufficient investigation</td><td>Go back to Phase 1, gather more evidence</td></tr></table></div>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Changing random things to see if bug goes away</td><td>Wastes time, introduces new bugs</td><td>Form a hypothesis first</td></tr><tr><td>Adding try/catch to suppress the error</td><td>Hides the real problem</td><td>Fix the root cause</td></tr><tr><td>Rewriting the feature from scratch</td><td>Nuclear option is rarely needed</td><td>Isolate and fix the specific issue</td></tr><tr><td>Blaming the framework/library without evidence</td><td>Usually your code is wrong</td><td>Prove the framework bug with minimal repro</td></tr><tr><td>Skipping the regression test after fixing</td><td>Bug will return</td><td>Write the test, always</td></tr><tr><td>Fixing symptoms instead of root causes</td><td>Patches accumulate, system degrades</td><td>Trace to the actual cause</td></tr><tr><td>Debugging for 45+ minutes without stepping back</td><td>Tunnel vision reduces effectiveness</td><td>Take a break, re-read Phase 1 evidence</td></tr><tr><td>Ignoring error messages or stack traces</td><td>The answer is often in the error</td><td>Read every line of the error</td></tr></table></div>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>test-driven-development</code></td><td>Every bug fix MUST include a regression test (RED-GREEN cycle)</td></tr><tr><td><code>verification-before-completion</code></td><td>After fixing a bug, verify with fresh evidence</td></tr><tr><td><code>resilient-execution</code></td><td>When debugging during task execution, pause task, complete debugging, resume</td></tr><tr><td><code>code-review</code></td><td>Review the fix for completeness and side effects</td></tr><tr><td><code>self-learning</code></td><td>Record new debugging patterns in learned-patterns.md</td></tr><tr><td><code>acceptance-testing</code></td><td>Verify fix does not break acceptance criteria</td></tr></table></div>
+<hr>
+<h2 id="quick-reference-what-not-to-do">Quick Reference: What NOT To Do</h2>
+<ol>
+<li><strong>Do NOT</strong> change random things and see if the bug goes away</li>
+<li><strong>Do NOT</strong> add try/catch to suppress the error</li>
+<li><strong>Do NOT</strong> rewrite the feature from scratch as a first resort</li>
+<li><strong>Do NOT</strong> blame the framework/library without evidence</li>
+<li><strong>Do NOT</strong> skip writing a regression test after fixing</li>
+<li><strong>Do NOT</strong> fix symptoms instead of root causes</li>
+<li><strong>Do NOT</strong> debug for more than 45 minutes without stepping back</li>
+<li><strong>Do NOT</strong> ignore error messages or stack traces</li>
+</ol>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — The 4-phase process is mandatory and must be followed in order. Each phase has a HARD-GATE that must be satisfied before proceeding. Never change code without understanding why it is broken.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>
