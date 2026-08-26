@@ -1,42 +1,55 @@
-# Dependencies
-node_modules/
-vendor/
-/docs/new-skills/
+# ==============================================================================
+# 1. AMBIENTE, SEGREDOS & CHAVES (CRÍTICO)
+# ==============================================================================
+.env
+.env.*
+!.env.example
 
-# Build outputs
-dist/
-build/
-out/
+# ==============================================================================
+# 2. RUNTIME, CACHE & DADOS LOCAIS
+# ==============================================================================
+data/
+.local/
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.sqlite3-journal
 
-# IDE
+# ==============================================================================
+# 3. EDITOR, AGENTES LOCAIS & SISTEMA OPERACIONAL
+# ==============================================================================
+.DS_Store
+Thumbs.db
+.kilo/
+.kilocode/
+.cursor/
+.windsurf/
 .idea/
 .vscode/
 *.swp
 *.swo
 *.rar
 
-# OS
-.DS_Store
-Thumbs.db
+# ==============================================================================
+# 4. DEPENDÊNCIAS & BUILDS
+# ==============================================================================
+node_modules/
+vendor/
+dist/
+build/
+out/
+/docs/new-skills/
 
-# Logs
+# ==============================================================================
+# 5. GOVERNANÇA INTERNA, RELATÓRIOS & ARTEFATOS TEMPORÁRIOS
+# ==============================================================================
+docs/reports/
 *.log
 npm-debug.log*
-
-# Environment
-.env
-.env.local
-.env.*.local
-
-# Temporary files
 tmp/
 temp/
+/tmp/
 *.tmp
-
-# Python & Ephemeral Local Data
-__pycache__/
-*.py[cod]
-*$py.class
-*.sqlite3
-.local/
-
+!skill-audit-bulletin/
+!.github/governance/
