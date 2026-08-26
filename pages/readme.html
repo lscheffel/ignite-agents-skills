@@ -412,14 +412,14 @@
   <div class="content">
     <h1 id="ignite-agents-skills--sota-skills-ecosystem--agent-governance">ignite-agents-skills — SOTA Skills Ecosystem & Agent Governance</h1>
 <blockquote>Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode e governança contínua para agentes autônomos.</blockquote>
-<p><a href="./CHANGELOG.md"><img src="https://img.shields.io/badge/version-v2.5.0-blue.svg" alt="Version" style="max-width:100%;border-radius:8px;"></a> <a href="./skills/index.json"><img src="https://img.shields.io/badge/skills-59%20SOTA-success.svg" alt="Skills" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/governance/AUDIT_MASTER_INDEX.md"><img src="https://img.shields.io/badge/assets-81%20active-success.svg" alt="Assets" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/governance/COMPLIANCE_SCORECARD.csv"><img src="https://img.shields.io/badge/audit%20score-91.10%2F100-brightgreen.svg" alt="Audit Score" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/workflows/validate-skills.yml"><img src="https://img.shields.io/badge/governance-CI%20Passing-success.svg" alt="Governance CI" style="max-width:100%;border-radius:8px;"></a> <a href="adr/index.html"><img src="https://img.shields.io/badge/architecture-ADR--001%20a%20ADR--026-purple.svg" alt="Architecture" style="max-width:100%;border-radius:8px;"></a></p>
+<p><a href="./CHANGELOG.md"><img src="https://img.shields.io/badge/version-v2.5.0-blue.svg" alt="Version" style="max-width:100%;border-radius:8px;"></a> <a href="./skills/index.json"><img src="https://img.shields.io/badge/skills-60%20SOTA-success.svg" alt="Skills" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/governance/AUDIT_MASTER_INDEX.md"><img src="https://img.shields.io/badge/assets-82%20active-success.svg" alt="Assets" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/governance/COMPLIANCE_SCORECARD.csv"><img src="https://img.shields.io/badge/audit%20score-91.10%2F100-brightgreen.svg" alt="Audit Score" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/workflows/validate-skills.yml"><img src="https://img.shields.io/badge/governance-CI%20Passing-success.svg" alt="Governance CI" style="max-width:100%;border-radius:8px;"></a> <a href="adr/index.html"><img src="https://img.shields.io/badge/architecture-ADR--001%20a%20ADR--026-purple.svg" alt="Architecture" style="max-width:100%;border-radius:8px;"></a></p>
 <hr>
 <h2 id="1-viso-geral--arquitetura">1. Visão Geral & Arquitetura</h2>
 <p>O <strong>ignite-agents-skills</strong> é uma plataforma 3-em-1 para agentes de inteligência artificial aplicados à engenharia de software de alta performance:</p>
 <ol>
 <li><strong>Registry Remoto de Skills:</strong> Manifesto canônico <code>skills/index.json</code> compatível com o padrão <a href="https://agentskills.io">Agent Skills</a> para <strong>Kilo Code</strong>, <strong>OpenCode</strong> e clientes HTTP.</li>
 <li><strong>Motor Semântico & Servidor MCP:</strong> Servidor MCP stdio nativo (<code>skills-rag-mcp</code>), RAG vetorial com busca híbrida BM25/embeddings, e CLI Router para descoberta inteligente de especializações.</li>
-<li><strong>Hub de Documentação GitHub Pages:</strong> Geração dinâmica de páginas HTML para todas as 59 skills e histórico completo de ADRs.</li>
+<li><strong>Hub de Documentação GitHub Pages:</strong> Geração dinâmica de páginas HTML para todas as 60 skills e histórico completo de ADRs.</li>
 </ol>
 <pre data-lang="mermaid"><code>graph TD
     A[Usuário / Agente de IA] --&gt;|JSON-RPC Stdio| B[Servidor MCP: scripts/skills_mcp_server.py]
@@ -430,33 +430,26 @@
     subgraph &quot;Camada de Descoberta &amp; RAG Vetorial (ADR-021 a ADR-025)&quot;
         B --&gt; F[Banco Vetorial: data/skills_rag_db/skills_rag.sqlite3]
         C --&gt; F
-        F --&gt; G[FTS5 BM25 + Embeddings + Reranking]
-    end
-
-    subgraph &quot;Catálogo Canônico de Especializações&quot;
-        D --&gt; H[59 Skills SOTA em skills/*/]
-        F --&gt; H
-    end
-
-    subgraph &quot;Governança, Build &amp; CI/CD&quot;
-        I[scripts/audit_engine.py] --&gt; J[.github/governance/]
-        K[scripts/sync-index.sh] --&gt; D
-        L[pages/build.py] --&gt; E
-        M[scripts/validate-skill.sh] --&gt; N[validate-skills.yml]
+        D --&gt; G[skills/index.json]
+        E --&gt; H[pages/index.html &amp; pages/skills/]
     end</code></pre>
 <hr>
 <h2 id="2-estrutura-do-repositrio">2. Estrutura do Repositório</h2>
 <pre data-lang="text"><code>.
 ├── LICENSE
 ├── README.md                           # Documentação principal
-├── USAGE.md                            # Guia completo de uso de todas as 59 skills
-├── CHANGELOG.md                        # Histórico de versões do ecossistema
-├── AGENTS.md                           # Guia canônico SSOT para agentes de IA
+├── USAGE.md                            # Guia completo de uso das skills
+├── CHANGELOG.md                        # Histórico de versões
+├── RELEASE-NOTES.md                    # Notas oficiais de release e destaques arquiteturais
+├── STATE.md                            # Memória persistente e estado do repositório para agentes
+├── AGENTS.md                           # SSOT de governança para agentes de IA
+├── GEMINI.md                           # Stub de runtime ultraleve para Gemini CLI
 ├── skills/
-│   ├── index.json                      # Registry centralizado de 59 skills
-│   ├── adr-archive/
-│   ├── adr-generator/
-│   ├── ... (59 skills SOTA)
+│   ├── index.json                      # Registry centralizado (fonte única para Kilo/OpenCode)
+│   ├── adr-architecture-elevation/     # Desafio adversarial e ampliação de ADRs
+│   ├── adr-archive/                    # Arquivamento e governança de ADRs
+│   ├── adr-generator/                  # Gerador de ADRs e Decision Sets
+│   ├── ... (60 skills SOTA)
 │   └── xlsx-processing/
 ├── scripts/                            # Toolbox e Motores Unificados
 │   ├── sync-index.sh                   # Auto-gera skills/index.json
@@ -467,7 +460,7 @@
 │   ├── skills_rag_indexer.py           # Motor de Indexação Vetorial / FTS5
 │   ├── skills_router.py                # CLI Router para busca semântica
 │   ├── audit_engine.py                 # Motor de Auditoria Forense SOTA (8 Dimensões)
-│   ├── translate_catalog_nim.py        # Tradutor de catálogo
+│   ├── translate_catalog_nim.py        # Tradutor de catálogo via NVIDIA NIM
 │   └── tests/                          # Suíte de testes automatizados (42 testes)
 ├── pages/                              # Motor de Documentação Web
 │   ├── build.py                        # Gerador de HTML estático
@@ -477,8 +470,8 @@
 │   └── audit/                          # Ledgers de auditoria
 └── data/                               # Banco SQLite vetorial e especificações</code></pre>
 <hr>
-<h2 id="3-catlogo-das-59-skills-por-categoria">3. Catálogo das 59 Skills por Categoria</h2>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Skills</th></tr><tr><td><strong>Architecture & Modeling</strong></td><td><code>architecture-review</code>, <code>database-architecture</code>, <code>ddd</code></td></tr><tr><td><strong>Documentation & Decision Records</strong></td><td><code>adr-generator</code>, <code>adr-archive</code>, <code>technical-documentation</code>, <code>changelog-generator</code></td></tr><tr><td><strong>Governance & Repository</strong></td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-management</code>, <code>skill-audit-bulletin</code></td></tr><tr><td><strong>Planning & Execution</strong></td><td><code>agent-planning-execution</code>, <code>product-spec-engineering</code>, <code>implementation</code></td></tr><tr><td><strong>Code Quality & Refactoring</strong></td><td><code>clean-code</code>, <code>refactoring</code>, <code>code-review</code>, <code>code-review-lite</code>, <code>code-review-workflow</code></td></tr><tr><td><strong>Testing & Verification</strong></td><td><code>testing-mastery</code>, <code>test-driven-development</code>, <code>verification-before-completion</code>, <code>systematic-debugging</code></td></tr><tr><td><strong>Security & Auditing</strong></td><td><code>security-review</code>, <code>circuit-breaker</code>, <code>resilient-execution</code></td></tr><tr><td><strong>AI, Prompting & Evaluation</strong></td><td><code>prompt-engineering</code>, <code>llm-as-judge</code>, <code>agent-development</code>, <code>context7-mcp</code></td></tr><tr><td><strong>Multi-Agent & Orchestration</strong></td><td><code>agent-orchestration</code>, <code>subagent-driven-development</code>, <code>dispatching-parallel-agents</code>, <code>cap</code></td></tr><tr><td><strong>API & Backend Frameworks</strong></td><td><code>api-design</code>, <code>php-laravel-ecosystem</code></td></tr><tr><td><strong>Frontend & UI/UX</strong></td><td><code>ui-ux-pro-max</code>, <code>react-best-practices</code>, <code>artifacts-builder</code>, <code>mobile-design</code>, <code>ux-researcher-designer</code></td></tr><tr><td><strong>Operations & Infrastructure</strong></td><td><code>observability</code>, <code>deployment</code>, <code>performance-optimization</code></td></tr><tr><td><strong>Git & Release Management</strong></td><td><code>git-workflow</code>, <code>release</code></td></tr><tr><td><strong>Tools & Extension Authoring</strong></td><td><code>mcp-builder</code>, <code>skill-creator</code>, <code>skill-discovery</code>, <code>writing-skills</code></td></tr><tr><td><strong>Content & Document Processing</strong></td><td><code>content-creator</code>, <code>content-research-writer</code>, <code>email-composer</code>, <code>seo-optimizer</code>, <code>docx-processing</code>, <code>pdf-processing</code>, <code>xlsx-processing</code>, <code>brainstorming</code></td></tr></table></div>
+<h2 id="3-catlogo-das-60-skills-por-categoria">3. Catálogo das 60 Skills por Categoria</h2>
+<div class="table-wrapper"><table><tr><th>Categoria</th><th>Skills</th></tr><tr><td><strong>Architecture & Modeling</strong></td><td><code>adr-architecture-elevation</code>, <code>architecture-review</code>, <code>database-architecture</code>, <code>ddd</code></td></tr><tr><td><strong>Documentation & Decision Records</strong></td><td><code>adr-generator</code>, <code>adr-archive</code>, <code>technical-documentation</code>, <code>changelog-generator</code></td></tr><tr><td><strong>Governance & Repository</strong></td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-management</code>, <code>skill-audit-bulletin</code></td></tr><tr><td><strong>Planning & Execution</strong></td><td><code>agent-planning-execution</code>, <code>product-spec-engineering</code>, <code>implementation</code></td></tr><tr><td><strong>Code Quality & Refactoring</strong></td><td><code>clean-code</code>, <code>refactoring</code>, <code>code-review</code>, <code>code-review-lite</code>, <code>code-review-workflow</code></td></tr><tr><td><strong>Testing & Verification</strong></td><td><code>testing-mastery</code>, <code>test-driven-development</code>, <code>verification-before-completion</code>, <code>systematic-debugging</code></td></tr><tr><td><strong>Security & Auditing</strong></td><td><code>security-review</code>, <code>circuit-breaker</code>, <code>resilient-execution</code></td></tr><tr><td><strong>AI, Prompting & Evaluation</strong></td><td><code>prompt-engineering</code>, <code>llm-as-judge</code>, <code>agent-development</code>, <code>context7-mcp</code></td></tr><tr><td><strong>Multi-Agent & Orchestration</strong></td><td><code>agent-orchestration</code>, <code>subagent-driven-development</code>, <code>dispatching-parallel-agents</code>, <code>cap</code></td></tr><tr><td><strong>API & Backend Frameworks</strong></td><td><code>api-design</code>, <code>php-laravel-ecosystem</code></td></tr><tr><td><strong>Frontend & UI/UX</strong></td><td><code>ui-ux-pro-max</code>, <code>react-best-practices</code>, <code>artifacts-builder</code>, <code>mobile-design</code>, <code>ux-researcher-designer</code></td></tr><tr><td><strong>Operations & Infrastructure</strong></td><td><code>observability</code>, <code>deployment</code>, <code>performance-optimization</code></td></tr><tr><td><strong>Git & Release Management</strong></td><td><code>git-workflow</code>, <code>release</code></td></tr><tr><td><strong>Tools & Extension Authoring</strong></td><td><code>mcp-builder</code>, <code>skill-creator</code>, <code>skill-discovery</code>, <code>writing-skills</code></td></tr><tr><td><strong>Content & Document Processing</strong></td><td><code>content-creator</code>, <code>content-research-writer</code>, <code>email-composer</code>, <code>seo-optimizer</code>, <code>docx-processing</code>, <code>pdf-processing</code>, <code>xlsx-processing</code>, <code>brainstorming</code></td></tr></table></div>
 <hr>
 <h2 id="4-como-usar">4. Como Usar</h2>
 <h3 id="a-no-kilo-code-vs-code">A. No Kilo Code (VS Code)</h3>

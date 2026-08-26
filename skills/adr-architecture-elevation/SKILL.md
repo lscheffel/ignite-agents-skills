@@ -1,22 +1,82 @@
 ---
 name: adr-architecture-elevation
-description: This skill implements an independent Architecture Adversarial Review + Design Space Exploration + Decision Set Amplification process. It acts as a second, independent architectural intelligence that reconstructs the problem from first principles, challenges the existing ADR Decision Set (ADR/BP/PI/TODO), explores alternative architectures, performs comparative evaluation, amplifies the winning solution with robustness/completeness/operational improvements, and produces a hardened, re-audited Decision Set. Use when an agent has produced an ADR Decision Set and you need to determine if it is locally optimal within the reasonable solution space — not merely "correct" but genuinely the best reasonable approach. Triggers: "audit this ADR", "challenge this architecture", "elevate this decision set", "architecture review", "adversarial review", "design space exploration", "decision set amplification", "SOTA architecture review".
+version: 1.0.0
+description: Independent Architecture Adversarial Review, Design Space Exploration and Decision Set Amplification. Reconstructs problems from first principles, challenges ADR Decision Sets (ADR/BP/PI/TODO), explores architectural alternatives, conducts comparative matrix evaluation, amplifies winning solutions and produces hardened, certified Decision Sets.
+domain: domain-stack
+triggers:
+  - adr-architecture-elevation
+  - audit this ADR
+  - challenge this architecture
+  - elevate this decision set
+  - architecture review
+  - adversarial review
+  - design space exploration
+  - decision set amplification
+  - SOTA architecture review
+tags:
+  - architecture
+  - adr
+  - adversarial-review
+  - design-space
+  - decision-set
+  - amplification
+  - governance
+  - sota
+related_skills:
+  - adr-generator
+  - adr-archive
+  - architecture-review
+  - systematic-debugging
+  - implementation
+  - governance
+metadata:
+  author: Antigravity Architecture / SOTA
+  provenance: internal
+  last_audited: "2026-08-26"
 ---
 
-# ADR Architecture Elevation — Independent Architecture Challenger
+# ADR Architecture Elevation — Independent Architecture Challenger (SOTA Edition)
 
 ## Purpose
 
 Transform an ADR Decision Set from "functional" to "industrial-grade" through an 8-phase independent architecture challenge process. This skill does not merely validate — it reconstructs, challenges, explores alternatives, compares, amplifies, reconciles, and re-audits to certify the solution is the best reasonable approach given constraints.
 
-## Trigger Conditions
+---
 
-Invoke this skill when:
+## When to Use
+
+### Use when:
 - An agent has produced an ADR Decision Set (ADR + Blueprint + Plan + TODO) and you need independent architectural challenge
 - The stakes are high enough to justify a second architectural intelligence (production systems, core infrastructure, irreversible decisions)
 - You suspect the solution may be locally correct but globally suboptimal
 - You need to prove whether a materially better alternative exists before committing to implementation
 - You want to elevate a "working" architecture to "SOTA execution-grade" through systematic amplification
+
+### Do not use when:
+- Creating initial ADR scaffolding from scratch (use `adr-generator`)
+- Simple code style or linting checks (use `clean-code` or `code-review-lite`)
+- Archiving already completed and executed ADRs (use `adr-archive`)
+
+---
+
+## Decision Tree
+
+```mermaid
+graph TD
+    A[ADR Decision Set Submitted] --> B[Phase 1: Independent Problem Model]
+    B --> C[Phase 2: Existing Decision Set Audit]
+    C --> D[Phase 3: Architecture Challenge & Alternatives]
+    D --> E[Phase 4: Comparative Architecture Evaluation Matrix]
+    E --> F{Phase 6: Decision}
+    F -->|KEEP| G[Certify Original Solution]
+    F -->|KEEP + AMPLIFY| H[Phase 5: Amplification Register]
+    F -->|MODIFY| H
+    F -->|REPLACE| H
+    H --> I[Phase 7: Hardened Decision Set]
+    I --> J[Phase 8: Re-Audit & Certification Gate]
+```
+
+---
 
 ## The 8-Phase Pipeline
 
@@ -24,7 +84,7 @@ Invoke this skill when:
 
 **Mandatory first step.** Do not read the existing ADR as truth. Extract and build your own problem representation:
 
-```
+```text
 Problem Statement
 Goals (primary, secondary, tertiary)
 Constraints (hard, soft, regulatory, budget, timeline)
@@ -45,7 +105,7 @@ Output: `Phase1_Independent_Problem_Model.md`
 
 Compare the existing Decision Set against your independent problem model:
 
-```
+```text
 For each artifact (ADR, BP, PI, TODO):
   - Correctness: Does it solve the stated problem?
   - Completeness: Are all problem dimensions addressed?
@@ -81,14 +141,14 @@ Assume the existing architecture may be locally correct but globally suboptimal.
 
 **Constraint**: Alternatives must earn their complexity. Use the Comparative Evaluation Matrix (Phase 4).
 
-Output: `Phase3_Architecture_Challenge.md` documenting each alternative with rationale
+Output: `Phase3_Architecture_Challenge.md` documenting each alternative with rationale.
 
 ### Phase 4 — Comparative Architecture Evaluation
 
 Evaluate Original (A) vs Alternatives (B, C...) against the matrix:
 
 | Criterion | Current (A) | Alt B | Alt C | Winner |
-|-----------|-------------|-------|-------|--------|
+|---|:---:|:---:|:---:|:---:|
 | Correctness | | | | |
 | Complexity (code/ops) | | | | |
 | Robustness | | | | |
@@ -103,7 +163,7 @@ Evaluate Original (A) vs Alternatives (B, C...) against the matrix:
 
 **Rule**: Do not recommend an alternative merely because it is different. The alternative must demonstrate material gain on multiple criteria without unjustified complexity.
 
-Output: `Phase4_Comparative_Evaluation.md` with scored matrix and recommendation
+Output: `Phase4_Comparative_Evaluation.md` with scored matrix and recommendation.
 
 ### Phase 5 — Amplification Register
 
@@ -111,37 +171,24 @@ Amplification ≠ Expansion. Amplification means increasing architectural qualit
 
 Seek five amplification types:
 
-**1. Completeness Amplification**
-- Add necessary requirements not explicitly stated
-- Close gaps between problem model and solution
+1. **Completeness Amplification**: Add necessary requirements not explicitly stated; close gaps between problem model and solution.
+2. **Robustness Amplification**: Add protection against failures, concurrency, corruption, intermediate states, retries, restarts, stampedes, cascading failures.
+3. **Capability Amplification**: Discover capabilities that significantly improve outcome without altering core.
+4. **Architectural Amplification**: Improve boundaries, abstractions, contracts, decoupling, extensibility.
+5. **Operational Amplification**: Add observability, diagnostics, rollout/rollback, metrics, health checks, recovery procedures.
+6. **Opportunity Discovery**: Classify collateral capabilities as NOW / LATER / DO NOT DO.
 
-**2. Robustness Amplification**
-- Add protection against: failures, concurrency, corruption, intermediate states, retries, restarts, stampede, cascading failures
-
-**3. Capability Amplification**
-- Discover capabilities that significantly improve outcome without altering core
-
-**4. Architectural Amplification**
-- Improve boundaries, abstractions, contracts, decoupling, extensibility
-
-**5. Operational Amplification**
-- Add observability, diagnostics, rollout/rollback, metrics, health checks, recovery procedures
-
-**6. Opportunity Discovery** (bonus)
-- What does this architecture build that could solve other problems?
-- Classify: NOW / LATER / DO NOT DO
-
-Output: `Phase5_Amplification_Register.md` with specific, actionable amplifications
+Output: `Phase5_Amplification_Register.md` with specific, actionable amplifications.
 
 ### Phase 6 — Decision
 
 One of:
-- **KEEP** — No material improvement demonstrated
-- **KEEP + AMPLIFY** — Original stands, apply amplifications
-- **MODIFY** — Original architecture, significant changes from amplification
-- **REPLACE** — Alternative architecture demonstrably superior
+- **KEEP** — No material improvement demonstrated.
+- **KEEP + AMPLIFY** — Original stands, apply amplifications.
+- **MODIFY** — Original architecture, significant changes from amplification.
+- **REPLACE** — Alternative architecture demonstrably superior.
 
-Output: `Phase6_Decision.md` with justification
+Output: `Phase6_Decision.md` with justification.
 
 ### Phase 7 — Hardened Decision Set
 
@@ -159,13 +206,39 @@ Audit your own hardened decision set against the independent problem model (Phas
 - Complexity remains justified
 - Traceability maintained end-to-end
 
-Output: `Phase8_Reaudit_Report.md` — Certification or required fixes
+Output: `Phase8_Reaudit_Report.md` — Certification or required fixes.
+
+---
+
+## Anti-Patterns & Pitfalls
+
+| Severity | Anti-Pattern | Description & Remediation |
+|---|---|---|
+| 🔴 **CRITICAL** | **Rubber-Stamping / Confirmation Bias** | Accepting the input ADR's assumptions without independent first-principles problem reconstruction. **Remedy**: Always complete Phase 1 before deep analysis. |
+| 🔴 **CRITICAL** | **Scope Creep as Amplification** | Adding heavy infrastructure, microservices, or unwanted third-party dependencies disguised as "improvements". **Remedy**: Enforce that every amplification must earn its complexity in Phase 4. |
+| 🟡 **ALARM** | **Novelty Bias** | Recommending an alternative simply because it uses newer or more fashionable technology without measurable trade-off gains. |
+| 🟢 **GENTLE** | **Dismissing KEEP Outcomes** | Believing an evaluation is only valuable if it proposes massive rewrites. Certifying a truly sound architecture with minor hardening is an optimal result. |
+
+---
+
+## Checklists & Verification Gates
+
+### Pre-Challenge Checklist
+- [ ] ADR Decision Set (ADR, BP, PI, TODO) present and accessible
+- [ ] Problem domain, constraints, and runtime environment identified
+- [ ] Independent Problem Model (Phase 1) completed without reading ADR implementation details
+
+### Post-Challenge Quality Gate
+- [ ] At least 2 architectural alternatives rigorously compared in Phase 4 matrix
+- [ ] Amplifications mapped to specific robustness, operational, or architectural gaps
+- [ ] Final Decision Set (`ADR-HARDENED`, `BP-HARDENED`, `PI-HARDENED`, `TODO-HARDENED`) internally consistent
+- [ ] Phase 8 Re-audit certified with zero CRITICAL findings
+
+---
 
 ## Output Structure
 
-The skill produces a complete audit package:
-
-```
+```text
 architecture-elevation-report/
 ├── Phase1_Independent_Problem_Model.md
 ├── Phase2_Audit_Report.md
@@ -182,63 +255,14 @@ architecture-elevation-report/
 └── EXECUTIVE_SUMMARY.md
 ```
 
-## Execution Protocol
+---
 
-### Input Requirements
+## Reference Files & Scripts
 
-The skill expects as input:
-1. The ADR Decision Set directory containing: `ADR.md`, `BP.md`, `PI.md`, `TODO.md`
-2. Any supporting context (requirements docs, constraints, existing architecture docs)
-
-### Agent Behavior Rules
-
-1. **Never assume the input ADR is correct** — Treat it as a hypothesis to test
-2. **Reconstruct independently first** — Phase 1 must complete before reading the ADR in detail
-3. **Challenge aggressively, recommend conservatively** — Explore broadly, only adopt what earns its place
-4. **Amplification is not expansion** — Do not add features, abstractions, or infrastructure merely because they could theoretically help
-5. **Document the negative space** — Record alternatives considered and rejected with reasoning
-6. **KEEP is a valid, honorable outcome** — If the original is genuinely optimal, certify it
-
-### Quality Gates
-
-Each phase must pass its quality gate before proceeding:
-
-- **Phase 1 Gate**: Problem model covers all 11 dimensions with specificity
-- **Phase 2 Gate**: Every finding mapped to problem model dimension
-- **Phase 3 Gate**: At least 2 alternatives explored with architectural rationale
-- **Phase 4 Gate**: Matrix complete with evidence-based scoring
-- **Phase 5 Gate**: Each amplification traced to a specific gap or opportunity
-- **Phase 6 Gate**: Decision justified by comparative evidence
-- **Phase 7 Gate**: All artifacts internally consistent and traceable
-- **Phase 8 Gate**: Re-audit passes with zero CRITICAL findings
-
-## Reference Files
-
-This skill includes supporting references in `references/`:
-
-- `evaluation-criteria.md` — Detailed rubrics for the Comparative Evaluation Matrix
-- `amplification-patterns.md` — Catalog of common amplification patterns by type
-- `anti-patterns.md` — Common architectural anti-patterns to detect during challenge
-- `output-templates.md` — Templates for each phase output document
-
-## Scripts
-
-- `scripts/run_elevation.py` — Orchestrates the 8-phase pipeline, manages state, produces final package
-- `scripts/comparative_matrix.py` — Helper for Phase 4 matrix scoring and visualization
-- `scripts/reconstruct_problem.py` — Guided problem reconstruction questionnaire
-
-## Usage Example
-
-```
-User: "Audit and elevate this ADR Decision Set for the translation pipeline"
-Agent: [Loads skill, reads input ADR/BP/PI/TODO, executes 8-phase pipeline]
-Output: Complete architecture-elevation-report/ with hardened decision set
-```
-
-## Integration Notes
-
-- This skill is designed for use by a second, independent agent instance (the "challenger")
-- The challenger should have no prior context on the problem — fresh reconstruction is essential
-- Works with any ADR format that follows the standard structure (Context, Decision, Consequences, Status)
-- Compatible with the `adr-generator`, `adr-archive`, and `implementation` skills
-- Output feeds directly into `implementation` skill for execution-grade delivery
+- [`references/evaluation-criteria.md`](./references/evaluation-criteria.md) — Detailed rubrics for the Comparative Evaluation Matrix
+- [`references/amplification-patterns.md`](./references/amplification-patterns.md) — Catalog of common amplification patterns by type
+- [`references/anti-patterns.md`](./references/anti-patterns.md) — Common architectural anti-patterns to detect during challenge
+- [`references/output-templates.md`](./references/output-templates.md) — Templates for each phase output document
+- [`scripts/run_elevation.py`](./scripts/run_elevation.py) — Orchestrates the 8-phase pipeline and produces final package
+- [`scripts/comparative_matrix.py`](./scripts/comparative_matrix.py) — Helper for Phase 4 matrix scoring and visualization
+- [`scripts/reconstruct_problem.py`](./scripts/reconstruct_problem.py) — Guided problem reconstruction questionnaire

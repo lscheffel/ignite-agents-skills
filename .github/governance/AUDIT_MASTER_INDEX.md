@@ -1,16 +1,16 @@
 # SOTA Expanded Audit Master Index
 
-Este índice consolida o veredito formal de auditoria técnica para 100% dos ativos acionáveis (81 ativos) do ecossistema.
+Este índice consolida o veredito formal de auditoria técnica para 100% dos ativos acionáveis (82 ativos) do ecossistema.
 
 ---
 
 ## 1. Sumário Executivo de Conformidade
 
-* **Data de Execução:** 2026-08-26 21:24:19 UTC
-* **Total de Ativos Auditados:** 81 (100.00% de cobertura, 0.00% omissão)
+* **Data de Execução:** 2026-08-26 22:52:53 UTC
+* **Total de Ativos Auditados:** 82 (100.00% de cobertura, 0.00% omissão)
 * **Score Global Médio do Ecossistema:** **91.0 / 100**
 * **Distribuição de Status:**
-  - 🟢 **Aprovada:** 81 (100.0%)
+  - 🟢 **Aprovada:** 82 (100.0%)
   - 🟡 **Aviso:** 0 (0.0%)
   - 🔴 **Crítica:** 0 (0.0%)
 
@@ -20,6 +20,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 
 | Ativo ID | Categoria | Hash SHA-256 (Prefix) | Score Global | Status | Risco STRIDE | RICE Score |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
+| `adr-architecture-elevation` | config_skill | `aaab888975d8...` | **87.7** | APROVADA | Baixo | `5.7` |
 | `adr-archive` | config_skill | `fc0f3656dc7f...` | **87.7** | APROVADA | Baixo | `5.7` |
 | `adr-generator` | config_skill | `58d1275caa46...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `agent-development` | config_skill | `e5eb33376b83...` | **92.6** | APROVADA | Baixo | `5.7` |

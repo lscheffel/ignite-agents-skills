@@ -9,11 +9,27 @@ set -e
 WORKSPACE_DIR="$(git rev-parse --show-toplevel)"
 cd "$WORKSPACE_DIR"
 
-AUDIT_SCRIPT=".github/scripts/audit_engine.py"
+# Resolução dinâmica dos scripts de auditoria e RAG
+if [ -f "scripts/audit_engine.py" ]; then
+    AUDIT_SCRIPT="scripts/audit_engine.py"
+elif [ -f ".github/scripts/audit_engine.py" ]; then
+    AUDIT_SCRIPT=".github/scripts/audit_engine.py"
+else
+    AUDIT_SCRIPT=""
+fi
+
+if [ -f "scripts/skills_rag_indexer.py" ]; then
+    RAG_INDEXER="scripts/skills_rag_indexer.py"
+elif [ -f ".github/scripts/skills_rag_indexer.py" ]; then
+    RAG_INDEXER=".github/scripts/skills_rag_indexer.py"
+else
+    RAG_INDEXER=""
+fi
+
 GOVERNANCE_INDEX=".github/governance/AUDIT_MASTER_INDEX.md"
 
 # Se o repositório atual não contiver o script de auditoria de skills, prossegue normalmente
-if [ ! -f "$AUDIT_SCRIPT" ]; then
+if [ -z "$AUDIT_SCRIPT" ]; then
     exit 0
 fi
 
@@ -43,7 +59,7 @@ if b'\r\n' in c:
 fi
 
 # 2. Executar validação forense e integridade
-echo "[*] Executing Forensic Audit Engine..."
+echo "[*] Executing Forensic Audit Engine ($AUDIT_SCRIPT)..."
 python3 "$AUDIT_SCRIPT" > /tmp/precommit_audit.log 2>&1 || {
     echo "❌ [FAIL] Audit Engine encountered an error:"
     cat /tmp/precommit_audit.log
@@ -75,11 +91,10 @@ else
 fi
 
 # 4. Gatilho Inteligente: Sincronização automática do RAG se houver alteração em skills
-RAG_INDEXER=".github/scripts/skills_rag_indexer.py"
-SKILL_CHANGES=$(git diff --cached --name-only | grep -E '^([^/]+/(SKILL\.md|.*\.py|.*\.json|.*\.md)|plugins/)' | grep -vE '^(README|CHANGELOG|USAGE|RELEASE-NOTES|STATE|AGENTS|GEMINI|docs/|\.github/|\.githooks/)' || true)
+SKILL_CHANGES=$(git diff --cached --name-only | grep -E '^([^/]+/(SKILL\.md|.*\.py|.*\.json|.*\.md)|plugins/|skills/)' | grep -vE '^(README|CHANGELOG|USAGE|RELEASE-NOTES|STATE|AGENTS|GEMINI|docs/|\.github/|\.githooks/)' || true)
 
-if [ -n "$SKILL_CHANGES" ] && [ -f "$RAG_INDEXER" ]; then
-    echo "[*] Alterações em skills detectadas. Sincronizando banco RAG dedicado..."
+if [ -n "$SKILL_CHANGES" ] && [ -n "$RAG_INDEXER" ]; then
+    echo "[*] Alterações em skills detectadas. Sincronizando banco RAG dedicado ($RAG_INDEXER)..."
     python3 "$RAG_INDEXER" > /tmp/precommit_rag.log 2>&1 || {
         echo "⚠️  [WARN] RAG Indexer avisou:"
         cat /tmp/precommit_rag.log

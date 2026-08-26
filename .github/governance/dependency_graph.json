@@ -1,10 +1,15 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-26T21:24:03.278852+00:00",
-    "total_nodes": 81
+    "generated_at": "2026-08-26T22:52:46.205018+00:00",
+    "total_nodes": 82
   },
   "nodes": [
+    {
+      "id": "adr-architecture-elevation",
+      "name": "adr-architecture-elevation",
+      "category": "config_skill"
+    },
     {
       "id": "adr-archive",
       "name": "adr-archive",
@@ -412,6 +417,71 @@
     }
   ],
   "edges": [
+    {
+      "source": "adr-architecture-elevation",
+      "target": "adr-archive",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "architecture-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "clean-code",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "code-review-lite",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
+      "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
     {
       "source": "adr-archive",
       "target": "adr-generator",

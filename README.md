@@ -3,8 +3,8 @@
 > Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode e governança contínua para agentes autônomos.
 
 [![Version](https://img.shields.io/badge/version-v2.5.0-blue.svg)](./CHANGELOG.md)
-[![Skills](https://img.shields.io/badge/skills-59%20SOTA-success.svg)](./skills/index.json)
-[![Assets](https://img.shields.io/badge/assets-81%20active-success.svg)](./.github/governance/AUDIT_MASTER_INDEX.md)
+[![Skills](https://img.shields.io/badge/skills-60%20SOTA-success.svg)](./skills/index.json)
+[![Assets](https://img.shields.io/badge/assets-82%20active-success.svg)](./.github/governance/AUDIT_MASTER_INDEX.md)
 [![Audit Score](https://img.shields.io/badge/audit%20score-91.10%2F100-brightgreen.svg)](./.github/governance/COMPLIANCE_SCORECARD.csv)
 [![Governance CI](https://img.shields.io/badge/governance-CI%20Passing-success.svg)](./.github/workflows/validate-skills.yml)
 [![Architecture](https://img.shields.io/badge/architecture-ADR--001%20a%20ADR--026-purple.svg)](./docs/adr/INDEX.md)
@@ -17,7 +17,7 @@ O **ignite-agents-skills** é uma plataforma 3-em-1 para agentes de inteligênci
 
 1. **Registry Remoto de Skills:** Manifesto canônico `skills/index.json` compatível com o padrão [Agent Skills](https://agentskills.io) para **Kilo Code**, **OpenCode** e clientes HTTP.
 2. **Motor Semântico & Servidor MCP:** Servidor MCP stdio nativo (`skills-rag-mcp`), RAG vetorial com busca híbrida BM25/embeddings, e CLI Router para descoberta inteligente de especializações.
-3. **Hub de Documentação GitHub Pages:** Geração dinâmica de páginas HTML para todas as 59 skills e histórico completo de ADRs.
+3. **Hub de Documentação GitHub Pages:** Geração dinâmica de páginas HTML para todas as 60 skills e histórico completo de ADRs.
 
 ```mermaid
 graph TD
@@ -29,19 +29,8 @@ graph TD
     subgraph "Camada de Descoberta & RAG Vetorial (ADR-021 a ADR-025)"
         B --> F[Banco Vetorial: data/skills_rag_db/skills_rag.sqlite3]
         C --> F
-        F --> G[FTS5 BM25 + Embeddings + Reranking]
-    end
-
-    subgraph "Catálogo Canônico de Especializações"
-        D --> H[59 Skills SOTA em skills/*/]
-        F --> H
-    end
-
-    subgraph "Governança, Build & CI/CD"
-        I[scripts/audit_engine.py] --> J[.github/governance/]
-        K[scripts/sync-index.sh] --> D
-        L[pages/build.py] --> E
-        M[scripts/validate-skill.sh] --> N[validate-skills.yml]
+        D --> G[skills/index.json]
+        E --> H[pages/index.html & pages/skills/]
     end
 ```
 
@@ -53,14 +42,18 @@ graph TD
 .
 ├── LICENSE
 ├── README.md                           # Documentação principal
-├── USAGE.md                            # Guia completo de uso de todas as 59 skills
-├── CHANGELOG.md                        # Histórico de versões do ecossistema
-├── AGENTS.md                           # Guia canônico SSOT para agentes de IA
+├── USAGE.md                            # Guia completo de uso das skills
+├── CHANGELOG.md                        # Histórico de versões
+├── RELEASE-NOTES.md                    # Notas oficiais de release e destaques arquiteturais
+├── STATE.md                            # Memória persistente e estado do repositório para agentes
+├── AGENTS.md                           # SSOT de governança para agentes de IA
+├── GEMINI.md                           # Stub de runtime ultraleve para Gemini CLI
 ├── skills/
-│   ├── index.json                      # Registry centralizado de 59 skills
-│   ├── adr-archive/
-│   ├── adr-generator/
-│   ├── ... (59 skills SOTA)
+│   ├── index.json                      # Registry centralizado (fonte única para Kilo/OpenCode)
+│   ├── adr-architecture-elevation/     # Desafio adversarial e ampliação de ADRs
+│   ├── adr-archive/                    # Arquivamento e governança de ADRs
+│   ├── adr-generator/                  # Gerador de ADRs e Decision Sets
+│   ├── ... (60 skills SOTA)
 │   └── xlsx-processing/
 ├── scripts/                            # Toolbox e Motores Unificados
 │   ├── sync-index.sh                   # Auto-gera skills/index.json
@@ -71,7 +64,7 @@ graph TD
 │   ├── skills_rag_indexer.py           # Motor de Indexação Vetorial / FTS5
 │   ├── skills_router.py                # CLI Router para busca semântica
 │   ├── audit_engine.py                 # Motor de Auditoria Forense SOTA (8 Dimensões)
-│   ├── translate_catalog_nim.py        # Tradutor de catálogo
+│   ├── translate_catalog_nim.py        # Tradutor de catálogo via NVIDIA NIM
 │   └── tests/                          # Suíte de testes automatizados (42 testes)
 ├── pages/                              # Motor de Documentação Web
 │   ├── build.py                        # Gerador de HTML estático
@@ -84,11 +77,11 @@ graph TD
 
 ---
 
-## 3. Catálogo das 59 Skills por Categoria
+## 3. Catálogo das 60 Skills por Categoria
 
 | Categoria | Skills |
 |:---|:---|
-| **Architecture & Modeling** | `architecture-review`, `database-architecture`, `ddd` |
+| **Architecture & Modeling** | `adr-architecture-elevation`, `architecture-review`, `database-architecture`, `ddd` |
 | **Documentation & Decision Records** | `adr-generator`, `adr-archive`, `technical-documentation`, `changelog-generator` |
 | **Governance & Repository** | `governance`, `repo-bootstrap`, `agents-md-management`, `skill-audit-bulletin` |
 | **Planning & Execution** | `agent-planning-execution`, `product-spec-engineering`, `implementation` |

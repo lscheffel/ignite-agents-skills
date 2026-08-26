@@ -2,6 +2,7 @@
 
 | Prioridade | Skill ID | Problema Central | Vetor | RICE Score | Complexidade |
 | :---: | :--- | :--- | :---: | :---: | :---: |
+| **P1** | `adr-architecture-elevation` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `adr-archive` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `agent-planning-execution` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `brainstorming` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |

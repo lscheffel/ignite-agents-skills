@@ -7,13 +7,14 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 ## [2.5.0] - 2026-08-26
 
 ### Added
-- **Unificação Integral do Ecossistema SOTA (59 Skills):**
-  - Substituição de todas as 24 skills legadas pelas **59 skills SOTA** em `skills/` (arquitetura modular com `references/`, `templates/`, `examples/` e `scripts/`).
+- **Unificação Integral do Ecossistema SOTA (60 Skills):**
+  - Substituição do catálogo legado pelas **60 skills SOTA** em `skills/` (incluindo a nova skill `adr-architecture-elevation` para desafio adversarial e ampliação de ADRs).
+  - Arquitetura modular preservada (`references/`, `templates/`, `examples/` e `scripts/`).
   - Suporte total a padrões bilíngues (PT/EN) em `scripts/validate-skill.sh` com 100% de aprovação.
 - **Servidor MCP Stdio Dedicado (`skills-rag-mcp`):**
   - Novo servidor em `scripts/skills_mcp_server.py` implementando JSON-RPC 2.0 com 7 ferramentas analíticas: `search_skills`, `route_task`, `get_skill_details`, `list_skills_catalog`, `bootstrap_agent_instructions`, `get_rag_telemetry` e `inspect_rag_index`.
 - **Motor RAG Semântico e Neural Hierárquico (ADR-021 a ADR-025):**
-  - Indexador vetorial `scripts/skills_rag_indexer.py` vetorizando 3.941 chunks em `data/skills_rag_db/skills_rag.sqlite3`.
+  - Indexador vetorial `scripts/skills_rag_indexer.py` vetorizando 4.161 chunks em `data/skills_rag_db/skills_rag.sqlite3`.
   - Busca híbrida FTS5 BM25 + Embeddings com fallback 512/2048-dim e cache SHA-256 de reranking (0ms).
 - **CLI Router:**
   - Utilitário `scripts/skills_router.py` para busca semântica via terminal e exportação JSON/XML snippet.

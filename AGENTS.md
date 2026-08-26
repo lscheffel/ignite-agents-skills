@@ -2,7 +2,7 @@
 
 ## 1. Visão Geral
 
-Registro centralizado de **59 skills SOTA** para agentes de IA compatíveis com o padrão [Agent Skills](https://agentskills.io). Hospedado como GitHub Pages, este repositório serve como registry remoto para múltiplos projetos que usam **Kilo Code**, **OpenCode**, **Gemini CLI**, **Antigravity** e outros agentes compatíveis.
+Registro centralizado de **60 skills SOTA** para agentes de IA compatíveis com o padrão [Agent Skills](https://agentskills.io). Hospedado como GitHub Pages, este repositório serve como registry remoto para múltiplos projetos que usam **Kilo Code**, **OpenCode**, **Gemini CLI**, **Antigravity** e outros agentes compatíveis.
 
 Além do registry remoto (`skills/index.json`), o repositório integra nativamente um **Servidor MCP Stdio (`skills-rag-mcp`)**, **Motor RAG Vetorial Semântico (SQLite3 + FTS5 + BM25 + Embeddings)**, **CLI Router**, **Motor de Auditoria Forense em 8 Dimensões SOTA** e **Gerador de Páginas Estáticas HTML** para deploy no GitHub Pages.
 
@@ -19,9 +19,10 @@ Além do registry remoto (`skills/index.json`), o repositório integra nativamen
 ├── AGENTS.md                           # Este arquivo (SSOT de governança para agentes)
 ├── skills/
 │   ├── index.json                      # Registry centralizado (fonte única para Kilo/OpenCode)
+│   ├── adr-architecture-elevation/     # Desafio adversarial e ampliação de ADRs
 │   ├── adr-archive/
 │   ├── adr-generator/
-│   ├── ... (59 skills SOTA)
+│   ├── ... (60 skills SOTA)
 │   └── xlsx-processing/
 ├── scripts/                            # Toolbox e Motores Unificados
 │   ├── sync-index.sh                   # Auto-gera skills/index.json

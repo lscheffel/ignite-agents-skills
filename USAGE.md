@@ -103,9 +103,10 @@ python3 scripts/skills_router.py --interactive
 
 ---
 
-## 4. Guia Rápido das 59 Skills SOTA
+## 4. Guia Rápido das 60 Skills SOTA
 
 ### 🏗️ Architecture & Modeling
+- `adr-architecture-elevation`: Desafio adversarial independente de ADRs, exploração do espaço de design, matriz de avaliação comparativa e amplificação do Decision Set.
 - `architecture-review`: Revisões arquiteturais, detecção de violações SOLID, Hexagonal, Clean Architecture e code smells estruturais.
 - `database-architecture`: Modelagem de dados, otimização de índices SQL/NoSQL, migrações e auditoria de consultas.
 - `ddd`: Padrões de Domain-Driven Design (Entities, Value Objects, Aggregates, Domain Services, Bounded Contexts).

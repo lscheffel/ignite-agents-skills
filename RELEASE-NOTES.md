@@ -8,13 +8,13 @@
 
 ### 🌟 Destaques da Versão (Highlights)
 
-- **Unificação Integral do Ecossistema SOTA (59 Skills):** Consolidação definitiva de 59 skills State of the Art com padrão modular (`references/`, `templates/`, `examples/`, `scripts/`), abrangendo Arquitetura, Modelagem de Dados, Governança, RAG, Engenharia de Prompts, Frontend, Operações e Auditoria Forense.
+- **Unificação Integral do Ecossistema SOTA (60 Skills):** Consolidação definitiva de 60 skills State of the Art com padrão modular (`references/`, `templates/`, `examples/`, `scripts/`), incluindo a nova skill `adr-architecture-elevation` (Desafio Adversarial Independente de ADRs e Ampliação de Decision Sets), abrangendo Arquitetura, Modelagem de Dados, Governança, RAG, Engenharia de Prompts, Frontend, Operações e Auditoria Forense.
 - **Servidor MCP Stdio Dedicado (`skills-rag-mcp`):** Implementação JSON-RPC 2.0 em [`scripts/skills_mcp_server.py`](./scripts/skills_mcp_server.py) expondo 7 ferramentas analíticas (`search_skills`, `route_task`, `get_skill_details`, `list_skills_catalog`, `bootstrap_agent_instructions`, `get_rag_telemetry`, `inspect_rag_index`).
-- **Motor RAG Semântico e Neural com Reranking (ADR-021 a ADR-025):** Indexador vetorial hierárquico em [`scripts/skills_rag_indexer.py`](./scripts/skills_rag_indexer.py) vetorizando 3.941 chunks com FTS5 BM25, embeddings 512/2048-dim, cache persistente SHA-256 e damping ponderado por tipo de ativo.
+- **Motor RAG Semântico e Neural com Reranking (ADR-021 a ADR-025):** Indexador vetorial hierárquico em [`scripts/skills_rag_indexer.py`](./scripts/skills_rag_indexer.py) vetorizando 4.161 chunks com FTS5 BM25, embeddings 512/2048-dim, cache persistente SHA-256 e damping ponderado por tipo de ativo.
 - **CLI Router para Descoberta no Terminal:** Ferramenta [`scripts/skills_router.py`](./scripts/skills_router.py) permitindo consultas em linguagem natural, filtros por categoria e exportação JSON/XML snippet.
-- **Motor de Auditoria Forense em 8 Dimensões SOTA:** Script [`scripts/audit_engine.py`](./scripts/audit_engine.py) auditando 100% dos 81 ativos com **Score Médio de 91.10 / 100** e geração determinística de manifestos e grafos de dependência em `.github/governance/`.
-- **Registry Remoto Canônico (`skills/index.json`):** Compatibilidade total com Kilo Code e OpenCode (`skills.urls`) via sincronizador determinístico [`scripts/sync-index.sh`](./scripts/sync-index.sh).
-- **Static Documentation Hub (GitHub Pages):** Compilador [`pages/build.py`](./pages/build.py) gerando páginas HTML estilizadas para todas as 59 skills e todo o histórico de ADRs (ADR-001 a ADR-026).
+- **Motor de Auditoria Forense em 8 Dimensões SOTA:** Script [`scripts/audit_engine.py`](./scripts/audit_engine.py) auditando 100% dos 82 ativos com **Score Médio de 91.10 / 100** e geração determinística de manifestos e grafos de dependência em `.github/governance/`.
+- **Registry Remoto Canônico (`skills/index.json`):** Compatibilidade total com Kilo Code e OpenCode (`skills.urls`) via sincronizador determinístico [`scripts/sync-index.sh`](./scripts/sync-index.sh) indexando 60 skills.
+- **Static Documentation Hub (GitHub Pages):** Compilador [`pages/build.py`](./pages/build.py) gerando páginas HTML estilizadas para todas as 60 skills e todo o histórico de ADRs (ADR-001 a ADR-026).
 - **Suíte de Testes Automatizados (42/42 Aprovados):** 7 suítes unitárias e de integração em [`scripts/tests/`](./scripts/tests/) com 100% de cobertura operacional.
 
 ---

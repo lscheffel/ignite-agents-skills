@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>adr-architecture-elevation — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; adr-architecture-elevation</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: adr-architecture-elevation version: 1.0.0 description: Independent Architecture Adversarial Review, Design Space Exploration and Decision Set Amplification. Reconstructs problems from first principles, challenges ADR Decision Sets (ADR/BP/PI/TODO), explores architectural alternatives, conducts comparative matrix evaluation, amplifies winning solutions and produces hardened, certified Decision Sets. domain: domain-stack triggers:</p>
+<ul>
+<li>adr-architecture-elevation</li>
+<li>audit this ADR</li>
+<li>challenge this architecture</li>
+<li>elevate this decision set</li>
+<li>architecture review</li>
+<li>adversarial review</li>
+<li>design space exploration</li>
+<li>decision set amplification</li>
+<li>SOTA architecture review</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>architecture</li>
+<li>adr</li>
+<li>adversarial-review</li>
+<li>design-space</li>
+<li>decision-set</li>
+<li>amplification</li>
+<li>governance</li>
+<li>sota</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>adr-generator</li>
+<li>adr-archive</li>
+<li>architecture-review</li>
+<li>systematic-debugging</li>
+<li>implementation</li>
+<li>governance</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / SOTA provenance: internal last_audited: "2026-08-26" ---</p>
+<h1 id="adr-architecture-elevation--independent-architecture-challenger-sota-edition">ADR Architecture Elevation — Independent Architecture Challenger (SOTA Edition)</h1>
+<h2 id="purpose">Purpose</h2>
+<p>Transform an ADR Decision Set from "functional" to "industrial-grade" through an 8-phase independent architecture challenge process. This skill does not merely validate — it reconstructs, challenges, explores alternatives, compares, amplifies, reconciles, and re-audits to certify the solution is the best reasonable approach given constraints.</p>
+<hr>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>An agent has produced an ADR Decision Set (ADR + Blueprint + Plan + TODO) and you need independent architectural challenge</li>
+<li>The stakes are high enough to justify a second architectural intelligence (production systems, core infrastructure, irreversible decisions)</li>
+<li>You suspect the solution may be locally correct but globally suboptimal</li>
+<li>You need to prove whether a materially better alternative exists before committing to implementation</li>
+<li>You want to elevate a "working" architecture to "SOTA execution-grade" through systematic amplification</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Creating initial ADR scaffolding from scratch (use <code>adr-generator</code>)</li>
+<li>Simple code style or linting checks (use <code>clean-code</code> or <code>code-review-lite</code>)</li>
+<li>Archiving already completed and executed ADRs (use <code>adr-archive</code>)</li>
+</ul>
+<hr>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[ADR Decision Set Submitted] --&gt; B[Phase 1: Independent Problem Model]
+    B --&gt; C[Phase 2: Existing Decision Set Audit]
+    C --&gt; D[Phase 3: Architecture Challenge &amp; Alternatives]
+    D --&gt; E[Phase 4: Comparative Architecture Evaluation Matrix]
+    E --&gt; F{Phase 6: Decision}
+    F --&gt;|KEEP| G[Certify Original Solution]
+    F --&gt;|KEEP + AMPLIFY| H[Phase 5: Amplification Register]
+    F --&gt;|MODIFY| H
+    F --&gt;|REPLACE| H
+    H --&gt; I[Phase 7: Hardened Decision Set]
+    I --&gt; J[Phase 8: Re-Audit &amp; Certification Gate]</code></pre>
+<hr>
+<h2 id="the-8-phase-pipeline">The 8-Phase Pipeline</h2>
+<h3 id="phase-1--independent-problem-model-reconstruction">Phase 1 — Independent Problem Model (Reconstruction)</h3>
+<p><strong>Mandatory first step.</strong> Do not read the existing ADR as truth. Extract and build your own problem representation:</p>
+<pre data-lang="text"><code>Problem Statement
+Goals (primary, secondary, tertiary)
+Constraints (hard, soft, regulatory, budget, timeline)
+Invariants (must always hold)
+Non-goals (explicitly out of scope)
+Actors (human, system, external)
+Inputs (data, events, triggers)
+Outputs (deliverables, side effects, state changes)
+State (persistent, ephemeral, distributed)
+Dependencies (upstream, downstream, lateral)
+Failure Conditions (what constitutes failure)
+Operational Requirements (SLOs, SLAs, observability, recovery)</code></pre>
+<p>Output: <code>Phase1_Independent_Problem_Model.md</code></p>
+<h3 id="phase-2--existing-decision-set-audit">Phase 2 — Existing Decision Set Audit</h3>
+<p>Compare the existing Decision Set against your independent problem model:</p>
+<pre data-lang="text"><code>For each artifact (ADR, BP, PI, TODO):
+  - Correctness: Does it solve the stated problem?
+  - Completeness: Are all problem dimensions addressed?
+  - Coherence: Do artifacts agree with each other?
+  - Implementability: Can this be built as specified?
+  - Robustness: Does it handle failure conditions?
+  - Traceability: Can every decision trace to a goal/constraint?</code></pre>
+<p>Output: <code>Phase2_Audit_Report.md</code> with findings categorized as CRITICAL / MAJOR / MINOR / OBSERVATION</p>
+<h3 id="phase-3--architecture-challenge-adversarial-review">Phase 3 — Architecture Challenge (Adversarial Review)</h3>
+<p>Assume the existing architecture may be locally correct but globally suboptimal. Actively search for:</p>
+<p><strong>A. Architectural Alternatives</strong> (at least 2, max 5):</p>
+<ul>
+<li>Does an approach exist that reduces complexity/coupling/cost?</li>
+<li>Does an approach exist that improves reliability/testability/extensibility?</li>
+<li>Does an approach exist that eliminates a dependency or failure surface?</li>
+<li>Is the current approach over-engineered for the actual problem?</li>
+</ul>
+<p><strong>B. Implementation Alternatives</strong> (same architecture, better execution):</p>
+<ul>
+<li>Substantially better patterns, libraries, or techniques?</li>
+</ul>
+<p><strong>C. Generalization Opportunities</strong>:</p>
+<ul>
+<li>Is the design excessively specific? Can it solve a broader class?</li>
+</ul>
+<p><strong>D. Simplification Opportunities</strong>:</p>
+<ul>
+<li>Can the problem be solved more simply without loss of capability?</li>
+</ul>
+<p><strong>E. Anticipation Opportunities</strong>:</p>
+<ul>
+<li>Predictable future needs that should inform current boundaries?</li>
+</ul>
+<p><strong>Constraint</strong>: Alternatives must earn their complexity. Use the Comparative Evaluation Matrix (Phase 4).</p>
+<p>Output: <code>Phase3_Architecture_Challenge.md</code> documenting each alternative with rationale.</p>
+<h3 id="phase-4--comparative-architecture-evaluation">Phase 4 — Comparative Architecture Evaluation</h3>
+<p>Evaluate Original (A) vs Alternatives (B, C...) against the matrix:</p>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Current (A)</th><th>Alt B</th><th>Alt C</th><th>Winner</th></tr><tr><td>Correctness</td><td></td><td></td><td></td><td></td></tr><tr><td>Complexity (code/ops)</td><td></td><td></td><td></td><td></td></tr><tr><td>Robustness</td><td></td><td></td><td></td><td></td></tr><tr><td>Testability</td><td></td><td></td><td></td><td></td></tr><tr><td>Operability</td><td></td><td></td><td></td><td></td></tr><tr><td>Performance</td><td></td><td></td><td></td><td></td></tr><tr><td>Security</td><td></td><td></td><td></td><td></td></tr><tr><td>Maintainability</td><td></td><td></td><td></td><td></td></tr><tr><td>Cost (build/run)</td><td></td><td></td><td></td><td></td></tr><tr><td>Reversibility</td><td></td><td></td><td></td><td></td></tr><tr><td>Operational Complexity</td><td></td><td></td><td></td><td></td></tr></table></div>
+<p><strong>Rule</strong>: Do not recommend an alternative merely because it is different. The alternative must demonstrate material gain on multiple criteria without unjustified complexity.</p>
+<p>Output: <code>Phase4_Comparative_Evaluation.md</code> with scored matrix and recommendation.</p>
+<h3 id="phase-5--amplification-register">Phase 5 — Amplification Register</h3>
+<p>Amplification ≠ Expansion. Amplification means increasing architectural quality, robustness, capability, or future leverage <strong>without unjustified complexity or scope expansion</strong>.</p>
+<p>Seek five amplification types:</p>
+<ol>
+<li><strong>Completeness Amplification</strong>: Add necessary requirements not explicitly stated; close gaps between problem model and solution.</li>
+<li><strong>Robustness Amplification</strong>: Add protection against failures, concurrency, corruption, intermediate states, retries, restarts, stampedes, cascading failures.</li>
+<li><strong>Capability Amplification</strong>: Discover capabilities that significantly improve outcome without altering core.</li>
+<li><strong>Architectural Amplification</strong>: Improve boundaries, abstractions, contracts, decoupling, extensibility.</li>
+<li><strong>Operational Amplification</strong>: Add observability, diagnostics, rollout/rollback, metrics, health checks, recovery procedures.</li>
+<li><strong>Opportunity Discovery</strong>: Classify collateral capabilities as NOW / LATER / DO NOT DO.</li>
+</ol>
+<p>Output: <code>Phase5_Amplification_Register.md</code> with specific, actionable amplifications.</p>
+<h3 id="phase-6--decision">Phase 6 — Decision</h3>
+<p>One of:</p>
+<ul>
+<li><strong>KEEP</strong> — No material improvement demonstrated.</li>
+<li><strong>KEEP + AMPLIFY</strong> — Original stands, apply amplifications.</li>
+<li><strong>MODIFY</strong> — Original architecture, significant changes from amplification.</li>
+<li><strong>REPLACE</strong> — Alternative architecture demonstrably superior.</li>
+</ul>
+<p>Output: <code>Phase6_Decision.md</code> with justification.</p>
+<h3 id="phase-7--hardened-decision-set">Phase 7 — Hardened Decision Set</h3>
+<p>Produce the final, amplified artifacts:</p>
+<ul>
+<li><code>ADR-HARDENED.md</code> — Updated ADR with all amplifications integrated</li>
+<li><code>BP-HARDENED.md</code> — Updated Blueprint with implementation-grade detail</li>
+<li><code>PI-HARDENED.md</code> — Updated Plan with amplification tasks</li>
+<li><code>TODO-HARDENED.md</code> — Updated TODO with execution-ready items</li>
+</ul>
+<h3 id="phase-8--re-audit">Phase 8 — Re-Audit</h3>
+<p>Audit your own hardened decision set against the independent problem model (Phase 1). Verify:</p>
+<ul>
+<li>All amplifications are integrated and consistent</li>
+<li>No new gaps introduced</li>
+<li>Complexity remains justified</li>
+<li>Traceability maintained end-to-end</li>
+</ul>
+<p>Output: <code>Phase8_Reaudit_Report.md</code> — Certification or required fixes.</p>
+<hr>
+<h2 id="anti-patterns--pitfalls">Anti-Patterns & Pitfalls</h2>
+<div class="table-wrapper"><table><tr><th>Severity</th><th>Anti-Pattern</th><th>Description & Remediation</th></tr><tr><td>🔴 <strong>CRITICAL</strong></td><td><strong>Rubber-Stamping / Confirmation Bias</strong></td><td>Accepting the input ADR's assumptions without independent first-principles problem reconstruction. <strong>Remedy</strong>: Always complete Phase 1 before deep analysis.</td></tr><tr><td>🔴 <strong>CRITICAL</strong></td><td><strong>Scope Creep as Amplification</strong></td><td>Adding heavy infrastructure, microservices, or unwanted third-party dependencies disguised as "improvements". <strong>Remedy</strong>: Enforce that every amplification must earn its complexity in Phase 4.</td></tr><tr><td>🟡 <strong>ALARM</strong></td><td><strong>Novelty Bias</strong></td><td>Recommending an alternative simply because it uses newer or more fashionable technology without measurable trade-off gains.</td></tr><tr><td>🟢 <strong>GENTLE</strong></td><td><strong>Dismissing KEEP Outcomes</strong></td><td>Believing an evaluation is only valuable if it proposes massive rewrites. Certifying a truly sound architecture with minor hardening is an optimal result.</td></tr></table></div>
+<hr>
+<h2 id="checklists--verification-gates">Checklists & Verification Gates</h2>
+<h3 id="pre-challenge-checklist">Pre-Challenge Checklist</h3>
+<ul>
+<li>[ ] ADR Decision Set (ADR, BP, PI, TODO) present and accessible</li>
+<li>[ ] Problem domain, constraints, and runtime environment identified</li>
+<li>[ ] Independent Problem Model (Phase 1) completed without reading ADR implementation details</li>
+</ul>
+<h3 id="post-challenge-quality-gate">Post-Challenge Quality Gate</h3>
+<ul>
+<li>[ ] At least 2 architectural alternatives rigorously compared in Phase 4 matrix</li>
+<li>[ ] Amplifications mapped to specific robustness, operational, or architectural gaps</li>
+<li>[ ] Final Decision Set (<code>ADR-HARDENED</code>, <code>BP-HARDENED</code>, <code>PI-HARDENED</code>, <code>TODO-HARDENED</code>) internally consistent</li>
+<li>[ ] Phase 8 Re-audit certified with zero CRITICAL findings</li>
+</ul>
+<hr>
+<h2 id="output-structure">Output Structure</h2>
+<pre data-lang="text"><code>architecture-elevation-report/
+├── Phase1_Independent_Problem_Model.md
+├── Phase2_Audit_Report.md
+├── Phase3_Architecture_Challenge.md
+├── Phase4_Comparative_Evaluation.md
+├── Phase5_Amplification_Register.md
+├── Phase6_Decision.md
+├── Phase7_Hardened_Decision_Set/
+│   ├── ADR-HARDENED.md
+│   ├── BP-HARDENED.md
+│   ├── PI-HARDENED.md
+│   └── TODO-HARDENED.md
+├── Phase8_Reaudit_Report.md
+└── EXECUTIVE_SUMMARY.md</code></pre>
+<hr>
+<h2 id="reference-files--scripts">Reference Files & Scripts</h2>
+<ul>
+<li><a href="./references/evaluation-criteria.md"><code>references/evaluation-criteria.md</code></a> — Detailed rubrics for the Comparative Evaluation Matrix</li>
+<li><a href="./references/amplification-patterns.md"><code>references/amplification-patterns.md</code></a> — Catalog of common amplification patterns by type</li>
+<li><a href="./references/anti-patterns.md"><code>references/anti-patterns.md</code></a> — Common architectural anti-patterns to detect during challenge</li>
+<li><a href="./references/output-templates.md"><code>references/output-templates.md</code></a> — Templates for each phase output document</li>
+<li><a href="./scripts/run_elevation.py"><code>scripts/run_elevation.py</code></a> — Orchestrates the 8-phase pipeline and produces final package</li>
+<li><a href="./scripts/comparative_matrix.py"><code>scripts/comparative_matrix.py</code></a> — Helper for Phase 4 matrix scoring and visualization</li>
+<li><a href="./scripts/reconstruct_problem.py"><code>scripts/reconstruct_problem.py</code></a> — Guided problem reconstruction questionnaire</li>
+</ul>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

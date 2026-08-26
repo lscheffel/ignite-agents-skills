@@ -338,8 +338,9 @@ class WorkspaceScopeResolver:
         base_dir = os.path.abspath(cwd or os.getcwd())
         global_canonical = os.path.abspath(os.path.expanduser("~/.gemini/config/skills"))
         
-        # Não considerar o próprio diretório global canônico como workspace local
-        if base_dir == global_canonical:
+        repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        # Não considerar o próprio diretório global canônico ou o próprio repo de skills como workspace local
+        if base_dir == global_canonical or base_dir == repo_root:
             return None
 
         for rel_dir in WORKSPACE_SKILL_CANDIDATE_DIRS:
@@ -347,7 +348,7 @@ class WorkspaceScopeResolver:
             if os.path.isdir(candidate):
                 has_skills = False
                 for root, _, files in os.walk(candidate):
-                    if any(f.endswith('.md') or f == 'SKILL.md' for f in files):
+                    if any(f == 'SKILL.md' or (f.endswith('.md') and root == candidate) for f in files):
                         has_skills = True
                         break
                 if has_skills:
@@ -363,7 +364,7 @@ class WorkspaceScopeResolver:
         skill_files = []
         for root, _, files in os.walk(skills_dir):
             for f in files:
-                if f.endswith('.md'):
+                if f == 'SKILL.md' or (f.endswith('.md') and root == skills_dir):
                     fp = os.path.join(root, f)
                     try:
                         m = os.path.getmtime(fp)

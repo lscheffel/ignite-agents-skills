@@ -1,12 +1,105 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-26T21:24:02.703762+00:00",
+    "generated_at": "2026-08-26T22:52:45.822557+00:00",
     "omission_rate": "0.00%",
-    "total_assets": 81,
+    "total_assets": 82,
     "persistence_target": ".github/governance/"
   },
   "assets": {
+    "adr-architecture-elevation": {
+      "id": "adr-architecture-elevation",
+      "name": "adr-architecture-elevation",
+      "category": "config_skill",
+      "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation",
+      "primary_sha256": "aaab888975d81233e8d31496bfc812c970953355d0c61a2ef1c167ab0537f96b",
+      "total_files": 11,
+      "total_bytes": 160145,
+      "total_tokens": 38618,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/SKILL.md",
+          "relpath": "SKILL.md",
+          "sha256": "aaab888975d81233e8d31496bfc812c970953355d0c61a2ef1c167ab0537f96b",
+          "bytes": 11367,
+          "tokens": 2803
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/references/amplification-patterns.md",
+          "relpath": "references/amplification-patterns.md",
+          "sha256": "5f5186ea0fc2097ffbb3a269d81c1df66bdad6d94e16be1ae63af3863071200a",
+          "bytes": 10690,
+          "tokens": 2669
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/references/anti-patterns.md",
+          "relpath": "references/anti-patterns.md",
+          "sha256": "66a42484bbc90e49720ef0f3d28ab932c3d9c23f87f904e3d5c975498ecb8b98",
+          "bytes": 11840,
+          "tokens": 2958
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/references/evaluation-criteria.md",
+          "relpath": "references/evaluation-criteria.md",
+          "sha256": "a9261cf7745bf5c41495c1b6a7afc04ea75885adae6163c36927e3d807f8dabb",
+          "bytes": 9257,
+          "tokens": 2309
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/references/output-templates.md",
+          "relpath": "references/output-templates.md",
+          "sha256": "2c378d5083ab78d27713cdee1d118d1135c0ece4949f8986a9e4e1240c60dbd7",
+          "bytes": 17556,
+          "tokens": 4356
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/scripts/comparative_matrix.py",
+          "relpath": "scripts/comparative_matrix.py",
+          "sha256": "76c7601563a0db339ba9318af5ee4bace5f2818bf05077852760f79c732f0961",
+          "bytes": 10461,
+          "tokens": 2613
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/scripts/reconstruct_problem.py",
+          "relpath": "scripts/reconstruct_problem.py",
+          "sha256": "2c17959a96503fa2aa8c7c6c8043cca66da63b8bae476c044bf6b81882d1afdf",
+          "bytes": 18154,
+          "tokens": 4535
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/scripts/run_elevation.py",
+          "relpath": "scripts/run_elevation.py",
+          "sha256": "4cadf163b1a91e39b62dbc82f358dc720ee8f518e810e992f922e86850cfab56",
+          "bytes": 10016,
+          "tokens": 2495
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/scripts/__pycache__/comparative_matrix.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/comparative_matrix.cpython-313.pyc",
+          "sha256": "2a08a695f9f6572fbcb4fd50c2299d8eefd4ab9b8fe3d60370d787368e45f849",
+          "bytes": 15879,
+          "tokens": 3580
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/scripts/__pycache__/reconstruct_problem.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/reconstruct_problem.cpython-313.pyc",
+          "sha256": "98d182e8a5fb39a465744065f35b72e859edeca69ed504f16401e80825b3ce91",
+          "bytes": 29107,
+          "tokens": 6655
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/scripts/__pycache__/run_elevation.cpython-313.pyc",
+          "relpath": "scripts/__pycache__/run_elevation.cpython-313.pyc",
+          "sha256": "a17c57f3e8411d58af506538a0bd48184c75e9926faaadea673bf9065ac46857",
+          "bytes": 15818,
+          "tokens": 3645
+        }
+      ],
+      "global_score": 87.7,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
     "adr-archive": {
       "id": "adr-archive",
       "name": "adr-archive",

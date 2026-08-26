@@ -10,11 +10,11 @@
 - **Repositório:** `ignite-agents-skills` (SOTA Skills Ecosystem & Agent Governance Hub)
 - **Caminho Canônico:** `/home/loupan/projetosVS/ignite-agents-skills`
 - **Última Atualização:** 2026-08-26
-- **Branch Ativa:** `feature/unify-sota-skills-ecosystem` (base: `master`)
+- **Branch Ativa:** `master`
 - **Versão:** `v2.5.0`
-- **Total de Ativos Monitorados:** 81 ativos (59 Config Skills, 11 Plugin Skills, 3 Built-in Skills, 8 MCP Servers)
+- **Total de Ativos Monitorados:** 82 ativos (60 Config Skills, 11 Plugin Skills, 3 Built-in Skills, 8 MCP Servers)
 - **Baseline de Qualidade:** Score Global Médio de **91.10 / 100** (100% de aprovação)
-- **Status do Catálogo:** 59 Skills SOTA em `skills/` + `skills/index.json` sincronizado
+- **Status do Catálogo:** 60 Skills SOTA em `skills/` + `skills/index.json` sincronizado
 - **Status da Arquitetura RAG:** SOTA Neural, Federado & Hierárquico Multi-Asset (ADR-021 a ADR-026 consolidadas)
 - **Suíte de Testes:** 100% Aprovada (42/42 testes em `scripts/tests/`)
 - **Páginas HTML:** 100% Compiladas em `pages/` para deploy em GitHub Pages
@@ -27,11 +27,11 @@ Consolidado a partir do [.github/governance/AUDIT_MASTER_INDEX.md](./.github/gov
 
 | Categoria de Ativo | Quantidade | Score Médio | Status de Aprovação | Risco STRIDE |
 |---|:---:|:---:|:---:|:---:|
-| **Config Skills (Nativas)** | 59 | 91.5 | 100% APROVADA | Baixo |
+| **Config Skills (Nativas)** | 60 | 91.5 | 100% APROVADA | Baixo |
 | **Plugin Skills** | 11 | 90.0 | 100% APROVADA | Baixo |
 | **Built-in Skills** | 3 | 88.5 | 100% APROVADA | Baixo |
 | **MCP Servers** | 8 | 90.8 | 100% APROVADA | Baixo |
-| **TOTAL CONSOLIDADO** | **81** | **91.10** | **100% APROVADA** | **Baixo** |
+| **TOTAL CONSOLIDADO** | **82** | **91.10** | **100% APROVADA** | **Baixo** |
 
 ---
 
