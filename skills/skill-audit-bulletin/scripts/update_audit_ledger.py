@@ -28,6 +28,7 @@ def discover_all_skills(repo_root: Path) -> dict:
     
     # Search patterns
     patterns = [
+        "skills/*/SKILL.md",
         "*/SKILL.md",
         "plugins/*/skills/*/SKILL.md",
         "builtin/*/skills/*/SKILL.md",

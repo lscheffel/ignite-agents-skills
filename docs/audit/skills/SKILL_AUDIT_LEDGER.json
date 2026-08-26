@@ -1,14 +1,14 @@
 {
   "version": "1.0.0",
   "last_updated": "2026-08-26",
-  "total_skills": 59,
-  "audited_skills": 1,
+  "total_skills": 60,
+  "audited_skills": 2,
   "pending_skills": 58,
-  "average_score": 96.0,
+  "average_score": 96.9,
   "entries": {
     "adr-archive": {
       "skill": "adr-archive",
-      "path": "adr-archive",
+      "path": "skills/adr-archive",
       "version": "3.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -21,7 +21,7 @@
     },
     "adr-generator": {
       "skill": "adr-generator",
-      "path": "adr-generator",
+      "path": "skills/adr-generator",
       "version": "3.1.1",
       "last_audited": null,
       "grade": "PENDING",
@@ -34,7 +34,7 @@
     },
     "agent-development": {
       "skill": "agent-development",
-      "path": "agent-development",
+      "path": "skills/agent-development",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -47,7 +47,7 @@
     },
     "agent-orchestration": {
       "skill": "agent-orchestration",
-      "path": "agent-orchestration",
+      "path": "skills/agent-orchestration",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -60,7 +60,7 @@
     },
     "agent-planning-execution": {
       "skill": "agent-planning-execution",
-      "path": "agent-planning-execution",
+      "path": "skills/agent-planning-execution",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -73,7 +73,7 @@
     },
     "agents-md-management": {
       "skill": "agents-md-management",
-      "path": "agents-md-management",
+      "path": "skills/agents-md-management",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -86,7 +86,7 @@
     },
     "api-design": {
       "skill": "api-design",
-      "path": "api-design",
+      "path": "skills/api-design",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -99,7 +99,7 @@
     },
     "architecture-review": {
       "skill": "architecture-review",
-      "path": "architecture-review",
+      "path": "skills/architecture-review",
       "version": "2.1.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -112,7 +112,7 @@
     },
     "artifacts-builder": {
       "skill": "artifacts-builder",
-      "path": "artifacts-builder",
+      "path": "skills/artifacts-builder",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -125,7 +125,7 @@
     },
     "brainstorming": {
       "skill": "brainstorming",
-      "path": "brainstorming",
+      "path": "skills/brainstorming",
       "version": "2.1.0",
       "last_audited": "2026-08-26",
       "grade": "A+",
@@ -138,20 +138,20 @@
     },
     "cap": {
       "skill": "cap",
-      "path": "cap",
+      "path": "skills/cap",
       "version": "3.0.0",
-      "last_audited": null,
-      "grade": "PENDING",
+      "last_audited": "2026-08-26",
+      "grade": "S",
       "previous_score": "N/A",
-      "current_score": "N/A",
-      "physical_score": "N/A",
-      "cognitive_score": "N/A",
-      "status": "PENDING_AUDIT",
-      "action": "PENDING_AUDIT"
+      "current_score": 97.8,
+      "physical_score": 98.5,
+      "cognitive_score": 97.0,
+      "status": "ADOPT AS-IS",
+      "action": "ADOPT AS-IS"
     },
     "changelog-generator": {
       "skill": "changelog-generator",
-      "path": "changelog-generator",
+      "path": "skills/changelog-generator",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -164,7 +164,7 @@
     },
     "circuit-breaker": {
       "skill": "circuit-breaker",
-      "path": "circuit-breaker",
+      "path": "skills/circuit-breaker",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -177,7 +177,7 @@
     },
     "clean-code": {
       "skill": "clean-code",
-      "path": "clean-code",
+      "path": "skills/clean-code",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -190,7 +190,7 @@
     },
     "code-review": {
       "skill": "code-review",
-      "path": "code-review",
+      "path": "skills/code-review",
       "version": "5.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -203,7 +203,7 @@
     },
     "code-review-lite": {
       "skill": "code-review-lite",
-      "path": "code-review-lite",
+      "path": "skills/code-review-lite",
       "version": "5.0.0-alias",
       "last_audited": null,
       "grade": "PENDING",
@@ -216,7 +216,7 @@
     },
     "code-review-workflow": {
       "skill": "code-review-workflow",
-      "path": "code-review-workflow",
+      "path": "skills/code-review-workflow",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -229,7 +229,7 @@
     },
     "content-creator": {
       "skill": "content-creator",
-      "path": "content-creator",
+      "path": "skills/content-creator",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -242,7 +242,7 @@
     },
     "content-research-writer": {
       "skill": "content-research-writer",
-      "path": "content-research-writer",
+      "path": "skills/content-research-writer",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -255,7 +255,7 @@
     },
     "context7-mcp": {
       "skill": "context7-mcp",
-      "path": "context7-mcp",
+      "path": "skills/context7-mcp",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -268,7 +268,7 @@
     },
     "database-architecture": {
       "skill": "database-architecture",
-      "path": "database-architecture",
+      "path": "skills/database-architecture",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -281,7 +281,7 @@
     },
     "ddd": {
       "skill": "ddd",
-      "path": "ddd",
+      "path": "skills/ddd",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -294,7 +294,7 @@
     },
     "deployment": {
       "skill": "deployment",
-      "path": "deployment",
+      "path": "skills/deployment",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -307,7 +307,7 @@
     },
     "dispatching-parallel-agents": {
       "skill": "dispatching-parallel-agents",
-      "path": "dispatching-parallel-agents",
+      "path": "skills/dispatching-parallel-agents",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -320,7 +320,7 @@
     },
     "docx-processing": {
       "skill": "docx-processing",
-      "path": "docx-processing",
+      "path": "skills/docx-processing",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -333,7 +333,7 @@
     },
     "email-composer": {
       "skill": "email-composer",
-      "path": "email-composer",
+      "path": "skills/email-composer",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -346,7 +346,7 @@
     },
     "find-skills": {
       "skill": "find-skills",
-      "path": "find-skills",
+      "path": "skills/find-skills",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -359,7 +359,7 @@
     },
     "git-workflow": {
       "skill": "git-workflow",
-      "path": "git-workflow",
+      "path": "skills/git-workflow",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -372,7 +372,7 @@
     },
     "governance": {
       "skill": "governance",
-      "path": "governance",
+      "path": "skills/governance",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -385,7 +385,7 @@
     },
     "implementation": {
       "skill": "implementation",
-      "path": "implementation",
+      "path": "skills/implementation",
       "version": "2.2.1",
       "last_audited": null,
       "grade": "PENDING",
@@ -398,7 +398,7 @@
     },
     "llm-as-judge": {
       "skill": "llm-as-judge",
-      "path": "llm-as-judge",
+      "path": "skills/llm-as-judge",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -411,7 +411,7 @@
     },
     "mcp-builder": {
       "skill": "mcp-builder",
-      "path": "mcp-builder",
+      "path": "skills/mcp-builder",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -424,7 +424,7 @@
     },
     "mobile-design": {
       "skill": "mobile-design",
-      "path": "mobile-design",
+      "path": "skills/mobile-design",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -437,7 +437,7 @@
     },
     "observability": {
       "skill": "observability",
-      "path": "observability",
+      "path": "skills/observability",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -450,7 +450,7 @@
     },
     "pdf-processing": {
       "skill": "pdf-processing",
-      "path": "pdf-processing",
+      "path": "skills/pdf-processing",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -463,7 +463,7 @@
     },
     "performance-optimization": {
       "skill": "performance-optimization",
-      "path": "performance-optimization",
+      "path": "skills/performance-optimization",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -476,7 +476,7 @@
     },
     "php-laravel-ecosystem": {
       "skill": "php-laravel-ecosystem",
-      "path": "php-laravel-ecosystem",
+      "path": "skills/php-laravel-ecosystem",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -489,7 +489,7 @@
     },
     "product-spec-engineering": {
       "skill": "product-spec-engineering",
-      "path": "product-spec-engineering",
+      "path": "skills/product-spec-engineering",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -502,7 +502,7 @@
     },
     "prompt-engineering": {
       "skill": "prompt-engineering",
-      "path": "prompt-engineering",
+      "path": "skills/prompt-engineering",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -515,7 +515,7 @@
     },
     "react-best-practices": {
       "skill": "react-best-practices",
-      "path": "react-best-practices",
+      "path": "skills/react-best-practices",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -528,7 +528,7 @@
     },
     "refactoring": {
       "skill": "refactoring",
-      "path": "refactoring",
+      "path": "skills/refactoring",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -541,7 +541,7 @@
     },
     "release": {
       "skill": "release",
-      "path": "release",
+      "path": "skills/release",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -554,7 +554,7 @@
     },
     "repo-bootstrap": {
       "skill": "repo-bootstrap",
-      "path": "repo-bootstrap",
+      "path": "skills/repo-bootstrap",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -567,7 +567,7 @@
     },
     "resilient-execution": {
       "skill": "resilient-execution",
-      "path": "resilient-execution",
+      "path": "skills/resilient-execution",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -580,7 +580,7 @@
     },
     "security-review": {
       "skill": "security-review",
-      "path": "security-review",
+      "path": "skills/security-review",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -593,7 +593,7 @@
     },
     "seo-optimizer": {
       "skill": "seo-optimizer",
-      "path": "seo-optimizer",
+      "path": "skills/seo-optimizer",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -606,7 +606,7 @@
     },
     "skill-audit-bulletin": {
       "skill": "skill-audit-bulletin",
-      "path": "skill-audit-bulletin",
+      "path": "skills/skill-audit-bulletin",
       "version": "5.1.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -619,7 +619,7 @@
     },
     "skill-creator": {
       "skill": "skill-creator",
-      "path": "skill-creator",
+      "path": "skills/skill-creator",
       "version": "2.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -632,7 +632,7 @@
     },
     "skill-discovery": {
       "skill": "skill-discovery",
-      "path": "skill-discovery",
+      "path": "skills/skill-discovery",
       "version": "3.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -645,7 +645,7 @@
     },
     "subagent-driven-development": {
       "skill": "subagent-driven-development",
-      "path": "subagent-driven-development",
+      "path": "skills/subagent-driven-development",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -658,7 +658,7 @@
     },
     "systematic-debugging": {
       "skill": "systematic-debugging",
-      "path": "systematic-debugging",
+      "path": "skills/systematic-debugging",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -671,7 +671,7 @@
     },
     "technical-documentation": {
       "skill": "technical-documentation",
-      "path": "technical-documentation",
+      "path": "skills/technical-documentation",
       "version": "2.1.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -684,7 +684,7 @@
     },
     "test-driven-development": {
       "skill": "test-driven-development",
-      "path": "test-driven-development",
+      "path": "skills/test-driven-development",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -697,7 +697,7 @@
     },
     "testing-mastery": {
       "skill": "testing-mastery",
-      "path": "testing-mastery",
+      "path": "skills/testing-mastery",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -710,7 +710,7 @@
     },
     "ui-ux-pro-max": {
       "skill": "ui-ux-pro-max",
-      "path": "ui-ux-pro-max",
+      "path": "skills/ui-ux-pro-max",
       "version": "3.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -723,7 +723,7 @@
     },
     "ux-researcher-designer": {
       "skill": "ux-researcher-designer",
-      "path": "ux-researcher-designer",
+      "path": "skills/ux-researcher-designer",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -736,7 +736,7 @@
     },
     "verification-before-completion": {
       "skill": "verification-before-completion",
-      "path": "verification-before-completion",
+      "path": "skills/verification-before-completion",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -749,7 +749,7 @@
     },
     "writing-skills": {
       "skill": "writing-skills",
-      "path": "writing-skills",
+      "path": "skills/writing-skills",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
@@ -762,7 +762,20 @@
     },
     "xlsx-processing": {
       "skill": "xlsx-processing",
-      "path": "xlsx-processing",
+      "path": "skills/xlsx-processing",
+      "version": "1.0.0",
+      "last_audited": null,
+      "grade": "PENDING",
+      "previous_score": "N/A",
+      "current_score": "N/A",
+      "physical_score": "N/A",
+      "cognitive_score": "N/A",
+      "status": "PENDING_AUDIT",
+      "action": "PENDING_AUDIT"
+    },
+    "adr-architecture-elevation": {
+      "skill": "adr-architecture-elevation",
+      "path": "skills/adr-architecture-elevation",
       "version": "1.0.0",
       "last_audited": null,
       "grade": "PENDING",
