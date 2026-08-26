@@ -58,6 +58,30 @@ if b'\r\n' in c:
     done
 fi
 
+# 1.5. Auto-Tradução para Inglês (ADR-026) quando PT-BR/outro idioma for detectado em skills/
+TRANSLATE_SCRIPT=""
+if [ -f "scripts/translate_catalog_nim.py" ]; then
+    TRANSLATE_SCRIPT="scripts/translate_catalog_nim.py"
+elif [ -f ".github/scripts/translate_catalog_nim.py" ]; then
+    TRANSLATE_SCRIPT=".github/scripts/translate_catalog_nim.py"
+fi
+
+if [ -n "$TRANSLATE_SCRIPT" ]; then
+    SKILL_STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^skills/.*\.(md|py|sh|ts|js)$' || true)
+    if [ -n "$SKILL_STAGED" ]; then
+        echo "[*] Verificando detecção de idioma e auto-tradução para EN-US (ADR-026)..."
+        for sf in $SKILL_STAGED; do
+            if [ -f "$sf" ]; then
+                python3 "$TRANSLATE_SCRIPT" --file "$sf" > /tmp/precommit_translate.log 2>&1 || {
+                    echo "⚠️  [WARN] Auto-tradução ignorada ou com erro em $sf (veja /tmp/precommit_translate.log)"
+                }
+                git add "$sf"
+            fi
+        done
+        echo "✅ [PASS] Verificação de idioma / auto-tradução concluída."
+    fi
+fi
+
 # 2. Executar validação forense e integridade
 echo "[*] Executing Forensic Audit Engine ($AUDIT_SCRIPT)..."
 python3 "$AUDIT_SCRIPT" > /tmp/precommit_audit.log 2>&1 || {

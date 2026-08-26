@@ -111,7 +111,14 @@ Respond ONLY with a valid JSON object in this exact schema:
 
 def get_workspace_root() -> Path:
     """Resolve a raiz do workspace dinamicamente."""
-    return Path(__file__).resolve().parent.parent.parent
+    if os.environ.get("SKILLS_WORKSPACE_DIR"):
+        return Path(os.environ["SKILLS_WORKSPACE_DIR"]).resolve()
+    p = Path(__file__).resolve().parent
+    if p.name == "scripts":
+        return p.parent
+    elif p.name == "github":
+        return p.parent.parent
+    return p.parent
 
 def load_dotenv(workspace_root: Path) -> Dict[str, str]:
     """Carrega variáveis do arquivo .env sem dependências externas."""

@@ -76,13 +76,14 @@ graph TD
 
 ## 3. Comportamento do Ciclo Pré-Commit & Governança Reativa
 
-Ao adicionar ou modificar qualquer skill (inclusive rascunhos ou conteúdos em PT-BR), o hook [`.githooks/pre-commit`](file:///home/loupan/projetosVS/ignite-agents-skills/.githooks/pre-commit) executa uma validação rigorosa antes de permitir o commit:
+Ao adicionar ou modificar qualquer skill (inclusive rascunhos ou conteúdos em PT-BR), o hook [`.githooks/pre-commit`](file:///home/loupan/projetosVS/ignite-agents-skills/.githooks/pre-commit) executa uma validação rigorosa e tradução automática antes de permitir o commit:
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor Dev as Desenvolvedor / Agente
     participant Hook as .githooks/pre-commit
+    participant Trans as scripts/translate_catalog_nim.py
     participant Audit as scripts/audit_engine.py
     participant RAG as scripts/skills_rag_indexer.py
     participant Git as Git Staging / Index
@@ -90,6 +91,8 @@ sequenceDiagram
     Dev->>Git: git commit -m "feat: new skill"
     Git->>Hook: Trigger pre-commit
     Hook->>Hook: 1. Normaliza line endings (CRLF -> LF)
+    Hook->>Trans: 1.5. Detecta idioma (PT-BR / outro) e auto-traduz para EN-US (ADR-026)
+    Trans->>Git: Atualiza e auto-stage do arquivo em EN-US
     Hook->>Audit: 2. Executa Auditoria Forense 8D
     alt Falha Crítica / Score < 80.0 / Status CRÍTICA
         Audit-->>Hook: Exit Code 1 + Log de Violações
@@ -103,8 +106,8 @@ sequenceDiagram
     end
 ```
 
-### Regras Específicas de Avaliação:
-- **Padrão Bilíngue:** O motor aceita títulos, seções e descrições tanto em PT-BR quanto em EN-US.
+### Regras Específicas de Avaliação & Tradução:
+- **Detecção & Tradução Automática (ADR-026):** O script `scripts/translate_catalog_nim.py` inspeciona os arquivos modificados em `skills/`. Se detectar stopwords em PT-BR com proporção >1.5x em relação ao inglês, invoca os modelos NVIDIA NIM para traduzir a prosa e comentários para EN-US preservando rigorosamente código procedural, YAML frontmatter e tags XML.
 - **Tolerância a Avisos:** Skills com pequenos avisos (ex.: ausência de diagramas Mermaid em tarefas simples) são classificadas como `AVISO` e permitidas no commit, gerando um registro no backlog de remediação ([`.github/governance/REMEDIATION_BACKLOG.md`](file:///home/loupan/projetosVS/ignite-agents-skills/.github/governance/REMEDIATION_BACKLOG.md)).
 - **Bloqueio Incondicional:** Falta de `SKILL.md`, ausência de frontmatter YAML mínimo, caracteres ilegais ou quebra estrutural grave acionam status `CRÍTICA` e bloqueiam o commit.
 

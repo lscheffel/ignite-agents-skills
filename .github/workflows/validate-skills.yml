@@ -22,10 +22,21 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install -y jq
-          pip install pyyaml
+      - name: Auto-translate PT-BR to EN-US (ADR-026 if key available)
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+        run: |
+          if [ -n "$NVIDIA_API_KEY" ]; then
+            python3 scripts/translate_catalog_nim.py
+          else
+            echo "ℹ️  NVIDIA_API_KEY not set. Running translation check in dry-run mode."
+            python3 scripts/translate_catalog_nim.py --dry-run || true
+          fi
       - name: Validate skills/index.json against real files
         run: |
+          chmod +x scripts/sync-index.sh
           chmod +x scripts/validate-index.sh
+          ./scripts/sync-index.sh
           ./scripts/validate-index.sh
       - name: Validate skill quality (Ultra-High Quality Grade)
         run: |
