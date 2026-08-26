@@ -410,136 +410,77 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-bp</div>
   </nav>
   <div class="content">
-    <h1 id="blueprint--adr-id-title">Blueprint — ADR-{{id}}: {{title}}</h1>
-<blockquote>Referência: <a href="./ADR-{{id}}.md">ADR-{{id}}</a></blockquote>
+    <hr>
+<p>id: ADR-{{id}}-BP type: bp title: "Blueprint — {{title}}" created: {{date}} updated: {{date}} adr_ref: ADR-{{id}} ---</p>
+<h1 id="blueprint--adr-id-title">Blueprint — ADR-{{id}}: {{title}}</h1>
+<blockquote>Reference: <a href="./ADR-{{id}}.md">ADR-{{id}}</a></blockquote>
 <hr>
-<h2 id="1-viso-geral">1. Visão Geral</h2>
-<h3 id="objetivo">Objetivo</h3>
+<h2 id="1-overview">1. Overview</h2>
+<h3 id="objective">Objective</h3>
 <p>{{objective}}</p>
-<h3 id="mtricas-de-sucesso">Métricas de Sucesso</h3>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Status</th></tr><tr><td>{{metric_1}}</td><td>{{before_1}}</td><td>{{after_1}}</td><td>⬜</td></tr><tr><td>{{metric_2}}</td><td>{{before_2}}</td><td>{{after_2}}</td><td>⬜</td></tr></table></div>
+<h3 id="success-metrics">Success Metrics</h3>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Before</th><th>After</th><th>Status</th></tr><tr><td>{{metric_1}}</td><td>{{before_1}}</td><td>{{after_1}}</td><td>⬜</td></tr><tr><td>{{metric_2}}</td><td>{{before_2}}</td><td>{{after_2}}</td><td>⬜</td></tr></table></div>
 <hr>
-<h2 id="2-estrutura-de-artefatos">2. Estrutura de Artefatos</h2>
-<pre><code>{{artifacts_structure}}</code></pre>
+<h2 id="2-affected-artifact-structure">2. Affected Artifact Structure</h2>
+<p>List the actual files that will be created or modified — not a generic structure. This will be the scope map that the TODO and PI will detail.</p>
+<pre data-lang="text"><code>{{artifacts_structure}}</code></pre>
 <hr>
-<h2 id="3-decision-tree">3. Decision Tree</h2>
-<pre data-lang="mermaid"><code>graph TD
-    {{decision_tree}}</code></pre>
-<hr>
-<h2 id="4-conceitos-fundamentais">4. Conceitos Fundamentais</h2>
-<h3 id="41-concept1title">4.1 {{concept_1_title}}</h3>
+<h2 id="3-key-concepts-of-the-solution">3. Key Concepts of the Solution</h2>
+<blockquote>Add as many concepts as the reader needs to understand the decision without referring back to the original ADR. Do not force a fixed number — a simple decision may not need any, while a complex one may need several.</blockquote>
+<h3 id="31-concept1title">3.1 {{concept_1_title}}</h3>
 <p>{{concept_1_description}}</p>
-<p><strong>Configuração:</strong></p>
-<pre data-lang="{{concept_1_config}}```"><code>
-### 4.2 {{concept_2_title}}
-
-{{concept_2_description}}
-
-**Configuração:**</code></pre>
+<p><strong>Configuration / Example:</strong></p>
+<pre><code>{{concept_1_config}}</code></pre>
+<p><!-- Repeat "3.N {{concept_n_title}}" for each additional relevant concept. --></p>
 <hr>
-<h2 id="5-workflow">5. Workflow</h2>
+<h2 id="4-implementation-workflows">4. Implementation Workflows</h2>
+<blockquote>Add as many workflows as the actual scope requires. A simple Blueprint may have only one.</blockquote>
 <h3 id="workflow-1-workflow1name">Workflow 1: {{workflow_1_name}}</h3>
-<p><strong>Objetivo:</strong> {{workflow_1_objective}}</p>
-<p><strong>Triggers:</strong></p>
-<ul>
-<li>{{workflow_1_trigger}}</li>
-</ul>
+<p><strong>Objective:</strong> {{workflow_1_objective}}</p>
 <p><strong>Steps:</strong> {{workflow_1_steps}}</p>
 <p><strong>Checkpoint:</strong> {{workflow_1_checkpoint}}</p>
+<p><!-- Repeat "Workflow N" for each additional workflow required. --></p>
 <hr>
-<h2 id="6-templates">6. Templates</h2>
-<h3 id="61-template1name">6.1 {{template_1_name}}</h3>
-<pre data-lang="{{template_1_content}}```"><code>
----
-
-## 7. Anti-patterns
-
-### 🔴 Crítico
-
-#### {{anti_pattern_1_title}}
-**O que é:** {{anti_pattern_1_what}}
-**Por que é ruim:** {{anti_pattern_1_why}}
-**Como evitar:** {{anti_pattern_1_how}}
-**Exemplo:**</code></pre>
-<h1 id="-errado">❌ ERRADO</h1>
-<p>{{anti_pattern_1_wrong}}</p>
-<h1 id="-correto">✅ CORRETO</h1>
-<p>{{anti_pattern_1_right}}</p>
-<pre><code>
-### 🟡 Médio
-
-#### {{anti_pattern_2_title}}
-**O que é:** {{anti_pattern_2_what}}
-**Por que é ruim:** {{anti_pattern_2_why}}
-**Como evitar:** {{anti_pattern_2_how}}
-
-### 🟢 Baixo
-
-#### {{anti_pattern_3_title}}
-**O que é:** {{anti_pattern_3_what}}
-**Por que é ruim:** {{anti_pattern_3_why}}
-**Como evitar:** {{anti_pattern_3_how}}
-
----
-
-## 8. Checklists
-
-### Checklist de Pré-Deploy
-
-- [ ] {{checklist_pre_1}}
-- [ ] {{checklist_pre_2}}
-
-### Checklist de Pós-Deploy
-
-- [ ] {{checklist_post_1}}
-- [ ] {{checklist_post_2}}
-
----
-
-## 9. Edge Cases
-
-### {{edge_case_1_title}}
-**Situação:** {{edge_case_1_situation}}
-**Solução:** {{edge_case_1_solution}}
-**Exceção:** {{edge_case_1_exception}}
-
-### {{edge_case_2_title}}
-**Situação:** {{edge_case_2_situation}}
-**Solução:** {{edge_case_2_solution}}
-**Exceção:** {{edge_case_2_exception}}
-
----
-
-## 10. Integração com Skills Existentes
-
-### Referências Diretas
-
-| Skill | Relação com o workflow |
-|-------|------------------------|
-| `{{skill_1}}` | {{skill_1_relation}} |
-| `{{skill_2}}` | {{skill_2_relation}} |
-
----
-
-## 11. Estimativas
-
-| Componente | Linhas Est. | Templates | Examples |
-|------------|-------------|-----------|----------|
-| {{component_1}} | {{lines_1}} | {{templates_1}} | {{examples_1}} |
-| **Total** | **{{total_lines}}** | **{{total_templates}}** | **{{total_examples}}** |
-
----
-
-## 12. Riscos e Mitigações
-
-| Risco | Impacto | Probabilidade | Mitigação |
-|-------|---------|---------------|-----------|
-| {{risk_1}} | {{impact_1}} | {{likelihood_1}} | {{mitigation_1}} |
-| {{risk_2}} | {{impact_2}} | {{likelihood_2}} | {{mitigation_2}} |
-
----
-
-*Documento gerado em {{date}}. Referência: ADR-{{id}}.*</code></pre>
+<h2 id="5-specific-anti-patterns-of-this-decision">5. Specific Anti-patterns of this Decision</h2>
+<blockquote>Particular implementation risks specific to THIS decision — do not repeat generic anti-patterns already covered by the SKILL.md of the adr-generator.</blockquote>
+<h3 id="critical">Critical</h3>
+<h4 id="antipattern1title">{{anti_pattern_1_title}}</h4>
+<p><strong>What is it:</strong> {{anti_pattern_1_what}} <strong>Why it's bad:</strong> {{anti_pattern_1_why}} <strong>How to avoid:</strong> {{anti_pattern_1_how}}</p>
+<h3 id="medium">Medium</h3>
+<h4 id="antipattern2title">{{anti_pattern_2_title}}</h4>
+<p><strong>What is it:</strong> {{anti_pattern_2_what}} <strong>Why it's bad:</strong> {{anti_pattern_2_why}} <strong>How to avoid:</strong> {{anti_pattern_2_how}}</p>
+<p><!-- Omit the entire section if the decision does not have specific risks beyond the generic ones. --></p>
+<hr>
+<h2 id="6-checklists">6. Checklists</h2>
+<h3 id="pre-deploy-checklist">Pre-Deploy Checklist</h3>
+<ul>
+<li>[ ] {{checklist_pre_1}}</li>
+<li>[ ] {{checklist_pre_2}}</li>
+</ul>
+<h3 id="post-deploy-checklist">Post-Deploy Checklist</h3>
+<ul>
+<li>[ ] {{checklist_post_1}}</li>
+<li>[ ] {{checklist_post_2}}</li>
+</ul>
+<hr>
+<h2 id="7-edge-cases">7. Edge Cases</h2>
+<h3 id="edgecase1title">{{edge_case_1_title}}</h3>
+<p><strong>Situation:</strong> {{edge_case_1_situation}} <strong>Solution:</strong> {{edge_case_1_solution}} <strong>Exception:</strong> {{edge_case_1_exception}}</p>
+<p><!-- Repeat for each relevant edge case. Omit if none exist. --></p>
+<hr>
+<h2 id="8-related-skills">8. Related Skills</h2>
+<blockquote>Only list skills that this Blueprint actually invokes or depends on — not a generic list of skills from the catalog.</blockquote>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relation to this Blueprint</th></tr><tr><td><code>{{skill_1}}</code></td><td>{{skill_1_relation}}</td></tr></table></div>
+<hr>
+<h2 id="9-risks-and-mitigations">9. Risks and Mitigations</h2>
+<div class="table-wrapper"><table><tr><th>Risk</th><th>Impact</th><th>Probability</th><th>Mitigation</th></tr><tr><td>{{risk_1}}</td><td>{{impact_1}}</td><td>{{likelihood_1}}</td><td>{{mitigation_1}}</td></tr></table></div>
+<hr>
+<h2 id="10-references">10. References</h2>
+<ul>
+<li>{{reference_1}}</li>
+</ul>
+<hr>
+<p><em>Document generated on {{date}}. Reference: ADR-{{id}}.</em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

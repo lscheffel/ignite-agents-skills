@@ -1,39 +1,39 @@
 # Rollback Report
 
-> Relatório produzido quando uma implementação requer reversão parcial ou total.
+> Report generated when an implementation requires partial or total reversal.
 
 ---
 
-## Identificação
+## Identification
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| ADR referência | {{adr_path}} |
-| Data do rollback | {{rollback_date}} |
-| Motivo | {{reason}} |
-| Escopo | {{scope}} (parcial/total) |
+| ADR reference | {{adr_path}} |
+| Rollback date | {{rollback_date}} |
+| Reason | {{reason}} |
+| Scope | {{scope}} (partial/total) |
 
 ---
 
-## Motivo do Rollback
+## Reason for Rollback
 
-### Descrição
+### Description
 
 {{reason_description}}
 
-### Classificação
+### Classification
 
-| Critério | Valor |
+| Criterion | Value |
 |----------|-------|
-| Tipo | {{type}} (erro de implementação / incompatibilidade / requisito alterado) |
-| Severidade | {{severity}} (crítica / alta / média / baixa) |
-| Impacto | {{impact}} (bloqueia produção / degrada funcionalidade / cosmético) |
+| Type | {{type}} (implementation error / incompatibility / changed requirement) |
+| Severity | {{severity}} (critical / high / medium / low) |
+| Impact | {{impact}} (blocks production / degrades functionality / cosmetic) |
 
 ---
 
-## Tarefas Revertidas
+## Tasks Reverted
 
-| # | Tarefa | Commits Revertidos | Arquivos Afetados |
+| # | Task | Reverted Commits | Affected Files |
 |---|--------|-------------------|-------------------|
 {{#each reverted_tasks}}
 | {{number}} | {{task}} | {{commits}} | {{files}} |
@@ -41,9 +41,9 @@
 
 ---
 
-## Commits Revertidos
+## Reverted Commits
 
-| Hash | Mensagem | Data Original | Autor |
+| Hash | Message | Original Date | Author |
 |------|----------|---------------|-------|
 {{#each reverted_commits}}
 | {{hash}} | {{message}} | {{date}} | {{author}} |
@@ -51,22 +51,22 @@
 
 ---
 
-## Estado Final
+## Final State
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
 | Branch | {{branch}} |
-| Commit final | {{final_commit}} |
+| Final commit | {{final_commit}} |
 | Build | {{build_status}} |
 | Lint | {{lint_status}} |
-| Testes | {{test_status}} |
-| Workspace limpo | {{workspace_clean}} |
+| Tests | {{test_status}} |
+| Clean workspace | {{workspace_clean}} |
 
 ---
 
-## Impacto no Progresso
+## Impact on Progress
 
-| Tarefa | Estado Antes | Estado Depois |
+| Task | Previous State | Current State |
 |--------|-------------|---------------|
 {{#each task_impact}}
 | {{task}} | {{before}} | {{after}} |
@@ -74,9 +74,9 @@
 
 ---
 
-## Ações Corretivas
+## Corrective Actions
 
-| # | Ação | Responsável | Prazo | Status |
+| # | Action | Responsible | Deadline | Status |
 |---|------|-------------|-------|--------|
 {{#each corrective_actions}}
 | {{number}} | {{action}} | {{owner}} | {{deadline}} | {{status}} |
@@ -84,9 +84,9 @@
 
 ---
 
-## Lições Aprendidas
+## Lessons Learned
 
-| # | Lição | Aplicável a |
+| # | Lesson | Applicable to |
 |---|-------|-------------|
 {{#each lessons}}
 | {{number}} | {{lesson}} | {{applicable_to}} |
@@ -94,7 +94,7 @@
 
 ---
 
-## Próximos Passos
+## Next Steps
 
 1. {{next_step_1}}
 2. {{next_step_2}}
@@ -102,21 +102,21 @@
 
 ---
 
-## Validação do Rollback
+## Rollback Validation
 
-- [ ] Todos os commits revertidos confirmados
-- [ ] Build passa após rollback
-- [ ] Testes passam após rollback
-- [ ] Workspace está limpo
-- [ ] Ações corretivas documentadas
-- [ ] Lições aprendidas registradas
+- [ ] All reverted commits confirmed
+- [ ] Build passes after rollback
+- [ ] Tests pass after rollback
+- [ ] Workspace is clean
+- [ ] Corrective actions documented
+- [ ] Lessons learned recorded
 
 ---
 
-## Assinatura
+## Signature
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Rollback executado em | {{execution_date}} |
-| Status do rollback | {{rollback_status}} |
-| Implementação pode prosseguir | {{can_proceed}} |
+| Rollback executed on | {{execution_date}} |
+| Rollback status | {{rollback_status}} |
+| Implementation can proceed | {{can_proceed}} |

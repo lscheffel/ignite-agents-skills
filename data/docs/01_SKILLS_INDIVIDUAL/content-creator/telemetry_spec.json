@@ -1,0 +1,25 @@
+{
+  "asset_id": "content-creator",
+  "asset_name": "content-creator",
+  "category": "config_skill",
+  "telemetry_metrics": {
+    "schema_tokens": 280,
+    "prompt_overhead_tokens": 2887,
+    "estimated_payload_return_bytes": 4096,
+    "estimated_payload_return_tokens": 1024,
+    "estimated_latency_ms": 110,
+    "p95_latency_ms": 240,
+    "timeout_seconds": 30,
+    "max_concurrency": 15,
+    "side_effects": "Read-Only / Pure Logic"
+  },
+  "cost_model": {
+    "cost_per_1k_invocations_usd": 0.433,
+    "context_cache_efficiency": "94%"
+  },
+  "governance_thresholds": {
+    "circuit_breaker_error_rate_threshold": "5%",
+    "consecutive_failures_trip": 3,
+    "cooldown_seconds": 15
+  }
+}

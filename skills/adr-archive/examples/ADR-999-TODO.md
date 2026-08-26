@@ -1,16 +1,16 @@
 ---
 id: ADR-999-TODO
 type: todo
-title: Execução - Parcial
+title: Partial Execution
 ---
 
-# TODO: Teste 999
+# TODO: Test 999
 
-## Tabela de Tarefas
-| ID | Tarefa | Status |
+## Task Table
+| ID | Task | Status |
 |---|---|---|
-| A1.1 | Tarefa 1 | ✅ |
-| A1.2 | Tarefa de refatoração pendente | 🔄 |
+| A1.1 | Task 1 | ✅ |
+| A1.2 | Pending Refactoring Task | 🔄 |
 
 ## Checkpoints
 - [x] Check 1

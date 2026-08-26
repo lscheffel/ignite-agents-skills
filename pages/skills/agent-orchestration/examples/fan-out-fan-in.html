@@ -411,13 +411,13 @@
   </nav>
   <div class="content">
     <h1 id="example-fan-outfan-in">Example: Fan-Out/Fan-In</h1>
-<p>Exemplo de paralelismo com fan-out e fan-in.</p>
-<h2 id="tarefa">Tarefa</h2>
-<p>"Processar 50 arquivos CSV e gerar consolidado"</p>
-<h2 id="padro-sequencial-">Padrão Sequencial (❌)</h2>
-<pre><code>Agente processa: arquivo1 → arquivo2 → ... → arquivo50
-Tempo: 50 x 2s = 100s</code></pre>
-<h2 id="padro-fan-outfan-in-">Padrão Fan-Out/Fan-In (✅)</h2>
+<p>Example of parallelism with fan-out and fan-in.</p>
+<h2 id="task">Task</h2>
+<p>"Process 50 CSV files and generate consolidated output"</p>
+<h2 id="sequential-pattern-">Sequential Pattern (❌)</h2>
+<pre data-lang="markdown"><code>Agent processes: file1 → file2 → ... → file50
+Time: 50 x 2s = 100s</code></pre>
+<h2 id="fan-outfan-in-pattern-">Fan-Out/Fan-In Pattern (✅)</h2>
 <pre data-lang="mermaid"><code>graph TD
     A[Input: 50 CSVs] --&gt; B1[Worker 1: CSVs 1-10]
     A --&gt; B2[Worker 2: CSVs 11-20]
@@ -429,8 +429,8 @@ Tempo: 50 x 2s = 100s</code></pre>
     B3 --&gt; C
     B4 --&gt; C
     B5 --&gt; C
-    C --&gt; D[Output: Consolidado]</code></pre>
-<h2 id="implementao">Implementação</h2>
+    C --&gt; D[Output: Consolidated]</code></pre>
+<h2 id="implementation">Implementation</h2>
 <h3 id="fan-out">Fan-Out</h3>
 <pre data-lang="yaml"><code>parallel_workers: 5
 batch_size: 10
@@ -440,10 +440,10 @@ strategy: round-robin</code></pre>
 deduplication: true
 validation: schema-check
 timeout: 60s</code></pre>
-<h2 id="mtricas">Métricas</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Sequencial</th><th>Paralelo</th></tr><tr><td>Tempo</td><td>100s</td><td>22s</td></tr><tr><td>Custo</td><td>$0.50</td><td>$0.55</td></tr><tr><td>Throughput</td><td>0.5/s</td><td>2.3/s</td></tr></table></div>
+<h2 id="metrics">Metrics</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Sequential</th><th>Parallel</th></tr><tr><td>Time</td><td>100s</td><td>22s</td></tr><tr><td>Cost</td><td>$0.50</td><td>$0.55</td></tr><tr><td>Throughput</td><td>0.5/s</td><td>2.3/s</td></tr></table></div>
 <h2 id="trade-off">Trade-off</h2>
-<p>Paralelismo aumenta custo levemente ($0.05) mas reduz tempo em 78%.</p>
+<p>Parallelism increases cost slightly ($0.05) but reduces time by 78%.</p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

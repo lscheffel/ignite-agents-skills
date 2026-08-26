@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>technical-documentation — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; technical-documentation</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: technical-documentation version: 2.1.0 description: Technical documentation generation, architectural diagrams, and comprehensive SOTA documentation reconciliation across all 6 canonical repository pillars (README, CHANGELOG, USAGE, RELEASE-NOTES, STATE, AGENTS/GEMINI). domain: domain-stack triggers:</p>
+<ul>
+<li>technical-documentation</li>
+<li>documentation-reconciliation</li>
+<li>tech-docs-generator</li>
+<li>doc-reconcile</li>
+<li>reconcile-docs</li>
+<li>reconcile-documentation</li>
+<li>sync-documentation</li>
+<li>atualizar-documentacao</li>
+<li>reconciliar-documentacao</li>
+<li>generate-technical-documentation</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>technical-documentation</li>
+<li>documentation</li>
+<li>reconciliation</li>
+<li>governance</li>
+<li>sota</li>
+<li>agent-memory</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>adr-generator</li>
+<li>adr-archive</li>
+<li>implementation</li>
+<li>governance</li>
+<li>architecture-review</li>
+<li>changelog-generator</li>
+<li>release</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: "2026-08-26" ---</p>
+<h1 id="technical-documentation-hub-sota-edition">Technical Documentation Hub (SOTA Edition)</h1>
+<p>Generates, maintains, and reconciles technical documentation at the <strong>SOTA (State of the Art)</strong> level, ensuring all artifacts are dense, rich in information, of ultra-high-quality grade, and hand-made tailored, eliminating placeholders, generic text, or drift from the actual code.</p>
+<hr>
+<h2 id="the-canonical-suite-of-6-pillars">The Canonical Suite of 6 Pillars</h2>
+<p>All document reconciliation executed by this skill audits and synchronizes the canonical suite of 6 pillars:</p>
+<div class="table-wrapper"><table><tr><th>Pillar / Document</th><th>Role & Responsibility</th><th>Expected Density</th></tr><tr><td><strong>1. <code>README.md</code></strong></td><td>Executive entrance port of the repository. Presents an overview, architecture diagram, badges, quick start, and module map.</td><td>High (Mermaid diagrams, tables, quick setup)</td></tr><tr><td><strong>2. <code>CHANGELOG.md</code></strong></td><td>Chronological and categorized change history based on the Keep a Changelog standard and SemVer.</td><td>High (versions with Added, Changed, Fixed, etc.)</td></tr><tr><td><strong>3. <code>USAGE.md</code></strong></td><td>Practical operational guide. Details end-to-end scenarios, pipelines, CLI flags, and verifiable real commands.</td><td>Very High (terminal examples, sequential flows)</td></tr><tr><td><strong>4. <code>RELEASE-NOTES.md</code></strong></td><td>Release notes focused on business value, architectural highlights, breaking changes, and migration guides.</td><td>Very High (highlights, metrics, and upgrade steps)</td></tr><tr><td><strong>5. <code>STATE.md</code></strong></td><td>Persistent memory of the AI agent. Records active context, current architecture, session history, and open technical debts.</td><td>Very High (active ADR tables, registry debt tables)</td></tr><tr><td><strong>6. <code>AGENTS.md</code> / <code>GEMINI.md</code></strong></td><td>Universal execution rules, operational restrictions, and governance for autonomous agents (Kilocode, Gemini, Antigravity).</td><td>Very High (invariants, hard-gates, and CLI reference)</td></tr></table></div>
+<blockquote><strong>Mandatory Reconciliation Rule:</strong> When executing document reconciliation, if any of the 6 pillars are outdated, <strong>update</strong> them; if non-existent, <strong>create</strong> them immediately using the corresponding template and extracting real data from the codebase and Git.</blockquote>
+<hr>
+<h2 id="sub-domain--component-documentation-reconciliation">Sub-Domain / Component: <code>documentation-reconciliation</code></h2>
+<h1 id="documentation-reconciliation">Documentation Reconciliation</h1>
+<p>Audits and reconciles canonical documentation against the actual code, Git history, ADRs, and technical debt registry.</p>
+<h3 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h3>
+<p>When you need to sweep ADRs from the repository to get context, <strong>FIRST</strong> read <code>docs/adr/ADR-INDEX.md</code> or a <code>grep</code> on the frontmatter of ADRs. You are <strong>PROHIBITED</strong> from reading the complete content (via <code>view_file</code> or <code>cat</code>) of any file with the tag <code>implementation_status: CONSOLIDATED</code> in its frontmatter YAML. Apply the 'SKIP' summary to these files.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Document reconciliation is requested (<code>/technical-documentation</code>, "reconcile documentation", "update documentation")</li>
+<li>Any of the 6 pillars (<code>README.md</code>, <code>CHANGELOG.md</code>, <code>USAGE.md</code>, <code>RELEASE-NOTES.md</code>, <code>STATE.md</code>, <code>AGENTS.md</code>/<code>GEMINI.md</code>) are absent or outdated</li>
+<li>After new features, refactorings, or ADR cycles are completed</li>
+<li>Before releases, deploys, or package/skill publications</li>
+<li>Inconsistencies between code and documentation are detected</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Creating isolated architectural decisions (use <code>adr-generator</code>)</li>
+<li>Auditing and archiving TODO tasks (use <code>adr-archive</code> / <code>audit.py</code>)</li>
+</ul>
+<h3 id="related-skills">Related Skills:</h3>
+<ul>
+<li><code>adr-generator</code> — creates ADRs and Decision Sets</li>
+<li><code>adr-archive</code> — lifecycle, Evidence Records (ER.md), and tech debt pruning</li>
+<li><code>implementation</code> — executes planned architectural changes</li>
+<li><code>governance</code> — repository branching, PR and release standards</li>
+<li><code>changelog-generator</code> — automated changelog diff categorization</li>
+</ul>
+<h2 id="decision-tree">Decision Tree</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[Reconciliation Requested] --&gt; B[Phase 1: Inventory &amp; Git Discovery]
+    B --&gt; C[Phase 2: Audit Existence &amp; Freshness of the 6 Pillars]
+    C --&gt; D[Phase 3: Reconcile README.md &amp; USAGE.md]
+    D --&gt; E[Phase 4: Reconcile CHANGELOG.md &amp; RELEASE-NOTES.md]
+    E --&gt; F[Phase 5: Reconcile STATE.md - Agent Memory]
+    F --&gt; G[Phase 6: Reconcile AGENTS.md &amp; GEMINI.md]
+    G --&gt; H[Phase 7: Generate Compliance Report]</code></pre>
+<h2 id="reconciliation-workflow-step-by-step">Reconciliation Workflow Step-by-Step</h2>
+<h3 id="phase-1-deep-inventory--git-discovery">Phase 1: Deep Inventory & Git Discovery</h3>
+<ol>
+<li>Execute Git inspection commands:</li>
+</ol>
+<pre data-lang="bash"><code>   git status
+   git log --oneline -30
+   git diff --stat HEAD~5..HEAD 2&gt;/dev/null || git status</code></pre>
+<ol>
+<li>Analyze the repository file tree, main modules, and packages (<code>package.json</code>, <code>Cargo.toml</code>, etc.).</li>
+<li>Consult the governance state:</li>
+</ol>
+<ul>
+<li>Read <code>docs/adr/ADR-INDEX.md</code> (if exists) to identify active and consolidated ADRs.</li>
+<li>Read <code>docs/governance/tech-debt-registry.json</code> to map open and resolved technical debts.</li>
+</ul>
+<h3 id="phase-2-audit-the-6-canonical-pillars">Phase 2: Audit the 6 Canonical Pillars</h3>
+<p>For each of the 6 canonical files in the repository root:</p>
+<ul>
+<li>Verify if the file exists.</li>
+<li>If not exists: mark as <code>CREATE_OBLIGATORY</code>.</li>
+<li>If exists: read and compare against the actual code/Git state to identify outdated sections (<code>UPDATE_DEFASADO</code>).</li>
+</ul>
+<h3 id="phase-3-reconcile-readmemd-and-usagemd">Phase 3: Reconcile <code>README.md</code> and <code>USAGE.md</code></h3>
+<ol>
+<li><strong><code>README.md</code>:</strong></li>
+</ol>
+<ul>
+<li>Ensure badges are updated (version, status, license).</li>
+<li>Include a concise overview and Mermaid architecture diagram reflecting the actual modules.</li>
+<li>Provide a quick start with real installation commands and a directory tree map.</li>
+</ul>
+<ol>
+<li><strong><code>USAGE.md</code>:</strong></li>
+</ol>
+<ul>
+<li>Detail real end-to-end scenarios, pipelines, and verifiable CLI commands.</li>
+<li>Include a troubleshooting section based on common errors.</li>
+</ul>
+<h3 id="phase-4-reconcile-changelogmd-and-release-notesmd">Phase 4: Reconcile <code>CHANGELOG.md</code> and <code>RELEASE-NOTES.md</code></h3>
+<ol>
+<li><strong><code>CHANGELOG.md</code>:</strong></li>
+</ol>
+<ul>
+<li>Structure in compliance with Keep a Changelog.</li>
+<li>Map recent commits and fill the <code>Added</code>, <code>Changed</code>, <code>Fixed</code>, <code>Deprecated</code>, <code>Removed</code>, <code>Security</code> sections.</li>
+</ul>
+<ol>
+<li><strong><code>RELEASE-NOTES.md</code>:</strong></li>
+</ol>
+<ul>
+<li>Summarize the main milestones and business value delivered in the version.</li>
+<li>Document breaking changes explicitly.</li>
+<li>Add a migration guide with step-by-step instructions and a count of mitigated ADRs/debts.</li>
+</ul>
+<h3 id="phase-5-reconcile-statemd-agent-memory">Phase 5: Reconcile <code>STATE.md</code> (Agent Memory)</h3>
+<ol>
+<li><strong><code>STATE.md</code>:</strong></li>
+</ol>
+<ul>
+<li>Record the current phase of the lifecycle and active branch.</li>
+<li>Insert a consolidated table of all ADRs (extracted from <code>ADR-INDEX.md</code>).</li>
+<li>Insert a table of all open technical debts (extracted from <code>tech-debt-registry.json</code>).</li>
+<li>Summarize the recent session history and point to clear next steps.</li>
+</ul>
+<h3 id="phase-6-reconcile-agentsmd-and-geminimd">Phase 6: Reconcile <code>AGENTS.md</code> and <code>GEMINI.md</code></h3>
+<ol>
+<li><strong><code>AGENTS.md</code> & <code>GEMINI.md</code>:</strong></li>
+</ol>
+<ul>
+<li>Document operational invariants of the repository (Hard-Gates of ER, prohibition of drive-by refactorings, scope isolation).</li>
+<li>List official CLI governance commands (<code>audit.py . --archive</code>, <code>audit.py . --register-debt</code>).</li>
+<li>Ensure agent execution rules reflect available tools and skills.</li>
+</ul>
+<h3 id="phase-7-compliance-report--handoff">Phase 7: Compliance Report & Handoff</h3>
+<ol>
+<li>Generate or update the report in <code>docs/DOCUMENTATION_AUDIT_REPORT.md</code> presenting:</li>
+</ol>
+<ul>
+<li>A table with the 6 pillars and actions taken (<code>CREATE</code> / <code>UPDATE</code> / <code>MAINTAIN</code>).</li>
+<li>Compliance Score of document integrity.</li>
+<li>Highlight any remaining gaps.</li>
+</ul>
+<hr>
+<h2 id="sub-domain--component-tech-docs-generator">Sub-Domain / Component: <code>tech-docs-generator</code></h2>
+<h1 id="technical-documentation-generator">Technical Documentation Generator</h1>
+<p>Generates technical documentation from in-depth analysis of the actual codebase (API references, system architecture, component guides, and integration manuals).</p>
+<h3 id="ultra-high-quality-grade-patterns">Ultra High-Quality Grade Patterns:</h3>
+<ul>
+<li><strong>Zero Fabrications:</strong> Extract examples from the real codebase exclusively, never invent signatures or imports that do not exist.</li>
+<li><strong>Complete Typing:</strong> Document all parameters, return types, raised exceptions, and error contracts.</li>
+<li><strong>Visual Diagrams:</strong> Always include Mermaid diagrams (<code>sequenceDiagram</code>, <code>graph TD</code>) when describing data flows or architecture.</li>
+</ul>
+<hr>
+<h2 id="available-canonical-templates">Available Canonical Templates</h2>
+<div class="table-wrapper"><table><tr><th>Template</th><th>Location</th><th>Corresponding Pillar</th><th>Copy Command</th></tr><tr><td><code>readme.template.md</code></td><td><code>templates/readme.template.md</code></td><td><code>README.md</code></td><td><code>cp templates/readme.template.md README.md</code></td></tr><tr><td><code>changelog.template.md</code></td><td><code>templates/changelog.template.md</code></td><td><code>CHANGELOG.md</code></td><td><code>cp templates/changelog.template.md CHANGELOG.md</code></td></tr><tr><td><code>usage.template.md</code></td><td><code>templates/usage.template.md</code></td><td><code>USAGE.md</code></td><td><code>cp templates/usage.template.md USAGE.md</code></td></tr><tr><td><code>release-notes.template.md</code></td><td><code>templates/release-notes.template.md</code></td><td><code>RELEASE-NOTES.md</code></td><td><code>cp templates/release-notes.template.md RELEASE-NOTES.md</code></td></tr><tr><td><code>state.template.md</code></td><td><code>templates/state.template.md</code></td><td><code>STATE.md</code></td><td><code>cp templates/state.template.md STATE.md</code></td></tr><tr><td><code>agents.template.md</code></td><td><code>templates/agents.template.md</code></td><td><code>AGENTS.md</code></td><td><code>cp templates/agents.template.md AGENTS.md</code></td></tr><tr><td><code>gemini.template.md</code></td><td><code>templates/gemini.template.md</code></td><td><code>GEMINI.md</code></td><td><code>cp templates/gemini.template.md GEMINI.md</code></td></tr></table></div>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="skeletal--generic-documentation">Skeletal / Generic Documentation</h4>
+<p><strong>What is it:</strong> Creating files with short text, unfilled placeholders (e.g., <code>{{TODO}}</code>, "Add text here"), or documentation that does not reflect the actual repository state. <strong>Why is it bad:</strong> Creates unnecessary noise and degrades AI agent performance. <strong>How to avoid:</strong> All generated documentation must be dense, rich in facts, with real data extracted from code, Git, ADRs, and registries.</p>
+<h4 id="partial-reconciliation-ignoring-pillars">Partial Reconciliation (Ignoring Pillars)</h4>
+<p><strong>What is it:</strong> Updating only the README and ignoring <code>CHANGELOG.md</code>, <code>USAGE.md</code>, <code>RELEASE-NOTES.md</code>, <code>STATE.md</code>, or <code>AGENTS.md</code>. <strong>Why is it bad:</strong> Creates desynchronization between the agent memory, version history, and operational instructions. <strong>How to avoid:</strong> Systematically audit the 6 pillars in every invocation.</p>
+<h4 id="fabricating-code-examples">Fabricating Code Examples</h4>
+<p><strong>What is it:</strong> Inventing functions, imports, or routes that do not exist in the codebase. <strong>Why is it bad:</strong> Users and agents copy examples that fail immediately. <strong>How to avoid:</strong> Always read the real code source before writing examples for <code>USAGE.md</code> or API docs.</p>
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="changelog-out-of-standard">Changelog Out of Standard</h4>
+<p><strong>What is it:</strong> Listing commits without categorization (<code>Added</code>, <code>Changed</code>, <code>Fixed</code>). <strong>Why is it bad:</strong> Difficult to read for humans and automation tools. <strong>How to avoid:</strong> Follow the Keep a Changelog standard.</p>
+<h4 id="statemd-disconnected-from-tech-debt-registry">STATE.md Disconnected from Tech Debt Registry</h4>
+<p><strong>What is it:</strong> Listing technical debts in <code>STATE.md</code> that do not exist in <code>tech-debt-registry.json</code> or vice versa. <strong>Why is it bad:</strong> Breaks the integrity of the single source of truth. <strong>How to avoid:</strong> Extract the debt table directly from the official JSON.</p>
+<hr>
+<h2 id="checklists">Checklists</h2>
+<h3 id="reconciliation-checklist-of-the-6-pillars">Reconciliation Checklist of the 6 Pillars</h3>
+<ul>
+<li>[ ] <strong><code>README.md</code>:</strong> Badges, overview, architecture (Mermaid), quick start, and directory tree map present and updated.</li>
+<li>[ ] <strong><code>CHANGELOG.md</code>:</strong> Versions and categories (Added, Changed, Fixed, etc.) synchronized with real commits.</li>
+<li>[ ] <strong><code>USAGE.md</code>:</strong> Practical guide with real commands, usage scenarios, and troubleshooting.</li>
+<li>[ ] <strong><code>RELEASE-NOTES.md</code>:</strong> Highlights, breaking changes, migration guide, and metrics consolidated.</li>
+<li>[ ] <strong><code>STATE.md</code>:</strong> Agent memory updated with active branch, ADRs, and technical debt registry.</li>
+<li>[ ] <strong><code>AGENTS.md</code> / <code>GEMINI.md</code>:</strong> Operational invariants, hard-gates, and CLI reference for AI agents synchronized.</li>
+<li>[ ] <strong>Compliance Report:</strong> <code>docs/DOCUMENTATION_AUDIT_REPORT.md</code> generated documenting changes.</li>
+</ul>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://keepachangelog.com/pt-BR/1.0.0/">Keep a Changelog</a></li>
+<li><a href="https://semver.org/lang/pt-BR/">Semantic Versioning 2.0.0</a></li>
+<li><a href="../../skills/adr-generator/index.html">ADR Generator</a> — for ADR lifecycle</li>
+<li><a href="../../skills/adr-archive/index.html">ADR Archive</a> — for auditing and governance of artifacts</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/agents.template.html">agents.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/changelog.template.html">changelog.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/gemini.template.html">gemini.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/readme.template.html">readme.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/release-notes.template.html">release-notes.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/state.template.html">state.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/usage.template.html">usage.template.md</a></li>
+</ul>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

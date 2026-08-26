@@ -1,5 +1,12 @@
 ---
-implementation_status: PENDENTE
+id: ADR-{{id}}
+type: adr
+title: "{{title}}"
+created: {{date}}
+updated: {{date}}
+implementation_status: PENDING
+depends_on: []
+# ADR Template
 ---
 
 # ADR-{{id}}: {{title}}
@@ -7,65 +14,68 @@ implementation_status: PENDENTE
 ## Status
 {{status}}
 
-## Contexto
+## Context
 
-### Diagnóstico
+### Diagnosis
 
-| Capacidade | Status | Evidence |
+| Capacity | Status | Evidence |
 |------------|--------|----------|
 | {{capability_1}} | {{status_1}} | {{evidence_1}} |
 | {{capability_2}} | {{status_2}} | {{evidence_2}} |
 
-### Consequências da Lacuna
+### Consequences of the Gap
 
 - {{consequence_1}}
 - {{consequence_2}}
 
-## Decisão
+## Decision
 
 {{decision}}
 
-### Arquitetura da Solução
+### Solution Architecture
 
 ```
-{{contexto}} → {{ação}} → {{resultado}}
+{{context_summary}} → {{action_summary}} → {{result_summary}}
 ```
 
-### Detalhes da Implementação
+### Implementation Details
 
 **Trigger:** {{trigger}}
 
 **Jobs:**
 {{jobs}}
 
-## Alternativas Consideradas
+## Considered Alternatives
 
-### Alternativa A: {{alt_a_title}}
-- **Prós**: {{alt_a_pros}}
-- **Contras**: {{alt_a_cons}}
+> A minimum of 2 alternatives — see anti-pattern "ADR without Alternatives". This applies even when the decision seems obvious in retrospect.
 
-### Alternativa B: {{alt_b_title}}
-- **Prós**: {{alt_b_pros}}
-- **Contras**: {{alt_b_cons}}
+### Alternative A: {{alt_a_title}}
+- **Pros**: {{alt_a_pros}}
+- **Cons**: {{alt_a_cons}}
 
-### Alternativa C: {{alt_c_title}} (Escolhida)
-- **Prós**: {{alt_c_pros}}
-- **Contras**: {{alt_c_cons}}
+### Alternative B: {{alt_b_title}}
+- **Pros**: {{alt_b_pros}}
+- **Cons**: {{alt_b_cons}}
 
-## Consequências
+### Alternative C: {{alt_c_title}} (Chosen)
+- **Pros**: {{alt_c_pros}}
+- **Cons**: {{alt_c_cons}}
 
-### Positivas
+## Consequences
+
+### Positive
 - {{positive_1}}
 - {{positive_2}}
 
-### Negativas
+### Negative
 - {{negative_1}}
 - {{negative_2}}
 
-### Riscos
-- **Risco**: {{risk}}
-  - **Mitigação**: {{mitigation}}
+### Risks
+- **Risk**: {{risk}}
+  - **Mitigation**: {{mitigation}}
 
-## Referências
+## References
 - {{reference_1}}
 - {{reference_2}}
+- Evidence Record: (pending — see Phase 5 of the adr-generator)

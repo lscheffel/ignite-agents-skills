@@ -1,63 +1,66 @@
 ---
-id: ADR-XXX-PI
+id: ADR-{{id}}-PI
 type: pi
-title: Implementation Plan - [Título da Decisão]
-created: YYYY-MM-DD
-updated: YYYY-MM-DD
-adr_ref: ADR-XXX
+title: "Implementation Plan - {{title}}"
+created: {{date}}
+updated: {{date}}
+adr_ref: ADR-{{id}}
 ---
 
-# ADR-XXX-PI: Implementation Plan - [Título da Decisão]
+# ADR-{{id}}-PI: Implementation Plan - {{title}}
 
-> Referência: [ADR-XXX](./ADR-XXX.md) | [ADR-XXX-TODO](./ADR-XXX-TODO.md)
+> Reference: [ADR-{{id}}](./ADR-{{id}}.md) | [ADR-{{id}}-TODO](./ADR-{{id}}-TODO.md)
+>
+> This artifact only exists in Tiers 2 and 3 (SOTA Quad / Direct Emergency).
+> If you are in Tier 0 or 1, stop at the Tríade — do not generate this file.
 
-## 1. Visão Geral (Overview)
+## 1. Overview
 
-Breve sumário do objetivo técnico deste plano. O que o agente autônomo está prestes a codificar e por quê?
+Brief summary of the technical objective of this plan. What autonomous agent is about to code and why?
 
-## 2. Padrões de Aceitação e Qualidade (Quality Standards)
+## 2. Quality Standards
 
-- **Test Coverage:** Exigência de cobertura (ex: > 90% para a nova feature).
-- **Linter/Typing:** Padrão a ser respeitado (ex: Strict mypy, ruff).
-- **Design Patterns:** Padrões a serem aplicados (ex: Repository Pattern, Strategy).
+- **Test Coverage:** Coverage requirement (e.g., > 90% for the new feature).
+- **Linter/Typing:** Standard to be followed (e.g., Strict mypy, ruff).
+- **Design Patterns:** Patterns to be applied (e.g., Repository Pattern, Strategy).
 
-## 3. Plano de Execução Granular (TDD & Step-by-Step)
+## 3. Granular Execution Plan (TDD & Step-by-Step)
 
-A implementação deve ser dividida em passos lógicos, auto-contidos e validados por testes ANTES da implementação do código-fonte (TDD).
+Implementation must be divided into logical, self-contained steps, validated by tests before implementing the source code (TDD).
 
-### Fase [A/B/C]: [Nome da Fase]
+### Phase [A/B/C]: [Phase Name]
 
-#### Passo [X.Y]: [Título do Passo - Ex: Criar Abstração de Repositório]
+#### Step [X.Y]: [Step Title - e.g., Create Repository Abstraction]
 
-**1. TDD Specs (O que testar primeiro):**
-- **Arquivo de Teste:** `tests/caminho/para/test_arquivo.py`
-- **Mocks Necessários:** Ex: Mock do banco de dados, Fixtures.
-- **Asserções Esperadas:** O que caracteriza o sucesso deste teste? (Ex: Deve levantar exceção X quando Y ocorrer).
-- **Comando de Teste:** `pytest tests/caminho/para/test_arquivo.py -v`
+**1. TDD Specs (What to test first):**
+- **Test File:** `tests/path/to/test_file.py`
+- **Required Mocks:** e.g., Mock database, Fixtures.
+- **Expected Assertions:** What characterizes the success of this test? (e.g., Must raise exception X when Y occurs).
+- **Test Command:** `pytest tests/path/to/test_file.py -v`
 
-**2. Code Specs (Implementação da regra de negócio):**
-- **Arquivos Afetados:** `src/caminho/para/arquivo.py`
-- **Assinaturas/Interfaces:**
+**2. Code Specs (Implementation of business rule):**
+- **Affected Files:** `src/path/to/file.py`
+- **Signatures/Interfaces:**
   ```python
-  class INomeDaInterface(Protocol):
-      async def metodo_x(self, param: str) -> bool: ...
+  class InterfaceName(Protocol):
+      async def method_x(self, param: str) -> bool: ...
   ```
-- **Lógica e Constantes:** Instruções precisas sobre como preencher a lógica.
+- **Logic and Constants:** Precise instructions on how to fill in the logic.
 
-**3. Integração e Comandos de Terminal:**
-- Bibliotecas a instalar: `pip install lib-X`
-- Geração de types/migrations: `alembic revision --autogenerate -m "..."`
+**3. Integration and Terminal Commands:**
+- Libraries to install: `pip install lib-X`
+- Generation of types/migrations: `alembic revision --autogenerate -m "..."`
 
-**4. Edge Cases e Rollback (Prevenção de Falhas):**
-- O que o agente deve fazer se a biblioteca X não estiver na versão correta?
-- O que fazer se o teste falhar por falta de dependência circular? (Plano de Rollback / Fix).
+**4. Edge Cases and Rollback (Failure Prevention):**
+- What should the agent do if library X is not in the correct version?
+- What to do if the test fails due to a circular dependency? (Rollback/Fix Plan).
 
 ---
-*(Repetir a estrutura de "Passo X.Y" para cada micro-tarefa da fase correspondente no arquivo TODO).*
+*(Repeat the "Step X.Y" structure for each micro-task in the corresponding phase in the TODO file. As in the TODO, the number of Phases and Steps is elastic — follow the real scope, not a fixed count.)*
 
-## 4. Validação Contínua (Continuous Validation)
+## 4. Continuous Validation
 
-Comandos exatos que o agente deve rodar no terminal para validar que o contrato de execução inteiro (build, lint, test) não foi quebrado após a conclusão de todos os passos:
+Exact commands that the agent must run in the terminal to validate that the entire execution contract (build, lint, test) has not been broken after completing all steps:
 
 ```bash
 # 1. Typecheck
@@ -66,6 +69,10 @@ mypy src/
 # 2. Linting
 ruff check src/
 
-# 3. Test Suite da Feature
-pytest tests/caminho/da/feature/
+# 3. Feature Test Suite
+pytest tests/path/to/feature/
 ```
+
+## 5. Handoff for Closure
+
+After completing all steps and Continuous Validation passes, this PI is ready to turn into an input for the Evidence Record (ER) generated by `implementation` or `adr-archive` — do not close the Decision Set by marking the TODO as completed (see Phase 5 of the SKILL.md in the adr-generator).

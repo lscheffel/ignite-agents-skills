@@ -410,49 +410,49 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">observability</a> &rsaquo; templates &rsaquo; logging-spec</div>
   </nav>
   <div class="content">
-    <h1 id="especificao-de-logging">Especificação de Logging</h1>
-<h2 id="viso-geral">Visão Geral</h2>
-<p>Documento de referência para logging estruturado no projeto.</p>
-<h2 id="formato">Formato</h2>
-<p>Todos os logs devem ser emitidos em formato JSON.</p>
-<h2 id="campos-obrigatrios">Campos Obrigatórios</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr><tr><td><code>timestamp</code></td><td>ISO 8601</td><td>Momento do evento</td><td><code>2025-01-15T10:30:00Z</code></td></tr><tr><td><code>level</code></td><td>string</td><td>Nível do log</td><td><code>info</code>, <code>error</code>, <code>warn</code>, <code>debug</code></td></tr><tr><td><code>message</code></td><td>string</td><td>Mensagem descritiva</td><td><code>User created successfully</code></td></tr><tr><td><code>service</code></td><td>string</td><td>Nome do serviço</td><td><code>user-service</code></td></tr></table></div>
-<h2 id="campos-de-contexto">Campos de Contexto</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr><tr><td><code>traceId</code></td><td>string</td><td>ID do trace distribuído</td><td><code>abc123def456</code></td></tr><tr><td><code>userId</code></td><td>string</td><td>ID do usuário (quando aplicável)</td><td><code>user_123</code></td></tr><tr><td><code>environment</code></td><td>string</td><td>Ambiente de execução</td><td><code>production</code>, <code>staging</code></td></tr><tr><td><code>requestId</code></td><td>string</td><td>ID da requisição</td><td><code>req_789</code></td></tr></table></div>
-<h2 id="nveis-de-log">Níveis de Log</h2>
+    <h1 id="logging-specification">Logging Specification</h1>
+<h2 id="overview">Overview</h2>
+<p>Reference document for structured logging in the project.</p>
+<h2 id="format">Format</h2>
+<p>All logs must be emitted in JSON format.</p>
+<h2 id="required-fields">Required Fields</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Type</th><th>Description</th><th>Example</th></tr><tr><td><code>timestamp</code></td><td>ISO 8601</td><td>Event timestamp</td><td><code>2025-01-15T10:30:00Z</code></td></tr><tr><td><code>level</code></td><td>string</td><td>Log level</td><td><code>info</code>, <code>error</code>, <code>warn</code>, <code>debug</code></td></tr><tr><td><code>message</code></td><td>string</td><td>Descriptive message</td><td><code>User created successfully</code></td></tr><tr><td><code>service</code></td><td>string</td><td>Service name</td><td><code>user-service</code></td></tr></table></div>
+<h2 id="context-fields">Context Fields</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Type</th><th>Description</th><th>Example</th></tr><tr><td><code>traceId</code></td><td>string</td><td>Distributed trace ID</td><td><code>abc123def456</code></td></tr><tr><td><code>userId</code></td><td>string</td><td>User ID (when applicable)</td><td><code>user_123</code></td></tr><tr><td><code>environment</code></td><td>string</td><td>Execution environment</td><td><code>production</code>, <code>staging</code></td></tr><tr><td><code>requestId</code></td><td>string</td><td>Request ID</td><td><code>req_789</code></td></tr></table></div>
+<h2 id="log-levels">Log Levels</h2>
 <h3 id="error">ERROR</h3>
 <ul>
-<li><strong>Uso:</strong> Falhas que precisam de ação imediata</li>
-<li><strong>Exemplos:</strong> Falha de conexão, timeout, erro de validação crítica</li>
-<li><strong>Ação:</strong> Investigar imediatamente</li>
+<li><strong>Usage:</strong> Critical failures requiring immediate action</li>
+<li><strong>Examples:</strong> Connection failure, timeout, critical validation error</li>
+<li><strong>Action:</strong> Investigate immediately</li>
 </ul>
 <h3 id="warn">WARN</h3>
 <ul>
-<li><strong>Uso:</strong> Anormalidades sem falha</li>
-<li><strong>Exemplos:</strong> Retry, fallback, depreciação</li>
-<li><strong>Ação:</strong> Monitorar, pode precisar de ação futura</li>
+<li><strong>Usage:</strong> Anomalies without failure</li>
+<li><strong>Examples:</strong> Retry, fallback, deprecation</li>
+<li><strong>Action:</strong> Monitor, may require future action</li>
 </ul>
 <h3 id="info">INFO</h3>
 <ul>
-<li><strong>Uso:</strong> Eventos significativos do negócio</li>
-<li><strong>Exemplos:</strong> Criação de usuário, pagamento processado</li>
-<li><strong>Ação:</strong> Auditoria e rastreabilidade</li>
+<li><strong>Usage:</strong> Significant business events</li>
+<li><strong>Examples:</strong> User creation, payment processing</li>
+<li><strong>Action:</strong> Audit and trackability</li>
 </ul>
 <h3 id="debug">DEBUG</h3>
 <ul>
-<li><strong>Uso:</strong> Detalhes para desenvolvimento</li>
-<li><strong>Exemplos:</strong> Query SQL, payloads, variáveis</li>
-<li><strong>Ação:</strong> Apenas em ambiente de dev/staging</li>
+<li><strong>Usage:</strong> Development details</li>
+<li><strong>Examples:</strong> SQL queries, payloads, variables</li>
+<li><strong>Action:</strong> Only in dev/staging environments</li>
 </ul>
-<h2 id="sanitizao-de-dados">Sanitização de Dados</h2>
-<h3 id="dados-que-nunca-devem-ser-logados">Dados que NUNCA devem ser logados:</h3>
+<h2 id="data-sanitization">Data Sanitization</h2>
+<h3 id="data-that-must-not-be-logged">Data that MUST NOT be logged:</h3>
 <ul>
-<li>Senhas ou tokens de autenticação</li>
-<li>Dados pessoais (CPF, RG, email completo)</li>
-<li>Números de cartão de crédito</li>
-<li>Chaves de API</li>
+<li>Passwords or authentication tokens</li>
+<li>Personal data (CPF, RG, full email)</li>
+<li>Credit card numbers</li>
+<li>API keys</li>
 </ul>
-<h3 id="regras-de-sanitizao">Regras de Sanitização:</h3>
+<h3 id="sanitization-rules">Sanitization Rules:</h3>
 <pre data-lang="typescript"><code>function sanitize(data: Record&lt;string, any&gt;): Record&lt;string, any&gt; {
   const sensitiveFields = [&#x27;password&#x27;, &#x27;token&#x27;, &#x27;secret&#x27;, &#x27;cpf&#x27;, &#x27;creditCard&#x27;];
   const sanitized = { ...data };
@@ -465,8 +465,8 @@
   
   return sanitized;
 }</code></pre>
-<h2 id="exemplos">Exemplos</h2>
-<h3 id="log-de-request">Log de Request</h3>
+<h2 id="examples">Examples</h2>
+<h3 id="request-log">Request Log</h3>
 <pre data-lang="json"><code>{
   &quot;timestamp&quot;: &quot;2025-01-15T10:30:00Z&quot;,
   &quot;level&quot;: &quot;info&quot;,
@@ -478,7 +478,7 @@
   &quot;statusCode&quot;: 201,
   &quot;duration&quot;: 45
 }</code></pre>
-<h3 id="log-de-erro">Log de Erro</h3>
+<h3 id="error-log">Error Log</h3>
 <pre data-lang="json"><code>{
   &quot;timestamp&quot;: &quot;2025-01-15T10:30:00Z&quot;,
   &quot;level&quot;: &quot;error&quot;,
@@ -489,16 +489,16 @@
   &quot;host&quot;: &quot;postgres-primary&quot;,
   &quot;retryCount&quot;: 3
 }</code></pre>
-<h2 id="configurao-por-ambiente">Configuração por Ambiente</h2>
-<div class="table-wrapper"><table><tr><th>Ambiente</th><th>Nível</th><th>Retenção</th><th>Destino</th></tr><tr><td>Development</td><td>debug</td><td>7 dias</td><td>Console</td></tr><tr><td>Staging</td><td>info</td><td>30 dias</td><td>ELK Stack</td></tr><tr><td>Production</td><td>info</td><td>90 dias</td><td>ELK + S3</td></tr></table></div>
-<h2 id="checklist-de-implementao">Checklist de Implementação</h2>
+<h2 id="environment-configuration">Environment Configuration</h2>
+<div class="table-wrapper"><table><tr><th>Environment</th><th>Level</th><th>Retention</th><th>Destination</th></tr><tr><td>Development</td><td>debug</td><td>7 days</td><td>Console</td></tr><tr><td>Staging</td><td>info</td><td>30 days</td><td>ELK Stack</td></tr><tr><td>Production</td><td>info</td><td>90 days</td><td>ELK + S3</td></tr></table></div>
+<h2 id="implementation-checklist">Implementation Checklist</h2>
 <ul>
-<li>[ ] Logger centralizado configurado</li>
-<li>[ ] Formato JSON definido</li>
-<li>[ ] Campos obrigatórios implementados</li>
-<li>[ ] Sanitização de dados sensíveis</li>
-<li>[ ] Níveis de log configurados por ambiente</li>
-<li>[ ] Retenção de logs documentada</li>
+<li>[ ] Centralized logger configured</li>
+<li>[ ] JSON format defined</li>
+<li>[ ] Required fields implemented</li>
+<li>[ ] Sensitive data sanitized</li>
+<li>[ ] Log levels configured by environment</li>
+<li>[ ] Log retention documented</li>
 </ul>
   </div>
 <footer>

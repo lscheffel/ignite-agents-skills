@@ -410,46 +410,46 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">implementation</a> &rsaquo; examples &rsaquo; complex-change</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-mudana-complexa-multi-adr">Exemplo: Mudança Complexa (Multi-ADR)</h1>
-<blockquote>Exemplo de implementação governada para uma mudança que envolve múltiplas ADRs e 10+ tarefas.</blockquote>
+    <h1 id="example-complex-change-multi-adr">Example: Complex Change (Multi-ADR)</h1>
+<blockquote>Example of a governed implementation for a change that involves multiple ADRs and 10+ tasks.</blockquote>
 <hr>
-<h2 id="contexto">Contexto</h2>
+<h2 id="context">Context</h2>
 <ul>
-<li><strong>ADR principal:</strong> ADR-004 (Implementação das Recomendações da Ultra-Auditoria)</li>
-<li><strong>ADR secundária:</strong> ADR-005 (Skill <code>implementation</code>)</li>
-<li><strong>Blueprint:</strong> ADR-004-BP.md (7 tarefas Fase A + 6 skills Fase B)</li>
-<li><strong>TODO:</strong> ADR-004-TODO.md (124 tarefas, 3 fases)</li>
+<li><strong>Primary ADR:</strong> ADR-004 (Implementation of Ultra-Audit Recommendations)</li>
+<li><strong>Secondary ADR:</strong> ADR-005 (Skill implementation)</li>
+<li><strong>Blueprint:</strong> ADR-004-BP.md (7 tasks Phase A + 6 skills Phase B)</li>
+<li><strong>TODO:</strong> ADR-004-TODO.md (124 tasks, 3 phases)</li>
 </ul>
 <hr>
-<h2 id="fluxo-completo">Fluxo Completo</h2>
+<h2 id="complete-flow">Complete Flow</h2>
 <h3 id="1-artifact-resolution">1. Artifact Resolution</h3>
 <pre data-lang="bash"><code>ADR_PATH=&quot;docs/adr/ADR-004.md&quot;
 BP_PATH=&quot;docs/adr/ADR-004-BP.md&quot;
 TODO_PATH=&quot;docs/adr/ADR-004-TODO.md&quot;</code></pre>
-<p><strong>Resultado:</strong></p>
+<p><strong>Result:</strong></p>
 <ul>
-<li>ADR existe ✅</li>
-<li>Blueprint existe ✅</li>
-<li>TODO existe ✅</li>
-<li>124 tarefas identificadas</li>
-<li>3 fases: Débitos (7), Skills (6), Validação (1)</li>
+<li>ADR exists ✅</li>
+<li>Blueprint exists ✅</li>
+<li>TODO exists ✅</li>
+<li>124 tasks identified</li>
+<li>3 phases: Debts (7), Skills (6), Validation (1)</li>
 </ul>
 <hr>
 <h3 id="2-execution-contract">2. Execution Contract</h3>
-<pre data-lang="markdown"><code>## Artefatos
-| Artefato | Status | Coerente |
-|----------|--------|----------|
-| ADR-004.md | Aceito | ✅ |
-| ADR-004-BP.md | Existente | ✅ |
-| ADR-004-TODO.md | Existente | ✅ |
+<pre data-lang="markdown"><code>## Artifacts
+| Artifact | Status | Consistent |
+|----------|--------|-------------|
+| ADR-004.md | Accepted | ✅ |
+| ADR-004-BP.md | Exists | ✅ |
+| ADR-004-TODO.md | Exists | ✅ |
 
-## Ambiente
-| Campo | Valor |
+## Environment
+| Field | Value |
 |-------|-------|
 | Branch | feature/adr-004-audit-fixes |
-| Workspace limpo | Sim |
-| Arquivos impactados | 20+ skills, index.json, CI workflow |</code></pre>
-<p><strong>Contrato validado ✅</strong></p>
+| Clean Workspace | Yes |
+| Affected Files | 20+ skills, index.json, CI workflow |</code></pre>
+<p><strong>Contract validated ✅</strong></p>
 <hr>
 <h3 id="3-change-plan-dag">3. Change Plan (DAG)</h3>
 <pre data-lang="mermaid"><code>graph TD
@@ -459,7 +459,7 @@ TODO_PATH=&quot;docs/adr/ADR-004-TODO.md&quot;</code></pre>
     A1 --&gt; B4[api-design]
     A1 --&gt; B5[observability]
     A1 --&gt; B6[refactoring]
-    A2[CHANGELOG] --&gt; C1[Validação]
+    A2[CHANGELOG] --&gt; C1[Validation]
     A3[Renomear arch-review] --&gt; C1
     A4[Desambiguar planning] --&gt; C1
     A5[Grafo related] --&gt; C1
@@ -471,56 +471,56 @@ TODO_PATH=&quot;docs/adr/ADR-004-TODO.md&quot;</code></pre>
     B4 --&gt; C1
     B5 --&gt; C1
     B6 --&gt; C1</code></pre>
-<p><strong>Ordem de execução:</strong></p>
-<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Paralelizável?</th></tr><tr><td>1</td><td>A1-A7 (débitos)</td><td>Sim (todas independentes)</td></tr><tr><td>2</td><td>B1-B6 (skills)</td><td>Não (sequencial, cada uma depende de A1)</td></tr><tr><td>3</td><td>C1 (validação)</td><td>Não (depende de todas)</td></tr></table></div>
+<p><strong>Execution order:</strong></p>
+<div class="table-wrapper"><table><tr><th>Phase</th><th>Tasks</th><th>Parallelizable?</th></tr><tr><td>1</td><td>A1-A7 (debts)</td><td>Yes (all independent)</td></tr><tr><td>2</td><td>B1-B6 (skills)</td><td>No (sequential, each depends on A1)</td></tr><tr><td>3</td><td>C1 (validation)</td><td>No (depends on all)</td></tr></table></div>
 <hr>
-<h3 id="4-execution-loop-resumo">4. Execution Loop (resumo)</h3>
-<h4 id="fase-1-dbitos-tcnicos-7-tarefas">Fase 1: Débitos Técnicos (7 tarefas)</h4>
-<div class="table-wrapper"><table><tr><th>Tarefa</th><th>Estado</th><th>Duração</th><th>Validações</th></tr><tr><td>A1: CI validate-skill.sh</td><td>✅</td><td>30min</td><td>CI passa</td></tr><tr><td>A2: CHANGELOG v2.0.x</td><td>✅</td><td>20min</td><td>Formato OK</td></tr><tr><td>A3: Renomear arch-review</td><td>✅</td><td>30min</td><td>0 refs quebradas</td></tr><tr><td>A4: Desambiguar planning</td><td>✅</td><td>20min</td><td>Cross-refs OK</td></tr><tr><td>A5: Grafo related_skills</td><td>✅</td><td>10min</td><td>Grafo conexo</td></tr><tr><td>A6: Checklists/</td><td>✅</td><td>15min</td><td>Pasta existe</td></tr><tr><td>A7: Peer review</td><td>✅</td><td>10min</td><td>Nota presente</td></tr></table></div>
-<p><strong>Fase 1 concluída ✅ (2h15min)</strong></p>
+<h3 id="4-execution-loop-summary">4. Execution Loop (summary)</h3>
+<h4 id="phase-1-technical-debts-7-tasks">Phase 1: Technical Debts (7 tasks)</h4>
+<div class="table-wrapper"><table><tr><th>Task</th><th>Status</th><th>Duration</th><th>Validations</th></tr><tr><td>A1: CI validate-skill.sh</td><td>✅</td><td>30min</td><td>CI passes</td></tr><tr><td>A2: CHANGELOG v2.0.x</td><td>✅</td><td>20min</td><td>Format OK</td></tr><tr><td>A3: Renomear arch-review</td><td>✅</td><td>30min</td><td>0 broken refs</td></tr><tr><td>A4: Desambiguar planning</td><td>✅</td><td>20min</td><td>Cross-refs OK</td></tr><tr><td>A5: Grafo related_skills</td><td>✅</td><td>10min</td><td>Graph connected</td></tr><tr><td>A6: Checklists/</td><td>✅</td><td>15min</td><td>Folder exists</td></tr><tr><td>A7: Peer review</td><td>✅</td><td>10min</td><td>Note present</td></tr></table></div>
+<p><strong>Phase 1 completed ✅ (2h15min)</strong></p>
 <hr>
-<h4 id="fase-2-skills-novas-6-skills">Fase 2: Skills Novas (6 skills)</h4>
-<div class="table-wrapper"><table><tr><th>Skill</th><th>Estado</th><th>Linhas</th><th>Templates</th><th>Validação</th></tr><tr><td>security-review</td><td>✅</td><td>285</td><td>3</td><td>validate-skill.sh passa</td></tr><tr><td>agent-orchestration</td><td>✅</td><td>270</td><td>3</td><td>validate-skill.sh passa</td></tr><tr><td>data-modeling</td><td>✅</td><td>260</td><td>3</td><td>validate-skill.sh passa</td></tr><tr><td>api-design</td><td>✅</td><td>245</td><td>3</td><td>validate-skill.sh passa</td></tr><tr><td>observability</td><td>✅</td><td>255</td><td>3</td><td>validate-skill.sh passa</td></tr><tr><td>refactoring</td><td>✅</td><td>240</td><td>3</td><td>validate-skill.sh passa</td></tr></table></div>
-<p><strong>Fase 2 concluída ✅ (14h)</strong></p>
+<h4 id="phase-2-new-skills-6-skills">Phase 2: New Skills (6 skills)</h4>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Status</th><th>Lines</th><th>Templates</th><th>Validation</th></tr><tr><td>security-review</td><td>✅</td><td>285</td><td>3</td><td>validate-skill.sh passes</td></tr><tr><td>agent-orchestration</td><td>✅</td><td>270</td><td>3</td><td>validate-skill.sh passes</td></tr><tr><td>data-modeling</td><td>✅</td><td>260</td><td>3</td><td>validate-skill.sh passes</td></tr><tr><td>api-design</td><td>✅</td><td>245</td><td>3</td><td>validate-skill.sh passes</td></tr><tr><td>observability</td><td>✅</td><td>255</td><td>3</td><td>validate-skill.sh passes</td></tr><tr><td>refactoring</td><td>✅</td><td>240</td><td>3</td><td>validate-skill.sh passes</td></tr></table></div>
+<p><strong>Phase 2 completed ✅ (14h)</strong></p>
 <hr>
-<h4 id="fase-3-validao-final">Fase 3: Validação Final</h4>
-<div class="table-wrapper"><table><tr><th>Validação</th><th>Resultado</th></tr><tr><td>validate-index.sh</td><td>✅ 20/20 skills</td></tr><tr><td>validate-skill.sh (todas)</td><td>✅ 0 erros</td></tr><tr><td>related_skills</td><td>✅ Grafo conexo</td></tr><tr><td>index.json</td><td>✅ 20 entradas</td></tr></table></div>
-<p><strong>Fase 3 concluída ✅ (30min)</strong></p>
+<h4 id="phase-3-final-validation">Phase 3: Final Validation</h4>
+<div class="table-wrapper"><table><tr><th>Validation</th><th>Result</th></tr><tr><td>validate-index.sh</td><td>✅ 20/20 skills</td></tr><tr><td>validate-skill.sh (all)</td><td>✅ 0 errors</td></tr><tr><td>related_skills</td><td>✅ Graph connected</td></tr><tr><td>index.json</td><td>✅ 20 entries</td></tr></table></div>
+<p><strong>Phase 3 completed ✅ (30min)</strong></p>
 <hr>
 <h3 id="5-documentation-synchronization">5. Documentation Synchronization</h3>
 <ul>
-<li>CHANGELOG.md: atualizado com v2.0.2 ✅</li>
-<li>README.md: atualizado com 20 skills ✅</li>
-<li>ADR-004.md: status "Aceito (Implementação concluída)" ✅</li>
-<li>ADR-004-TODO.md: todas as tarefas ✅</li>
+<li>CHANGELOG.md: updated with v2.0.2 ✅</li>
+<li>README.md: updated with 20 skills ✅</li>
+<li>ADR-004.md: status "Accepted (Implementation completed)" ✅</li>
+<li>ADR-004-TODO.md: all tasks ✅</li>
 </ul>
 <hr>
 <h3 id="6-execution-report">6. Execution Report</h3>
-<pre data-lang="markdown"><code>## Resumo
-| Campo | Valor |
+<pre data-lang="markdown"><code>## Summary
+| Field | Value |
 |-------|-------|
-| Duração total | ~16.5h |
-| Tarefas totais | 124 |
-| Concluídas | 124 |
-| Adiadas | 0 |
-| Bloqueadas | 0 |
-| Taxa de conclusão | 100% |
+| Total duration | ~16.5h |
+| Total tasks | 124 |
+| Completed | 124 |
+| Deferred | 0 |
+| Blocked | 0 |
+| Completion rate | 100% |
 
-## Validações
-| Validação | Resultado |
+## Validations
+| Validation | Result |
 |-----------|-----------|
 | validate-index.sh | ✅ |
 | validate-skill.sh (20 skills) | ✅ |
-| related_skills grafo | ✅ |</code></pre>
-<p><strong>Implementação concluída com sucesso ✅</strong></p>
+| related_skills graph | ✅ |</code></pre>
+<p><strong>Implementation completed successfully ✅</strong></p>
 <hr>
-<h2 id="lies">Lições</h2>
+<h2 id="lessons">Lessons</h2>
 <ol>
-<li><strong>Mudanças grandes benefitiam de DAG:</strong> a visualização das dependências evita execução fora de ordem</li>
-<li><strong>Fases paralelizáveis aceleram:</strong> a Fase 1 (débitos) foi toda paralelizável</li>
-<li><strong>Validação contínua evita retrabalho:</strong> cada skill foi validada individualmente antes de prosseguir</li>
-<li><strong>Execution Report documenta tudo:</strong> future reference para decisões similares</li>
-<li><strong>Múltiplas ADRs podem ser encadeadas:</strong> ADR-004 gerou ADR-005 como consequência</li>
+<li><strong>Large changes benefit from DAG:</strong> visualizing dependencies avoids out-of-order execution</li>
+<li><strong>Parallelizable phases accelerate:</strong> Phase 1 (debts) was entirely parallelizable</li>
+<li><strong>Continuous validation avoids rework:</strong> each skill was validated individually before proceeding</li>
+<li><strong>Execution Report documents everything:</strong> future reference for similar decisions</li>
+<li><strong>Multiple ADRs can be chained:</strong> ADR-004 generated ADR-005 as a consequence</li>
 </ol>
   </div>
 <footer>

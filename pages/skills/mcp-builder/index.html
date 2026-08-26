@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mcp-builder — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; mcp-builder</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: mcp-builder version: 1.0.0 description: 'Use when the user needs to build MCP (Model Context Protocol) servers — tool definitions, resource management, prompt templates, transport layers, and client integration. Triggers: user says "MCP", "MCP server", "model context protocol", building tools for AI clients, creating AI integrations.' domain: domain-stack triggers:</p>
+<ul>
+<li>mcp-builder</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>mcp-builder</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="mcp-builder">MCP Builder</h1>
+<h2 id="overview">Overview</h2>
+<p>Build production-quality MCP (Model Context Protocol) servers that expose tools, resources, and prompts to AI clients. This skill covers the full development lifecycle: tool definition, resource management, prompt templates, transport configuration (stdio, SSE), error handling, security hardening, testing, and client integration.</p>
+<h2 id="phase-1-design">Phase 1: Design</h2>
+<ol>
+<li>Identify capabilities to expose (tools, resources, prompts)</li>
+<li>Define tool schemas with Zod/JSON Schema</li>
+<li>Plan resource URI patterns</li>
+<li>Design error handling strategy</li>
+<li>Choose transport layer (stdio for CLI, SSE for web)</li>
+</ol>
+<p><strong>STOP — Present the capability inventory and transport choice to user for approval.</strong></p>
+<h3 id="capability-selection-decision-table">Capability Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>What You Have</th><th>MCP Primitive</th><th>Example</th></tr><tr><td>Actions that modify state</td><td>Tool</td><td><code>create-issue</code>, <code>send-email</code>, <code>deploy-app</code></td></tr><tr><td>Actions that read/query</td><td>Tool</td><td><code>search-documents</code>, <code>get-status</code></td></tr><tr><td>Data the AI should read</td><td>Resource</td><td><code>config://settings</code>, <code>docs://api/endpoints</code></td></tr><tr><td>Reusable prompt patterns</td><td>Prompt</td><td><code>code-review</code>, <code>summarize-document</code></td></tr><tr><td>Real-time data feeds</td><td>Resource (subscribable)</td><td><code>metrics://cpu/current</code></td></tr></table></div>
+<h3 id="transport-selection-decision-table">Transport Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Context</th><th>Transport</th><th>Why</th></tr><tr><td>CLI tool, local client (Claude Desktop)</td><td>Stdio</td><td>Simple, no network overhead</td></tr><tr><td>Web application, remote clients</td><td>SSE</td><td>Network-accessible, real-time</td></tr><tr><td>Both local and remote</td><td>Stdio + SSE</td><td>Support both use cases</td></tr><tr><td>High-throughput, bidirectional</td><td>WebSocket (custom)</td><td>Lower latency than SSE</td></tr></table></div>
+<h2 id="phase-2-implementation">Phase 2: Implementation</h2>
+<ol>
+<li>Set up MCP server project structure</li>
+<li>Implement tool handlers with input validation</li>
+<li>Implement resource providers</li>
+<li>Add prompt templates</li>
+<li>Configure transport and authentication</li>
+</ol>
+<p><strong>STOP — Run basic smoke tests before moving to hardening.</strong></p>
+<h3 id="project-structure">Project Structure</h3>
+<pre><code>src/
+  index.ts          # Server entry point
+  tools/
+    search.ts       # Tool implementations
+    create.ts
+  resources/
+    documents.ts    # Resource providers
+    config.ts
+  prompts/
+    review.ts       # Prompt templates
+  lib/
+    database.ts     # Shared utilities
+    validation.ts
+tests/
+  tools.test.ts
+  resources.test.ts
+package.json
+tsconfig.json</code></pre>
+<h3 id="tool-definition-pattern">Tool Definition Pattern</h3>
+<pre data-lang="typescript"><code>import { McpServer } from &#x27;@modelcontextprotocol/sdk/server/mcp.js&#x27;;
+import { z } from &#x27;zod&#x27;;
+
+const server = new McpServer({
+  name: &#x27;my-mcp-server&#x27;,
+  version: &#x27;1.0.0&#x27;,
+});
+
+server.tool(
+  &#x27;search-documents&#x27;,
+  &#x27;Search documents by query. Returns matching documents with relevance scores.&#x27;,
+  {
+    query: z.string().describe(&#x27;Search query string&#x27;),
+    limit: z.number().min(1).max(100).default(10).describe(&#x27;Maximum results to return&#x27;),
+    filter: z.object({
+      type: z.enum([&#x27;article&#x27;, &#x27;page&#x27;, &#x27;note&#x27;]).optional(),
+      dateAfter: z.string().datetime().optional(),
+    }).optional().describe(&#x27;Optional filters&#x27;),
+  },
+  async ({ query, limit, filter }) =&gt; {
+    const results = await searchEngine.search(query, { limit, ...filter });
+    return {
+      content: [{
+        type: &#x27;text&#x27;,
+        text: JSON.stringify(results, null, 2),
+      }],
+    };
+  }
+);</code></pre>
+<h3 id="tool-design-principles">Tool Design Principles</h3>
+<div class="table-wrapper"><table><tr><th>Principle</th><th>Rule</th></tr><tr><td>Clear naming</td><td>verb-noun format: <code>search-documents</code>, <code>create-issue</code></td></tr><tr><td>Descriptive descriptions</td><td>Explain what, when, and return value</td></tr><tr><td>Validated inputs</td><td>Zod schemas with <code>.describe()</code> on every field</td></tr><tr><td>Structured outputs</td><td>Well-formatted text or JSON</td></tr><tr><td>Idempotent when possible</td><td>Same input produces same result</td></tr><tr><td>Actionable errors</td><td>Specific error messages with <code>isError: true</code></td></tr></table></div>
+<h3 id="tool-response-patterns">Tool Response Patterns</h3>
+<pre data-lang="typescript"><code>// Text response
+return { content: [{ type: &#x27;text&#x27;, text: &#x27;Operation completed successfully&#x27; }] };
+
+// Structured data response
+return { content: [{ type: &#x27;text&#x27;, text: JSON.stringify(data, null, 2) }] };
+
+// Multi-part response
+return {
+  content: [
+    { type: &#x27;text&#x27;, text: `Found ${results.length} results:` },
+    { type: &#x27;text&#x27;, text: results.map(r =&gt; `- ${r.title}: ${r.summary}`).join(&#x27;\n&#x27;) },
+  ],
+};
+
+// Image response
+return { content: [{ type: &#x27;image&#x27;, data: base64Data, mimeType: &#x27;image/png&#x27; }] };
+
+// Error response
+return {
+  content: [{ type: &#x27;text&#x27;, text: `Error: ${error.message}` }],
+  isError: true,
+};</code></pre>
+<h2 id="resource-management">Resource Management</h2>
+<h3 id="resource-definition">Resource Definition</h3>
+<pre data-lang="typescript"><code>// Static resource
+server.resource(
+  &#x27;config&#x27;,
+  &#x27;config://app/settings&#x27;,
+  { mimeType: &#x27;application/json&#x27; },
+  async () =&gt; ({
+    contents: [{
+      uri: &#x27;config://app/settings&#x27;,
+      mimeType: &#x27;application/json&#x27;,
+      text: JSON.stringify(appConfig),
+    }],
+  })
+);
+
+// Dynamic resource with URI template
+server.resource(
+  &#x27;document&#x27;,
+  new ResourceTemplate(&#x27;docs://{category}/{id}&#x27;, { list: undefined }),
+  { mimeType: &#x27;text/markdown&#x27; },
+  async (uri, { category, id }) =&gt; ({
+    contents: [{
+      uri: uri.href,
+      mimeType: &#x27;text/markdown&#x27;,
+      text: await getDocument(category, id),
+    }],
+  })
+);</code></pre>
+<h3 id="resource-uri-conventions">Resource URI Conventions</h3>
+<pre><code>file:///path/to/file          — Local files
+https://api.example.com/data  — Remote HTTP resources
+db://database/table/id        — Database records
+config://app/settings         — Configuration
+docs://category/slug          — Documentation</code></pre>
+<h2 id="prompt-templates">Prompt Templates</h2>
+<pre data-lang="typescript"><code>server.prompt(
+  &#x27;code-review&#x27;,
+  &#x27;Generate a code review for the given file&#x27;,
+  {
+    filePath: z.string().describe(&#x27;Path to the file to review&#x27;),
+    severity: z.enum([&#x27;strict&#x27;, &#x27;normal&#x27;, &#x27;lenient&#x27;]).default(&#x27;normal&#x27;),
+  },
+  async ({ filePath, severity }) =&gt; {
+    const code = await readFile(filePath, &#x27;utf-8&#x27;);
+    return {
+      messages: [{
+        role: &#x27;user&#x27;,
+        content: {
+          type: &#x27;text&#x27;,
+          text: `Review this code with ${severity} standards:\n\n\`\`\`\n${code}\n\`\`\``,
+        },
+      }],
+    };
+  }
+);</code></pre>
+<h2 id="transport-layers">Transport Layers</h2>
+<h3 id="stdio-transport-cli-tools-local-development">Stdio Transport (CLI tools, local development)</h3>
+<pre data-lang="typescript"><code>import { StdioServerTransport } from &#x27;@modelcontextprotocol/sdk/server/stdio.js&#x27;;
+
+const transport = new StdioServerTransport();
+await server.connect(transport);</code></pre>
+<h3 id="sse-transport-web-applications-remote-servers">SSE Transport (Web applications, remote servers)</h3>
+<pre data-lang="typescript"><code>import express from &#x27;express&#x27;;
+import { SSEServerTransport } from &#x27;@modelcontextprotocol/sdk/server/sse.js&#x27;;
+
+const app = express();
+
+app.get(&#x27;/sse&#x27;, async (req, res) =&gt; {
+  const transport = new SSEServerTransport(&#x27;/messages&#x27;, res);
+  await server.connect(transport);
+});
+
+app.post(&#x27;/messages&#x27;, async (req, res) =&gt; {
+  // Handle incoming messages
+});
+
+app.listen(3001);</code></pre>
+<h2 id="phase-3-hardening">Phase 3: Hardening</h2>
+<ol>
+<li>Add comprehensive error handling</li>
+<li>Implement rate limiting and timeouts</li>
+<li>Security review (input sanitization, permission checks)</li>
+<li>Write integration tests</li>
+<li>Document tools and resources for clients</li>
+</ol>
+<p><strong>STOP — All tests must pass and security review must be complete before deployment.</strong></p>
+<h3 id="error-handling">Error Handling</h3>
+<pre data-lang="typescript"><code>server.tool(&#x27;risky-operation&#x27;, &#x27;Performs an operation that might fail&#x27;, {
+  input: z.string(),
+}, async ({ input }) =&gt; {
+  try {
+    const result = await performOperation(input);
+    return { content: [{ type: &#x27;text&#x27;, text: JSON.stringify(result) }] };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      return {
+        content: [{ type: &#x27;text&#x27;, text: `Invalid input: ${error.message}` }],
+        isError: true,
+      };
+    }
+    if (error instanceof NotFoundError) {
+      return {
+        content: [{ type: &#x27;text&#x27;, text: `Resource not found: ${error.message}` }],
+        isError: true,
+      };
+    }
+    console.error(&#x27;Unexpected error:&#x27;, error);
+    return {
+      content: [{ type: &#x27;text&#x27;, text: &#x27;An unexpected error occurred. Please try again.&#x27; }],
+      isError: true,
+    };
+  }
+});</code></pre>
+<h3 id="error-handling-rules">Error Handling Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Why</th></tr><tr><td>Never expose stack traces to clients</td><td>Security risk</td></tr><tr><td>Return <code>isError: true</code> for all errors</td><td>Client can distinguish success/failure</td></tr><tr><td>Log unexpected errors server-side</td><td>Debugging and monitoring</td></tr><tr><td>Provide actionable error messages</td><td>Client can self-correct</td></tr><tr><td>Handle timeouts for external calls</td><td>Prevent hanging requests</td></tr><tr><td>Validate all inputs before processing</td><td>Reject bad data early</td></tr></table></div>
+<h3 id="security-considerations">Security Considerations</h3>
+<div class="table-wrapper"><table><tr><th>Category</th><th>Rules</th></tr><tr><td>Input validation</td><td>Zod schemas, path traversal prevention, length limits</td></tr><tr><td>Permission model</td><td>Least privilege, whitelist directories, separate read/write tools</td></tr><tr><td>Secrets</td><td>Env vars only, never in responses, mask in logs, rotate regularly</td></tr><tr><td>Rate limiting</td><td>Limit tool invocations per client</td></tr><tr><td>Auditing</td><td>Log all tool calls with timestamps</td></tr></table></div>
+<h2 id="testing-mcp-servers">Testing MCP Servers</h2>
+<pre data-lang="typescript"><code>import { McpServer } from &#x27;@modelcontextprotocol/sdk/server/mcp.js&#x27;;
+import { InMemoryTransport } from &#x27;@modelcontextprotocol/sdk/inMemory.js&#x27;;
+import { Client } from &#x27;@modelcontextprotocol/sdk/client/index.js&#x27;;
+
+describe(&#x27;MCP Server&#x27;, () =&gt; {
+  let server: McpServer;
+  let client: Client;
+
+  beforeEach(async () =&gt; {
+    server = createServer();
+    client = new Client({ name: &#x27;test-client&#x27;, version: &#x27;1.0.0&#x27; });
+    const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+    await Promise.all([
+      server.connect(serverTransport),
+      client.connect(clientTransport),
+    ]);
+  });
+
+  test(&#x27;search-documents returns results&#x27;, async () =&gt; {
+    const result = await client.callTool({
+      name: &#x27;search-documents&#x27;,
+      arguments: { query: &#x27;test&#x27;, limit: 5 },
+    });
+    expect(result.content[0].type).toBe(&#x27;text&#x27;);
+    const data = JSON.parse(result.content[0].text);
+    expect(data.length).toBeLessThanOrEqual(5);
+  });
+
+  test(&#x27;handles invalid input gracefully&#x27;, async () =&gt; {
+    const result = await client.callTool({
+      name: &#x27;search-documents&#x27;,
+      arguments: { query: &#x27;&#x27;, limit: -1 },
+    });
+    expect(result.isError).toBe(true);
+  });
+});</code></pre>
+<h2 id="client-integration">Client Integration</h2>
+<h3 id="claude-desktop-configuration">Claude Desktop Configuration</h3>
+<pre data-lang="json"><code>{
+  &quot;mcpServers&quot;: {
+    &quot;my-server&quot;: {
+      &quot;command&quot;: &quot;node&quot;,
+      &quot;args&quot;: [&quot;/path/to/server/dist/index.js&quot;],
+      &quot;env&quot;: {
+        &quot;API_KEY&quot;: &quot;your-key-here&quot;
+      }
+    }
+  }
+}</code></pre>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Tools that do too many things</td><td>Hard to use, hard to test</td><td>Split into focused single-purpose tools</td></tr><tr><td>Missing input validation</td><td>Crashes, security holes</td><td>Always use Zod schemas</td></tr><tr><td>Returning raw stack traces</td><td>Security risk, confusing for AI</td><td>Return <code>isError: true</code> with clean message</td></tr><tr><td>No timeout on external calls</td><td>Hangs indefinitely</td><td>Set timeouts on all I/O</td></tr><tr><td>Hardcoded secrets in source</td><td>Credential exposure</td><td>Use environment variables</td></tr><tr><td>Tools without descriptions</td><td>Clients cannot discover purpose</td><td>Write clear descriptions</td></tr><tr><td>Blocking event loop with sync ops</td><td>Server becomes unresponsive</td><td>Use async/await for all I/O</td></tr><tr><td>No tests</td><td>Regressions go undetected</td><td>Test with InMemoryTransport</td></tr></table></div>
+<h2 id="documentation-lookup-context7">Documentation Lookup (Context7)</h2>
+<p>Use <code>mcp__context7__resolve-library-id</code> then <code>mcp__context7__query-docs</code> for up-to-date docs. Returned docs override memorized knowledge.</p>
+<ul>
+<li><code>@anthropic-ai/sdk</code> — for Claude API client, tool definitions, or streaming</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>senior-devops</code></td><td>Containerize and deploy MCP servers</td></tr><tr><td><code>agent-development</code></td><td>MCP servers provide tools for agents</td></tr><tr><td><code>security-review</code></td><td>Security hardening of tool inputs/outputs</td></tr><tr><td><code>test-driven-development</code></td><td>TDD for tool implementation</td></tr><tr><td><code>deployment</code></td><td>CI/CD pipeline for MCP server releases</td></tr><tr><td><code>planning</code></td><td>MCP server design is part of the implementation plan</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt project structure, transport choice, and tooling to the use case. Tool validation with Zod and error handling with <code>isError</code> are strongly recommended. Security review is recommended before production deployment.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

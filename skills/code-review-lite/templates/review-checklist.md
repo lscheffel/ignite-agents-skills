@@ -1,86 +1,86 @@
 # Code Review Lite Checklist
 
-> Checklist rápido para revisão de código leve (code-review-lite)
+> Quick checklist for lightweight code review (code-review-lite)
 
 ---
 
-## Pré-Revisão
+## Pre-Review
 
-- [ ] Branch atual identificado
-- [ ] Arquivos modificados listados (`git diff --name-only`)
-- [ ] Contexto da task/issue carregado
-- [ ] ADRs referenciadas identificadas
-- [ ] TODOs referenciados identificados
-
----
-
-## Fase 1: Context Loading
-
-- [ ] Comportamento esperado entendido
-- [ ] Output esperado definido
-- [ ] Constraints arquiteturais conhecidas
+- [ ] Current branch identified
+- [ ] Modified files listed (`git diff --name-only`)
+- [ ] Task/issue context loaded
+- [ ] ADRs referenced identified
+- [ ] TODOs referenced identified
 
 ---
 
-## Fase 2: Five Dimensions
+## Phase 1: Context Loading
+
+- [ ] Expected behavior understood
+- [ ] Expected output defined
+- [ ] Architectural constraints known
+
+---
+
+## Phase 2: Five Dimensions
 
 ### 1. Plan Alignment
-- [ ] Implementação = Requisitos
-- [ ] Escopo respeitado (sem gold-plating)
-- [ ] Funcionalidade desnecessária ausente
+- [ ] Implementation = Requirements
+- [ ] Scope respected (no gold-plating)
+- [ ] Unnecessary functionality absent
 
 ### 2. Obvious Bugs
-- [ ] Sem referências nulas
-- [ ] Imports resolvem
-- [ ] Condições válidas
-- [ ] Returns presentes
-- [ ] Exceções tratadas
-- [ ] Sem race conditions óbvias
+- [ ] No null references
+- [ ] Imports resolved
+- [ ] Valid conditions
+- [ ] Returns present
+- [ ] Exceptions handled
+- [ ] No obvious race conditions
 
 ### 3. Security Regression
-- [ ] Sem secrets expostos
-- [ ] Input sanitizado
-- [ ] Auth checks presentes
-- [ ] Sem injection vectors (SQL, command, path)
-- [ ] Deserialization segura
+- [ ] No exposed secrets
+- [ ] Input sanitized
+- [ ] Auth checks present
+- [ ] No injection vectors (SQL, command, path)
+- [ ] Secure deserialization
 
 ### 4. Architecture Drift
-- [ ] Sem duplicação nova
-- [ ] Abstrações intactas
-- [ ] Sem dependências circulares
-- [ ] ADRs respeitadas
-- [ ] Responsabilidades não vazando
+- [ ] No duplicated code
+- [ ] Abstractions intact
+- [ ] No circular dependencies
+- [ ] ADRs respected
+- [ ] Responsibilities not leaking
 
 ### 5. Testing
-- [ ] Testes existentes passam
-- [ ] Novo comportamento testado
-- [ ] Gaps óbvios cobertos
+- [ ] Existing tests pass
+- [ ] New behavior tested
+- [ ] Obvious gaps covered
 
 ---
 
-## Decisão
+## Decision
 
-- [ ] **APPROVED** — Sem issues bloqueantes
-- [ ] **APPROVED_WITH_WARNINGS** — Issues menores documentados
-- [ ] **REQUIRES_FIXES** — Issues bloqueantes listados
-- [ ] **ESCALATE_TO_FULL_REVIEW** — Confidence < 70% ou triggers de escala
+- [ ] **APPROVED** — No blocking issues
+- [ ] **APPROVED_WITH_WARNINGS** — Minor issues documented
+- [ ] **REQUIRES_FIXES** — Blocking issues listed
+- [ ] **ESCALATE_TO_FULL_REVIEW** — Confidence < 70% or escalation triggers
 
 ---
 
 ## Escalation Triggers (Auto)
 
-- [ ] Auth alterado
-- [ ] Payment flow alterado
-- [ ] Infrastructure alterado
-- [ ] Public API alterado
-- [ ] DB schema alterado
-- [ ] Lockfile alterado
+- [ ] Auth changed
+- [ ] Payment flow changed
+- [ ] Infrastructure changed
+- [ ] Public API changed
+- [ ] DB schema changed
+- [ ] Lockfile changed
 
 ---
 
-## Notas
+## Notes
 
-Issues encontrados:
+Found issues:
 -
 -
 

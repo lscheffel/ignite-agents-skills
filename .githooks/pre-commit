@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# SOTA Skills Ecosystem - Pre-Commit Governance Hook
+# Garante não-regressão, integridade SHA-256 e conformidade com os 8 Vetores SOTA.
+# ==============================================================================
+
+set -e
+
+WORKSPACE_DIR="$(git rev-parse --show-toplevel)"
+cd "$WORKSPACE_DIR"
+
+AUDIT_SCRIPT=".github/scripts/audit_engine.py"
+GOVERNANCE_INDEX=".github/governance/AUDIT_MASTER_INDEX.md"
+
+# Se o repositório atual não contiver o script de auditoria de skills, prossegue normalmente
+if [ ! -f "$AUDIT_SCRIPT" ]; then
+    exit 0
+fi
+
+echo "================================================================================"
+echo "🛡️  SOTA SKILLS GOVERNANCE - PRE-COMMIT AUDIT & INTEGRITY CHECK"
+echo "================================================================================"
+
+# 1. Normalizar quebras de linha (CRLF -> LF) nos arquivos em staging
+echo "[*] Normalizing line endings across staged files..."
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM || true)
+
+if [ -n "$STAGED_FILES" ]; then
+    for f in $STAGED_FILES; do
+        if [ -f "$f" ]; then
+            python3 -c "
+import sys
+fp = sys.argv[1]
+with open(fp, 'rb') as fh:
+    c = fh.read()
+if b'\r\n' in c:
+    with open(fp, 'wb') as fh:
+        fh.write(c.replace(b'\r\n', b'\n'))
+" "$f" 2>/dev/null || true
+            git add "$f"
+        fi
+    done
+fi
+
+# 2. Executar validação forense e integridade
+echo "[*] Executing Forensic Audit Engine..."
+python3 "$AUDIT_SCRIPT" > /tmp/precommit_audit.log 2>&1 || {
+    echo "❌ [FAIL] Audit Engine encountered an error:"
+    cat /tmp/precommit_audit.log
+    exit 1
+}
+
+# Auto-stage arquivos de governança atualizados pela auditoria
+if [ -d ".github/governance" ]; then
+    git add .github/governance/
+fi
+
+# 3. Validar se algum ativo está em AVISO ou CRÍTICA no índice de governança
+if [ -f "$GOVERNANCE_INDEX" ]; then
+    WARN_COUNT=$(grep -o "AVISO" "$GOVERNANCE_INDEX" 2>/dev/null | wc -l || echo 0)
+    CRIT_COUNT=$(grep -o "CRÍTICA" "$GOVERNANCE_INDEX" 2>/dev/null | wc -l || echo 0)
+
+    if [ "$CRIT_COUNT" -gt 0 ]; then
+        echo "❌ [BLOCK] Commit rejected: $CRIT_COUNT asset(s) with CRÍTICA status detected!"
+        exit 1
+    fi
+
+    if [ "$WARN_COUNT" -gt 0 ]; then
+        echo "⚠️  [WARN] Notice: $WARN_COUNT asset(s) with AVISO status detected."
+    fi
+
+    echo "✅ [PASS] All assets verified against 8-Dimension SOTA Framework."
+else
+    echo "ℹ️  [INFO] Governance index ($GOVERNANCE_INDEX) not found. Skipping grep check."
+fi
+
+# 4. Gatilho Inteligente: Sincronização automática do RAG se houver alteração em skills
+RAG_INDEXER=".github/scripts/skills_rag_indexer.py"
+SKILL_CHANGES=$(git diff --cached --name-only | grep -E '^([^/]+/(SKILL\.md|.*\.py|.*\.json|.*\.md)|plugins/)' | grep -vE '^(README|CHANGELOG|USAGE|RELEASE-NOTES|STATE|AGENTS|GEMINI|docs/|\.github/|\.githooks/)' || true)
+
+if [ -n "$SKILL_CHANGES" ] && [ -f "$RAG_INDEXER" ]; then
+    echo "[*] Alterações em skills detectadas. Sincronizando banco RAG dedicado..."
+    python3 "$RAG_INDEXER" > /tmp/precommit_rag.log 2>&1 || {
+        echo "⚠️  [WARN] RAG Indexer avisou:"
+        cat /tmp/precommit_rag.log
+    }
+    echo "✅ [PASS] Dedicated Skills RAG DB sincronizado."
+fi
+
+echo "================================================================================"
+echo "✨ Pre-Commit Governance Check Passed! Proceeding with commit."
+echo "================================================================================"
+exit 0

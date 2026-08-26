@@ -411,250 +411,262 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: refactoring description: Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado. Use quando refatorar código, melhorar estrutura existente ou migrar sistemas legados. version: 2.0.0 tags: [refactoring, code-quality, legacy, strangler-fig, testing] related_skills: [architecture-review-kilo, ddd, testing] ---</p>
+<p>name: refactoring version: 2.0.0 description: Comprehensive guide to safe and incremental refactoring. Covers techniques for extraction, Strangler Fig, Branch by Abstraction, testing before refactoring, and legacy migration. Use when refactoring code, improving existing structure, or migrating legacy systems. domain: engineering-quality triggers:</p>
+<ul>
+<li>refactoring</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>refactoring</li>
+<li>code-quality</li>
+<li>legacy</li>
+<li>strangler-fig</li>
+<li>testing</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="refactoring">Refactoring</h1>
-<p>Guia para refatoração segura, incremental e estruturada.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Guide to safe, incremental, and structured refactoring.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use When:</h3>
 <ul>
-<li>Código funciona mas é difícil de manter</li>
-<li>Precisa melhorar estrutura sem mudar comportamento</li>
-<li>Sistema legado precisa de modernização gradual</li>
-<li>Identificou code smells (duplicação, métodos longos, classes grandes)</li>
-<li>Precisa separar responsabilidades misturadas</li>
+<li>Code functions but is difficult to maintain</li>
+<li>Need to improve structure without changing behavior</li>
+<li>Legacy system needs gradual modernization</li>
+<li>Identified code smells (duplication, long methods, large classes)</li>
+<li>Need to separate mixed responsibilities</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do Not Use When:</h3>
 <ul>
-<li>Não há testes e risco de quebra é alto</li>
-<li>Código está sendo descartado em breve</li>
-<li>Refatoração não traz valor mensurável</li>
-<li>Time não tem bandwidth para manter mudanças</li>
+<li>No tests and high risk of breakage</li>
+<li>Code is being discarded soon</li>
+<li>Refactoring does not bring measurable value</li>
+<li>Team does not have bandwidth to maintain changes</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>architecture-review-kilo</code> — para identificar violações arquiteturais antes de refatorar</li>
-<li><code>ddd</code> — para modelar domínio rico durante refatoração</li>
-<li><code>testing</code> — para criar safety net antes de refatorar</li>
+<li><code>architecture-review-kilo</code> — to identify architectural violations before refactoring</li>
+<li><code>ddd</code> — to model rich domain during refactoring</li>
+<li><code>testing</code> — to create safety net before refactoring</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Código para refatorar] --&gt; B{Tem testes?}
-    B --&gt;|Sim| C[Refatar com safety net]
-    B --&gt;|Não| D[Adicionar testes primeiro]
-    D --&gt; E{Mudança pequena?}
-    C --&gt; F{Tamanho da mudança?}
-    F --&gt;|Pequena| G[Extract Method/Class]
-    F --&gt;|Grande| H[Strangler Fig]
-    E --&gt;|Sim| I[Extract Method/Class]
-    E --&gt;|Não| J[Strangler Fig]
-    H --&gt; K{Depende de external?}
+    A[Code to refactor] --&gt; B{Has tests?}
+    B --&gt;|Yes| C[Refactor with safety net]
+    B --&gt;|No| D[Add tests first]
+    D --&gt; E{Is change small?}
+    C --&gt; F{Size of change?}
+    F --&gt;|Small| G[Extract Method/Class]
+    F --&gt;|Large| H[Strangler Fig]
+    E --&gt;|Yes| I[Extract Method/Class]
+    E --&gt;|No| J[Strangler Fig]
+    H --&gt; K{Depends on external?}
     I --&gt; L[Commit incremental]
     J --&gt; K
-    K --&gt;|Sim| M[Branch by Abstraction]
-    K --&gt;|Não| N[Refatorar diretamente]
+    K --&gt;|Yes| M[Branch by Abstraction]
+    K --&gt;|No| N[Refactor directly]
     M --&gt; O[Interface + Adapter]
     N --&gt; P[Commit incremental]
     G --&gt; L</code></pre>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="code-smells-comuns">Code Smells Comuns</h3>
-<div class="table-wrapper"><table><tr><th>Code Smell</th><th>Sintoma</th><th>Técnica de Refatoração</th></tr><tr><td>Long Method</td><td>Função > 30 linhas</td><td>Extract Method</td></tr><tr><td>Large Class</td><td>Classe com múltiplas responsabilidades</td><td>Extract Class</td></tr><tr><td>Duplicated Code</td><td>Mesma lógica em 2+ lugares</td><td>Extract Method / Template Method</td></tr><tr><td>Feature Envy</td><td>Método usa mais dados de outra classe</td><td>Move Method</td></tr><tr><td>Primitive Obsession</td><td>Primitivos usados em vez de objetos</td><td>Replace with Value Object</td></tr><tr><td>Switch Statements</td><td>Múltiplos switches no mesmo lugar</td><td>Replace with Polymorphism</td></tr></table></div>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
+<h3 id="common-code-smells">Common Code Smells</h3>
+<div class="table-wrapper"><table><tr><th>Code Smell</th><th>Symptom</th><th>Refactoring Technique</th></tr><tr><td>Long Method</td><td>Function > 30 lines</td><td>Extract Method</td></tr><tr><td>Large Class</td><td>Class with multiple responsibilities</td><td>Extract Class</td></tr><tr><td>Duplicated Code</td><td>Same logic in 2+ places</td><td>Extract Method / Template Method</td></tr><tr><td>Feature Envy</td><td>Method uses more data from another class</td><td>Move Method</td></tr><tr><td>Primitive Obsession</td><td>Primitives used instead of objects</td><td>Replace with Value Object</td></tr><tr><td>Switch Statements</td><td>Multiple switches in the same place</td><td>Replace with Polymorphism</td></tr></table></div>
 <h3 id="strangler-fig-pattern">Strangler Fig Pattern</h3>
-<p>Migrar sistema legado gradualmente, construindo novo sistema ao redor:</p>
-<pre><code>Sistema Legado (monolito)
+<p>Migrate legacy system gradually, building new system around it:</p>
+<pre><code>Legacy System (monolith)
     │
-    ├── Novo módulo A (microserviço)
-    ├── Novo módulo B (microserviço)
-    └── Legado restante (diminui com o tempo)</code></pre>
+    ├── New module A (microservice)
+    ├── New module B (microservice)
+    └── Remaining legacy (diminishes over time)</code></pre>
 <h3 id="branch-by-abstraction">Branch by Abstraction</h3>
-<p>Criar abstração para remover dependência antes de refatorar:</p>
-<pre><code>Código atual → Extrair interface → Criar adapter → Trocar implementação</code></pre>
+<p>Create abstraction to remove dependency before refactoring:</p>
+<pre><code>Current code → Extract interface → Create adapter → Switch implementation</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-analisar-cdigo-atual">Fase 1: Analisar Código Atual</h3>
+<h3 id="phase-1-analyze-current-code">Phase 1: Analyze Current Code</h3>
 <ol>
-<li>Identifique o code smell ou problema</li>
-<li>Mapeie dependências e pontos de integração</li>
-<li>Verifique se existem testes cobrindo o código</li>
-<li>Use o template <code>templates/refactoring-catalog.md</code> para documentar</li>
-<li><strong>Checkpoint</strong>: Código, dependências e testes mapeados</li>
+<li>Identify code smell or problem</li>
+<li>Map dependencies and integration points</li>
+<li>Verify if there are tests covering the code</li>
+<li>Use the <code>refactoring-catalog.md</code> template to document</li>
+<li><strong>Checkpoint</strong>: Code, dependencies, and tests mapped</li>
 </ol>
-<h3 id="fase-2-criar-safety-net-de-testes">Fase 2: Criar Safety Net de Testes</h3>
+<h3 id="phase-2-create-safety-net-of-tests">Phase 2: Create Safety Net of Tests</h3>
 <ol>
-<li>Se não há testes, crie usando <code>templates/test-before-refactor.md</code></li>
-<li>Execute testes e confirme que passam</li>
-<li>Adicione testes para caminhos de erro e edge cases</li>
-<li>Commit os testes ANTES de qualquer refatoração</li>
-<li><strong>Checkpoint</strong>: Todos os testes passam, commit feito</li>
+<li>If no tests exist, create using <code>test-before-refactor.md</code> template</li>
+<li>Execute tests and confirm they pass</li>
+<li>Add tests for error paths and edge cases</li>
+<li>Commit tests before any refactoring</li>
+<li><strong>Checkpoint</strong>: All tests pass, commit made</li>
 </ol>
-<h3 id="fase-3-executar-refatorao">Fase 3: Executar Refatoração</h3>
+<h3 id="phase-3-execute-refactoring">Phase 3: Execute Refactoring</h3>
 <ol>
-<li>Aplique uma técnica de refatoração por vez</li>
-<li>Execute testes após cada mudança</li>
-<li>Se teste quebra, revert imediatamente</li>
-<li>Commite incrementalmente a cada mudança segura</li>
-<li><strong>Checkpoint</strong>: Testes continuam passando</li>
+<li>Apply one refactoring technique at a time</li>
+<li>Execute tests after each change</li>
+<li>If test breaks, revert immediately</li>
+<li>Commit incrementally after each safe change</li>
+<li><strong>Checkpoint</strong>: Tests continue passing</li>
 </ol>
-<h3 id="fase-4-revisar-e-validar">Fase 4: Revisar e Validar</h3>
+<h3 id="phase-4-review-and-validate">Phase 4: Review and Validate</h3>
 <ol>
-<li>Execute lint e typecheck</li>
-<li>Verifique cobertura de testes não diminuiu</li>
-<li>Peça review de pelo menos um colega</li>
-<li>Documente mudanças no changelog</li>
-<li><strong>Checkpoint</strong>: PR aprovado, sem regressões</li>
+<li>Execute lint and typecheck</li>
+<li>Verify test coverage did not decrease</li>
+<li>Request review from at least one colleague</li>
+<li>Document changes in changelog</li>
+<li><strong>Checkpoint</strong>: PR approved, no regressions</li>
 </ol>
-<h3 id="fase-5-planejar-prxima-refatorao">Fase 5: Planejar Próxima Refatoração</h3>
+<h3 id="phase-5-plan-next-refactoring">Phase 5: Plan Next Refactoring</h3>
 <ol>
-<li>Identifique próximo code smell na fila</li>
-<li>Estime esforço e dependências</li>
-<li>Atualize o catálogo de refatorações</li>
-<li>Comunique progresso ao time</li>
-<li><strong>Checkpoint</strong>: Próxima refatoração planejada</li>
+<li>Identify next code smell in the queue</li>
+<li>Estimate effort and dependencies</li>
+<li>Update the refactoring catalog</li>
+<li>Communicate progress to the team</li>
+<li><strong>Checkpoint</strong>: Next refactoring planned</li>
 </ol>
-<h3 id="fase-6-migrar-sistema-legado-strangler-fig">Fase 6: Migrar Sistema Legado (Strangler Fig)</h3>
+<h3 id="phase-6-migrate-legacy-system-strangler-fig">Phase 6: Migrate Legacy System (Strangler Fig)</h3>
 <ol>
-<li>Identifique borda do módulo legado</li>
-<li>Crie interface para o módulo</li>
-<li>Implemente novo módulo ao lado</li>
-<li>Redirecione tráfego gradualmente</li>
-<li>Remova código legado quando novo módulo estiver estável</li>
-<li><strong>Checkpoint</strong>: Módulo legado removido, novo módulo em produção</li>
+<li>Identify the edge of the legacy module</li>
+<li>Create interface for the module</li>
+<li>Implement new module alongside</li>
+<li>Redirect traffic gradually</li>
+<li>Remove legacy code when new module is stable</li>
+<li><strong>Checkpoint</strong>: Legacy module removed, new module in production</li>
 </ol>
 <h2 id="templates">Templates</h2>
 <h3 id="refactoring-catalogmd">refactoring-catalog.md</h3>
-<p>Localização: <code>templates/refactoring-catalog.md</code></p>
-<p>Catálogo de refatorações para documentar mudanças planejadas.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/refactoring-catalog.md</code></p>
+<p>Refactoring catalog to document planned changes.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/refactoring-catalog.md docs/refactoring-catalog.md</code></pre>
 <h3 id="legacy-migrationmd">legacy-migration.md</h3>
-<p>Localização: <code>templates/legacy-migration.md</code></p>
-<p>Template para planejar migração de sistemas legados.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/legacy-migration.md</code></p>
+<p>Template for planning legacy system migration.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/legacy-migration.md docs/migrations/{system}-migration.md</code></pre>
 <h3 id="test-before-refactormd">test-before-refactor.md</h3>
-<p>Localização: <code>templates/test-before-refactor.md</code></p>
-<p>Template para criar testes antes de refatorar código sem cobertura.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/test-before-refactor.md</code></p>
+<p>Template for creating tests before refactoring code without coverage.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/test-before-refactor.md docs/test-plan-{module}.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="refatorar-sem-testes">Refatorar sem Testes</h4>
-<p><strong>O que é:</strong> Modificar código sem safety net de testes automatizados. <strong>Por que é ruim:</strong> Impossível saber se comportamento foi preservado, regressões silenciosas. <strong>Como evitar:</strong> Sempre criar testes antes de refatorar. Sem exceções. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - refatorar sem testes
+<h3 id="critical">Critical</h3>
+<h4 id="refactor-without-tests">Refactor Without Tests</h4>
+<p><strong>What is it:</strong> Modifying code without a safety net of automated tests. <strong>Why is it bad:</strong> Impossible to know if behavior was preserved, silent regressions. <strong>How to avoid:</strong> Always create tests before refactoring. No exceptions. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - refactor without tests
 function processOrder(order) {
-  // mudar lógica sem testes cobrindo
+  // change logic without tests covering
   return order.items.reduce((sum, item) =&gt; sum + item.price * item.qty, 0);
 }
 
-// ✅ CORRETO - testar primeiro
+// ✅ RIGHT - test first
 it(&#x27;should calculate total correctly&#x27;, () =&gt; {
   expect(processOrder({ items: [{ price: 10, qty: 2 }] })).toBe(20);
 });
-// agora refatorar com segurança</code></pre>
-<h4 id="refatorar--mudar-behavior-ao-mesmo-tempo">Refatorar + Mudar Behavior ao Mesmo Tempo</h4>
-<p><strong>O que é:</strong> Alterar comportamento e estrutura em uma mesma mudança. <strong>Por que é ruim:</strong> Impossível isolar causa de bugs, commit não é atômico. <strong>Como evitar:</strong> Separar refatoração (mesmo comportamento) de feature (novo comportamento). <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - refatorar e mudar behavior
+// now refactor safely</code></pre>
+<h4 id="refactor--change-behavior-at-the-same-time">Refactor + Change Behavior at the Same Time</h4>
+<p><strong>What is it:</strong> Altering behavior and structure in one change. <strong>Why is it bad:</strong> Impossible to isolate cause of bugs, commit is not atomic. <strong>How to avoid:</strong> Separate refactoring (same behavior) from feature (new behavior). <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - refactor and change behavior
 function calculateTotal(items) {
   return items.reduce((sum, i) =&gt; sum + i.price * i.qty, 0);
-  // e mudar para incluir desconto - dois objetivos misturados
+  // and change to include discount - two goals mixed
 }
 
-// ✅ CORRETO - separar commits
-// Commit 1: refatorar (extract method)
-// Commit 2: adicionar desconto (novo behavior)</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
+// ✅ RIGHT - separate commits
+// Commit 1: refactor (same behavior)
+// Commit 2: add discount (new behavior)</code></pre>
+<h3 id="medium">Medium</h3>
 <h4 id="big-bang-refactoring">Big Bang Refactoring</h4>
-<p><strong>O que é:</strong> Refatorar sistema inteiro de uma vez. <strong>Por que é ruim:</strong> Alto risco, difícil de review, merge conflicts, regressões difíceis de localizar. <strong>Como evitar:</strong> Refatorar incrementalmente, módulo por módulo. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - refatorar tudo
-// &quot;Vou refatorar o sistema inteiro esta sprint&quot;
+<p><strong>What is it:</strong> Refactoring the entire system at once. <strong>Why is it bad:</strong> High risk, difficult to review, merge conflicts, regressions hard to locate. <strong>How to avoid:</strong> Refactor incrementally, module by module. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - refactor everything
+// &quot;I&#x27;ll refactor the entire system this sprint&quot;
 
-// ✅ CORRETO - incremental
-// Sprint 1: Refatorar módulo de pagamento
-// Sprint 2: Refatorar módulo de usuário
-// Sprint 3: Refatorar módulo de notificação</code></pre>
-<h4 id="no-commitar-incrementalmente">Não Commitar Incrementalmente</h4>
-<p><strong>O que é:</strong> Acumular muitas mudanças sem commit intermediário. <strong>Por que é ruim:</strong> Diff gigante impossível de review, difícil de reverter mudanças pontuais. <strong>Como evitar:</strong> Commite a cada refatoração segura (testes passando). <strong>Exemplo:</strong></p>
-<pre data-lang="bash"><code># ❌ ERRADO
-git add -A &amp;&amp; git commit -m &quot;refatoração completa do sistema&quot;
+// ✅ RIGHT - incremental
+// Sprint 1: Refactor payment module
+// Sprint 2: Refactor user module
+// Sprint 3: Refactor notification module</code></pre>
+<h4 id="do-not-commit-incrementally">Do Not Commit Incrementally</h4>
+<p><strong>What is it:</strong> Accumulating many changes without intermediate commits. <strong>Why is it bad:</strong> Huge diff impossible to review, difficult to revert point changes. <strong>How to avoid:</strong> Commit after each safe refactoring (tests passing). <strong>Example:</strong></p>
+<pre data-lang="bash"><code># ❌ WRONG
+git add -A &amp;&amp; git commit -m &quot;refactoring complete system&quot;
 
-# ✅ CORRETO
+# ✅ RIGHT
 git commit -m &quot;refactor: extract calculateTotal method&quot;
 git commit -m &quot;refactor: move validation to separate class&quot;
 git commit -m &quot;refactor: replace switch with polymorphism&quot;</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="refatorar-cdigo-que-ningum-mantm">Refatorar Código que Ninguém Mantém</h4>
-<p><strong>O que é:</strong> Refatorar código que ninguém usa ou mantém ativamente. <strong>Por que é ruim:</strong> desperdício de tempo, não traz valor, código pode ser deletado. <strong>Como evitar:</strong> Verifique se código é usado antes de refatorar. <strong>Exemplo:</strong></p>
-<pre data-lang="typescript"><code>// ❌ ERRADO - refatorar código morto
-// função não chamada em nenhum lugar, ninguém mantém
+<h3 id="low">Low</h3>
+<h4 id="refactor-code-no-one-maintains">Refactor Code No One Maintains</h4>
+<p><strong>What is it:</strong> Refactoring code that no one uses or maintains actively. <strong>Why is it bad:</strong> Waste of time, does not bring value, code can be deleted. <strong>How to avoid:</strong> Verify if code is used before refactoring. <strong>Example:</strong></p>
+<pre data-lang="typescript"><code>// ❌ WRONG - refactor dead code
+// function not called anywhere, no one maintains
 function legacyCalculate() { /* ... */ }
 
-// ✅ CORRETO - verificar uso primeiro
+// ✅ RIGHT - check usage first
 grep -r &quot;legacyCalculate&quot; src/
-# resultado: 0 ocorrências → deletar, não refatorar</code></pre>
+# result: 0 occurrences → delete, do not refactor</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-pr-refatorao">Checklist Pré-Refatoração</h3>
+<h3 id="pre-refactoring-checklist">Pre-Refactoring Checklist</h3>
 <ul>
-<li>[ ] Testes existentes cobrem código a ser refatorado</li>
-<li>[ ] Todos os testes passam no momento atual</li>
-<li>[ ] Código fonte está commitado (sem mudanças pendentes)</li>
-<li>[ ] Dependências do módulo mapeadas</li>
-<li>[ ] Time ciente da refatoração planejada</li>
+<li>[ ] Existing tests cover code to be refactored</li>
+<li>[ ] All tests pass at the moment</li>
+<li>[ ] Source code is committed (no pending changes)</li>
+<li>[ ] Module dependencies are mapped</li>
+<li>[ ] Team is aware of the planned refactoring</li>
 </ul>
-<h3 id="checklist-durante-refatorao">Checklist Durante Refatoração</h3>
+<h3 id="refactoring-checklist">Refactoring Checklist</h3>
 <ul>
-<li>[ ] Apenas uma técnica de refatoração aplicada por commit</li>
-<li>[ ] Testes executados após cada mudança</li>
-<li>[ ] Nenhum teste quebrou (ou foi ajustado intencionalmente)</li>
-<li>[ ] Commits incrementais com mensagens claras</li>
-<li>[ ] Lint e typecheck passando</li>
+<li>[ ] Only one refactoring technique applied per commit</li>
+<li>[ ] Tests executed after each change</li>
+<li>[ ] No tests broke (or were intentionally adjusted)</li>
+<li>[ ] Commits are incremental with clear messages</li>
+<li>[ ] Lint and typecheck pass</li>
 </ul>
-<h3 id="checklist-ps-refatorao">Checklist Pós-Refatoração</h3>
+<h3 id="post-refactoring-checklist">Post-Refactoring Checklist</h3>
 <ul>
-<li>[ ] Todos os testes passam</li>
-<li>[ ] Cobertura de testes não diminuiu</li>
-<li>[ ] Code review realizado</li>
-<li>[ ] Documentação atualizada se necessário</li>
-<li>[ ] Nenhum TODO ou FIXME introduzido</li>
+<li>[ ] All tests pass</li>
+<li>[ ] Test coverage did not decrease</li>
+<li>[ ] Code review was done</li>
+<li>[ ] Documentation updated if necessary</li>
+<li>[ ] No TODOs or FIXMEs introduced</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="cdigo-com-dependncias-circulares">Código com Dependências Circulares</h3>
-<p><strong>Situação:</strong> Módulos A e B dependem um do outro. <strong>Solução:</strong> Use Branch by Abstraction: extraia interface, crie adapter, quebre ciclo. <strong>Exceção:</strong> Se dependência é genuinamente bidirecional, considere merge de módulos.</p>
-<pre data-lang="typescript"><code>// ❌ Dependência circular
+<h3 id="circular-dependencies">Circular Dependencies</h3>
+<p><strong>Situation:</strong> Modules A and B depend on each other. <strong>Solution:</strong> Use Branch by Abstraction: extract interface, create adapter, break cycle. <strong>Exception:</strong> If dependency is genuinely bidirectional, consider merging modules.</p>
+<pre data-lang="typescript"><code>// ❌ Circular dependency
 // module-a.ts → import from module-b
 // module-b.ts → import from module-a
 
-// ✅ Quebrar com interface
+// ✅ Break with interface
 // interface.ts - defines contract
 // module-a.ts - implements interface
 // module-b.ts - uses interface only</code></pre>
-<h3 id="cdigo-sem-testes-e-sem-dono">Código Sem Testes e Sem Dono</h3>
-<p><strong>Situação:</strong> Código crítico sem testes e sem ninguém que conheça detalhes. <strong>Solução:</strong> Adicione testes exploratórios (caracterização) antes de refatorar. <strong>Exceção:</strong> Se código pode ser substituído por biblioteca externa, avalie substituir.</p>
-<pre data-lang="typescript"><code>// Teste de caracterização - documentar comportamento atual
+<h3 id="code-without-tests-and-no-owner">Code Without Tests and No Owner</h3>
+<p><strong>Situation:</strong> Critical code without tests and no one knows details. <strong>Solution:</strong> Add exploratory tests (characterization) before refactoring. <strong>Exception:</strong> If code can be replaced by an external library, consider replacing.</p>
+<pre data-lang="typescript"><code>// Test characterization - document current behavior
 it(&#x27;should match current behavior for order calculation&#x27;, () =&gt; {
-  // executar código legado e documentar resultado
+  // execute legacy code and document result
   const result = legacyCalculate(order);
-  expect(result).toBe(142.50); // valor documentado
+  expect(result).toBe(142.50); // documented value
 });</code></pre>
-<h3 id="sistema-em-produo-com-alto-trfego">Sistema em Produção com Alto Tráfego</h3>
-<p><strong>Situação:</strong> Refatorar código que processa milhares de requisições/segundo. <strong>Solução:</strong> Use feature flags para alternar entre implementação antiga e nova. <strong>Exceção:</strong> Se refatoração é puramente interna (mesma interface), pode ser direta.</p>
-<pre data-lang="typescript"><code>// Feature flag para migração gradual
+<h3 id="system-in-production-with-high-traffic">System in Production with High Traffic</h3>
+<p><strong>Situation:</strong> Refactoring code that processes thousands of requests per second. <strong>Solution:</strong> Use feature flags to gradually switch between old and new implementation. <strong>Exception:</strong> If refactoring is purely internal (same interface), it can be direct.</p>
+<pre data-lang="typescript"><code>// Feature flag for gradual migration
 function processPayment(order) {
   if (featureFlags.isEnabled(&#x27;new-payment-processor&#x27;)) {
     return newPaymentProcessor.process(order);
   }
   return legacyPaymentProcessor.process(order);
 }</code></pre>
-<h3 id="refatorao-que-afeta-api-pblica">Refatoração que Afeta API Pública</h3>
-<p><strong>Situação:</strong> Mudança que quebra contrato com consumidores externos. <strong>Solução:</strong> Versione a API, mantenha versão antiga deprecada por período. <strong>Exceção:</strong> Se consumidores são internos e podem ser atualizados simultaneamente.</p>
-<pre data-lang="typescript"><code>// v1 - mantida por 6 meses
-// v2 - nova implementação
-// consumidores migram gradualmente</code></pre>
-<h2 id="referncias">Referências</h2>
+<h3 id="refactoring-that-affects-public-api">Refactoring That Affects Public API</h3>
+<p><strong>Situation:</strong> Change that breaks contract with external consumers. <strong>Solution:</strong> Version the API, maintain old version deprecated for a period. <strong>Exception:</strong> If consumers are internal and can be updated simultaneously.</p>
+<pre data-lang="typescript"><code>// v1 - maintained for 6 months
+// v2 - new implementation
+// consumers migrate gradually</code></pre>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://martinfowler.com/books/refactoring.html">Martin Fowler - Refactoring</a></li>
 <li><a href="https://martinfowler.com/bliki/StranglerFigApplication.html">Strangler Fig - Martin Fowler</a></li>
 <li><a href="https://refactoring.guru/">Refactoring Guru</a></li>
-<li><code>architecture-review-kilo</code> — para identificar onde refatorar</li>
-<li><code>ddd</code> — para modelar domínio durante refatoração</li>
-<li><code>testing</code> — para criar safety net</li>
+<li><code>architecture-review-kilo</code> — to identify where to refactor</li>
+<li><code>ddd</code> — to model domain during refactoring</li>
+<li><code>testing</code> — to create safety net</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

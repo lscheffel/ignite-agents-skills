@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agent-planning-execution — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; agent-planning-execution</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: agent-planning-execution version: 1.0.0 description: Comprehensive planning, roadmap management, task decomposition, and plan execution hub. domain: agentic-workflow triggers:</p>
+<ul>
+<li>agent-planning-execution</li>
+<li>agentic-workflow</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>agent-planning-execution</li>
+<li>agentic-workflow</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="agent-planning--execution-hub">Agent Planning & Execution Hub</h1>
+<p>Comprehensive planning, roadmap management, task decomposition, and plan execution hub.</p>
+<h2 id="sub-domain--component-planning">Sub-Domain / Component: <code>planning</code></h2>
+<h1 id="structured-planning">Structured Planning</h1>
+<h2 id="overview">Overview</h2>
+<p>Structured planning converts vague requirements into approved, documented implementation plans before any code is written. It forces clarifying questions, approach comparison with trade-offs, and explicit user approval — preventing the most common cause of wasted effort: building the wrong thing. Every task, regardless of perceived simplicity, goes through this process.</p>
+<p><strong>Announce at start:</strong> "I'm using the planning skill to create a structured implementation plan."</p>
+<h2 id="trigger-conditions">Trigger Conditions</h2>
+<ul>
+<li>User requests a new feature, enhancement, or change</li>
+<li>A bug fix requires more than a one-line change</li>
+<li>Refactoring work spanning multiple files</li>
+<li>Any task where the approach is not already documented and approved</li>
+<li>Transition from brainstorming skill with an approved design</li>
+<li><code>/plan</code> command invoked</li>
+</ul>
+<hr>
+<h2 id="phase-1-context-gathering">Phase 1: Context Gathering</h2>
+<p><strong>Goal:</strong> Understand the codebase and existing patterns before asking questions.</p>
+<ol>
+<li>Read relevant files, docs, recent commits, and CLAUDE.md</li>
+<li>Check memory files for known project context, stack, and conventions</li>
+<li>Review existing plans in <code>docs/plans/</code> for related work</li>
+<li>Identify existing patterns the new work should follow</li>
+<li>Note technical constraints discovered during exploration</li>
+</ol>
+<p><strong>STOP — Do NOT proceed to Phase 2 until:</strong></p>
+<ul>
+<li>[ ] You have explored the relevant parts of the codebase</li>
+<li>[ ] You understand the existing architecture and patterns</li>
+<li>[ ] You have checked memory files for prior decisions</li>
+</ul>
+<hr>
+<h2 id="phase-2-clarifying-questions">Phase 2: Clarifying Questions</h2>
+<p><strong>Goal:</strong> Eliminate ambiguity by asking targeted questions one at a time.</p>
+<ol>
+<li>Ask ONE question per message — never overwhelm with multiple questions</li>
+<li>Prefer multiple choice questions when possible</li>
+<li>Study the codebase before asking — do not ask what you can discover</li>
+<li>Convert vague requirements into specific, testable criteria</li>
+</ol>
+<h3 id="question-category-priority">Question Category Priority</h3>
+<div class="table-wrapper"><table><tr><th>Priority</th><th>Category</th><th>Example Question</th></tr><tr><td>1</td><td>Purpose</td><td>"What problem does this solve? Who is it for?"</td></tr><tr><td>2</td><td>Success criteria</td><td>"How will we know it works? What does 'done' look like?"</td></tr><tr><td>3</td><td>Constraints</td><td>"Are there performance, compatibility, or timeline constraints?"</td></tr><tr><td>4</td><td>Non-goals</td><td>"What should we explicitly NOT build?"</td></tr><tr><td>5</td><td>Existing patterns</td><td>"Should we follow the pattern used in X, or is a new approach needed?"</td></tr><tr><td>6</td><td>Edge cases</td><td>"What should happen when [boundary condition]?"</td></tr></table></div>
+<h3 id="question-rules">Question Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Rationale</th></tr><tr><td>One question per message</td><td>Prevents cognitive overload</td></tr><tr><td>Multiple choice preferred</td><td>Faster to answer, reduces ambiguity</td></tr><tr><td>Research before asking</td><td>Respect user's time — discover what you can</td></tr><tr><td>Testable criteria</td><td>Vague answers lead to vague implementations</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to Phase 3 until:</strong></p>
+<ul>
+<li>[ ] You understand the purpose and success criteria</li>
+<li>[ ] You have identified constraints and non-goals</li>
+<li>[ ] No- writing-plans</li>
+<li>reverse-engineering-specs</li>
+</ul>
+<h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
+<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
+<h2 id="condies-de-ativao">Condições de Ativação</h2>
+<h2 id="phase-3-approach-design">Phase 3: Approach Design</h2>
+<p><strong>Goal:</strong> Propose 2-3 concrete approaches with trade-offs and a clear recommendation.</p>
+<p>For each approach, include:</p>
+<div class="table-wrapper"><table><tr><th>Section</th><th>Content</th></tr><tr><td>Architecture summary</td><td>2-3 sentences describing the approach</td></tr><tr><td>Key files</td><td>Exact paths to create/modify</td></tr><tr><td>Dependencies</td><td>External deps or breaking changes</td></tr><tr><td>Trade-offs</td><td>Explicit pros and cons</td></tr><tr><td>Effort estimate</td><td>Number of tasks (not hours)</td></tr><tr><td>Risk level</td><td>Low / Medium / High with explanation</td></tr></table></div>
+<h3 id="approach-selection-decision-table">Approach Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Factor</th><th>Weight</th><th>How to Evaluate</th></tr><tr><td>Alignment with existing patterns</td><td>High</td><td>Does it match current codebase conventions?</td></tr><tr><td>Simplicity</td><td>High</td><td>Fewest moving parts that meet requirements</td></tr><tr><td>Testability</td><td>Medium</td><td>Can each component be independently tested?</td></tr><tr><td>Future extensibility</td><td>Low</td><td>Only consider if user mentioned future plans</td></tr><tr><td>Performance</td><td>Varies</td><td>Only if user specified performance constraints</td></tr></table></div>
+<p><strong>Lead with your recommended approach.</strong> Explain why it is the best choice given the constraints. Present alternatives to show you considered the trade-off space.</p>
+<p><strong>STOP — Do NOT proceed to Phase 4 until:</strong></p>
+<ul>
+<li>[ ] You have proposed at least 2 approaches</li>
+<li>[ ] Each approach has trade-offs documented</li>
+<li>[ ] You have made a clear recommendation with reasoning</li>
+</ul>
+<hr>
+<h2 id="phase-4-plan-documentation">Phase 4: Plan Documentation</h2>
+<p><strong>Goal:</strong> Write a detailed, executable plan document and get explicit approval.</p>
+<h3 id="plan-document-format">Plan Document Format</h3>
+<pre data-lang="markdown"><code># [Feature Name] Implementation Plan
+
+**Goal:** [One sentence]
+**Architecture:** [2-3 sentences]
+**Approach:** [Which approach was chosen and why]
+
+---
+
+### Task N: [Component Name]
+
+**Files:**
+- Create: `exact/path/to/file.ext`
+- Modify: `exact/path/to/existing.ext`
+- Test: `tests/exact/path/to/test.ext`
+
+**Steps:**
+1. Write the failing test
+2. Run test to verify it fails
+3. Write minimal implementation
+4. Run test to verify it passes
+5. Commit
+
+**Verification:** [Exact command to verify this task]</code></pre>
+<h3 id="plan-quality-checklist">Plan Quality Checklist</h3>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Check</th></tr><tr><td>Every task has exact file paths</td><td>No "somewhere in src/"</td></tr><tr><td>Every task has a verification command</td><td>No "eyeball it"</td></tr><tr><td>Tasks are ordered by dependency</td><td>No forward references</td></tr><tr><td>Tasks are 2-5 minutes each</td><td>No "implement the whole module"</td></tr><tr><td>TDD steps are explicit</td><td>RED-GREEN-REFACTOR per task</td></tr></table></div>
+<h2 id="fallback-e-governana-adr-002">Fallback e Governança (ADR-002)</h2>
+<p><strong>ATENÇÃO:</strong> O planejamento deve idealmente ser derivado de uma ADR aprovada e refletido no Roadmap. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
+<ol>
+<li><strong>Fallback</strong>: Se a feature solicitada é complexa e não possui ADR, acione a skill <code>adr-generator</code> antes de prosseguir.</li>
+<li>Salve o plano detalhado no formato <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan).</li>
+<li><strong>Roadmap</strong>: Exija o preenchimento ou atualização do Roadmap do projeto (via <code>roadmap-update</code> ou atualizando o arquivo de roadmap aplicável) para refletir o planejamento recém-criado.</li>
+</ol>
+<p>Se o repositório for legado (Fallback silencioso), salve provisoriamente o plano em <code>docs/plans/YYYY-MM-DD-<feature>.md</code>.</p>
+<p><strong>STOP — Do NOT proceed to Phase 5 until:</strong></p>
+<ul>
+<li>[ ] Plan document is written and saved (preferencialmente atrelado a uma ADR)</li>
+<li>[ ] Every task has file paths, steps, and verification</li>
+<li>[ ] User has explicitly approved the plan (said "yes", "approved", "go ahead", etc.)</li>
+<li>[ ] Roadmap atualizado (se aplicável)</li>
+</ul>
+<hr>
+<h2 id="phase-5-transition-to-execution">Phase 5: Transition to Execution</h2>
+<p><strong>Goal:</strong> Hand off the approved plan to the appropriate execution skill.</p>
+<h3 id="transition-decision-table">Transition Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Next Skill</th><th>Rationale</th></tr><tr><td>Standard implementation (< 10 tasks)</td><td><code>task-management</code></td><td>Sequential tracked execution</td></tr><tr><td>Large implementation (10+ independent tasks)</td><td><code>subagent-driven-development</code></td><td>Parallel execution with review gates</td></tr><tr><td>Autonomous development session</td><td><code>autonomous-loop</code></td><td>Ralph-style iterative execution</td></tr><tr><td>Single focused task</td><td><code>executing-plans</code></td><td>Direct plan execution</td></tr></table></div>
+<p>Invoke the chosen skill and pass the plan document path.</p>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>"This is too simple to plan"</td><td>Simple tasks have unexamined assumptions</td><td>Plan anyway — the plan can be short</td></tr><tr><td>"I already know the approach"</td><td>Your approach may conflict with project patterns</td><td>Document it and get approval</td></tr><tr><td>"The user wants it fast"</td><td>Bad code is slower than planned code</td><td>Planning prevents rework</td></tr><tr><td>"It's just a bug fix"</td><td>Bug fixes need root cause analysis</td><td>Plan the fix, not just the patch</td></tr><tr><td>"I'll plan as I go"</td><td>That is improvising, not planning</td><td>Plan first, execute second</td></tr><tr><td>Asking 5 questions at once</td><td>Overwhelms the user, gets vague answers</td><td>One question per message</td></tr><tr><td>Proposing only 1 approach</td><td>No trade-off analysis, may miss better options</td><td>Always propose 2-3 approaches</td></tr><tr><td>Vague file references</td><td>"Update the tests" — which tests?</td><td>Exact file paths always</td></tr><tr><td>Tasks that take 30+ minutes</td><td>Too large to track and verify</td><td>Break into 2-5 minute tasks</td></tr><tr><td>Starting code before approval</td><td>Wastes effort if direction changes</td><td>Wait for explicit "yes"</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<p><HARD-GATE> Do NOT write any code, create any files, or take any implementation action until:</p>
+<ol>
+<li>You have asked clarifying questions and understood the requirements</li>
+<li>You have proposed approaches with trade-offs</li>
+<li>The user has explicitly approved the plan</li>
+</ol>
+<p>This applies to EVERY task regardless of perceived simplicity. </HARD-GATE></p>
+<p><strong>Iron Law: NO CODE WITHOUT AN APPROVED PLAN.</strong> No exceptions. No "just this small thing." No "it's obvious."</p>
+<p>If you catch yourself thinking any of the following, STOP immediately:</p>
+<ul>
+<li>"Let me just quickly..." — No. Plan first.</li>
+<li>"This doesn't need a full plan..." — Yes it does. The plan can be brief.</li>
+<li>"I'll document it after..." — No. Document before.</li>
+</ul>
+<hr>
+<h2 id="subagent-dispatch-opportunities">Subagent Dispatch Opportunities</h2>
+<div class="table-wrapper"><table><tr><th>Task Pattern</th><th>Dispatch To</th><th>When</th></tr><tr><td>Independent research tasks during planning</td><td><code>Agent</code> tool with <code>subagent_type="Explore"</code></td><td>When gathering context from multiple codebase areas</td></tr><tr><td>Plan validation across architecture layers</td><td><code>Agent</code> tool dispatching <code>planner</code> agent</td><td>When plan covers multiple system boundaries</td></tr><tr><td>After plan approval, independent implementation tasks</td><td><code>Agent</code> tool (multiple parallel, per <code>dispatching-parallel-agents</code> skill)</td><td>When plan steps have no dependencies between them</td></tr></table></div>
+<p>Follow the <code>dispatching-parallel-agents</code> skill protocol when dispatching.</p>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th><th>When</th></tr><tr><td><code>brainstorming</code></td><td>Upstream — provides design context</td><td>Planning follows brainstorming</td></tr><tr><td><code>task-management</code></td><td>Downstream — receives approved plan</td><td>Standard execution path</td></tr><tr><td><code>executing-plans</code></td><td>Downstream — executes plan directly</td><td>Single-task execution</td></tr><tr><td><code>subagent-driven-development</code></td><td>Downstream — parallel execution</td><td>Large independent task sets</td></tr><tr><td><code>autonomous-loop</code></td><td>Downstream — iterative execution</td><td>Ralph-style sessions</td></tr><tr><td><code>self-learning</code></td><td>Bidirectional — informs and learns from planning</td><td>Context loading and pattern storage</td></tr><tr><td><code>verification-before-completion</code></td><td>Downstream — verifies plan completeness</td><td>Before claiming plan is done</td></tr><tr><td><code>task-decomposition</code></td><td>Complementary — provides WBS for complex plans</td><td>When plan needs hierarchical breakdown</td></tr></table></div>
+<hr>
+<h2 id="concrete-examples">Concrete Examples</h2>
+<h3 id="example-small-bug-fix-plan">Example: Small Bug Fix Plan</h3>
+<pre data-lang="markdown"><code># Fix: Login button disabled state not clearing
+
+**Goal:** Fix login button remaining disabled after failed login attempt
+**Architecture:** State management bug in LoginForm component
+**Approach:** Reset `isSubmitting` state in the catch block of handleSubmit
+
+### Task 1: Write failing test
+**Files:** Test: `tests/components/LoginForm.test.tsx`
+**Steps:** Write test that submits invalid credentials and verifies button re-enables
+**Verification:** `npm test -- --grep &quot;re-enables button after failed login&quot;`
+
+### Task 2: Fix the bug
+**Files:** Modify: `src/components/LoginForm.tsx`
+**Steps:** Add `setIsSubmitting(false)` to catch block in handleSubmit
+**Verification:** `npm test -- --grep &quot;LoginForm&quot;` — all pass</code></pre>
+<h3 id="example-transition-command">Example: Transition Command</h3>
+<p>After plan approval:</p>
+<pre><code>Plan approved and saved to docs/plans/2026-03-15-login-fix.md.
+Invoking task-management skill to begin tracked execution.</code></pre>
+<hr>
+<h2 id="verification-gate">Verification Gate</h2>
+<p>Before claiming the plan is complete, verify:</p>
+<ol>
+<li>IDENTIFY: Plan document exists at <code>docs/plans/</code></li>
+<li>RUN: Review plan for completeness against quality checklist</li>
+<li>READ: Verify all sections are filled with specific details</li>
+<li>VERIFY: User has explicitly approved</li>
+<li>CLAIM: Only then transition to implementation</li>
+</ol>
+<hr>
+<h2 id="key-principles">Key Principles</h2>
+<ul>
+<li><strong>DRY</strong> — Do not repeat yourself</li>
+<li><strong>YAGNI</strong> — Do not build what is not needed yet</li>
+<li><strong>TDD</strong> — Write tests first when applicable</li>
+<li><strong>Frequent commits</strong> — Small, atomic commits after each task</li>
+<li><strong>Exact paths</strong> — Always specify exact file paths in the plan</li>
+</ul>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly for every implementation task. The phases are sequential and non-negotiable. No code without an approved plan.</p>
+<hr>
+<h2 id="sub-domain--component-writing-plans">Sub-Domain / Component: <code>writing-plans</code></h2>
+<h1 id="writing-plans">Writing Plans</h1>
+<h2 id="overview">Overview</h2>
+<p>Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.</p>
+<p>Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.</p>
+<p><strong>Announce at start:</strong> "I'm using the writing-plans skill to create the implementation plan."</p>
+<p><strong>Context:</strong> If working in an isolated worktree, it should have been created via the <code>superpowers:using-git-worktrees</code> skill at execution time.</p>
+<h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
+<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
+<h2 id="fallback-e-governana-adr-002">Fallback e Governança (ADR-002)</h2>
+<p><strong>ATENÇÃO:</strong> Planos de implementação (PI) devem idealmente derivar de uma ADR aprovada. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
+<ol>
+<li>Se não houver ADR para a feature solicitada, acione o <strong>Fallback</strong>: peça para o usuário gerar a ADR (usando a skill <code>adr-generator</code>) antes de detalhar o plano, a menos que seja uma tarefa trivial.</li>
+<li>Ao gerar o plano, escreva-o em <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan).</li>
+<li>Exija o uso e atualização do arquivo <code>docs/adr/ADR-XXX-TODO.md</code> para rastrear as tarefas criadas no PI. (Não use formatos antigos como <code>task-card</code>).</li>
+</ol>
+<p><HARD-GATE: UNIFIED-TODO> <strong>É TERMINANTEMENTE PROIBIDO</strong> criar múltiplos arquivos TODO para a mesma ADR (ex: <code>ADR-XXX-P2-TODO.md</code> ou <code>ADR-XXX-Fase2-TODO.md</code>). O formato da Quadra exige mapeamento 1:1 rigoroso. Se uma ADR tiver múltiplas fases, mapeie TODAS ELAS em um único arquivo <code>ADR-XXX-TODO.md</code> usando cabeçalhos markdown (<code>## Fase 1</code>, <code>## Fase 2</code>). Se o escopo da ADR for gigantesco a ponto de inviabilizar um único TODO, oriente o usuário a desmembrar a própria ADR-mãe em sub-ADRs independentes (ex: <code>ADR-008-A</code>, <code>ADR-008-B</code>), cada qual com sua própria Quadra. </HARD-GATE></p>
+<p>Se o repositório for legado e não possuir governança de ADRs (Fallback silencioso), salve provisoriamente em: <code>docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md</code> e ignore o <code>todo</code>.</p>
+<h2 id="scope-check">Scope Check</h2>
+<p>If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.</p>
+<h2 id="file-structure">File Structure</h2>
+<p>Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.</p>
+<ul>
+<li>Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.</li>
+<li>You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.</li>
+<li>Files that change together should live together. Split by responsibility, not by technical layer.</li>
+<li>In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.</li>
+</ul>
+<p>This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.</p>
+<h2 id="task-right-sizing">Task Right-Sizing</h2>
+<p>A task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. When drawing task boundaries: fold setup, configuration, scaffolding, and documentation steps into the task whose deliverable needs them; split only where a reviewer could meaningfully reject one task while approving its neighbor. Each task ends with an independently testable deliverable.</p>
+<h2 id="bite-sized-task-granularity">Bite-Sized Task Granularity</h2>
+<p><strong>Each step is one action (2-5 minutes):</strong></p>
+<ul>
+<li>"Write the failing test" - step</li>
+<li>"Run it to make sure it fails" - step</li>
+<li>"Implement the minimal code to make the test pass" - step</li>
+<li>"Run the tests and make sure they pass" - step</li>
+<li>"Commit" - step</li>
+</ul>
+<h2 id="plan-document-header">Plan Document Header</h2>
+<p><strong>Every plan MUST start with this header:</strong></p>
+<pre data-lang="markdown"><code># [Feature Name] Implementation Plan
+
+&gt; **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** [One sentence describing what this builds]
+
+**Architecture:** [2-3 sentences about approach]
+
+**Tech Stack:** [Key technologies/libraries]
+
+## Global Constraints
+
+[The spec&#x27;s project-wide requirements — version floors, dependency limits,
+naming and copy rules, platform requirements — one line each, with exact
+values copied verbatim from the spec. Every task&#x27;s requirements implicitly
+include this section.]
+
+---</code></pre>
+<h2 id="task-structure">Task Structure</h2>
+<pre data-lang="`markdown"><code>### Task N: [Component Name]
+
+**Files:**
+- Create: `exact/path/to/file.py`
+- Modify: `exact/path/to/existing.py:123-145`
+- Test: `tests/exact/path/to/test.py`
+
+**Interfaces:**
+- Consumes: [what this task uses from earlier tasks — exact signatures]
+- Produces: [what later tasks rely on — exact function names, parameter
+  and return types. A task&#x27;s implementer sees only their own task; this
+  block is how they learn the names and types neighboring tasks use.]
+
+- [ ] **Step 1: Write the failing test**
+</code></pre>
+<p>def test_specific_behavior(): result = function(input) assert result == expected</p>
+<pre><code>
+- [ ] **Step 2: Run test to verify it fails**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: FAIL with &quot;function not defined&quot;
+
+- [ ] **Step 3: Write minimal implementation**
+</code></pre>
+<p>def function(input): return expected</p>
+<pre><code>
+- [ ] **Step 4: Run test to verify it passes**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: PASS
+
+- [ ] **Step 5: Commit**
+</code></pre>
+<p>git add tests/path/test.py src/path/file.py git commit -m "feat: add specific feature"</p>
+<pre><code></code></pre>
+<h2 id="no-placeholders">No Placeholders</h2>
+<p>Every step must contain the actual content an engineer needs. These are <strong>plan failures</strong> — never write them:</p>
+<ul>
+<li>"TBD", "TODO", "implement later", "fill in details"</li>
+<li>"Add appropriate error handling" / "add validation" / "handle edge cases"</li>
+<li>"Write tests for the above" (without actual test code)</li>
+<li>"Similar to Task N" (repeat the code — the engineer may be reading tasks out of order)</li>
+<li>Steps that describe what to do without showing how (code blocks required for code steps)</li>
+<li>References to types, functions, or methods not defined in any task</li>
+</ul>
+<h2 id="remember">Remember</h2>
+<ul>
+<li>Exact file paths always</li>
+<li>Complete code in every step — if a step changes code, show the code</li>
+<li>Exact commands with expected output</li>
+<li>DRY, YAGNI, TDD, frequent commits</li>
+</ul>
+<h2 id="self-review">Self-Review</h2>
+<p>After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.</p>
+<p><strong>1. Spec coverage:</strong> Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.</p>
+<p><strong>2. Placeholder scan:</strong> Search your plan for red flags — any of the patterns from the "No Placeholders" section above. Fix them.</p>
+<p><strong>3. Type consistency:</strong> Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called <code>clearLayers()</code> in Task 3 but <code>clearFullLayers()</code> in Task 7 is a bug.</p>
+<p>If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.</p>
+<h2 id="execution-handoff">Execution Handoff</h2>
+<p>After saving the plan, offer execution choice:</p>
+<p><strong>"Plan complete and saved to <code>docs/superpowers/plans/<filename>.md</code>. Two execution options:</strong></p>
+<p><strong>1. Subagent-Driven (recommended)</strong> - I dispatch a fresh subagent per task, review between tasks, fast iteration</p>
+<p><strong>2. Inline Execution</strong> - Execute tasks in this session using executing-plans, batch execution with checkpoints</p>
+<p><strong>Which approach?"</strong></p>
+<p><strong>If Subagent-Driven chosen:</strong></p>
+<ul>
+<li><strong>REQUIRED SUB-SKILL:</strong> Use superpowers:subagent-driven-development</li>
+<li>Fresh subagent per task + two-stage review</li>
+</ul>
+<p><strong>If Inline Execution chosen:</strong></p>
+<ul>
+<li><strong>REQUIRED SUB-SKILL:</strong> Use superpowers:executing-plans</li>
+<li>Batch execution with checkpoints for review</li>
+</ul>
+<hr>
+<h2 id="sub-domain--component-executing-plans">Sub-Domain / Component: <code>executing-plans</code></h2>
+<h1 id="executing-plans">Executing Plans</h1>
+<h2 id="overview">Overview</h2>
+<p>This skill turns an approved plan document into working code through disciplined, batch-based execution. Each step is implemented with TDD, verified before proceeding, and reviewed at checkpoints. It provides the structural framework for moving from plan to production code with consistent quality gates.</p>
+<p><strong>Announce at start:</strong> "I'm using the executing-plans skill to implement the approved plan at [plan path]."</p>
+<h2 id="trigger-conditions">Trigger Conditions</h2>
+<ul>
+<li>An approved plan document exists and is ready for implementation</li>
+<li><code>/execute</code> command invoked with a plan reference</li>
+<li>Resuming a partially completed plan execution</li>
+<li>Transition from planning skill after plan approval</li>
+</ul>
+<hr>
+<h2 id="phase-1-read-the-plan">Phase 1: Read the Plan</h2>
+<p><strong>Goal:</strong> Thoroughly understand the plan before writing any code.</p>
+<ol>
+<li>Read the entire plan document from start to finish</li>
+<li>Identify all implementation steps and count them</li>
+<li>Map dependencies between steps (what must be done first)</li>
+<li>Note any ambiguities or open questions</li>
+<li>Confirm understanding with the user before proceeding</li>
+</ol>
+<h3 id="plan-comprehension-checklist">Plan Comprehension Checklist</h3>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Question</th></tr><tr><td>Goal clarity</td><td>Can you explain the plan's goal in one sentence?</td></tr><tr><td>Step count</td><td>How many implementation steps are there?</td></tr><tr><td>Dependencies</td><td>Which steps depend on which?</td></tr><tr><td>Ambiguities</td><td>Are there any unclear or underspecified steps?</td></tr><tr><td>Verification</td><td>Does every step have a verification method?</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to Phase 2 until:</strong></p>
+<ul>
+<li>[ ] You can explain the plan's goal in one sentence</li>
+<li>[ ] You can list all implementation steps</li>
+<li>[ ] Dependencies are mapped</li>
+<li>[ ] Any ambiguities are noted and resolved with user</li>
+<li>[ ] User has confirmed you may proceed</li>
+</ul>
+<hr>
+<h2 id="phase-2-create-task-batch">Phase 2: Create Task Batch</h2>
+<p><strong>Goal:</strong> Break the plan into small, executable task batches.</p>
+<h3 id="batch-size-decision-table">Batch Size Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Task Complexity</th><th>Batch Size</th><th>Examples</th></tr><tr><td>Simple (config, boilerplate)</td><td>Up to 5 tasks</td><td>ENV vars, imports, type definitions</td></tr><tr><td>Standard (features, logic)</td><td>3 tasks</td><td>Endpoints, services, components</td></tr><tr><td>Complex (integrations, security)</td><td>2 tasks</td><td>OAuth flows, payment processing</td></tr><tr><td>Critical (data migration, auth)</td><td>1 task</td><td>Database migrations, credential handling</td></tr></table></div>
+<h3 id="task-requirements-stic">Task Requirements (STIC)</h3>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Description</th></tr><tr><td><strong>S</strong>pecific</td><td>Clear definition of what to implement</td></tr><tr><td><strong>T</strong>estable</td><td>Can be verified with automated tests</td></tr><tr><td><strong>I</strong>ndependent</td><td>Minimal coupling to other tasks in the batch (where possible)</td></tr><tr><td><strong>C</strong>ompact</td><td>Completable in a focused session (2-5 minutes)</td></tr></table></div>
+<h3 id="task-template">Task Template</h3>
+<pre><code>Task: [concise description]
+Plan Step: [reference to plan section]
+Files to Create/Modify: [list of exact file paths]
+Acceptance Criteria:
+  - [specific, testable criterion 1]
+  - [specific, testable criterion 2]
+Dependencies: [other tasks that must be done first, or &quot;none&quot;]
+Verification: [exact command to run]</code></pre>
+<p><strong>STOP — Do NOT proceed to Phase 3 until:</strong></p>
+<ul>
+<li>[ ] Tasks created for the current batch</li>
+<li>[ ] Each task has clear acceptance criteria</li>
+<li>[ ] Dependencies are satisfied (previous tasks complete)</li>
+<li>[ ] Tasks ordered by dependency (independent tasks first)</li>
+</ul>
+<hr>
+<h2 id="phase-3-execute-tasks">Phase 3: Execute Tasks</h2>
+<p><strong>Goal:</strong> Execute each task one at a time using TDD.</p>
+<h3 id="per-task-workflow">Per-Task Workflow</h3>
+<pre><code>1. ANNOUNCE which task you are starting
+2. IMPLEMENT using test-driven-development skill:
+   a. Write failing test (RED)
+   b. Write minimal code to pass (GREEN)
+   c. Refactor (REFACTOR)
+   d. Repeat RED-GREEN-REFACTOR for each behavior
+3. VERIFY using verification-before-completion skill:
+   a. Run full test suite (not just new tests)
+   b. Run lint, type-check, build as applicable
+   c. Confirm all checks pass
+4. MARK task as complete
+5. PROCEED to next task</code></pre>
+<h3 id="execution-rules">Execution Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Rationale</th></tr><tr><td>One task at a time</td><td>Do not start task 2 until task 1 is verified</td></tr><tr><td>Follow TDD strictly</td><td>No production code without a failing test</td></tr><tr><td>Do not deviate from the plan</td><td>If plan needs changes, stop and discuss with user</td></tr><tr><td>Do not skip verification</td><td>Every task must pass verification before marking complete</td></tr><tr><td>Report progress</td><td>Announce start and completion of each task</td></tr></table></div>
+<h3 id="task-outcome-decision-table">Task Outcome Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Outcome</th><th>Action</th><th>Next Step</th></tr><tr><td>Verification passes</td><td>Mark complete</td><td>Next task</td></tr><tr><td>Test failure, obvious fix</td><td>Fix and re-verify</td><td>Same task</td></tr><tr><td>Test failure, unclear cause</td><td>Invoke <code>systematic-debugging</code></td><td>Same task after fix</td></tr><tr><td>Plan step is ambiguous</td><td>Stop and ask user</td><td>Wait for clarification</td></tr><tr><td>Plan step is not feasible</td><td>Report blocker</td><td>Wait for direction</td></tr><tr><td>Unexpected dependency found</td><td>Report and reorder</td><td>Adjust batch</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to next task until:</strong></p>
+<ul>
+<li>[ ] Current task's acceptance criteria are met</li>
+<li>[ ] All tests pass (new and existing)</li>
+<li>[ ] Verification-before-completion has been executed</li>
+<li>[ ] Task marked as complete</li>
+</ul>
+<hr>
+<h2 id="phase-4-batch-checkpoint">Phase 4: Batch Checkpoint</h2>
+<p><strong>Goal:</strong> After completing all tasks in a batch, perform a full checkpoint review.</p>
+<h3 id="checkpoint-steps">Checkpoint Steps</h3>
+<ol>
+<li>Run full test suite — all tests, not just those from the current batch</li>
+<li>Run all verification commands — lint, type-check, build, format</li>
+<li>Review what was implemented — summarize completed tasks and outcomes</li>
+<li>Assess progress against the plan — how far through are we?</li>
+<li>Identify any issues or risks that came up during execution</li>
+<li>Report to user and ask for direction</li>
+</ol>
+<h3 id="checkpoint-report-template">Checkpoint Report Template</h3>
+<pre><code>BATCH CHECKPOINT
+================
+Batch: [N] of [estimated total]
+Tasks Completed: [list]
+
+Verification Results:
+  Tests:      [X passed, Y failed, Z skipped]
+  Build:      [pass/fail]
+  Lint:       [pass/fail, N warnings]
+  Type-check: [pass/fail]
+
+Progress: [N of M plan steps complete] ([percentage]%)
+
+Issues Encountered:
+  - [issue 1 and how it was resolved]
+
+Risks or Concerns:
+  - [risk 1]
+
+Next Batch Preview:
+  - [task 1]
+  - [task 2]
+  - [task 3]
+
+Awaiting direction: Continue with next batch / Adjust plan / Other?</code></pre>
+<p><strong>STOP — Do NOT proceed to next batch until:</strong></p>
+<ul>
+<li>[ ] Full test suite passes</li>
+<li>[ ] All verification commands pass</li>
+<li>[ ] Checkpoint report presented to user</li>
+<li>[ ] User has confirmed to continue</li>
+</ul>
+<hr>
+<h2 id="phase-5-continue-adjust-or-complete">Phase 5: Continue, Adjust, or Complete</h2>
+<p><strong>Goal:</strong> Act on user direction after each checkpoint.</p>
+<h3 id="direction-decision-table">Direction Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>User Direction</th><th>Action</th><th>Next Phase</th></tr><tr><td>"Continue"</td><td>Create next batch of tasks</td><td>Phase 2</td></tr><tr><td>"Adjust plan"</td><td>Discuss changes, update plan document</td><td>Phase 2 (with updated plan)</td></tr><tr><td>"Stop here"</td><td>Summarize progress, note remaining work</td><td>Completion</td></tr><tr><td>"Skip ahead to [step]"</td><td>Verify dependencies are met, then jump</td><td>Phase 2 (at new step)</td></tr><tr><td>"Go back and redo [task]"</td><td>Revert if needed, re-execute with corrections</td><td>Phase 3</td></tr></table></div>
+<p>Never proceed to the next batch without explicit user approval.</p>
+<hr>
+<h2 id="critical-blocker-handling">Critical Blocker Handling</h2>
+<p>When you encounter something that prevents task completion, do NOT work around it. Stop and escalate.</p>
+<h3 id="blocker-classification">Blocker Classification</h3>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Examples</th><th>Action</th></tr><tr><td>Ambiguous spec</td><td>Plan step could mean multiple things</td><td>Present interpretations, ask user</td></tr><tr><td>Missing dependency</td><td>Required API or library unavailable</td><td>Report with alternatives</td></tr><tr><td>Contradiction</td><td>Step conflicts with another part of the plan</td><td>Identify both sides, ask user</td></tr><tr><td>Security concern</td><td>Planned approach has vulnerability</td><td>Report risk, propose safer alternative</td></tr><tr><td>Feasibility</td><td>Step cannot be implemented as described</td><td>Explain why, propose alternatives</td></tr></table></div>
+<h3 id="blocker-report-format">Blocker Report Format</h3>
+<pre><code>CRITICAL BLOCKER
+================
+Task: [which task is blocked]
+Blocker: [clear description of the problem]
+Impact: [what cannot proceed until this is resolved]
+Options:
+  A. [option with tradeoffs]
+  B. [option with tradeoffs]
+  C. [skip this step and continue]
+
+Awaiting direction before proceeding.</code></pre>
+<p><strong>Do NOT</strong> guess what the user intended. <strong>Do NOT</strong> implement a workaround without approval. <strong>Do NOT</strong> skip the blocked task silently. <strong>DO</strong> present options with clear tradeoffs. <strong>DO</strong> continue with non-blocked tasks if possible (but flag the skip).</p>
+<hr>
+<h2 id="subagent-dispatch-option">Subagent Dispatch Option</h2>
+<p>For larger plans, individual tasks can be dispatched to subagents for parallel execution.</p>
+<h3 id="when-to-suggest-subagent-dispatch">When to Suggest Subagent Dispatch</h3>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Threshold</th></tr><tr><td>Independent tasks in plan</td><td>10+ tasks with few dependencies</td></tr><tr><td>Task specification quality</td><td>Each task has clear acceptance criteria</td></tr><tr><td>Speed requirement</td><td>User has indicated urgency</td></tr><tr><td>Task interdependency</td><td>Low coupling between tasks</td></tr></table></div>
+<p>When conditions are met, suggest switching to the <code>subagent-driven-development</code> skill for the remaining work.</p>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>Implementing entire plan at once</td><td>No checkpoints, no quality gates</td><td>Batch-based execution with checkpoints</td></tr><tr><td>Skipping TDD because "it's simple"</td><td>Bugs accumulate, regressions appear</td><td>Every task uses TDD, no exceptions</td></tr><tr><td>Working around blockers silently</td><td>User unaware, wrong assumptions baked in</td><td>Stop and escalate blockers</td></tr><tr><td>Proceeding without approval after batch</td><td>Direction may have changed</td><td>Always checkpoint and wait</td></tr><tr><td>Deviating from the plan</td><td>Unauthorized changes, scope creep</td><td>Discuss changes before implementing</td></tr><tr><td>Running only new tests</td><td>Regressions go undetected</td><td>Full test suite at checkpoints</td></tr><tr><td>Marking tasks complete without verification</td><td>False progress, accumulated bugs</td><td>Verification is mandatory</td></tr><tr><td>Batches larger than 5 tasks</td><td>Hard to review, too much risk per batch</td><td>Keep batches small</td></tr><tr><td>Skipping checkpoint report</td><td>User loses visibility into progress</td><td>Always present full checkpoint</td></tr><tr><td>Not committing at batch boundaries</td><td>Huge diffs, hard to revert</td><td>Commit after each batch</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<p><HARD-GATE> Do NOT skip any verification step. Do NOT proceed past a checkpoint without user approval. Do NOT deviate from the approved plan without discussion. <strong>ER.md GENERATION BAN</strong>: You are STRICTLY PROHIBITED from creating or generating <code>*ER.md</code> (Execution Report) files. For ADR implementations, you must only check the boxes in the <code>TODO.md</code> file and run the audit tool (<code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code>), which is the exclusive gatekeeper authorized to generate ERs. </HARD-GATE></p>
+<p>If you catch yourself thinking:</p>
+<ul>
+<li>"I know what comes next, I'll skip the checkpoint..." — No. Report and wait.</li>
+<li>"This verification is redundant..." — Run it anyway. Fresh evidence only.</li>
+<li>"The plan is close enough, I'll adjust as I go..." — Discuss adjustments first.</li>
+</ul>
+<hr>
+<h2 id="subagent-dispatch-opportunities">Subagent Dispatch Opportunities</h2>
+<div class="table-wrapper"><table><tr><th>Task Pattern</th><th>Dispatch To</th><th>When</th></tr><tr><td>Independent plan steps with no shared state</td><td>Parallel subagents via <code>Agent</code> tool</td><td>When dependency analysis shows no blockers between steps</td></tr><tr><td>Code review of completed step</td><td><code>code-reviewer</code> agent</td><td>After each major plan step completion</td></tr><tr><td>Test execution for completed features</td><td>Background <code>Bash</code> task</td><td>When tests can run independently of ongoing work</td></tr></table></div>
+<p>Follow the <code>dispatching-parallel-agents</code> skill protocol when dispatching.</p>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th><th>When</th></tr><tr><td><code>planning</code></td><td>Upstream — provides approved plan document</td><td>Plan is the input to this skill</td></tr><tr><td><code>test-driven-development</code></td><td>Per-task — TDD cycle for every code task</td><td>Phase 3 execution</td></tr><tr><td><code>verification-before-completion</code></td><td>Per-task — verification gate</td><td>Before marking any task complete</td></tr><tr><td><code>systematic-debugging</code></td><td>On failure — investigate unexpected failures</td><td>When task encounters errors</td></tr><tr><td><code>code-review</code></td><td>At checkpoints — review code quality</td><td>Phase 4 batch review</td></tr><tr><td><code>subagent-driven-development</code></td><td>Alternative — parallel execution path</td><td>For large independent task sets</td></tr><tr><td><code>resilient-execution</code></td><td>On failure — retry with alternatives</td><td>When task approaches fail</td></tr><tr><td><code>task-management</code></td><td>Complementary — provides task tracking</td><td>Can be used together</td></tr></table></div>
+<hr>
+<h2 id="concrete-examples">Concrete Examples</h2>
+<h3 id="example-batch-creation-from-plan">Example: Batch Creation from Plan</h3>
+<p>Plan: "Add user authentication with JWT"</p>
+<pre><code>Batch 1 (3 tasks):
+  Task 1: Write failing test for JWT token generation
+    Files: tests/auth/jwt.test.ts
+    Verification: npm test -- --grep &quot;JWT generation&quot; → FAIL (expected)
+
+  Task 2: Implement JWT token generation
+    Files: src/auth/jwt.ts
+    Verification: npm test -- --grep &quot;JWT generation&quot; → PASS
+
+  Task 3: Write failing test for auth middleware
+    Files: tests/middleware/auth.test.ts
+    Verification: npm test -- --grep &quot;auth middleware&quot; → FAIL (expected)
+
+[CHECKPOINT after batch 1]
+
+Batch 2 (3 tasks):
+  Task 4: Implement auth middleware
+  Task 5: Write failing test for login endpoint
+  Task 6: Implement login endpoint
+
+[CHECKPOINT after batch 2]</code></pre>
+<hr>
+<h2 id="completion-criteria">Completion Criteria</h2>
+<p>The plan execution is complete when:</p>
+<ol>
+<li>All plan steps have been implemented as tasks</li>
+<li>All tasks have passed verification</li>
+<li>Full test suite passes</li>
+<li>Final checkpoint report presented to user</li>
+<li>User confirms the plan is complete</li>
+<li><strong>FINAL STEP (For ADR-based plans):</strong> You MUST run <code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code>, read the generated audit report from <code>docs/reports</code>, and present its verdict (success or pending debts) to the user.</li>
+</ol>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly. Batches, checkpoints, and verification gates are non-negotiable. No task is complete without verification. No batch proceeds without user approval.</p>
+<hr>
+<h2 id="sub-domain--component-task-decomposition">Sub-Domain / Component: <code>task-decomposition</code></h2>
+<h1 id="task-decomposition">Task Decomposition</h1>
+<h2 id="overview">Overview</h2>
+<p>Task decomposition breaks complex tasks into manageable, well-defined subtasks with clear dependencies, effort estimates, and parallelization opportunities. It covers hierarchical work breakdown structures (WBS), dependency graph construction, critical path analysis, task sizing, and identification of concurrent execution opportunities. Essential for planning multi-step implementations, project estimation, and autonomous loop task selection.</p>
+<p><strong>Announce at start:</strong> "I'm using the task-decomposition skill to break this work into a structured hierarchy with dependencies and estimates."</p>
+<h2 id="trigger-conditions">Trigger Conditions</h2>
+<ul>
+<li>Complex task needs to be broken into subtasks</li>
+<li>Dependency mapping is needed between work items</li>
+<li>Effort estimation is required for planning</li>
+<li>Parallelization opportunities need to be identified</li>
+<li><code>/decompose</code> command invoked</li>
+<li>Transition from planning skill for complex plans</li>
+<li>Autonomous loop needs task selection guidance</li>
+</ul>
+<hr>
+<h2 id="phase-1-scope-definition">Phase 1: Scope Definition</h2>
+<p><strong>Goal:</strong> Define clear boundaries for the decomposition.</p>
+<ol>
+<li>Define the overall deliverable and acceptance criteria</li>
+<li>Identify the boundaries (what is in scope, what is not)</li>
+<li>Determine the decomposition granularity level</li>
+<li>Identify stakeholders and their requirements</li>
+<li>Establish constraints (time, resources, dependencies)</li>
+</ol>
+<h3 id="granularity-decision-table">Granularity Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Context</th><th>Target Level</th><th>Typical Duration</th><th>Rationale</th></tr><tr><td>Autonomous loop (Ralph)</td><td>L3-L4 (Task/Subtask)</td><td>15 min - 4 hours</td><td>ONE task per loop iteration</td></tr><tr><td>Sprint planning</td><td>L2-L3 (Story/Task)</td><td>0.5-2 days</td><td>Sprint-sized work items</td></tr><tr><td>Roadmap planning</td><td>L0-L1 (Epic/Feature)</td><td>2-8 weeks</td><td>High-level milestone tracking</td></tr><tr><td>Bug fix</td><td>L3-L4 (Task/Subtask)</td><td>15 min - 2 hours</td><td>Focused, specific fixes</td></tr></table></div>
+<h3 id="granularity-levels">Granularity Levels</h3>
+<div class="table-wrapper"><table><tr><th>Level</th><th>Name</th><th>Typical Duration</th><th>Example</th></tr><tr><td>L0</td><td>Epic</td><td>2-8 weeks</td><td>"User authentication system"</td></tr><tr><td>L1</td><td>Feature</td><td>2-5 days</td><td>"OAuth2 login flow"</td></tr><tr><td>L2</td><td>Story</td><td>0.5-2 days</td><td>"Google OAuth provider integration"</td></tr><tr><td>L3</td><td>Task</td><td>1-4 hours</td><td>"Implement Google callback handler"</td></tr><tr><td>L4</td><td>Subtask</td><td>15-60 minutes</td><td>"Parse OAuth token response"</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to Phase 2 until:</strong></p>
+<ul>
+<li>[ ] Deliverable and acceptance criteria are defined</li>
+<li>[ ] Scope boundaries are clear (in/out)</li>
+<li>[ ] Target granularity level is chosen</li>
+<li>[ ] Constraints are identified</li>
+</ul>
+<hr>
+<h2 id="phase-2-hierarchical-breakdown">Phase 2: Hierarchical Breakdown</h2>
+<p><strong>Goal:</strong> Decompose the work into a tree structure meeting the INVEST criteria.</p>
+<ol>
+<li>Identify top-level work streams (epics or major components)</li>
+<li>Break each work stream into features or milestones</li>
+<li>Decompose features into implementable tasks</li>
+<li>Apply the "2-hour rule" — no task should exceed 2 hours of focused work</li>
+<li>Ensure each task has a clear definition of done</li>
+<li>Verify MECE (Mutually Exclusive, Collectively Exhaustive) coverage</li>
+</ol>
+<h3 id="the-invest-criteria-for-tasks">The INVEST Criteria for Tasks</h3>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Question</th><th>Bad Example</th><th>Good Example</th></tr><tr><td><strong>I</strong>ndependent</td><td>Can this be done without waiting for others?</td><td>"Implement auth after DB is ready"</td><td>"Implement auth with mock DB"</td></tr><tr><td><strong>N</strong>egotiable</td><td>Is the approach flexible?</td><td>"Use Redis for caching"</td><td>"Add caching layer for user sessions"</td></tr><tr><td><strong>V</strong>aluable</td><td>Does completing this deliver value?</td><td>"Set up folder structure"</td><td>"Create user registration endpoint"</td></tr><tr><td><strong>E</strong>stimable</td><td>Can you estimate the effort?</td><td>"Improve performance"</td><td>"Add database index for user lookup query"</td></tr><tr><td><strong>S</strong>mall</td><td>Can one person finish it in < 2 hours?</td><td>"Build the dashboard"</td><td>"Create dashboard chart component for revenue data"</td></tr><tr><td><strong>T</strong>estable</td><td>Can you verify it is done?</td><td>"Make it better"</td><td>"Response time < 200ms for /api/users"</td></tr></table></div>
+<h3 id="mece-verification">MECE Verification</h3>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Question</th></tr><tr><td>Mutually Exclusive</td><td>Does any task overlap with another? (Should not)</td></tr><tr><td>Collectively Exhaustive</td><td>Do all tasks together cover the full deliverable? (Should)</td></tr><tr><td>No orphans</td><td>Does every task contribute to the deliverable?</td></tr><tr><td>No gaps</td><td>Is there any work needed that has no task?</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to Phase 3 until:</strong></p>
+<ul>
+<li>[ ] All work streams are identified</li>
+<li>[ ] Tasks meet INVEST criteria</li>
+<li>[ ] MECE coverage is verified</li>
+<li>[ ] No task exceeds 2 hours</li>
+</ul>
+<hr>
+<h2 id="phase-3-dependency-mapping">Phase 3: Dependency Mapping</h2>
+<p><strong>Goal:</strong> Build a directed acyclic graph (DAG) of task dependencies.</p>
+<ol>
+<li>Identify input/output dependencies between tasks</li>
+<li>Classify dependency types</li>
+<li>Build a directed acyclic graph (DAG)</li>
+<li>Identify the critical path (longest dependency chain)</li>
+<li>Flag circular dependencies as errors to resolve</li>
+<li>Mark external dependencies (API access, approvals, third-party)</li>
+</ol>
+<h3 id="dependency-types">Dependency Types</h3>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Symbol</th><th>Meaning</th><th>Example</th></tr><tr><td>Finish-to-Start (FS)</td><td>A -> B</td><td>B cannot start until A finishes</td><td>"Deploy" after "Build passes"</td></tr><tr><td>Start-to-Start (SS)</td><td>A => B</td><td>B can start when A starts</td><td>"Write docs" when "Write code" starts</td></tr><tr><td>Finish-to-Finish (FF)</td><td>A =>> B</td><td>B cannot finish until A finishes</td><td>"Testing" finishes after "Development"</td></tr><tr><td>Start-to-Finish (SF)</td><td>A ~> B</td><td>B cannot finish until A starts</td><td>Rare — shift handoff scenarios</td></tr></table></div>
+<h3 id="dependency-notation-format">Dependency Notation Format</h3>
+<pre><code>Task 1: Set up database schema
+Task 2: Create data access layer         [depends: 1]
+Task 3: Implement API endpoints          [depends: 2]
+Task 4: Write unit tests for DAL         [depends: 2]
+Task 5: Write API integration tests      [depends: 3, 4]
+Task 6: Create frontend components       [depends: none]
+Task 7: Connect frontend to API          [depends: 3, 6]
+Task 8: End-to-end testing               [depends: 5, 7]
+
+Parallel tracks:
+  Track A: 1 -&gt; 2 -&gt; 3 -&gt; 5 -&gt; 8
+  Track B: 1 -&gt; 2 -&gt; 4 -&gt; 5 -&gt; 8
+  Track C: 6 -&gt; 7 -&gt; 8
+  Critical path: 1 -&gt; 2 -&gt; 3 -&gt; 7 -&gt; 8</code></pre>
+<h3 id="circular-dependency-resolution">Circular Dependency Resolution</h3>
+<div class="table-wrapper"><table><tr><th>Detection</th><th>Resolution</th></tr><tr><td>A depends on B, B depends on A</td><td>Break into smaller tasks that remove the cycle</td></tr><tr><td>A depends on B's interface, B depends on A's interface</td><td>Define interfaces first as a separate task</td></tr><tr><td>Tight coupling between components</td><td>Introduce an abstraction layer task</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to Phase 4 until:</strong></p>
+<ul>
+<li>[ ] All dependencies are mapped</li>
+<li>[ ] No circular dependencies exist</li>
+<li>[ ] Critical path is identified</li>
+<li>[ ] External dependencies are flagged</li>
+</ul>
+<hr>
+<h2 id="phase-4-parallelization-planning">Phase 4: Parallelization Planning</h2>
+<p><strong>Goal:</strong> Identify independent task clusters that can run concurrently.</p>
+<ol>
+<li>Identify independent task clusters (no dependencies between them)</li>
+<li>Group tasks by resource type (read, write, build, test)</li>
+<li>Determine maximum parallelism based on resource constraints</li>
+<li>Sequence tasks within each parallel track</li>
+<li>Plan synchronization points (merge gates)</li>
+</ol>
+<h3 id="resource-based-parallelism-limits">Resource-Based Parallelism Limits</h3>
+<div class="table-wrapper"><table><tr><th>Resource Type</th><th>Max Parallel</th><th>Rationale</th></tr><tr><td>Code reading / analysis</td><td>Unlimited</td><td>No side effects</td></tr><tr><td>File creation / editing</td><td>3-5</td><td>Avoid merge conflicts</td></tr><tr><td>Build / compile</td><td>1</td><td>Resource contention</td></tr><tr><td>Test execution</td><td>1-2</td><td>Shared state, ports</td></tr><tr><td>Database migrations</td><td>1</td><td>Sequential by nature</td></tr><tr><td>Documentation</td><td>Unlimited</td><td>Independent files</td></tr></table></div>
+<h3 id="parallelization-pattern-decision-table">Parallelization Pattern Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>When to Use</th><th>Example</th></tr><tr><td>Independent Clusters</td><td>Work streams with no shared state</td><td>Backend, Frontend, Infra</td></tr><tr><td>By Layer</td><td>Layers touch different files</td><td>API, Service, Data</td></tr><tr><td>By Feature Area</td><td>Independent vertical slices</td><td>Auth, Profile, Billing</td></tr><tr><td>By Task Type</td><td>Code, tests, docs touch different files</td><td>Implement, Test, Document</td></tr></table></div>
+<h3 id="synchronization-points">Synchronization Points</h3>
+<pre><code>  +------+     +------+     +------+
+  |Task A|     |Task B|     |Task C|
+  +--+---+     +--+---+     +--+---+
+     |            |            |
+     v            v            v
+  ======================================
+     SYNC GATE: All Complete
+     Verify: no conflicts, tests pass
+  ======================================
+                 |
+                 v
+          +----------+
+          |Next Phase|
+          +----------+</code></pre>
+<p><strong>STOP — Do NOT proceed to Phase 5 until:</strong></p>
+<ul>
+<li>[ ] Independent clusters are identified</li>
+<li>[ ] Resource constraints are considered</li>
+<li>[ ] Synchronization points are defined</li>
+<li>[ ] Maximum parallelism is determined</li>
+</ul>
+<hr>
+<h2 id="phase-5-estimation-and-prioritization">Phase 5: Estimation and Prioritization</h2>
+<p><strong>Goal:</strong> Estimate effort for each task and create an execution timeline.</p>
+<h3 id="t-shirt-sizing-to-hours">T-Shirt Sizing to Hours</h3>
+<div class="table-wrapper"><table><tr><th>Size</th><th>Hours</th><th>Confidence</th><th>Example</th></tr><tr><td>XS</td><td>0.5-1h</td><td>High</td><td>Rename a variable, fix a typo</td></tr><tr><td>S</td><td>1-2h</td><td>High</td><td>Add a simple endpoint, write a test</td></tr><tr><td>M</td><td>2-4h</td><td>Medium</td><td>Implement a feature with known pattern</td></tr><tr><td>L</td><td>4-8h</td><td>Low</td><td>New feature with research needed</td></tr><tr><td>XL</td><td>8h+</td><td>Very Low</td><td><strong>Must be decomposed further</strong></td></tr></table></div>
+<h3 id="estimation-heuristics">Estimation Heuristics</h3>
+<div class="table-wrapper"><table><tr><th>Scenario</th><th>Multiplier</th><th>Rationale</th></tr><tr><td>Known pattern</td><td>1.2x base estimate</td><td>20% buffer for unknowns</td></tr><tr><td>Unknown pattern</td><td>2x base estimate</td><td>Add research spike task first</td></tr><tr><td>Integration work</td><td>1.5x sum of components</td><td>Integration is harder than parts</td></tr><tr><td>First-time technology</td><td>3x "if I knew how" estimate</td><td>Learning curve</td></tr><tr><td>Bug fixes</td><td>Time-box 2h investigation</td><td>Then re-estimate</td></tr></table></div>
+<h3 id="three-point-estimation">Three-Point Estimation</h3>
+<pre><code>Expected = (Optimistic + 4 * Most Likely + Pessimistic) / 6
+
+Example:
+  Optimistic:  2 hours (everything goes smoothly)
+  Most Likely: 4 hours (normal development pace)
+  Pessimistic: 10 hours (major unexpected issues)
+  Expected:    (2 + 16 + 10) / 6 = 4.7 hours</code></pre>
+<h3 id="prioritization-decision-table">Prioritization Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Factor</th><th>Weight</th><th>How to Evaluate</th></tr><tr><td>On critical path</td><td>Highest</td><td>Delays here delay everything</td></tr><tr><td>Blocks other tasks</td><td>High</td><td>Unblocking multiplies throughput</td></tr><tr><td>Business value</td><td>High</td><td>User-facing impact</td></tr><tr><td>Risk reduction</td><td>Medium</td><td>De-risks unknowns early</td></tr><tr><td>Quick win</td><td>Medium</td><td>Low effort, high morale</td></tr><tr><td>Nice to have</td><td>Low</td><td>Only after core work is done</td></tr></table></div>
+<hr>
+<h2 id="work-breakdown-structure-template">Work Breakdown Structure Template</h2>
+<pre data-lang="markdown"><code># WBS: [Project Name]
+
+## 1. [Work Stream A]
+### 1.1 [Feature]
+- [ ] 1.1.1 [Task] — Est: 2h — Deps: none — Priority: P0
+- [ ] 1.1.2 [Task] — Est: 1h — Deps: 1.1.1 — Priority: P0
+- [ ] 1.1.3 [Task] — Est: 3h — Deps: 1.1.1 — Priority: P1
+
+### 1.2 [Feature]
+- [ ] 1.2.1 [Task] — Est: 1h — Deps: none — Priority: P0
+- [ ] 1.2.2 [Task] — Est: 2h — Deps: 1.2.1, 1.1.2 — Priority: P1
+
+## 2. [Work Stream B]
+### 2.1 [Feature]
+- [ ] 2.1.1 [Task] — Est: 1h — Deps: none — Priority: P0
+- [ ] 2.1.2 [Task] — Est: 4h — Deps: 2.1.1 — Priority: P0
+
+## Summary
+- Total tasks: N
+- Estimated total effort: Xh
+- Critical path duration: Yh
+- Max parallelism: Z tracks
+- External dependencies: [list]</code></pre>
+<hr>
+<h2 id="critical-path-analysis">Critical Path Analysis</h2>
+<h3 id="how-to-find-the-critical-path">How to Find the Critical Path</h3>
+<ol>
+<li>List all tasks with durations and dependencies</li>
+<li>Forward pass: calculate earliest start (ES) and earliest finish (EF)</li>
+<li>Backward pass: calculate latest start (LS) and latest finish (LF)</li>
+<li>Float = LS - ES (tasks with zero float are on the critical path)</li>
+<li>The critical path is the longest chain through the dependency graph</li>
+</ol>
+<h3 id="optimization-strategies">Optimization Strategies</h3>
+<div class="table-wrapper"><table><tr><th>Strategy</th><th>When</th><th>Effect</th><th>Risk</th></tr><tr><td>Parallelize</td><td>Independent tasks on critical path</td><td>Reduces calendar time</td><td>Low</td></tr><tr><td>Fast-track</td><td>Overlap sequential tasks</td><td>Reduces duration</td><td>Medium — may cause rework</td></tr><tr><td>Crash</td><td>Add resources to critical tasks</td><td>Reduces duration</td><td>Medium — coordination cost</td></tr><tr><td>Scope reduction</td><td>Remove non-essential tasks</td><td>Reduces total work</td><td>Low — if non-essential is correct</td></tr><tr><td>Spike first</td><td>Unknown tasks blocking the path</td><td>De-risks estimates</td><td>Low</td></tr></table></div>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>Tasks too large to estimate</td><td>"Build the backend" is not a task</td><td>Decompose until estimable (< 2h)</td></tr><tr><td>Missing dependencies</td><td>Surface during implementation, cause rework</td><td>Map ALL dependencies upfront</td></tr><tr><td>Circular dependencies</td><td>Indicate unclear architecture</td><td>Break the cycle with interface tasks</td></tr><tr><td>All tasks sequential</td><td>No parallelism possible</td><td>Identify independent clusters</td></tr><tr><td>Estimation without decomposition</td><td>Guessing at L0 level, always wrong</td><td>Estimate at leaf level, sum up</td></tr><tr><td>Ignoring external dependencies</td><td>Block progress unexpectedly</td><td>Flag and plan for them</td></tr><tr><td>Over-decomposition</td><td>Noise, not signal (50 subtasks for a form)</td><td>Stop at meaningful, testable units</td></tr><tr><td>Ignoring critical path</td><td>Priorities work on non-critical tasks</td><td>Always prioritize critical path</td></tr><tr><td>Not re-estimating</td><td>Estimates drift as you learn</td><td>Re-estimate after each phase</td></tr><tr><td>Tasks without acceptance criteria</td><td>Cannot verify completion</td><td>Every task has definition of done</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<p><HARD-GATE> Do NOT skip dependency mapping. Do NOT leave tasks larger than 2 hours. Do NOT estimate without decomposing first. Every task must have dependencies, estimates, and acceptance criteria. </HARD-GATE></p>
+<p>If you catch yourself thinking:</p>
+<ul>
+<li>"I can estimate the whole thing without breaking it down..." — No. Decompose first.</li>
+<li>"Dependencies are obvious, I don't need to map them..." — Map them. Hidden dependencies cause failures.</li>
+<li>"This task is fine at 8 hours..." — Decompose it. XL tasks must be broken down.</li>
+<li>"The critical path doesn't matter for small projects..." — It does. It tells you what to prioritize.</li>
+</ul>
+<hr>
+<h2 id="subagent-dispatch-opportunities">Subagent Dispatch Opportunities</h2>
+<div class="table-wrapper"><table><tr><th>Task Pattern</th><th>Dispatch To</th><th>When</th></tr><tr><td>Parallelizable leaf tasks identified during decomposition</td><td>Parallel subagents via <code>Agent</code> tool</td><td>When tasks have no shared dependencies</td></tr><tr><td>Architecture analysis of task boundaries</td><td><code>planner</code> agent</td><td>When decomposition reveals cross-cutting concerns</td></tr><tr><td>Validation of decomposition completeness</td><td><code>spec-reviewer</code> agent</td><td>When task tree is complete but unverified</td></tr></table></div>
+<p>Mark each decomposed task with a <code>parallelizable: yes/no</code> flag in the output table. Follow the <code>dispatching-parallel-agents</code> skill protocol when dispatching.</p>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th><th>When</th></tr><tr><td><code>planning</code></td><td>Upstream — provides the plan to decompose</td><td>Complex plans need WBS</td></tr><tr><td><code>task-management</code></td><td>Downstream — receives decomposed tasks</td><td>For execution tracking</td></tr><tr><td><code>dispatching-parallel-agents</code></td><td>Downstream — receives parallelizable clusters</td><td>For concurrent execution</td></tr><tr><td><code>autonomous-loop</code></td><td>Downstream — task selection from WBS</td><td>Ralph task selection</td></tr><tr><td><code>executing-plans</code></td><td>Downstream — batch creation from WBS</td><td>Plan execution</td></tr><tr><td><code>subagent-driven-development</code></td><td>Downstream — independent tasks for subagents</td><td>Delegated implementation</td></tr><tr><td><code>spec-writing</code></td><td>Complementary — specs inform decomposition</td><td>Understanding requirements</td></tr></table></div>
+<hr>
+<h2 id="concrete-examples">Concrete Examples</h2>
+<h3 id="example-decomposition-of-add-user-authentication">Example: Decomposition of "Add User Authentication"</h3>
+<pre><code># WBS: User Authentication
+
+## 1. Core Auth
+### 1.1 Token Management
+- [ ] 1.1.1 Implement JWT generation — Est: 1h — Deps: none — P0
+- [ ] 1.1.2 Implement JWT validation — Est: 1h — Deps: 1.1.1 — P0
+- [ ] 1.1.3 Implement refresh token rotation — Est: 2h — Deps: 1.1.2 — P1
+
+### 1.2 Auth Middleware
+- [ ] 1.2.1 Create auth middleware — Est: 1h — Deps: 1.1.2 — P0
+- [ ] 1.2.2 Add role-based access control — Est: 2h — Deps: 1.2.1 — P1
+
+## 2. Auth Endpoints
+### 2.1 Registration
+- [ ] 2.1.1 POST /auth/register endpoint — Est: 1h — Deps: 1.1.1 — P0
+- [ ] 2.1.2 Email validation — Est: 30m — Deps: none — P0
+
+### 2.2 Login
+- [ ] 2.2.1 POST /auth/login endpoint — Est: 1h — Deps: 1.1.1, 1.2.1 — P0
+- [ ] 2.2.2 POST /auth/refresh endpoint — Est: 1h — Deps: 1.1.3 — P1
+
+## Summary
+- Total tasks: 8
+- Estimated total effort: 10.5h
+- Critical path: 1.1.1 -&gt; 1.1.2 -&gt; 1.2.1 -&gt; 2.2.1 (4h)
+- Max parallelism: 3 tracks (Token, Middleware, Endpoints)
+- External dependencies: none</code></pre>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow the decomposition phases in order. Every task must meet the INVEST criteria and have explicit dependencies, estimates, and acceptance criteria. The dependency graph and critical path analysis are mandatory for multi-day work.</p>
+<hr>
+<h2 id="sub-domain--component-task-management">Sub-Domain / Component: <code>task-management</code></h2>
+<h1 id="task-management">Task Management</h1>
+<h2 id="overview">Overview</h2>
+<p>Task management converts approved plans into bite-sized, trackable tasks and orchestrates their execution with progress reporting and checkpoint reviews. Each task is a single action that takes 2-5 minutes. The skill provides structured progress tracking, regular checkpoints, and integration with code review to maintain quality throughout execution.</p>
+<p><strong>Announce at start:</strong> "I'm using the task-management skill to break this plan into tracked tasks."</p>
+<h2 id="trigger-conditions">Trigger Conditions</h2>
+<ul>
+<li>An approved plan document needs to be converted into executable tasks</li>
+<li>Multi-step implementation needs structured progress tracking</li>
+<li>Work needs checkpoint reviews at regular intervals</li>
+<li><code>/execute</code> command used with a plan that needs task breakdown</li>
+<li>Transition from planning skill with an approved plan</li>
+</ul>
+<hr>
+<h2 id="phase-1-plan-parsing">Phase 1: Plan Parsing</h2>
+<p><strong>Goal:</strong> Extract all tasks from the approved plan with correct ordering and dependencies.</p>
+<ol>
+<li>Read the approved plan document from start to finish</li>
+<li>Extract every implementation step as a discrete task</li>
+<li>Identify dependencies between tasks (what must complete first)</li>
+<li>Order tasks by dependency — independent tasks first</li>
+<li>Confirm task list with the user before beginning execution</li>
+</ol>
+<h3 id="task-granularity-rules">Task Granularity Rules</h3>
+<div class="table-wrapper"><table><tr><th>Granularity</th><th>Example</th><th>Verdict</th></tr><tr><td>Single action, 2-5 min</td><td>"Write the failing test for UserService.create"</td><td>Correct</td></tr><tr><td>Single action, 2-5 min</td><td>"Run the test to verify it fails"</td><td>Correct</td></tr><tr><td>Single action, 2-5 min</td><td>"Implement the minimal code to pass the test"</td><td>Correct</td></tr><tr><td>Multiple actions, 30+ min</td><td>"Implement the authentication system"</td><td>Too large — decompose</td></tr><tr><td>Trivial, < 1 min</td><td>"Add a blank line"</td><td>Too small — merge with adjacent task</td></tr></table></div>
+<h3 id="task-specification-template">Task Specification Template</h3>
+<pre><code>Task N: [Clear, specific description]
+Files: [Exact paths to create/modify/test]
+Depends on: [Task numbers that must complete first, or &quot;none&quot;]
+Verification: [Exact command to confirm completion]</code></pre>
+<p><strong>STOP — Do NOT proceed to Phase 2 until:</strong></p>
+<ul>
+<li>[ ] Every plan step has been converted to 2-5 minute tasks</li>
+<li>[ ] Dependencies are mapped (no circular dependencies)</li>
+<li>[ ] Every task has a verification command</li>
+<li>[ ] Task list is confirmed with user</li>
+</ul>
+<hr>
+<h2 id="phase-2-task-execution">Phase 2: Task Execution</h2>
+<p><strong>Goal:</strong> Execute tasks one at a time with verification after each.</p>
+<h3 id="per-task-workflow">Per-Task Workflow</h3>
+<ol>
+<li><strong>Announce</strong> — Report which task is starting: <code>[N/Total] Starting: <description></code></li>
+<li><strong>Set status</strong> — Mark task as <code>in_progress</code></li>
+<li><strong>Execute</strong> — Perform the task (follow TDD if writing code)</li>
+<li><strong>Verify</strong> — Run the verification command</li>
+<li><strong>Read output</strong> — Confirm verification matches success criteria</li>
+<li><strong>Report</strong> — Show completion: <code>[N/Total] Completed: <description></code></li>
+<li><strong>Set status</strong> — Mark task as <code>completed</code></li>
+</ol>
+<h3 id="execution-rules">Execution Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Rationale</th></tr><tr><td>One task at a time</td><td>Prevents context switching errors</td></tr><tr><td>Verify before marking complete</td><td>No false completions</td></tr><tr><td>Read verification output fully</td><td>Do not assume success from partial output</td></tr><tr><td>Follow TDD for code tasks</td><td>RED-GREEN-REFACTOR cycle</td></tr><tr><td>Do not skip ahead</td><td>Dependencies may not be satisfied</td></tr></table></div>
+<h3 id="task-status-flow">Task Status Flow</h3>
+<pre><code>pending → in_progress → completed
+                     → blocked (needs user input)
+                     → failed (invoke resilient-execution)</code></pre>
+<h3 id="status-decision-table">Status Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Outcome</th><th>New Status</th><th>Action</th></tr><tr><td>Verification passes</td><td><code>completed</code></td><td>Proceed to next task</td></tr><tr><td>Verification fails, fixable</td><td><code>in_progress</code></td><td>Fix and re-verify</td></tr><tr><td>Verification fails, unclear cause</td><td><code>failed</code></td><td>Invoke <code>resilient-execution</code> skill</td></tr><tr><td>Needs user decision</td><td><code>blocked</code></td><td>Report blocker, pause task</td></tr><tr><td>Task depends on blocked task</td><td><code>pending</code></td><td>Skip to next non-blocked task</td></tr></table></div>
+<p><strong>Do NOT proceed to next task until current task verification passes.</strong></p>
+<hr>
+<h2 id="phase-3-checkpoint-review">Phase 3: Checkpoint Review</h2>
+<p><strong>Goal:</strong> Pause every 3 tasks to assess progress and quality.</p>
+<h3 id="checkpoint-trigger-table">Checkpoint Trigger Table</h3>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Action</th></tr><tr><td>3 tasks completed since last checkpoint</td><td>Mandatory checkpoint</td></tr><tr><td>Logical batch complete (e.g., one component)</td><td>Checkpoint recommended</td></tr><tr><td>Test failure encountered</td><td>Immediate checkpoint</td></tr><tr><td>User requests status</td><td>Ad-hoc checkpoint</td></tr></table></div>
+<h3 id="checkpoint-steps">Checkpoint Steps</h3>
+<ol>
+<li>Show progress summary</li>
+<li>Run full test suite (not just new tests)</li>
+<li>Run lint, type-check, build as applicable</li>
+<li>Dispatch <code>code-review</code> skill if significant code was written</li>
+<li>Ask user if direction is still correct</li>
+</ol>
+<h3 id="progress-report-format">Progress Report Format</h3>
+<p>After each task:</p>
+<pre><code>[3/15] Task completed: Write failing test for UserService.create
+       Files: tests/services/user.test.ts
+       Verification: npm test -- --grep &quot;UserService.create&quot; — PASS</code></pre>
+<p>After each checkpoint:</p>
+<pre><code>── Checkpoint [6/15] ──
+Completed: 6 | Remaining: 9 | Blocked: 0
+Tests: 12 passing, 0 failing
+Lint: clean | Build: passing
+Next batch: Tasks 7-9 (API endpoint implementation)
+Continue? [yes / adjust plan / stop here]</code></pre>
+<p><strong>STOP — Do NOT proceed to next batch until:</strong></p>
+<ul>
+<li>[ ] Full test suite passes</li>
+<li>[ ] Checkpoint report presented to user</li>
+<li>[ ] User has confirmed to continue</li>
+</ul>
+<hr>
+<h2 id="phase-4-batch-review">Phase 4: Batch Review</h2>
+<p><strong>Goal:</strong> After completing a logical group of tasks, perform quality review.</p>
+<ol>
+<li>Dispatch <code>code-reviewer</code> agent to review the batch</li>
+<li>Fix any Critical or Important issues before proceeding</li>
+<li>Commit the batch with a descriptive conventional commit message</li>
+<li>Update the plan document with completed status</li>
+</ol>
+<h3 id="review-issue-handling">Review Issue Handling</h3>
+<div class="table-wrapper"><table><tr><th>Severity</th><th>Action</th><th>Continue?</th></tr><tr><td>Critical</td><td>Must fix immediately</td><td>No — fix first</td></tr><tr><td>Important</td><td>Should fix before next batch</td><td>Conditional — user decides</td></tr><tr><td>Suggestion</td><td>Note for future</td><td>Yes — proceed</td></tr></table></div>
+<p><strong>STOP — Do NOT start next batch until:</strong></p>
+<ul>
+<li>[ ] Review issues at Critical severity are resolved</li>
+<li>[ ] Batch is committed</li>
+<li>[ ] Plan document is updated</li>
+</ul>
+<hr>
+<h2 id="phase-5-completion">Phase 5: Completion</h2>
+<p><strong>Goal:</strong> Verify all tasks are done and report final status.</p>
+<ol>
+<li>Confirm all tasks have <code>completed</code> status</li>
+<li>Run final full test suite</li>
+<li>Run all verification commands</li>
+<li>Present final summary to user</li>
+<li>Invoke <code>verification-before-completion</code> skill</li>
+</ol>
+<h3 id="final-summary-format">Final Summary Format</h3>
+<pre><code>── FINAL SUMMARY ──
+Total tasks: 15 | Completed: 15 | Failed: 0
+Tests: 42 passing, 0 failing
+Build: passing | Lint: clean
+Commits: 5 (conventional format)
+
+All tasks from plan docs/plans/2026-03-15-feature.md are complete.
+Verification-before-completion: PASS</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>Marking complete without verification</td><td>False progress, bugs accumulate</td><td>Run verification command, read output</td></tr><tr><td>Tasks larger than 5 minutes</td><td>Hard to track, prone to scope creep</td><td>Break into 2-5 minute tasks</td></tr><tr><td>Skipping checkpoints</td><td>Quality degrades, direction drifts</td><td>Checkpoint every 3 tasks</td></tr><tr><td>Running only new tests</td><td>Regressions go undetected</td><td>Full test suite at checkpoints</td></tr><tr><td>Parallelizing dependent tasks</td><td>Race conditions, merge conflicts</td><td>One task at a time unless truly independent</td></tr><tr><td>Proceeding past blocked tasks silently</td><td>User unaware of skipped work</td><td>Report all blockers explicitly</td></tr><tr><td>Not committing at batch boundaries</td><td>Large, hard-to-review changesets</td><td>Commit after each logical batch</td></tr><tr><td>"It works, I'll verify later"</td><td>Later never comes</td><td>Verify NOW</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<p><HARD-GATE> NO TASK MARKED COMPLETE WITHOUT VERIFICATION. Run the verification command. Read the output. Confirm it matches expectations. Only then mark complete. </HARD-GATE></p>
+<p>If you catch yourself thinking:</p>
+<ul>
+<li>"The code looks right, I don't need to run it..." — Run it. Always.</li>
+<li>"I'll batch the verifications..." — No. Verify each task individually.</li>
+<li>"This task is trivial, it obviously works..." — Prove it with verification.</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th><th>When</th></tr><tr><td><code>planning</code></td><td>Upstream — provides approved plan</td><td>Task list source</td></tr><tr><td><code>executing-plans</code></td><td>Complementary — handles plan execution flow</td><td>Can be used together</td></tr><tr><td><code>test-driven-development</code></td><td>Per-task — TDD cycle for code tasks</td><td>Every code task</td></tr><tr><td><code>verification-before-completion</code></td><td>Per-task — verification gate</td><td>Before marking any task complete</td></tr><tr><td><code>resilient-execution</code></td><td>On failure — retry with alternatives</td><td>When task verification fails</td></tr><tr><td><code>code-review</code></td><td>At checkpoints — batch quality review</td><td>Every 3 tasks or batch boundary</td></tr><tr><td><code>subagent-driven-development</code></td><td>Alternative — parallel execution path (via <code>Agent</code> tool)</td><td>For independent task batches</td></tr><tr><td><code>Agent</code> tool</td><td>Dispatch mechanism for all subagent work</td><td>When parallelizing independent tasks</td></tr><tr><td><code>circuit-breaker</code></td><td>Safety net — detects stagnation</td><td>When tasks repeatedly fail</td></tr></table></div>
+<hr>
+<h2 id="concrete-examples">Concrete Examples</h2>
+<h3 id="example-task-extraction-from-plan">Example: Task Extraction from Plan</h3>
+<p>Plan step: "Add user registration endpoint with validation"</p>
+<p>Extracted tasks:</p>
+<pre><code>Task 1: Write failing test for POST /api/users input validation
+  Files: tests/api/users.test.ts
+  Depends on: none
+  Verification: npm test -- --grep &quot;POST /api/users validation&quot; → FAIL (expected)
+
+Task 2: Implement input validation schema
+  Files: src/schemas/user.ts
+  Depends on: Task 1
+  Verification: npm test -- --grep &quot;POST /api/users validation&quot; → PASS
+
+Task 3: Write failing test for POST /api/users success case
+  Files: tests/api/users.test.ts
+  Depends on: Task 2
+  Verification: npm test -- --grep &quot;POST /api/users creates user&quot; → FAIL (expected)
+
+Task 4: Implement registration endpoint handler
+  Files: src/routes/users.ts
+  Depends on: Task 3
+  Verification: npm test -- --grep &quot;POST /api/users&quot; → ALL PASS
+
+Task 5: Commit registration endpoint
+  Files: none (git operation)
+  Depends on: Task 4
+  Verification: git log --oneline -1 → shows conventional commit</code></pre>
+<h3 id="example-blocked-task-report">Example: Blocked Task Report</h3>
+<pre><code>BLOCKED: Task 7 — Write integration test for payment webhook
+Reason: Stripe test API key not configured in .env.test
+Impact: Tasks 7-9 (payment flow) cannot proceed
+Non-blocked tasks: Tasks 10-12 (profile page) can continue
+
+Options:
+A. User provides Stripe test key → unblocks Tasks 7-9
+B. Skip payment tasks, continue with profile → revisit later
+C. Mock Stripe entirely → reduces test fidelity
+
+Awaiting direction.</code></pre>
+<hr>
+<h2 id="key-principles">Key Principles</h2>
+<ul>
+<li><strong>One task at a time</strong> — Do not parallelize unless tasks are truly independent</li>
+<li><strong>Verify after each task</strong> — Run the verification command before marking complete</li>
+<li><strong>Checkpoint regularly</strong> — Every 3 tasks, pause and assess</li>
+<li><strong>Track everything</strong> — No task without a status</li>
+<li><strong>Small commits</strong> — Commit after each logical batch</li>
+</ul>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly. Every task gets verified. Every 3 tasks get a checkpoint. No exceptions.</p>
+<hr>
+<h2 id="sub-domain--component-roadmap-planning">Sub-Domain / Component: <code>roadmap-planning</code></h2>
+<h1 id="roadmap-planning">Roadmap Planning</h1>
+<h2 id="purpose">Purpose</h2>
+<p>Guide product managers through strategic roadmap planning by orchestrating prioritization, epic definition, stakeholder alignment, and release sequencing skills into a structured process. Use this to move from disconnected feature requests to a cohesive, outcome-driven roadmap that aligns stakeholders, sequences work logically, and communicates strategic intent—avoiding "feature factory" roadmaps that lack strategic narrative or customer-centric framing.</p>
+<p>This is not a Gantt chart—it's a strategic communication tool that shows what you're building, why it matters, and how it ladders up to business outcomes.</p>
+<h2 id="key-concepts">Key Concepts</h2>
+<h3 id="what-is-strategic-roadmap-planning">What is Strategic Roadmap Planning?</h3>
+<p>Roadmap planning is the process of:</p>
+<ol>
+<li><strong>Gathering inputs</strong> — Customer problems, business goals, technical constraints</li>
+<li><strong>Defining initiatives</strong> — Epics with clear hypotheses and success metrics</li>
+<li><strong>Prioritizing</strong> — Rank initiatives by impact, effort, strategic fit</li>
+<li><strong>Sequencing</strong> — Organize into releases/quarters with logical dependencies</li>
+<li><strong>Communicating</strong> — Present roadmap to stakeholders with strategic narrative</li>
+</ol>
+<h3 id="types-of-roadmaps">Types of Roadmaps</h3>
+<p><strong>Now/Next/Later Roadmap:</strong></p>
+<ul>
+<li><strong>Now:</strong> Current quarter (committed)</li>
+<li><strong>Next:</strong> Following quarter (high confidence)</li>
+<li><strong>Later:</strong> Future exploration (low confidence)</li>
+<li><strong>Best for:</strong> Agile teams, uncertainty, continuous discovery</li>
+</ul>
+<p><strong>Theme-Based Roadmap:</strong></p>
+<ul>
+<li>Organize by strategic themes (e.g., "Retention," "Enterprise Expansion," "Mobile Experience")</li>
+<li><strong>Best for:</strong> Communicating to execs, showing strategic intent</li>
+</ul>
+<p><strong>Timeline Roadmap (Quarters):</strong></p>
+<ul>
+<li>Q1: Epics A, B; Q2: Epics C, D; Q3: Epics E, F</li>
+<li><strong>Best for:</strong> Resource planning, stakeholder communication</li>
+</ul>
+<p><strong>Feature-Based Roadmap (Anti-Pattern):</strong></p>
+<ul>
+<li>Lists features without context (e.g., "Dark mode," "SSO," "Advanced reporting")</li>
+<li><strong>Why it fails:</strong> No strategic narrative, no customer problems framed</li>
+</ul>
+<h3 id="why-this-works">Why This Works</h3>
+<ul>
+<li><strong>Outcome-driven:</strong> Ties initiatives to business/customer outcomes</li>
+<li><strong>Stakeholder alignment:</strong> Transparent process reduces political friction</li>
+<li><strong>Strategic clarity:</strong> Shows not just "what" but "why"</li>
+<li><strong>Flexible:</strong> Adapts as you learn from discovery/delivery</li>
+</ul>
+<h3 id="anti-patterns-what-this-is-not">Anti-Patterns (What This Is NOT)</h3>
+<ul>
+<li><strong>Not a commitment:</strong> Roadmaps are strategic plans, not contracts</li>
+<li><strong>Not a feature list:</strong> Roadmaps frame problems, not just solutions</li>
+<li><strong>Not waterfall:</strong> Roadmaps evolve quarterly based on learning</li>
+</ul>
+<h3 id="when-to-use-this">When to Use This</h3>
+<ul>
+<li>Annual or quarterly planning cycles</li>
+<li>After product strategy session (translate strategy to roadmap)</li>
+<li>Onboarding new stakeholders (align on direction)</li>
+<li>Reframing existing roadmap (shift from feature-driven to outcome-driven)</li>
+</ul>
+<h3 id="when-not-to-use-this">When NOT to Use This</h3>
+<ul>
+<li>For tactical sprint planning (use backlog instead)</li>
+<li>When strategy is unclear (run product-strategy-session first)</li>
+<li>When stakeholders expect date commitments (address expectations first)</li>
+</ul>
+<hr>
+<h3 id="facilitation-source-of-truth">Facilitation Source of Truth</h3>
+<p>When running this workflow as a guided conversation, use <a href="../../skills/workshop-facilitation/index.html"><code>workshop-facilitation</code></a> as the interaction protocol.</p>
+<p>It defines:</p>
+<ul>
+<li>session heads-up + entry mode (Guided, Context dump, Best guess)</li>
+<li>one-question turns with plain-language prompts</li>
+<li>progress labels (for example, Context Qx/8 and Scoring Qx/5)</li>
+<li>interruption handling and pause/resume behavior</li>
+<li>numbered recommendations at decision points</li>
+<li>quick-select numbered response options for regular questions (include <code>Other (specify)</code> when useful)</li>
+</ul>
+<p>This file defines the workflow sequence and domain-specific outputs. If there is a conflict, follow this file's workflow logic.</p>
+<h2 id="application">Application</h2>
+<p>Use <code>template.md</code> for the full fill-in structure.</p>
+<p>This workflow orchestrates <strong>5 phases</strong> over <strong>1-2 weeks</strong>, using multiple component and interactive skills.</p>
+<hr>
+<h2 id="phase-1-gather-inputs-day-1-2">Phase 1: Gather Inputs (Day 1-2)</h2>
+<p><strong>Goal:</strong> Collect business goals, customer problems, technical constraints, stakeholder requests.</p>
+<h3 id="activities">Activities</h3>
+<p><strong>1. Review Business Goals (OKRs, Strategic Initiatives)</strong></p>
+<ul>
+<li><strong>Source:</strong> Company OKRs, exec strategy memos, board decks</li>
+<li><strong>Questions:</strong></li>
+<li>What are the company's top 3 priorities this year?</li>
+<li>What metrics must we move? (revenue, retention, acquisition, efficiency)</li>
+<li>Are there strategic bets? (new markets, partnerships, product lines)</li>
+<li><strong>Output:</strong> 3-5 business outcomes to optimize for</li>
+</ul>
+<p><strong>2. Review Customer Problems (Discovery Insights)</strong></p>
+<ul>
+<li><strong>Source:</strong> Discovery interviews, support tickets, NPS feedback, churn surveys</li>
+<li><strong>Use:</strong> Insights from <code>skills/discovery-process/SKILL.md</code> (if recently completed)</li>
+<li><strong>Questions:</strong></li>
+<li>What are the top 3-5 customer pain points?</li>
+<li>Which problems affect the most customers?</li>
+<li>Which problems have highest intensity?</li>
+<li><strong>Output:</strong> 3-5 validated customer problems</li>
+</ul>
+<p><strong>3. Review Technical Constraints & Opportunities</strong></p>
+<ul>
+<li><strong>Source:</strong> Engineering leadership, tech debt assessments</li>
+<li><strong>Questions:</strong></li>
+<li>Are there technical blockers? (scaling, performance, security)</li>
+<li>Are there enabling investments? (platform upgrades, API rewrites)</li>
+<li>What's the technical roadmap? (migrations, deprecations)</li>
+<li><strong>Output:</strong> List of technical investments required</li>
+</ul>
+<p><strong>4. Review Stakeholder Requests</strong></p>
+<ul>
+<li><strong>Source:</strong> Sales, marketing, customer success, execs</li>
+<li><strong>Questions:</strong></li>
+<li>What are sales asking for? (enterprise features, integrations)</li>
+<li>What's marketing requesting? (growth initiatives, positioning)</li>
+<li>What's customer success flagging? (churn risks, expansion blockers)</li>
+<li><strong>Output:</strong> List of stakeholder requests (not yet committed)</li>
+</ul>
+<h3 id="outputs-from-phase-1">Outputs from Phase 1</h3>
+<ul>
+<li><strong>Business outcomes:</strong> 3-5 OKRs or strategic goals</li>
+<li><strong>Customer problems:</strong> 3-5 validated pain points</li>
+<li><strong>Technical investments:</strong> Platform/tech debt items</li>
+<li><strong>Stakeholder requests:</strong> Feature requests from internal teams</li>
+</ul>
+<hr>
+<h2 id="phase-2-define-initiatives-epics-day-3-4">Phase 2: Define Initiatives (Epics) (Day 3-4)</h2>
+<p><strong>Goal:</strong> Turn inputs into epics with hypotheses, success metrics, and effort estimates.</p>
+<h3 id="activities">Activities</h3>
+<p><strong>1. Define Epic Hypotheses</strong></p>
+<ul>
+<li><strong>Use:</strong> <code>skills/epic-hypothesis/SKILL.md</code> (component)</li>
+<li><strong>For each initiative:</strong> Write hypothesis statement</li>
+<li><strong>Format:</strong> "We believe that [building X] for [persona] will achieve [outcome] because [assumption]."</li>
+<li><strong>Participants:</strong> PM</li>
+<li><strong>Duration:</strong> 60 minutes per epic</li>
+<li><strong>Output:</strong> 10-15 epic hypotheses</li>
+</ul>
+<p><strong>Example Epics (SaaS Product):</strong></p>
+<pre><code>Epic 1: Guided Onboarding
+Hypothesis: We believe that adding a step-by-step onboarding checklist for non-technical users will increase activation rate from 40% to 60% because users currently drop off due to lack of guidance.
+
+Success Metric: Activation rate (% completing first action within 24 hours)
+Target: 40% → 60%
+
+Epic 2: Enterprise SSO
+Hypothesis: We believe that adding SSO for enterprise accounts will increase enterprise deals closed from 2/quarter to 5/quarter because enterprise buyers require SSO for security compliance.
+
+Success Metric: Enterprise deals closed per quarter
+Target: 2 → 5
+
+Epic 3: Mobile-Optimized Workflows
+Hypothesis: We believe that optimizing core workflows for mobile will increase mobile DAU from 5% to 20% because mobile-first users currently can&#x27;t complete workflows on the go.
+
+Success Metric: Mobile DAU as % of total DAU
+Target: 5% → 20%</code></pre>
+<p><strong>2. Estimate Effort (T-Shirt Sizing)</strong></p>
+<ul>
+<li><strong>Participants:</strong> PM + engineering lead</li>
+<li><strong>Duration:</strong> 90 minutes</li>
+<li><strong>Method:</strong></li>
+<li><strong>Small (S):</strong> 1-2 weeks (1-2 engineers)</li>
+<li><strong>Medium (M):</strong> 3-4 weeks (2-3 engineers)</li>
+<li><strong>Large (L):</strong> 2-3 months (3-5 engineers)</li>
+<li><strong>Extra Large (XL):</strong> 3+ months (5+ engineers)</li>
+<li><strong>Output:</strong> Effort estimate per epic</li>
+</ul>
+<p><strong>3. Map to Business Outcomes</strong></p>
+<ul>
+<li><strong>For each epic:</strong> Tag with primary business outcome</li>
+<li><strong>Example:</strong></li>
+<li>Epic 1 (Guided Onboarding) → Retention</li>
+<li>Epic 2 (Enterprise SSO) → Acquisition (enterprise)</li>
+<li>Epic 3 (Mobile Workflows) → Engagement</li>
+</ul>
+<h3 id="outputs-from-phase-2">Outputs from Phase 2</h3>
+<ul>
+<li><strong>10-15 epics:</strong> Each with hypothesis, success metric, effort estimate</li>
+<li><strong>Business outcome mapping:</strong> Which epics drive which OKRs</li>
+</ul>
+<hr>
+<h2 id="phase-3-prioritize-initiatives-day-5">Phase 3: Prioritize Initiatives (Day 5)</h2>
+<p><strong>Goal:</strong> Rank epics by impact, effort, and strategic fit.</p>
+<h3 id="activities">Activities</h3>
+<p><strong>1. Choose Prioritization Framework</strong></p>
+<ul>
+<li><strong>Use:</strong> <code>skills/prioritization-advisor/SKILL.md</code> (interactive)</li>
+<li><strong>Participants:</strong> PM</li>
+<li><strong>Duration:</strong> 30 minutes</li>
+<li><strong>Output:</strong> Recommended framework (RICE, ICE, Value/Effort, etc.)</li>
+</ul>
+<p><strong>2. Score Epics</strong></p>
+<ul>
+<li><strong>Participants:</strong> PM, engineering lead, product leadership</li>
+<li><strong>Duration:</strong> 120 minutes</li>
+<li><strong>Method:</strong> Apply framework to all epics</li>
+<li><strong>Example (RICE scoring):</strong></li>
+</ul>
+<div class="table-wrapper"><table><tr><th>Epic</th><th>Reach</th><th>Impact</th><th>Confidence</th><th>Effort</th><th>RICE Score</th></tr><tr><td>Guided Onboarding</td><td>10,000 users</td><td>3 (massive)</td><td>80%</td><td>1 month</td><td>24,000</td></tr><tr><td>Enterprise SSO</td><td>500 users</td><td>3 (massive)</td><td>90%</td><td>2 months</td><td>675</td></tr><tr><td>Mobile Workflows</td><td>5,000 users</td><td>2 (high)</td><td>60%</td><td>3 months</td><td>2,000</td></tr><tr><td>Advanced Reporting</td><td>2,000 users</td><td>2 (high)</td><td>50%</td><td>2 months</td><td>1,000</td></tr></table></div>
+<p><strong>3. Adjust for Strategic Fit</strong></p>
+<ul>
+<li><strong>Review scores:</strong> Do they align with business goals?</li>
+<li><strong>Strategic overrides:</strong> Promote epics that align with strategic bets (even if score is lower)</li>
+<li><strong>Example:</strong> Enterprise SSO scores lower, but it's critical for enterprise expansion strategy → boost priority</li>
+</ul>
+<h3 id="outputs-from-phase-3">Outputs from Phase 3</h3>
+<ul>
+<li><strong>Ranked backlog:</strong> Epics sorted by priority (RICE score + strategic adjustments)</li>
+<li><strong>Top 10 epics:</strong> Highest-priority initiatives for roadmap</li>
+</ul>
+<hr>
+<h2 id="phase-4-sequence-roadmap-day-6-7">Phase 4: Sequence Roadmap (Day 6-7)</h2>
+<p><strong>Goal:</strong> Organize epics into quarters/releases with logical dependencies.</p>
+<h3 id="activities">Activities</h3>
+<p><strong>1. Map Dependencies</strong></p>
+<ul>
+<li><strong>Questions:</strong></li>
+<li>Does Epic B depend on Epic A? (e.g., "Advanced Reporting" requires "Data Pipeline Upgrade")</li>
+<li>Are there technical blockers? (e.g., "Mobile App" requires "API Redesign")</li>
+<li><strong>Output:</strong> Dependency graph (Epic A → Epic B → Epic C)</li>
+</ul>
+<p><strong>2. Sequence by Quarter (or Release)</strong></p>
+<ul>
+<li><strong>Now (Q1):</strong> Top 3-5 epics, no dependencies</li>
+<li><strong>Next (Q2):</strong> Next 3-5 epics, may depend on Q1 completion</li>
+<li><strong>Later (Q3+):</strong> Remaining epics, lower confidence</li>
+</ul>
+<p><strong>Example Roadmap (Timeline-Based):</strong></p>
+<pre><code>Q1 2026 (Now - Committed):
+├─ Guided Onboarding (Retention)
+├─ Enterprise SSO (Acquisition)
+└─ Mobile-Optimized Workflows (Engagement)
+
+Q2 2026 (Next - High Confidence):
+├─ Advanced Reporting (depends on Data Pipeline, Q1)
+├─ Slack Integration (Engagement)
+└─ Pricing Page Redesign (Acquisition)
+
+Q3 2026 (Later - Lower Confidence):
+├─ Mobile App (depends on API Redesign)
+├─ AI-Powered Recommendations
+└─ Multi-Language Support
+
+Q4 2026 (Exploration):
+├─ Marketplace/Plugin Ecosystem
+└─ Enterprise Onboarding Concierge</code></pre>
+<p><strong>Alternative: Now/Next/Later Roadmap</strong></p>
+<pre><code>NOW (Current Quarter):
+- Guided Onboarding
+- Enterprise SSO
+- Mobile-Optimized Workflows
+
+NEXT (Following Quarter):
+- Advanced Reporting
+- Slack Integration
+- Pricing Page Redesign
+
+LATER (Future):
+- Mobile App
+- AI Recommendations
+- Multi-Language Support</code></pre>
+<p><strong>3. Validate with Engineering</strong></p>
+<ul>
+<li><strong>Participants:</strong> PM + engineering lead</li>
+<li><strong>Questions:</strong></li>
+<li>Is sequencing realistic? (capacity, dependencies)</li>
+<li>Are there hidden technical blockers?</li>
+<li>Do we need to adjust scope?</li>
+<li><strong>Output:</strong> Validated roadmap sequence</li>
+</ul>
+<h3 id="outputs-from-phase-4">Outputs from Phase 4</h3>
+<ul>
+<li><strong>Sequenced roadmap:</strong> Epics organized by Q1, Q2, Q3</li>
+<li><strong>Dependency map:</strong> What depends on what</li>
+<li><strong>Capacity check:</strong> Engineering agrees sequence is feasible</li>
+</ul>
+<hr>
+<h2 id="phase-5-communicate-roadmap-week-2">Phase 5: Communicate Roadmap (Week 2)</h2>
+<p><strong>Goal:</strong> Present roadmap to stakeholders, gather feedback, build alignment.</p>
+<h3 id="activities">Activities</h3>
+<p><strong>1. Create Roadmap Presentation</strong></p>
+<ul>
+<li><strong>Format:</strong> 30-45 min presentation</li>
+<li><strong>Structure:</strong></li>
+<li><strong>Slide 1:</strong> Strategic context (business goals, customer problems)</li>
+<li><strong>Slide 2-3:</strong> Roadmap overview (Q1, Q2, Q3)</li>
+<li><strong>Slide 4-6:</strong> Deep dive per quarter (epics, hypotheses, success metrics)</li>
+<li><strong>Slide 7:</strong> What's NOT on roadmap (and why)</li>
+<li><strong>Slide 8:</strong> Dependencies and risks</li>
+<li><strong>Participants:</strong> PM, design</li>
+<li><strong>Duration:</strong> 2-3 hours to prepare</li>
+</ul>
+<p><strong>2. Present to Stakeholders</strong></p>
+<ul>
+<li><strong>Audience:</strong> Execs, product leadership, engineering, sales, marketing, CS</li>
+<li><strong>Duration:</strong> 45 min presentation + 15 min Q&A</li>
+<li><strong>Focus:</strong></li>
+<li>Strategic narrative: "Here's why we're prioritizing X over Y"</li>
+<li>Outcome focus: "Each epic drives [business outcome]"</li>
+<li>Flexibility: "This roadmap is a plan, not a commitment; we'll adjust as we learn"</li>
+</ul>
+<p><strong>3. Gather Feedback</strong></p>
+<ul>
+<li><strong>Questions to ask:</strong></li>
+<li>Do these priorities align with business goals?</li>
+<li>Are we missing critical customer problems?</li>
+<li>Are dependencies clear?</li>
+<li>What concerns do you have?</li>
+<li><strong>Output:</strong> List of feedback, concerns, questions</li>
+</ul>
+<p><strong>4. Refine Roadmap</strong></p>
+<ul>
+<li><strong>Based on feedback:</strong> Adjust priorities, add missing epics, clarify dependencies</li>
+<li><strong>Duration:</strong> 1-2 days</li>
+<li><strong>Output:</strong> Final roadmap v1.0</li>
+</ul>
+<p><strong>5. Publish Roadmap</strong></p>
+<ul>
+<li><strong>Internal:</strong> Share with team (Confluence, Notion, Productboard, etc.)</li>
+<li><strong>External (Optional):</strong> Public roadmap for customers (use Now/Next/Later format)</li>
+<li><strong>Format:</strong> Visual roadmap + narrative doc</li>
+</ul>
+<h3 id="outputs-from-phase-5">Outputs from Phase 5</h3>
+<ul>
+<li><strong>Roadmap presentation:</strong> 30-45 min deck</li>
+<li><strong>Stakeholder alignment:</strong> Feedback incorporated, concerns addressed</li>
+<li><strong>Published roadmap:</strong> Accessible to team (internal) or customers (external)</li>
+</ul>
+<hr>
+<h2 id="complete-workflow-end-to-end-summary">Complete Workflow: End-to-End Summary</h2>
+<pre><code>Week 1:
+├─ Day 1-2: Gather Inputs
+│  ├─ Review business goals (OKRs)
+│  ├─ Review customer problems (discovery insights)
+│  ├─ Review technical constraints
+│  └─ Review stakeholder requests
+│
+├─ Day 3-4: Define Initiatives (Epics)
+│  ├─ skills/epic-hypothesis/SKILL.md (60 min per epic)
+│  ├─ Estimate effort (90 min)
+│  └─ Map to business outcomes
+│
+├─ Day 5: Prioritize Initiatives
+│  ├─ skills/prioritization-advisor/SKILL.md (30 min)
+│  ├─ Score epics (120 min)
+│  └─ Adjust for strategic fit
+│
+└─ Day 6-7: Sequence Roadmap
+   ├─ Map dependencies
+   ├─ Sequence by quarter (Q1, Q2, Q3)
+   └─ Validate with engineering
+
+Week 2:
+└─ Communicate Roadmap
+   ├─ Create presentation (2-3 hours)
+   ├─ Present to stakeholders (60 min)
+   ├─ Gather feedback
+   ├─ Refine roadmap (1-2 days)
+   └─ Publish roadmap</code></pre>
+<p><strong>Total Time Investment:</strong></p>
+<ul>
+<li><strong>Fast track:</strong> 1 week (existing epics, quick alignment)</li>
+<li><strong>Typical:</strong> 1.5-2 weeks (define epics, stakeholder review)</li>
+</ul>
+<hr>
+<h2 id="examples">Examples</h2>
+<p>See <code>examples/sample.md</code> for full roadmap examples.</p>
+<p>Mini example excerpt:</p>
+<pre data-lang="markdown"><code>Now: Guided onboarding (activation +20%)
+Next: Enterprise SSO (deal velocity)
+Later: Mobile workflows (DAU lift)</code></pre>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<h3 id="pitfall-1-feature-driven-roadmap-no-outcomes">Pitfall 1: Feature-Driven Roadmap (No Outcomes)</h3>
+<p><strong>Symptom:</strong> Roadmap lists features ("Dark mode," "SSO," "Advanced filters") with no context</p>
+<p><strong>Consequence:</strong> No strategic clarity, stakeholders don't understand "why"</p>
+<p><strong>Fix:</strong> Frame epics as hypotheses with success metrics (not just feature names)</p>
+<hr>
+<h3 id="pitfall-2-prioritizing-by-hippo-highest-paid-persons-opinion">Pitfall 2: Prioritizing by HiPPO (Highest Paid Person's Opinion)</h3>
+<p><strong>Symptom:</strong> Execs dictate roadmap, no data-driven prioritization</p>
+<p><strong>Consequence:</strong> Build wrong things, ignore customer problems</p>
+<p><strong>Fix:</strong> Use prioritization framework (RICE, ICE) to transparently score epics</p>
+<hr>
+<h3 id="pitfall-3-roadmap-as-commitment-waterfall-thinking">Pitfall 3: Roadmap as Commitment (Waterfall Thinking)</h3>
+<p><strong>Symptom:</strong> Roadmap treated as contract, no flexibility to adjust</p>
+<p><strong>Consequence:</strong> Can't pivot when you learn new information</p>
+<p><strong>Fix:</strong> Communicate roadmap as "strategic plan, subject to change based on learning"</p>
+<hr>
+<h3 id="pitfall-4-no-dependencies-mapped">Pitfall 4: No Dependencies Mapped</h3>
+<p><strong>Symptom:</strong> Sequence epics without checking technical dependencies</p>
+<p><strong>Consequence:</strong> Q2 epic blocked because Q1 dependency didn't finish</p>
+<p><strong>Fix:</strong> Map dependencies explicitly in Phase 4, validate with engineering</p>
+<hr>
+<h3 id="pitfall-5-solo-pm-roadmap-no-stakeholder-input">Pitfall 5: Solo PM Roadmap (No Stakeholder Input)</h3>
+<p><strong>Symptom:</strong> PM creates roadmap alone, presents finished plan</p>
+<p><strong>Consequence:</strong> No buy-in, stakeholders feel excluded</p>
+<p><strong>Fix:</strong> Gather inputs (Phase 1) from all stakeholders, present draft (Phase 5) for feedback</p>
+<hr>
+<h2 id="references">References</h2>
+<h3 id="related-skills-orchestrated-by-this-workflow">Related Skills (Orchestrated by This Workflow)</h3>
+<p><strong>Phase 2:</strong></p>
+<ul>
+<li><code>skills/epic-hypothesis/SKILL.md</code> (component)</li>
+</ul>
+<p><strong>Phase 3:</strong></p>
+<ul>
+<li><code>skills/prioritization-advisor/SKILL.md</code> (interactive)</li>
+</ul>
+<p><strong>Phase 4:</strong></p>
+<ul>
+<li>(Dependencies mapped manually, no specific skill)</li>
+</ul>
+<p><strong>Phase 5:</strong></p>
+<ul>
+<li>(Presentation created manually, no specific skill)</li>
+</ul>
+<p><strong>Optional/Related:</strong></p>
+<ul>
+<li><code>skills/product-strategy-session/SKILL.md</code> (workflow) — Run before roadmap planning to establish strategy</li>
+<li><code>skills/discovery-process/SKILL.md</code> (workflow) — Provides customer problem inputs for Phase 1</li>
+<li><code>skills/user-story-mapping-workshop/SKILL.md</code> (interactive) — For complex epics requiring release planning</li>
+</ul>
+<h3 id="external-frameworks">External Frameworks</h3>
+<ul>
+<li>Bruce McCarthy, <em>Product Roadmaps Relaunched</em> (2017) — Outcome-driven roadmaps</li>
+<li>C. Todd Lombardo, <em>Product Roadmaps Relaunched</em> (2017) — Now/Next/Later framework</li>
+<li>Intercom, "RICE Prioritization" (2016) — Prioritization framework</li>
+</ul>
+<h3 id="deans-work">Dean's Work</h3>
+<ul>
+<li>[If Dean has roadmap planning resources, link here]</li>
+</ul>
+<hr>
+<p><strong>Skill type:</strong> Workflow <strong>Suggested filename:</strong> <code>roadmap-planning.md</code> <strong>Suggested placement:</strong> <code>/skills/workflows/</code> <strong>Dependencies:</strong> Orchestrates <code>skills/epic-hypothesis/SKILL.md</code>, <code>skills/prioritization-advisor/SKILL.md</code>, plus manual activities</p>
+<hr>
+<h2 id="sub-domain--component-roadmap-update">Sub-Domain / Component: <code>roadmap-update</code></h2>
+<h1 id="roadmap-update">Roadmap Update</h1>
+<blockquote>If you see unfamiliar placeholders or need to check which tools are connected, see <a href="../../CONNECTORS.md">CONNECTORS.md</a>.</blockquote>
+<p>Update, create, or reprioritize a product roadmap.</p>
+<h2 id="usage">Usage</h2>
+<pre><code>/roadmap-update $ARGUMENTS</code></pre>
+<h2 id="workflow">Workflow</h2>
+<h3 id="1-understand-current-state">1. Understand Current State</h3>
+<p>If <strong>~~project tracker</strong> is connected:</p>
+<ul>
+<li>Pull current roadmap items with their statuses, assignees, and dates</li>
+<li>Identify items that are overdue, at risk, or recently completed</li>
+<li>Surface any items without clear owners or dates</li>
+</ul>
+<p>If no project management tool is connected:</p>
+<ul>
+<li>Ask the user to describe their current roadmap or paste/upload it</li>
+<li>Accept any format: list, table, spreadsheet, screenshot, or prose description</li>
+</ul>
+<h3 id="2-determine-the-operation">2. Determine the Operation</h3>
+<p>Ask what the user wants to do:</p>
+<p><strong>Add item</strong>: New feature, initiative, or work item to the roadmap</p>
+<ul>
+<li>Gather: name, description, priority, estimated effort, target timeframe, owner, dependencies</li>
+<li>Suggest where it fits based on current priorities and capacity</li>
+</ul>
+<p><strong>Update status</strong>: Change status of existing items</p>
+<ul>
+<li>Options: not started, in progress, at risk, blocked, completed, cut</li>
+<li>For "at risk" or "blocked": ask for the blocker and mitigation plan</li>
+</ul>
+<p><strong>Reprioritize</strong>: Change the order or priority of items</p>
+<ul>
+<li>Ask what changed (new information, strategy shift, resource change, customer feedback)</li>
+<li>Apply a prioritization framework if helpful — see <strong>Prioritization Frameworks</strong> below for RICE, MoSCoW, ICE, and value-vs-effort</li>
+<li>Show before/after comparison</li>
+</ul>
+<p><strong>Move timeline</strong>: Shift dates for items</p>
+<ul>
+<li>Ask why (scope change, dependency slip, resource constraint)</li>
+<li>Identify downstream impacts on dependent items</li>
+<li>Flag items that move past hard deadlines</li>
+</ul>
+<p><strong>Create new roadmap</strong>: Build a roadmap from scratch</p>
+<ul>
+<li>Ask about timeframe (quarter, half, year)</li>
+<li>Ask about format preference (Now/Next/Later, quarterly columns, OKR-aligned) — see <strong>Roadmap Frameworks</strong> below</li>
+<li>Gather the list of initiatives to include</li>
+</ul>
+<h3 id="3-generate-roadmap-summary">3. Generate Roadmap Summary</h3>
+<p>Produce a roadmap view with:</p>
+<h4 id="status-overview">Status Overview</h4>
+<p>Quick summary: X items in progress, Y completed this period, Z at risk.</p>
+<h4 id="roadmap-items">Roadmap Items</h4>
+<p>For each item, show:</p>
+<ul>
+<li>Name and one-line description</li>
+<li>Status indicator (on track / at risk / blocked / completed / not started)</li>
+<li>Target timeframe or date</li>
+<li>Owner</li>
+<li>Key dependencies</li>
+</ul>
+<p>Group items by:</p>
+<ul>
+<li>Timeframe (Now / Next / Later) or quarter, depending on format</li>
+<li>Or by theme/goal if the user prefers</li>
+</ul>
+<h4 id="risks-and-dependencies">Risks and Dependencies</h4>
+<ul>
+<li>Items that are blocked or at risk, with details</li>
+<li>Cross-team dependencies and their status</li>
+<li>Items approaching hard deadlines</li>
+</ul>
+<h4 id="changes-this-update">Changes This Update</h4>
+<p>If this is an update to an existing roadmap, summarize what changed:</p>
+<ul>
+<li>Items added, removed, or reprioritized</li>
+<li>Timeline shifts</li>
+<li>Status changes</li>
+</ul>
+<h3 id="4-follow-up">4. Follow Up</h3>
+<p>After generating the roadmap:</p>
+<ul>
+<li>Offer to format for a specific audience (executive summary, engineering detail, customer-facing)</li>
+<li>Offer to draft communication about roadmap changes</li>
+<li>If project management tool is connected, offer to update ticket statuses</li>
+</ul>
+<h2 id="roadmap-frameworks">Roadmap Frameworks</h2>
+<h3 id="now--next--later">Now / Next / Later</h3>
+<p>The simplest and often most effective roadmap format:</p>
+<ul>
+<li><strong>Now</strong> (current sprint/month): Committed work. High confidence in scope and timeline. These are the things the team is actively building.</li>
+<li><strong>Next</strong> (next 1-3 months): Planned work. Good confidence in what, less confidence in exactly when. Scoped and prioritized but not yet started.</li>
+<li><strong>Later</strong> (3-6+ months): Directional. These are strategic bets and opportunities we intend to pursue, but scope and timing are flexible.</li>
+</ul>
+<p>When to use: Most teams, most of the time. Especially good for communicating externally or to leadership because it avoids false precision on dates.</p>
+<h3 id="quarterly-themes">Quarterly Themes</h3>
+<p>Organize the roadmap around 2-3 themes per quarter:</p>
+<ul>
+<li>Each theme represents a strategic area of investment (e.g., "Enterprise readiness", "Activation improvements", "Platform extensibility")</li>
+<li>Under each theme, list the specific initiatives planned</li>
+<li>Themes should map to company or team OKRs</li>
+<li>This format makes it easy to explain WHY you are building what you are building</li>
+</ul>
+<p>When to use: When you need to show strategic alignment. Good for planning meetings and executive communication.</p>
+<h3 id="okr-aligned-roadmap">OKR-Aligned Roadmap</h3>
+<p>Map roadmap items directly to Objectives and Key Results:</p>
+<ul>
+<li>Start with the team's OKRs for the period</li>
+<li>Under each Key Result, list the initiatives that will move that metric</li>
+<li>Include the expected impact of each initiative on the Key Result</li>
+<li>This creates clear accountability between what you build and what you measure</li>
+</ul>
+<p>When to use: Organizations that run on OKRs. Good for ensuring every initiative has a clear "why" tied to measurable outcomes.</p>
+<h3 id="timeline--gantt-view">Timeline / Gantt View</h3>
+<p>Calendar-based view with items on a timeline:</p>
+<ul>
+<li>Shows start dates, end dates, and durations</li>
+<li>Visualizes parallelism and sequencing</li>
+<li>Good for identifying resource conflicts</li>
+<li>Shows dependencies between items</li>
+</ul>
+<p>When to use: Execution planning with engineering. Identifying scheduling conflicts. NOT good for communicating externally (creates false precision expectations).</p>
+<h2 id="prioritization-frameworks">Prioritization Frameworks</h2>
+<h3 id="rice-score">RICE Score</h3>
+<p>Score each initiative on four dimensions, then calculate RICE = (Reach x Impact x Confidence) / Effort</p>
+<ul>
+<li><strong>Reach</strong>: How many users/customers will this affect in a given time period? Use concrete numbers (e.g., "500 users per quarter").</li>
+<li><strong>Impact</strong>: How much will this move the needle for each person reached? Score on a scale: 3 = massive, 2 = high, 1 = medium, 0.5 = low, 0.25 = minimal.</li>
+<li><strong>Confidence</strong>: How confident are we in the reach and impact estimates? 100% = high confidence (backed by data), 80% = medium (some evidence), 50% = low (gut feel).</li>
+<li><strong>Effort</strong>: How many person-months of work? Include engineering, design, and any other functions.</li>
+</ul>
+<p>When to use: When you need a quantitative, defensible prioritization. Good for comparing a large backlog of initiatives. Less good for strategic bets where impact is hard to estimate.</p>
+<h3 id="moscow">MoSCoW</h3>
+<p>Categorize items into Must have, Should have, Could have, Won't have:</p>
+<ul>
+<li><strong>Must have</strong>: The roadmap is a failure without these. Non-negotiable commitments.</li>
+<li><strong>Should have</strong>: Important and expected, but delivery is viable without them.</li>
+<li><strong>Could have</strong>: Desirable but clearly lower priority. Include only if capacity allows.</li>
+<li><strong>Won't have</strong>: Explicitly out of scope for this period. Important to list for clarity.</li>
+</ul>
+<p>When to use: Scoping a release or quarter. Negotiating with stakeholders about what fits. Good for forcing prioritization conversations.</p>
+<h3 id="ice-score">ICE Score</h3>
+<p>Simpler than RICE. Score each item 1-10 on three dimensions:</p>
+<ul>
+<li><strong>Impact</strong>: How much will this move the target metric?</li>
+<li><strong>Confidence</strong>: How confident are we in the impact estimate?</li>
+<li><strong>Ease</strong>: How easy is this to implement? (Inverse of effort — higher = easier)</li>
+</ul>
+<p>ICE Score = Impact x Confidence x Ease</p>
+<p>When to use: Quick prioritization of a feature backlog. Good for early-stage products or when you do not have enough data for RICE.</p>
+<h3 id="value-vs-effort-matrix">Value vs Effort Matrix</h3>
+<p>Plot initiatives on a 2x2 matrix:</p>
+<ul>
+<li><strong>High value, Low effort</strong> (Quick wins): Do these first.</li>
+<li><strong>High value, High effort</strong> (Big bets): Plan these carefully. Worth the investment but need proper scoping.</li>
+<li><strong>Low value, Low effort</strong> (Fill-ins): Do these when you have spare capacity.</li>
+<li><strong>Low value, High effort</strong> (Money pits): Do not do these. Remove from the backlog.</li>
+</ul>
+<p>When to use: Visual prioritization in team planning sessions. Good for building shared understanding of tradeoffs.</p>
+<h2 id="dependency-mapping">Dependency Mapping</h2>
+<h3 id="identifying-dependencies">Identifying Dependencies</h3>
+<p>Look for dependencies across these categories:</p>
+<ul>
+<li><strong>Technical dependencies</strong>: Feature B requires infrastructure work from Feature A</li>
+<li><strong>Team dependencies</strong>: Feature requires work from another team (design, platform, data)</li>
+<li><strong>External dependencies</strong>: Waiting on a vendor, partner, or third-party integration</li>
+<li><strong>Knowledge dependencies</strong>: Need research or investigation results before starting</li>
+<li><strong>Sequential dependencies</strong>: Must ship Feature A before starting Feature B (shared code, user flow)</li>
+</ul>
+<h3 id="managing-dependencies">Managing Dependencies</h3>
+<ul>
+<li>List all dependencies explicitly in the roadmap</li>
+<li>Assign an owner to each dependency (who is responsible for resolving it)</li>
+<li>Set a "need by" date: when does the depending item need this resolved</li>
+<li>Build buffer around dependencies — they are the highest-risk items on any roadmap</li>
+<li>Flag dependencies that cross team boundaries early — these require coordination</li>
+<li>Have a contingency plan: what do you do if the dependency slips?</li>
+</ul>
+<h3 id="reducing-dependencies">Reducing Dependencies</h3>
+<ul>
+<li>Can you build a simpler version that avoids the dependency?</li>
+<li>Can you parallelize by using an interface contract or mock?</li>
+<li>Can you sequence differently to move the dependency earlier?</li>
+<li>Can you absorb the work into your team to remove the cross-team coordination?</li>
+</ul>
+<h2 id="capacity-planning">Capacity Planning</h2>
+<h3 id="estimating-capacity">Estimating Capacity</h3>
+<ul>
+<li>Start with the number of engineers and the time period</li>
+<li>Subtract known overhead: meetings, on-call rotations, interviews, holidays, PTO</li>
+<li>A common rule of thumb: engineers spend 60-70% of time on planned feature work</li>
+<li>Factor in team ramp time for new members</li>
+</ul>
+<h3 id="allocating-capacity">Allocating Capacity</h3>
+<p>A healthy allocation for most product teams:</p>
+<ul>
+<li><strong>70% planned features</strong>: Roadmap items that advance strategic goals</li>
+<li><strong>20% technical health</strong>: Tech debt, reliability, performance, developer experience</li>
+<li><strong>10% unplanned</strong>: Buffer for urgent issues, quick wins, and requests from other teams</li>
+</ul>
+<p>Adjust ratios based on team context:</p>
+<ul>
+<li>New product: more feature work, less tech debt</li>
+<li>Mature product: more tech debt and reliability investment</li>
+<li>Post-incident: more reliability, less features</li>
+<li>Rapid growth: more scalability and performance</li>
+</ul>
+<h3 id="capacity-vs-ambition">Capacity vs Ambition</h3>
+<ul>
+<li>If roadmap commitments exceed capacity, something must give</li>
+<li>Do not solve capacity problems by pretending people can do more — solve by cutting scope</li>
+<li>When adding to the roadmap, always ask: "What comes off?"</li>
+<li>Better to commit to fewer things and deliver reliably than to overcommit and disappoint</li>
+</ul>
+<h2 id="communicating-roadmap-changes">Communicating Roadmap Changes</h2>
+<h3 id="when-the-roadmap-changes">When the Roadmap Changes</h3>
+<p>Common triggers for roadmap changes:</p>
+<ul>
+<li>New strategic priority from leadership</li>
+<li>Customer feedback or research that changes priorities</li>
+<li>Technical discovery that changes estimates</li>
+<li>Dependency slip from another team</li>
+<li>Resource change (team grows or shrinks, key person leaves)</li>
+<li>Competitive move that requires response</li>
+</ul>
+<h3 id="how-to-communicate-changes">How to Communicate Changes</h3>
+<ol>
+<li><strong>Acknowledge the change</strong>: Be direct about what is changing and why</li>
+<li><strong>Explain the reason</strong>: What new information drove this decision?</li>
+<li><strong>Show the tradeoff</strong>: What was deprioritized to make room? Or what is slipping?</li>
+<li><strong>Show the new plan</strong>: Updated roadmap with the changes reflected</li>
+<li><strong>Acknowledge impact</strong>: Who is affected and how? Stakeholders who were expecting deprioritized items need to hear it directly.</li>
+</ol>
+<h3 id="avoiding-roadmap-whiplash">Avoiding Roadmap Whiplash</h3>
+<ul>
+<li>Do not change the roadmap for every piece of new information. Have a threshold for change.</li>
+<li>Batch roadmap updates at natural cadences (monthly, quarterly) unless something is truly urgent.</li>
+<li>Distinguish between "roadmap change" (strategic reprioritization) and "scope adjustment" (normal execution refinement).</li>
+<li>Track how often the roadmap changes. Frequent changes may signal unclear strategy, not good responsiveness.</li>
+</ul>
+<h2 id="output-format">Output Format</h2>
+<p>Use a clear, scannable format. Tables work well for roadmap items. Use text status labels: <strong>Done</strong>, <strong>On Track</strong>, <strong>At Risk</strong>, <strong>Blocked</strong>, <strong>Not Started</strong>.</p>
+<h2 id="tips">Tips</h2>
+<ul>
+<li>A roadmap is a communication tool, not a project plan. Keep it at the right altitude — themes and outcomes, not tasks.</li>
+<li>When reprioritizing, always ask what changed. Priority shifts should be driven by new information, not whim.</li>
+<li>Flag capacity issues early. If the roadmap has more work than the team can handle, say so.</li>
+<li>Dependencies are the biggest risk to roadmaps. Surface them explicitly.</li>
+<li>If the user asks to add something, always ask what comes off or moves. Roadmaps are zero-sum against capacity.</li>
+</ul>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

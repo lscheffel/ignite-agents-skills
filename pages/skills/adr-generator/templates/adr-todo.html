@@ -410,110 +410,48 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; templates &rsaquo; adr-todo</div>
   </nav>
   <div class="content">
-    <h1 id="todo-title">TODO: {{title}}</h1>
-<blockquote>ADR-{{id}} | Início: {{date}} | Status: ⬜ PENDENTE</blockquote>
-<hr>
-<h2 id="legenda">Legenda</h2>
+    <hr>
+<p>id: ADR-{{id}}-TODO type: todo title: "Execution - {{title}}" created: {{date}} updated: {{date}} adr_ref: ADR-{{id}} ---</p>
+<h1 id="adr-id-todo-execution---title">ADR-{{id}}-TODO: Execution - {{title}}</h1>
+<blockquote>Reference: <a href="./ADR-{{id}}.md">ADR-{{id}}</a> | Status: ⬜ PENDING</blockquote>
+<blockquote><strong>Elastic Structure:</strong> The Phases and Steps below are an example skeleton, not a mandatory count. Use as many Phases as the real scope of the decision requires – a small decision may have a single Phase with two or three tasks; a large decision may have several. Do not create tasks just to fill the structure (see anti-pattern "TODO with Fabricated Phases").</blockquote>
+<h2 id="legend">Legend</h2>
 <ul>
-<li>✅ Concluído</li>
-<li>⬜ Pendente</li>
-<li>🔄 Em Andamento</li>
-<li>❌ Bloqueado</li>
-<li>⏸️ Pausado</li>
+<li>✅ Completed</li>
+<li>⬜ Pending</li>
+<li>🔄 In Progress</li>
+<li>❌ Blocked</li>
+<li>⏸️ Paused</li>
 </ul>
-<p><strong>Prioridade:</strong> 🔴 Alta | 🟡 Média | 🟢 Baixa</p>
+<p><strong>Priority:</strong> 🔴 High | 🟡 Medium | 🟢 Low</p>
 <hr>
-<h2 id="fase-a-phaseatitle">Fase A: {{phase_a_title}}</h2>
-<h3 id="a1-phaseasubtitle">A1: {{phase_a_subtitle}}</h3>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A1.1</td><td>{{task_a1_1}}</td><td>⬜</td><td>🔴</td><td>—</td><td>{{time_a1_1}}</td></tr><tr><td>A1.2</td><td>{{task_a1_2}}</td><td>⬜</td><td>🔴</td><td>A1.1</td><td>{{time_a1_2}}</td></tr><tr><td>A1.3</td><td>{{task_a1_3}}</td><td>⬜</td><td>🔴</td><td>A1.1</td><td>{{time_a1_3}}</td></tr></table></div>
-<p><strong>Checkpoint A1:</strong></p>
+<h2 id="phase-phase1letter-phase1title">Phase {{phase_1_letter}}: {{phase_1_title}}</h2>
+<h3 id="phase1letter1-phase1subtitle">{{phase_1_letter}}1: {{phase_1_subtitle}}</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Task</th><th>Status</th><th>Priority</th><th>Dependencies</th><th>Estimation</th></tr><tr><td>{{phase_1_letter}}1.1</td><td>{{task_1}}</td><td>⬜</td><td>🔴</td><td>—</td><td>{{time_1}}</td></tr><tr><td>{{phase_1_letter}}1.2</td><td>{{task_2}}</td><td>⬜</td><td>🔴</td><td>{{phase_1_letter}}1.1</td><td>{{time_2}}</td></tr></table></div>
+<p><strong>Checkpoint {{phase_1_letter}}1:</strong></p>
 <ul>
-<li>[ ] {{checkpoint_a1_1}}</li>
-<li>[ ] {{checkpoint_a1_2}}</li>
+<li>[ ] {{checkpoint_1}}</li>
 </ul>
-<hr>
-<h3 id="a2-phasea2subtitle">A2: {{phase_a2_subtitle}}</h3>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A2.1</td><td>{{task_a2_1}}</td><td>⬜</td><td>🔴</td><td>A1</td><td>{{time_a2_1}}</td></tr><tr><td>A2.2</td><td>{{task_a2_2}}</td><td>⬜</td><td>🟡</td><td>A1</td><td>{{time_a2_2}}</td></tr><tr><td>A2.3</td><td>{{task_a2_3}}</td><td>⬜</td><td>🔴</td><td>A2.2</td><td>{{time_a2_3}}</td></tr></table></div>
-<p><strong>Checkpoint A2:</strong></p>
+<p><!-- Repeat the block "### {{phase_1_letter}}N: {{subtitle}}" for each additional sub-group of tasks within this Phase, and repeat the entire section "## Phase {{letra}}" for each additional Phase that the real scope requires. Each Phase ends with a General Checkpoint:</p>
+<p><strong>General Checkpoint for Phase {{phase_1_letter}}:</strong></p>
 <ul>
-<li>[ ] {{checkpoint_a2_1}}</li>
-<li>[ ] {{checkpoint_a2_2}}</li>
+<li>[ ] {{checkpoint_general}}</li>
 </ul>
+<p>--></p>
 <hr>
-<h3 id="a3-phasea3subtitle">A3: {{phase_a3_subtitle}}</h3>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>A3.1</td><td>{{task_a3_1}}</td><td>⬜</td><td>🔴</td><td>A2</td><td>{{time_a3_1}}</td></tr><tr><td>A3.2</td><td>{{task_a3_2}}</td><td>⬜</td><td>🔴</td><td>A3.1</td><td>{{time_a3_2}}</td></tr><tr><td>A3.3</td><td>{{task_a3_3}}</td><td>⬜</td><td>🔴</td><td>A3.2</td><td>{{time_a3_3}}</td></tr></table></div>
-<p><strong>Checkpoint A3:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_a3_1}}</li>
-<li>[ ] {{checkpoint_a3_2}}</li>
-</ul>
+<h2 id="general-summary">General Summary</h2>
+<div class="table-wrapper"><table><tr><th>Phase</th><th>Tasks</th><th>Estimated Hours</th><th>Status</th></tr><tr><td>Phase {{phase_1_letter}}: {{phase_1_title}}</td><td>{{count_1}}</td><td>~{{hours_1}}</td><td>⬜</td></tr><tr><td><strong>Total</strong></td><td><strong>{{total}}</strong></td><td><strong>~{{total_hours}}</strong></td><td></td></tr></table></div>
+<p><!-- Add a line for each real Phase. --></p>
 <hr>
-<p><strong>Checkpoint Geral Fase A:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_a_general_1}}</li>
-<li>[ ] {{checkpoint_a_general_2}}</li>
-</ul>
-<hr>
-<h2 id="fase-b-phasebtitle">Fase B: {{phase_b_title}}</h2>
-<h3 id="b1-phasebsubtitle">B1: {{phase_b_subtitle}}</h3>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B1.1</td><td>{{task_b1_1}}</td><td>⬜</td><td>🔴</td><td>A</td><td>{{time_b1_1}}</td></tr><tr><td>B1.2</td><td>{{task_b1_2}}</td><td>⬜</td><td>🔴</td><td>B1.1</td><td>{{time_b1_2}}</td></tr><tr><td>B1.3</td><td>{{task_b1_3}}</td><td>⬜</td><td>🔴</td><td>B1.2</td><td>{{time_b1_3}}</td></tr><tr><td>B1.4</td><td>{{task_b1_4}}</td><td>⬜</td><td>🟡</td><td>B1.3</td><td>{{time_b1_4}}</td></tr></table></div>
-<p><strong>Checkpoint B1:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_b1_1}}</li>
-<li>[ ] {{checkpoint_b1_2}}</li>
-</ul>
-<hr>
-<h3 id="b2-phaseb2subtitle">B2: {{phase_b2_subtitle}}</h3>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>B2.1</td><td>{{task_b2_1}}</td><td>⬜</td><td>🔴</td><td>B1</td><td>{{time_b2_1}}</td></tr><tr><td>B2.2</td><td>{{task_b2_2}}</td><td>⬜</td><td>🔴</td><td>B2.1</td><td>{{time_b2_2}}</td></tr><tr><td>B2.3</td><td>{{task_b2_3}}</td><td>⬜</td><td>🟡</td><td>B2.2</td><td>{{time_b2_3}}</td></tr><tr><td>B2.4</td><td>{{task_b2_4}}</td><td>⬜</td><td>🔴</td><td>B2.3</td><td>{{time_b2_4}}</td></tr><tr><td>B2.5</td><td>{{task_b2_5}}</td><td>⬜</td><td>🔴</td><td>B2.4</td><td>{{time_b2_5}}</td></tr><tr><td>B2.6</td><td>{{task_b2_6}}</td><td>⬜</td><td>🔴</td><td>B2.5</td><td>{{time_b2_6}}</td></tr><tr><td>B2.7</td><td>{{task_b2_7}}</td><td>⬜</td><td>🔴</td><td>B2.6</td><td>{{time_b2_7}}</td></tr><tr><td>B2.8</td><td>{{task_b2_8}}</td><td>⬜</td><td>🔴</td><td>B2.7</td><td>{{time_b2_8}}</td></tr><tr><td>B2.9</td><td>{{task_b2_9}}</td><td>⬜</td><td>🟡</td><td>B2.8</td><td>{{time_b2_9}}</td></tr></table></div>
-<p><strong>Checkpoint B2:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_b2_1}}</li>
-<li>[ ] {{checkpoint_b2_2}}</li>
-<li>[ ] {{checkpoint_b2_3}}</li>
-</ul>
-<hr>
-<p><strong>Checkpoint Geral Fase B:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_b_general_1}}</li>
-<li>[ ] {{checkpoint_b_general_2}}</li>
-</ul>
-<hr>
-<h2 id="fase-c-phasectitle">Fase C: {{phase_c_title}}</h2>
-<h3 id="c1-phasecsubtitle">C1: {{phase_c_subtitle}}</h3>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Status</th><th>Prioridade</th><th>Dependências</th><th>Estimativa</th></tr><tr><td>C1.1</td><td>{{task_c1_1}}</td><td>⬜</td><td>🟡</td><td>B</td><td>{{time_c1_1}}</td></tr><tr><td>C1.2</td><td>{{task_c1_2}}</td><td>⬜</td><td>🟡</td><td>C1.1</td><td>{{time_c1_2}}</td></tr><tr><td>C1.3</td><td>{{task_c1_3}}</td><td>⬜</td><td>🟢</td><td>B</td><td>{{time_c1_3}}</td></tr></table></div>
-<p><strong>Checkpoint C1:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_c1_1}}</li>
-<li>[ ] {{checkpoint_c1_2}}</li>
-</ul>
-<hr>
-<p><strong>Checkpoint Geral Fase C:</strong></p>
-<ul>
-<li>[ ] {{checkpoint_c_general_1}}</li>
-<li>[ ] {{checkpoint_c_general_2}}</li>
-</ul>
-<hr>
-<h2 id="resumo-geral">Resumo Geral</h2>
-<div class="table-wrapper"><table><tr><th>Fase</th><th>Tarefas</th><th>Horas Est.</th><th>Status</th></tr><tr><td>Fase A: {{phase_a_title}}</td><td>{{count_a}}</td><td>~{{hours_a}}</td><td>⬜</td></tr><tr><td>Fase B: {{phase_b_title}}</td><td>{{count_b}}</td><td>~{{hours_b}}</td><td>⬜</td></tr><tr><td>Fase C: {{phase_c_title}}</td><td>{{count_c}}</td><td>~{{hours_c}}</td><td>⬜</td></tr><tr><td><strong>Total</strong></td><td><strong>{{total}}</strong></td><td><strong>~{{total_hours}}</strong></td><td></td></tr></table></div>
-<hr>
-<h2 id="dependncias-entre-fases">Dependências entre Fases</h2>
-<pre><code>Fase A ({{phase_a_title_short}})
+<h2 id="dependencies-between-phases">Dependencies between Phases</h2>
+<blockquote>Only include this diagram if there are more than one Phase with real dependencies between them. For a single-Phase TODO, omit this section.</blockquote>
+<pre><code>Phase {{phase_1_letter}} ({{phase_1_title}})
   │
-  ├─── A1: {{a1_short}} ─────┐
-  ├─── A2: {{a2_short}} ─────┤
-  ├─── A3: {{a3_short}} ─────┤
-  └─── A4: {{a4_short}} ─────┘
-                                │
-Fase B ({{phase_b_title_short}}) ◄──────────────────┘
-  │
-  ├─── B1: {{b1_short}} ───────┐
-  └─── B2: {{b2_short}} ────────┘
-                                │
-Fase C ({{phase_c_title_short}}) ◄──────────────────┘
-  │
-  └─── C1: {{c1_short}} ────────┘</code></pre>
+  └─── {{phase_1_letter}}1: {{phase_1_short}} ─────┐
+                                                     │
+Phase {{phase_2_letter}} ({{phase_2_title}}) ◄───────┘</code></pre>
 <hr>
-<p><em>Documento gerado em {{date}}. Referência: ADR-{{id}}.</em></p>
+<p><em>Document generated on {{date}}. Reference: ADR-{{id}}.</em></p>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

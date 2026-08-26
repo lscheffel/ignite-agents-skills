@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>product-spec-engineering — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; product-spec-engineering</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: product-spec-engineering version: 1.0.0 description: PRD generation, technical spec writing, and reverse engineering requirements. domain: domain-stack triggers:</p>
+<ul>
+<li>product-spec-engineering</li>
+<li>domain-stack</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>product-spec-engineering</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="product-spec-engineering-hub">Product Spec Engineering Hub</h1>
+<p>PRD generation, technical spec writing, and reverse engineering requirements.</p>
+<h2 id="sub-domain--component-spec-writing">Sub-Domain / Component: <code>spec-writing</code></h2>
+<h1 id="specification-writing">Specification Writing</h1>
+<h2 id="overview">Overview</h2>
+<p>Specifications define WHAT the software should do, never HOW. This skill applies the Jobs to Be Done (JTBD) methodology to break requirements into properly scoped, testable specification files that drive autonomous implementation. Every spec produces Given/When/Then acceptance criteria free of implementation details.</p>
+<p><strong>This is a RIGID skill.</strong> Every phase, gate, and format rule must be followed exactly.</p>
+<h2 id="the-cardinal-rule">The Cardinal Rule</h2>
+<p><strong>[HARD-GATE:SPEC]</strong> Specifications must NEVER contain implementation details.</p>
+<div class="table-wrapper"><table><tr><th>Forbidden</th><th>Allowed</th></tr><tr><td>Code blocks or snippets</td><td>Behavioral descriptions</td></tr><tr><td>Variable names or function signatures</td><td>Observable outcomes</td></tr><tr><td>Technology choices ("use React", "use PostgreSQL")</td><td>Capability requirements ("renders in browser", "persists data")</td></tr><tr><td>Algorithm suggestions ("use K-means clustering")</td><td>Success criteria ("extracts 5-10 dominant colors")</td></tr><tr><td>Architecture patterns ("use MVC")</td><td>User-facing behaviors</td></tr><tr><td>Library references ("use Zod for validation")</td><td>Validation requirements ("rejects malformed input")</td></tr></table></div>
+<p><strong>Why:</strong> Implementation-free specs preserve flexibility. The implementing agent can choose the best approach for the codebase, technology, and constraints — and change course without spec updates.</p>
+<h2 id="phase-1-jobs-to-be-done-jtbd">Phase 1: Jobs to Be Done (JTBD)</h2>
+<p>Identify the user's or system's jobs using this format:</p>
+<pre><code>When [situation], I want to [motivation], so I can [expected outcome].</code></pre>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>"When I upload an image, I want to extract its color palette, so I can use those colors in my design."</li>
+<li>"When I receive an API request, I want to validate the payload, so I can reject malformed data before processing."</li>
+</ul>
+<p>Gather jobs through discovery questions:</p>
+<ol>
+<li>Who is the user/actor?</li>
+<li>What situation triggers this need?</li>
+<li>What outcome do they want?</li>
+<li>What happens if they cannot accomplish this?</li>
+</ol>
+<p>STOP after JTBD identification — present all jobs to the user for confirmation before breaking into topics.</p>
+<h2 id="phase-2-topics-of-concern">Phase 2: Topics of Concern</h2>
+<p>Break each job into discrete topics. Apply the <strong>"One Sentence Without 'And'" test:</strong></p>
+<div class="table-wrapper"><table><tr><th>Test</th><th>Result</th><th>Action</th></tr><tr><td>"This spec covers color extraction."</td><td>PASS</td><td>Single topic — one spec file</td></tr><tr><td>"This spec covers color extraction and palette rendering."</td><td>FAIL</td><td>Two topics — split into two spec files</td></tr><tr><td>"This spec covers user authentication and session management."</td><td>FAIL</td><td>Split into two specs</td></tr><tr><td>"This spec covers input validation for the registration form."</td><td>PASS</td><td>Single topic — one spec file</td></tr></table></div>
+<p>Each topic becomes one specification file.</p>
+<p>STOP after topic breakdown — confirm the list of spec files before writing them.</p>
+<h2 id="phase-3-write-specification-files">Phase 3: Write Specification Files</h2>
+<p><strong>File naming convention:</strong> <code><int>-<descriptive-name>.md</code></p>
+<pre><code>specs/
+├── 01-color-extraction.md
+├── 02-palette-rendering.md
+├── 03-export-formats.md
+└── 04-color-accessibility.md</code></pre>
+<h3 id="specification-file-template">Specification File Template</h3>
+<pre data-lang="markdown"><code># [Topic Name]
+
+## Job to Be Done
+When [situation], I want to [motivation], so I can [expected outcome].
+
+## Acceptance Criteria
+
+### [Criterion 1 Name]
+- Given [precondition]
+- When [action]
+- Then [observable outcome]
+- And [additional observable outcome]
+
+### [Criterion 2 Name]
+- Given [precondition]
+- When [action]
+- Then [observable outcome]
+
+## Edge Cases
+- [Describe boundary condition and expected behavior]
+- [Describe error condition and expected behavior]
+
+## Data Contracts
+- Input: [Describe shape, constraints, valid ranges]
+- Output: [Describe shape, guarantees, invariants]
+
+## Non-Functional Requirements
+- Performance: [measurable target, e.g., &quot;responds within 200ms for 95th percentile&quot;]
+- Accessibility: [specific standard, e.g., &quot;WCAG 2.1 AA&quot;]
+- Security: [specific requirement, e.g., &quot;input sanitized against XSS&quot;]</code></pre>
+<h3 id="acceptance-criteria-quality-rules">Acceptance Criteria Quality Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Good Example</th><th>Bad Example</th></tr><tr><td>Observable behavioral outcome</td><td>"Extracts 5-10 dominant colors from any image"</td><td>"Use K-means clustering with k=8"</td></tr><tr><td>Testable</td><td>"Color data persists across sessions"</td><td>"Store in PostgreSQL JSONB column"</td></tr><tr><td>Specific and measurable</td><td>"Palette changes appear within 500ms"</td><td>"Use WebSocket for real-time updates"</td></tr><tr><td>Independent (stands alone)</td><td>"Palette renders when image loads"</td><td>"Implement with React useEffect hook"</td></tr><tr><td>Implementation-free</td><td>"Passwords cannot be recovered from stored data"</td><td>"Use bcrypt with 12 salt rounds"</td></tr></table></div>
+<p>STOP after writing specs — run the audit checklist before proceeding to Phase 4.</p>
+<h3 id="spec-audit-checklist">Spec Audit Checklist</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Check</th><th>Pass Criteria</th></tr><tr><td>1</td><td>No implementation details</td><td>Zero code, function names, or tech choices</td></tr><tr><td>2</td><td>One Sentence Without 'And' test</td><td>Each spec covers exactly one topic</td></tr><tr><td>3</td><td>All criteria are Given/When/Then</td><td>No free-form prose criteria</td></tr><tr><td>4</td><td>All criteria are testable</td><td>Each can be verified by a test</td></tr><tr><td>5</td><td>Edge cases documented</td><td>At least 2 per spec</td></tr><tr><td>6</td><td>Data contracts defined</td><td>Input and output shapes specified</td></tr><tr><td>7</td><td>Consistent naming</td><td><code><int>-<descriptive-name>.md</code> format</td></tr></table></div>
+<h2 id="phase-4-story-map-organization">Phase 4: Story Map Organization</h2>
+<p>Organize specs into a story map for release planning:</p>
+<pre><code>CAPABILITY 1    CAPABILITY 2    CAPABILITY 3    CAPABILITY 4
+─────────────   ─────────────   ─────────────   ─────────────
+basic upload    auto-extract    manual arrange  export PNG
+bulk upload     palette gen     templates       export SVG
+drag-drop       color names     grid layout     share link
+                accessibility   animation       collaborate</code></pre>
+<ul>
+<li><strong>Horizontal rows</strong> = candidate releases</li>
+<li><strong>Top row</strong> = minimum viable release</li>
+<li>Each row adds capabilities across the board</li>
+</ul>
+<h3 id="slc-release-criteria">SLC Release Criteria</h3>
+<p>For each horizontal slice, evaluate:</p>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Question</th><th>Standard</th></tr><tr><td><strong>Simple</strong></td><td>Can it ship fast with narrow scope?</td><td>Weeks, not months</td></tr><tr><td><strong>Lovable</strong></td><td>Will people actually want to use it?</td><td>Delightful, not just functional</td></tr><tr><td><strong>Complete</strong></td><td>Does it fully accomplish a job?</td><td>End-to-end, not half-done</td></tr></table></div>
+<p><strong>[HARD-GATE]</strong> A release must satisfy ALL three. "Simple but incomplete" is not shippable. "Complete but not lovable" is not shippable.</p>
+<p>STOP after story map — get user confirmation on release slicing before finalizing.</p>
+<h2 id="phase-5-specs-audit-mode">Phase 5: Specs Audit Mode</h2>
+<p>When auditing existing specs (rather than writing new ones):</p>
+<ol>
+<li>Read all spec files in <code>specs/</code></li>
+<li>Check each against the Cardinal Rule (no code, no implementation details)</li>
+<li>Verify "One Sentence Without 'And'" test</li>
+<li>Ensure consistent naming convention</li>
+<li>Verify Given/When/Then format for all acceptance criteria</li>
+<li>Flag violations and auto-fix where possible</li>
+</ol>
+<p>Deploy up to 100 parallel subagents via the <code>Agent</code> tool (with <code>subagent_type="Explore"</code>) — one per spec file — for large spec sets.</p>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Mistake</th><th>Why It Is Wrong</th><th>What To Do Instead</th></tr><tr><td>Including code snippets in specs</td><td>Locks implementation approach</td><td>Describe behavior, not mechanism</td></tr><tr><td>Naming technologies ("use Redis")</td><td>Prevents better alternatives</td><td>Describe capability ("caches results")</td></tr><tr><td>Combining topics with "and"</td><td>Spec too broad, hard to implement/test</td><td>Split into separate spec files</td></tr><tr><td>Vague acceptance criteria ("works well")</td><td>Cannot write a test for it</td><td>Specific measurable outcome</td></tr><tr><td>Missing edge cases</td><td>Bugs in boundary conditions</td><td>Document at least 2 edge cases per spec</td></tr><tr><td>Skipping data contracts</td><td>Input/output ambiguity</td><td>Always define shapes and constraints</td></tr><tr><td>Writing specs after code</td><td>Specs justify code instead of driving it</td><td>Specs come BEFORE implementation</td></tr><tr><td>Acceptance criteria that describe UI layout</td><td>Implementation detail</td><td>Describe what the user can accomplish</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li><strong>[HARD-GATE]</strong> Do NOT include ANY implementation details — no code, no tech names, no architecture</li>
+<li><strong>[HARD-GATE]</strong> Do NOT skip the "One Sentence Without 'And'" test — split every compound topic</li>
+<li><strong>[HARD-GATE]</strong> Do NOT accept acceptance criteria that are not in Given/When/Then format</li>
+<li><strong>[HARD-GATE]</strong> Do NOT skip the audit checklist before finalizing specs</li>
+<li><strong>Do NOT skip</strong> edge cases — every spec needs at least 2</li>
+<li><strong>Do NOT skip</strong> data contracts — every spec needs input/output shapes</li>
+<li><strong>Do NOT</strong> write specs after implementation — specs drive code, not the reverse</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>autonomous-loop</code></td><td>Planning mode reads specs to identify implementation gaps</td></tr><tr><td><code>acceptance-testing</code></td><td>Tests are derived directly from spec acceptance criteria</td></tr><tr><td><code>reverse-engineering-specs</code></td><td>Generates specs from existing code (brownfield)</td></tr><tr><td><code>prd-generation</code></td><td>PRD provides high-level requirements; specs detail them</td></tr><tr><td><code>planning</code></td><td>Plans reference spec acceptance criteria for task definition</td></tr><tr><td><code>test-driven-development</code></td><td>Red phase writes tests matching spec acceptance criteria</td></tr><tr><td><code>writing-skills</code></td><td>Skills can be specified using this methodology</td></tr></table></div>
+<h2 id="concrete-example-complete-spec-file">Concrete Example: Complete Spec File</h2>
+<pre data-lang="markdown"><code># Image Color Extraction
+
+## Job to Be Done
+When I upload an image to the design tool, I want to automatically extract
+its dominant colors, so I can use those colors in my design palette.
+
+## Acceptance Criteria
+
+### Dominant Color Extraction
+- Given an uploaded image in PNG, JPG, or WebP format
+- When the extraction process completes
+- Then 5-10 dominant colors are returned as hex values
+- And colors are ordered by prominence (most dominant first)
+
+### Transparent Image Handling
+- Given an uploaded image with transparent regions
+- When the extraction process completes
+- Then transparent regions are excluded from color analysis
+- And at least 3 dominant colors are still returned
+
+### Processing Feedback
+- Given an image upload has started
+- When extraction is in progress
+- Then the user sees a progress indicator
+- And extraction completes within 3 seconds for images up to 10MB
+
+## Edge Cases
+- Single-color image: returns 1 color (not an error)
+- Very large image (&gt;50MB): returns an error with size limit message
+- Corrupted image file: returns an error with clear message, no crash
+- Animated GIF: extracts colors from the first frame only
+
+## Data Contracts
+- Input: Image file (PNG, JPG, WebP), max 50MB
+- Output: Array of 1-10 hex color strings, ordered by prominence
+- Error output: Error object with code and human-readable message
+
+## Non-Functional Requirements
+- Performance: &lt;3s for images up to 10MB, &lt;10s for images up to 50MB
+- Accessibility: Color values include WCAG contrast ratio against white/black</code></pre>
+<h2 id="verification-gate">Verification Gate</h2>
+<p>Before claiming specs are complete:</p>
+<ol>
+<li>VERIFY the Cardinal Rule — zero implementation details in any spec</li>
+<li>VERIFY every spec passes the "One Sentence Without 'And'" test</li>
+<li>VERIFY all acceptance criteria use Given/When/Then format</li>
+<li>VERIFY every spec has edge cases and data contracts</li>
+<li>VERIFY the story map has at least one complete SLC release slice</li>
+<li>VERIFY the user has confirmed the spec set</li>
+</ol>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>Rigid</strong> — The no-implementation-details rule, JTBD structure, Given/When/Then format, and audit checklist must be followed exactly. No elements may be skipped or adapted.</p>
+<hr>
+<h2 id="sub-domain--component-prd-generation">Sub-Domain / Component: <code>prd-generation</code></h2>
+<h1 id="prd-generation">PRD Generation</h1>
+<h2 id="overview">Overview</h2>
+<p>Transform high-level ideas into structured Product Requirements Documents through guided discovery. This skill walks through problem/solution/constraint discovery, generates a professional PRD with measurable goals and user stories, and ensures stakeholder approval before saving.</p>
+<p><strong>Announce at start:</strong> "I'm using the prd-generation skill to create a Product Requirements Document."</p>
+<h2 id="phase-1-discovery">Phase 1: Discovery</h2>
+<p>Ask these questions ONE AT A TIME (prefer multiple choice where possible).</p>
+<p><strong>Do NOT skip discovery.</strong> Even if the user provides a detailed brief, confirm understanding by asking at least 3 clarifying questions.</p>
+<p>STOP after discovery — present a summary of collected answers and get confirmation before drafting.</p>
+<h3 id="problem-space-questions">Problem Space Questions</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr><tr><td>1</td><td>What problem does this solve?</td><td>Anchors the entire PRD</td></tr><tr><td>2</td><td>Who are the target users? (personas, roles)</td><td>Shapes user stories</td></tr><tr><td>3</td><td>How are users currently solving this?</td><td>Identifies competitive landscape</td></tr><tr><td>4</td><td>What is the impact of NOT solving this?</td><td>Justifies priority</td></tr></table></div>
+<h3 id="solution-space-questions">Solution Space Questions</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr><tr><td>5</td><td>What does success look like? (specific metrics)</td><td>Defines success metrics</td></tr><tr><td>6</td><td>What are must-have vs nice-to-have features?</td><td>Sets priority tiers</td></tr><tr><td>7</td><td>What are the explicit non-goals?</td><td>Prevents scope creep</td></tr><tr><td>8</td><td>Are there existing solutions to learn from?</td><td>Informs design decisions</td></tr></table></div>
+<h3 id="constraint-questions">Constraint Questions</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Question</th><th>Why It Matters</th></tr><tr><td>9</td><td>What is the timeline? Any hard deadlines?</td><td>Scopes release plan</td></tr><tr><td>10</td><td>What technical constraints exist?</td><td>Narrows solution space</td></tr><tr><td>11</td><td>What resources are available?</td><td>Sets realistic expectations</td></tr><tr><td>12</td><td>Are there compliance or regulatory requirements?</td><td>Identifies non-functional reqs</td></tr></table></div>
+<h2 id="phase-2-draft-prd">Phase 2: Draft PRD</h2>
+<p>Generate the PRD using the template below. Dispatch the <code>prd-writer</code> agent with collected answers for heavy generation.</p>
+<p>STOP after drafting — do NOT present as final until Phase 3 review is complete.</p>
+<h3 id="prd-template">PRD Template</h3>
+<pre data-lang="markdown"><code># [Product/Feature Name] — Product Requirements Document
+
+## 1. Overview
+One paragraph summarizing what this is and why it matters.
+
+## 2. Problem Statement
+- Current situation
+- Pain points
+- Impact of not solving
+
+## 3. Goals &amp; Non-Goals
+### Goals
+- [ ] Goal 1 (measurable)
+- [ ] Goal 2 (measurable)
+
+### Non-Goals
+- Explicitly NOT doing X
+- Explicitly NOT doing Y
+
+## 4. User Stories
+As a [persona], I want to [action], so that [benefit].
+
+## 5. Functional Requirements
+### FR-1: [Requirement Name]
+- Description
+- Acceptance criteria
+- Priority (P0/P1/P2)
+
+## 6. Non-Functional Requirements
+- Performance: [specific targets]
+- Security: [requirements]
+- Accessibility: [standards]
+- Scalability: [expectations]
+
+## 7. Technical Constraints
+- Platform/stack requirements
+- Integration dependencies
+- Data requirements
+
+## 8. Success Metrics
+| Metric | Current | Target | How to Measure |
+|--------|---------|--------|----------------|
+
+## 9. Timeline &amp; Milestones
+| Phase | Description | Target Date |
+|-------|-------------|-------------|
+
+## 10. Open Questions
+- [ ] Question 1
+- [ ] Question 2
+
+## 11. Appendix
+References, mockups, related documents</code></pre>
+<h3 id="priority-classification">Priority Classification</h3>
+<div class="table-wrapper"><table><tr><th>Priority</th><th>Meaning</th><th>Rule</th></tr><tr><td><strong>P0</strong></td><td>Must-have for launch</td><td>Without this, the product does not ship</td></tr><tr><td><strong>P1</strong></td><td>Important, ship soon after launch</td><td>Significant value but not blocking</td></tr><tr><td><strong>P2</strong></td><td>Nice-to-have</td><td>Enhances experience, can wait</td></tr></table></div>
+<h2 id="phase-3-review">Phase 3: Review</h2>
+<p>Present the PRD section by section:</p>
+<ol>
+<li>After each section, ask: "Does this capture your intent? Any changes?"</li>
+<li>Revise based on feedback before moving to next section</li>
+<li>Pay special attention to these high-signal sections:</li>
+</ol>
+<ul>
+<li>Goals & Non-Goals (scope alignment)</li>
+<li>User Stories (persona accuracy)</li>
+<li>Success Metrics (measurability)</li>
+<li>Functional Requirements (acceptance criteria completeness)</li>
+</ul>
+<p>STOP after review — get explicit "approved" confirmation before saving.</p>
+<h2 id="phase-4-save-and-transition">Phase 4: Save and Transition</h2>
+<p>After explicit approval:</p>
+<ol>
+<li>Save to <code>docs/prds/YYYY-MM-DD-<feature>.md</code></li>
+<li>Commit the PRD with message: <code>docs(prd): add PRD for <feature></code></li>
+<li>If implementation follows, invoke the <code>brainstorming</code> skill</li>
+<li>If specs are needed, invoke the <code>spec-writing</code> skill</li>
+</ol>
+<h3 id="transition-decision-table">Transition Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>User Intent</th><th>Next Skill</th><th>Rationale</th></tr><tr><td>"Let's build this"</td><td><code>brainstorming</code> → <code>planning</code></td><td>Explore approaches then plan</td></tr><tr><td>"Write the specs"</td><td><code>spec-writing</code></td><td>Break PRD into JTBD specs</td></tr><tr><td>"Just save it"</td><td>None</td><td>PRD is the deliverable</td></tr><tr><td>"Get estimates"</td><td><code>task-decomposition</code></td><td>Break into estimable tasks</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Mistake</th><th>Why It Is Wrong</th><th>What To Do Instead</th></tr><tr><td>Skipping discovery and jumping to draft</td><td>Produces assumptions-based PRD</td><td>Always complete Phase 1 first</td></tr><tr><td>Goals without metrics</td><td>Cannot measure success</td><td>Every goal needs a number</td></tr><tr><td>Missing non-goals</td><td>Scope creep guaranteed</td><td>Explicitly list what is out of scope</td></tr><tr><td>User stories without acceptance criteria</td><td>Untestable requirements</td><td>Add Given/When/Then to each story</td></tr><tr><td>Generic success metrics ("improve UX")</td><td>Unmeasurable</td><td>Use specific numbers: "reduce load time to <2s"</td></tr><tr><td>Presenting entire PRD at once for review</td><td>User overwhelmed, gives superficial approval</td><td>Present section by section</td></tr><tr><td>Copying competitor features verbatim</td><td>Misses actual user needs</td><td>Focus on user problems, not solutions</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li><strong>Do NOT</strong> skip discovery because "the user already described it well enough"</li>
+<li><strong>Do NOT</strong> leave placeholder text in any section — fill every section or mark as "TBD: [reason]"</li>
+<li><strong>Do NOT</strong> proceed to save without explicit user approval of each section</li>
+<li><strong>Do NOT</strong> invent success metrics — they must come from the user</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>brainstorming</code></td><td>Upstream: explores ideas before PRD; downstream: explores implementation after PRD</td></tr><tr><td><code>spec-writing</code></td><td>Downstream: PRD provides high-level requirements; specs detail them with JTBD</td></tr><tr><td><code>planning</code></td><td>Downstream: plan references PRD requirements for task breakdown</td></tr><tr><td><code>task-decomposition</code></td><td>Downstream: breaks PRD into estimable work items</td></tr><tr><td><code>tech-docs-generator</code></td><td>Parallel: PRD informs what documentation is needed</td></tr><tr><td><code>acceptance-testing</code></td><td>Downstream: acceptance criteria from PRD feed test definitions</td></tr></table></div>
+<h2 id="verification-gate">Verification Gate</h2>
+<p>Before claiming the PRD is complete:</p>
+<ol>
+<li>VERIFY all 11 sections are filled (not placeholder text)</li>
+<li>VERIFY every goal has a measurable metric</li>
+<li>VERIFY non-goals are explicit and meaningful</li>
+<li>VERIFY user stories have acceptance criteria</li>
+<li>VERIFY user has approved each section individually</li>
+<li>VERIFY the file is saved and committed</li>
+</ol>
+<h2 id="concrete-example-discovery-summary">Concrete Example: Discovery Summary</h2>
+<pre><code>Problem: Users cannot find relevant search results in the dashboard.
+Users: Data analysts (primary), team leads (secondary).
+Current workaround: Export to Excel and use Ctrl+F.
+Impact of not solving: 30min/day wasted per analyst (team of 12).
+Success metric: Reduce average search time from 5min to &lt;30s.
+Must-have: Full-text search across all dashboard widgets.
+Non-goal: Advanced boolean query syntax (P2, not launch).
+Timeline: 6 weeks to MVP.
+Constraint: Must work with existing Elasticsearch cluster.</code></pre>
+<p>This summary is presented to the user for confirmation before Phase 2 begins.</p>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>Flexible</strong> — Adapt discovery depth and PRD structure to project context while preserving the discovery-before-drafting principle and section-by-section review process.</p>
+<hr>
+<h2 id="sub-domain--component-reverse-engineering-specs">Sub-Domain / Component: <code>reverse-engineering-specs</code></h2>
+<h1 id="reverse-engineering-specifications">Reverse Engineering Specifications</h1>
+<h2 id="overview">Overview</h2>
+<p>For brownfield/legacy projects without documentation, this skill generates implementation-free specifications by exhaustively analyzing existing code. The output is a complete behavioral description that drives autonomous development on top of the existing codebase — enabling safe refactoring, feature addition, and modernization.</p>
+<p><strong>Key principle:</strong> Document actual behavior, including bugs. Bugs are "documented features" until explicitly marked for fixing.</p>
+<p><strong>This is a RIGID skill.</strong> Every code path must be traced. No assumptions, no skipping.</p>
+<h2 id="phase-1-exhaustive-code-investigation">Phase 1: Exhaustive Code Investigation</h2>
+<p><strong>[HARD-GATE]</strong> Every code path must be traced. No assumptions, no skipping.</p>
+<p>Deploy parallel subagents via the <code>Agent</code> tool (up to 500, with <code>subagent_type="Explore"</code>) to analyze:</p>
+<div class="table-wrapper"><table><tr><th>Analysis Target</th><th>What to Document</th><th>Priority</th></tr><tr><td>Entry points</td><td>All ways the system can be invoked (HTTP, CLI, events, cron)</td><td>P0</td></tr><tr><td>Code paths</td><td>Every branch, loop, conditional, early return</td><td>P0</td></tr><tr><td>Data flows</td><td>Input → transformation → output for every pipeline</td><td>P0</td></tr><tr><td>State mutations</td><td>Every place state is read, written, or deleted</td><td>P0</td></tr><tr><td>Error handling</td><td>Try/catch blocks, error codes, fallback behaviors</td><td>P0</td></tr><tr><td>Side effects</td><td>External calls, file I/O, database writes, event emissions</td><td>P1</td></tr><tr><td>Configuration</td><td>Environment variables, config files, feature flags</td><td>P1</td></tr><tr><td>Dependencies</td><td>External services, libraries, APIs consumed</td><td>P1</td></tr><tr><td>Concurrency</td><td>Async operations, race conditions, locking mechanisms</td><td>P2</td></tr><tr><td>Implicit behavior</td><td>Convention-based routing, middleware chains, decorators</td><td>P2</td></tr></table></div>
+<h3 id="investigation-strategy-decision-table">Investigation Strategy Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Codebase Size</th><th>Strategy</th><th>Subagent Count</th></tr><tr><td>Small (<50 files)</td><td>Single-pass full scan</td><td>5-10</td></tr><tr><td>Medium (50-500 files)</td><td>Module-by-module scan</td><td>50-100</td></tr><tr><td>Large (500+ files)</td><td>Entry-point-first, then depth scan</td><td>200-500</td></tr></table></div>
+<p>STOP after investigation — present a summary of discovered entry points, data flows, and behaviors. Get confirmation before generating specs.</p>
+<h2 id="phase-2-behavioral-specification-generation">Phase 2: Behavioral Specification Generation</h2>
+<p>Transform code analysis into implementation-free specs following the <code>spec-writing</code> skill format.</p>
+<h3 id="transformation-rules">Transformation Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Explanation</th></tr><tr><td>Strip ALL implementation details</td><td>No function names, variable names, technology references</td></tr><tr><td>Describe WHAT, never HOW</td><td>Observable behavior only</td></tr><tr><td>Document actual behavior (bugs included)</td><td>Bugs become "current behavior" in specs</td></tr><tr><td>Use Given/When/Then format</td><td>For all acceptance criteria</td></tr><tr><td>Include data contracts</td><td>Input shapes, output shapes, invariants</td></tr><tr><td>Separate known issues</td><td>Bugs go in KNOWN_ISSUES.md, not inline</td></tr></table></div>
+<h3 id="implementation-detail-stripping">Implementation Detail Stripping</h3>
+<div class="table-wrapper"><table><tr><th>Code Artifact</th><th>What You See</th><th>What You Write in Spec</th></tr><tr><td><code>jwt.verify(token, secret)</code></td><td>Token validation with JWT</td><td>"Credentials are validated against the authentication system"</td></tr><tr><td><code>redis.get(cacheKey)</code></td><td>Redis cache lookup</td><td>"Previously computed results are retrieved from cache"</td></tr><tr><td><code>if (user.role === 'admin')</code></td><td>Role check</td><td>"Privileged operations require administrator access"</td></tr><tr><td><code>res.status(429).json(...)</code></td><td>Rate limiting response</td><td>"Excessive requests receive a rate limit error"</td></tr><tr><td><code>bcrypt.hash(pw, 12)</code></td><td>Password hashing</td><td>"Passwords are stored in a non-reversible format"</td></tr></table></div>
+<p>STOP after spec generation — run the completeness checklist before organizing.</p>
+<h2 id="phase-3-specification-organization">Phase 3: Specification Organization</h2>
+<p>Create spec files following the naming convention:</p>
+<pre><code>specs/
+├── 01-[first-capability].md
+├── 02-[second-capability].md
+├── ...
+├── NN-[last-capability].md
+└── KNOWN_ISSUES.md</code></pre>
+<h3 id="knownissuesmd-format">KNOWN_ISSUES.md Format</h3>
+<pre data-lang="markdown"><code># Known Issues
+
+## [Issue Title]
+- **Current behavior:** [What actually happens]
+- **Expected behavior:** [What should happen, if known]
+- **Affected specs:** [Which spec files reference this behavior]
+- **Severity:** [Critical | High | Medium | Low]
+- **Notes:** [Additional context]</code></pre>
+<h3 id="severity-classification">Severity Classification</h3>
+<div class="table-wrapper"><table><tr><th>Severity</th><th>Criteria</th><th>Action</th></tr><tr><td><strong>Critical</strong></td><td>Data loss, security vulnerability, system crash</td><td>Fix before any new features</td></tr><tr><td><strong>High</strong></td><td>Incorrect results, broken workflow</td><td>Fix in next release</td></tr><tr><td><strong>Medium</strong></td><td>Poor UX, performance issue</td><td>Plan for future fix</td></tr><tr><td><strong>Low</strong></td><td>Cosmetic, minor inconsistency</td><td>Fix opportunistically</td></tr></table></div>
+<p>STOP after organization — present the spec file list and KNOWN_ISSUES for review.</p>
+<h2 id="phase-4-quality-verification">Phase 4: Quality Verification</h2>
+<p><strong>[HARD-GATE]</strong> All checks must pass before this phase is complete.</p>
+<div class="table-wrapper"><table><tr><th>#</th><th>Check</th><th>Question</th><th>Status</th></tr><tr><td>1</td><td>Entry points</td><td>Are ALL entry points documented?</td><td>[ ]</td></tr><tr><td>2</td><td>Code paths</td><td>Are ALL branches and conditionals traced?</td><td>[ ]</td></tr><tr><td>3</td><td>Data flows</td><td>Are ALL input→output pipelines described?</td><td>[ ]</td></tr><tr><td>4</td><td>State mutations</td><td>Are ALL state changes captured?</td><td>[ ]</td></tr><tr><td>5</td><td>Error handling</td><td>Are ALL error paths documented?</td><td>[ ]</td></tr><tr><td>6</td><td>Side effects</td><td>Are ALL external interactions noted?</td><td>[ ]</td></tr><tr><td>7</td><td>Edge cases</td><td>Are boundary conditions described?</td><td>[ ]</td></tr><tr><td>8</td><td>Concurrency</td><td>Are async behaviors documented?</td><td>[ ]</td></tr><tr><td>9</td><td>Configuration</td><td>Are ALL config options listed?</td><td>[ ]</td></tr><tr><td>10</td><td>Dependencies</td><td>Are ALL external dependencies identified?</td><td>[ ]</td></tr><tr><td>11</td><td>Implementation-free</td><td>Zero code, tech names, or architecture in specs?</td><td>[ ]</td></tr><tr><td>12</td><td>Given/When/Then</td><td>All acceptance criteria in correct format?</td><td>[ ]</td></tr></table></div>
+<h2 id="concrete-example-code-to-spec-transformation">Concrete Example: Code to Spec Transformation</h2>
+<h3 id="code-input--what-you-analyze">Code (input — what you analyze):</h3>
+<pre data-lang="javascript"><code>function checkAuth(req, res, next) {
+  const token = req.headers.authorization?.split(&#x27; &#x27;)[1];
+  if (!token) return res.status(401).json({ error: &#x27;No token&#x27; });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (e) {
+    return res.status(403).json({ error: &#x27;Invalid token&#x27; });
+  }
+}</code></pre>
+<h3 id="spec-output--what-you-produce">Spec (output — what you produce):</h3>
+<pre data-lang="markdown"><code># Request Authentication
+
+## Job to Be Done
+When a request arrives at a protected endpoint, I want to verify the
+caller&#x27;s identity, so I can ensure only authorized users access the system.
+
+## Acceptance Criteria
+
+### Valid Credentials
+- Given a request with valid credentials in the authorization header
+- When the request is processed
+- Then the request proceeds to the next handler
+- And the authenticated user identity is available to downstream handlers
+
+### Missing Credentials
+- Given a request without credentials
+- When the request is processed
+- Then a 401 status is returned
+- And an error message indicates missing credentials
+
+### Invalid Credentials
+- Given a request with invalid or expired credentials
+- When the request is processed
+- Then a 403 status is returned
+- And an error message indicates invalid credentials
+
+## Edge Cases
+- Malformed authorization header (missing &quot;Bearer&quot; prefix): treated as missing credentials
+- Expired credentials: treated as invalid credentials
+
+## Data Contracts
+- Input: Authorization header in &quot;Bearer &lt;credential&gt;&quot; format
+- Output on success: User identity object attached to request context
+- Output on failure: JSON error response with appropriate status code</code></pre>
+<p>Notice: No mention of JWT, middleware, Express, environment variables, or any implementation detail.</p>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Mistake</th><th>Why It Is Wrong</th><th>What To Do Instead</th></tr><tr><td>Skipping "boring" code paths</td><td>Undocumented behavior causes bugs during refactoring</td><td>Trace EVERY path, even error handlers</td></tr><tr><td>Leaking implementation details into specs</td><td>Defeats the purpose of behavioral specs</td><td>Strip all tech names, function names, code</td></tr><tr><td>Marking bugs as "correct behavior"</td><td>Loses the information that it is a bug</td><td>Document in KNOWN_ISSUES.md with severity</td></tr><tr><td>Skipping async/concurrency analysis</td><td>Race conditions are the hardest bugs to find</td><td>Document all async behavior</td></tr><tr><td>Analyzing only happy paths</td><td>Most bugs live in error paths</td><td>Document ALL error handling paths</td></tr><tr><td>Guessing behavior instead of tracing code</td><td>Spec becomes fiction</td><td>Read every line — no assumptions</td></tr><tr><td>Generating specs without user review</td><td>Misunderstandings propagate</td><td>Present for review after each phase</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li><strong>[HARD-GATE]</strong> Do NOT skip any code path — every branch, conditional, and error handler must be traced</li>
+<li><strong>[HARD-GATE]</strong> Do NOT include ANY implementation details in specs — no code, tech names, or architecture</li>
+<li><strong>[HARD-GATE]</strong> Do NOT mark the completeness checklist as done until ALL 12 items pass</li>
+<li><strong>Do NOT skip</strong> concurrency analysis — even if the code "looks synchronous"</li>
+<li><strong>Do NOT skip</strong> configuration analysis — env vars and feature flags change behavior</li>
+<li><strong>Do NOT</strong> assume behavior from function names — read the actual code</li>
+<li><strong>Do NOT</strong> fix bugs while reverse-engineering — document them in KNOWN_ISSUES.md</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>spec-writing</code></td><td>Output follows spec-writing format; use for audit after generation</td></tr><tr><td><code>autonomous-loop</code></td><td>Specs feed into planning mode for gap analysis</td></tr><tr><td><code>acceptance-testing</code></td><td>Tests derived from reverse-engineered acceptance criteria</td></tr><tr><td><code>self-learning</code></td><td>Populate memory files with discovered project context</td></tr><tr><td><code>planning</code></td><td>After specs exist, plan improvements or new features</td></tr><tr><td><code>systematic-debugging</code></td><td>Known issues inform debugging priorities</td></tr></table></div>
+<h2 id="workflow-after-reverse-engineering">Workflow After Reverse Engineering</h2>
+<div class="table-wrapper"><table><tr><th>Step</th><th>Skill</th><th>Purpose</th></tr><tr><td>1</td><td><code>reverse-engineering-specs</code> (this)</td><td>Generate behavioral specs from code</td></tr><tr><td>2</td><td><code>spec-writing</code> (audit mode)</td><td>Verify quality and completeness</td></tr><tr><td>3</td><td><code>planning</code></td><td>Identify gaps, plan improvements</td></tr><tr><td>4</td><td><code>autonomous-loop</code></td><td>Implement features or fixes with specs as guide</td></tr></table></div>
+<h2 id="verification-gate">Verification Gate</h2>
+<p>Before claiming reverse engineering is complete:</p>
+<ol>
+<li>VERIFY the completeness checklist (all 12 items) passes</li>
+<li>VERIFY zero implementation details in any spec file</li>
+<li>VERIFY all acceptance criteria use Given/When/Then format</li>
+<li>VERIFY KNOWN_ISSUES.md exists and categorizes all discovered bugs</li>
+<li>VERIFY the user has reviewed the spec set and KNOWN_ISSUES</li>
+</ol>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>Flexible</strong> — Adapt investigation depth and subagent count to codebase size while preserving the exhaustive-investigation and implementation-free output rules. No code paths may be skipped.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

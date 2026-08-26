@@ -1,60 +1,40 @@
-# USAGE.md — Guia Completo de Uso das Skills
+# Guia Completo de Uso e Operação (USAGE.md)
 
-> Guia abrangente de como usar cada skill do repositório `ignite-agents-skills`.
-
----
-
-## Índice
-
-1. [Visão Geral](#visão-geral)
-2. [Como Configurar](#como-configurar)
-3. [Skills por Categoria](#skills-por-categoria)
-4. [Guia de Uso por Skill](#guia-de-uso-por-skill)
-5. [Fluxos de Trabalho Comuns](#fluxos-de-trabalho-comuns)
-6. [Anti-patterns Gerais](#anti-patterns-gerais)
-7. [Referências](#referências)
+> Manual técnico e operacional de consumo, roteamento semântico, servidor MCP, registry remoto e governança do repositório `ignite-agents-skills`.
 
 ---
 
-## Visão Geral
+## 1. Modos de Consumo do Ecossistema
 
-O repositório `ignite-agents-skills` contém **25 skills** para agentes de IA compatíveis com o padrão [Agent Skills](https://agentskills.io). Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.
+O `ignite-agents-skills` suporta quatro modos integrados de consumo:
 
-### Total de Skills: 25
+```mermaid
+graph TD
+    A[Agente de IA / Desenvolvedor] --> B[1. Registry Remoto Kilo / OpenCode]
+    A --> C[2. Servidor MCP Stdio JSON-RPC 2.0]
+    A --> D[3. CLI Router & Busca Semântica]
+    A --> E[4. GitHub Pages / Web Hub]
 
-| Categoria | Quantidade | Skills |
-|-----------|------------|--------|
-| Architecture | 2 | `architecture-review-kilo`, `ddd` |
-| Documentation | 3 | `documentation`, `adr-generator`, `documentation-reconciliation` |
-| Governance | 3 | `governance`, `repo-bootstrap`, `agents-md-generator` |
-| Planning | 2 | `planning`, `writing-plans` |
-| Implementation | 1 | `implementation` |
-| Quality | 2 | `testing`, `code-review-lite` |
-| Security | 1 | `security-review` |
-| AI | 2 | `prompt-engineering`, `vibe-coding` |
-| Orchestration | 1 | `agent-orchestration` |
-| Data | 1 | `data-modeling` |
-| API | 1 | `api-design` |
-| Operations | 1 | `observability` |
-| Code Quality | 1 | `refactoring` |
-| Tools | 2 | `git`, `release` |
-| Audit | 2 | `skill-audit-bulletin`, `adr-archive` |
-
----
-
-## Como Configurar
-
-### No Kilo Code (VS Code)
-
-1. Abra as configurações do Kilo
-2. Navegue até **Comportamento do Agente → Habilidades → URLs de Habilidades**
-3. Adicione a URL do registry:
-
-```
-https://lscheffel.github.io/ignite-agents-skills/skills/
+    B --> B1[skills/index.json via HTTP]
+    C --> C1[scripts/skills_mcp_server.py]
+    D --> D1[scripts/skills_router.py]
+    E --> E1[pages/index.html renderizado]
 ```
 
-### Via arquivo `kilo.json`
+---
+
+## 2. Configuração por Ambiente
+
+### 2.1 Kilo Code (VS Code & IDEs compatíveis)
+
+1. Abra as configurações do Kilo Code.
+2. Navegue até **Comportamento do Agente → Habilidades → URLs de Habilidades**.
+3. Adicione a URL canônica:
+   ```
+   https://lscheffel.github.io/ignite-agents-skills/skills/
+   ```
+
+Ou edite diretamente o seu `kilo.json`:
 
 ```json
 {
@@ -66,673 +46,173 @@ https://lscheffel.github.io/ignite-agents-skills/skills/
 }
 ```
 
-### Via CLI
+### 2.2 Servidor MCP Stdio (`skills-rag-mcp`)
+
+No arquivo de configuração MCP do seu cliente (ex.: Gemini CLI, Claude Desktop, Antigravity):
+
+```json
+{
+  "mcpServers": {
+    "skills-rag-mcp": {
+      "command": "python3",
+      "args": [
+        "/home/loupan/projetosVS/ignite-agents-skills/scripts/skills_mcp_server.py"
+      ],
+      "env": {
+        "SKILLS_WORKSPACE_DIR": "/home/loupan/projetosVS/ignite-agents-skills"
+      }
+    }
+  }
+}
+```
+
+#### Ferramentas MCP Disponíveis:
+
+| Tool | Descrição | Parâmetros Principais |
+|:---|:---|:---|
+| `search_skills` | Busca híbrida (BM25 + vetores) | `query` (string), `top_k` (int), `category` |
+| `route_task` | Roteamento automático de tarefas | `task_description` (string), `top_k` |
+| `get_skill_details` | Recupera o conteúdo completo e templates | `skill_id` (string) |
+| `list_skills_catalog` | Lista todas as skills indexadas | `category_filter` (opcional) |
+| `bootstrap_agent_instructions` | Provisiona AGENTS.md e GEMINI.md | `workspace_path` (string) |
+| `get_rag_telemetry` | Métricas de latência, footprint e cache | (nenhum) |
+| `inspect_rag_index` | Inventário volumétrico de chunks e tokens | `parent_skill`, `asset_type` |
+
+---
+
+## 3. CLI Reference & Roteamento Semântico
+
+O script `scripts/skills_router.py` oferece busca vetorial híbrida, expansão de acrônimos e descoberta local:
 
 ```bash
-# Buscar skills disponíveis
-curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq '.skills[].name'
+# 1. Consulta simples em linguagem natural
+python3 scripts/skills_router.py "como escrever testes automatizados e TDD"
+
+# 2. Filtrar por tipo de ativo (skill_root, template, reference)
+python3 scripts/skills_router.py "template de ADR e blueprint" --asset-type template
+
+# 3. Retornar saída em JSON para automação
+python3 scripts/skills_router.py "revisão de segurança e OWASP" --json --top-k 2
+
+# 4. Obter prompt snippet XML formatado para injeção em LLM
+python3 scripts/skills_router.py "planejar refatoração arquitetural" --prompt-snippet
+
+# 5. Modo REPL interativo
+python3 scripts/skills_router.py --interactive
 ```
 
 ---
 
-## Skills por Categoria
+## 4. Guia Rápido das 59 Skills SOTA
 
-### 🏗️ Architecture
+### 🏗️ Architecture & Modeling
+- `architecture-review`: Revisões arquiteturais, detecção de violações SOLID, Hexagonal, Clean Architecture e code smells estruturais.
+- `database-architecture`: Modelagem de dados, otimização de índices SQL/NoSQL, migrações e auditoria de consultas.
+- `ddd`: Padrões de Domain-Driven Design (Entities, Value Objects, Aggregates, Domain Services, Bounded Contexts).
 
-#### `architecture-review-kilo`
+### 📝 Documentation & Decision Records
+- `adr-generator`: Criação de Architecture Decision Records com Decision Set completo (ADR, BP, PI, TODO).
+- `adr-archive`: Governança de ciclo de vida e arquivamento automatizado de ADRs implementadas.
+- `technical-documentation`: Reconciliação dos 6 pilares de documentação (README, CHANGELOG, USAGE, RELEASE-NOTES, STATE, AGENTS).
+- `changelog-generator`: Geração automatizada de changelogs a partir do git log.
 
-**Descrição:** Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais.
+### 🏛️ Governance & Repository Setup
+- `governance`: Políticas de branching, code review, SemVer e aprovação.
+- `repo-bootstrap`: Estruturação inicial completa de novos repositórios com arquivos padrão.
+- `agents-md-management`: Geração e manutenção adaptativa de arquivos AGENTS.md.
+- `skill-audit-bulletin`: Auditoria forense contínua (Dual-Axis SOTA) de skills.
 
-**Quando usar:**
-- Precisa de revisão de arquitetura
-- Quer analisar estrutura de código
-- Precisa avaliar design
+### 🎯 Planning & Implementation
+- `agent-planning-execution`: Decomposição estruturada de épicos e roadmaps em tarefas atômicas.
+- `product-spec-engineering`: Elaboração de PRDs, especificações técnicas e user stories.
+- `implementation`: Execução governada e incremental de mudanças planejadas com relatórios de progresso.
 
-**Exemplo de uso:**
-```
-Revise a arquitetura deste projeto e identifique violações de SOLID
-```
+### 🧼 Code Quality & Refactoring
+- `clean-code`: Princípios de código limpo, legibilidade, redução de complexidade ciclomática e remoção de code smells.
+- `refactoring`: Refatoração segura (Strangler Fig, Branch by Abstraction, catálogo de transformações).
+- `code-review`: Revisão unificada de código com suporte a `mode: lite` e `mode: full`.
+- `code-review-lite`: Revisão rápida e iterativa focada em commits e PRs pequenos.
+- `code-review-workflow`: Workflow estruturado para submissão e recebimento de reviews.
 
-**Skills relacionadas:** `ddd`, `adr-generator`
+### 🧪 Testing & Verification
+- `testing-mastery`: Estratégia unificada de testes (unitários, integração, aceitação, e2e).
+- `test-driven-development`: Ciclo rigoroso RED-GREEN-REFACTOR.
+- `verification-before-completion`: Protocolo Hard-Gate de 5 passos para verificação antes de concluir tarefas.
+- `systematic-debugging`: Investigação estruturada em 4 fases para eliminar depuração por tentativa e erro.
 
----
+### 🔒 Security & Resilience
+- `security-review`: Auditoria de vulnerabilidades OWASP, modelagem de ameaças e verificação de dependências.
+- `circuit-breaker`: Proteção de loops autônomos, cooldown e prevenção de recursão infinita.
+- `resilient-execution`: Mecanismo de recuperação e tentativas com abordagens alternativas.
 
-#### `ddd`
+### 🤖 AI, Prompting & Multi-Agent
+- `prompt-engineering`: Técnicas avançadas de engenharia de prompts (few-shot, CoT, role prompting).
+- `llm-as-judge`: Avaliação estruturada de critérios subjetivos via rubricas LLM.
+- `agent-development`: Padrões para construção de agentes, memória, loop e guardrails.
+- `agent-orchestration`: Orquestração de múltiplos agentes (decomposição, roteamento de modelos, handoffs).
+- `subagent-driven-development`: Execução paralela de planos multi-tarefas com subagentes independentes.
+- `dispatching-parallel-agents`: Despacho e coordenação de subagentes paralelos sem dependências.
+- `cap`: Minimal Context Bootstrap para consumo eficiente de tokens no início de sessões.
+- `context7-mcp`: Integração com documentação atualizada via Context7 MCP.
 
-**Descrição:** Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados.
+### 🌐 Frontend & UI/UX
+- `ui-ux-pro-max`: Design tokens, design systems, responsividade, WCAG e heurísticas visuais.
+- `react-best-practices`: Padrões modernos de React (Server Components, hooks, memoização, context).
+- `artifacts-builder`: Criação de protótipos e mini-aplicações interativas em HTML/CSS/JS standalone.
+- `mobile-design`: Padrões para apps móveis (React Native, Flutter, SwiftUI).
+- `ux-researcher-designer`: Metodologias de pesquisa de usuário, personas e mapas de jornada.
 
-**Quando usar:**
-- Modelar domínios ricos
-- Refatorar entidades anêmicas
-- Estruturar contextos delimitados
+### ⚙️ Operations & Infrastructure
+- `observability`: Logs estruturados, métricas Prometheus/Grafana, traces OpenTelemetry e SLIs/SLOs.
+- `deployment`: Pipelines de CI/CD, configuração de staging/production e infraestrutura como código.
+- `performance-optimization`: Diagnóstico de bottlenecks, Core Web Vitals, queries SQL e caching.
+- `api-design`: Design de APIs RESTful e GraphQL, versionamento, paginação e contratos de erro.
+- `php-laravel-ecosystem`: Padrões e boas práticas para ecossistema PHP e framework Laravel.
 
-**Exemplo de uso:**
-```
-Crie um Aggregate Root para o domínio de Pedidos seguindo DDD
-```
+### 🛠️ Git, Release & Tools
+- `git-workflow`: Operações avançadas de Git, commits convencionais e worktrees.
+- `release`: Gerenciamento de releases, tags SemVer, changelogs e deploys.
+- `mcp-builder`: Desenvolvimento de servidores e ferramentas MCP.
+- `skill-creator`: Framework para criação, validação e empacotamento de novas skills.
+- `skill-discovery`: Descoberta dinâmica de especializações no catálogo canônico.
+- `writing-skills`: Autoria e testes de skills para Claude Code e Gemini.
 
-**Skills relacionadas:** `architecture-review-kilo`, `testing`, `implementation`
-
----
-
-### 📚 Documentation
-
-#### `adr-generator`
-
-**Descrição:** Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status.
-
-**Quando usar:**
-- Precisa documentar decisão arquitetural
-- Quer registrar trade-offs técnicos
-- Precisa criar ADR
-
-**Exemplo de uso:**
-```
-Crie uma ADR para documentar a decisão de usar PostgreSQL ao invés de MongoDB
-```
-
-**Skills relacionadas:** `documentation`, `architecture-review-kilo`, `implementation`
-
----
-
-#### `documentation`
-
-**Descrição:** Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code.
-
-**Quando usar:**
-- Criar documentação
-- Revisar docs
-- Padronizar material técnico
-
-**Exemplo de uso:**
-```
-Crie um README completo para este projeto
-```
-
-**Skills relacionadas:** `adr-generator`, `repo-bootstrap`, `implementation`
-
----
-
-#### `documentation-reconciliation`
-
-**Descrição:** Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código.
-
-**Quando usar:**
-- README/CHANGELOG/USAGE desatualizados
-- ADRs/BPs/TODOs com status incorretos
-- ADRs implementadas não arquivadas
-- Antes de release ou deploy gh-pages
-- Gaps entre documentação e implementação
-
-**Exemplo de uso:**
-```
-Execute reconciliação documental completa deste repositório
-```
-
-**Skills relacionadas:** `governance`, `adr-generator`, `skill-audit-bulletin`
+### 📄 Content & Office
+- `content-creator`: Redação de conteúdo técnico, marketing e documentação.
+- `content-research-writer`: Pesquisa aprofundada, citações e artigos estruturados.
+- `email-composer`: Comunicação corporativa, notificações e templates de e-mail.
+- `seo-optimizer`: Otimização técnica para motores de busca e metadados.
+- `docx-processing`: Manipulação programática de arquivos Word (.docx).
+- `pdf-processing`: Geração, extração de texto e manipulação de arquivos PDF.
+- `xlsx-processing`: Processamento, fórmulas e geração de planilhas Excel (.xlsx).
+- `brainstorming`: Ideação estruturada e exploração de design antes do planejamento.
 
 ---
 
-### 🏛️ Governance
+## 5. Scripts de Automação do Repositório
 
-#### `governance`
+```bash
+# Sincronização do registry Kilo
+./scripts/sync-index.sh
 
-**Descrição:** Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs.
+# Validação do registry Kilo
+./scripts/validate-index.sh
 
-**Quando usar:**
-- Definir processos de equipe
-- Implementar governance-as-code
-- Padronizar workflows de desenvolvimento
+# Validação de qualidade de skills
+bash scripts/validate-skill.sh skills/nome-da-skill
 
-**Exemplo de uso:**
+# Janitor de arquivamento de ADRs
+./scripts/archive-adrs.sh
+
+# Auditoria forense SOTA (8 dimensões)
+python3 scripts/audit_engine.py
+
+# Re-indexação do banco vetorial RAG
+python3 scripts/skills_rag_indexer.py
+
+# Testes automatizados do ecossistema
+python3 -m unittest discover -s scripts/tests -p "test_*.py"
+
+# Build das páginas estáticas do GitHub Pages
+python3 pages/build.py
 ```
-Configure branch protection e CODEOWNERS para este repositório
-```
-
-**Skills relacionadas:** `git`, `release`, `repo-bootstrap`, `implementation`, `skill-audit-bulletin`
-
----
-
-#### `repo-bootstrap`
-
-**Descrição:** Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE.
-
-**Quando usar:**
-- Inicializar novo repositório
-- Padronizar estrutura existente
-- Criar template de projeto
-
-**Exemplo de uso:**
-```
-Gere a estrutura inicial para este novo repositório
-```
-
-**Skills relacionadas:** `governance`, `documentation`, `git`, `skill-audit-bulletin`
-
----
-
-#### `agents-md-generator`
-
-**Descrição:** Gera e mantém arquivos AGENTS.md adaptativos que se adaptam ao contexto do projeto. Detecta automaticamente tipo de projeto, tecnologias, padrões arquiteturais e governança.
-
-**Quando usar:**
-- Criar AGENTS.md para novo projeto
-- Atualizar AGENTS.md existente
-- Gerar documentação adaptativa
-
-**Exemplo de uso:**
-```
-Gere um AGENTS.md para este projeto CRM
-```
-
-**Skills relacionadas:** `repo-bootstrap`, `governance`, `documentation`, `skill-audit-bulletin`
-
----
-
-### 📋 Planning
-
-#### `planning`
-
-**Descrição:** Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização.
-
-**Quando usar:**
-- Planejar projeto
-- Criar roadmap
-- Estimar esforço
-- Decompor trabalho
-
-**Exemplo de uso:**
-```
-Crie um roadmap para as próximas 3 features
-```
-
-**Skills relacionadas:** `writing-plans`, `governance`, `implementation`
-
----
-
-#### `writing-plans`
-
-**Descrição:** Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação.
-
-**Quando usar:**
-- Criar plano de implementação
-- Quebrar feature em tarefas
-- Criar roadmap técnico
-
-**Exemplo de uso:**
-```
-Crie um plano de implementação para a feature de autenticação
-```
-
-**Skills relacionadas:** `planning`, `ddd`, `implementation`
-
----
-
-### ⚙️ Implementation
-
-#### `implementation`
-
-**Descrição:** Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução.
-
-**Quando usar:**
-- Implementar ADR aprovada
-- Executar mudanças governadas
-- Precisa de rastreabilidade completa
-
-**Exemplo de uso:**
-```
-Implemente a ADR-005 seguindo o processo governado
-```
-
-**Skills relacionadas:** `adr-generator`, `writing-plans`, `planning`, `testing`, `git`, `documentation`, `governance`, `release`, `architecture-review-kilo`, `ddd`
-
----
-
-### 🧪 Quality
-
-#### `testing`
-
-**Descrição:** Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas.
-
-**Quando usar:**
-- Escrever testes
-- Revisar cobertura
-- Definir estratégia de testes
-
-**Exemplo de uso:**
-```
-Crie testes unitários para o UserService
-```
-
-**Skills relacionadas:** `ddd`, `governance`, `implementation`
-
----
-
-#### `code-review-lite`
-
-**Descrição:** Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.
-
-**Quando usar:**
-- Após completar features/refactors
-- Antes de commits/push
-- Detectar regressões óbvias
-- Validar alinhamento com ADRs
-
-**Exemplo de uso:**
-```
-Revise este código para bugs óbvios e drift arquitetural
-```
-
-**Skills relacionadas:** `planning`, `adr-generator`, `testing`, `security-review`, `architecture-review-kilo`
-
----
-
-### 🔒 Security
-
-#### `security-review`
-
-**Descrição:** Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras.
-
-**Quando usar:**
-- Revisar código por segurança
-- Auditar dependências
-- Validar práticas de criptografia
-
-**Exemplo de uso:**
-```
-Revise este código vulnerabilidades de segurança
-```
-
-**Skills relacionadas:** `governance`, `architecture-review-kilo`, `testing`
-
----
-
-### 🤖 AI
-
-#### `prompt-engineering`
-
-**Descrição:** Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas.
-
-**Quando usar:**
-- Criar prompts para agentes de IA
-- Otimizar interações
-- Treinar equipes em IA
-
-**Exemplo de uso:**
-```
-Crie um prompt eficaze para refatoração de código legado
-```
-
-**Skills relacionadas:** `vibe-coding`
-
----
-
-#### `vibe-coding`
-
-**Descrição:** Modalidade de desenvolvimento onde o desenvolvedor guia o agente de IA com intenção e direção, não comandos detalhados. Foca em resultado, velocidade e fluxo contínuo.
-
-**Quando usar:**
-- Pair programming com IA
-- Desenvolvimento assistido por IA
-- Session de vibe coding
-
-**Exemplo de uso:**
-```
-Vamos fazer uma sessão de vibe coding para esta feature
-```
-
-**Skills relacionadas:** `prompt-engineering`, `testing`
-
----
-
-### 🔀 Orchestration
-
-#### `agent-orchestration`
-
-**Descrição:** Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in.
-
-**Quando usar:**
-- Coordenar vários agentes
-- Definir papéis
-- Gerenciar handoffs
-- Otimizar execução paralela
-
-**Exemplo de uso:**
-```
-Orquestre 3 agentes para revisar documentação, testes e segurança
-```
-
-**Skills relacionadas:** `prompt-engineering`, `vibe-coding`, `governance`
-
----
-
-### 📊 Data
-
-#### `data-modeling`
-
-**Descrição:** Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance.
-
-**Quando usar:**
-- Criar bancos de dados
-- Projetar schemas
-- Otimizar queries
-- Gerenciar migrações
-
-**Exemplo de uso:**
-```
-Crie um schema SQL para o domínio de usuários
-```
-
-**Skills relacionadas:** `ddd`, `testing`, `architecture-review-kilo`
-
----
-
-### 🌐 API
-
-#### `api-design`
-
-**Descrição:** Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência.
-
-**Quando usar:**
-- Projetar novas APIs
-- Revisar contratos existentes
-- Padronizar práticas de design
-
-**Exemplo de uso:**
-```
-Crie a especificação REST para o endpoint de usuários
-```
-
-**Skills relacionadas:** `documentation`, `testing`, `governance`
-
----
-
-### ⚙️ Operations
-
-#### `observability`
-
-**Descrição:** Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting.
-
-**Quando usar:**
-- Configurar monitoramento
-- Investigar incidentes
-- Implementar observabilidade
-
-**Exemplo de uso:**
-```
-Configure métricas Prometheus para esta API
-```
-
-**Skills relacionadas:** `testing`, `release`, `governance`
-
----
-
-### 🧹 Code Quality
-
-#### `refactoring`
-
-**Descrição:** Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado.
-
-**Quando usar:**
-- Refatorar código
-- Melhorar estrutura existente
-- Migrar sistemas legados
-
-**Exemplo de uso:**
-```
-Refatore este código usando a técnica Strangler Fig
-```
-
-**Skills relacionadas:** `architecture-review-kilo`, `ddd`, `testing`
-
----
-
-### 🛠️ Tools
-
-#### `git`
-
-**Descrição:** Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas.
-
-**Quando usar:**
-- Fazer commits
-- Criar branches
-- Resolver conflitos
-- Ensinar Git
-
-**Exemplo de uso:**
-```
-Crie um commit seguindo Conventional Commits
-```
-
-**Skills relacionadas:** `governance`, `release`, `repo-bootstrap`, `implementation`
-
----
-
-#### `release`
-
-**Descrição:** Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback.
-
-**Quando usar:**
-- Preparar releases
-- Publicar pacotes
-- Gerenciar versionamento semântico
-
-**Exemplo de uso:**
-```
-Crie uma release v1.2.0 com changelog
-```
-
-**Skills relacionadas:** `git`, `governance`, `implementation`
-
----
-
-### 🔍 Audit
-
-#### `skill-audit-bulletin`
-
-**Descrição:** Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final.
-
-**Quando usar:**
-- Revisar skills
-- Validar registry
-- Decidir adoção
-
-**Exemplo de uso:**
-```
-Audite a qualidade da skill governance
-```
-
-**Skills relacionadas:** `architecture-review-kilo`, `documentation`
-
----
-
-#### `adr-archive`
-
-**Descrição:** Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.
-
-**Quando usar:**
-- Arquivar ADRs implementadas
-- Limpar artefatos de execução (BP, TODO, PI) da raiz
-- Garantir que apenas ADRs ativas e ERs de ADRs finalizadas fiquem visíveis
-- Executar reconciliação documental pré-release
-- Automatizar governança de ADRs
-
-**Exemplo de uso:**
-```
-Arquive as ADRs implementadas deste repositório
-```
-
-**Skills relacionadas:** `adr-generator`, `implementation`, `documentation-reconciliation`, `governance`
-
----
-
-## Fluxos de Trabalho Comuns
-
-### Fluxo 1: Iniciar Novo Projeto
-
-```mermaid
-graph TD
-    A[Iniciar Projeto] --> B[repo-bootstrap]
-    B --> C[governance]
-    C --> D[agents-md-generator]
-    D --> E[documentation]
-    E --> F[Projeto Pronto]
-```
-
-1. **repo-bootstrap** — Gerar estrutura inicial
-2. **governance** — Configurar processos
-3. **agents-md-generator** — Gerar AGENTS.md
-4. **documentation** — Criar documentação
-
----
-
-### Fluxo 2: Implementar Nova Feature
-
-```mermaid
-graph TD
-    A[Nova Feature] --> B[planning]
-    B --> C[writing-plans]
-    C --> D[adr-generator]
-    D --> E[implementation]
-    E --> F[testing]
-    F --> G[Feature Pronta]
-```
-
-1. **planning** — Planejar a feature
-2. **writing-plans** — Criar plano de implementação
-3. **adr-generator** — Documentar decisões arquiteturais
-4. **implementation** — Executar implementação
-5. **testing** — Validar com testes
-
----
-
-### Fluxo 3: Revisão de Código
-
-```mermaid
-graph TD
-    A[PR Aberto] --> B[architecture-review-kilo]
-    B --> C[security-review]
-    C --> D[testing]
-    D --> E[code-review-lite]
-    E --> F[documentation]
-    F --> G[Review Completo]
-```
-
-1. **architecture-review-kilo** — Revisar arquitetura
-2. **security-review** — Verificar segurança
-3. **testing** — Validar testes
-4. **code-review-lite** — Revisão leve (AI-first)
-5. **documentation** — Verificar documentação
-
----
-
-### Fluxo 4: Migração de Legado
-
-```mermaid
-graph TD
-    A[Código Legado] --> B[architecture-review-kilo]
-    B --> C[refactoring]
-    C --> D[ddd]
-    D --> E[testing]
-    E --> F[Código Moderno]
-```
-
-1. **architecture-review-kilo** — Analisar arquitetura atual
-2. **refactoring** — Planejar refatoração
-3. **ddd** — Reestruturar domínio
-4. **testing** — Validar com testes
-
----
-
-### Fluxo 5: Deploy e Release
-
-```mermaid
-graph TD
-    A[Pronto para Deploy] --> B[release]
-    B --> C[git]
-    C --> D[governance]
-    D --> E[observability]
-    E --> F[Deploy Concluído]
-```
-
-1. **release** — Preparar release
-2. **git** — Criar tags e branches
-3. **governance** — Verificar processo
-4. **observability** — Monitorar deploy
-
----
-
-### Fluxo 6: Reconciliação Documental (Pré-Release)
-
-```mermaid
-graph TD
-    A[Pré-Release] --> B[documentation-reconciliation]
-    B --> C[adr-archive]
-    C --> D[validate-index]
-    D --> E[CHANGELOG update]
-    E --> F[Tag + Deploy]
-```
-
-1. **documentation-reconciliation** — Auditar docs canônicas + ADR/BP/TODO
-2. **adr-archive** — Arquivar ADRs implementadas
-3. **validate-index** — Verificar registry
-4. **CHANGELOG update** — Entradas para commits recentes
-5. **Tag + Deploy** — SemVer + gh-pages sync
-
----
-
-## Anti-patterns Gerais
-
-### 🔴 Crítico
-
-#### Usar múltiplas skills para a mesma tarefa
-**O que é:** Usar `adr-generator` + `documentation` + `repo-bootstrap` para criar documentação.
-**Por que é ruim:** Conflitos, redundância, inconsistência.
-**Como evitar:** Escolher a skill mais específica para a tarefa.
-
-#### Ignorar dependências entre skills
-**O que é:** Usar `implementation` sem antes usar `adr-generator` e `writing-plans`.
-**Por que é ruim:** Falta de contexto, decisões não documentadas.
-**Como evitar:** Seguir o fluxo de trabalho recomendado.
-
-### 🟡 Médio
-
-#### Não validar antes de usar
-**O que é:** Usar skills sem verificar se estão atualizadas.
-**Por que é ruim:** Padrões desatualizados, inconsistências.
-**Como evitar:** Verificar versão e changelog antes de usar.
-
-#### Não documentar decisões
-**O que é:** Tomar decisões arquiteturais sem criar ADR.
-**Por que é ruim:** Perda de contexto, dificuldade futura.
-**Como evitar:** Sempre criar ADR para decisões significativas.
-
-### 🟢 Baixo
-
-#### Não usar templates
-**O que é:** Criar do zero quando existem templates.
-**Por que é ruim:** Mais trabalho, inconsistência.
-**Como evitar:** Usar templates disponíveis em cada skill.
-
-#### Não revisar output
-**O que é:** Aceitar output sem verificar.
-**Por que erros passam:** Erros passam despercebidos.
-**Como evitar:** Sempre revisar antes de commitar.
-
----
-
-## Referências
-
-- [Agent Skills Standard](https://agentskills.io)
-- [Kilo Code Documentation](https://kilocode.ai)
-- [GitHub Pages Setup](https://pages.github.com/)
-- [Conventional Commits](https://www.conventionalcommits.org/)
-- [Semantic Versioning](https://semver.org/)
-- [Domain-Driven Design](https://www.domainlanguage.com/ddd/)
-- [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-
----
-
-*Última atualização: 2026-07-15*
-*Total de skills: 25*
-*Versão do registry: 2.3.1*

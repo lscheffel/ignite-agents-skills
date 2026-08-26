@@ -411,287 +411,299 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: prompt-engineering description: Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas. Use quando criar prompts para agentes de IA, otimizar interações ou treinar equipes em IA. version: 2.0.0 tags: [prompts, llm, ai, techniques, agents] related_skills: [vibe-coding] ---</p>
+<p>name: prompt-engineering version: 2.0.0 description: Guidelines for effective prompt engineering with AI agents. Covers prompt structure, few-shot, chain-of-thought, role prompting, constraints, and advanced techniques. Use when creating prompts for AI agents, optimizing interactions, or training teams in AI. domain: domain-stack triggers:</p>
+<ul>
+<li>prompt-engineering</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>prompts</li>
+<li>llm</li>
+<li>ai</li>
+<li>techniques</li>
+<li>agents</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="prompt-engineering">Prompt Engineering</h1>
-<p>Diretrizes para engenharia de prompts eficazes.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Guidelines for effective prompt engineering.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Criando prompts para agentes de IA</li>
-<li>Otimizando interações com LLMs</li>
-<li>Treinando equipes em IA</li>
-<li>Padronizando prompts entre projetos</li>
-<li>Criando prompt para tarefa complexa</li>
+<li>Creating prompts for AI agents</li>
+<li>Optimizing interactions with LLMs</li>
+<li>Training teams in AI</li>
+<li>Standardizing prompts across projects</li>
+<li>Creating prompts for complex tasks</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Tarefa é simples (1-2 linhas)</li>
-<li>Prompt já existe e funciona</li>
-<li>Precisa de interação humana direta</li>
+<li>Task is simple (1-2 lines)</li>
+<li>Prompt already exists and works</li>
+<li>Requires direct human interaction</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>vibe-coding</code> — para desenvolvimento guiado por IA</li>
+<li><code>vibe-coding</code> — for AI-guided development</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Tipo de Prompt?] --&gt;|Simples| B[Zero-shot]
-    A --&gt;|Complexo| C[Few-shot]
-    A --&gt;|Múltiplas etapas| D[Chain-of-Thought]
-    A --&gt;|Formato específico| E[Constrained Output]
-    B --&gt;|1-2 frases| F[Direct Prompt]
-    C --&gt;|Exemplos| G[With Examples]
-    D --&gt;|Pensamento| H[Step by Step]</code></pre>
+    A[Prompt Type?] --&gt;|Simple| B[Zero-shot]
+    A --&gt;|Complex| C[Few-shot]
+    A --&gt;|Multiple steps| D[Chain-of-Thought]
+    A --&gt;|Specific format| E[Constrained Output]
+    B --&gt;|1-2 sentences| F[Direct Prompt]
+    C --&gt;|Examples| G[With Examples]
+    D --&gt;|Reasoning| H[Step by Step]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-criar-prompt-para-tarefa-simples">Fase 1: Criar Prompt para Tarefa Simples</h3>
+<h3 id="phase-1-create-prompt-for-simple-task">Phase 1: Create Prompt for Simple Task</h3>
 <ol>
-<li>Identifique a tarefa:</li>
+<li>Identify the task:</li>
 </ol>
-<pre><code>   &quot;Formatar JSON para tabela markdown&quot;</code></pre>
+<pre><code>   &quot;Format JSON to table markdown&quot;</code></pre>
 <ol>
-<li>Crie prompt direto:</li>
+<li>Create direct prompt:</li>
 </ol>
-<pre><code>   Formate o seguinte JSON como tabela markdown:
-   {json aqui}</code></pre>
+<pre><code>   Format the following JSON as a table markdown:
+   {json here}</code></pre>
 <ol>
-<li>Teste o prompt:</li>
+<li>Test the prompt:</li>
 </ol>
-<pre data-lang="bash"><code>   # Use ferramenta de teste
+<pre data-lang="bash"><code>   # Use testing tool
    echo &quot;prompt&quot; | llm-prompt-test</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Prompt produz output correto</li>
+<li><strong>Checkpoint</strong>: Prompt produces correct output</li>
 </ol>
-<h3 id="fase-2-criar-prompt-para-tarefa-complexa">Fase 2: Criar Prompt para Tarefa Complexa</h3>
+<h3 id="phase-2-create-prompt-for-complex-task">Phase 2: Create Prompt for Complex Task</h3>
 <ol>
-<li>Defina contexto (role):</li>
+<li>Define context (role):</li>
 </ol>
-<pre><code>   Você é um arquiteto de software sênior especializado em DDD.</code></pre>
+<pre><code>   You are a senior software architect specializing in DDD.</code></pre>
 <ol>
-<li>Defina tarefa clara:</li>
+<li>Define clear task:</li>
 </ol>
-<pre><code>   Modele o domínio de um sistema de pedidos com:
-   - Entidades: Order, Product, User
+<pre><code>   Model the domain of a order system with:
+   - Entities: Order, Product, User
    - Value Objects: Money, Address
-   - Aggregates: Order com OrderItems</code></pre>
+   - Aggregates: Order with OrderItems</code></pre>
 <ol>
-<li>Defina formato de saída:</li>
+<li>Define output format:</li>
 </ol>
-<pre><code>   Responda em formato:
-   - Entidades: lista
-   - Value Objects: lista
-   - Aggregates: lista com invariantes</code></pre>
+<pre><code>   Respond in the following format:
+   - Entities: list
+   - Value Objects: list
+   - Aggregates: list with invariants</code></pre>
 <ol>
-<li>Defina restrições:</li>
+<li>Define constraints:</li>
 </ol>
 <pre><code>   - Use TypeScript
-   - Não inclua framework
-   - Foque em domínio puro</code></pre>
+   - Do not include framework
+   - Focus on pure domain</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Prompt produz output estruturado</li>
+<li><strong>Checkpoint</strong>: Prompt produces structured output</li>
 </ol>
-<h3 id="fase-3-otimizar-prompt">Fase 3: Otimizar Prompt</h3>
+<h3 id="phase-3-optimize-prompt">Phase 3: Optimize Prompt</h3>
 <ol>
-<li>Adicione few-shot se necessário:</li>
+<li>Add few-shot if necessary:</li>
 </ol>
-<pre><code>   Exemplo 1:
-   Input: Order com 2 items
-   Output: Aggregate com invariantes...
+<pre><code>   Example 1:
+   Input: Order with 2 items
+   Output: Aggregate with invariants...
    
-   Exemplo 2:
+   Example 2:
    Input: User registration
-   Output: Entity com validação...
+   Output: Entity with validation...
    
-   Agora processe:
-   Input: {novo caso}</code></pre>
+   Now process:
+   Input: {new case}</code></pre>
 <ol>
-<li>Adicione chain-of-thought:</li>
+<li>Add chain-of-thought:</li>
 </ol>
-<pre><code>   Pense passo a passo:
-   1. Primeiro, identifique as entidades
-   2. Depois, defina os value objects
-   3. Finalmente, estabeleça os aggregates</code></pre>
+<pre><code>   Think step by step:
+   1. First, identify the entities
+   2. Then, define the value objects
+   3. Finally, establish the aggregates</code></pre>
 <ol>
-<li>Adicione constrained output:</li>
+<li>Add constrained output:</li>
 </ol>
-<pre><code>   Responda APENAS com código TypeScript.
-   Não inclua explicações.</code></pre>
+<pre><code>   Respond ONLY with the final code.
+   Do not include explanations.</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Output mais preciso e consistente</li>
+<li><strong>Checkpoint</strong>: Output is more precise and consistent</li>
 </ol>
-<h3 id="fase-4-avaliar-qualidade-de-prompt">Fase 4: Avaliar Qualidade de Prompt</h3>
+<h3 id="phase-4-evaluate-prompt-quality">Phase 4: Evaluate Prompt Quality</h3>
 <ol>
-<li>Teste com múltiplos inputs:</li>
+<li>Test with multiple inputs:</li>
 </ol>
-<pre data-lang="bash"><code>   # Teste 1
+<pre data-lang="bash"><code>   # Test 1
    echo &quot;input1&quot; | llm
    
-   # Teste 2
+   # Test 2
    echo &quot;input2&quot; | llm</code></pre>
 <ol>
-<li>Verifique consistência:</li>
+<li>Verify consistency:</li>
 </ol>
 <ul>
-<li>Mesmo formato?</li>
-<li>Mesmo nível de detalhe?</li>
+<li>Same format?</li>
+<li>Same level of detail?</li>
 </ul>
 <ol>
-<li>Meça latência e custo:</li>
+<li>Measure latency and cost:</li>
 </ol>
 <ul>
-<li>Tokens usados</li>
-<li>Tempo de resposta</li>
+<li>Tokens used</li>
+<li>Response time</li>
 </ul>
 <ol>
-<li><strong>Checkpoint</strong>: Prompt validado com múltiplos testes</li>
+<li><strong>Checkpoint</strong>: Prompt validated with multiple tests</li>
 </ol>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="estrutura-de-prompt">Estrutura de Prompt</h3>
-<h4 id="1-contexto">1. Contexto</h4>
-<p>Quem é o agente, qual seu papel, qual o objetivo.</p>
-<pre><code>Você é um desenvolvedor sênior especializado em Node.js.
-Sua tarefa é refatorar código legado.</code></pre>
-<h4 id="2-tarefa">2. Tarefa</h4>
-<p>O que deve ser feito, de forma clara e específica.</p>
-<pre><code>Refatore a classe UserService para seguir Single Responsibility Principle.
-Extraia validação para UserValidator.</code></pre>
-<h4 id="3-formato-de-sada">3. Formato de Saída</h4>
-<p>Estrutura esperada da resposta.</p>
-<pre><code>Responda em formato:</code></pre>
-<p>// Antes {código}</p>
-<p>// Depois {código}</p>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
+<h3 id="prompt-structure">Prompt Structure</h3>
+<h4 id="1-context">1. Context</h4>
+<p>Who is the agent, what is their role, what is the objective.</p>
+<pre><code>You are a senior software developer specializing in Node.js.
+Your task is to refactor legacy code.</code></pre>
+<h4 id="2-task">2. Task</h4>
+<p>What needs to be done, clearly and specifically.</p>
+<pre><code>Refactor the UserService class to follow the Single Responsibility Principle.
+Extract validation to UserValidator.</code></pre>
+<h4 id="3-output-format">3. Output Format</h4>
+<p>The expected structure of the response.</p>
+<pre><code>Respond in the following format:</code></pre>
+<p>// Before {code}</p>
+<p>// After {code}</p>
 <pre><code></code></pre>
-<h4 id="4-restries">4. Restrições</h4>
-<p>O que NÃO fazer, limites e regras.</p>
-<pre><code>- Não altere comportamento
-- Mantenha compatibilidade
+<h4 id="4-constraints">4. Constraints</h4>
+<p>What NOT to do, limits, and rules.</p>
+<pre><code>- Do not alter behavior
+- Maintain compatibility
 - Use TypeScript</code></pre>
-<h3 id="tcnicas">Técnicas</h3>
+<h3 id="techniques">Techniques</h3>
 <h4 id="role-prompting">Role Prompting</h4>
-<pre><code>Você é um arquiteto de software sênior especializado em DDD...</code></pre>
+<pre><code>You are a senior software architect specializing in DDD...</code></pre>
 <h4 id="few-shot">Few-Shot</h4>
-<pre><code>Exemplo 1:
+<pre><code>Example 1:
 Input: ...
 Output: ...
 
-Exemplo 2:
+Example 2:
 Input: ...
 Output: ...
 
-Agora processe:
+Now process:
 Input: ...</code></pre>
 <h4 id="chain-of-thought">Chain-of-Thought</h4>
-<pre><code>Pense passo a passo:
-1. Primeiro, ...
-2. Depois, ...
-3. Finalmente, ...</code></pre>
+<pre><code>Think step by step:
+1. First, ...
+2. Then, ...
+3. Finally, ...</code></pre>
 <h4 id="constrained-output">Constrained Output</h4>
-<pre><code>Responda APENAS com o código final.
-Não inclua explicações.</code></pre>
+<pre><code>Respond ONLY with the final code.
+Do not include explanations.</code></pre>
 <h2 id="templates">Templates</h2>
 <h3 id="prompt-simplemd">prompt-simple.md</h3>
-<p>Localização: <code>templates/prompt-simple.md</code></p>
-<p>Template para prompt simples.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/prompt-simple.md</code></p>
+<p>Template for simple prompts.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cat templates/prompt-simple.md</code></pre>
 <h3 id="prompt-complexmd">prompt-complex.md</h3>
-<p>Localização: <code>templates/prompt-complex.md</code></p>
-<p>Template para prompt complexo com contexto.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/prompt-complex.md</code></p>
+<p>Template for complex prompts with context.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cat templates/prompt-complex.md</code></pre>
 <h3 id="prompt-evaluationmd">prompt-evaluation.md</h3>
-<p>Localização: <code>templates/prompt-evaluation.md</code></p>
-<p>Template para avaliação de prompt.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/prompt-evaluation.md</code></p>
+<p>Template for prompt evaluation.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cat templates/prompt-evaluation.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="prompt-vago">Prompt Vago</h4>
-<p><strong>O que é:</strong> Prompt sem contexto ou tarefa clara. <strong>Por que é ruim:</strong> Output imprevisível, precisa de múltiplas tentativas. <strong>Como evitar:</strong> Sempre inclua contexto, tarefa, formato e restrições. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Melhore o código&quot;
+<h3 id="critical">Critical</h3>
+<h4 id="vague-prompt">Vague Prompt</h4>
+<p><strong>What is it:</strong> A prompt without context or clear task. <strong>Why is it bad:</strong> Output is unpredictable, needs multiple attempts. <strong>How to avoid:</strong> Always include context, task, format, and constraints. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+&quot;Improve the code&quot;
 
-# ✅ CORRETO
-&quot;Refatore o código para usar async/await em vez de callbacks.
+# ✅ RIGHT
+&quot;Refactor the code to use async/await instead of callbacks.
 Use TypeScript.
-Mantenha o mesmo comportamento.</code></pre>
-<p>{código}</p>
+Maintain the same behavior.</code></pre>
+<p>{code}</p>
 <pre data-lang="""><code></code></pre>
-<h4 id="mltiplas-tarefas-em-um-prompt">Múltiplas Tarefas em um Prompt</h4>
-<p><strong>O que é:</strong> Prompt que pede múltiplas coisas diferentes. <strong>Por que é ruim:</strong> Output misturado, difícil de validar. <strong>Como evitar:</strong> Um prompt, uma tarefa. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Modele o domínio, crie testes e documente a API&quot;
+<h4 id="multiple-tasks-in-one-prompt">Multiple Tasks in One Prompt</h4>
+<p><strong>What is it:</strong> A prompt that asks for multiple things. <strong>Why is it bad:</strong> Output is mixed, hard to validate. <strong>How to avoid:</strong> One prompt, one task. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+&quot;Model the domain, create tests, and document the API&quot;
 
-# ✅ CORRETO
-&quot;Modele o domínio com DDD. Responda apenas com código TypeScript.&quot;</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="instrues-contraditrias">Instruções Contraditórias</h4>
-<p><strong>O que é:</strong> Prompt com regras conflitantes. <strong>Por que é ruim:</strong> Agente fica confuso, output inconsistente. <strong>Como evitar:</strong> Revise prompt antes de enviar. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+# ✅ RIGHT
+&quot;Model the domain with DDD. Respond only with code TypeScript.&quot;</code></pre>
+<h3 id="medium">Medium</h3>
+<h4 id="contradictory-instructions">Contradictory Instructions</h4>
+<p><strong>What is it:</strong> A prompt with conflicting rules. <strong>Why is it bad:</strong> Agent gets confused, output is inconsistent. <strong>How to avoid:</strong> Review prompt before sending. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 &quot;Use JavaScript&quot;
 &quot;Use TypeScript&quot;
 
-# ✅ CORRETO
+# ✅ RIGHT
 &quot;Use TypeScript&quot;</code></pre>
-<h4 id="falta-de-contexto">Falta de Contexto</h4>
-<p><strong>O que é:</strong> Prompt sem informações necessárias. <strong>Por que é ruim:</strong> Output genérico, não específico do projeto. <strong>Como evitar:</strong> Inclua contexto do projeto, stack, restrições. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Crie API de usuários&quot;
+<h4 id="lack-of-context">Lack of Context</h4>
+<p><strong>What is it:</strong> A prompt without necessary information. <strong>Why is it bad:</strong> Output is generic, not specific to the project. <strong>How to avoid:</strong> Include project context, stack, constraints. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+&quot;Create a user API&quot;
 
-# ✅ CORRETO
-&quot;Crie API REST de usuários usando Node.js + Express + TypeScript.
+# ✅ RIGHT
+&quot;Create a REST API for users using Node.js + Express + TypeScript.
 Use Clean Architecture.
 Endpoints: GET /users, POST /users, GET /users/:id&quot;</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="prompt-sem-formato-de-sada">Prompt sem Formato de Saída</h4>
-<p><strong>O que é:</strong> Prompt que não especifica formato esperado. <strong>Por que é ruim:</strong> Output pode não ser usável. <strong>Como evitar:</strong> Sempre especifique formato. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Liste os endpoints&quot;
+<h3 id="low">Low</h3>
+<h4 id="prompt-without-output-format">Prompt without Output Format</h4>
+<p><strong>What is it:</strong> A prompt that does not specify output format. <strong>Why is it bad:</strong> Output may not be usable. <strong>How to avoid:</strong> Always specify output format. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+&quot;List the endpoints&quot;
 
-# ✅ CORRETO
-&quot;Liste os endpoints em formato JSON:
+# ✅ RIGHT
+&quot;List the endpoints in the following JSON format:
 {
   &quot;endpoints&quot;: [
     { &quot;method&quot;: &quot;GET&quot;, &quot;path&quot;: &quot;/users&quot; }
   ]
 }&quot;</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-prompt">Checklist de Prompt</h3>
+<h3 id="prompt-checklist">Prompt Checklist</h3>
 <ul>
-<li>[ ] Contexto definido (role do agente)</li>
-<li>[ ] Tarefa clara e específica</li>
-<li>[ ] Formato de saída definido</li>
-<li>[ ] Restrições incluídas</li>
-<li>[ ] Exemplos fornecidos (se complexo)</li>
-<li>[ ] Chain-of-thought incluído (se necessário)</li>
+<li>[ ] Context defined (agent role)</li>
+<li>[ ] Task clear and specific</li>
+<li>[ ] Output format defined</li>
+<li>[ ] Constraints included</li>
+<li>[ ] Examples provided (if complex)</li>
+<li>[ ] Chain-of-thought included (if necessary)</li>
 </ul>
-<h3 id="checklist-de-output">Checklist de Output</h3>
+<h3 id="output-checklist">Output Checklist</h3>
 <ul>
-<li>[ ] Formato correto</li>
-<li>[ ] Código compila</li>
-<li>[ ] Testes passam</li>
-<li>[ ] Documentação incluída</li>
-<li>[ ] Segurança verificada</li>
+<li>[ ] Correct format</li>
+<li>[ ] Code compiles</li>
+<li>[ ] Tests pass</li>
+<li>[ ] Documentation included</li>
+<li>[ ] Security verified</li>
 </ul>
-<h3 id="checklist-de-constraint">Checklist de Constraint</h3>
+<h3 id="constraint-checklist">Constraint Checklist</h3>
 <ul>
-<li>[ ] Output é apenas código</li>
-<li>[ ] Não inclui explicações</li>
-<li>[ ] Formato JSON/TS especificado</li>
-<li>[ ] Tamanho máximo definido</li>
+<li>[ ] Output is only code</li>
+<li>[ ] No explanations included</li>
+<li>[ ] JSON/TS format specified</li>
+<li>[ ] Maximum size defined</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="prompt-para-cdigo-legado">Prompt para Código Legado</h3>
-<p><strong>Situação:</strong> Precisa de prompt para refatorar código antigo. <strong>Solução:</strong> Inclua contexto do legado, objetivo da refatoração. <strong>Exceção:</strong> Se código é crítico, peça mais cuidado.</p>
-<pre><code>&quot;Refatore este código JavaScript para TypeScript.
-Mantenha 100% de compatibilidade.
-Não altere comportamento externo.&quot;</code></pre>
-<h3 id="prompt-para-documentao-em-lngua-estrangeira">Prompt para Documentação em Língua Estrangeira</h3>
-<p><strong>Situação:</strong> Precisa de prompt para documentar em inglês. <strong>Solução:</strong> Especifique língua, inclua glossário. <strong>Exceção:</strong> Se equipe é multilíngue, peça tradução.</p>
-<pre><code>&quot;Documente em inglês americano.
-Termos técnicos: Order (Pedido), Item (Item)&quot;</code></pre>
-<h2 id="referncias">Referências</h2>
+<h3 id="legacy-code-prompt">Legacy Code Prompt</h3>
+<p><strong>Situation:</strong> Need to create a prompt for refactoring legacy code. <strong>Solution:</strong> Include legacy context, refactoring objective. <strong>Exception:</strong> If code is critical, ask for more caution.</p>
+<pre><code>&quot;Refactor this JavaScript code to TypeScript.
+Maintain 100% compatibility.
+Do not alter external behavior.&quot;</code></pre>
+<h3 id="foreign-language-documentation-prompt">Foreign Language Documentation Prompt</h3>
+<p><strong>Situation:</strong> Need to create a prompt for documenting in a foreign language. <strong>Solution:</strong> Specify language, include glossary. <strong>Exception:</strong> If team is multilingual, ask for translation.</p>
+<pre><code>&quot;Document in American English.
+Technical terms: Order (Pedido), Item (Item)&quot;</code></pre>
+<h2 id="references">References</h2>
 <ul>
-<li><code>vibe-coding</code> — para desenvolvimento guiado por IA</li>
+<li><code>vibe-coding</code> — for AI-guided development</li>
 <li><a href="https://www.promptingguide.org/">Prompt Engineering Guide</a></li>
 </ul>
 <h2 id="files">Arquivos</h2>

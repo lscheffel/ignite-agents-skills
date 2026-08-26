@@ -410,70 +410,70 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">security-review</a> &rsaquo; examples &rsaquo; crypto-validation</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-validao-de-criptografia--aes-256-gcm">Exemplo: Validação de Criptografia — AES-256-GCM</h1>
-<h2 id="contexto">Contexto</h2>
-<p>Aplicação armazena dados sensíveis (tokens, credenciais) criptografados com AES-256-GCM. Precisa validar que a implementação está correta e segura.</p>
-<h2 id="checklist-de-validao">Checklist de Validação</h2>
-<h3 id="1-gerao-de-chave">1. Geração de Chave</h3>
-<pre data-lang="python"><code># ✅ CORRETO: Usar PBKDF2/scrypt/Argon2 para derivar chave de senha
+    <h1 id="example-cryptography-validation--aes-256-gcm">Example: Cryptography Validation — AES-256-GCM</h1>
+<h2 id="context">Context</h2>
+<p>Application stores sensitive data (tokens, credentials) encrypted with AES-256-GCM. Needs to validate that the implementation is correct and secure.</p>
+<h2 id="validation-checklist">Validation Checklist</h2>
+<h3 id="1-key-generation">1. Key Generation</h3>
+<pre data-lang="python"><code># ✅ CORRECT: Use PBKDF2/scrypt/Argon2 to derive key from password
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 
 kdf = PBKDF2HMAC(
     algorithm=hashes.SHA256(),
     length=32,
-    salt=salt,  # 16 bytes aleatórios
-    iterations=600_000,  # mínimo OWASP 2023
+    salt=salt,  # 16 bytes random
+    iterations=600_000,  # minimum OWASP 2023
 )
 key = kdf.derive(password.encode())
 
-# ❌ ERRADO: Usar hash simples (MD5, SHA-256) como chave
-key = hashlib.sha256(password.encode()).digest()  # NÃO FAÇA ISSO</code></pre>
-<p><strong>Validação:</strong></p>
+# ❌ WRONG: Use simple hash (MD5, SHA-256) as key
+key = hashlib.sha256(password.encode()).digest()  # DO NOT DO THIS</code></pre>
+<p><strong>Validation:</strong></p>
 <ul>
-<li>[ ] KDF usa PBKDF2 (≥600k iterações), scrypt (N≥16384), ou Argon2id</li>
-<li>[ ] Salt é aleatório e único por registro (≥16 bytes)</li>
-<li>[ ] Salt é armazenado junto com o ciphertext (não secreto)</li>
+<li>[ ] KDF uses PBKDF2 (≥600k iterations), scrypt (N≥16384), or Argon2id</li>
+<li>[ ] Salt is random and unique per record (≥16 bytes)</li>
+<li>[ ] Salt is stored along with the ciphertext (not secret)</li>
 </ul>
 <h3 id="2-nonceiv">2. Nonce/IV</h3>
-<pre data-lang="python"><code># ✅ CORRETO: Nonce aleatório de 12 bytes (96 bits) para GCM
+<pre data-lang="python"><code># ✅ CORRECT: Random 12-byte nonce (96 bits) for GCM
 import os
-nonce = os.urandom(12)  # 96 bits = padrão para GCM
+nonce = os.urandom(12)  # 96 bits = standard for GCM
 
-# ❌ ERRADO: Reutilizar nonce com a mesma chave
-nonce = b&#x27;\x00&#x27; * 12  # NUNCA fazer isso
-nonce = bytes.fromhex(&#x27;000000000000000000000000&#x27;)  # NUNCA</code></pre>
-<p><strong>Validação:</strong></p>
+# ❌ WRONG: Reuse nonce with the same key
+nonce = b&#x27;\x00&#x27; * 12  # NEVER do this
+nonce = bytes.fromhex(&#x27;000000000000000000000000&#x27;)  # NEVER</code></pre>
+<p><strong>Validation:</strong></p>
 <ul>
-<li>[ ] Nonce tem 12 bytes (96 bits) para GCM</li>
-<li>[ ] Nonce é gerado aleatoriamente (<code>os.urandom(12)</code>)</li>
-<li>[ ] Nonce NÃO é derivado de counter sequencial (risco de colisão)</li>
-<li>[ ] Nunca reutilizar par (chave, nonce)</li>
+<li>[ ] Nonce has 12 bytes (96 bits) for GCM</li>
+<li>[ ] Nonce is generated randomly (<code>os.urandom(12)</code>)</li>
+<li>[ ] Nonce is not derived from sequential counter (risk of collision)</li>
+<li>[ ] Never reuse key-nonce pair</li>
 </ul>
-<h3 id="3-autenticao-aad">3. Autenticação (AAD)</h3>
-<pre data-lang="python"><code># ✅ CORRETO: Usar Additional Authenticated Data (AAD)
+<h3 id="3-authentication-aad">3. Authentication (AAD)</h3>
+<pre data-lang="python"><code># ✅ CORRECT: Use Additional Authenticated Data (AAD)
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 aesgcm = AESGCM(key)
-# AAD autentica metadados sem criptografá-los
+# AAD authenticates metadata without encrypting it
 ciphertext = aesgcm.encrypt(nonce, plaintext, aad=user_id.encode())
 
-# ❌ ERRADO: Não usar AAD (perde autenticação de contexto)
+# ❌ WRONG: Do not use AAD (lose authentication context)
 ciphertext = aesgcm.encrypt(nonce, plaintext, None)</code></pre>
-<p><strong>Validação:</strong></p>
+<p><strong>Validation:</strong></p>
 <ul>
-<li>[ ] AAD inclui identificador do registro (user_id, record_id)</li>
-<li>[ ] AAD é verificado na decriptação (se não bate, falha)</li>
-<li>[ ] AAD não contém dados sensíveis (é autenticado, não criptografado)</li>
+<li>[ ] AAD includes record identifier (user_id, record_id)</li>
+<li>[ ] AAD is verified during decryption (if mismatch, fail)</li>
+<li>[ ] AAD does not contain sensitive data (is authenticated, not encrypted)</li>
 </ul>
-<h3 id="4-armazenamento">4. Armazenamento</h3>
-<pre data-lang="python"><code># ✅ CORRETO: Armazenar nonce + ciphertext + tag juntos
+<h3 id="4-storage">4. Storage</h3>
+<pre data-lang="python"><code># ✅ CORRECT: Store nonce + ciphertext + tag together
 import base64
 
-# Formato: base64(nonce || ciphertext || tag)
+# Format: base64(nonce || ciphertext || tag)
 encrypted = base64.b64encode(nonce + ciphertext).decode()
 
-# ✅ OU: Formato JSON estruturado
+# ✅ OR: Structured JSON format
 encrypted_data = {
     &quot;ciphertext&quot;: base64.b64encode(ciphertext).decode(),
     &quot;nonce&quot;: base64.b64encode(nonce).decode(),
@@ -482,16 +482,16 @@ encrypted_data = {
     &quot;version&quot;: 1
 }
 
-# ❌ ERRADO: Armazenar só o ciphertext
-encrypted = base64.b64encode(ciphertext).decode()  # nonce perdido!</code></pre>
-<p><strong>Validação:</strong></p>
+# ❌ WRONG: Store only ciphertext
+encrypted = base64.b64encode(ciphertext).decode()  # nonce lost!</code></pre>
+<p><strong>Validation:</strong></p>
 <ul>
-<li>[ ] Nonce é armazenado (não recalculado)</li>
-<li>[ ] Formato inclui todos os campos necessários para decriptação</li>
-<li>[ ] Nonce não é considerado segredo (pode ser armazenado em plaintext)</li>
+<li>[ ] Nonce is stored (not recalculated)</li>
+<li>[ ] Format includes all necessary fields for decryption</li>
+<li>[ ] Nonce is not considered secret (can be stored in plaintext)</li>
 </ul>
-<h3 id="5-decriptao">5. Decriptação</h3>
-<pre data-lang="python"><code># ✅ CORRETO: Verificar autenticação antes de decriptar
+<h3 id="5-decryption">5. Decryption</h3>
+<pre data-lang="python"><code># ✅ CORRECT: Verify authentication before decrypting
 def decrypt(encrypted_data: dict, key: bytes) -&gt; bytes:
     nonce = base64.b64decode(encrypted_data[&quot;nonce&quot;])
     ciphertext = base64.b64decode(encrypted_data[&quot;ciphertext&quot;])
@@ -502,22 +502,22 @@ def decrypt(encrypted_data: dict, key: bytes) -&gt; bytes:
         plaintext = aesgcm.decrypt(nonce, ciphertext, aad)
         return plaintext
     except Exception:
-        # NÃO expor detalhes do erro
-        raise ValueError(&quot;Dados inválidos ou corrompidos&quot;)
+        # DO NOT expose decryption error details
+        raise ValueError(&quot;Invalid or corrupted data&quot;)
 
-# ❌ ERRADO: Expor detalhes do erro de criptografia
+# ❌ WRONG: Expose decryption error details
 except InvalidTag as e:
-    raise ValueError(f&quot;Tag inválida: {e}&quot;)  # NUNCA fazer isso</code></pre>
-<p><strong>Validação:</strong></p>
+    raise ValueError(f&quot;Invalid tag: {e}&quot;)  # NEVER do this</code></pre>
+<p><strong>Validation:</strong></p>
 <ul>
-<li>[ ] Erros de decriptação são genéricos (não expõem causa)</li>
-<li>[ ] AAD é verificado na decriptação</li>
-<li>[ ] Dados corrompidos causam falha (não output parcial)</li>
+<li>[ ] Decryption errors are generic (do not expose cause)</li>
+<li>[ ] AAD is verified during decryption</li>
+<li>[ ] Corrupted data causes failure (do not output partial data)</li>
 </ul>
-<h2 id="resumo-da-auditoria">Resumo da Auditoria</h2>
-<div class="table-wrapper"><table><tr><th>Check</th><th>Status</th><th>Observação</th></tr><tr><td>KDF correto</td><td>✅</td><td>PBKDF2 com 600k iterações</td></tr><tr><td>Nonce único</td><td>✅</td><td>os.urandom(12)</td></tr><tr><td>AAD utilizado</td><td>✅</td><td>user_id como AAD</td></tr><tr><td>Armazenamento correto</td><td>✅</td><td>nonce + ciphertext + tag</td></tr><tr><td>Decriptação segura</td><td>✅</td><td>Erros genéricos</td></tr></table></div>
-<h2 id="anti-patterns-encontrados">Anti-patterns Encontrados</h2>
-<div class="table-wrapper"><table><tr><th>Anti-pattern</th><th>Severidade</th><th>Encontrado?</th></tr><tr><td>Reutilização de nonce</td><td>🔴 Crítico</td><td>Não</td></tr><tr><td>Nonce fixo/predizível</td><td>🔴 Crítico</td><td>Não</td></tr><tr><td>Sem AAD</td><td>🟡 Médio</td><td>Não</td></tr><tr><td>Erros expõem detalhes</td><td>🟡 Médio</td><td>Não</td></tr><tr><td>Nonce como counter</td><td>🟡 Médio</td><td>Não</td></tr></table></div>
+<h2 id="audit-summary">Audit Summary</h2>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Status</th><th>Observation</th></tr><tr><td>Correct KDF</td><td>✅</td><td>PBKDF2 with 600k iterations</td></tr><tr><td>Unique nonce</td><td>✅</td><td>os.urandom(12)</td></tr><tr><td>AAD used</td><td>✅</td><td>user_id as AAD</td></tr><tr><td>Correct storage</td><td>✅</td><td>nonce + ciphertext + tag</td></tr><tr><td>Secure decryption</td><td>✅</td><td>Generic errors</td></tr></table></div>
+<h2 id="anti-patterns-found">Anti-patterns Found</h2>
+<div class="table-wrapper"><table><tr><th>Anti-pattern</th><th>Severity</th><th>Found?</th></tr><tr><td>Reusing nonce</td><td>🔴 Critical</td><td>No</td></tr><tr><td>Predictable nonce</td><td>🔴 Critical</td><td>No</td></tr><tr><td>No AAD</td><td>🟡 Medium</td><td>No</td></tr><tr><td>Exposing error details</td><td>🟡 Medium</td><td>No</td></tr><tr><td>Nonce as counter</td><td>🟡 Medium</td><td>No</td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

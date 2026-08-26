@@ -410,14 +410,14 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">governance</a> &rsaquo; examples &rsaquo; branch-protection</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-configurao-de-branch-protection">Exemplo: Configuração de Branch Protection</h1>
-<h2 id="antes">Antes</h2>
+    <h1 id="example-branch-protection-configuration">Example: Branch Protection Configuration</h1>
+<h2 id="before">Before</h2>
 <ul>
-<li>Push direto para main</li>
-<li>Nenhum review obrigatório</li>
-<li>CI opcional</li>
+<li>Direct push to main</li>
+<li>No mandatory review</li>
+<li>CI optional</li>
 </ul>
-<h2 id="depois">Depois</h2>
+<h2 id="after">After</h2>
 <pre data-lang="yaml"><code># .github/branch-protection.yml
 branches:
   - name: main
@@ -427,11 +427,11 @@ branches:
       required_status_checks:
         strict: true
       restrictions: null</code></pre>
-<h2 id="resultado">Resultado</h2>
+<h2 id="result">Result</h2>
 <ul>
-<li>0 pushes diretos para main</li>
-<li>100% dos PRs revisados</li>
-<li>CI obrigatório</li>
+<li>0 direct pushes to main</li>
+<li>100% of PRs reviewed</li>
+<li>CI mandatory</li>
 </ul>
   </div>
 <footer>

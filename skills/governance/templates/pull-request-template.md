@@ -1,44 +1,44 @@
 # Pull Request Template
 
-## Descrição
+## Description
 
-{Resumo claro e conciso da mudança}
+{Clear and concise summary of the change}
 
-## Tipo de Mudança
+## Change Type
 
-- [ ] Bug fix (correção que não quebra a API)
-- [ ] Feature (nova funcionalidade)
-- [ ] Breaking change (mudança que quebra a API)
-- [ ] Documentation (mudança apenas em docs)
-- [ ] Refactor (melhoria sem mudança de comportamento)
+- [ ] Bug fix (non-API-breaking correction)
+- [ ] Feature (new functionality)
+- [ ] Breaking change (API-breaking change)
+- [ ] Documentation (change only in docs)
+- [ ] Refactor (improvement without behavior change)
 
 ## Checklist
 
 ### Code Quality
-- [ ] Código segue padrões do projeto
-- [ ] Não há código comentado ou debug
-- [ ] Variáveis e funções têm nomes claros
-- [ ] Complexidade ciclomática < 10
+- [ ] Code adheres to project standards
+- [ ] No commented or debug code
+- [ ] Variables and functions have clear names
+- [ ] Cyclomatic complexity < 10
 
 ### Testing
-- [ ] Testes unitários adicionados/atualizados
-- [ ] Testes de integração adicionados (se aplicável)
-- [ ] Todos os testes passam (`npm test`)
-- [ ] Coverage ≥ 80% (se aplicável)
+- [ ] Unit tests added/updated
+- [ ] Integration tests added (if applicable)
+- [ ] All tests pass (`npm test`)
+- [ ] Coverage ≥ 80% (if applicable)
 
 ### Documentation
-- [ ] README.md atualizado (se necessário)
-- [ ] Comentários de código adicionados
-- [ ] CHANGELOG.md atualizado (se necessário)
+- [ ] README.md updated (if necessary)
+- [ ] Code comments added
+- [ ] CHANGELOG.md updated (if necessary)
 
 ### Security
-- [ ] Nenhuma credencial exposta
-- [ ] Input validado
-- [ ] Dependências verificadas (`npm audit`)
+- [ ] No credentials exposed
+- [ ] Input validated
+- [ ] Dependencies verified (`npm audit`)
 
-## Screenshots (se aplicável)
+## Screenshots (if applicable)
 
-{Adicione screenshots da UI ou mudanças visuais}
+{Add screenshots of UI or visual changes}
 
 ## Related Issues
 

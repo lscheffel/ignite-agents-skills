@@ -410,39 +410,39 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; examples &rsaquo; database-choice</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-adr-para-escolha-de-database">Exemplo: ADR para Escolha de Database</h1>
-<h2 id="contexto">Contexto</h2>
-<p>Precisávamos escolher entre PostgreSQL, MongoDB e DynamoDB para novo serviço.</p>
-<h2 id="deciso">Decisão</h2>
-<p>Escolhemos PostgreSQL por:</p>
+    <h1 id="example-adr-for-database-choice">Example: ADR for Database Choice</h1>
+<h2 id="context">Context</h2>
+<p>We needed to choose between PostgreSQL, MongoDB, and DynamoDB for the new service.</p>
+<h2 id="decision">Decision</h2>
+<p>We chose PostgreSQL for:</p>
 <ul>
-<li>Equipe já tem experiência</li>
-<li>Suporte a JSONB para flexibilidade</li>
-<li>Replicação síncrona para HA</li>
+<li>The team already has experience</li>
+<li>Support for JSONB for flexibility</li>
+<li>Synchronous replication for HA</li>
 </ul>
-<h2 id="alternativas">Alternativas</h2>
+<h2 id="alternatives">Alternatives</h2>
 <ul>
-<li><strong>MongoDB</strong>: Schema flexível, mas operação mais cara</li>
-<li><strong>DynamoDB</strong>: Serverless, mas vendor lock-in</li>
+<li><strong>MongoDB</strong>: Flexible schema, but more expensive operation</li>
+<li><strong>DynamoDB</strong>: Serverless, but vendor lock-in</li>
 </ul>
-<h2 id="resultado">Resultado</h2>
-<pre><code># ADR-003: Database Choice
+<h2 id="result">Result</h2>
+<pre data-lang="markdown"><code># ADR-003: Database Choice
 ## Status
-Aceito
+Accepted
 
-## Contexto
-Novo serviço de pedidos precisa de database.
+## Context
+The new order service requires a database.
 
-## Decisão
-PostgreSQL com replicação síncrona.
+## Decision
+PostgreSQL with synchronous replication.
 
-## Consequências
-### Positivas
-- Equipe produtiva desde início
-- Consultas flexíveis com JSONB
+## Consequences
+### Positive
+- The team is productive from the start
+- Flexible queries with JSONB
 
-### Negativas
-- Operacional mais complexo que DynamoDB</code></pre>
+### Negative
+- More operationally complex than DynamoDB</code></pre>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

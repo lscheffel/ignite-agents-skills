@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>content-research-writer — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; content-research-writer</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: content-research-writer version: 1.0.0 description: 'Use when the user needs research methodology, long-form content creation, academic-style citations, fact-checking, or evidence-based writing with proper source attribution. Trigger conditions: whitepaper drafting, research article writing, source evaluation, citation management, fact-checking protocol, case study creation, evidence-based argumentation.' domain: domain-stack triggers:</p>
+<ul>
+<li>content-research-writer</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>content-research-writer</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="content-research-writer">Content Research Writer</h1>
+<h2 id="overview">Overview</h2>
+<p>Produce well-researched, authoritative long-form content with proper source attribution, structured argumentation, and evidence-based claims. This skill covers research methodology, source evaluation, citation management, outline construction, drafting workflows, fact-checking protocols, and publishing-ready formatting for articles, whitepapers, reports, and educational content.</p>
+<p>Apply this skill whenever content must be backed by evidence, cited properly, and structured for credibility with expert audiences.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-research-planning">Phase 1: Research Planning</h3>
+<ol>
+<li>Define the topic scope and target audience</li>
+<li>Identify key questions the content must answer</li>
+<li>Determine content type (article, whitepaper, case study, guide)</li>
+<li>Set word count target and depth level</li>
+<li>Establish credibility requirements (peer-reviewed, industry reports, primary data)</li>
+<li>Create a research timeline with milestones</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin source discovery until the research plan is documented and scope is agreed upon.</strong></blockquote>
+<h3 id="phase-2-source-discovery-and-evaluation">Phase 2: Source Discovery and Evaluation</h3>
+<ol>
+<li>Search academic databases (Google Scholar, PubMed, JSTOR, arXiv)</li>
+<li>Identify industry reports and authoritative publications</li>
+<li>Find primary sources (official documentation, datasets, specifications)</li>
+<li>Evaluate source credibility using the CRAAP test (see table below)</li>
+<li>Organize sources in a reference manager or structured format</li>
+<li>Extract key findings, statistics, and quotable passages</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin outlining until you have sufficient Tier 1-2 sources for every core claim.</strong></blockquote>
+<h3 id="phase-3-outline-and-structure">Phase 3: Outline and Structure</h3>
+<ol>
+<li>Create a thesis statement or central argument</li>
+<li>Build hierarchical outline with main sections and subsections</li>
+<li>Map evidence to each section (which sources support which claims)</li>
+<li>Identify gaps requiring additional research</li>
+<li>Define transitions between sections for narrative flow</li>
+<li>Plan visual elements (tables, charts, diagrams, callouts)</li>
+</ol>
+<blockquote><strong>STOP — Do NOT begin drafting until the outline is reviewed and evidence gaps are filled.</strong></blockquote>
+<h3 id="phase-4-drafting">Phase 4: Drafting</h3>
+<ol>
+<li>Write section by section following the outline</li>
+<li>Integrate citations as you write (never retrofit)</li>
+<li>Balance original analysis with supporting evidence</li>
+<li>Use topic sentences and clear paragraph structure</li>
+<li>Include concrete examples, data points, and case studies</li>
+<li>Write introduction last (after body is complete)</li>
+</ol>
+<blockquote><strong>STOP — Do NOT move to review until all sections are drafted and all citations are in place.</strong></blockquote>
+<h3 id="phase-5-review-and-fact-check">Phase 5: Review and Fact-Check</h3>
+<ol>
+<li>Verify every factual claim against its source</li>
+<li>Check all statistics for accuracy and context</li>
+<li>Ensure citations are complete and correctly formatted</li>
+<li>Review for logical consistency and argument strength</li>
+<li>Proofread for clarity, grammar, and style</li>
+<li>Have subject matter expert review if possible</li>
+</ol>
+<h2 id="content-type-decision-table">Content Type Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Content Type</th><th>Word Count</th><th>Research Depth</th><th>Audience</th><th>Citation Style</th></tr><tr><td>Blog article</td><td>1,500-3,000</td><td>Tier 2-3 sources</td><td>General</td><td>Inline links</td></tr><tr><td>Long-form article</td><td>3,000-5,000</td><td>Tier 1-3 sources</td><td>Informed readers</td><td>Parenthetical (APA)</td></tr><tr><td>Whitepaper</td><td>3,000-8,000</td><td>Tier 1-2 mandatory</td><td>Decision-makers</td><td>Footnotes or numbered</td></tr><tr><td>Case study</td><td>1,000-2,500</td><td>Primary + Tier 2</td><td>Buyers</td><td>Inline attribution</td></tr><tr><td>Technical report</td><td>5,000-15,000</td><td>Tier 1 mandatory</td><td>Experts</td><td>IEEE or APA</td></tr><tr><td>Educational guide</td><td>2,000-6,000</td><td>Tier 1-3 mixed</td><td>Learners</td><td>Parenthetical</td></tr></table></div>
+<h2 id="source-evaluation-framework-craap-test">Source Evaluation Framework (CRAAP Test)</h2>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Questions to Ask</th><th>Red Flags</th></tr><tr><td><strong>Currency</strong></td><td>When was it published? Updated?</td><td>> 5 years old for fast-moving topics</td></tr><tr><td><strong>Relevance</strong></td><td>Does it directly address your topic?</td><td>Tangential connection, different context</td></tr><tr><td><strong>Authority</strong></td><td>Who is the author? What are their credentials?</td><td>No author, no institutional affiliation</td></tr><tr><td><strong>Accuracy</strong></td><td>Is it supported by evidence? Peer-reviewed?</td><td>No citations, unverifiable claims</td></tr><tr><td><strong>Purpose</strong></td><td>Why does this exist? Inform, sell, persuade?</td><td>Strong commercial bias, advocacy without disclosure</td></tr></table></div>
+<h3 id="source-tier-system">Source Tier System</h3>
+<div class="table-wrapper"><table><tr><th>Tier</th><th>Source Type</th><th>Credibility</th><th>Use For</th></tr><tr><td>Tier 1</td><td>Peer-reviewed journals, official standards</td><td>Highest</td><td>Core claims, statistics</td></tr><tr><td>Tier 2</td><td>Industry reports (Gartner, McKinsey), textbooks</td><td>High</td><td>Market data, frameworks</td></tr><tr><td>Tier 3</td><td>Reputable news outlets, official documentation</td><td>Good</td><td>Context, current events</td></tr><tr><td>Tier 4</td><td>Expert blogs, conference talks, interviews</td><td>Moderate</td><td>Perspectives, opinions</td></tr><tr><td>Tier 5</td><td>Social media, forums, Wikipedia</td><td>Low</td><td>Discovery only, never cite directly</td></tr></table></div>
+<h2 id="citation-formats">Citation Formats</h2>
+<h3 id="inline-citation-styles">Inline Citation Styles</h3>
+<pre data-lang="markdown"><code># Parenthetical (APA-style)
+Research shows that 73% of enterprises have adopted cloud-native architectures
+(Smith &amp; Johnson, 2025).
+
+# Narrative
+According to Smith and Johnson (2025), 73% of enterprises have adopted
+cloud-native architectures.
+
+# Footnote-style (Chicago)
+Research shows significant cloud adoption.[^1]
+
+[^1]: Smith, J., &amp; Johnson, R. (2025). Cloud adoption trends.
+*Journal of Cloud Computing*, 12(3), 45-62.
+
+# Numbered (IEEE-style)
+Research shows significant cloud adoption [1].
+
+## References
+[1] J. Smith and R. Johnson, &quot;Cloud adoption trends,&quot; *J. Cloud Computing*,
+    vol. 12, no. 3, pp. 45-62, 2025.</code></pre>
+<h3 id="reference-format-templates">Reference Format Templates</h3>
+<pre data-lang="markdown"><code># Journal Article
+Author, A. B., &amp; Author, C. D. (Year). Title of article. *Journal Name*,
+Volume(Issue), Pages. https://doi.org/xxxxx
+
+# Book
+Author, A. B. (Year). *Title of book* (Edition). Publisher.
+
+# Website
+Author or Organization. (Year, Month Day). Title of page. Site Name.
+https://www.example.com/page
+
+# Report
+Organization. (Year). *Title of report* (Report No. XXX).
+https://www.example.com/report.pdf</code></pre>
+<h2 id="content-structure-templates">Content Structure Templates</h2>
+<h3 id="long-form-article-2000-5000-words">Long-Form Article (2000-5000 words)</h3>
+<pre><code>1. Hook / Opening Anecdote (100-200 words)
+2. Context and Problem Statement (200-300 words)
+3. Thesis / Key Insight (50-100 words)
+4. Section 1: Background (400-600 words)
+   - Historical context
+   - Current state
+   - Key definitions
+5. Section 2: Core Analysis (600-1000 words)
+   - Main argument with evidence
+   - Data and statistics
+   - Expert perspectives
+6. Section 3: Implications (400-600 words)
+   - Practical applications
+   - Case studies
+   - Future outlook
+7. Section 4: Counterarguments (200-400 words)
+   - Acknowledge limitations
+   - Address objections
+8. Conclusion (200-300 words)
+   - Synthesize key findings
+   - Call to action or forward-looking statement
+9. References</code></pre>
+<h3 id="whitepaper-3000-8000-words">Whitepaper (3000-8000 words)</h3>
+<pre><code>1. Executive Summary (300-500 words)
+2. Introduction and Problem Statement (500-800 words)
+3. Methodology (300-500 words)
+4. Findings / Analysis (1500-3000 words)
+   - Section with data visualization
+   - Comparative analysis
+   - Case studies
+5. Recommendations (500-1000 words)
+6. Conclusion (300-500 words)
+7. Appendices
+8. References</code></pre>
+<h3 id="case-study-1000-2500-words">Case Study (1000-2500 words)</h3>
+<pre><code>1. Executive Summary (100-200 words)
+2. Challenge / Problem (200-400 words)
+3. Approach / Solution (300-600 words)
+4. Implementation (300-500 words)
+5. Results and Metrics (200-400 words)
+6. Lessons Learned (200-300 words)
+7. About [Company/Subject]</code></pre>
+<h2 id="writing-quality-checklist">Writing Quality Checklist</h2>
+<h3 id="paragraph-level">Paragraph Level</h3>
+<ul>
+<li>Each paragraph has a clear topic sentence</li>
+<li>Paragraphs are 3-6 sentences (avoid walls of text)</li>
+<li>Transitions connect paragraphs logically</li>
+<li>Evidence follows claims immediately</li>
+</ul>
+<h3 id="sentence-level">Sentence Level</h3>
+<ul>
+<li>Vary sentence length (mix short and long)</li>
+<li>Active voice preferred over passive</li>
+<li>Avoid jargon without definition</li>
+<li>Concrete language over abstract</li>
+</ul>
+<h3 id="document-level">Document Level</h3>
+<ul>
+<li>Introduction establishes the "so what" clearly</li>
+<li>Each section advances the central argument</li>
+<li>No unsupported claims</li>
+<li>Conclusion adds value (doesn't just repeat)</li>
+<li>Consistent tone and reading level throughout</li>
+</ul>
+<h2 id="fact-checking-protocol">Fact-Checking Protocol</h2>
+<h3 id="verification-steps">Verification Steps</h3>
+<ol>
+<li><strong>Primary source check</strong>: Trace every claim back to its original source</li>
+<li><strong>Cross-reference</strong>: Verify key facts with at least 2 independent sources</li>
+<li><strong>Statistical validation</strong>: Check that numbers are current and in context</li>
+<li><strong>Quote accuracy</strong>: Verify exact wording of all direct quotes</li>
+<li><strong>Date verification</strong>: Confirm all dates and timelines</li>
+<li><strong>Name and title check</strong>: Verify correct spelling and current titles</li>
+</ol>
+<h3 id="common-fact-checking-pitfalls">Common Fact-Checking Pitfalls</h3>
+<div class="table-wrapper"><table><tr><th>Pitfall</th><th>Example</th><th>Prevention</th></tr><tr><td>Outdated statistics</td><td>"50% of..." from a 2018 study</td><td>Always note publication year, seek recent data</td></tr><tr><td>Misattributed quotes</td><td>Einstein didn't say most "Einstein quotes"</td><td>Trace to primary source document</td></tr><tr><td>Survivorship bias</td><td>"All successful companies do X"</td><td>Look for counterexamples</td></tr><tr><td>Correlation as causation</td><td>"Countries that eat chocolate win more Nobels"</td><td>Distinguish correlation from causation</td></tr><tr><td>Out-of-context numbers</td><td>"Revenue grew 500%" (from $1 to $5)</td><td>Always provide absolute numbers and context</td></tr></table></div>
+<h2 id="research-tools">Research Tools</h2>
+<div class="table-wrapper"><table><tr><th>Tool</th><th>Purpose</th><th>Best For</th></tr><tr><td>Google Scholar</td><td>Academic paper search</td><td>Peer-reviewed research</td></tr><tr><td>Semantic Scholar</td><td>AI-powered paper discovery</td><td>Finding related work</td></tr><tr><td>arXiv</td><td>Preprints</td><td>Cutting-edge CS/ML/Physics</td></tr><tr><td>PubMed</td><td>Medical/bio research</td><td>Health and life sciences</td></tr><tr><td>Statista</td><td>Statistics and market data</td><td>Industry data points</td></tr><tr><td>Wayback Machine</td><td>Historical web pages</td><td>Verifying past claims</td></tr><tr><td>Zotero / Mendeley</td><td>Reference management</td><td>Organizing sources</td></tr><tr><td>Perplexity</td><td>AI-assisted research</td><td>Initial discovery</td></tr></table></div>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>Claims without citations</td><td>Undermines credibility entirely</td><td>Cite every factual claim inline</td></tr><tr><td>Single-source assertions</td><td>One source can be wrong or biased</td><td>Cross-reference with 2+ independent sources</td></tr><tr><td>Citing secondary when primary exists</td><td>Telephone game distorts findings</td><td>Trace to and cite the original study</td></tr><tr><td>Writing introduction first</td><td>Leads to misalignment with body</td><td>Write body first, introduction last</td></tr><tr><td>Padding to reach word count</td><td>Readers detect filler immediately</td><td>Add depth or cut the target</td></tr><tr><td>Weasel words without specifics</td><td>"Some experts say" means nothing</td><td>Name the expert, cite the source</td></tr><tr><td>Retrofitting citations after drafting</td><td>Gaps in evidence go unnoticed</td><td>Integrate citations during writing</td></tr><tr><td>Ignoring counterarguments</td><td>One-sided work lacks credibility</td><td>Address objections explicitly</td></tr><tr><td>Paraphrasing too closely</td><td>Borderline plagiarism even with citation</td><td>Summarize in your own analytical voice</td></tr><tr><td>No conflict-of-interest disclosure</td><td>Erodes trust when discovered</td><td>Disclose sponsorship or affiliations upfront</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT skip the CRAAP test because "the source looks reputable" -- evaluate it formally.</li>
+<li>Do NOT use Tier 4-5 sources for core claims, regardless of convenience.</li>
+<li>Do NOT begin drafting without a completed outline with evidence mapped to sections.</li>
+<li>Do NOT publish without running the fact-checking protocol on every statistic and quote.</li>
+<li>Do NOT retrofit citations after writing -- integrate them as you draft.</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>seo-optimizer</code></td><td>Research content needs SEO-optimized titles, meta descriptions, and structured data</td></tr><tr><td><code>content-creator</code></td><td>Research findings feed into marketing copy and social media content</td></tr><tr><td><code>email-composer</code></td><td>Research summaries inform stakeholder update emails and executive briefings</td></tr><tr><td><code>tech-docs-generator</code></td><td>Technical research follows similar source evaluation and citation practices</td></tr><tr><td><code>llm-as-judge</code></td><td>Evaluate research content quality against rubric dimensions</td></tr><tr><td><code>clean-code</code></td><td>Writing quality checklist parallels clean code principles for prose</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt research depth, citation formality, and structure to the content type and audience. Academic whitepapers demand Tier 1 sources and formal citations; blog posts may use a lighter approach. The fact-checking protocol and source evaluation framework are always recommended.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

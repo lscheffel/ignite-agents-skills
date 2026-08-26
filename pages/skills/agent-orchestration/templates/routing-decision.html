@@ -411,48 +411,48 @@
   </nav>
   <div class="content">
     <h1 id="routing-decision">Routing Decision</h1>
-<p>Decisão de roteamento de modelo para agentes.</p>
-<h2 id="contexto">Contexto</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td><strong>Tarefa</strong></td><td><code>{task_description}</code></td></tr><tr><td><strong>Complexidade</strong></td><td><code>{low, medium, high}</code></td></tr><tr><td><strong>Requisitos</strong></td><td><code>{requirements}</code></td></tr></table></div>
-<h2 id="matriz-de-roteamento">Matriz de Roteamento</h2>
-<h3 id="por-complexidade">Por Complexidade</h3>
-<div class="table-wrapper"><table><tr><th>Complexidade</th><th>Modelo</th><th>Custo</th><th>Latência</th><th>Uso</th></tr><tr><td><strong>Baixa</strong></td><td><code>{lightweight_model}</code></td><td>$</td><td>Baixa</td><td>Extração, formatação, classificação simples</td></tr><tr><td><strong>Média</strong></td><td><code>{standard_model}</code></td><td>$$</td><td>Média</td><td>Análise, síntese, geração estruturada</td></tr><tr><td><strong>Alta</strong></td><td><code>{advanced_model}</code></td><td>$$$</td><td>Alta</td><td>Raciocínio complexo, código, arquitetura</td></tr></table></div>
-<h3 id="por-papel">Por Papel</h3>
-<div class="table-wrapper"><table><tr><th>Papel</th><th>Modelo Recomendado</th><th>Justificativa</th></tr><tr><td><strong>Orchestrator</strong></td><td><code>{model}</code></td><td>Precisa de raciocínio ampla</td></tr><tr><td><strong>Specialist</strong></td><td><code>{model}</code></td><td>Precisa de expertise focada</td></tr><tr><td><strong>Reviewer</strong></td><td><code>{model}</code></td><td>Precisa de atenção a detalhes</td></tr><tr><td><strong>Formatter</strong></td><td><code>{model}</code></td><td>Tarefa simples, modelo leve</td></tr></table></div>
-<h2 id="deciso">Decisão</h2>
+<p>Model-based routing decision for agents.</p>
+<h2 id="context">Context</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td><strong>Task</strong></td><td><code>{task_description}</code></td></tr><tr><td><strong>Complexity</strong></td><td><code>{low, medium, high}</code></td></tr><tr><td><strong>Requirements</strong></td><td><code>{requirements}</code></td></tr></table></div>
+<h2 id="routing-matrix">Routing Matrix</h2>
+<h3 id="by-complexity">By Complexity</h3>
+<div class="table-wrapper"><table><tr><th>Complexity</th><th>Model</th><th>Cost</th><th>Latency</th><th>Use</th></tr><tr><td><strong>Low</strong></td><td><code>{lightweight_model}</code></td><td>$</td><td>Low</td><td>Extraction, simple formatting, and classification</td></tr><tr><td><strong>Medium</strong></td><td><code>{standard_model}</code></td><td>$$</td><td>Medium</td><td>Analysis, synthesis, and structured generation</td></tr><tr><td><strong>High</strong></td><td><code>{advanced_model}</code></td><td>$$$</td><td>High</td><td>Complex reasoning, code, and architecture</td></tr></table></div>
+<h3 id="by-role">By Role</h3>
+<div class="table-wrapper"><table><tr><th>Role</th><th>Recommended Model</th><th>Justification</th></tr><tr><td><strong>Orchestrator</strong></td><td><code>{model}</code></td><td>Needs broad reasoning</td></tr><tr><td><strong>Specialist</strong></td><td><code>{model}</code></td><td>Needs focused expertise</td></tr><tr><td><strong>Reviewer</strong></td><td><code>{model}</code></td><td>Needs attention to detail</td></tr><tr><td><strong>Formatter</strong></td><td><code>{model}</code></td><td>Simple task, lightweight model</td></tr></table></div>
+<h2 id="decision">Decision</h2>
 <pre data-lang="yaml"><code>selected_model: &quot;{model_name}&quot;
 reason: &quot;{justification}&quot;
 cost_estimate: &quot;{estimated_cost}&quot;
 latency_estimate: &quot;{estimated_latency}&quot;
 fallback_model: &quot;{fallback_model_name}&quot;
 fallback_reason: &quot;{when_to_use_fallback}&quot;</code></pre>
-<h2 id="cenrios">Cenários</h2>
-<h3 id="cenrio-1-extrao-de-dados">Cenário 1: Extração de Dados</h3>
+<h2 id="scenarios">Scenarios</h2>
+<h3 id="scenario-1-data-extraction">Scenario 1: Data Extraction</h3>
 <ul>
-<li><strong>Complexidade</strong>: Baixa</li>
-<li><strong>Modelo</strong>: <code>{lightweight_model}</code></li>
-<li><strong>Justificativa</strong>: Tarefa simples, não precisa de raciocínio complexo</li>
+<li><strong>Complexity</strong>: Low</li>
+<li><strong>Model</strong>: <code>{lightweight_model}</code></li>
+<li><strong>Justification</strong>: Simple task, no complex reasoning needed</li>
 </ul>
-<h3 id="cenrio-2-anlise-de-cdigo">Cenário 2: Análise de Código</h3>
+<h3 id="scenario-2-code-analysis">Scenario 2: Code Analysis</h3>
 <ul>
-<li><strong>Complexidade</strong>: Média</li>
-<li><strong>Modelo</strong>: <code>{standard_model}</code></li>
-<li><strong>Justificativa</strong>: Precisa entender contexto, mas não é trivial</li>
+<li><strong>Complexity</strong>: Medium</li>
+<li><strong>Model</strong>: <code>{standard_model}</code></li>
+<li><strong>Justification</strong>: Needs to understand context, but not trivial</li>
 </ul>
-<h3 id="cenrio-3-gerao-de-arquitetura">Cenário 3: Geração de Arquitetura</h3>
+<h3 id="scenario-3-architecture-generation">Scenario 3: Architecture Generation</h3>
 <ul>
-<li><strong>Complexidade</strong>: Alta</li>
-<li><strong>Modelo</strong>: <code>{advanced_model}</code></li>
-<li><strong>Justificativa</strong>: Raciocínio complexo, múltiplas considerações</li>
+<li><strong>Complexity</strong>: High</li>
+<li><strong>Model</strong>: <code>{advanced_model}</code></li>
+<li><strong>Justification</strong>: Complex reasoning, multiple considerations</li>
 </ul>
 <h2 id="checklist">Checklist</h2>
 <ul>
-<li>[ ] Complexidade avaliada</li>
-<li>[ ] Modelo selecionado por complexidade</li>
-<li>[ ] Custo estimado documentado</li>
-<li>[ ] Fallback definido</li>
-<li>[ ] Latência aceitável</li>
-<li>[ ] Throughput adequado</li>
+<li>[ ] Complexity evaluated</li>
+<li>[ ] Model selected by complexity</li>
+<li>[ ] Estimated cost documented</li>
+<li>[ ] Fallback defined</li>
+<li>[ ] Acceptable latency</li>
+<li>[ ] Adequate throughput</li>
 </ul>
   </div>
 <footer>

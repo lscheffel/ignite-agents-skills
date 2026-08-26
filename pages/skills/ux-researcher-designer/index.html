@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ux-researcher-designer — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; ux-researcher-designer</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: ux-researcher-designer version: 1.0.0 description: 'Use when the user needs user research methodologies, persona development, journey mapping, usability testing plans, or information architecture analysis. Triggers: user says "user research", "persona", "journey map", "usability test", "card sort", "heuristic evaluation", "information architecture", "user interview", understanding user behavior.' domain: frontend-ux triggers:</p>
+<ul>
+<li>ux-researcher-designer</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>ux-researcher-designer</li>
+<li>frontend-ux</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="ux-researcher--designer">UX Researcher & Designer</h1>
+<h2 id="overview">Overview</h2>
+<p>Apply systematic UX research and design methods to understand users, validate assumptions, and create evidence-based designs. This skill covers the full research-to-design pipeline: discovery research, persona creation, journey mapping, information architecture, usability testing, and heuristic evaluation.</p>
+<h2 id="phase-1-discovery-research">Phase 1: Discovery Research</h2>
+<ol>
+<li>Define research objectives and questions</li>
+<li>Select appropriate research methods</li>
+<li>Recruit participants (5-8 per segment for qualitative)</li>
+<li>Conduct research sessions</li>
+<li>Synthesize findings using affinity mapping</li>
+</ol>
+<p><strong>STOP — Present research plan with objectives and methods for user approval.</strong></p>
+<h3 id="research-method-selection-decision-table">Research Method Selection Decision Table</h3>
+<h4 id="generative-discovery-methods">Generative (Discovery) Methods</h4>
+<div class="table-wrapper"><table><tr><th>Method</th><th>When to Use</th><th>Participants</th><th>Duration</th><th>Cost</th></tr><tr><td>User Interviews</td><td>Understanding motivations, behaviors, pain points</td><td>5-8 per segment</td><td>45-60 min each</td><td>Medium</td></tr><tr><td>Contextual Inquiry</td><td>Observing users in their natural environment</td><td>4-6</td><td>1-2 hours each</td><td>High</td></tr><tr><td>Diary Studies</td><td>Longitudinal behavior patterns</td><td>10-15</td><td>1-4 weeks</td><td>Medium</td></tr><tr><td>Surveys</td><td>Quantitative validation of qualitative findings</td><td>100+</td><td>5-10 min</td><td>Low</td></tr><tr><td>Focus Groups</td><td>Exploring attitudes and preferences</td><td>6-10 per group</td><td>60-90 min</td><td>Medium</td></tr></table></div>
+<h4 id="evaluative-methods">Evaluative Methods</h4>
+<div class="table-wrapper"><table><tr><th>Method</th><th>When to Use</th><th>Participants</th><th>Duration</th><th>Cost</th></tr><tr><td>Usability Testing</td><td>Validating designs against tasks</td><td>5-8</td><td>30-60 min each</td><td>Medium</td></tr><tr><td>A/B Testing</td><td>Comparing two design variants</td><td>1000+ per variant</td><td>1-4 weeks</td><td>Low</td></tr><tr><td>Card Sorting</td><td>Organizing information architecture</td><td>15-30</td><td>20-30 min</td><td>Low</td></tr><tr><td>Tree Testing</td><td>Validating navigation structure</td><td>50+</td><td>10-15 min</td><td>Low</td></tr><tr><td>First Click Testing</td><td>Evaluating initial user instincts</td><td>30+</td><td>5-10 min</td><td>Low</td></tr><tr><td>Heuristic Evaluation</td><td>Expert review without users</td><td>3-5 evaluators</td><td>1-2 hours</td><td>Low</td></tr></table></div>
+<h4 id="method-selection-decision-table">Method Selection Decision Table</h4>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Recommended Method</th><th>Why</th></tr><tr><td>No idea who users are</td><td>Interviews + contextual inquiry</td><td>Deep understanding needed</td></tr><tr><td>Have assumptions to validate</td><td>Surveys + usability testing</td><td>Quantitative confirmation</td></tr><tr><td>Redesigning navigation</td><td>Card sorting + tree testing</td><td>Structure-focused</td></tr><tr><td>Evaluating existing product</td><td>Heuristic evaluation + usability test</td><td>Find problems fast</td></tr><tr><td>Comparing two designs</td><td>A/B testing</td><td>Statistical comparison</td></tr><tr><td>Limited budget/time</td><td>Heuristic evaluation</td><td>No participants needed</td></tr><tr><td>Long-term behavior understanding</td><td>Diary study</td><td>Captures patterns over time</td></tr></table></div>
+<h3 id="interview-guide-template">Interview Guide Template</h3>
+<pre><code>1. Introduction (5 min)
+   - Thank participant, explain purpose
+   - Get consent for recording
+   - &quot;There are no wrong answers&quot;
+
+2. Warm-up (5 min)
+   - Background questions about role/context
+   - Current tools and workflows
+
+3. Core Questions (30 min)
+   - Open-ended questions about behaviors
+   - Follow-up probes: &quot;Tell me more about...&quot;
+   - Critical incident: &quot;Describe a time when...&quot;
+   - Avoid leading questions
+
+4. Wrap-up (5 min)
+   - &quot;Is there anything I didn&#x27;t ask that you think is important?&quot;
+   - Thank and explain next steps</code></pre>
+<h2 id="phase-2-analysis-and-modeling">Phase 2: Analysis and Modeling</h2>
+<ol>
+<li>Create user personas from research data</li>
+<li>Map user journey for key scenarios</li>
+<li>Define information architecture</li>
+<li>Identify pain points and opportunities</li>
+<li>Prioritize using impact/effort matrix</li>
+</ol>
+<p><strong>STOP — Present personas and journey map for review before design validation.</strong></p>
+<h3 id="persona-template">Persona Template</h3>
+<pre data-lang="markdown"><code># [Persona Name]
+
+## Demographics
+- Age: [range]
+- Occupation: [role]
+- Technical proficiency: [low/medium/high]
+- Usage frequency: [daily/weekly/monthly]
+
+## Goals
+1. Primary goal: [what they are trying to achieve]
+2. Secondary goal: [supporting objective]
+3. Tertiary goal: [nice-to-have]
+
+## Pain Points
+1. [Frustration with current process]
+2. [Unmet need]
+3. [Workaround they have created]
+
+## Behaviors
+- [How they currently solve the problem]
+- [Tools and methods they use]
+- [Decision-making patterns]
+
+## Quotes (from research)
+- &quot;[Verbatim quote that captures their perspective]&quot;
+- &quot;[Another representative quote]&quot;
+
+## Scenario
+[A paragraph describing a typical day/task where they would use the product]</code></pre>
+<h3 id="persona-quality-decision-table">Persona Quality Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Check</th><th>Pass</th><th>Fail</th></tr><tr><td>Based on real research data</td><td>Quotes and behaviors from interviews</td><td>Invented or assumed behaviors</td></tr><tr><td>Actionable for design</td><td>Specific goals and pain points</td><td>Vague "wants to be productive"</td></tr><tr><td>Distinct from other personas</td><td>Different goals, behaviors, constraints</td><td>Overlapping with another persona</td></tr><tr><td>Number of personas</td><td>2-4 primary</td><td>More than 5 (too many to design for)</td></tr></table></div>
+<h3 id="journey-map-structure">Journey Map Structure</h3>
+<pre><code>Stages:     Awareness -&gt; Consideration -&gt; Onboarding -&gt; Usage -&gt; Advocacy
+                |              |             |          |          |
+Actions:   [What they do at each stage]
+                |              |             |          |          |
+Thoughts:  [What they are thinking]
+                |              |             |          |          |
+Emotions:  [Frustration/neutral/delight mapped to each stage]
+                |              |             |          |          |
+Pain Points: [Friction and frustration points]
+                |              |             |          |          |
+Opportunities: [Design opportunities to improve]
+                |              |             |          |          |
+Touchpoints: [Channels and interfaces involved]</code></pre>
+<h3 id="journey-map-elements">Journey Map Elements</h3>
+<ul>
+<li><strong>Moments of Truth</strong>: Critical points where users form lasting impressions</li>
+<li><strong>Service Blueprints</strong>: Front-stage actions mapped to back-stage processes</li>
+<li><strong>Emotion Curve</strong>: Visual line showing emotional highs and lows</li>
+<li><strong>Gap Analysis</strong>: Difference between current and desired experience</li>
+</ul>
+<h3 id="heuristic-evaluation-nielsens-10">Heuristic Evaluation (Nielsen's 10)</h3>
+<div class="table-wrapper"><table><tr><th>#</th><th>Heuristic</th><th>What to Look For</th></tr><tr><td>1</td><td>Visibility of system status</td><td>Loading indicators, progress bars, save confirmations</td></tr><tr><td>2</td><td>Match with real world</td><td>Natural language, familiar metaphors, logical order</td></tr><tr><td>3</td><td>User control and freedom</td><td>Undo, cancel, back, escape hatches</td></tr><tr><td>4</td><td>Consistency and standards</td><td>Same action = same result, platform conventions</td></tr><tr><td>5</td><td>Error prevention</td><td>Confirmation dialogs, constraints, smart defaults</td></tr><tr><td>6</td><td>Recognition over recall</td><td>Visible options, contextual help, recent history</td></tr><tr><td>7</td><td>Flexibility and efficiency</td><td>Shortcuts, customization, bulk actions</td></tr><tr><td>8</td><td>Aesthetic and minimalist design</td><td>No unnecessary information, clear hierarchy</td></tr><tr><td>9</td><td>Help users with errors</td><td>Plain language errors, specific cause, suggest fix</td></tr><tr><td>10</td><td>Help and documentation</td><td>Searchable, task-oriented, concise</td></tr></table></div>
+<h3 id="severity-rating-scale">Severity Rating Scale</h3>
+<div class="table-wrapper"><table><tr><th>Rating</th><th>Description</th><th>Action</th></tr><tr><td>0</td><td>Not a usability problem</td><td>No action</td></tr><tr><td>1</td><td>Cosmetic only</td><td>Fix if time allows</td></tr><tr><td>2</td><td>Minor problem</td><td>Low priority fix</td></tr><tr><td>3</td><td>Major problem</td><td>High priority, fix before launch</td></tr><tr><td>4</td><td>Usability catastrophe</td><td>Must fix immediately</td></tr></table></div>
+<h2 id="phase-3-design-validation">Phase 3: Design Validation</h2>
+<ol>
+<li>Create testable prototypes (low or high fidelity)</li>
+<li>Plan usability testing sessions</li>
+<li>Conduct tests with 5+ participants</li>
+<li>Analyze results and iterate</li>
+<li>Document findings and recommendations</li>
+</ol>
+<p><strong>STOP — Present usability test results and recommendations for review.</strong></p>
+<h3 id="prototype-fidelity-decision-table">Prototype Fidelity Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Situation</th><th>Fidelity</th><th>Tool</th><th>Why</th></tr><tr><td>Early concept validation</td><td>Low (paper/wireframe)</td><td>Balsamiq, paper</td><td>Fast iteration, low commitment</td></tr><tr><td>Navigation testing</td><td>Medium (clickable)</td><td>Figma prototype</td><td>Test flow without visual polish</td></tr><tr><td>Visual design validation</td><td>High (pixel-perfect)</td><td>Figma, coded prototype</td><td>Test actual look and feel</td></tr><tr><td>Interaction validation</td><td>High (coded)</td><td>HTML/CSS/JS prototype</td><td>Test real interactions</td></tr></table></div>
+<h3 id="ab-testing-methodology">A/B Testing Methodology</h3>
+<div class="table-wrapper"><table><tr><th>Step</th><th>Details</th></tr><tr><td>Hypothesis</td><td>"Changing [X] will [improve/decrease] [metric] because [reason]"</td></tr><tr><td>Sample size</td><td>Power analysis (95% confidence, 80% power)</td></tr><tr><td>Duration</td><td>Minimum 2 full business cycles (2+ weeks)</td></tr><tr><td>Variable control</td><td>Test one change at a time</td></tr><tr><td>Analysis</td><td>Statistical significance (p < 0.05)</td></tr></table></div>
+<h3 id="common-ux-metrics">Common UX Metrics</h3>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>What It Measures</th><th>Benchmark</th></tr><tr><td>Task success rate</td><td>% completing target task</td><td>> 78% (acceptable)</td></tr><tr><td>Time on task</td><td>Duration to complete action</td><td>Varies by task</td></tr><tr><td>Error rate</td><td>Mistakes per task</td><td>< 10%</td></tr><tr><td>System Usability Scale (SUS)</td><td>Overall usability score</td><td>68 = average</td></tr><tr><td>Net Promoter Score (NPS)</td><td>Likelihood to recommend</td><td>> 0 = good, > 50 = excellent</td></tr><tr><td>Customer Effort Score (CES)</td><td>Ease of experience</td><td>> 5/7</td></tr></table></div>
+<h3 id="information-architecture">Information Architecture</h3>
+<h4 id="card-sort-analysis-decision-table">Card Sort Analysis Decision Table</h4>
+<div class="table-wrapper"><table><tr><th>Sort Type</th><th>When to Use</th><th>Analysis Method</th></tr><tr><td>Open sort</td><td>Discovery — users create categories</td><td>Similarity matrix, dendrogram</td></tr><tr><td>Closed sort</td><td>Validation — sort into predefined categories</td><td>Category agreement percentage</td></tr><tr><td>Hybrid sort</td><td>Both — predefined with ability to add new</td><td>Combined analysis</td></tr></table></div>
+<h4 id="navigation-patterns">Navigation Patterns</h4>
+<div class="table-wrapper"><table><tr><th>Pattern</th><th>Use Case</th></tr><tr><td>Global navigation</td><td>Persistent across all pages</td></tr><tr><td>Local navigation</td><td>Within a section</td></tr><tr><td>Contextual navigation</td><td>Related content links</td></tr><tr><td>Utility navigation</td><td>Settings, account, help</td></tr><tr><td>Breadcrumbs</td><td>Location within hierarchy</td></tr></table></div>
+<h2 id="deliverables-checklist">Deliverables Checklist</h2>
+<ul>
+<li>[ ] Research plan with objectives and methods</li>
+<li>[ ] Participant recruitment screener</li>
+<li>[ ] Interview/test script</li>
+<li>[ ] Affinity map of findings</li>
+<li>[ ] Personas (2-4 primary)</li>
+<li>[ ] Journey map for key scenario</li>
+<li>[ ] Information architecture diagram</li>
+<li>[ ] Usability test report with severity ratings</li>
+<li>[ ] Prioritized recommendations with evidence</li>
+</ul>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Designing without research</td><td>Assumptions lead to wrong designs</td><td>Start with discovery research</td></tr><tr><td>Testing with colleagues</td><td>Biased, know too much about product</td><td>Recruit external participants</td></tr><tr><td>Asking users what they want</td><td>Users cannot predict behavior</td><td>Observe what they do instead</td></tr><tr><td>Confirmation bias</td><td>Only seeing what supports beliefs</td><td>Use structured analysis, multiple evaluators</td></tr><tr><td>Too many personas (5+)</td><td>Cannot design for everyone</td><td>Keep to 2-4 primary personas</td></tr><tr><td>Skipping synthesis</td><td>Raw data is not insights</td><td>Always do affinity mapping</td></tr><tr><td>Underpowered A/B tests</td><td>Results are meaningless noise</td><td>Calculate sample size before starting</td></tr><tr><td>Presenting findings without recommendations</td><td>Research without action is wasted</td><td>Always include prioritized next steps</td></tr></table></div>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>ui-ux-pro-max</code></td><td>UX guidelines and design patterns</td></tr><tr><td><code>mobile-design</code></td><td>Mobile usability testing patterns</td></tr><tr><td><code>planning</code></td><td>Research plan is part of the implementation plan</td></tr><tr><td><code>spec-writing</code></td><td>User research informs JTBD specifications</td></tr><tr><td><code>prd-generation</code></td><td>Personas and journey maps feed into PRDs</td></tr><tr><td><code>llm-as-judge</code></td><td>Evaluate design quality with rubrics</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Select and combine research methods based on project constraints (budget, timeline, access to users). Lightweight methods (heuristic evaluation, guerrilla testing) are acceptable when full research is impractical.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

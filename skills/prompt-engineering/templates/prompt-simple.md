@@ -1,31 +1,31 @@
 # Prompt Simple Template
 
-## Contexto
+## Context
 
-{Quem é o agente, qual seu papel}
+{Who is the agent, what is their role}
 
-## Tarefa
+## Task
 
-{O que deve ser feito, de forma clara e específica}
+{What needs to be done, clearly and specifically}
 
-## Formato de Saída
+## Output Format
 
-{Estrutura esperada da resposta}
+{Expected structure of the response}
 
-## Restrições
+## Restrictions
 
-{O que NÃO fazer, limites e regras}
+{What NOT to do, limits, and rules}
 
 ---
 
-## Prompt Final
+## Final Prompt
 
 ```
-{contexto}
+{context}
 
-{tarefa}
+{task}
 
-{formato de saída}
+{output format}
 
-{restrições}
+{restrictions}
 ```

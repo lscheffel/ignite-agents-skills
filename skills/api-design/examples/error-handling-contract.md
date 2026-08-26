@@ -1,19 +1,19 @@
-# Exemplo: Contrato de Erros — API de Pagamentos
+# Example: Error Contract — Payment API
 
-## Contexto
+## Context
 
-API de processamento de pagamentos com alta criticidade. Erros devem ser claros, acionáveis e seguros (sem vazar dados sensíveis).
+High-criticality payment processing API. Errors must be clear, actionable, and secure (without leaking sensitive data).
 
-## Definição de Categorias de Erro
+## Error Category Definitions
 
-### 1. Erros de Validação (4xx)
+### 1. Validation Errors (4xx)
 
 ```json
 {
   "type": "https://pay.example.com/errors/invalid-request",
-  "title": "Requisição inválida",
+  "title": "Invalid Request",
   "status": 400,
-  "detail": "O campo 'amount' deve ser um número positivo",
+  "detail": "The 'amount' field must be a positive number",
   "instance": "/payments",
   "request_id": "req_abc123",
   "timestamp": "2026-07-05T18:00:00Z",
@@ -21,56 +21,56 @@ API de processamento de pagamentos com alta criticidade. Erros devem ser claros,
     {
       "field": "amount",
       "code": "INVALID_VALUE",
-      "message": "deve ser um número positivo",
+      "message": "must be a positive number",
       "rejected_value": -100
     }
   ]
 }
 ```
 
-### 2. Erros de Autenticação (401/403)
+### 2. Authentication Errors (401/403)
 
 ```json
 {
   "type": "https://pay.example.com/errors/unauthorized",
-  "title": "Não autorizado",
+  "title": "Unauthorized",
   "status": 401,
-  "detail": "Token de acesso expirado ou inválido",
+  "detail": "Access token expired or invalid",
   "instance": "/payments",
   "request_id": "req_def456",
   "timestamp": "2026-07-05T18:00:00Z"
 }
 ```
 
-**Regra de segurança:** Nunca incluir detalhes sobre por que a autenticação falhou (token inválido vs expirado vs inexistente).
+**Security Rule:** Never include details about why authentication failed (invalid vs expired vs non-existent token).
 
-### 3. Erros de Negócio (422)
+### 3. Business Errors (422)
 
 ```json
 {
   "type": "https://pay.example.com/errors/insufficient-funds",
-  "title": "Saldo insuficiente",
+  "title": "Insufficient Funds",
   "status": 422,
-  "detail": "O saldo disponível (R$ 50.00) é menor que o valor solicitado (R$ 100.00)",
+  "detail": "The available balance (USD 50.00) is less than the requested amount (USD 100.00)",
   "instance": "/payments",
   "request_id": "req_ghi789",
   "timestamp": "2026-07-05T18:00:00Z",
   "metadata": {
     "available_balance": 50.00,
     "requested_amount": 100.00,
-    "currency": "BRL"
+    "currency": "USD"
   }
 }
 ```
 
-### 4. Erros de Limite (429)
+### 4. Rate Limit Errors (429)
 
 ```json
 {
   "type": "https://pay.example.com/errors/rate-limited",
-  "title": "Limite de requisições atingido",
+  "title": "Rate Limit Exceeded",
   "status": 429,
-  "detail": "Limite de 100 requisições/minuto atingido. Tente novamente em 30 segundos.",
+  "detail": "Rate limit of 100 requests/minute exceeded. Try again in 30 seconds.",
   "instance": "/payments",
   "request_id": "req_jkl012",
   "timestamp": "2026-07-05T18:00:00Z",
@@ -78,28 +78,28 @@ API de processamento de pagamentos com alta criticidade. Erros devem ser claros,
 }
 ```
 
-### 5. Erros de Servidor (5xx)
+### 5. Server Errors (5xx)
 
 ```json
 {
   "type": "https://pay.example.com/errors/gateway-error",
-  "title": "Erro no gateway de pagamento",
+  "title": "Payment Gateway Error",
   "status": 502,
-  "detail": "O gateway de pagamento retornou uma resposta inesperada",
+  "detail": "The payment gateway returned an unexpected response",
   "instance": "/payments",
   "request_id": "req_mno345",
   "timestamp": "2026-07-05T18:00:00Z"
 }
 ```
 
-**Regra de segurança:** Nunca expor stack traces, IDs internos ou detalhes de infraestrutura em erros 5xx.
+**Security Rule:** Never expose stack traces, internal IDs, or infrastructure details in 5xx errors.
 
-## Regras Gerais
+## General Rules
 
-1. **Consistência:** Todos os erros seguem RFC 7807
-2. **Segurança:** Nunca vazar dados sensíveis (tokens, senhas, IDs internos)
-3. **Accionabilidade:** O `detail` deve explicar o que fazer para corrigir
-4. **Rastreabilidade:** `request_id` e `timestamp` são obrigatórios
-5. **Idioma:** Mensagens em português (para APIs brasileiras) ou inglês (para APIs internacionais)
-6. **Log:** Erros 4xx logam em WARN, 5xx em ERROR
-7. **Alerta:** Erros 5xx disparam alerta se taxa > 1% em 5 minutos
+1. **Consistency:** All errors follow RFC 7807
+2. **Security:** Never leak sensitive data (tokens, passwords, internal IDs)
+3. **Actionability:** The `detail` field must explain what to do to correct the error
+4. **Traceability:** `request_id` and `timestamp` are mandatory
+5. **Language:** Messages are in Portuguese (for Brazilian APIs) or English (for international APIs)
+6. **Logging:** 4xx errors log at WARN, 5xx errors log at ERROR
+7. **Alerting:** 5xx errors trigger an alert if the rate > 1% in 5 minutes

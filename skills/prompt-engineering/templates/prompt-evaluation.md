@@ -6,36 +6,36 @@
 {prompt original}
 ```
 
-## Testes
+## Tests
 
-### Teste 1
+### Test 1
 Input: {entrada 1}
 Output: {saída obtida}
-Esperado: {saída esperada}
+Expected: {saída esperada}
 Status: ✅/❌
 
-### Teste 2
+### Test 2
 Input: {entrada 2}
 Output: {saída obtida}
-Esperado: {saída esperada}
+Expected: {saída esperada}
 Status: ✅/❌
 
-## Métricas
+## Metrics
 
-| Métrica | Valor |
+| Metric | Value |
 |---------|-------|
-| Tokens usados | {número} |
-| Tempo de resposta | {tempo}ms |
-| Consistência | {score}/10 |
-| Precisão | {score}/10 |
+| Tokens used | {número} |
+| Response time | {tempo}ms |
+| Consistency | {score}/10 |
+| Precision | {score}/10 |
 
-## Melhorias
+## Improvements
 
 1. {melhoria 1}
 2. {melhoria 2}
 3. {melhoria 3}
 
-## Prompt Otimizado
+## Optimized Prompt
 
 ```
 {prompt otimizado}

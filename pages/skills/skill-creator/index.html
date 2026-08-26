@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>skill-creator — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; skill-creator</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: skill-creator version: 2.0.0 description: End-to-end framework and scaffolding engine for creating, testing, validating, and packaging autonomous AI agent skills with progressive disclosure, deterministic frontmatter, and bundled resources. domain: domain-stack triggers:</p>
+<ul>
+<li>skill-creator</li>
+<li>create-skill</li>
+<li>build-skill</li>
+<li>new-skill</li>
+<li>criar-skill</li>
+<li>package-skill</li>
+<li>init-skill</li>
+<li>skill-generator</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>skill-creator</li>
+<li>skills</li>
+<li>scaffolding</li>
+<li>packaging</li>
+<li>agent-customization</li>
+<li>governance</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>skill-audit-bulletin</li>
+<li>skill-discovery</li>
+<li>writing-skills</li>
+<li>technical-documentation</li>
+<li>repo-bootstrap</li>
+</ul>
+<p>metadata: author: Antigravity Architecture & ComposioHQ provenance: curated license: MIT last_audited: "2026-08-26" ---</p>
+<h1 id="skill-creator-sota-edition">Skill Creator (SOTA Edition)</h1>
+<p>Authoritative framework and scaffolding toolkit for designing, building, validating, and packaging high-quality skills for autonomous AI agents (Gemini CLI, Antigravity, Claude Code).</p>
+<hr>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use When:</h3>
+<ul>
+<li>Creating a new skill from scratch to equip agents with domain workflows, specialized knowledge, or tool integrations.</li>
+<li>Refactoring, modularizing, or upgrading an existing skill to meet modern SOTA standards.</li>
+<li>Scaffolding canonical skill directories with <code>init_skill.py</code>.</li>
+<li>Validating YAML frontmatter and directory conventions with <code>quick_validate.py</code>.</li>
+<li>Packaging and distributing skills into production-ready <code>.zip</code> bundles via <code>package_skill.py</code>.</li>
+</ul>
+<h3 id="do-not-use-when">Do Not Use When:</h3>
+<ul>
+<li>Auditing existing skills against the 8-dimension rubric (use <code>skill-audit-bulletin</code>).</li>
+<li>Searching or routing existing catalog skills (use <code>skill-discovery</code> or <code>find-skills</code>).</li>
+<li>Creating repository-level governance files or ADRs (use <code>repo-bootstrap</code> or <code>adr-generator</code>).</li>
+<li>Writing general documentation without skill packaging (use <code>technical-documentation</code>).</li>
+</ul>
+<h3 id="related-skills">Related Skills:</h3>
+<ul>
+<li><code>skill-audit-bulletin</code> — evaluates and audits created skills against the 8-dimension quality rubric.</li>
+<li><code>skill-discovery</code> — catalogs and routes queries to relevant installed skills.</li>
+<li><code>writing-skills</code> — guidelines for prompt tuning and agent persona authoring.</li>
+<li><code>technical-documentation</code> — documentation standards and template management.</li>
+</ul>
+<hr>
+<h2 id="decision-tree--lifecycle-flow">Decision Tree & Lifecycle Flow</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Skill Creation Requested&quot;] --&gt; B[&quot;Phase 1: Identify Concrete Use Cases &amp; Triggers&quot;]
+    B --&gt; C[&quot;Phase 2: Plan Reusable Resources (scripts, references, assets)&quot;]
+    C --&gt; D[&quot;Phase 3: Scaffold Directory via init_skill.py&quot;]
+    D --&gt; E[&quot;Phase 4: Author SKILL.md (Progressive Disclosure &amp; Imperative Tone)&quot;]
+    E --&gt; F[&quot;Phase 5: Execute Automated Validation (quick_validate.py)&quot;]
+    F --&gt;|Validation Failed| E
+    F --&gt;|Validation Passed| G[&quot;Phase 6: Package &amp; Verify via skill-audit-bulletin&quot;]
+    G --&gt; H[&quot;Ready for Production Deployment&quot;]</code></pre>
+<hr>
+<h2 id="progressive-disclosure-design-principle">Progressive Disclosure Design Principle</h2>
+<p>Skills manage context efficiently through a 3-tier loading architecture:</p>
+<div class="table-wrapper"><table><tr><th>Tier</th><th>Component</th><th>Loading Trigger</th><th>Context Footprint</th><th>Content Responsibility</th></tr><tr><td><strong>Tier 1</strong></td><td><strong>YAML Metadata</strong> (<code>name</code> & <code>description</code>)</td><td>Always loaded in system memory</td><td>~50–100 tokens</td><td>Tells the agent <em>what</em> the skill does and <em>when</em> to invoke it.</td></tr><tr><td><strong>Tier 2</strong></td><td><strong><code>SKILL.md</code> Body</strong></td><td>Loaded when skill triggers</td><td>< 4,000 tokens</td><td>Procedural steps, decision trees, checklists, and anti-patterns.</td></tr><tr><td><strong>Tier 3</strong></td><td><strong>Bundled Resources</strong> (<code>scripts/</code>, <code>references/</code>, <code>assets/</code>)</td><td>Loaded on-demand as needed</td><td>Unlimited</td><td>Large schemas, full documentation, reusable scripts, and templates.</td></tr></table></div>
+<hr>
+<h2 id="anatomy-of-a-canonical-skill">Anatomy of a Canonical Skill</h2>
+<p>Every skill follows a deterministic directory structure:</p>
+<pre><code>skill-name/
+├── SKILL.md                     # [REQUIRED] Frontmatter metadata + operational instructions
+├── scripts/                     # [OPTIONAL] Deterministic Python/Bash tools
+│   └── helper_tool.py
+├── references/                  # [OPTIONAL] Deep documentation, schemas, domain guides (&gt;10k tokens)
+│   └── domain_reference.md
+└── assets/                      # [OPTIONAL] Boilerplate code, templates, fonts, images
+    └── starter_template/</code></pre>
+<h3 id="1-frontmatter-contract-skillmd">1. Frontmatter Contract (<code>SKILL.md</code>)</h3>
+<pre data-lang="yaml"><code>---
+name: my-skill-name
+version: 1.0.0
+description: Precise explanation of capabilities and invocation triggers in 3rd person.
+domain: domain-stack
+triggers:
+  - my-skill-name
+  - alternate-trigger-1
+  - alternate-trigger-2
+tags:
+  - my-skill-name
+  - category
+related_skills:
+  - related-skill-1
+metadata:
+  author: Author Name
+  provenance: internal
+  last_audited: &quot;2026-08-26&quot;
+---</code></pre>
+<hr>
+<h2 id="skill-creation-workflow-6-step-lifecycle">Skill Creation Workflow (6-Step Lifecycle)</h2>
+<h3 id="step-1-concrete-use-cases--trigger-mapping">Step 1: Concrete Use Cases & Trigger Mapping</h3>
+<ul>
+<li>Identify 3–5 realistic user prompts that should trigger this skill.</li>
+<li>Map distinct keywords (in Portuguese and English) to the <code>triggers:</code> list.</li>
+<li>Formulate clear "When to Use" and "Do Not Use When" boundaries.</li>
+</ul>
+<h3 id="step-2-plan-reusable-resources">Step 2: Plan Reusable Resources</h3>
+<ul>
+<li><strong><code>scripts/</code></strong>: Is there logic that would otherwise require rewriting identical boilerplate? Include a Python script.</li>
+<li><strong><code>references/</code></strong>: Is there deep domain reference material (e.g. database schemas, large API specs)? Move it to <code>references/</code> to keep <code>SKILL.md</code> concise.</li>
+<li><strong><code>assets/</code></strong>: Are there template files, initial boilerplates, or static artifacts? Store them in <code>assets/</code>.</li>
+</ul>
+<h3 id="step-3-scaffold-directory-via-initskillpy">Step 3: Scaffold Directory via <code>init_skill.py</code></h3>
+<p>Run the scaffolding script:</p>
+<pre data-lang="bash"><code># Workspace Local execution
+python3 ~/.gemini/config/skills/skill-creator/scripts/init_skill.py &lt;skill-name&gt; --path &lt;output-directory&gt;
+
+# In-repo execution
+python3 scripts/init_skill.py &lt;skill-name&gt; --path .</code></pre>
+<p>The script initializes <code>SKILL.md</code>, standard YAML frontmatter, and placeholder directories (<code>scripts/</code>, <code>references/</code>, <code>assets/</code>).</p>
+<h3 id="step-4-author-skillmd-sota-standards">Step 4: Author <code>SKILL.md</code> (SOTA Standards)</h3>
+<ul>
+<li><strong>Imperative / Verb-First Style</strong>: Write instructions as commands ("Extract data", "Verify schema", "Execute build") rather than conversational prose.</li>
+<li><strong>Zero Placeholders</strong>: Eliminate <code>{{TODO}}</code>, dummy text, or unverified imports.</li>
+<li><strong>Decision Trees</strong>: Add Mermaid flowcharts for non-trivial conditional branches.</li>
+<li><strong>Checklists</strong>: Provide copy-pasteable acceptance checklists.</li>
+</ul>
+<h3 id="step-5-automated-validation--packaging">Step 5: Automated Validation & Packaging</h3>
+<p>Validate the created skill against schema and naming constraints:</p>
+<pre data-lang="bash"><code># Validate skill structure
+python3 ~/.gemini/config/skills/skill-creator/scripts/quick_validate.py &lt;path/to/skill-folder&gt;
+
+# Package into distributable zip
+python3 ~/.gemini/config/skills/skill-creator/scripts/package_skill.py &lt;path/to/skill-folder&gt; [dist_dir]</code></pre>
+<h3 id="step-6-audit-gating-with-skill-audit-bulletin">Step 6: Audit Gating with <code>skill-audit-bulletin</code></h3>
+<p>Before publishing, audit the skill using <code>skill-audit-bulletin</code> to ensure it reaches <strong>Grade A (Score ≥ 85/100)</strong> across all 8 dimensions:</p>
+<ol>
+<li>Semantic Triggering Precision (20%)</li>
+<li>Applicability & Boundaries (10%)</li>
+<li>Depth & Coverage (15%)</li>
+<li>Technical Accuracy (15%)</li>
+<li>Universality & Portability (10%)</li>
+<li>Maintainability (10%)</li>
+<li>Agent Executor Ergonomics (10%)</li>
+<li>Risk Profile (10%)</li>
+</ol>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="bloated-monolithic-skillmd">Bloated Monolithic SKILL.md</h4>
+<ul>
+<li><strong>What is it:</strong> Dumping entire 50-page manuals, schemas, or large source files directly into <code>SKILL.md</code>.</li>
+<li><strong>Why is it bad:</strong> Saturates the AI agent's context window on initial trigger, degrading performance and increasing costs.</li>
+<li><strong>How to avoid:</strong> Apply Progressive Disclosure. Keep <code>SKILL.md</code> under 4,000 tokens and move deep material into <code>references/</code>.</li>
+</ul>
+<h4 id="hallucinated-external-tools">Hallucinated External Tools</h4>
+<ul>
+<li><strong>What is it:</strong> Instructing the agent to run CLI commands that do not exist or are not installed in the environment.</li>
+<li><strong>Why is it bad:</strong> Causes execution loops and immediate runtime failures.</li>
+<li><strong>How to avoid:</strong> Bundle required tools as self-contained Python scripts in <code>scripts/</code> using the Python Standard Library.</li>
+</ul>
+<h4 id="single-word-triggers--vague-descriptions">Single-Word Triggers & Vague Descriptions</h4>
+<ul>
+<li><strong>What is it:</strong> Having only <code>triggers: [skill-name]</code> with a generic description like "Helps with stuff".</li>
+<li><strong>Why is it bad:</strong> RAG and semantic routers fail to activate the skill when users query in natural language.</li>
+<li><strong>How to avoid:</strong> Include 5–10 diverse triggers, action verbs, and English/Portuguese variations.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="conversational-second-person-tone">Conversational Second-Person Tone</h4>
+<ul>
+<li><strong>What is it:</strong> Writing "You should do this" or "If you want, you can".</li>
+<li><strong>How to avoid:</strong> Use objective, imperative instructions: "Execute step 1", "Parse YAML", "Verify exit code".</li>
+</ul>
+<h4 id="hardcoded-host-specific-paths">Hardcoded Host-Specific Paths</h4>
+<ul>
+<li><strong>What is it:</strong> Referencing <code>/home/user/...</code> in scripts or instructions.</li>
+<li><strong>How to avoid:</strong> Use dynamic path resolution (<code>Path(__file__).resolve()</code> or relative paths).</li>
+</ul>
+<hr>
+<h2 id="checklist-for-sota-skill-delivery">Checklist for SOTA Skill Delivery</h2>
+<ul>
+<li>[ ] Frontmatter includes <code>name</code>, <code>version</code>, <code>description</code>, <code>triggers</code>, <code>tags</code>, <code>related_skills</code>, and <code>metadata</code>.</li>
+<li>[ ] <code>description</code> clearly specifies capabilities and trigger scenarios in 3rd person.</li>
+<li>[ ] <code>When to Use</code> and <code>Do Not Use When</code> sections clearly define boundaries.</li>
+<li>[ ] Progressive Disclosure applied (<code>references/</code> and <code>scripts/</code> used for heavy resources).</li>
+<li>[ ] All code snippets, CLI commands, and scripts verified without placeholders.</li>
+<li>[ ] Validated with <code>quick_validate.py</code>.</li>
+<li>[ ] Audited with <code>skill-audit-bulletin</code> achieving Grade A (≥85/100).</li>
+</ul>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

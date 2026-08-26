@@ -411,110 +411,122 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: api-design description: Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência. Use quando projetar novas APIs, revisar contratos existentes ou padronizar práticas de design de interface. version: 2.0.0 tags: [api, rest, graphql, endpoints, versioning] related_skills: [documentation, testing, governance] ---</p>
+<p>name: api-design version: 2.0.0 description: Comprehensive guide to designing robust, consistent, and scalable RESTful and GraphQL APIs. Define standards for endpoints, versioning, error contracts, pagination, and idempotence. Use when designing new APIs, reviewing existing contracts, or standardizing interface design practices. domain: architecture-systems triggers:</p>
+<ul>
+<li>api-design</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>api</li>
+<li>rest</li>
+<li>graphql</li>
+<li>endpoints</li>
+<li>versioning</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="api-design">API Design</h1>
-<p>Guia para design de APIs robustas, consistentes e escaláveis.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Guide to designing robust, consistent, and scalable APIs.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Precisa projetar novos endpoints</li>
-<li>Precisa definir contrato de API</li>
-<li>Precisa implementar versionamento</li>
-<li>Precisa padronizar tratamento de erros</li>
-<li>Precisa revisar API existente</li>
+<li>You need to design new endpoints</li>
+<li>You need to define an API contract</li>
+<li>You need to implement versioning</li>
+<li>You need to standardize error handling</li>
+<li>You need to review an existing API</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Protótipo rápido sem contratos formais</li>
-<li>API interna entre serviços do mesmo time</li>
-<li>SDK já existe e está bem definido</li>
+<li>You need a quick prototype without formal contracts</li>
+<li>You are working on an internal API between services of the same team</li>
+<li>An SDK already exists and is well-defined</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>documentation</code> — para documentação de API</li>
-<li><code>testing</code> — para testes de contrato</li>
-<li><code>governance</code> — para processos de review</li>
+<li><code>documentation</code> — for API documentation</li>
+<li><code>testing</code> — for contract testing</li>
+<li><code>governance</code> — for review processes</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Precisa expor dados?] --&gt;|Sim| B[API pública?]
-    A --&gt;|Não| C[Use mensageria]
-    B --&gt;|Sim| D[REST ou GraphQL?]
-    B --&gt;|Não| E[API interna]
-    D --&gt;|CRUD simples| F[REST]
-    D --&gt;|Consultas complexas| G[GraphQL]
-    F --&gt; H[Definir endpoints CRUD]
-    H --&gt; I[Versionamento]
-    I --&gt; J[Formato de erro]
-    J --&gt; K[ paginação]
-    K --&gt; L[Idempotência]
-    L --&gt; M[API Pronta]
-    G --&gt; N[Schema GraphQL]
+    A[Do you need to expose data?] --&gt;|Yes| B[Is the API public?]
+    A --&gt;|No| C[Use messaging]
+    B --&gt;|Yes| D[REST or GraphQL?]
+    B --&gt;|No| E[Internal API]
+    D --&gt;|Simple CRUD| F[REST]
+    D --&gt;|Complex queries| G[GraphQL]
+    F --&gt; H[Define CRUD endpoints]
+    H --&gt; I[Versioning]
+    I --&gt; J[Error format]
+    J --&gt; K[ pagination]
+    K --&gt; L[Idempotence]
+    L --&gt; M[API ready]
+    G --&gt; N[GraphQL schema]
     N --&gt; O[Resolvers]
     O --&gt; I</code></pre>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
 <h3 id="restful-design">RESTful Design</h3>
-<p>API baseada em recursos HTTP.</p>
+<p>API based on HTTP resources.</p>
 <ul>
-<li><strong>Recursos</strong> representam entidades</li>
-<li><strong>Métodos</strong> definem ações</li>
-<li><strong>Status codes</strong> comunicam resultado</li>
+<li><strong>Resources</strong> represent entities</li>
+<li><strong>Methods</strong> define actions</li>
+<li><strong>Status codes</strong> communicate results</li>
 </ul>
-<pre><code>GET    /users         → Listar usuários
-POST   /users         → Criar usuário
-GET    /users/{id}    → Obter usuário
-PUT    /users/{id}    → Atualizar usuário
-DELETE /users/{id}    → Deletar usuário</code></pre>
-<h3 id="idempotncia">Idempotência</h3>
-<p>Operações que produzem mesmo resultado mesmo que executadas múltiplas vezes.</p>
+<pre><code>GET    /users         → List users
+POST   /users         → Create user
+GET    /users/{id}    → Get user
+PUT    /users/{id}    → Update user
+DELETE /users/{id}    → Delete user</code></pre>
+<h3 id="idempotence">Idempotence</h3>
+<p>Operations that produce the same result even if executed multiple times.</p>
 <ul>
-<li><strong>Idempotente</strong>: GET, PUT, DELETE</li>
-<li><strong>Não idempotente</strong>: POST, PATCH (por padrão)</li>
-<li><strong>Seguro</strong>: GET, HEAD, OPTIONS</li>
+<li><strong>Idempotent</strong>: GET, PUT, DELETE</li>
+<li><strong>Not idempotent</strong>: POST, PATCH (by default)</li>
+<li><strong>Safe</strong>: GET, HEAD, OPTIONS</li>
 </ul>
-<h3 id="versionamento">Versionamento</h3>
-<p>Estratégias para evoluir API sem quebrar clientes.</p>
+<h3 id="versioning">Versioning</h3>
+<p>Strategies to evolve the API without breaking clients.</p>
 <ul>
-<li><strong>URL path</strong>: <code>/v1/users</code> (recomendado)</li>
+<li><strong>URL path</strong>: <code>/v1/users</code> (recommended)</li>
 <li><strong>Header</strong>: <code>Accept: application/vnd.api.v1+json</code></li>
 <li><strong>Query param</strong>: <code>/users?version=1</code></li>
 </ul>
-<h3 id="contrato-de-api">Contrato de API</h3>
-<p>Acordo formal sobre formato de dados.</p>
+<h3 id="api-contract">API Contract</h3>
+<p>Formal agreement on data format.</p>
 <ul>
 <li>Request/Response schema</li>
-<li>Códigos de erro</li>
-<li>Formatação de datas</li>
-<li>Paginação</li>
+<li>Error codes</li>
+<li>Date formatting</li>
+<li>Pagination</li>
 </ul>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-definir-recursos">Fase 1: Definir Recursos</h3>
+<h3 id="phase-1-define-resources">Phase 1: Define Resources</h3>
 <ol>
-<li>Identifique entidades do domínio:</li>
+<li>Identify domain entities:</li>
 </ol>
-<pre data-lang="bash"><code>   # Listar entidades do modelo
+<pre data-lang="bash"><code>   # List entities from the model
    grep -r &quot;model\|entity&quot; src/</code></pre>
 <ol>
-<li>Crie mapeamento recurso-URL:</li>
+<li>Create resource-URL mapping:</li>
 </ol>
 <pre><code>   /users          → User
    /orders         → Order
    /products       → Product</code></pre>
 <ol>
-<li>Defina relacionamentos:</li>
+<li>Define relationships:</li>
 </ol>
-<pre><code>   /users/{id}/orders   → Orders do user
-   /orders/{id}/items   → Items da order</code></pre>
+<pre><code>   /users/{id}/orders   → Orders of the user
+   /orders/{id}/items   → Items of the order</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Lista de recursos aprovada</li>
+<li><strong>Checkpoint</strong>: Approved list of resources</li>
 </ol>
-<h3 id="fase-2-especificar-endpoints">Fase 2: Especificar Endpoints</h3>
+<h3 id="phase-2-specify-endpoints">Phase 2: Specify Endpoints</h3>
 <ol>
-<li>Para cada recurso, defina operações:</li>
+<li>For each resource, define operations:</li>
 </ol>
 <pre data-lang="yaml"><code>   /users:
      get:
-       summary: Listar usuários
+       summary: List users
        parameters:
          - name: page
            in: query
@@ -523,48 +535,48 @@ DELETE /users/{id}    → Deletar usuário</code></pre>
              default: 1
        responses:
          200:
-           description: Lista de usuários</code></pre>
+           description: List of users</code></pre>
 <ol>
-<li>Use template <code>templates/endpoint-spec.md</code></li>
-<li>Documente request/response</li>
-<li><strong>Checkpoint</strong>: Especificação completa</li>
+<li>Use the <code>endpoint-spec.md</code> template</li>
+<li>Document request/response</li>
+<li><strong>Checkpoint</strong>: Complete specification</li>
 </ol>
-<h3 id="fase-3-definir-tratamento-de-erros">Fase 3: Definir Tratamento de Erros</h3>
+<h3 id="phase-3-define-error-handling">Phase 3: Define Error Handling</h3>
 <ol>
-<li>Crie contrato de erro padronizado:</li>
+<li>Create a standardized error contract:</li>
 </ol>
 <pre data-lang="json"><code>   {
      &quot;error&quot;: {
        &quot;code&quot;: &quot;VALIDATION_ERROR&quot;,
-       &quot;message&quot;: &quot;Email inválido&quot;,
+       &quot;message&quot;: &quot;Invalid email&quot;,
        &quot;details&quot;: [
          {
            &quot;field&quot;: &quot;email&quot;,
-           &quot;message&quot;: &quot;Formato inválido&quot;
+           &quot;message&quot;: &quot;Invalid format&quot;
          }
        ]
      }
    }</code></pre>
 <ol>
-<li>Use template <code>templates/error-contract.md</code></li>
-<li>Mapeie códigos HTTP para erros</li>
-<li><strong>Checkpoint</strong>: Contrato de erro definido</li>
+<li>Use the <code>error-contract.md</code> template</li>
+<li>Map HTTP status codes to errors</li>
+<li><strong>Checkpoint</strong>: Error contract defined</li>
 </ol>
-<h3 id="fase-4-implementar-versionamento">Fase 4: Implementar Versionamento</h3>
+<h3 id="phase-4-implement-versioning">Phase 4: Implement Versioning</h3>
 <ol>
-<li>Escolha estratégia de versionamento:</li>
+<li>Choose a versioning strategy:</li>
 </ol>
-<pre data-lang="bash"><code>   # Recomendado: URL path
+<pre data-lang="bash"><code>   # Recommended: URL path
    /v1/users
    /v2/users</code></pre>
 <ol>
-<li>Use template <code>templates/api-versioning.md</code></li>
-<li>Defina política de depreciação</li>
-<li><strong>Checkpoint</strong>: Versionamento funcionando</li>
+<li>Use the <code>api-versioning.md</code> template</li>
+<li>Define deprecation policy</li>
+<li><strong>Checkpoint</strong>: Versioning working</li>
 </ol>
-<h3 id="fase-5-adicionar-paginao">Fase 5: Adicionar Paginação</h3>
+<h3 id="phase-5-add-pagination">Phase 5: Add Pagination</h3>
 <ol>
-<li>Implemente paginação consistente:</li>
+<li>Implement consistent pagination:</li>
 </ol>
 <pre data-lang="json"><code>   {
      &quot;data&quot;: [...],
@@ -576,50 +588,50 @@ DELETE /users/{id}    → Deletar usuário</code></pre>
      }
    }</code></pre>
 <ol>
-<li>Defina limites padrão</li>
-<li>Adicione headers de paginação</li>
-<li><strong>Checkpoint</strong>: Paginação testada</li>
+<li>Define default limits</li>
+<li>Add pagination headers</li>
+<li><strong>Checkpoint</strong>: Pagination tested</li>
 </ol>
-<h3 id="fase-6-garantir-idempotncia">Fase 6: Garantir Idempotência</h3>
+<h3 id="phase-6-ensure-idempotence">Phase 6: Ensure Idempotence</h3>
 <ol>
-<li>Identifique operações não idempotentes</li>
-<li>Implemente chaves de idempotência:</li>
+<li>Identify non-idempotent operations</li>
+<li>Implement idempotency keys:</li>
 </ol>
 <pre data-lang="http"><code>   POST /payments
    Idempotency-Key: 550e8400-e29b-41d4-a716-446655440000</code></pre>
 <ol>
-<li>Armazene respostas temporárias</li>
-<li><strong>Checkpoint</strong>: Idempotência verificada</li>
+<li>Store temporary responses</li>
+<li><strong>Checkpoint</strong>: Idempotence verified</li>
 </ol>
 <h2 id="templates">Templates</h2>
 <h3 id="endpoint-specmd">endpoint-spec.md</h3>
-<p>Localização: <code>templates/endpoint-spec.md</code></p>
-<p>Template para especificação de endpoint.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/endpoint-spec.md</code></p>
+<p>Template for endpoint specification.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/endpoint-spec.md docs/api/users.md</code></pre>
 <h3 id="error-contractmd">error-contract.md</h3>
-<p>Localização: <code>templates/error-contract.md</code></p>
-<p>Template para contrato de erro.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/error-contract.md</code></p>
+<p>Template for error contract.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/error-contract.md docs/api/errors.md</code></pre>
 <h3 id="api-versioningmd">api-versioning.md</h3>
-<p>Localização: <code>templates/api-versioning.md</code></p>
-<p>Template para versionamento de API.</p>
-<p><strong>Uso:</strong></p>
+<p>Location: <code>templates/api-versioning.md</code></p>
+<p>Template for API versioning.</p>
+<p><strong>Usage:</strong></p>
 <pre data-lang="bash"><code>cp templates/api-versioning.md docs/api/versioning.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="endpoint-sem-tratamento-de-erro-consistente">Endpoint sem Tratamento de Erro Consistente</h4>
-<p><strong>O que é:</strong> Endpoints que retornam erros em formatos diferentes. <strong>Por que é ruim:</strong> Clientes não conseguem tratar erros programaticamente. <strong>Como evitar:</strong> Use contrato de erro padronizado em todos endpoints. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+<h3 id="critical">Critical</h3>
+<h4 id="endpoint-without-consistent-error-handling">Endpoint without Consistent Error Handling</h4>
+<p><strong>What is it:</strong> Endpoints that return errors in different formats. <strong>Why is it bad:</strong> Clients cannot handle errors programmatically. <strong>How to avoid:</strong> Use a standardized error contract on all endpoints. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 GET /users/999
 { &quot;msg&quot;: &quot;user not found&quot; }
 
 GET /orders/999
 Status: 404 Not Found
-# Sem body
+# No body
 
-# ✅ CORRETO
+# ✅ RIGHT
 GET /users/999
 {
   &quot;error&quot;: {
@@ -628,98 +640,98 @@ GET /users/999
     &quot;details&quot;: [{&quot;field&quot;: &quot;id&quot;, &quot;message&quot;: &quot;User with id 999 does not exist&quot;}]
   }
 }</code></pre>
-<h4 id="put-sem-idempotncia">PUT sem Idempotência</h4>
-<p><strong>O que é:</strong> PUT que cria recursos duplicados em chamadas repetidas. <strong>Por que é ruim:</strong> Viola contrato REST, causa inconsistências. <strong>Como evitar:</strong> PUT deve ser idempotente, use POST para criação. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+<h4 id="put-without-idempotence">PUT without Idempotence</h4>
+<p><strong>What is it:</strong> PUT that creates duplicate resources on repeated calls. <strong>Why is it bad:</strong> Violates the REST contract, causes inconsistencies. <strong>How to avoid:</strong> PUT must be idempotent, use POST for creation. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 PUT /users
 { &quot;name&quot;: &quot;John&quot; }
-# Cria novo user a cada chamada
+# Creates new user on each call
 
-# ✅ CORRETO
+# ✅ RIGHT
 PUT /users/123
 { &quot;name&quot;: &quot;John&quot; }
-# Atualiza user existente, idempotente</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="post-para-operaes-de-leitura">POST para Operações de Leitura</h4>
-<p><strong>O que é:</strong> Usar POST para buscar dados. <strong>Por que é ruim:</strong> Confunde semântica HTTP, dificulta cache. <strong>Como evitar:</strong> Use GET para leitura, POST para criação. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+# Updates existing user, idempotent</code></pre>
+<h3 id="medium">Medium</h3>
+<h4 id="post-for-read-operations">POST for Read Operations</h4>
+<p><strong>What is it:</strong> Using POST for fetching data. <strong>Why is it bad:</strong> Confuses HTTP semantics, hinders caching. <strong>How to avoid:</strong> Use GET for reading, POST for creation. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 POST /search
 { &quot;query&quot;: &quot;users&quot; }
 
-# ✅ CORRETO
+# ✅ RIGHT
 GET /users?q=users
-# ou
+# or
 GET /search?q=users</code></pre>
-<h4 id="versionamento-quebrando-clientes">Versionamento Quebrando Clientes</h4>
-<p><strong>O que é:</strong> Mudanças incompatíveis sem nova versão. <strong>Por que é ruim:</strong> Quebra clientes existentes. <strong>Como evitar:</strong> Use versionamento, mantenha backward compatibility. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-# v1: GET /users retorna { &quot;name&quot;: &quot;John&quot; }
-# v2: GET /users retorna { &quot;fullName&quot;: &quot;John&quot; }
-# Sem migração
+<h4 id="versioning-breaking-clients">Versioning Breaking Clients</h4>
+<p><strong>What is it:</strong> Incompatible changes without a new version. <strong>Why is it bad:</strong> Breaks existing clients. <strong>How to avoid:</strong> Use versioning, maintain backward compatibility. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
+# v1: GET /users returns { &quot;name&quot;: &quot;John&quot; }
+# v2: GET /users returns { &quot;fullName&quot;: &quot;John&quot; }
+# No migration
 
-# ✅ CORRETO
-# v1: GET /users retorna { &quot;name&quot;: &quot;John&quot; }
-# v2: GET /users retorna { &quot;fullName&quot;: &quot;John&quot;, &quot;name&quot;: &quot;John&quot; }
-# Mantém compatibilidade</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="query-params-opcionais-sem-default">Query Params Opcionais sem Default</h4>
-<p><strong>O que é:</strong> Parâmetros sem valor padrão definido. <strong>Por que é ruim:</strong> Comportamento imprevisível, diferentes clientes podem ter diferentes comportamentos. <strong>Como evitar:</strong> Sempre defina valores padrão para parâmetros opcionais. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
+# ✅ RIGHT
+# v1: GET /users returns { &quot;name&quot;: &quot;John&quot; }
+# v2: GET /users returns { &quot;fullName&quot;: &quot;John&quot;, &quot;name&quot;: &quot;John&quot; }
+# Maintains compatibility</code></pre>
+<h3 id="low">Low</h3>
+<h4 id="optional-query-params-without-default">Optional Query Params without Default</h4>
+<p><strong>What is it:</strong> Parameters without a defined default value. <strong>Why is it bad:</strong> Unpredictable behavior, different clients may behave differently. <strong>How to avoid:</strong> Always define default values for optional parameters. <strong>Example:</strong></p>
+<pre><code># ❌ WRONG
 GET /users?page=&amp;limit=
 
-# ✅ CORRETO
+# ✅ RIGHT
 GET /users?page=1&amp;limit=20
-# Ou documente que omitir usa defaults: page=1, limit=20</code></pre>
+# Or document that omitting uses defaults: page=1, limit=20</code></pre>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-design-de-endpoint">Checklist de Design de Endpoint</h3>
+<h3 id="checklist-for-endpoint-design">Checklist for Endpoint Design</h3>
 <ul>
-<li>[ ] Recurso identificado claramente</li>
-<li>[ ] Método HTTP correto (GET, POST, PUT, DELETE)</li>
-<li>[ ] Path naming consistente (kebab-case ou camelCase)</li>
-<li>[ ] Parâmetros documentados</li>
-<li>[ ] Request body definido</li>
-<li>[ ] Responses definidos (200, 201, 204, 400, 404, 500)</li>
-<li>[ ] Headers necessários listados</li>
+<li>[ ] Resource clearly identified</li>
+<li>[ ] Correct HTTP method (GET, POST, PUT, DELETE)</li>
+<li>[ ] Consistent path naming (kebab-case or camelCase)</li>
+<li>[ ] Parameters documented</li>
+<li>[ ] Request body defined</li>
+<li>[ ] Responses defined (200, 201, 204, 400, 404, 500)</li>
+<li>[ ] Necessary headers listed</li>
 </ul>
-<h3 id="checklist-de-tratamento-de-erros">Checklist de Tratamento de Erros</h3>
+<h3 id="checklist-for-error-handling">Checklist for Error Handling</h3>
 <ul>
-<li>[ ] Formato de erro padronizado</li>
-<li>[ ] Códigos de erro documentados</li>
-<li>[ ] Mensagens de erro claras</li>
-<li>[ ] Details quando aplicável</li>
-<li>[ ] Status codes corretos</li>
+<li>[ ] Standardized error format</li>
+<li>[ ] Error codes documented</li>
+<li>[ ] Clear error messages</li>
+<li>[ ] Details when applicable</li>
+<li>[ ] Correct status codes</li>
 </ul>
-<h3 id="checklist-de-versionamento">Checklist de Versionamento</h3>
+<h3 id="checklist-for-versioning">Checklist for Versioning</h3>
 <ul>
-<li>[ ] Estratégia de versionamento definida</li>
-<li>[ ] Versão atual documentada</li>
-<li>[ ] Política de depreciação definida</li>
-<li>[ ] Migração documentada</li>
-<li>[ ] Compatibilidade backward verificada</li>
+<li>[ ] Versioning strategy defined</li>
+<li>[ ] Current version documented</li>
+<li>[ ] Deprecation policy defined</li>
+<li>[ ] Migration documented</li>
+<li>[ ] Backward compatibility verified</li>
 </ul>
-<h3 id="checklist-de-paginao">Checklist de Paginação</h3>
+<h3 id="checklist-for-pagination">Checklist for Pagination</h3>
 <ul>
-<li>[ ] Formato de paginação definido</li>
-<li>[ ] Limites padrão documentados</li>
-<li>[ ] Headers de paginação implementados</li>
-<li>[ ] Total items disponível</li>
-<li>[ ] Navegação (next/prev) funcional</li>
+<li>[ ] Consistent pagination format</li>
+<li>[ ] Default limits documented</li>
+<li>[ ] Pagination headers implemented</li>
+<li>[ ] Total items available</li>
+<li>[ ] Navigation (next/prev) functional</li>
 </ul>
-<h3 id="checklist-de-idempotncia">Checklist de Idempotência</h3>
+<h3 id="checklist-for-idempotence">Checklist for Idempotence</h3>
 <ul>
-<li>[ ] Operações idempotentes identificadas</li>
-<li>[ ] Chaves de idempotência implementadas</li>
-<li>[ ] Armazenamento temporário configurado</li>
-<li>[ ] Timeout de chaves definido</li>
-<li>[ ] Testes de idempotência escritos</li>
+<li>[ ] Non-idempotent operations identified</li>
+<li>[ ] Idempotency keys implemented</li>
+<li>[ ] Temporary response storage configured</li>
+<li>[ ] Timeout for keys defined</li>
+<li>[ ] Idempotence tests written</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="api-que-precisa-de-autenticao">API que Precisa de Autenticação</h3>
-<p><strong>Situação:</strong> Endpoints que requerem autenticação. <strong>Solução:</strong> Defina scheme de autenticação (OAuth2, JWT, API Key). <strong>Exceção:</strong> Endpoints públicos não devem requerer autenticação.</p>
+<h3 id="api-requiring-authentication">API Requiring Authentication</h3>
+<p><strong>Situation:</strong> Endpoints requiring authentication. <strong>Solution:</strong> Define an authentication scheme (OAuth2, JWT, API Key). <strong>Exception:</strong> Public endpoints should not require authentication.</p>
 <pre data-lang="http"><code>GET /users/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIs...</code></pre>
-<h3 id="api-com-operaes-assncronas">API com Operações Assíncronas</h3>
-<p><strong>Situação:</strong> Operações que levam tempo para completar. <strong>Solução:</strong> Use polling ou webhooks, retorne 202 Accepted.</p>
+<h3 id="api-with-asynchronous-operations">API with Asynchronous Operations</h3>
+<p><strong>Situation:</strong> Operations taking time to complete. <strong>Solution:</strong> Use polling or webhooks, return 202 Accepted.</p>
 <pre data-lang="http"><code>POST /reports/generate
 Status: 202 Accepted
 {
@@ -727,26 +739,26 @@ Status: 202 Accepted
   &quot;status&quot;: &quot;processing&quot;,
   &quot;pollUrl&quot;: &quot;/jobs/abc123&quot;
 }</code></pre>
-<h3 id="api-com-dados-sensveis">API com Dados Sensíveis</h3>
-<p><strong>Situação:</strong> Dados que precisam de proteção especial. <strong>Solução:</strong> Implemente criptografia em trânsito e repouso, mascare dados sensíveis.</p>
+<h3 id="api-with-sensitive-data">API with Sensitive Data</h3>
+<p><strong>Situation:</strong> Data requiring special protection. <strong>Solution:</strong> Implement encryption in transit and at rest, mask sensitive data.</p>
 <pre data-lang="json"><code>{
   &quot;creditCard&quot;: &quot;****-****-****-1234&quot;,
   &quot;email&quot;: &quot;j***@example.com&quot;
 }</code></pre>
-<h3 id="api-com-rate-limiting">API com Rate Limiting</h3>
-<p><strong>Situação:</strong> Proteger API de abuso. <strong>Solução:</strong> Implemente rate limiting com headers informativos.</p>
+<h3 id="api-with-rate-limiting">API with Rate Limiting</h3>
+<p><strong>Situation:</strong> Protecting the API from abuse. <strong>Solution:</strong> Implement rate limiting with informative headers.</p>
 <pre data-lang="http"><code>HTTP/1.1 429 Too Many Requests
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 0
 X-RateLimit-Reset: 1623456789</code></pre>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://www.oreilly.com/library/view/rest-api-design/9781449317843/">REST API Design Rulebook</a></li>
 <li><a href="https://httpstatuses.com/">HTTP Status Codes</a></li>
 <li><a href="https://jsonapi.org/">JSON API Specification</a></li>
-<li><code>documentation</code> — para documentação de API</li>
-<li><code>testing</code> — para testes de contrato</li>
-<li><code>governance</code> — para processos de review</li>
+<li><code>documentation</code> — for API documentation</li>
+<li><code>testing</code> — for contract testing</li>
+<li><code>governance</code> — for review processes</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

@@ -1,12 +1,12 @@
-# Exemplo: Prompt para Refatoração
+# Example: Refactoring Prompt
 
-## Contexto
-Você é um desenvolvedor sênior especializado em Clean Code.
+## Context
+You are a senior developer specializing in Clean Code.
 
-## Tarefa
-Refatore esta classe para seguir Single Responsibility Principle.
+## Task
+Refactor this class to follow the Single Responsibility Principle.
 
-## Código Original
+## Original Code
 ```typescript
 class UserService {
   createUser() {}
@@ -16,14 +16,14 @@ class UserService {
 }
 ```
 
-## Formato de Saída
+## Output Format
 ```typescript
-// Classes separadas
+// Separate classes
 class UserService {}
 class EmailValidator {}
 class EmailService {}
 class DiscountCalculator {}
 ```
 
-## Resultado
-4 classes com responsabilidade única, testes mais focados.
+## Result
+4 classes with single responsibility, more focused tests.

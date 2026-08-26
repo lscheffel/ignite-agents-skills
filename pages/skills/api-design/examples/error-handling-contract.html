@@ -410,16 +410,16 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">api-design</a> &rsaquo; examples &rsaquo; error-handling-contract</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-contrato-de-erros--api-de-pagamentos">Exemplo: Contrato de Erros — API de Pagamentos</h1>
-<h2 id="contexto">Contexto</h2>
-<p>API de processamento de pagamentos com alta criticidade. Erros devem ser claros, acionáveis e seguros (sem vazar dados sensíveis).</p>
-<h2 id="definio-de-categorias-de-erro">Definição de Categorias de Erro</h2>
-<h3 id="1-erros-de-validao-4xx">1. Erros de Validação (4xx)</h3>
+    <h1 id="example-error-contract--payment-api">Example: Error Contract — Payment API</h1>
+<h2 id="context">Context</h2>
+<p>High-criticality payment processing API. Errors must be clear, actionable, and secure (without leaking sensitive data).</p>
+<h2 id="error-category-definitions">Error Category Definitions</h2>
+<h3 id="1-validation-errors-4xx">1. Validation Errors (4xx)</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;https://pay.example.com/errors/invalid-request&quot;,
-  &quot;title&quot;: &quot;Requisição inválida&quot;,
+  &quot;title&quot;: &quot;Invalid Request&quot;,
   &quot;status&quot;: 400,
-  &quot;detail&quot;: &quot;O campo &#x27;amount&#x27; deve ser um número positivo&quot;,
+  &quot;detail&quot;: &quot;The &#x27;amount&#x27; field must be a positive number&quot;,
   &quot;instance&quot;: &quot;/payments&quot;,
   &quot;request_id&quot;: &quot;req_abc123&quot;,
   &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;,
@@ -427,68 +427,68 @@
     {
       &quot;field&quot;: &quot;amount&quot;,
       &quot;code&quot;: &quot;INVALID_VALUE&quot;,
-      &quot;message&quot;: &quot;deve ser um número positivo&quot;,
+      &quot;message&quot;: &quot;must be a positive number&quot;,
       &quot;rejected_value&quot;: -100
     }
   ]
 }</code></pre>
-<h3 id="2-erros-de-autenticao-401403">2. Erros de Autenticação (401/403)</h3>
+<h3 id="2-authentication-errors-401403">2. Authentication Errors (401/403)</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;https://pay.example.com/errors/unauthorized&quot;,
-  &quot;title&quot;: &quot;Não autorizado&quot;,
+  &quot;title&quot;: &quot;Unauthorized&quot;,
   &quot;status&quot;: 401,
-  &quot;detail&quot;: &quot;Token de acesso expirado ou inválido&quot;,
+  &quot;detail&quot;: &quot;Access token expired or invalid&quot;,
   &quot;instance&quot;: &quot;/payments&quot;,
   &quot;request_id&quot;: &quot;req_def456&quot;,
   &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;
 }</code></pre>
-<p><strong>Regra de segurança:</strong> Nunca incluir detalhes sobre por que a autenticação falhou (token inválido vs expirado vs inexistente).</p>
-<h3 id="3-erros-de-negcio-422">3. Erros de Negócio (422)</h3>
+<p><strong>Security Rule:</strong> Never include details about why authentication failed (invalid vs expired vs non-existent token).</p>
+<h3 id="3-business-errors-422">3. Business Errors (422)</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;https://pay.example.com/errors/insufficient-funds&quot;,
-  &quot;title&quot;: &quot;Saldo insuficiente&quot;,
+  &quot;title&quot;: &quot;Insufficient Funds&quot;,
   &quot;status&quot;: 422,
-  &quot;detail&quot;: &quot;O saldo disponível (R$ 50.00) é menor que o valor solicitado (R$ 100.00)&quot;,
+  &quot;detail&quot;: &quot;The available balance (USD 50.00) is less than the requested amount (USD 100.00)&quot;,
   &quot;instance&quot;: &quot;/payments&quot;,
   &quot;request_id&quot;: &quot;req_ghi789&quot;,
   &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;,
   &quot;metadata&quot;: {
     &quot;available_balance&quot;: 50.00,
     &quot;requested_amount&quot;: 100.00,
-    &quot;currency&quot;: &quot;BRL&quot;
+    &quot;currency&quot;: &quot;USD&quot;
   }
 }</code></pre>
-<h3 id="4-erros-de-limite-429">4. Erros de Limite (429)</h3>
+<h3 id="4-rate-limit-errors-429">4. Rate Limit Errors (429)</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;https://pay.example.com/errors/rate-limited&quot;,
-  &quot;title&quot;: &quot;Limite de requisições atingido&quot;,
+  &quot;title&quot;: &quot;Rate Limit Exceeded&quot;,
   &quot;status&quot;: 429,
-  &quot;detail&quot;: &quot;Limite de 100 requisições/minuto atingido. Tente novamente em 30 segundos.&quot;,
+  &quot;detail&quot;: &quot;Rate limit of 100 requests/minute exceeded. Try again in 30 seconds.&quot;,
   &quot;instance&quot;: &quot;/payments&quot;,
   &quot;request_id&quot;: &quot;req_jkl012&quot;,
   &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;,
   &quot;retry_after&quot;: 30
 }</code></pre>
-<h3 id="5-erros-de-servidor-5xx">5. Erros de Servidor (5xx)</h3>
+<h3 id="5-server-errors-5xx">5. Server Errors (5xx)</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;https://pay.example.com/errors/gateway-error&quot;,
-  &quot;title&quot;: &quot;Erro no gateway de pagamento&quot;,
+  &quot;title&quot;: &quot;Payment Gateway Error&quot;,
   &quot;status&quot;: 502,
-  &quot;detail&quot;: &quot;O gateway de pagamento retornou uma resposta inesperada&quot;,
+  &quot;detail&quot;: &quot;The payment gateway returned an unexpected response&quot;,
   &quot;instance&quot;: &quot;/payments&quot;,
   &quot;request_id&quot;: &quot;req_mno345&quot;,
   &quot;timestamp&quot;: &quot;2026-07-05T18:00:00Z&quot;
 }</code></pre>
-<p><strong>Regra de segurança:</strong> Nunca expor stack traces, IDs internos ou detalhes de infraestrutura em erros 5xx.</p>
-<h2 id="regras-gerais">Regras Gerais</h2>
+<p><strong>Security Rule:</strong> Never expose stack traces, internal IDs, or infrastructure details in 5xx errors.</p>
+<h2 id="general-rules">General Rules</h2>
 <ol>
-<li><strong>Consistência:</strong> Todos os erros seguem RFC 7807</li>
-<li><strong>Segurança:</strong> Nunca vazar dados sensíveis (tokens, senhas, IDs internos)</li>
-<li><strong>Accionabilidade:</strong> O <code>detail</code> deve explicar o que fazer para corrigir</li>
-<li><strong>Rastreabilidade:</strong> <code>request_id</code> e <code>timestamp</code> são obrigatórios</li>
-<li><strong>Idioma:</strong> Mensagens em português (para APIs brasileiras) ou inglês (para APIs internacionais)</li>
-<li><strong>Log:</strong> Erros 4xx logam em WARN, 5xx em ERROR</li>
-<li><strong>Alerta:</strong> Erros 5xx disparam alerta se taxa > 1% em 5 minutos</li>
+<li><strong>Consistency:</strong> All errors follow RFC 7807</li>
+<li><strong>Security:</strong> Never leak sensitive data (tokens, passwords, internal IDs)</li>
+<li><strong>Actionability:</strong> The <code>detail</code> field must explain what to do to correct the error</li>
+<li><strong>Traceability:</strong> <code>request_id</code> and <code>timestamp</code> are mandatory</li>
+<li><strong>Language:</strong> Messages are in Portuguese (for Brazilian APIs) or English (for international APIs)</li>
+<li><strong>Logging:</strong> 4xx errors log at WARN, 5xx errors log at ERROR</li>
+<li><strong>Alerting:</strong> 5xx errors trigger an alert if the rate > 1% in 5 minutes</li>
 </ol>
   </div>
 <footer>

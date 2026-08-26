@@ -411,70 +411,70 @@
   </nav>
   <div class="content">
     <h1 id="execution-report">Execution Report</h1>
-<blockquote>Relatório final produzido ao término da implementação governada.</blockquote>
+<blockquote>Final Report Produced at the End of Governed Implementation.</blockquote>
 <hr>
-<h2 id="resumo">Resumo</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>ADR referência</td><td>{{adr_path}}</td></tr><tr><td>Data de início</td><td>{{start_date}}</td></tr><tr><td>Data de término</td><td>{{end_date}}</td></tr><tr><td>Duração total</td><td>{{total_duration}}</td></tr><tr><td>Tarefas totais</td><td>{{total_tasks}}</td></tr><tr><td>Tarefas concluídas</td><td>{{completed_tasks}}</td></tr><tr><td>Tarefas adiadas</td><td>{{deferred_tasks}}</td></tr><tr><td>Tarefas bloqueadas</td><td>{{blocked_tasks}}</td></tr><tr><td>Taxa de conclusão</td><td>{{completion_rate}}</td></tr></table></div>
+<h2 id="summary">Summary</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>ADR Reference</td><td>{{adr_path}}</td></tr><tr><td>Start Date</td><td>{{start_date}}</td></tr><tr><td>End Date</td><td>{{end_date}}</td></tr><tr><td>Total Duration</td><td>{{total_duration}}</td></tr><tr><td>Total Tasks</td><td>{{total_tasks}}</td></tr><tr><td>Completed Tasks</td><td>{{completed_tasks}}</td></tr><tr><td>Deferred Tasks</td><td>{{deferred_tasks}}</td></tr><tr><td>Blocked Tasks</td><td>{{blocked_tasks}}</td></tr><tr><td>Completion Rate</td><td>{{completion_rate}}</td></tr></table></div>
 <hr>
-<h2 id="tarefas-concludas">Tarefas Concluídas</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Duração</th><th>Tentativas</th><th>Validações</th></tr></table></div>
+<h2 id="completed-tasks">Completed Tasks</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Task</th><th>Duration</th><th>Attempts</th><th>Validations</th></tr></table></div>
 <p>{{#each completed}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{task}}</th><th>{{duration}}</th><th>{{attempts}}</th><th>{{validations}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="tarefas-adiadas">Tarefas Adiadas</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Justificativa</th><th>Data Revisão</th></tr></table></div>
+<h2 id="deferred-tasks">Deferred Tasks</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Task</th><th>Justification</th><th>Review Date</th></tr></table></div>
 <p>{{#each deferred}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{task}}</th><th>{{reason}}</th><th>{{review_date}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="tarefas-bloqueadas">Tarefas Bloqueadas</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Tarefa</th><th>Bloqueador</th><th>Ação Necessária</th></tr></table></div>
+<h2 id="blocked-tasks">Blocked Tasks</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Task</th><th>Blocker</th><th>Required Action</th></tr></table></div>
 <p>{{#each blocked}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{task}}</th><th>{{blocker}}</th><th>{{required_action}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="validaes-executadas">Validações Executadas</h2>
-<div class="table-wrapper"><table><tr><th>Validação</th><th>Resultado</th><th>Tentativa</th><th>Observações</th></tr><tr><td>Build</td><td>{{build_result}}</td><td>{{build_attempt}}</td><td>{{build_notes}}</td></tr><tr><td>Lint</td><td>{{lint_result}}</td><td>{{lint_attempt}}</td><td>{{lint_notes}}</td></tr><tr><td>Typecheck</td><td>{{typecheck_result}}</td><td>{{typecheck_attempt}}</td><td>{{typecheck_notes}}</td></tr><tr><td>Testes unitários</td><td>{{unit_test_result}}</td><td>{{unit_test_attempt}}</td><td>{{unit_test_notes}}</td></tr><tr><td>Testes integração</td><td>{{integration_test_result}}</td><td>{{integration_test_attempt}}</td><td>{{integration_test_notes}}</td></tr></table></div>
+<h2 id="executed-validations">Executed Validations</h2>
+<div class="table-wrapper"><table><tr><th>Validation</th><th>Result</th><th>Attempt</th><th>Notes</th></tr><tr><td>Build</td><td>{{build_result}}</td><td>{{build_attempt}}</td><td>{{build_notes}}</td></tr><tr><td>Lint</td><td>{{lint_result}}</td><td>{{lint_attempt}}</td><td>{{lint_notes}}</td></tr><tr><td>Typecheck</td><td>{{typecheck_result}}</td><td>{{typecheck_attempt}}</td><td>{{typecheck_notes}}</td></tr><tr><td>Unit Tests</td><td>{{unit_test_result}}</td><td>{{unit_test_attempt}}</td><td>{{unit_test_notes}}</td></tr><tr><td>Integration Tests</td><td>{{integration_test_result}}</td><td>{{integration_test_attempt}}</td><td>{{integration_test_notes}}</td></tr></table></div>
 <hr>
-<h2 id="alteraes-realizadas">Alterações Realizadas</h2>
-<div class="table-wrapper"><table><tr><th>Arquivo</th><th>Tipo</th><th>Tarefa</th><th>Linhas Adicionadas</th><th>Linhas Removidas</th></tr></table></div>
+<h2 id="implemented-changes">Implemented Changes</h2>
+<div class="table-wrapper"><table><tr><th>File</th><th>Type</th><th>Task</th><th>Added Lines</th><th>Removed Lines</th></tr></table></div>
 <p>{{#each changes}}</p>
 <div class="table-wrapper"><table><tr><th>{{file}}</th><th>{{type}}</th><th>{{task}}</th><th>{{added}}</th><th>{{removed}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="documentao-atualizada">Documentação Atualizada</h2>
-<div class="table-wrapper"><table><tr><th>Documento</th><th>Tipo de Atualização</th><th>Status</th></tr></table></div>
+<h2 id="updated-documentation">Updated Documentation</h2>
+<div class="table-wrapper"><table><tr><th>Document</th><th>Type of Update</th><th>Status</th></tr></table></div>
 <p>{{#each docs_updated}}</p>
 <div class="table-wrapper"><table><tr><th>{{document}}</th><th>{{update_type}}</th><th>{{status}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="riscos-remanescentes">Riscos Remanescentes</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Risco</th><th>Impacto</th><th>Probabilidade</th><th>Mitigação Recomendada</th></tr></table></div>
+<h2 id="remaining-risks">Remaining Risks</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Risk</th><th>Impact</th><th>Probability</th><th>Recommended Mitigation</th></tr></table></div>
 <p>{{#each remaining_risks}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{risk}}</th><th>{{impact}}</th><th>{{probability}}</th><th>{{mitigation}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="dvida-tcnica-criada">Dívida Técnica Criada</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Débito</th><th>Criticidade</th><th>Justificativa</th></tr></table></div>
+<h2 id="technical-debt-created">Technical Debt Created</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Debt</th><th>Criticality</th><th>Justification</th></tr></table></div>
 <p>{{#each tech_debt}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{debt}}</th><th>{{criticality}}</th><th>{{justification}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="recomendaes-futuras">Recomendações Futuras</h2>
-<div class="table-wrapper"><table><tr><th>#</th><th>Recomendação</th><th>Prioridade</th><th>Contexto</th></tr></table></div>
+<h2 id="future-recommendations">Future Recommendations</h2>
+<div class="table-wrapper"><table><tr><th>#</th><th>Recommendation</th><th>Priority</th><th>Context</th></tr></table></div>
 <p>{{#each recommendations}}</p>
 <div class="table-wrapper"><table><tr><th>{{number}}</th><th>{{recommendation}}</th><th>{{priority}}</th><th>{{context}}</th></tr></table></div>
 <p>{{/each}}</p>
 <hr>
-<h2 id="mtricas-da-implementao">Métricas da Implementação</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Valor</th></tr><tr><td>Tempo médio por tarefa</td><td>{{avg_time_per_task}}</td></tr><tr><td>Número de rollbacks</td><td>{{rollback_count}}</td></tr><tr><td>Número de correções durante execução</td><td>{{fix_count}}</td></tr><tr><td>Cobertura de testes final</td><td>{{final_coverage}}</td></tr></table></div>
+<h2 id="implementation-metrics">Implementation Metrics</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Value</th></tr><tr><td>Average Time per Task</td><td>{{avg_time_per_task}}</td></tr><tr><td>Number of Rollbacks</td><td>{{rollback_count}}</td></tr><tr><td>Number of Fixes During Execution</td><td>{{fix_count}}</td></tr><tr><td>Final Test Coverage</td><td>{{final_coverage}}</td></tr></table></div>
 <hr>
-<h2 id="concluso">Conclusão</h2>
+<h2 id="conclusion">Conclusion</h2>
 <p>{{conclusion}}</p>
 <hr>
-<h2 id="assinatura">Assinatura</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Relatório gerado em</td><td>{{report_date}}</td></tr><tr><td>Implementação considerada</td><td>{{implementation_status}}</td></tr><tr><td>Próximos passos</td><td>{{next_steps}}</td></tr></table></div>
+<h2 id="signature">Signature</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Report Generated on</td><td>{{report_date}}</td></tr><tr><td>Implementation Considered</td><td>{{implementation_status}}</td></tr><tr><td>Next Steps</td><td>{{next_steps}}</td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

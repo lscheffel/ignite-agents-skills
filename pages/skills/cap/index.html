@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cap — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; cap</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: cap version: 3.0.0 description: Minimal Context Bootstrap for AI Coding Agents. Acquire only the repository knowledge strictly required to execute the supplied task. Optimize for minimal token consumption, deterministic discovery, and early execution. domain: core-governance triggers:</p>
+<ul>
+<li>cap</li>
+<li>context acquisition</li>
+<li>context bootstrap</li>
+<li>minimal context</li>
+<li>token optimization bootstrap</li>
+<li>repo context</li>
+<li>acquire context</li>
+<li>adquirir contexto</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>cap</li>
+<li>context</li>
+<li>bootstrap</li>
+<li>token-optimization</li>
+<li>core-governance</li>
+<li>ripgrep</li>
+</ul>
+<p>related_skills:</p>
+<ul>
+<li>implementation</li>
+<li>agent-planning-execution</li>
+<li>systematic-debugging</li>
+<li>clean-code</li>
+<li>technical-documentation</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: "2026-08-26" ---</p>
+<h1 id="context-acquisition-protocol-cap">Context Acquisition Protocol (CAP)</h1>
+<p>Minimal Context Bootstrap for AI Coding Agents. Acquire <strong>only the information that is strictly missing</strong> to begin execution safely.</p>
+<blockquote>The supplied user request / task description is your primary source of truth. The repository exists exclusively to answer unanswered questions. Your objective is <strong>not</strong> to understand the whole repository; your objective is to eliminate uncertainty until implementation becomes safe, and stop immediately.</blockquote>
+<hr>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use When:</h3>
+<ul>
+<li>Starting any coding, debugging, or refactoring task where specific implementation details are unknown.</li>
+<li>You need to locate exact symbols, files, imports, or API contracts with minimal token consumption.</li>
+<li>Bootstrapping task context from a large codebase without reading entire directories.</li>
+<li>Avoiding token bloat and context window pollution before executing changes.</li>
+</ul>
+<h3 id="do-not-use-when">Do Not Use When:</h3>
+<ul>
+<li>The prompt or task description already provides 100% of the necessary code, paths, and contracts.</li>
+<li>An exhaustive, full-repository architectural audit has been explicitly requested by the user.</li>
+<li>You are already in the middle of an active <code>implementation</code> execution loop.</li>
+<li>The task is a pure conceptual discussion or creative brainstorm with no code modifications.</li>
+</ul>
+<h3 id="related-skills">Related Skills:</h3>
+<ul>
+<li><code>implementation</code> — executes code changes once context saturation is reached.</li>
+<li><code>agent-planning-execution</code> — plans complex roadmap decomposition before execution.</li>
+<li><code>systematic-debugging</code> — 4-phase investigation workflow for bug triage.</li>
+<li><code>clean-code</code> — code quality and refactoring standards.</li>
+</ul>
+<hr>
+<h2 id="decision-tree--operating-loop">Decision Tree & Operating Loop</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Task Received&quot;] --&gt; B[&quot;Step 1: Parse Provided Context&quot;]
+    B --&gt; C[&quot;Step 2: What is still unknown?&quot;]
+    
+    C --&gt;|No unknowns left| SAT[&quot;Context Saturation Reached&quot;]
+    C --&gt;|Unknowns exist| D[&quot;Step 3: What is the CHEAPEST source?&quot;]
+    
+    D --&gt; E[&quot;Acquire Evidence via Exact Search (rg/fd/tree)&quot;]
+    E --&gt; F{&quot;Did uncertainty decrease?&quot;}
+    
+    F --&gt;|No| G[&quot;Escalate to next level in hierarchy&quot;]
+    G --&gt; E
+    
+    F --&gt;|Yes| H{&quot;Can implementation begin safely?&quot;}
+    H --&gt;|No| C
+    H --&gt;|Yes| SAT
+    
+    SAT --&gt; I[&quot;STOP: Present 3 Completion Options&quot;]</code></pre>
+<p>Never perform repository exploration outside this loop.</p>
+<hr>
+<h2 id="step-1--parse-supplied-context">Step 1 — Parse Supplied Context</h2>
+<p>Read the supplied document or prompt and extract every explicit fact:</p>
+<ul>
+<li>Objective & requested change</li>
+<li>Target module, package, file, or symbol</li>
+<li>Interfaces, public APIs, and types</li>
+<li>Associated ADRs, RFCs, or constraints</li>
+<li>Acceptance criteria & validation strategy</li>
+</ul>
+<p><em>Rule:</em> Do not search or browse the repository yet. Extract what is already known first.</p>
+<hr>
+<h2 id="step-2--formulate-unanswered-questions">Step 2 — Formulate Unanswered Questions</h2>
+<p>Determine what remains unknown before searching the repository:</p>
+<ul>
+<li><em>What must change?</em></li>
+<li><em>Where must it change?</em></li>
+<li><em>Which direct dependencies are affected?</em></li>
+<li><em>How will the result be validated?</em></li>
+</ul>
+<p><em>Rule:</em> Repository exploration is allowed <strong>only</strong> to answer specific, formulated questions.</p>
+<hr>
+<h2 id="step-3--cheapest-evidence-first-8-level-hierarchy">Step 3 — Cheapest Evidence First (8-Level Hierarchy)</h2>
+<p>Always answer each question using the cheapest available evidence source:</p>
+<div class="table-wrapper"><table><tr><th>Level</th><th>Evidence Source</th><th>Operation / Tool</th><th>Token Cost</th></tr><tr><td><strong>1</strong></td><td><strong>Exact Path</strong></td><td><code>view_file</code> on explicit path</td><td>Lowest</td></tr><tr><td><strong>2</strong></td><td><strong>Exact Symbol</strong></td><td><code>rg "<exact_symbol>"</code></td><td>Ultra-low</td></tr><tr><td><strong>3</strong></td><td><strong>Filesystem Metadata</strong></td><td><code>fd <name></code> or <code>tree -L 2</code></td><td>Very low</td></tr><tr><td><strong>4</strong></td><td><strong>Canonical Documentation</strong></td><td><code>README.md</code>, <code>docs/</code>, <code>ADR-*.md</code></td><td>Low</td></tr><tr><td><strong>5</strong></td><td><strong>Public Interfaces</strong></td><td>Exported headers / Interface definitions</td><td>Medium</td></tr><tr><td><strong>6</strong></td><td><strong>Public Types</strong></td><td>Type signatures & schemas</td><td>Medium</td></tr><tr><td><strong>7</strong></td><td><strong>Tests</strong></td><td>Unit / Integration test assertions</td><td>Medium-High</td></tr><tr><td><strong>8</strong></td><td><strong>Implementation</strong></td><td>Full function / class body</td><td>Highest</td></tr></table></div>
+<p><em>Rule:</em> Never jump directly to reading full implementations (Level 8) if a cheaper source (Levels 1–6) can resolve the question.</p>
+<hr>
+<h2 id="preferred-deterministic-operations">Preferred Deterministic Operations</h2>
+<pre data-lang="bash"><code># 1. Repository topology (limit depth)
+tree -L 2
+
+# 2. Locate file by name
+fd &lt;filename&gt;
+
+# 3. Locate exact symbol definition
+rg &quot;&lt;symbol&gt;&quot;
+
+# 4. Locate identifier references
+rg &quot;&lt;identifier&gt;&quot;
+
+# 5. Locate imports &amp; exports
+rg &quot;^import|^from&quot;
+rg &quot;^export&quot;
+
+# 6. Locate canonical documentation
+fd README
+fd ADR
+fd docs</code></pre>
+<p><em>Rule:</em> Only use recursive directory traversal when targeted <code>rg</code> / <code>fd</code> searches cannot answer the question.</p>
+<hr>
+<h2 id="reading-strategy--skip-rules">Reading Strategy & Skip Rules</h2>
+<h3 id="reading-strategy">Reading Strategy</h3>
+<p>Read only the smallest fragment of code capable of answering the question:</p>
+<ol>
+<li>Public API → 2. Interface → 3. Contract → 4. Types → 5. Tests → 6. Implementation.</li>
+</ol>
+<p><em>Stop reading immediately after the answer is found.</em></p>
+<h3 id="skip-rules">Skip Rules</h3>
+<ul>
+<li><strong>If module is specified</strong> → Skip module discovery.</li>
+<li><strong>If file path is specified</strong> → Open it directly (do not search for other files).</li>
+<li><strong>If symbol is specified</strong> → Search only that symbol.</li>
+<li><strong>If implementation location is specified</strong> → Begin directly at that target.</li>
+<li><strong>If the answer already exists in memory/transcript</strong> → Never search again.</li>
+</ul>
+<hr>
+<h2 id="context-saturation--scope-control">Context Saturation & Scope Control</h2>
+<h3 id="context-saturation">Context Saturation</h3>
+<p>Context acquisition ends immediately when you can answer:</p>
+<ol>
+<li><em>What must change?</em></li>
+<li><em>Where must it change?</em></li>
+<li><em>Why must it change?</em></li>
+<li><em>Which direct dependencies are affected?</em></li>
+<li><em>How will the result be validated?</em></li>
+</ol>
+<p><em>No additional repository exploration is permitted after this threshold.</em></p>
+<h3 id="scope-control">Scope Control</h3>
+<ul>
+<li>Restrict all work strictly to the requested scope.</li>
+<li>Ignore unrelated tech debt, code smells, or style inconsistencies unless they break correctness.</li>
+<li>Do not refactor peripheral files without explicit instruction.</li>
+</ul>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="whole-repository-exploration">Whole Repository Exploration</h4>
+<ul>
+<li><strong>What is it:</strong> Inspecting entire folder trees "to understand the architecture."</li>
+<li><strong>Why is it bad:</strong> Wastes thousands of context tokens and introduces hallucination noise.</li>
+<li><strong>How to avoid:</strong> Think in specific questions. Search only with targeted <code>rg</code> / <code>fd</code>.</li>
+</ul>
+<h4 id="reading-past-context-saturation">Reading Past Context Saturation</h4>
+<ul>
+<li><strong>What is it:</strong> Continuing to open and inspect files after knowing what and where to change.</li>
+<li><strong>Why is it bad:</strong> Dilutes attention and increases latency.</li>
+<li><strong>How to avoid:</strong> Hard stop when the 5 saturation questions are answered.</li>
+</ul>
+<h4 id="replacing-evidence-with-inference">Replacing Evidence with Inference</h4>
+<ul>
+<li><strong>What is it:</strong> Guessing file paths, function signatures, or contracts instead of quick <code>rg</code>.</li>
+<li><strong>Why is it bad:</strong> Leads to broken imports and runtime errors.</li>
+<li><strong>How to avoid:</strong> Query the cheapest evidence source before writing code.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="proactive-escalation">Proactive Escalation</h4>
+<ul>
+<li><strong>What is it:</strong> Jumping straight to Level 8 (full implementation read) without checking Level 1–5 (interfaces/types).</li>
+<li><strong>How to avoid:</strong> Follow the 8-Level hierarchy sequentially.</li>
+</ul>
+<h4 id="opening-multiple-candidate-files">Opening Multiple Candidate Files</h4>
+<ul>
+<li><strong>What is it:</strong> Opening 10 files simultaneously from a loose search.</li>
+<li><strong>How to avoid:</strong> Refine the <code>rg</code> query to pinpoint the exact single target file.</li>
+</ul>
+<hr>
+<h2 id="decision-rules--checklists">Decision Rules & Checklists</h2>
+<h3 id="execution-rules">Execution Rules</h3>
+<ul>
+<li><code>IF</code> the answer already exists <code>THEN</code> do not search.</li>
+<li><code>IF</code> the exact path is known <code>THEN</code> open it directly.</li>
+<li><code>IF</code> a cheaper source exists <code>THEN</code> use it first.</li>
+<li><code>IF</code> uncertainty is resolved <code>THEN</code> stop exploration immediately.</li>
+</ul>
+<h3 id="protocol-verification-checklist">Protocol Verification Checklist</h3>
+<ul>
+<li>[ ] Minimal repository queries executed.</li>
+<li>[ ] Every query answered a specific, pre-formulated question.</li>
+<li>[ ] Zero unneeded files opened.</li>
+<li>[ ] Context acquisition stopped immediately upon saturation.</li>
+</ul>
+<hr>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>Once Context Saturation is reached, <strong>do not begin implementation automatically</strong>. Present exactly the following 3 options to the user:</p>
+<ol>
+<li><strong>Proceed with simple implementation</strong></li>
+<li><strong>Proceed using the <code>/implementation</code> skill</strong></li>
+<li><strong>Stop and wait for further user instructions</strong></li>
+</ol>
+<p><em>Execute only the option explicitly selected by the user.</em></p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

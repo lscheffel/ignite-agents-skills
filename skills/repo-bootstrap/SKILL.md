@@ -1,40 +1,54 @@
 ---
 name: repo-bootstrap
-description: Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, estrutura de docs/ e exemplos de CI/CD. Use quando iniciar um novo repositório ou padronizar estrutura de projeto.
 version: 2.0.0
-tags: [repository, scaffolding, boilerplate, governance, ci-cd]
-related_skills: [governance, documentation, git, skill-audit-bulletin]
+description: 'Generates an initial repository structure with governance files: README.md,
+  AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE,
+  docs/ directory, and CI/CD examples. Use when initializing a new repository or
+  standardizing project structure.'
+domain: core-governance
+triggers:
+- repo-bootstrap
+tags:
+- repository
+- scaffolding
+- boilerplate
+- governance
+- ci-cd
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Repo Bootstrap
 
-Gera estrutura inicial padronizada para repositórios.
+Generates a standardized initial repository structure.
 
-## Quando Usar
+## When to Use
 
-### Use quando:
-- Inicializando novo repositório
-- Padronizando estrutura existente
-- Criando template de projeto
-- Onboarding de novos projetos
+### Use when:
+- Initializing a new repository
+- Standardizing an existing structure
+- Creating a project template
+- Onboarding new projects
 
-### Não use quando:
-- Repositório já existe e está padronizado
-- Projeto sem documentação necessária
+### Do not use when:
+- Repository already exists and is standardized
+- Project does not require documentation
 
-### Skills relacionadas:
-- `governance` — para processos de equipe
-- `documentation` — para padrões de docs
-- `git` — para .gitignore
+### Related Skills:
+- `governance` — for team processes
+- `documentation` — for documentation standards
+- `git` — for .gitignore
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Tipo de Repo?] -->|Aplicação| B[Monorepo]
-    A -->|Biblioteca| C[Multi-repo]
+    A[Repository Type?] -->|Application| B[Monorepo]
+    A -->|Library| C[Multi-repo]
     A -->|Open Source| D[Open Source]
-    A -->|Interno| E[Interno]
+    A -->|Internal| E[Internal]
     B -->|Node.js| F[Node.js Template]
     B -->|Python| G[Python Template]
     B -->|Go| H[Go Template]
@@ -42,14 +56,14 @@ graph TD
 
 ## Workflow
 
-### Fase 1: Criar Repositório do Zero
+### Phase 1: Create Repository from Scratch
 
-1. Crie estrutura:
+1. Create structure:
    ```bash
    mkdir -p docs/{adr,api,architecture}
    mkdir -p .github/workflows
    ```
-2. Copie templates:
+2. Copy templates:
    ```bash
    cp templates/README.md README.md
    cp templates/CONTRIBUTING.md CONTRIBUTING.md
@@ -57,33 +71,33 @@ graph TD
    cp templates/ci.yml .github/workflows/ci.yml
    cp templates/AGENTS.md AGENTS.md
    ```
-3. Crie arquivos:
+3. Create files:
    ```bash
    touch CHANGELOG.md
    touch LICENSE
    ```
-4. **Checkpoint**: Estrutura criada, git init
+4. **Checkpoint**: Structure created, git init
 
-### Fase 2: Adicionar Governança a Repo Existente
+### Phase 2: Add Governance to Existing Repository
 
-1. Verifique estrutura atual:
+1. Verify current structure:
    ```bash
    ls -la
    ```
-2. Adicione arquivos faltando:
+2. Add missing files:
    ```bash
-   # Para cada arquivo faltando
-   cp templates/{arquivo} ./{arquivo}
+   # For each missing file
+   cp templates/{file} ./{file}
    ```
-3. Atualize README:
+3. Update README:
    ```bash
-   # Adicione badges, links
+   # Add badges, links
    ```
-4. **Checkpoint**: Governança adicionada
+4. **Checkpoint**: Governance added
 
-### Fase 3: Configurar CI/CD
+### Phase 3: Configure CI/CD
 
-1. Crie workflow:
+1. Create workflow:
    ```bash
    mkdir -p .github/workflows
    cp templates/ci.yml .github/workflows/ci.yml
@@ -92,15 +106,15 @@ graph TD
    ```bash
    # NPM_TOKEN, DOCKER_PASSWORD, etc.
    ```
-3. Ative branch protection:
+3. Enable branch protection:
    ```bash
    # Settings > Branches > Add rule
    ```
-4. **Checkpoint**: CI/CD funcionando
+4. **Checkpoint**: CI/CD functioning
 
-## Conceitos Fundamentais
+## Key Concepts
 
-### Estrutura Gerada
+### Generated Structure
 
 ```
 repo/
@@ -121,127 +135,127 @@ repo/
 └── src/
 ```
 
-### Arquivos Gerados
+### Generated Files
 
 #### README.md
-- Descrição do projeto
-- Instalação
-- Uso básico
-- Como contribuir
+- Project description
+- Installation
+- Basic usage
+- Contributing guidelines
 
 #### AGENTS.md
-- Instruções para agentes
-- Padrões de código
-- Comandos importantes
+- Agent instructions
+- Code standards
+- Important commands
 
 #### CHANGELOG.md
-- Formato Keep a Changelog
-- Seções: Added, Changed, etc.
+- Keep a Changelog format
+- Sections: Added, Changed, etc.
 
 ## Templates
 
 ### README.md
-Localização: `templates/README.md`
+Location: `templates/README.md`
 
-Template para README de projeto.
+Template for project README.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/README.md README.md
 ```
 
 ### CONTRIBUTING.md
-Localização: `templates/CONTRIBUTING.md`
+Location: `templates/CONTRIBUTING.md`
 
-Template para contribuição.
+Template for contributing guidelines.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/CONTRIBUTING.md CONTRIBUTING.md
 ```
 
 ### SECURITY.md
-Localização: `templates/SECURITY.md`
+Location: `templates/SECURITY.md`
 
-Política de segurança.
+Security policy.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/SECURITY.md SECURITY.md
 ```
 
 ### ci.yml
-Localização: `templates/ci.yml`
+Location: `templates/ci.yml`
 
-Workflow de CI/CD.
+CI/CD workflow.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/ci.yml .github/workflows/ci.yml
 ```
 
 ### AGENTS.md
-Localização: `templates/AGENTS.md`
+Location: `templates/AGENTS.md`
 
-Instruções para agentes.
+Agent instructions.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/AGENTS.md AGENTS.md
 ```
 
 ## Anti-patterns
 
-### 🔴 Crítico
+### Critical
 
-#### Repo sem LICENSE
-**O que é:** Repositório sem arquivo de licença.
-**Por que é ruim:** Uso não autorizado, problemas legais.
-**Como evitar:** Sempre inclua LICENSE.
-**Exemplo:**
+#### Repository without LICENSE
+**What is it:** Repository without a license file.
+**Why is it bad:** Unauthorized use, legal issues.
+**How to avoid:** Always include a LICENSE file.
+**Example:**
 ```
-# ❌ ERRADO
-# Repo sem LICENSE
+# ❌ WRONG
+# Repository without LICENSE
 
-# ✅ CORRETO
-# MIT License no arquivo LICENSE
-```
-
-#### Repo sem .gitignore
-**O que é:** Repositório sem .gitignore.
-**Por que é ruim:** Arquivos sensíveis commitados, repo sujo.
-**Como evitar:** Use gitignore.io ou template.
-**Exemplo:**
-```
-# ❌ ERRADO
-# .env commitado
-
-# ✅ CORRETO
-# .gitignore inclui .env, node_modules, etc.
+# ✅ CORRECT
+# MIT License in LICENSE file
 ```
 
-### 🟡 Médio
-
-#### Repo sem CI
-**O que é:** Repositório sem CI configurado.
-**Por que é ruim:** Bugs em produção, qualidade não verificada.
-**Como evitar:** Sempre configure CI.
-**Exemplo:**
+#### Repository without .gitignore
+**What is it:** Repository without a .gitignore file.
+**Why is it bad:** Sensitive files committed, repository dirty.
+**How to avoid:** Use gitignore.io or template.
+**Example:**
 ```
-# ❌ ERRADO
-# Push direto para main
+# ❌ WRONG
+# .env committed
 
-# ✅ CORRETO
-# CI verifica lint, testes, build
+# ✅ CORRECT
+# .gitignore includes .env, node_modules, etc.
 ```
 
-### 🟢 Baixo
+### Medium
 
-#### Repo sem Badges
-**O que é:** README sem badges de status.
-**Por que é ruim:** Usuários não sabem status.
-**Como evitar:** Adicione badges padrão.
-**Exemplo:**
+#### Repository without CI
+**What is it:** Repository without CI configured.
+**Why is it bad:** Bugs in production, quality not verified.
+**How to avoid:** Always configure CI.
+**Example:**
+```
+# ❌ WRONG
+# Push directly to main
+
+# ✅ CORRECT
+# CI verifies lint, tests, build
+```
+
+### Low
+
+#### Repository without Badges
+**What is it:** README without status badges.
+**Why is it bad:** Users do not know the status.
+**How to avoid:** Add standard badges.
+**Example:**
 ```markdown
 ![CI](https://github.com/.../actions/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)
@@ -249,44 +263,44 @@ cp templates/AGENTS.md AGENTS.md
 
 ## Checklists
 
-### Checklist de Repo Completeness
-- [ ] README.md presente
-- [ ] LICENSE presente
-- [ ] .gitignore configurado
-- [ ] CI/CD configurado
-- [ ] AGENTS.md presente
-- [ ] CONTRIBUTING.md presente
-- [ ] SECURITY.md presente
+### Repository Completeness Checklist
+- [ ] README.md present
+- [ ] LICENSE present
+- [ ] .gitignore configured
+- [ ] CI/CD configured
+- [ ] AGENTS.md present
+- [ ] CONTRIBUTING.md present
+- [ ] SECURITY.md present
 
-### Checklist de CI Pipeline
-- [ ] Lint passa
-- [ ] Testes passam
-- [ ] Build funciona
-- [ ] Coverage reportado
+### CI Pipeline Checklist
+- [ ] Lint passes
+- [ ] Tests pass
+- [ ] Build functions
+- [ ] Coverage reported
 - [ ] Security scan
 
-### Checklist de Security Basics
-- [ ] .env no .gitignore
-- [ ] Secrets configurados
-- [ ] LICENSE incluída
-- [ ] SECURITY.md presente
+### Security Basics Checklist
+- [ ] .env in .gitignore
+- [ ] Secrets configured
+- [ ] LICENSE included
+- [ ] SECURITY.md present
 
 ## Edge Cases
 
-### Fork de Projeto Externo
-**Situação:** Fork de projeto sem estrutura padronizada.
-**Solução:** Mantenha compatibilidade, adicione AGENTS.md.
-**Exceção:** Se fork é totalmente novo, reestruture.
+### Fork of External Project
+**Situation:** Fork of project without standardized structure.
+**Solution:** Maintain compatibility, add AGENTS.md.
+**Exception:** If fork is entirely new, restructure.
 
 ```bash
-# Manter estrutura original
-# Adicionar AGENTS.md para agentes
+# Maintain original structure
+# Add AGENTS.md for agents
 ```
 
-### Monorepo com Múltiplas Linguagens
-**Situação:** Monorepo com Node.js, Python, Go.
-**Solução:** Estrutura por serviço, CI multi-stage.
-**Exceção:** Se monolito é pequeno, unifique.
+### Monorepo with Multiple Languages
+**Situation:** Monorepo with Node.js, Python, Go.
+**Solution:** Structure by service, CI multi-stage.
+**Exception:** If monolito is small, unify.
 
 ```
 packages/
@@ -295,8 +309,8 @@ packages/
 └── cli/     # Go
 ```
 
-## Referências
+## References
 
-- `governance` — para processos
-- `documentation` — para padrões
-- `git` — para .gitignore
+- `governance` — for team processes
+- `documentation` — for documentation standards
+- `git` — for .gitignore

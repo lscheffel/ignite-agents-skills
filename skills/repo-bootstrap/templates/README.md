@@ -1,41 +1,41 @@
 # README Template
 
-# {Nome do Projeto}
+# {Project Name}
 
-{Descrição em 1 parágrafo}
+{Project Description in 1 paragraph}
 
-## Instalação
+## Installation
 
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone {url}
 
-# Instale dependências
+# Install dependencies
 npm install
 
-# Configure variáveis de ambiente
+# Copy environment variables configuration
 cp .env.example .env
 ```
 
-## Uso
+## Usage
 
 ```bash
-# Desenvolvimento
+# Development
 npm run dev
 
-# Testes
+# Tests
 npm test
 
 # Build
 npm run build
 ```
 
-## Documentação
+## Documentation
 
-- [API Docs](docs/api.md)
+- [API Documentation](docs/api.md)
 - [Architecture](docs/architecture.md)
 - [Contributing](CONTRIBUTING.md)
 
-## Licença
+## License
 
 {License}

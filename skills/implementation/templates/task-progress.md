@@ -1,49 +1,49 @@
 # Task Progress
 
-> Progresso individual de uma tarefa durante a execução governada.
+> Individual task progress during governed execution.
 
 ---
 
-## Identificação
+## Identification
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Tarefa | {{task_name}} |
-| Número | {{task_number}} |
+| Task | {{task_name}} |
+| Number | {{task_number}} |
 | TODO | {{todo_path}} |
-| Data início | {{start_date}} |
+| Start Date | {{start_date}} |
 
 ---
 
-## Estado
+## State
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Estado atual | {{current_state}} |
-| Data início | {{start_date}} |
-| Data término | {{end_date}} |
-| Duração | {{duration}} |
-| Tentativas | {{attempts}} |
+| Current State | {{current_state}} |
+| Start Date | {{start_date}} |
+| End Date | {{end_date}} |
+| Duration | {{duration}} |
+| Attempts | {{attempts}} |
 
-### Transições de Estado
+### State Transitions
 
-| Data | De | Para | Motivo |
-|------|----|------|--------|
+| Date | From | To | Reason |
+|------|------|----|--------|
 {{#each transitions}}
 | {{date}} | {{from}} | {{to}} | {{reason}} |
 {{/each}}
 
 ---
 
-## Descrição da Tarefa
+## Task Description
 
 {{task_description}}
 
 ---
 
-## Dependências
+## Dependencies
 
-| # | Dependência | Estado | Pode iniciar? |
+| # | Dependency | State | Can Start? |
 |---|-------------|--------|---------------|
 {{#each dependencies}}
 | {{number}} | {{dependency}} | {{status}} | {{can_start}} |
@@ -51,9 +51,9 @@
 
 ---
 
-## Alterações Realizadas
+## Changes Made
 
-| # | Arquivo | Tipo | Descrição | Linhas |
+| # | File | Type | Description | Lines |
 |---|---------|------|-----------|--------|
 {{#each changes}}
 | {{number}} | {{file}} | {{type}} | {{description}} | {{lines}} |
@@ -61,9 +61,9 @@
 
 ---
 
-## Validações
+## Validations
 
-| # | Validação | Resultado | Tentativa | Timestamp | Observações |
+| # | Validation | Result | Attempt | Timestamp | Notes |
 |---|-----------|-----------|-----------|-----------|-------------|
 {{#each validations}}
 | {{number}} | {{validation}} | {{result}} | {{attempt}} | {{timestamp}} | {{notes}} |
@@ -71,9 +71,9 @@
 
 ---
 
-## Bloqueadores
+## Blockers
 
-| # | Bloqueador | Data Identificação | Data Resolução | Ação |
+| # | Blocker | Identification Date | Resolution Date | Action |
 |---|------------|-------------------|----------------|------|
 {{#each blockers}}
 | {{number}} | {{blocker}} | {{identified}} | {{resolved}} | {{action}} |
@@ -81,9 +81,9 @@
 
 ---
 
-## Critérios de Aceite
+## Acceptance Criteria
 
-| # | Critério | Atendido | Evidência |
+| # | Criterion | Met | Evidence |
 |---|----------|----------|-----------|
 {{#each acceptance_criteria}}
 | {{number}} | {{criterion}} | {{met}} | {{evidence}} |
@@ -91,7 +91,7 @@
 
 ---
 
-## Observações
+## Notes
 
 {{#each notes}}
 - {{note}}
@@ -99,11 +99,11 @@
 
 ---
 
-## Resumo
+## Summary
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Tarefa concluída | {{completed}} |
-| Validações passaram | {{validations_passed}} |
-| Documentação atualizada | {{docs_updated}} |
-| Próxima tarefa | {{next_task}} |
+| Task Completed | {{completed}} |
+| Validations Passed | {{validations_passed}} |
+| Documentation Updated | {{docs_updated}} |
+| Next Task | {{next_task}} |

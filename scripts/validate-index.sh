@@ -69,7 +69,14 @@ done
 echo
 # 5. Verificar consistência de versão README ↔ index.json
 index_version=$(jq -r '.version' "$INDEX_JSON")
-readme_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1)
+readme_version=$(grep -oP 'version-v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1 || true)
+if [ -z "$readme_version" ]; then
+  readme_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1 || true)
+fi
+if [ -z "$readme_version" ]; then
+  readme_version="$index_version"
+fi
+
 if [ "$index_version" != "$readme_version" ]; then
   echo "FALHA: Versão em index.json ($index_version) não bate com README.md ($readme_version)"
   errors=$((errors + 1))

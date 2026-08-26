@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>artifacts-builder — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; artifacts-builder</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: artifacts-builder version: 1.0.0 description: 'Use when the user needs standalone HTML/CSS/JS artifacts — interactive demos, prototypes, single-file applications, or visual tools that run independently in a browser. Triggers: user says "artifact", "demo", "prototype", "single-file app", "HTML tool", "interactive widget", "standalone page", building something that runs in a browser without a build step.' domain: domain-stack triggers:</p>
+<ul>
+<li>artifacts-builder</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>artifacts-builder</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="artifacts-builder">Artifacts Builder</h1>
+<h2 id="overview">Overview</h2>
+<p>Generate self-contained, production-quality HTML/CSS/JS artifacts that run in any modern browser without a build step. Each artifact is a single file (or minimal file set) containing everything needed for an interactive demo, prototype, data visualization, or utility tool. Emphasis on progressive enhancement, responsive design, and clean code.</p>
+<h2 id="phase-1-scope-definition">Phase 1: Scope Definition</h2>
+<ol>
+<li>Clarify the artifact's purpose (demo, prototype, tool, visualization)</li>
+<li>Determine interactivity level (static, interactive, data-driven)</li>
+<li>Identify required dependencies (none, CDN-loaded, embedded)</li>
+<li>Define responsive requirements (mobile, desktop, both)</li>
+<li>Set constraints (file size, browser support, offline capability)</li>
+</ol>
+<p><strong>STOP — Confirm scope and constraints with user before architecture decisions.</strong></p>
+<h3 id="artifact-type-decision-table">Artifact Type Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Purpose</th><th>Complexity</th><th>Dependencies</th><th>Example</th></tr><tr><td>Static demo</td><td>Low</td><td>None</td><td>Product mockup, landing page</td></tr><tr><td>Interactive widget</td><td>Medium</td><td>None or Alpine.js</td><td>Calculator, form builder</td></tr><tr><td>Data visualization</td><td>Medium-High</td><td>D3.js or Chart.js</td><td>Dashboard, chart explorer</td></tr><tr><td>Prototype</td><td>Medium</td><td>Alpine.js or Petite-Vue</td><td>Clickable UI prototype</td></tr><tr><td>Utility tool</td><td>Medium-High</td><td>Varies</td><td>JSON formatter, color picker</td></tr><tr><td>Generative art</td><td>Medium</td><td>None</td><td>Canvas animation, pattern generator</td></tr><tr><td>Presentation</td><td>Medium</td><td>None or Mermaid</td><td>Slide deck, diagram viewer</td></tr></table></div>
+<h2 id="phase-2-architecture">Phase 2: Architecture</h2>
+<ol>
+<li>Choose single-file or multi-file approach</li>
+<li>Select CDN dependencies (if any)</li>
+<li>Plan component structure within the file</li>
+<li>Define state management approach</li>
+<li>Plan progressive enhancement layers</li>
+</ol>
+<p><strong>STOP — Present architecture and dependency choices for approval.</strong></p>
+<h3 id="architecture-decision-table">Architecture Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Constraint</th><th>Single-File</th><th>Multi-File</th></tr><tr><td>Easy sharing (email, paste)</td><td>Yes</td><td>No</td></tr><tr><td>File size < 100KB</td><td>Yes</td><td>Either</td></tr><tr><td>Multiple pages/views</td><td>Possible (SPA)</td><td>Better</td></tr><tr><td>Team collaboration</td><td>Difficult</td><td>Better</td></tr><tr><td>Offline use</td><td>Yes (self-contained)</td><td>Needs bundling</td></tr><tr><td>SEO requirements</td><td>N/A</td><td>N/A (artifacts are tools)</td></tr></table></div>
+<h3 id="dependency-decision-table">Dependency Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Need</th><th>Recommended</th><th>CDN URL</th><th>Size</th></tr><tr><td>Lightweight reactivity</td><td>Alpine.js</td><td><code>cdn.jsdelivr.net/npm/alpinejs@3</code></td><td>~15KB</td></tr><tr><td>Minimal Vue-like</td><td>Petite-Vue</td><td><code>unpkg.com/petite-vue</code></td><td>~6KB</td></tr><tr><td>Charts</td><td>Chart.js</td><td><code>cdn.jsdelivr.net/npm/chart.js@4</code></td><td>~65KB</td></tr><tr><td>Data visualization</td><td>D3.js</td><td><code>cdn.jsdelivr.net/npm/d3@7</code></td><td>~90KB</td></tr><tr><td>Diagrams</td><td>Mermaid</td><td><code>cdn.jsdelivr.net/npm/mermaid@10</code></td><td>~120KB</td></tr><tr><td>CSS framework (proto)</td><td>Tailwind Play CDN</td><td><code>cdn.tailwindcss.com</code></td><td>Runtime</td></tr><tr><td>Icons</td><td>Lucide</td><td><code>unpkg.com/lucide@latest</code></td><td>On-demand</td></tr><tr><td>No dependency needed</td><td>Vanilla JS</td><td>N/A</td><td>0KB</td></tr></table></div>
+<h3 id="cdn-usage-rules">CDN Usage Rules</h3>
+<div class="table-wrapper"><table><tr><th>Rule</th><th>Rationale</th></tr><tr><td>Pin to major version (<code>@3</code>, <code>@7</code>)</td><td>Prevent breaking changes</td></tr><tr><td>Maximum 3 CDN dependencies</td><td>Keep artifacts lightweight</td></tr><tr><td>Add <code>integrity</code> and <code>crossorigin</code></td><td>Security against CDN compromise</td></tr><tr><td>Provide graceful degradation</td><td>Work if CDN fails</td></tr><tr><td>Prefer smaller alternatives</td><td>Alpine over React, Petite-Vue over Vue</td></tr></table></div>
+<h2 id="phase-3-implementation">Phase 3: Implementation</h2>
+<ol>
+<li>Build semantic HTML structure</li>
+<li>Add CSS (inline <code><style></code> or embedded)</li>
+<li>Implement JavaScript functionality</li>
+<li>Add error handling and fallbacks</li>
+<li>Test across viewports and browsers</li>
+</ol>
+<p><strong>STOP — Verify the artifact works correctly before delivering to user.</strong></p>
+<h3 id="template-structure">Template Structure</h3>
+<pre data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;[Artifact Title]&lt;/title&gt;
+  &lt;style&gt;
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Design Tokens */
+    :root {
+      --color-bg: #ffffff;
+      --color-text: #1a1a2e;
+      --color-primary: #3b82f6;
+      --color-border: #e2e8f0;
+      --radius: 0.5rem;
+      --space: 1rem;
+      --font: system-ui, -apple-system, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #0f172a;
+        --color-text: #e2e8f0;
+        --color-primary: #60a5fa;
+        --color-border: #334155;
+      }
+    }
+
+    /* Base Styles */
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    /* Component Styles */
+    /* ... */
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- Semantic HTML content --&gt;
+
+  &lt;script&gt;
+    // Application logic
+    (function() {
+      &#x27;use strict&#x27;;
+      // ...
+    })();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h3 id="responsive-design-patterns">Responsive Design Patterns</h3>
+<h4 id="container-based-layout">Container-Based Layout</h4>
+<pre data-lang="css"><code>.container {
+  width: min(100% - 2rem, 1200px);
+  margin-inline: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: var(--space);
+}</code></pre>
+<h4 id="mobile-first-media-queries">Mobile-First Media Queries</h4>
+<pre data-lang="css"><code>/* Base: mobile */
+.layout { display: flex; flex-direction: column; }
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .layout { flex-direction: row; }
+  .sidebar { width: 280px; flex-shrink: 0; }
+}</code></pre>
+<h3 id="progressive-enhancement">Progressive Enhancement</h3>
+<div class="table-wrapper"><table><tr><th>Layer</th><th>Purpose</th><th>Requirement</th></tr><tr><td>HTML</td><td>Content accessible and meaningful</td><td>Works without CSS or JS</td></tr><tr><td>CSS</td><td>Visual presentation and layout</td><td>Works without JS</td></tr><tr><td>JavaScript</td><td>Enhanced interactivity</td><td>Adds dynamic behavior</td></tr></table></div>
+<h4 id="feature-detection">Feature Detection</h4>
+<pre data-lang="javascript"><code>// Check before using modern APIs
+if (&#x27;IntersectionObserver&#x27; in window) {
+  // Use lazy loading
+} else {
+  // Load all images immediately
+}
+
+if (CSS.supports(&#x27;backdrop-filter&#x27;, &#x27;blur(10px)&#x27;)) {
+  element.classList.add(&#x27;glass-effect&#x27;);
+}</code></pre>
+<h3 id="state-management-no-framework">State Management (No Framework)</h3>
+<h4 id="simple-state-pattern">Simple State Pattern</h4>
+<pre data-lang="javascript"><code>function createStore(initialState) {
+  let state = { ...initialState };
+  const listeners = new Set();
+
+  return {
+    getState: () =&gt; ({ ...state }),
+    setState(updates) {
+      state = { ...state, ...updates };
+      listeners.forEach(fn =&gt; fn(state));
+    },
+    subscribe(fn) {
+      listeners.add(fn);
+      return () =&gt; listeners.delete(fn);
+    },
+  };
+}</code></pre>
+<h4 id="url-based-state-for-shareable-artifacts">URL-Based State (for shareable artifacts)</h4>
+<pre data-lang="javascript"><code>function syncStateWithURL(store) {
+  const params = new URLSearchParams(location.search);
+  for (const [key, value] of params) {
+    store.setState({ [key]: JSON.parse(value) });
+  }
+  store.subscribe(state =&gt; {
+    const params = new URLSearchParams();
+    Object.entries(state).forEach(([k, v]) =&gt; params.set(k, JSON.stringify(v)));
+    history.replaceState(null, &#x27;&#x27;, `?${params}`);
+  });
+}</code></pre>
+<h3 id="export-formats">Export Formats</h3>
+<div class="table-wrapper"><table><tr><th>Format</th><th>Use Case</th><th>Method</th></tr><tr><td>Single HTML file</td><td>Sharing, embedding</td><td>Self-contained <code><style></code> and <code><script></code></td></tr><tr><td>HTML + assets</td><td>Complex artifacts</td><td>Separate CSS/JS files</td></tr><tr><td>Data URL</td><td>Inline embedding</td><td><code>data:text/html;base64,...</code></td></tr><tr><td>Screenshot/PNG</td><td>Documentation</td><td><code>html2canvas</code> or browser screenshot</td></tr><tr><td>PDF</td><td>Print/report</td><td><code>window.print()</code> with print styles</td></tr></table></div>
+<h2 id="quality-checklist">Quality Checklist</h2>
+<ul>
+<li>[ ] Valid HTML5 (<code><!DOCTYPE html></code>, <code>lang</code> attribute)</li>
+<li>[ ] Responsive viewport meta tag</li>
+<li>[ ] Works without JavaScript (content visible)</li>
+<li>[ ] Dark mode support (<code>prefers-color-scheme</code>)</li>
+<li>[ ] Keyboard navigable</li>
+<li>[ ] No console errors</li>
+<li>[ ] File size under 100KB (excluding images)</li>
+<li>[ ] Cross-browser tested (Chrome, Firefox, Safari)</li>
+<li>[ ] Print styles if applicable</li>
+<li>[ ] Semantic HTML elements used appropriately</li>
+</ul>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>React/Vue/Angular in single-file artifact</td><td>Massive overhead for simple interactions</td><td>Use Alpine.js or vanilla JS</td></tr><tr><td>Heavy framework from CDN for simple UI</td><td>Slow load, wasted bandwidth</td><td>Match dependency weight to need</td></tr><tr><td>Inline styles instead of CSS custom properties</td><td>Cannot theme, cannot dark-mode</td><td>Use CSS custom properties (tokens)</td></tr><tr><td>No error handling on user input</td><td>Crashes on bad input</td><td>Validate and provide feedback</td></tr><tr><td>Fixed pixel dimensions</td><td>Breaks on mobile, tablets</td><td>Use responsive units (%, rem, vw)</td></tr><tr><td>Missing <code><meta viewport></code></td><td>Mobile renders desktop-zoomed</td><td>Always include viewport meta tag</td></tr><tr><td>Blocking <code><script></code> in <code><head></code></td><td>Delays page rendering</td><td>Use <code>defer</code> attribute or put at end of body</td></tr><tr><td>No IIFE wrapper for script</td><td>Global scope pollution</td><td>Wrap in <code>(function() { ... })()</code></td></tr><tr><td>Hardcoded colors without tokens</td><td>Cannot switch themes</td><td>Use CSS custom properties</td></tr></table></div>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>ui-ux-pro-max</code></td><td>Style selection and UX guidelines</td></tr><tr><td><code>ui-design-system</code></td><td>Design tokens for consistent theming</td></tr><tr><td><code>canvas-design</code></td><td>Canvas/SVG visualizations within artifacts</td></tr><tr><td><code>senior-frontend</code></td><td>Complex component patterns</td></tr><tr><td><code>mobile-design</code></td><td>Mobile-responsive artifact design</td></tr><tr><td><code>planning</code></td><td>Artifact scope is defined during planning</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt the architecture, dependencies, and complexity to the artifact's requirements. Simple demos should remain as minimal as possible; complex tools may use lightweight frameworks and multiple CDN dependencies.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

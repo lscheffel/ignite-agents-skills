@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test-driven-development — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; test-driven-development</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: test-driven-development version: 1.0.0 description: 'Use when writing any new code, adding features, or fixing bugs that require code changes. Enforces strict RED-GREEN-REFACTOR cycle with no production code without a failing test first. Triggers: new feature implementation, bug fix, refactoring existing code, adding behavior to existing modules.' domain: engineering-quality triggers:</p>
+<ul>
+<li>test-driven-development</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>test-driven-development</li>
+<li>engineering-quality</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="test-driven-development">Test-Driven Development</h1>
+<h2 id="overview">Overview</h2>
+<p>TDD enforces the RED-GREEN-REFACTOR cycle as an unbreakable discipline: write a failing test, make it pass with minimal code, then clean up. This skill prevents untested production code from ever existing and ensures every line of implementation is driven by a verified requirement.</p>
+<p><strong>Announce at start:</strong> "I'm using the test-driven-development skill with the RED-GREEN-REFACTOR cycle."</p>
+<hr>
+<h2 id="iron-law">Iron Law</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  HARD-GATE: NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST    │
+│                                                                 │
+│  This is non-negotiable. There are no exceptions. If you are   │
+│  writing production code and there is no failing test demanding │
+│  that code, you are violating this skill. STOP immediately     │
+│  and write the test first.                                     │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<hr>
+<h2 id="phase-1-red-write-a-failing-test">Phase 1: RED (Write a Failing Test)</h2>
+<p><strong>Goal:</strong> Write exactly ONE test that fails for the right reason.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Identify the smallest unit of behavior to implement next</li>
+<li>Write a test that asserts that behavior exists</li>
+<li>Run the test suite — confirm the new test FAILS</li>
+<li>Read the failure message — confirm it fails for the RIGHT reason (missing functionality, not syntax error or import error)</li>
+<li>If it fails for the wrong reason, fix the test until it fails correctly</li>
+</ol>
+<h3 id="stop--hard-gate-do-not-proceed-to-green-until">STOP — HARD-GATE: Do NOT proceed to GREEN until:</h3>
+<ul>
+<li>[ ] Test is written and saved</li>
+<li>[ ] Test suite has been run</li>
+<li>[ ] New test fails</li>
+<li>[ ] Failure reason is correct (tests the intended behavior)</li>
+</ul>
+<hr>
+<h2 id="phase-2-green-make-it-pass">Phase 2: GREEN (Make It Pass)</h2>
+<p><strong>Goal:</strong> Write the MINIMUM production code to make the failing test pass.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Write only enough code to make the failing test pass</li>
+<li>Do NOT refactor. Do NOT clean up. Do NOT optimize</li>
+<li>Hardcode values if that makes the test pass — that is fine</li>
+<li>Run the full test suite</li>
+<li>ALL tests must pass (not just the new one)</li>
+</ol>
+<h3 id="stop--hard-gate-do-not-proceed-to-refactor-until">STOP — HARD-GATE: Do NOT proceed to REFACTOR until:</h3>
+<ul>
+<li>[ ] Production code is written</li>
+<li>[ ] Full test suite has been run</li>
+<li>[ ] ALL tests pass (new and existing)</li>
+<li>[ ] No more code was written than necessary</li>
+</ul>
+<hr>
+<h2 id="phase-3-refactor-clean-up">Phase 3: REFACTOR (Clean Up)</h2>
+<p><strong>Goal:</strong> Improve code quality without changing behavior.</p>
+<h3 id="actions">Actions</h3>
+<ol>
+<li>Look for duplication, poor naming, long methods, code smells</li>
+<li>Make ONE refactoring change at a time</li>
+<li>Run the full test suite after EACH change</li>
+<li>If any test fails, undo the refactoring immediately</li>
+<li>Continue until the code is clean</li>
+</ol>
+<h3 id="stop--hard-gate-do-not-proceed-to-next-red-until">STOP — HARD-GATE: Do NOT proceed to next RED until:</h3>
+<ul>
+<li>[ ] Code is clean and readable</li>
+<li>[ ] All tests still pass after refactoring</li>
+<li>[ ] No behavior was changed during refactoring</li>
+</ul>
+<hr>
+<h2 id="hard-gate-enforcement">HARD-GATE Enforcement</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│  HARD-GATE: PHASE COMPLETION CHECK                          │
+│                                                             │
+│  Before moving to next phase, ALL items in the              │
+│  STOP MARKER checklist must be satisfied.                   │
+│                                                             │
+│  If ANY item is not satisfied:                              │
+│  → STOP                                                    │
+│  → Complete the missing item                               │
+│  → Re-verify ALL items                                     │
+│  → ONLY THEN proceed                                       │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+<hr>
+<h2 id="watch-mode-discipline">Watch Mode Discipline</h2>
+<p>After every change to any file (test or production), run the relevant test suite. No exceptions.</p>
+<div class="table-wrapper"><table><tr><th>Action</th><th>Run Tests?</th><th>Expected Result</th></tr><tr><td>Write a test</td><td>Yes</td><td>Failure (RED)</td></tr><tr><td>Write production code</td><td>Yes</td><td>Pass (GREEN)</td></tr><tr><td>Refactor code</td><td>Yes</td><td>Pass (still GREEN)</td></tr><tr><td>Any other edit</td><td>Yes</td><td>No regressions</td></tr></table></div>
+<p>If your test runner supports watch mode, use it. If not, run tests manually after every save.</p>
+<hr>
+<h2 id="decision-table-test-type-selection">Decision Table: Test Type Selection</h2>
+<div class="table-wrapper"><table><tr><th>Behavior Being Tested</th><th>Test Type</th><th>Framework Example</th></tr><tr><td>Pure function logic</td><td>Unit test</td><td>Vitest, pytest, cargo test</td></tr><tr><td>API endpoint request/response</td><td>Integration test</td><td>Supertest, httpx</td></tr><tr><td>Database query correctness</td><td>Integration test</td><td>Testcontainers</td></tr><tr><td>UI component rendering</td><td>Unit test</td><td>React Testing Library</td></tr><tr><td>Full user workflow</td><td>E2E test</td><td>Playwright</td></tr><tr><td>Error handling path</td><td>Unit test</td><td>Vitest, pytest</td></tr></table></div>
+<hr>
+<h2 id="example-cycle">Example Cycle</h2>
+<pre><code>Requirement: &quot;Users can register with email and password&quot;
+
+Behavior List:
+1. Registration with valid email and password succeeds
+2. Registration fails if email is empty
+3. Registration fails if password is too short
+4. Registration fails if email is already taken
+
+Cycle 1 - Behavior 1:
+  RED:   test_registration_with_valid_email_and_password_succeeds → FAIL (no register function)
+  GREEN: def register(email, password): return User(email=email) → PASS
+  REFACTOR: rename variable for clarity → PASS
+
+Cycle 2 - Behavior 2:
+  RED:   test_registration_fails_if_email_is_empty → FAIL (no validation)
+  GREEN: add if not email: raise ValueError → PASS
+  REFACTOR: extract validation to separate method → PASS
+
+...continue for each behavior...</code></pre>
+<hr>
+<h2 id="checklist-starting-a-new-feature-with-tdd">Checklist: Starting a New Feature with TDD</h2>
+<ol>
+<li>[ ] Understand the requirement fully before writing any code</li>
+<li>[ ] Break the requirement into a list of specific behaviors</li>
+<li>[ ] Order behaviors from simplest to most complex</li>
+<li>[ ] Create a task for the first behavior</li>
+<li>[ ] Enter RED phase: write failing test for first behavior</li>
+<li>[ ] Enter GREEN phase: write minimal code to pass</li>
+<li>[ ] Enter REFACTOR phase: clean up</li>
+<li>[ ] Create task for next behavior, repeat from step 5</li>
+<li>[ ] After all behaviors are implemented, run full test suite</li>
+<li>[ ] Invoke <code>verification-before-completion</code> before claiming done</li>
+</ol>
+<hr>
+<h2 id="test-quality-standards">Test Quality Standards</h2>
+<p>Each test must be:</p>
+<div class="table-wrapper"><table><tr><th>Standard</th><th>Definition</th></tr><tr><td><strong>Fast</strong></td><td>Milliseconds, not seconds</td></tr><tr><td><strong>Isolated</strong></td><td>No shared state between tests, no test ordering dependencies</td></tr><tr><td><strong>Repeatable</strong></td><td>Same result every time, no flakiness</td></tr><tr><td><strong>Self-validating</strong></td><td>Pass or fail, no manual interpretation needed</td></tr><tr><td><strong>Timely</strong></td><td>Written before the production code (that is the whole point)</td></tr></table></div>
+<p>Each test should:</p>
+<ul>
+<li>Test ONE behavior or scenario</li>
+<li>Have a descriptive name that explains the scenario and expected outcome</li>
+<li>Follow Arrange-Act-Assert (or Given-When-Then) structure</li>
+<li>Use the minimum setup necessary</li>
+<li>Assert outcomes, not implementation details</li>
+</ul>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>Correct Approach</th></tr><tr><td>Writing production code first</td><td>Defeats the purpose of TDD; tests shaped to pass</td><td>Write the test first, always</td></tr><tr><td>Writing multiple tests before any code</td><td>Batch testing defeats incremental design</td><td>One test, one cycle</td></tr><tr><td>Test passes on first run</td><td>Either test is wrong or behavior already exists</td><td>Investigate before proceeding</td></tr><tr><td>Spending >5 minutes in GREEN</td><td>Writing too much code at once</td><td>Simplify; make test more specific</td></tr><tr><td>Modifying tests to match code</td><td>Tests specify behavior; code must match tests</td><td>Fix the code, not the test</td></tr><tr><td>Skipping REFACTOR phase</td><td>Technical debt accumulates rapidly</td><td>Refactor every cycle</td></tr><tr><td>Not running tests after every change</td><td>Regressions go unnoticed</td><td>Run tests after every save</td></tr></table></div>
+<hr>
+<h2 id="rationalization-prevention">Rationalization Prevention</h2>
+<div class="table-wrapper"><table><tr><th>Excuse</th><th>Reality</th></tr><tr><td>"It's just a small change"</td><td>Small changes cause production outages. Test it.</td></tr><tr><td>"I'll write the tests after"</td><td>You will not. And if you do, they will be weaker because they were shaped to pass, not to specify.</td></tr><tr><td>"This is just a refactor"</td><td>Refactors change behavior more often than you think. The test suite proves they do not.</td></tr><tr><td>"I know this works"</td><td>You do not. You think you do. The test proves it.</td></tr><tr><td>"Tests would slow me down"</td><td>Debugging without tests slows you down 10x more.</td></tr><tr><td>"This code is too simple to test"</td><td>If it is too simple to test, it is too simple to get wrong — so the test will be trivial to write. Write it.</td></tr><tr><td>"I can't test this because of dependencies"</td><td>Then your design has a coupling problem. Fix the design.</td></tr><tr><td>"The test would be harder to write than the code"</td><td>That means you do not understand the requirements well enough. The test forces you to clarify.</td></tr><tr><td>"I'll just manually verify it"</td><td>Manual verification is not repeatable, not documented, and not trustworthy.</td></tr><tr><td>"This is throwaway/prototype code"</td><td>Prototype code has a habit of becoming production code. Test it now or regret it later.</td></tr><tr><td>"The framework makes it hard to test"</td><td>Use the framework's testing utilities, or isolate your logic from the framework.</td></tr><tr><td>"I'm under time pressure"</td><td>TDD is faster over any timeline longer than 20 minutes. The pressure is exactly why you need it.</td></tr></table></div>
+<hr>
+<h2 id="red-flags">Red Flags</h2>
+<p>If you observe any of these, STOP and reassess:</p>
+<div class="table-wrapper"><table><tr><th>Red Flag</th><th>What It Means</th><th>Action</th></tr><tr><td>Writing production code with no failing test</td><td>Immediate violation</td><td>Stop. Write the test.</td></tr><tr><td>Test passes immediately on first run</td><td>Test is wrong or behavior exists</td><td>Investigate before proceeding</td></tr><tr><td>More than 5 minutes in GREEN phase</td><td>Writing too much code</td><td>Simplify. Make test more specific.</td></tr><tr><td>Refactoring changes behavior</td><td>Test coverage has a gap</td><td>Add missing tests</td></tr><tr><td>Tests modified to pass</td><td>Requirements inverted</td><td>Fix code to match tests</td></tr><tr><td>Multiple tests before any production code</td><td>Batch testing defeats purpose</td><td>One test at a time</td></tr><tr><td>Test suite not run after a change</td><td>Regressions invisible</td><td>Run tests. Always. Every time.</td></tr></table></div>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>verification-before-completion</code></td><td>MUST be invoked before claiming any TDD work is complete</td></tr><tr><td><code>systematic-debugging</code></td><td>When a test fails unexpectedly during REFACTOR, switch to debugging</td></tr><tr><td><code>code-review</code></td><td>After completing a feature via TDD, review the test suite for completeness</td></tr><tr><td><code>acceptance-testing</code></td><td>Acceptance criteria drive the behavior list for TDD cycles</td></tr><tr><td><code>planning</code></td><td>Plan breaks features into behaviors suitable for TDD cycles</td></tr><tr><td><code>testing-strategy</code></td><td>Strategy defines frameworks; TDD defines the cycle</td></tr></table></div>
+<hr>
+<h2 id="test-types-in-tdd">Test Types in TDD</h2>
+<div class="table-wrapper"><table><tr><th>Type</th><th>Scope</th><th>Speed</th><th>When to Write</th></tr><tr><td><strong>Unit (Primary)</strong></td><td>Individual functions, methods, classes</td><td>Milliseconds</td><td>RED phase for every behavior</td></tr><tr><td><strong>Integration (Secondary)</strong></td><td>Component interactions</td><td>Seconds</td><td>After unit tests cover individual behaviors</td></tr><tr><td><strong>E2E (Tertiary)</strong></td><td>Complete user workflows</td><td>Seconds-minutes</td><td>Critical paths after unit and integration are solid</td></tr></table></div>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — The RED-GREEN-REFACTOR cycle is mandatory and cannot be reordered, skipped, or combined. Every phase has a HARD-GATE that must be satisfied before proceeding. No production code without a failing test first.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

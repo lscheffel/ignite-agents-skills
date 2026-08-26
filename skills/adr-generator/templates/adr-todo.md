@@ -1,168 +1,74 @@
-# TODO: {{title}}
+---
+id: ADR-{{id}}-TODO
+type: todo
+title: "Execution - {{title}}"
+created: {{date}}
+updated: {{date}}
+adr_ref: ADR-{{id}}
+---
 
-> ADR-{{id}} | Início: {{date}} | Status: ⬜ PENDENTE
+# ADR-{{id}}-TODO: Execution - {{title}}
+
+> Reference: [ADR-{{id}}](./ADR-{{id}}.md) | Status: ⬜ PENDING
+
+> **Elastic Structure:** The Phases and Steps below are an example skeleton, not a mandatory count. Use as many Phases as the real scope of the decision requires – a small decision may have a single Phase with two or three tasks; a large decision may have several. Do not create tasks just to fill the structure (see anti-pattern "TODO with Fabricated Phases").
+
+## Legend
+
+- ✅ Completed
+- ⬜ Pending
+- 🔄 In Progress
+- ❌ Blocked
+- ⏸️ Paused
+
+**Priority:** 🔴 High | 🟡 Medium | 🟢 Low
 
 ---
 
-## Legenda
+## Phase {{phase_1_letter}}: {{phase_1_title}}
 
-- ✅ Concluído
-- ⬜ Pendente
-- 🔄 Em Andamento
-- ❌ Bloqueado
-- ⏸️ Pausado
+### {{phase_1_letter}}1: {{phase_1_subtitle}}
 
-**Prioridade:** 🔴 Alta | 🟡 Média | 🟢 Baixa
-
----
-
-## Fase A: {{phase_a_title}}
-
-### A1: {{phase_a_subtitle}}
-
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
+| # | Task | Status | Priority | Dependencies | Estimation |
 |---|--------|--------|------------|--------------|------------|
-| A1.1 | {{task_a1_1}} | ⬜ | 🔴 | — | {{time_a1_1}} |
-| A1.2 | {{task_a1_2}} | ⬜ | 🔴 | A1.1 | {{time_a1_2}} |
-| A1.3 | {{task_a1_3}} | ⬜ | 🔴 | A1.1 | {{time_a1_3}} |
+| {{phase_1_letter}}1.1 | {{task_1}} | ⬜ | 🔴 | — | {{time_1}} |
+| {{phase_1_letter}}1.2 | {{task_2}} | ⬜ | 🔴 | {{phase_1_letter}}1.1 | {{time_2}} |
 
-**Checkpoint A1:**
-- [ ] {{checkpoint_a1_1}}
-- [ ] {{checkpoint_a1_2}}
+**Checkpoint {{phase_1_letter}}1:**
+- [ ] {{checkpoint_1}}
 
----
+<!--
+Repeat the block "### {{phase_1_letter}}N: {{subtitle}}" for each additional sub-group of tasks within this Phase, and repeat the entire section "## Phase {{letra}}" for each additional Phase that the real scope requires. Each Phase ends with a General Checkpoint:
 
-### A2: {{phase_a2_subtitle}}
-
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
-|---|--------|--------|------------|--------------|------------|
-| A2.1 | {{task_a2_1}} | ⬜ | 🔴 | A1 | {{time_a2_1}} |
-| A2.2 | {{task_a2_2}} | ⬜ | 🟡 | A1 | {{time_a2_2}} |
-| A2.3 | {{task_a2_3}} | ⬜ | 🔴 | A2.2 | {{time_a2_3}} |
-
-**Checkpoint A2:**
-- [ ] {{checkpoint_a2_1}}
-- [ ] {{checkpoint_a2_2}}
+**General Checkpoint for Phase {{phase_1_letter}}:**
+- [ ] {{checkpoint_general}}
+-->
 
 ---
 
-### A3: {{phase_a3_subtitle}}
+## General Summary
 
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
-|---|--------|--------|------------|--------------|------------|
-| A3.1 | {{task_a3_1}} | ⬜ | 🔴 | A2 | {{time_a3_1}} |
-| A3.2 | {{task_a3_2}} | ⬜ | 🔴 | A3.1 | {{time_a3_2}} |
-| A3.3 | {{task_a3_3}} | ⬜ | 🔴 | A3.2 | {{time_a3_3}} |
-
-**Checkpoint A3:**
-- [ ] {{checkpoint_a3_1}}
-- [ ] {{checkpoint_a3_2}}
-
----
-
-**Checkpoint Geral Fase A:**
-- [ ] {{checkpoint_a_general_1}}
-- [ ] {{checkpoint_a_general_2}}
-
----
-
-## Fase B: {{phase_b_title}}
-
-### B1: {{phase_b_subtitle}}
-
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
-|---|--------|--------|------------|--------------|------------|
-| B1.1 | {{task_b1_1}} | ⬜ | 🔴 | A | {{time_b1_1}} |
-| B1.2 | {{task_b1_2}} | ⬜ | 🔴 | B1.1 | {{time_b1_2}} |
-| B1.3 | {{task_b1_3}} | ⬜ | 🔴 | B1.2 | {{time_b1_3}} |
-| B1.4 | {{task_b1_4}} | ⬜ | 🟡 | B1.3 | {{time_b1_4}} |
-
-**Checkpoint B1:**
-- [ ] {{checkpoint_b1_1}}
-- [ ] {{checkpoint_b1_2}}
-
----
-
-### B2: {{phase_b2_subtitle}}
-
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
-|---|--------|--------|------------|--------------|------------|
-| B2.1 | {{task_b2_1}} | ⬜ | 🔴 | B1 | {{time_b2_1}} |
-| B2.2 | {{task_b2_2}} | ⬜ | 🔴 | B2.1 | {{time_b2_2}} |
-| B2.3 | {{task_b2_3}} | ⬜ | 🟡 | B2.2 | {{time_b2_3}} |
-| B2.4 | {{task_b2_4}} | ⬜ | 🔴 | B2.3 | {{time_b2_4}} |
-| B2.5 | {{task_b2_5}} | ⬜ | 🔴 | B2.4 | {{time_b2_5}} |
-| B2.6 | {{task_b2_6}} | ⬜ | 🔴 | B2.5 | {{time_b2_6}} |
-| B2.7 | {{task_b2_7}} | ⬜ | 🔴 | B2.6 | {{time_b2_7}} |
-| B2.8 | {{task_b2_8}} | ⬜ | 🔴 | B2.7 | {{time_b2_8}} |
-| B2.9 | {{task_b2_9}} | ⬜ | 🟡 | B2.8 | {{time_b2_9}} |
-
-**Checkpoint B2:**
-- [ ] {{checkpoint_b2_1}}
-- [ ] {{checkpoint_b2_2}}
-- [ ] {{checkpoint_b2_3}}
-
----
-
-**Checkpoint Geral Fase B:**
-- [ ] {{checkpoint_b_general_1}}
-- [ ] {{checkpoint_b_general_2}}
-
----
-
-## Fase C: {{phase_c_title}}
-
-### C1: {{phase_c_subtitle}}
-
-| # | Tarefa | Status | Prioridade | Dependências | Estimativa |
-|---|--------|--------|------------|--------------|------------|
-| C1.1 | {{task_c1_1}} | ⬜ | 🟡 | B | {{time_c1_1}} |
-| C1.2 | {{task_c1_2}} | ⬜ | 🟡 | C1.1 | {{time_c1_2}} |
-| C1.3 | {{task_c1_3}} | ⬜ | 🟢 | B | {{time_c1_3}} |
-
-**Checkpoint C1:**
-- [ ] {{checkpoint_c1_1}}
-- [ ] {{checkpoint_c1_2}}
-
----
-
-**Checkpoint Geral Fase C:**
-- [ ] {{checkpoint_c_general_1}}
-- [ ] {{checkpoint_c_general_2}}
-
----
-
-## Resumo Geral
-
-| Fase | Tarefas | Horas Est. | Status |
+| Phase | Tasks | Estimated Hours | Status |
 |------|---------|------------|--------|
-| Fase A: {{phase_a_title}} | {{count_a}} | ~{{hours_a}} | ⬜ |
-| Fase B: {{phase_b_title}} | {{count_b}} | ~{{hours_b}} | ⬜ |
-| Fase C: {{phase_c_title}} | {{count_c}} | ~{{hours_c}} | ⬜ |
+| Phase {{phase_1_letter}}: {{phase_1_title}} | {{count_1}} | ~{{hours_1}} | ⬜ |
 | **Total** | **{{total}}** | **~{{total_hours}}** | |
 
+<!-- Add a line for each real Phase. -->
+
 ---
 
-## Dependências entre Fases
+## Dependencies between Phases
+
+> Only include this diagram if there are more than one Phase with real dependencies between them. For a single-Phase TODO, omit this section.
 
 ```
-Fase A ({{phase_a_title_short}})
+Phase {{phase_1_letter}} ({{phase_1_title}})
   │
-  ├─── A1: {{a1_short}} ─────┐
-  ├─── A2: {{a2_short}} ─────┤
-  ├─── A3: {{a3_short}} ─────┤
-  └─── A4: {{a4_short}} ─────┘
-                                │
-Fase B ({{phase_b_title_short}}) ◄──────────────────┘
-  │
-  ├─── B1: {{b1_short}} ───────┐
-  └─── B2: {{b2_short}} ────────┘
-                                │
-Fase C ({{phase_c_title_short}}) ◄──────────────────┘
-  │
-  └─── C1: {{c1_short}} ────────┘
+  └─── {{phase_1_letter}}1: {{phase_1_short}} ─────┐
+                                                     │
+Phase {{phase_2_letter}} ({{phase_2_title}}) ◄───────┘
 ```
 
 ---
 
-*Documento gerado em {{date}}. Referência: ADR-{{id}}.*
+*Document generated on {{date}}. Reference: ADR-{{id}}.*

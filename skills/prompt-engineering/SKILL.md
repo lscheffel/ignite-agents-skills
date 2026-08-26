@@ -1,329 +1,340 @@
 ---
 name: prompt-engineering
-description: Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas. Use quando criar prompts para agentes de IA, otimizar interações ou treinar equipes em IA.
 version: 2.0.0
-tags: [prompts, llm, ai, techniques, agents]
-related_skills: [vibe-coding]
+description: Guidelines for effective prompt engineering with AI agents. Covers prompt structure, few-shot, chain-of-thought, role prompting, constraints, and advanced techniques. Use when creating prompts for AI agents, optimizing interactions, or training teams in AI.
+domain: domain-stack
+triggers:
+- prompt-engineering
+tags:
+- prompts
+- llm
+- ai
+- techniques
+- agents
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Prompt Engineering
 
-Diretrizes para engenharia de prompts eficazes.
+Guidelines for effective prompt engineering.
 
-## Quando Usar
+## When to Use
 
-### Use quando:
-- Criando prompts para agentes de IA
-- Otimizando interações com LLMs
-- Treinando equipes em IA
-- Padronizando prompts entre projetos
-- Criando prompt para tarefa complexa
+### Use when:
+- Creating prompts for AI agents
+- Optimizing interactions with LLMs
+- Training teams in AI
+- Standardizing prompts across projects
+- Creating prompts for complex tasks
 
-### Não use quando:
-- Tarefa é simples (1-2 linhas)
-- Prompt já existe e funciona
-- Precisa de interação humana direta
+### Do not use when:
+- Task is simple (1-2 lines)
+- Prompt already exists and works
+- Requires direct human interaction
 
-### Skills relacionadas:
-- `vibe-coding` — para desenvolvimento guiado por IA
+### Related Skills:
+- `vibe-coding` — for AI-guided development
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Tipo de Prompt?] -->|Simples| B[Zero-shot]
-    A -->|Complexo| C[Few-shot]
-    A -->|Múltiplas etapas| D[Chain-of-Thought]
-    A -->|Formato específico| E[Constrained Output]
-    B -->|1-2 frases| F[Direct Prompt]
-    C -->|Exemplos| G[With Examples]
-    D -->|Pensamento| H[Step by Step]
+    A[Prompt Type?] -->|Simple| B[Zero-shot]
+    A -->|Complex| C[Few-shot]
+    A -->|Multiple steps| D[Chain-of-Thought]
+    A -->|Specific format| E[Constrained Output]
+    B -->|1-2 sentences| F[Direct Prompt]
+    C -->|Examples| G[With Examples]
+    D -->|Reasoning| H[Step by Step]
 ```
 
 ## Workflow
 
-### Fase 1: Criar Prompt para Tarefa Simples
+### Phase 1: Create Prompt for Simple Task
 
-1. Identifique a tarefa:
+1. Identify the task:
    ```
-   "Formatar JSON para tabela markdown"
+   "Format JSON to table markdown"
    ```
-2. Crie prompt direto:
+2. Create direct prompt:
    ```
-   Formate o seguinte JSON como tabela markdown:
-   {json aqui}
+   Format the following JSON as a table markdown:
+   {json here}
    ```
-3. Teste o prompt:
+3. Test the prompt:
    ```bash
-   # Use ferramenta de teste
+   # Use testing tool
    echo "prompt" | llm-prompt-test
    ```
-4. **Checkpoint**: Prompt produz output correto
+4. **Checkpoint**: Prompt produces correct output
 
-### Fase 2: Criar Prompt para Tarefa Complexa
+### Phase 2: Create Prompt for Complex Task
 
-1. Defina contexto (role):
+1. Define context (role):
    ```
-   Você é um arquiteto de software sênior especializado em DDD.
+   You are a senior software architect specializing in DDD.
    ```
-2. Defina tarefa clara:
+2. Define clear task:
    ```
-   Modele o domínio de um sistema de pedidos com:
-   - Entidades: Order, Product, User
+   Model the domain of a order system with:
+   - Entities: Order, Product, User
    - Value Objects: Money, Address
-   - Aggregates: Order com OrderItems
+   - Aggregates: Order with OrderItems
    ```
-3. Defina formato de saída:
+3. Define output format:
    ```
-   Responda em formato:
-   - Entidades: lista
-   - Value Objects: lista
-   - Aggregates: lista com invariantes
+   Respond in the following format:
+   - Entities: list
+   - Value Objects: list
+   - Aggregates: list with invariants
    ```
-4. Defina restrições:
+4. Define constraints:
    ```
    - Use TypeScript
-   - Não inclua framework
-   - Foque em domínio puro
+   - Do not include framework
+   - Focus on pure domain
    ```
-5. **Checkpoint**: Prompt produz output estruturado
+5. **Checkpoint**: Prompt produces structured output
 
-### Fase 3: Otimizar Prompt
+### Phase 3: Optimize Prompt
 
-1. Adicione few-shot se necessário:
+1. Add few-shot if necessary:
    ```
-   Exemplo 1:
-   Input: Order com 2 items
-   Output: Aggregate com invariantes...
+   Example 1:
+   Input: Order with 2 items
+   Output: Aggregate with invariants...
    
-   Exemplo 2:
+   Example 2:
    Input: User registration
-   Output: Entity com validação...
+   Output: Entity with validation...
    
-   Agora processe:
-   Input: {novo caso}
+   Now process:
+   Input: {new case}
    ```
-2. Adicione chain-of-thought:
+2. Add chain-of-thought:
    ```
-   Pense passo a passo:
-   1. Primeiro, identifique as entidades
-   2. Depois, defina os value objects
-   3. Finalmente, estabeleça os aggregates
+   Think step by step:
+   1. First, identify the entities
+   2. Then, define the value objects
+   3. Finally, establish the aggregates
    ```
-3. Adicione constrained output:
+3. Add constrained output:
    ```
-   Responda APENAS com código TypeScript.
-   Não inclua explicações.
+   Respond ONLY with the final code.
+   Do not include explanations.
    ```
-4. **Checkpoint**: Output mais preciso e consistente
+4. **Checkpoint**: Output is more precise and consistent
 
-### Fase 4: Avaliar Qualidade de Prompt
+### Phase 4: Evaluate Prompt Quality
 
-1. Teste com múltiplos inputs:
+1. Test with multiple inputs:
    ```bash
-   # Teste 1
+   # Test 1
    echo "input1" | llm
    
-   # Teste 2
+   # Test 2
    echo "input2" | llm
    ```
-2. Verifique consistência:
-   - Mesmo formato?
-   - Mesmo nível de detalhe?
-3. Meça latência e custo:
-   - Tokens usados
-   - Tempo de resposta
-4. **Checkpoint**: Prompt validado com múltiplos testes
+2. Verify consistency:
+   - Same format?
+   - Same level of detail?
+3. Measure latency and cost:
+   - Tokens used
+   - Response time
+4. **Checkpoint**: Prompt validated with multiple tests
 
-## Conceitos Fundamentais
+## Fundamental Concepts
 
-### Estrutura de Prompt
+### Prompt Structure
 
-#### 1. Contexto
-Quem é o agente, qual seu papel, qual o objetivo.
-
-```
-Você é um desenvolvedor sênior especializado em Node.js.
-Sua tarefa é refatorar código legado.
-```
-
-#### 2. Tarefa
-O que deve ser feito, de forma clara e específica.
+#### 1. Context
+Who is the agent, what is their role, what is the objective.
 
 ```
-Refatore a classe UserService para seguir Single Responsibility Principle.
-Extraia validação para UserValidator.
+You are a senior software developer specializing in Node.js.
+Your task is to refactor legacy code.
 ```
 
-#### 3. Formato de Saída
-Estrutura esperada da resposta.
+#### 2. Task
+What needs to be done, clearly and specifically.
 
 ```
-Responda em formato:
+Refactor the UserService class to follow the Single Responsibility Principle.
+Extract validation to UserValidator.
+```
+
+#### 3. Output Format
+The expected structure of the response.
+
+```
+Respond in the following format:
 ```typescript
-// Antes
-{código}
+// Before
+{code}
 
-// Depois
-{código}
+// After
+{code}
 ```
 ```
 
-#### 4. Restrições
-O que NÃO fazer, limites e regras.
+#### 4. Constraints
+What NOT to do, limits, and rules.
 
 ```
-- Não altere comportamento
-- Mantenha compatibilidade
+- Do not alter behavior
+- Maintain compatibility
 - Use TypeScript
 ```
 
-### Técnicas
+### Techniques
 
 #### Role Prompting
 ```
-Você é um arquiteto de software sênior especializado em DDD...
+You are a senior software architect specializing in DDD...
 ```
 
 #### Few-Shot
 ```
-Exemplo 1:
+Example 1:
 Input: ...
 Output: ...
 
-Exemplo 2:
+Example 2:
 Input: ...
 Output: ...
 
-Agora processe:
+Now process:
 Input: ...
 ```
 
 #### Chain-of-Thought
 ```
-Pense passo a passo:
-1. Primeiro, ...
-2. Depois, ...
-3. Finalmente, ...
+Think step by step:
+1. First, ...
+2. Then, ...
+3. Finally, ...
 ```
 
 #### Constrained Output
 ```
-Responda APENAS com o código final.
-Não inclua explicações.
+Respond ONLY with the final code.
+Do not include explanations.
 ```
 
 ## Templates
 
 ### prompt-simple.md
-Localização: `templates/prompt-simple.md`
+Location: `templates/prompt-simple.md`
 
-Template para prompt simples.
+Template for simple prompts.
 
-**Uso:**
+**Usage:**
 ```bash
 cat templates/prompt-simple.md
 ```
 
 ### prompt-complex.md
-Localização: `templates/prompt-complex.md`
+Location: `templates/prompt-complex.md`
 
-Template para prompt complexo com contexto.
+Template for complex prompts with context.
 
-**Uso:**
+**Usage:**
 ```bash
 cat templates/prompt-complex.md
 ```
 
 ### prompt-evaluation.md
-Localização: `templates/prompt-evaluation.md`
+Location: `templates/prompt-evaluation.md`
 
-Template para avaliação de prompt.
+Template for prompt evaluation.
 
-**Uso:**
+**Usage:**
 ```bash
 cat templates/prompt-evaluation.md
 ```
 
 ## Anti-patterns
 
-### 🔴 Crítico
+### Critical
 
-#### Prompt Vago
-**O que é:** Prompt sem contexto ou tarefa clara.
-**Por que é ruim:** Output imprevisível, precisa de múltiplas tentativas.
-**Como evitar:** Sempre inclua contexto, tarefa, formato e restrições.
-**Exemplo:**
+#### Vague Prompt
+**What is it:** A prompt without context or clear task.
+**Why is it bad:** Output is unpredictable, needs multiple attempts.
+**How to avoid:** Always include context, task, format, and constraints.
+**Example:**
 ```
-# ❌ ERRADO
-"Melhore o código"
+# ❌ WRONG
+"Improve the code"
 
-# ✅ CORRETO
-"Refatore o código para usar async/await em vez de callbacks.
+# ✅ RIGHT
+"Refactor the code to use async/await instead of callbacks.
 Use TypeScript.
-Mantenha o mesmo comportamento.
+Maintain the same behavior.
 ```typescript
-{código}
+{code}
 ```"
 ```
 
-#### Múltiplas Tarefas em um Prompt
-**O que é:** Prompt que pede múltiplas coisas diferentes.
-**Por que é ruim:** Output misturado, difícil de validar.
-**Como evitar:** Um prompt, uma tarefa.
-**Exemplo:**
+#### Multiple Tasks in One Prompt
+**What is it:** A prompt that asks for multiple things.
+**Why is it bad:** Output is mixed, hard to validate.
+**How to avoid:** One prompt, one task.
+**Example:**
 ```
-# ❌ ERRADO
-"Modele o domínio, crie testes e documente a API"
+# ❌ WRONG
+"Model the domain, create tests, and document the API"
 
-# ✅ CORRETO
-"Modele o domínio com DDD. Responda apenas com código TypeScript."
+# ✅ RIGHT
+"Model the domain with DDD. Respond only with code TypeScript."
 ```
 
-### 🟡 Médio
+### Medium
 
-#### Instruções Contraditórias
-**O que é:** Prompt com regras conflitantes.
-**Por que é ruim:** Agente fica confuso, output inconsistente.
-**Como evitar:** Revise prompt antes de enviar.
-**Exemplo:**
+#### Contradictory Instructions
+**What is it:** A prompt with conflicting rules.
+**Why is it bad:** Agent gets confused, output is inconsistent.
+**How to avoid:** Review prompt before sending.
+**Example:**
 ```
-# ❌ ERRADO
+# ❌ WRONG
 "Use JavaScript"
 "Use TypeScript"
 
-# ✅ CORRETO
+# ✅ RIGHT
 "Use TypeScript"
 ```
 
-#### Falta de Contexto
-**O que é:** Prompt sem informações necessárias.
-**Por que é ruim:** Output genérico, não específico do projeto.
-**Como evitar:** Inclua contexto do projeto, stack, restrições.
-**Exemplo:**
+#### Lack of Context
+**What is it:** A prompt without necessary information.
+**Why is it bad:** Output is generic, not specific to the project.
+**How to avoid:** Include project context, stack, constraints.
+**Example:**
 ```
-# ❌ ERRADO
-"Crie API de usuários"
+# ❌ WRONG
+"Create a user API"
 
-# ✅ CORRETO
-"Crie API REST de usuários usando Node.js + Express + TypeScript.
+# ✅ RIGHT
+"Create a REST API for users using Node.js + Express + TypeScript.
 Use Clean Architecture.
 Endpoints: GET /users, POST /users, GET /users/:id"
 ```
 
-### 🟢 Baixo
+### Low
 
-#### Prompt sem Formato de Saída
-**O que é:** Prompt que não especifica formato esperado.
-**Por que é ruim:** Output pode não ser usável.
-**Como evitar:** Sempre especifique formato.
-**Exemplo:**
+#### Prompt without Output Format
+**What is it:** A prompt that does not specify output format.
+**Why is it bad:** Output may not be usable.
+**How to avoid:** Always specify output format.
+**Example:**
 ```
-# ❌ ERRADO
-"Liste os endpoints"
+# ❌ WRONG
+"List the endpoints"
 
-# ✅ CORRETO
-"Liste os endpoints em formato JSON:
+# ✅ RIGHT
+"List the endpoints in the following JSON format:
 {
   "endpoints": [
     { "method": "GET", "path": "/users" }
@@ -333,51 +344,51 @@ Endpoints: GET /users, POST /users, GET /users/:id"
 
 ## Checklists
 
-### Checklist de Prompt
-- [ ] Contexto definido (role do agente)
-- [ ] Tarefa clara e específica
-- [ ] Formato de saída definido
-- [ ] Restrições incluídas
-- [ ] Exemplos fornecidos (se complexo)
-- [ ] Chain-of-thought incluído (se necessário)
+### Prompt Checklist
+- [ ] Context defined (agent role)
+- [ ] Task clear and specific
+- [ ] Output format defined
+- [ ] Constraints included
+- [ ] Examples provided (if complex)
+- [ ] Chain-of-thought included (if necessary)
 
-### Checklist de Output
-- [ ] Formato correto
-- [ ] Código compila
-- [ ] Testes passam
-- [ ] Documentação incluída
-- [ ] Segurança verificada
+### Output Checklist
+- [ ] Correct format
+- [ ] Code compiles
+- [ ] Tests pass
+- [ ] Documentation included
+- [ ] Security verified
 
-### Checklist de Constraint
-- [ ] Output é apenas código
-- [ ] Não inclui explicações
-- [ ] Formato JSON/TS especificado
-- [ ] Tamanho máximo definido
+### Constraint Checklist
+- [ ] Output is only code
+- [ ] No explanations included
+- [ ] JSON/TS format specified
+- [ ] Maximum size defined
 
 ## Edge Cases
 
-### Prompt para Código Legado
-**Situação:** Precisa de prompt para refatorar código antigo.
-**Solução:** Inclua contexto do legado, objetivo da refatoração.
-**Exceção:** Se código é crítico, peça mais cuidado.
+### Legacy Code Prompt
+**Situation:** Need to create a prompt for refactoring legacy code.
+**Solution:** Include legacy context, refactoring objective.
+**Exception:** If code is critical, ask for more caution.
 
 ```
-"Refatore este código JavaScript para TypeScript.
-Mantenha 100% de compatibilidade.
-Não altere comportamento externo."
+"Refactor this JavaScript code to TypeScript.
+Maintain 100% compatibility.
+Do not alter external behavior."
 ```
 
-### Prompt para Documentação em Língua Estrangeira
-**Situação:** Precisa de prompt para documentar em inglês.
-**Solução:** Especifique língua, inclua glossário.
-**Exceção:** Se equipe é multilíngue, peça tradução.
+### Foreign Language Documentation Prompt
+**Situation:** Need to create a prompt for documenting in a foreign language.
+**Solution:** Specify language, include glossary.
+**Exception:** If team is multilingual, ask for translation.
 
 ```
-"Documente em inglês americano.
-Termos técnicos: Order (Pedido), Item (Item)"
+"Document in American English.
+Technical terms: Order (Pedido), Item (Item)"
 ```
 
-## Referências
+## References
 
-- `vibe-coding` — para desenvolvimento guiado por IA
+- `vibe-coding` — for AI-guided development
 - [Prompt Engineering Guide](https://www.promptingguide.org/)

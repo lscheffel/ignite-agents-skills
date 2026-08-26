@@ -1,170 +1,145 @@
+---
+id: ADR-{{id}}-BP
+type: bp
+title: "Blueprint — {{title}}"
+created: {{date}}
+updated: {{date}}
+adr_ref: ADR-{{id}}
+---
+
 # Blueprint — ADR-{{id}}: {{title}}
 
-> Referência: [ADR-{{id}}](./ADR-{{id}}.md)
+> Reference: [ADR-{{id}}](./ADR-{{id}}.md)
 
 ---
 
-## 1. Visão Geral
+## 1. Overview
 
-### Objetivo
+### Objective
 {{objective}}
 
-### Métricas de Sucesso
+### Success Metrics
 
-| Métrica | Antes | Depois | Status |
+| Metric | Before | After | Status |
 |---------|-------|--------|--------|
 | {{metric_1}} | {{before_1}} | {{after_1}} | ⬜ |
 | {{metric_2}} | {{before_2}} | {{after_2}} | ⬜ |
 
 ---
 
-## 2. Estrutura de Artefatos
+## 2. Affected Artifact Structure
 
-```
+List the actual files that will be created or modified — not a generic structure. This will be the scope map that the TODO and PI will detail.
+
+```text
 {{artifacts_structure}}
 ```
 
 ---
 
-## 3. Decision Tree
+## 3. Key Concepts of the Solution
 
-```mermaid
-graph TD
-    {{decision_tree}}
-```
+> Add as many concepts as the reader needs to understand the decision without referring back to the original ADR. Do not force a fixed number — a simple decision may not need any, while a complex one may need several.
 
----
-
-## 4. Conceitos Fundamentais
-
-### 4.1 {{concept_1_title}}
+### 3.1 {{concept_1_title}}
 
 {{concept_1_description}}
 
-**Configuração:**
-```{{concept_1_config}}```
+**Configuration / Example:**
+```
+{{concept_1_config}}
+```
 
-### 4.2 {{concept_2_title}}
-
-{{concept_2_description}}
-
-**Configuração:**
-```{{concept_2_config}}```
+<!-- Repeat "3.N {{concept_n_title}}" for each additional relevant concept. -->
 
 ---
 
-## 5. Workflow
+## 4. Implementation Workflows
+
+> Add as many workflows as the actual scope requires. A simple Blueprint may have only one.
 
 ### Workflow 1: {{workflow_1_name}}
 
-**Objetivo:** {{workflow_1_objective}}
-
-**Triggers:**
-- {{workflow_1_trigger}}
+**Objective:** {{workflow_1_objective}}
 
 **Steps:**
 {{workflow_1_steps}}
 
 **Checkpoint:** {{workflow_1_checkpoint}}
 
----
-
-## 6. Templates
-
-### 6.1 {{template_1_name}}
-
-```{{template_1_content}}```
+<!-- Repeat "Workflow N" for each additional workflow required. -->
 
 ---
 
-## 7. Anti-patterns
+## 5. Specific Anti-patterns of this Decision
 
-### 🔴 Crítico
+> Particular implementation risks specific to THIS decision — do not repeat generic anti-patterns already covered by the SKILL.md of the adr-generator.
+
+### Critical
 
 #### {{anti_pattern_1_title}}
-**O que é:** {{anti_pattern_1_what}}
-**Por que é ruim:** {{anti_pattern_1_why}}
-**Como evitar:** {{anti_pattern_1_how}}
-**Exemplo:**
-```bash
-# ❌ ERRADO
-{{anti_pattern_1_wrong}}
+**What is it:** {{anti_pattern_1_what}}
+**Why it's bad:** {{anti_pattern_1_why}}
+**How to avoid:** {{anti_pattern_1_how}}
 
-# ✅ CORRETO
-{{anti_pattern_1_right}}
-```
-
-### 🟡 Médio
+### Medium
 
 #### {{anti_pattern_2_title}}
-**O que é:** {{anti_pattern_2_what}}
-**Por que é ruim:** {{anti_pattern_2_why}}
-**Como evitar:** {{anti_pattern_2_how}}
+**What is it:** {{anti_pattern_2_what}}
+**Why it's bad:** {{anti_pattern_2_why}}
+**How to avoid:** {{anti_pattern_2_how}}
 
-### 🟢 Baixo
-
-#### {{anti_pattern_3_title}}
-**O que é:** {{anti_pattern_3_what}}
-**Por que é ruim:** {{anti_pattern_3_why}}
-**Como evitar:** {{anti_pattern_3_how}}
+<!-- Omit the entire section if the decision does not have specific risks beyond the generic ones. -->
 
 ---
 
-## 8. Checklists
+## 6. Checklists
 
-### Checklist de Pré-Deploy
+### Pre-Deploy Checklist
 
 - [ ] {{checklist_pre_1}}
 - [ ] {{checklist_pre_2}}
 
-### Checklist de Pós-Deploy
+### Post-Deploy Checklist
 
 - [ ] {{checklist_post_1}}
 - [ ] {{checklist_post_2}}
 
 ---
 
-## 9. Edge Cases
+## 7. Edge Cases
 
 ### {{edge_case_1_title}}
-**Situação:** {{edge_case_1_situation}}
-**Solução:** {{edge_case_1_solution}}
-**Exceção:** {{edge_case_1_exception}}
+**Situation:** {{edge_case_1_situation}}
+**Solution:** {{edge_case_1_solution}}
+**Exception:** {{edge_case_1_exception}}
 
-### {{edge_case_2_title}}
-**Situação:** {{edge_case_2_situation}}
-**Solução:** {{edge_case_2_solution}}
-**Exceção:** {{edge_case_2_exception}}
+<!-- Repeat for each relevant edge case. Omit if none exist. -->
 
 ---
 
-## 10. Integração com Skills Existentes
+## 8. Related Skills
 
-### Referências Diretas
+> Only list skills that this Blueprint actually invokes or depends on — not a generic list of skills from the catalog.
 
-| Skill | Relação com o workflow |
-|-------|------------------------|
+| Skill | Relation to this Blueprint |
+|-------|------------------------------|
 | `{{skill_1}}` | {{skill_1_relation}} |
-| `{{skill_2}}` | {{skill_2_relation}} |
 
 ---
 
-## 11. Estimativas
+## 9. Risks and Mitigations
 
-| Componente | Linhas Est. | Templates | Examples |
-|------------|-------------|-----------|----------|
-| {{component_1}} | {{lines_1}} | {{templates_1}} | {{examples_1}} |
-| **Total** | **{{total_lines}}** | **{{total_templates}}** | **{{total_examples}}** |
-
----
-
-## 12. Riscos e Mitigações
-
-| Risco | Impacto | Probabilidade | Mitigação |
+| Risk | Impact | Probability | Mitigation |
 |-------|---------|---------------|-----------|
 | {{risk_1}} | {{impact_1}} | {{likelihood_1}} | {{mitigation_1}} |
-| {{risk_2}} | {{impact_2}} | {{likelihood_2}} | {{mitigation_2}} |
 
 ---
 
-*Documento gerado em {{date}}. Referência: ADR-{{id}}.*
+## 10. References
+
+- {{reference_1}}
+
+---
+
+*Document generated on {{date}}. Reference: ADR-{{id}}.*

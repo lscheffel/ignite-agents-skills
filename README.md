@@ -1,200 +1,215 @@
-# ignite-agents-skills
+# ignite-agents-skills — SOTA Skills Ecosystem & Agent Governance
 
-Registro centralizado de skills para agentes compatíveis com o padrão [Agent Skills](https://agentskills.io).
+> Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode e governança contínua para agentes autônomos.
 
-Hospedado como GitHub Pages, este repositório serve como registry remoto para múltiplos projetos que usam **Kilo**, **OpenCode** e outros agentes compatíveis.
+[![Version](https://img.shields.io/badge/version-v2.5.0-blue.svg)](./CHANGELOG.md)
+[![Skills](https://img.shields.io/badge/skills-59%20SOTA-success.svg)](./skills/index.json)
+[![Assets](https://img.shields.io/badge/assets-81%20active-success.svg)](./.github/governance/AUDIT_MASTER_INDEX.md)
+[![Audit Score](https://img.shields.io/badge/audit%20score-91.10%2F100-brightgreen.svg)](./.github/governance/COMPLIANCE_SCORECARD.csv)
+[![Governance CI](https://img.shields.io/badge/governance-CI%20Passing-success.svg)](./.github/workflows/validate-skills.yml)
+[![Architecture](https://img.shields.io/badge/architecture-ADR--001%20a%20ADR--026-purple.svg)](./docs/adr/INDEX.md)
 
-> **Nota de compatibilidade (Kilo Code):** o mecanismo `skills.urls` do Kilo busca `{url}/index.json` e resolve cada arquivo em `{url}/{skill-name}/{file}`, onde `file` é **relativo à pasta da própria skill** (ex.: `"SKILL.md"`, não `"skills/nome/SKILL.md"`). Por isso o manifesto canônico é `skills/index.json` (paths relativos), e a URL configurada no Kilo deve apontar para a pasta `skills/`, não para `.well-known/skills/`. Uma tentativa anterior de seguir a convenção `.well-known/` usava paths completos no `files`, o que quebra a resolução do Kilo (duplicação de path) — por isso foi removida.
+---
 
-## Estrutura
+## 1. Visão Geral & Arquitetura
 
+O **ignite-agents-skills** é uma plataforma 3-em-1 para agentes de inteligência artificial aplicados à engenharia de software de alta performance:
+
+1. **Registry Remoto de Skills:** Manifesto canônico `skills/index.json` compatível com o padrão [Agent Skills](https://agentskills.io) para **Kilo Code**, **OpenCode** e clientes HTTP.
+2. **Motor Semântico & Servidor MCP:** Servidor MCP stdio nativo (`skills-rag-mcp`), RAG vetorial com busca híbrida BM25/embeddings, e CLI Router para descoberta inteligente de especializações.
+3. **Hub de Documentação GitHub Pages:** Geração dinâmica de páginas HTML para todas as 59 skills e histórico completo de ADRs.
+
+```mermaid
+graph TD
+    A[Usuário / Agente de IA] -->|JSON-RPC Stdio| B[Servidor MCP: scripts/skills_mcp_server.py]
+    A -->|CLI Discovery| C[CLI Router: scripts/skills_router.py]
+    A -->|HTTP / Kilo Fetch| D[Registry: skills/index.json]
+    A -->|Web Browser| E[GitHub Pages: pages/index.html]
+
+    subgraph "Camada de Descoberta & RAG Vetorial (ADR-021 a ADR-025)"
+        B --> F[Banco Vetorial: data/skills_rag_db/skills_rag.sqlite3]
+        C --> F
+        F --> G[FTS5 BM25 + Embeddings + Reranking]
+    end
+
+    subgraph "Catálogo Canônico de Especializações"
+        D --> H[59 Skills SOTA em skills/*/]
+        F --> H
+    end
+
+    subgraph "Governança, Build & CI/CD"
+        I[scripts/audit_engine.py] --> J[.github/governance/]
+        K[scripts/sync-index.sh] --> D
+        L[pages/build.py] --> E
+        M[scripts/validate-skill.sh] --> N[validate-skills.yml]
+    end
 ```
+
+---
+
+## 2. Estrutura do Repositório
+
+```text
 .
 ├── LICENSE
-├── USAGE.md                          # Guia completo de uso das skills
+├── README.md                           # Documentação principal
+├── USAGE.md                            # Guia completo de uso de todas as 59 skills
+├── CHANGELOG.md                        # Histórico de versões do ecossistema
+├── AGENTS.md                           # Guia canônico SSOT para agentes de IA
 ├── skills/
-│   ├── index.json                    # Registry de skills (fonte única)
+│   ├── index.json                      # Registry centralizado de 59 skills
 │   ├── adr-archive/
 │   ├── adr-generator/
-│   ├── agent-orchestration/
-│   ├── agents-md-generator/          # 🆕 Skill para AGENTS.md adaptativo
-│   ├── api-design/
-│   ├── architecture-review-kilo/
-│   ├── data-modeling/
-│   ├── ddd/
-│   ├── documentation/
-│   ├── documentation-reconciliation/
-│   ├── git/
-│   ├── governance/
-│   ├── implementation/
-│   ├── observability/
-│   ├── planning/
-│   ├── prompt-engineering/
-│   ├── refactoring/
-│   ├── release/
-│   ├── repo-bootstrap/
-│   ├── security-review/
-│   ├── skill-audit-bulletin/
-│   ├── testing/
-│   ├── vibe-coding/
-│   └── writing-plans/
-├── scripts/
-│   ├── archive-adrs.sh               # Arquiva ADRs implementadas
-│   ├── sync-index.sh                 # Auto-gera index.json
-│   ├── validate-index.sh             # Valida index.json contra arquivos reais
-│   └── validate-skill.sh             # Valida qualidade Ultra-High Quality Grade
-└── docs/
-    └── adr/
-        ├── INDEX.md                  # Índice de ADRs (active + archived)
-        └── archive/                  # Cold storage (ADRs implementadas)
-            ├── ADR-001.md
-            ├── ADR-002.md
-            ├── ADR-003.md
-            ├── ADR-004.md
-            ├── ADR-005.md
-            ├── ADR-006.md
-            └── ADR-007.md
+│   ├── ... (59 skills SOTA)
+│   └── xlsx-processing/
+├── scripts/                            # Toolbox e Motores Unificados
+│   ├── sync-index.sh                   # Auto-gera skills/index.json
+│   ├── validate-index.sh               # Valida index.json contra arquivos reais
+│   ├── validate-skill.sh               # Valida qualidade Ultra-High Quality Grade
+│   ├── archive-adrs.sh                 # Janitor de ciclo de vida de ADRs
+│   ├── skills_mcp_server.py            # Servidor MCP Stdio (skills-rag-mcp)
+│   ├── skills_rag_indexer.py           # Motor de Indexação Vetorial / FTS5
+│   ├── skills_router.py                # CLI Router para busca semântica
+│   ├── audit_engine.py                 # Motor de Auditoria Forense SOTA (8 Dimensões)
+│   ├── translate_catalog_nim.py        # Tradutor de catálogo
+│   └── tests/                          # Suíte de testes automatizados (42 testes)
+├── pages/                              # Motor de Documentação Web
+│   ├── build.py                        # Gerador de HTML estático
+│   └── ...                             # Templates e artefatos renderizados
+├── docs/                               # Governança e Arquitetura
+│   ├── adr/                            # ADR-001 a ADR-026 (ativas + archive)
+│   └── audit/                          # Ledgers de auditoria
+└── data/                               # Banco SQLite vetorial e especificações
 ```
 
-## Categorias
+---
+
+## 3. Catálogo das 59 Skills por Categoria
 
 | Categoria | Skills |
-|-----------|--------|
-| Architecture | `architecture-review-kilo`, `ddd` |
-| Documentation | `documentation`, `adr-generator`, `documentation-reconciliation` |
-| Governance | `governance`, `repo-bootstrap`, `agents-md-generator` |
-| Planning | `planning`, `writing-plans` |
-| Implementation | `implementation` |
-| Quality | `testing` |
-| Security | `security-review` |
-| AI | `prompt-engineering`, `vibe-coding` |
-| Orchestration | `agent-orchestration` |
-| Data | `data-modeling` |
-| API | `api-design` |
-| Operations | `observability` |
-| Code Quality | `refactoring` |
-| Tools | `git`, `release` |
-| Audit | `skill-audit-bulletin` |
+|:---|:---|
+| **Architecture & Modeling** | `architecture-review`, `database-architecture`, `ddd` |
+| **Documentation & Decision Records** | `adr-generator`, `adr-archive`, `technical-documentation`, `changelog-generator` |
+| **Governance & Repository** | `governance`, `repo-bootstrap`, `agents-md-management`, `skill-audit-bulletin` |
+| **Planning & Execution** | `agent-planning-execution`, `product-spec-engineering`, `implementation` |
+| **Code Quality & Refactoring** | `clean-code`, `refactoring`, `code-review`, `code-review-lite`, `code-review-workflow` |
+| **Testing & Verification** | `testing-mastery`, `test-driven-development`, `verification-before-completion`, `systematic-debugging` |
+| **Security & Auditing** | `security-review`, `circuit-breaker`, `resilient-execution` |
+| **AI, Prompting & Evaluation** | `prompt-engineering`, `llm-as-judge`, `agent-development`, `context7-mcp` |
+| **Multi-Agent & Orchestration** | `agent-orchestration`, `subagent-driven-development`, `dispatching-parallel-agents`, `cap` |
+| **API & Backend Frameworks** | `api-design`, `php-laravel-ecosystem` |
+| **Frontend & UI/UX** | `ui-ux-pro-max`, `react-best-practices`, `artifacts-builder`, `mobile-design`, `ux-researcher-designer` |
+| **Operations & Infrastructure** | `observability`, `deployment`, `performance-optimization` |
+| **Git & Release Management** | `git-workflow`, `release` |
+| **Tools & Extension Authoring** | `mcp-builder`, `skill-creator`, `skill-discovery`, `writing-skills` |
+| **Content & Document Processing** | `content-creator`, `content-research-writer`, `email-composer`, `seo-optimizer`, `docx-processing`, `pdf-processing`, `xlsx-processing`, `brainstorming` |
 
-## Publicação (GitHub Pages)
+---
 
-1. Habilite GitHub Pages em **Settings → Pages**
-2. Source: **Deploy from a branch**
-3. Branch: `main` (ou `master`) — repositório precisa ser **público** (Pages privado exige plano pago do GitHub, e o Kilo faz fetch simples, sem autenticação)
-4. Após deploy, o registry estará disponível em:
+## 4. Como Usar
 
-```
-https://<usuario>.github.io/ignite-agents-skills/skills/
-```
+### A. No Kilo Code (VS Code)
 
-Confirme que está no ar antes de configurar o Kilo:
+No Kilo Code: **Kilo Settings → Comportamento do Agente → Habilidades → URLs de Habilidades**, adicione:
 
-```
-curl -I https://<usuario>.github.io/ignite-agents-skills/skills/index.json
+```text
+https://lscheffel.github.io/ignite-agents-skills/skills/
 ```
 
-## Configuração no Kilo
-
-No Kilo Code (VS Code): **Kilo Settings → Comportamento do Agente → Habilidades → URLs de Habilidades**, adicione:
-
-```
-https://<usuario>.github.io/ignite-agents-skills/skills/
-```
-
-(com a barra final). Se preferir configurar via arquivo, use `skills.urls` no seu `kilo.json`:
+Ou no seu `kilo.json`:
 
 ```json
 {
   "skills": {
     "urls": [
-      "https://<usuario>.github.io/ignite-agents-skills/skills/"
+      "https://lscheffel.github.io/ignite-agents-skills/skills/"
     ]
   }
 }
 ```
 
-O Kilo busca `{url}/index.json`, e para cada skill listada baixa os arquivos de `{url}/{skill-name}/{file}`. Por isso `files` no `index.json` **deve ser relativo à pasta da skill** — nunca inclua o prefixo `skills/nome-da-skill/`.
+### B. Como Servidor MCP (`skills-rag-mcp`)
 
-## Como Adicionar uma Nova Skill
+Adicione o servidor MCP ao seu arquivo `mcp_config.json` ou configuração de IDE:
 
-1. Crie o diretório: `skills/nova-skill/`
-2. Adicione o `SKILL.md` com frontmatter `name` e `description`
-3. Adicione arquivos auxiliares se necessário
-4. O `skills/index.json` é sincronizado **automaticamente** via workflow de CI/CD
-5. Rode `scripts/validate-index.sh` localmente para confirmar que os paths resolvem
-6. Rode `bash scripts/validate-skill.sh skills/nova-skill` para validar qualidade
-7. Commit e push para `master`
-
-**Nota:** O workflow `sync-and-deploy.yml` sincroniza automaticamente o index.json e faz deploy para GitHub Pages quando há alterações na pasta `skills/`.
-
-## Padrão de Skill
-
-Cada `SKILL.md` deve conter:
-
-```yaml
----
-name: nome-da-skill
-description: Descrição curta para o agente decidir quando usar.
----
+```json
+{
+  "mcpServers": {
+    "skills-rag-mcp": {
+      "command": "python3",
+      "args": [
+        "/caminho/para/ignite-agents-skills/scripts/skills_mcp_server.py"
+      ],
+      "env": {
+        "SKILLS_WORKSPACE_DIR": "/caminho/para/ignite-agents-skills"
+      }
+    }
+  }
+}
 ```
 
-### Ultra-High Quality Grade
+**Ferramentas expostas pelo MCP:**
 
-Skills refatoradas seguem o padrão Ultra-High Quality Grade (v2.0.0+) com:
+- `search_skills`: Busca semântica híbrida (vetorial + BM25).
+- `route_task`: Roteamento inteligente de tarefas para a skill ideal.
+- `get_skill_details`: Detalhes completos, templates e instruções de uma skill.
+- `list_skills_catalog`: Catálogo completo com filtros de categoria.
+- `bootstrap_agent_instructions`: Provisionamento de `AGENTS.md` e stubs.
+- `get_rag_telemetry`: Métricas de latência, footprint de tokens e cache hits.
+- `inspect_rag_index`: Auditoria da integridade do banco semântico.
 
-- **Decision Trees** — Mermaid graphs para decisão automática
-- **Workflows** — Passos executáveis com critérios de aceitação
-- **Anti-patterns** — Indicadores de severidade (🔴 crítico, 🟡 alerta, 🟢 suave)
-- **Checklists** — Verificação de qualidade antes/depois
-- **Edge Cases** — Cobertura de cenários excepcionais
-- **Templates** — 72 templates disponíveis em `skills/*/templates/`
-- **Examples** — 18 exemplos em `skills/*/examples/`
+### C. Via CLI Router
 
-## Status da Implementação
+```bash
+# Busca semântica rápida no terminal
+python3 scripts/skills_router.py "preciso modelar banco de dados relacional e índices" --top-k 3
+```
 
-**v2.3.1 — Skills Ultra-High Quality Grade**
+---
 
-| Métrica | Status |
-|---------|--------|
-| Skills total | 25 ✅ |
-| Skills refatoradas | 25/25 ✅ |
-| Templates criados | 72+ ✅ |
-| Examples criados | 18+ ✅ |
-| Páginas HTML geradas | 140+ ✅ |
-| ADRs renderizadas | 38 ✅ |
-| Validação automática | ✅ |
-| CI pipeline | ✅ (`validate-skill.sh` + `validate-index.sh`) |
-| Auto-sync index.json | ✅ (`sync-and-deploy.yml`) |
-| GitHub Pages | ✅ |
-| Dynamic HTML Pages | ✅ (`pages/build.py`) |
-| SDLC completo | ✅ |
+## 5. Comandos de Manutenção e Governança
 
-## Decisões Arquiteturais
+```bash
+# 1. Sincronizar o skills/index.json
+./scripts/sync-index.sh
 
-Decisões arquiteturais significativas são documentadas em [docs/adr/](./docs/adr/):
+# 2. Validar integridade do skills/index.json
+./scripts/validate-index.sh
 
-**Ativas:**
-- *Nenhuma ADR ativa*
+# 3. Validar qualidade de todas as skills
+for s in skills/*/; do [ -f "$s/SKILL.md" ] && bash scripts/validate-skill.sh "$s"; done
 
-**Arquivadas (Cold Storage):**
-- [ADR-001: Consolidar registry de skills em único index.json](./docs/adr/archive/ADR-001.md) ✅
-- [ADR-002: Padrão de Skill Ultra-High Quality Grade](./docs/adr/archive/ADR-002.md) ✅
-- [ADR-003: Retrospectiva da Implementação Ultra-High Quality Grade](./docs/adr/archive/ADR-003.md) ✅
-- [ADR-004: Implementação das Recomendações da Ultra-Auditoria v2.0.2](./docs/adr/archive/ADR-004.md) ✅
-- [ADR-005: Introdução da Skill `implementation` para Execução Governada de Mudanças](./docs/adr/archive/ADR-005.md) ✅
-- [ADR-006: Workflow CI para Auto-sync do Index e Deploy GitHub Pages](./docs/adr/archive/ADR-006.md) ✅
-- [ADR-007: Skill para Geração de AGENTS.md Adaptativo](./docs/adr/archive/ADR-007.md) ✅
-- [ADR-008: Ultra-Avaliação v2.0.3 — Correção de Débitos Estruturais](./docs/adr/archive/ADR-008.md) ✅
-- [ADR-009: Resolução de Débitos da Auditoria v2.1.0](./docs/adr/archive/ADR-009.md) ✅
-- [ADR-010: Branch Protection e SemVer para Tags — Emergencial](./docs/adr/archive/ADR-010.md) ✅
-- [ADR-011: Documentation Reconciliation Skill](./docs/adr/archive/ADR-011.md) ✅
-- [ADR-012: Dynamic HTML Pages — Rendering de Skills em GitHub Pages](./docs/adr/archive/ADR-012.md) ✅
-- [ADR-013: Expansão do Build.py para Incluir ADRs e Referências](./docs/adr/archive/ADR-013.md) ✅
-- [ADR-014: Fix Workflow sync-and-deploy — Sync Completo de master para gh-pages](./docs/adr/archive/ADR-014.md) ✅
-- [ADR-015: Fix Caminhos Relativos Depth-Aware no Build.py](./docs/adr/archive/ADR-015.md) ✅
+# 4. Executar o motor de auditoria forense SOTA (8 dimensões)
+python3 scripts/audit_engine.py
 
-> 📦 ADRs implementadas são movidas para `docs/adr/archive/` como referência. Veja [docs/adr/INDEX.md](./docs/adr/INDEX.md) para o índice completo.
+# 5. Re-indexar banco vetorial RAG
+python3 scripts/skills_rag_indexer.py
 
-## Licença
+# 6. Rodar a suíte de testes automatizados
+python3 -m unittest discover -s scripts/tests -p "test_*.py"
 
-MIT — ver [LICENSE](./LICENSE).
+# 7. Compilar as páginas HTML de documentação
+python3 pages/build.py
+```
+
+---
+
+## 6. Histórico de Decisões Arquiteturais (ADRs)
+
+| ADR | Título | Status |
+|:---|:---|:---:|
+| **ADR-001 a ADR-015** | Fundação do Registry Kilo, Ultra-High Quality Grade, Workflows de CI/CD, Geração de Páginas HTML Dinâmicas | Implementado (Archive) |
+| **ADR-021** | Dual-Engine Neural Rerank com GPU NVIDIA e Cutoff Gate | Implementado |
+| **ADR-022** | RAG SOTA Quad Optimizations: Embeddings 2048-dim, Cache Rerank, Chunks Focalizados | Implementado |
+| **ADR-023** | Federated Multi-Scope RAG com Descoberta em 12 Convenções de Agentes | Implementado |
+| **ADR-024** | Consolidação RICE: Telemetria de Runtime no MCP e Lazy Loading de Referências | Implementado |
+| **ADR-025** | Hierarchical Multi-Asset Ingestion com Damping e Parent Linking | Implementado |
+| **ADR-026** | Automação SSOT de Instruções via `bootstrap_agent_instructions` | Implementado |
+
+Veja o catálogo completo em [docs/adr/INDEX.md](./docs/adr/INDEX.md).
+
+---
+
+## 7. Licença
+
+Distribuído sob licença MIT. Veja [LICENSE](./LICENSE) para mais detalhes.

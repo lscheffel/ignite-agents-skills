@@ -410,85 +410,85 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">implementation</a> &rsaquo; checklists &rsaquo; pre-execution</div>
   </nav>
   <div class="content">
-    <h1 id="checklist-de-pr-execuo">Checklist de Pré-Execução</h1>
-<blockquote>Executar este checklist antes de iniciar qualquer implementação governada.</blockquote>
+    <h1 id="pre-execution-checklist">Pre-Execution Checklist</h1>
+<blockquote>Execute this checklist before initiating any governed implementation.</blockquote>
 <hr>
-<h2 id="1-validao-de-artefatos">1. Validação de Artefatos</h2>
+<h2 id="1-artifact-validation">1. Artifact Validation</h2>
 <ul>
-<li>[ ] ADR existe e está em <code>docs/adr/ADR-XXX.md</code></li>
-<li>[ ] ADR contém seção "Decisão" preenchida</li>
-<li>[ ] ADR contém seção "Contexto" preenchida</li>
-<li>[ ] ADR contém seção "Consequências" preenchida</li>
-<li>[ ] Blueprint existe em <code>docs/adr/ADR-XXX-BP.md</code></li>
-<li>[ ] Blueprint contém tarefas documentadas com dependências</li>
-<li>[ ] Blueprint contém estimativas de tempo</li>
-<li>[ ] TODO existe em <code>docs/adr/ADR-XXX-TODO.md</code></li>
-<li>[ ] TODO contém tarefas com estados (pendente/em andamento/concluído)</li>
-<li>[ ] TODO contém dependências entre tarefas</li>
-<li>[ ] TODO contém prioridades definidas</li>
+<li>[ ] ADR exists and is in <code>docs/adr/ADR-XXX.md</code></li>
+<li>[ ] ADR contains a filled "Decision" section</li>
+<li>[ ] ADR contains a filled "Context" section</li>
+<li>[ ] ADR contains a filled "Consequences" section</li>
+<li>[ ] Blueprint exists in <code>docs/adr/ADR-XXX-BP.md</code></li>
+<li>[ ] Blueprint contains documented tasks with dependencies</li>
+<li>[ ] Blueprint contains time estimates</li>
+<li>[ ] TODO exists in <code>docs/adr/ADR-XXX-TODO.md</code></li>
+<li>[ ] TODO contains tasks with states (pending/in progress/completed)</li>
+<li>[ ] TODO contains dependencies between tasks</li>
+<li>[ ] TODO contains defined priorities</li>
 </ul>
 <hr>
-<h2 id="2-validao-de-coerncia">2. Validação de Coerência</h2>
+<h2 id="2-coherence-validation">2. Coherence Validation</h2>
 <ul>
-<li>[ ] Tarefas do Blueprint existem no TODO</li>
-<li>[ ] Dependências no TODO são consistentes com Blueprint</li>
-<li>[ ] Estimativas no TODO são consistentes com Blueprint</li>
-<li>[ ] Nenhuma tarefa está duplicada entre Blueprint e TODO</li>
-<li>[ ] ADR está alinhada com o escopo do Blueprint</li>
+<li>[ ] Tasks from the Blueprint exist in the TODO</li>
+<li>[ ] Dependencies in the TODO are consistent with the Blueprint</li>
+<li>[ ] Estimates in the TODO are consistent with the Blueprint</li>
+<li>[ ] No task is duplicated between the Blueprint and TODO</li>
+<li>[ ] ADR is aligned with the scope of the Blueprint</li>
 </ul>
 <hr>
-<h2 id="3-validao-do-ambiente">3. Validação do Ambiente</h2>
+<h2 id="3-environment-validation">3. Environment Validation</h2>
 <ul>
-<li>[ ] Branch atual não é main/master (ou há PR aberto)</li>
-<li>[ ] Workspace está limpo (sem uncommitted changes)</li>
-<li>[ ] Branch está atualizada com remote</li>
-<li>[ ] Não há conflitos de merge pendentes</li>
-<li>[ ] Diretório de trabalho está correto</li>
+<li>[ ] Current branch is not main/master (or a PR is open)</li>
+<li>[ ] Workspace is clean (no uncommitted changes)</li>
+<li>[ ] Branch is up-to-date with remote</li>
+<li>[ ] No pending merge conflicts</li>
+<li>[ ] Working directory is correct</li>
 </ul>
 <hr>
-<h2 id="4-validao-de-arquivos-impactados">4. Validação de Arquivos Impactados</h2>
+<h2 id="4-affected-file-validation">4. Affected File Validation</h2>
 <ul>
-<li>[ ] Todos os arquivos listados no Blueprint existem</li>
-<li>[ ] Arquivos estão acessíveis (permissões corretas)</li>
-<li>[ ] Não há arquivos lockados por outro processo</li>
-<li>[ ] Backup foi considerado (se aplicável)</li>
+<li>[ ] All files listed in the Blueprint exist</li>
+<li>[ ] Files are accessible (correct permissions)</li>
+<li>[ ] No files are locked by another process</li>
+<li>[ ] Backup was considered (if applicable)</li>
 </ul>
 <hr>
-<h2 id="5-validao-de-critrios">5. Validação de Critérios</h2>
+<h2 id="5-criteria-validation">5. Criteria Validation</h2>
 <ul>
-<li>[ ] Critérios de aceite estão definidos no TODO</li>
-<li>[ ] Critérios de rollback estão definidos no Blueprint</li>
-<li>[ ] Testes relevantes foram identificados</li>
-<li>[ ] Comandos de validação foram documentados</li>
+<li>[ ] Acceptance criteria are defined in the TODO</li>
+<li>[ ] Rollback criteria are defined in the Blueprint</li>
+<li>[ ] Relevant tests were identified</li>
+<li>[ ] Validation commands were documented</li>
 </ul>
 <hr>
-<h2 id="6-validao-de-dependncias-externas">6. Validação de Dependências Externas</h2>
+<h2 id="6-external-dependency-validation">6. External Dependency Validation</h2>
 <ul>
-<li>[ ] Skills relacionadas estão disponíveis no registry</li>
-<li>[ ] Dependências de build estão instaladas</li>
-<li>[ ] Ferramentas de lint/test estão configuradas</li>
-<li>[ ] CI/CD está funcional (se aplicável)</li>
+<li>[ ] Related skills are available in the registry</li>
+<li>[ ] Build dependencies are installed</li>
+<li>[ ] Lint/test tools are configured</li>
+<li>[ ] CI/CD is functional (if applicable)</li>
 </ul>
 <hr>
-<h2 id="7-gerao-do-execution-contract">7. Geração do Execution Contract</h2>
+<h2 id="7-execution-contract-generation">7. Execution Contract Generation</h2>
 <ul>
-<li>[ ] Execution Contract foi gerado a partir do template</li>
-<li>[ ] Todos os campos obrigatórios foram preenchidos</li>
-<li>[ ] Contrato foi validado pelo agente</li>
-<li>[ ] Próximo passo foi definido</li>
+<li>[ ] Execution Contract was generated from the template</li>
+<li>[ ] All mandatory fields were filled</li>
+<li>[ ] Contract was validated by the agent</li>
+<li>[ ] Next step was defined</li>
 </ul>
 <hr>
-<h2 id="8-construo-do-change-plan">8. Construção do Change Plan</h2>
+<h2 id="8-change-plan-construction">8. Change Plan Construction</h2>
 <ul>
-<li>[ ] DAG foi construído a partir do TODO</li>
-<li>[ ] DAG está livre de ciclos</li>
-<li>[ ] Ordem de execução foi definida (topological sort)</li>
-<li>[ ] Tarefas paralelizáveis foram identificadas</li>
-<li>[ ] Estimativa total foi calculada</li>
+<li>[ ] DAG was constructed from the TODO</li>
+<li>[ ] DAG is free of cycles</li>
+<li>[ ] Execution order was defined (topological sort)</li>
+<li>[ ] Parallelizable tasks were identified</li>
+<li>[ ] Total estimate was calculated</li>
 </ul>
 <hr>
-<h2 id="aprovao">Aprovação</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Checklist completo</td><td>✅/❌</td></tr><tr><td>Contrato aprovado</td><td>✅/❌</td></tr><tr><td>Plano aprovado</td><td>✅/❌</td></tr><tr><td>Implementação autorizada</td><td>✅/❌</td></tr></table></div>
+<h2 id="approval">Approval</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Checklist complete</td><td>✅/❌</td></tr><tr><td>Contract approved</td><td>✅/❌</td></tr><tr><td>Plan approved</td><td>✅/❌</td></tr><tr><td>Implementation authorized</td><td>✅/❌</td></tr></table></div>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

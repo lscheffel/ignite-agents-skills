@@ -411,61 +411,65 @@
   </nav>
   <div class="content">
     <hr>
-<p>implementation_status: PENDENTE ---</p>
+<p>id: ADR-{{id}} type: adr title: "{{title}}" created: {{date}} updated: {{date}} implementation_status: PENDING depends_on: []</p>
+<h1 id="adr-template">ADR Template</h1>
+<hr>
 <h1 id="adr-id-title">ADR-{{id}}: {{title}}</h1>
 <h2 id="status">Status</h2>
 <p>{{status}}</p>
-<h2 id="contexto">Contexto</h2>
-<h3 id="diagnstico">Diagnóstico</h3>
-<div class="table-wrapper"><table><tr><th>Capacidade</th><th>Status</th><th>Evidence</th></tr><tr><td>{{capability_1}}</td><td>{{status_1}}</td><td>{{evidence_1}}</td></tr><tr><td>{{capability_2}}</td><td>{{status_2}}</td><td>{{evidence_2}}</td></tr></table></div>
-<h3 id="consequncias-da-lacuna">Consequências da Lacuna</h3>
+<h2 id="context">Context</h2>
+<h3 id="diagnosis">Diagnosis</h3>
+<div class="table-wrapper"><table><tr><th>Capacity</th><th>Status</th><th>Evidence</th></tr><tr><td>{{capability_1}}</td><td>{{status_1}}</td><td>{{evidence_1}}</td></tr><tr><td>{{capability_2}}</td><td>{{status_2}}</td><td>{{evidence_2}}</td></tr></table></div>
+<h3 id="consequences-of-the-gap">Consequences of the Gap</h3>
 <ul>
 <li>{{consequence_1}}</li>
 <li>{{consequence_2}}</li>
 </ul>
-<h2 id="deciso">Decisão</h2>
+<h2 id="decision">Decision</h2>
 <p>{{decision}}</p>
-<h3 id="arquitetura-da-soluo">Arquitetura da Solução</h3>
-<pre><code>{{contexto}} → {{ação}} → {{resultado}}</code></pre>
-<h3 id="detalhes-da-implementao">Detalhes da Implementação</h3>
+<h3 id="solution-architecture">Solution Architecture</h3>
+<pre><code>{{context_summary}} → {{action_summary}} → {{result_summary}}</code></pre>
+<h3 id="implementation-details">Implementation Details</h3>
 <p><strong>Trigger:</strong> {{trigger}}</p>
 <p><strong>Jobs:</strong> {{jobs}}</p>
-<h2 id="alternativas-consideradas">Alternativas Consideradas</h2>
-<h3 id="alternativa-a-altatitle">Alternativa A: {{alt_a_title}}</h3>
+<h2 id="considered-alternatives">Considered Alternatives</h2>
+<blockquote>A minimum of 2 alternatives — see anti-pattern "ADR without Alternatives". This applies even when the decision seems obvious in retrospect.</blockquote>
+<h3 id="alternative-a-altatitle">Alternative A: {{alt_a_title}}</h3>
 <ul>
-<li><strong>Prós</strong>: {{alt_a_pros}}</li>
-<li><strong>Contras</strong>: {{alt_a_cons}}</li>
+<li><strong>Pros</strong>: {{alt_a_pros}}</li>
+<li><strong>Cons</strong>: {{alt_a_cons}}</li>
 </ul>
-<h3 id="alternativa-b-altbtitle">Alternativa B: {{alt_b_title}}</h3>
+<h3 id="alternative-b-altbtitle">Alternative B: {{alt_b_title}}</h3>
 <ul>
-<li><strong>Prós</strong>: {{alt_b_pros}}</li>
-<li><strong>Contras</strong>: {{alt_b_cons}}</li>
+<li><strong>Pros</strong>: {{alt_b_pros}}</li>
+<li><strong>Cons</strong>: {{alt_b_cons}}</li>
 </ul>
-<h3 id="alternativa-c-altctitle-escolhida">Alternativa C: {{alt_c_title}} (Escolhida)</h3>
+<h3 id="alternative-c-altctitle-chosen">Alternative C: {{alt_c_title}} (Chosen)</h3>
 <ul>
-<li><strong>Prós</strong>: {{alt_c_pros}}</li>
-<li><strong>Contras</strong>: {{alt_c_cons}}</li>
+<li><strong>Pros</strong>: {{alt_c_pros}}</li>
+<li><strong>Cons</strong>: {{alt_c_cons}}</li>
 </ul>
-<h2 id="consequncias">Consequências</h2>
-<h3 id="positivas">Positivas</h3>
+<h2 id="consequences">Consequences</h2>
+<h3 id="positive">Positive</h3>
 <ul>
 <li>{{positive_1}}</li>
 <li>{{positive_2}}</li>
 </ul>
-<h3 id="negativas">Negativas</h3>
+<h3 id="negative">Negative</h3>
 <ul>
 <li>{{negative_1}}</li>
 <li>{{negative_2}}</li>
 </ul>
-<h3 id="riscos">Riscos</h3>
+<h3 id="risks">Risks</h3>
 <ul>
-<li><strong>Risco</strong>: {{risk}}</li>
-<li><strong>Mitigação</strong>: {{mitigation}}</li>
+<li><strong>Risk</strong>: {{risk}}</li>
+<li><strong>Mitigation</strong>: {{mitigation}}</li>
 </ul>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li>{{reference_1}}</li>
 <li>{{reference_2}}</li>
+<li>Evidence Record: (pending — see Phase 5 of the adr-generator)</li>
 </ul>
   </div>
 <footer>

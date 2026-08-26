@@ -1,0 +1,17 @@
+{
+  "$schema": "./schemas/tech-debt-registry.schema.json",
+  "version": "1.0.0",
+  "last_updated": "{{DATE}}",
+  "debts": [
+    {
+      "id": "TD-{{YEAR}}-001",
+      "origin": "implementation:ADR-XXX",
+      "discovered_at": "{{DATE}}",
+      "severity": "MEDIUM",
+      "domain": "core-governance",
+      "description": "Exemplo de débito técnico incidental registrado durante execução de ADR.",
+      "status": "OPEN",
+      "mitigation_ref": null
+    }
+  ]
+}

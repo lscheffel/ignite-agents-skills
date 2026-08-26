@@ -1,106 +1,119 @@
 ---
 name: observability
-description: Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting. Use quando configurar monitoramento, investigar incidentes ou implementar observabilidade em microsserviços.
 version: 2.0.0
-tags: [observability, logging, metrics, tracing, alerting]
-related_skills: [testing, release, governance]
+description: Comprehensive guide to system observability in production. Defines standards
+  for structured logging, metrics, distributed tracing, and alerting. Use when configuring
+  monitoring, investigating incidents, or implementing observability in microservices.
+domain: architecture-systems
+triggers:
+- observability
+tags:
+- observability
+- logging
+- metrics
+- tracing
+- alerting
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Observability
 
-Guia completo para observabilidade de sistemas em produção.
+Comprehensive guide to system observability in production.
 
-## Quando Usar
+## When to Use
 
-### Use quando:
-- Sistema em produção precisa de monitoramento
-- Precisa investigar incidentes ou bugs em produção
-- Quer implementar logging estruturado
-- Precisa definir métricas e SLAs
-- Quer configurar alertas acionáveis
-- Precisa de tracing distribuído em microsserviços
+### Use when:
+- System in production requires monitoring
+- Need to investigate incidents or bugs in production
+- Want to implement structured logging
+- Need to define metrics and SLAs
+- Want to configure actionable alerts
+- Need distributed tracing in microservices
 
-### Não use quando:
-- Projeto em fase de protótipo (sem requisitos de observabilidade)
-- Sistema single-server sem necessidade de tracing
-- Logs simples de debug em desenvolvimento
+### Do not use when:
+- Project in prototype phase (without observability requirements)
+- Single-server system without tracing needs
+- Simple debug logs in development
 
-### Skills relacionadas:
-- `testing` — para testar instrumentação e mocks de métricas
-- `release` — para métricas de deploy e rollback
-- `governance` — para políticas de retenção de logs e compliance
+### Related Skills:
+- `testing` — for testing instrumentation and metric mocks
+- `release` — for metrics of deploy and rollback
+- `governance` — for policies of log retention and compliance
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Sistema em produção] --> B{O que aconteceu?}
-    B -->|Preciso de logs| C[Logging]
-    B -->|Preciso de dados quantitativos| D[Métricas]
-    B -->|Preciso entender fluxo| E[Tracing]
-    B -->|Preciso de notificação| F[Alerting]
+    A[System in production] --> B{What happened?}
+    B -->|Need logs| C[Logging]
+    B -->|Need quantitative data| D[Metrics]
+    B -->|Need to understand flow| E[Tracing]
+    B -->|Need notification| F[Alerting]
     
-    C --> C1[Como está o estado?]
-    C1 --> C2[Logs estruturados]
-    C2 --> C3[Níveis apropriados]
+    C --> C1[How is the state?]
+    C1 --> C2[Structured logs]
+    C2 --> C3[Adequate levels]
     
-    D --> D1{Como está?}
-    D1 -->|Disponibilidade| D2[SLA/SLO]
-    D1 -->|Performance| D3[Latência/Throughput]
-    D1 -->|Erros| D4[Taxa de erro]
+    D --> D1{How is it?}
+    D1 -->|Availability| D2[SLA/SLO]
+    D1 -->|Performance| D3[Latency/Throughput]
+    D1 -->|Errors| D4[Error rate]
     
-    E --> E1{Por quê?}
-    E1 -->|Fluxo distribuído| E2[Trace propagation]
-    E1 -->|Dependências| E3[Service map]
+    E --> E1{Why?}
+    E1 -->|Distributed flow| E2[Trace propagation]
+    E1 -->|Dependencies| E3[Service map]
     
-    F --> F1[Alertas acionáveis]
+    F --> F1[Actionable alerts]
     F1 --> F2[Runbooks]
-    F2 --> F3[Escalonamento]
+    F2 --> F3[Escalation]
 ```
 
-## Conceitos Fundamentais
+## Fundamental Concepts
 
-### Os 3 Pilares da Observabilidade
+### The 3 Pillars of Observability
 
-| Pilar | O que responde | Exemplo |
+| Pillar | What it answers | Example |
 |-------|----------------|---------|
-| **Logging** | O que aconteceu? | "Erro de conexão com DB" |
-| **Metrics** | Como está o sistema? | "99.9% disponibilidade" |
-| **Tracing** | Por que aconteceu? | "Request falhou no service B" |
+| **Logging** | What happened? | "DB connection failed" |
+| **Metrics** | How is the system? | "99.9% availability" |
+| **Tracing** | Why did it happen? | "Request failed in service B" |
 
-### Níveis de Log
+### Log Levels
 
-| Nível | Uso | Exemplo |
+| Level | Use | Example |
 |-------|-----|---------|
-| `ERROR` | Falha que precisa de ação | "DB connection failed" |
-| `WARN` | Anormalidade sem falha | "Retrying request" |
-| `INFO` | Evento significativo | "User created" |
-| `DEBUG` | Detalhes para debug | "Query executed: SELECT *..." |
+| `ERROR` | Failure requiring action | "DB connection failed" |
+| `WARN` | Anomaly without failure | "Retrying request" |
+| `INFO` | Significant event | "User created" |
+| `DEBUG` | Details for debugging | "Query executed: SELECT *..." |
 
-### Métricas (RED Method)
+### Metrics (RED Method)
 
-- **Rate**: Taxa de requisições por segundo
-- **Errors**: Taxa de erros
-- **Duration**: Latência das requisições (p50, p95, p99)
+- **Rate**: Requests per second rate
+- **Errors**: Error rate
+- **Duration**: Request latency (p50, p95, p99)
 
 ### Tracing
 
-- **Trace ID**: Identificador único por request
-- **Span**: Unidade de trabalho dentro de um trace
-- **Parent Span**: Span que originou outro
+- **Trace ID**: Unique identifier per request
+- **Span**: Unit of work within a trace
+- **Parent Span**: Span that originated another
 
 ## Workflow
 
-### Workflow 1: Implementar Logging Estruturado
+### Workflow 1: Implement Structured Logging
 
-1. Escolha formato de log (JSON recomendado):
+1. Choose log format (JSON recommended):
    ```bash
-   # Exemplo com pino (Node.js)
+   # Example with pino (Node.js)
    import pino from 'pino';
    const logger = pino({ level: 'info' });
    ```
-2. Defina campos obrigatórios no template `templates/logging-spec.md`
-3. Implemente logger centralizado:
+2. Define required fields in `templates/logging-spec.md`
+3. Implement centralized logger:
    ```typescript
    // src/lib/logger.ts
    export const logger = pino({
@@ -108,15 +121,15 @@ graph TD
      formatters: { level: (label) => ({ level: label }) },
    });
    ```
-4. Substitua todos `console.log` por logger
-5. **Checkpoint**: Todos os logs usam formato estruturado
+4. Replace all `console.log` with logger
+5. **Checkpoint**: All logs use structured format
 
-### Workflow 2: Configurar Métricas e SLAs
+### Workflow 2: Configure Metrics and SLAs
 
-1. Defina SLAs no template `templates/metrics-sla.md`
-2. Configure coletor de métricas (Prometheus/DataDog):
+1. Define SLAs in `templates/metrics-sla.md`
+2. Configure metric collector (Prometheus/DataDog):
    ```typescript
-   // Exemplo com prom-client
+   // Example with prom-client
    const httpRequestDuration = new Histogram({
      name: 'http_request_duration_seconds',
      help: 'Duration of HTTP requests',
@@ -124,19 +137,19 @@ graph TD
      buckets: [0.1, 0.5, 1, 2, 5],
    });
    ```
-3. Instrumente endpoints principais
+3. Instrument main endpoints
 4. Configure dashboards (Grafana/DataDog)
-5. **Checkpoint**: Métricas visíveis no dashboard
+5. **Checkpoint**: Metrics visible in dashboard
 
-### Workflow 3: Implementar Tracing Distribuído
+### Workflow 3: Implement Distributed Tracing
 
-1. Configure propagador de trace (OpenTelemetry):
+1. Configure trace propagator (OpenTelemetry):
    ```typescript
    import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
    const provider = new NodeTracerProvider();
    provider.register();
    ```
-2. Instrumente serviços com spans:
+2. Instrument services with spans:
    ```typescript
    const span = tracer.startSpan('process-order');
    try {
@@ -149,14 +162,14 @@ graph TD
      span.end();
    }
    ```
-3. Configure exportador (Jaeger/Zipkin)
-4. Adicione contexto entre serviços (headers)
-5. **Checkpoint**: Traces visíveis no Jaeger/Zipkin
+3. Configure exporter (Jaeger/Zipkin)
+4. Add context between services (headers)
+5. **Checkpoint**: Traces visible in Jaeger/Zipkin
 
-### Workflow 4: Criar Alertas Acionáveis
+### Workflow 4: Create Actionable Alerts
 
-1. Defina regras no template `templates/alert-rules.md`
-2. Implemente alertas com runbook:
+1. Define rules in `templates/alert-rules.md`
+2. Implement alerts with runbook:
    ```yaml
    # alert-rules.yml
    - alert: HighErrorRate
@@ -165,194 +178,194 @@ graph TD
      labels:
        severity: critical
      annotations:
-       summary: "Taxa de erro > 5%"
+       summary: "Error rate > 5%"
        runbook_url: "https://wiki/runbooks/high-error-rate"
    ```
-3. Configure notificações (PagerDuty/Slack)
-4. Teste alertas com cenários simulados
-5. **Checkpoint**: Alertas disparam e notificam corretamente
+3. Configure notifications (PagerDuty/Slack)
+4. Test alerts with simulated scenarios
+5. **Checkpoint**: Alerts fire and notify correctly
 
-### Workflow 5: Investigar Incidente
+### Workflow 5: Investigate Incident
 
-1. Identifique alerta disparado
-2. Acesse dashboard de métricas
-3. Use trace ID para rastrear request problemático
-4. Analise logs correlacionados
-5. Documente causa raiz
-6. **Checkpoint**: Incidente resolvido e documentado
+1. Identify triggered alert
+2. Access metric dashboard
+3. Use trace ID to track problematic request
+4. Analyze correlated logs
+5. Document root cause
+6. **Checkpoint**: Incident resolved and documented
 
 ## Templates
 
 ### logging-spec.md
-Localização: `templates/logging-spec.md`
+Location: `templates/logging-spec.md`
 
-Especificação de logging estruturado. Define formato, campos obrigatórios e níveis.
+Structured logging specification. Defines format, required fields, and levels.
 
-**Uso:**
+**Use:**
 ```bash
 cp templates/logging-spec.md docs/logging-spec.md
 ```
 
 ### metrics-sla.md
-Localização: `templates/metrics-sla.md`
+Location: `templates/metrics-sla.md`
 
-Template para definir métricas RED e SLAs/SLOs do sistema.
+Template for defining metrics RED and SLAs/SLOs of the system.
 
-**Uso:**
+**Use:**
 ```bash
 cp templates/metrics-sla.md docs/metrics-sla.md
 ```
 
 ### alert-rules.md
-Localização: `templates/alert-rules.md`
+Location: `templates/alert-rules.md`
 
-Template para regras de alerta com severidade e runbooks.
+Template for alert rules with severity and runbooks.
 
-**Uso:**
+**Use:**
 ```bash
 cp templates/alert-rules.md docs/alert-rules.md
 ```
 
 ## Anti-patterns
 
-### 🔴 Crítico
+### Critical
 
-#### Log com Dados Sensíveis
-**O que é:** Logs contendo senhas, tokens, CPFs ou dados pessoais.
-**Por que é ruim:** Violação de LGPD/GDPR, risco de vazamento.
-**Como evitar:** Use mascaramento e sanitize dados antes de logar.
-**Exemplo:**
+#### Log with Sensitive Data
+**What is it:** Logs containing passwords, tokens, CPFs, or personal data.
+**Why is it bad:** Violation of LGPD/GDPR, risk of leakage.
+**How to avoid:** Use masking and sanitize data before logging.
+**Example:**
 ```typescript
-// ❌ ERRADO - loga senha e token
+// ❌ WRONG - logs password and token
 logger.info({ user: 'john', password: 'secret123', token: 'abc123' });
 
-// ✅ CORRETO - sanitiza dados sensíveis
+// ✅ RIGHT - sanitizes sensitive data
 logger.info({ user: 'john', password: '***', token: '***' });
 ```
 
-#### Alerta sem Ação Definida
-**O que é:** Alerta dispara mas ninguém sabe o que fazer.
-**Por que é ruim:** Alerta é ignorado, time perde confiança.
-**Como evitar:** Sempre inclua runbook com passos claros.
-**Exemplo:**
+#### Alert without Defined Action
+**What is it:** Alert fires but nobody knows what to do.
+**Why is it bad:** Alert is ignored, team loses trust.
+**How to avoid:** Always include runbook with clear steps.
+**Example:**
 ```yaml
-# ❌ ERRADO - sem runbook
+# ❌ WRONG - without runbook
 - alert: HighCPU
   expr: cpu_usage > 90
 
-# ✅ CORRETO - com runbook
+# ✅ RIGHT - with runbook
 - alert: HighCPU
   expr: cpu_usage > 90
   annotations:
     runbook_url: "https://wiki/runbooks/high-cpu"
-    steps: "1. Verificar processos 2. Escalar se necessário"
+    steps: "1. Check processes 2. Scale if necessary"
 ```
 
-### 🟡 Médio
+### Medium
 
-#### Log sem Contexto
-**O que é:** Logs sem identificador de request, usuário ou ambiente.
-**Por que é ruim:** Impossível correlacionar eventos em microsserviços.
-**Como evitar:** Sempre inclua trace_id, user_id e environment.
-**Exemplo:**
+#### Log without Context
+**What is it:** Logs without request ID, user ID, or environment.
+**Why is it bad:** Impossible to correlate events in microservices.
+**How to avoid:** Always include trace ID, user ID, and environment.
+**Example:**
 ```typescript
-// ❌ ERRADO - sem contexto
+// ❌ WRONG - without context
 logger.error('Failed to process order');
 
-// ✅ CORRETO - com contexto
+// ✅ RIGHT - with context
 logger.error({ traceId, userId, environment: 'prod' }, 'Failed to process order');
 ```
 
-#### Métricas sem Dimensão Temporal
-**O que é:** Métricas sem série temporal ou agregação adequada.
-**Por que é ruim:** Impossível identificar tendências ou comparar períodos.
-**Como evitar:** Use contadores, histogramas e séries temporais.
-**Exemplo:**
+#### Metrics without Temporal Dimension
+**What is it:** Metrics without time series or adequate aggregation.
+**Why is it bad:** Impossible to identify trends or compare periods.
+**How to avoid:** Use counters, histograms, and time series.
+**Example:**
 ```typescript
-// ❌ ERRADO - apenas último valor
+// ❌ WRONG - only last value
 gauge.set(errorCount);
 
-// ✅ CORRETO - com contagem e taxa
+// ✅ RIGHT - with count and rate
 counter.inc({ status: 'error' });
 const errorRate = counter.rate({ status: 'error' });
 ```
 
-### 🟢 Baixo
+### Low
 
-#### console.log em Produção
-**O que é:** Uso de `console.log` em código de produção.
-**Por que é ruim:** Sem estrutura, sem níveis, difícil de filtrar.
-**Como evitar:** Use biblioteca de logging estruturado.
-**Exemplo:**
+#### console.log in Production
+**What is it:** Use of `console.log` in production code.
+**Why is it bad:** Unstructured, no levels, hard to filter.
+**How to avoid:** Use structured logging library.
+**Example:**
 ```typescript
-// ❌ ERRADO
+// ❌ WRONG
 console.log('User created:', user);
 
-// ✅ CORRETO
+// ✅ RIGHT
 logger.info({ userId: user.id, action: 'user_created' });
 ```
 
 ## Checklists
 
-### Checklist de Logging
-- [ ] Logs em formato JSON estruturado
-- [ ] Níveis de log apropriados (ERROR, WARN, INFO, DEBUG)
-- [ ] Campos obrigatórios: timestamp, level, message, service
-- [ ] Campos de contexto: trace_id, user_id, environment
-- [ ] Dados sensíveis mascarados
-- [ ] Retenção de logs definida
-- [ ] Logs centralizados (ELK/Datadog)
+### Logging Checklist
+- [ ] Logs in JSON structured format
+- [ ] Log levels adequate (ERROR, WARN, INFO, DEBUG)
+- [ ] Required fields: timestamp, level, message, service
+- [ ] Context fields: trace ID, user ID, environment
+- [ ] Sensitive data masked
+- [ ] Log retention defined
+- [ ] Centralized logs (ELK/Datadog)
 
-### Checklist de Métricas
-- [ ] Métricas RED implementadas (Rate, Errors, Duration)
-- [ ] SLAs/SLOs documentados
-- [ ] Dashboards configurados
-- [ ] Métricas de negócio definidas
-- [ ] Retenção de métricas definida
-- [ ] Alertas baseados em métricas
+### Metrics Checklist
+- [ ] RED metrics implemented (Rate, Errors, Duration)
+- [ ] SLAs/SLOs documented
+- [ ] Dashboards configured
+- [ ] Business metrics defined
+- [ ] Metric retention defined
+- [ ] Alerts based on metrics
 
-### Checklist de Tracing
-- [ ] Trace propagation configurado entre serviços
-- [ ] Spans instrumentados nos pontos principais
-- [ ] Contexto propagado via headers
-- [ ] Exportador configurado (Jaeger/Zipkin)
-- [ ] Sampling rate definido
+### Tracing Checklist
+- [ ] Trace propagation configured between services
+- [ ] Spans instrumented in main points
+- [ ] Context propagated via headers
+- [ ] Exporter configured (Jaeger/Zipkin)
+- [ ] Sampling rate defined
 
-### Checklist de Alertas
-- [ ] Alertas têm severidade definida
-- [ ] Runbooks anexados a cada alerta
-- [ ] Escalonamento configurado
-- [ ] Testes de alertas realizados
-- [ ] Alertas review periódico (quarterly)
+### Alert Checklist
+- [ ] Alerts have defined severity
+- [ ] Runbooks attached to each alert
+- [ ] Escalation configured
+- [ ] Alert tests performed
+- [ ] Alert review periodic (quarterly)
 
-### Checklist de Incidente
-- [ ] Alerta identificado e confirmado
-- [ ] Dashboard analisado
-- [ ] Trace ID rastreado
-- [ ] Logs correlacionados
-- [ ] Causa raiz identificada
-- [ ] Documentação pós-incidente
+### Incident Checklist
+- [ ] Triggered alert identified and confirmed
+- [ ] Dashboard analyzed
+- [ ] Trace ID tracked
+- [ ] Correlated logs analyzed
+- [ ] Root cause identified
+- [ ] Post-incident documentation
 
 ## Edge Cases
 
-### Alto Volume de Logs
-**Situação:** Sistema gera milhões de logs por minuto.
-**Solução:** Use sampling, levels apropriados e compressão.
-**Exceção:** Logs de auditoria não devem ser sampled.
+### High Log Volume
+**Situation:** System generates millions of logs per minute.
+**Solution:** Use sampling, adequate levels, and compression.
+**Exception:** Audit logs should not be sampled.
 
 ```typescript
-// Sampling para debug
+// Sampling for debugging
 const logger = pino({
   level: 'info',
-  // Apenas 10% dos logs DEBUG
+  // Only 10% of DEBUG logs
   base: { sampleRate: process.env.NODE_ENV === 'prod' ? 0.1 : 1 },
 });
 ```
 
-### Tracing em Microsserviços Assíncronos
-**Situação:** Eventos via Kafka/RabbitMQ sem request HTTP.
-**Solução:** Propague trace context via message headers.
-**Exceção:** Consumers batch podem precisar de trace separado.
+### Tracing in Asynchronous Microservices
+**Situation:** Events via Kafka/RabbitMQ without HTTP request.
+**Solution:** Propagate trace context via message headers.
+**Exception:** Consumers batch may need separate trace.
 
 ```typescript
 // Producer
@@ -364,13 +377,13 @@ const traceId = message.headers['trace-id'];
 const span = tracer.startSpan('process-order', { traceId });
 ```
 
-### Correlação entre Serviços
-**Situação:** Logs de diferentes serviços não correlacionados.
-**Solução:** Use trace_id como campo comum e propague via headers.
-**Exceção:** Serviços legados sem suporte a tracing.
+### Correlation between Services
+**Situation:** Logs from different services not correlated.
+**Solution:** Use trace ID as common field and propagate via headers.
+**Exception:** Legacy services without tracing support.
 
 ```typescript
-// Middleware para propagar trace_id
+// Middleware to propagate trace ID
 app.use((req, res, next) => {
   const traceId = req.headers['x-trace-id'] || generateTraceId();
   req.traceId = traceId;
@@ -379,13 +392,13 @@ app.use((req, res, next) => {
 });
 ```
 
-## Referências
+## References
 
 - [OpenTelemetry](https://opentelemetry.io/)
 - [Prometheus](https://prometheus.io/)
 - [Grafana](https://grafana.com/)
 - [Jaeger](https://www.jaegertracing.io/)
 - [Structured Logging](https://www.structuredlogging.org/)
-- `testing` — para testar instrumentação
-- `release` — para métricas de deploy
-- `governance` — para políticas de retenção
+- `testing` — for testing instrumentation
+- `release` — for metrics of deploy
+- `governance` — for policies of retention

@@ -1,17 +1,17 @@
 ---
 id: ADR-998-TODO
 type: todo
-title: Execução - Bloqueada
+title: Execution - Blocked
 ---
 
-# TODO: Teste 998
+# TODO: Test 998
 
-## Tabela de Tarefas
-| ID | Tarefa | Status |
+## Task Table
+| ID | Task | Status |
 |---|---|---|
-| A1.1 | Tarefa 1 | ✅ |
-| A1.2 | Tarefa de refatoração | ❌ |
-| A1.3 | Depende da anterior | ⏸️ |
+| A1.1 | Task 1 | ✔️ |
+| A1.2 | Refactoring Task | ❌ |
+| A1.3 | Depends on previous | ⏸️ |
 
 ## Checkpoints
 - [x] Check 1

@@ -9,33 +9,33 @@ adr_ref: ADR-001
 
 # ADR-001-PI: Implementation Plan - Implementação do JWT
 
-> Referência: [ADR-001](./ADR-001.md) | [ADR-001-TODO](./ADR-001-TODO.md)
+> Reference: [ADR-001](./ADR-001.md) | [ADR-001-TODO](./ADR-001-TODO.md)
 
-## 1. Visão Geral (Overview)
-Este plano descreve como o agente autônomo irá implementar, testar e plugar o serviço JWT e o Middleware na aplicação, garantindo segurança ECDSA.
+## 1. Overview
+This plan describes how the autonomous agent will implement, test, and deploy the JWT service and Middleware in the application, ensuring ECDSA security.
 
-## 2. Padrões de Aceitação e Qualidade (Quality Standards)
-- **Test Coverage:** Exigência de 100% de cobertura no módulo `auth/`.
-- **Linter/Typing:** `mypy --strict` e `ruff check`.
-- **Bibliotecas:** Uso obrigatório de `PyJWT[crypto]`.
+## 2. Quality Standards
+- **Test Coverage:** 100% coverage requirement for the `auth/` module.
+- **Linter/Typing:** `mypy --strict` and `ruff check`.
+- **Libraries:** Mandatory use of `PyJWT[crypto]`.
 
-## 3. Plano de Execução Granular (TDD & Step-by-Step)
+## 3. Granular Execution Plan (TDD & Step-by-Step)
 
-### Fase A: Core Authentication
+### Phase A: Core Authentication
 
-#### Passo A1.1: Criar JWT Adapter com PyJWT
+#### Step A1.1: Create JWT Adapter with PyJWT
 
-**1. TDD Specs (O que testar primeiro):**
-- **Arquivo de Teste:** `tests/auth/test_jwt_service.py`
-- **Mocks Necessários:** Injetar chaves ECDSA fake para o teste.
-- **Asserções Esperadas:** 
-  - `test_generate_token_success()`: Verifica se o payload contém `exp` e `sub`.
-  - `test_decode_token_expired()`: Lança exceção customizada `TokenExpiredError` quando `exp` está no passado.
-- **Comando de Teste:** `pytest tests/auth/test_jwt_service.py -v`
+**1. TDD Specs (What to test first):**
+- **Test File:** `tests/auth/test_jwt_service.py`
+- **Required Mocks:** Inject fake ECDSA keys for testing.
+- **Expected Assertions:** 
+  - `test_generate_token_success()`: Verifies if the payload contains `exp` and `sub`.
+  - `test_decode_token_expired()`: Throws a custom `TokenExpiredError` when `exp` is in the past.
+- **Test Command:** `pytest tests/auth/test_jwt_service.py -v`
 
-**2. Code Specs (Implementação da regra de negócio):**
-- **Arquivos Afetados:** `src/auth/jwt_service.py` e `src/auth/exceptions.py`
-- **Assinaturas/Interfaces:**
+**2. Code Specs (Implementation of the business rule):**
+- **Affected Files:** `src/auth/jwt_service.py` and `src/auth/exceptions.py`
+- **Signatures/Interfaces:**
   ```python
   import jwt
   
@@ -44,48 +44,48 @@ Este plano descreve como o agente autônomo irá implementar, testar e plugar o 
       def create_access_token(self, user_id: str) -> str: ...
       def decode_token(self, token: str) -> dict[str, Any]: ...
   ```
-- **Lógica e Constantes:**
+- **Logic and Constants:**
   - `ALGORITHM = "ES256"`
-  - Tempo de expiração do access token cravado em 15 minutos (use `datetime.utcnow()`).
+  - Access token expiration time set to 15 minutes (use `datetime.utcnow()`).
 
-**3. Integração e Comandos de Terminal:**
+**3. Integration and Terminal Commands:**
 - `pip install "PyJWT[crypto]"`
 - `pip freeze > requirements.txt`
 
-**4. Edge Cases e Rollback (Prevenção de Falhas):**
-- **Se PyJWT falhar por falta de dependências C (cryptography):** Adicione instruções para rodar `apt-get install build-essential libssl-dev libffi-dev` ou use fallback para `HS256` provisório comunicando o usuário.
-- **Rollback:** Em caso de quebra persistente, desfaça os imports e reverta o commit.
+**4. Edge Cases and Rollback (Failure Prevention):**
+- **If PyJWT fails due to missing C dependencies (cryptography):** Add instructions to run `apt-get install build-essential libssl-dev libffi-dev` or use a fallback to `HS256` provisional, notifying the user.
+- **Rollback:** In case of persistent failure, undo imports and revert the commit.
 
-#### Passo A1.2: Implementar Auth Middleware
+#### Step A1.2: Implement Auth Middleware
 
-**1. TDD Specs (O que testar primeiro):**
-- **Arquivo de Teste:** `tests/auth/test_middleware.py`
-- **Mocks:** Mockar a classe `JWTService` retornando payloads fixos. Usar `httpx.AsyncClient` para simular requests ao app ASGI.
-- **Asserções Esperadas:**
-  - Request sem header `Authorization` retorna HTTP 401.
-  - Request com token expirado retorna HTTP 401 e JSON `{"detail": "Token expired"}`.
-- **Comando de Teste:** `pytest tests/auth/test_middleware.py -v`
+**1. TDD Specs (What to test first):**
+- **Test File:** `tests/auth/test_middleware.py`
+- **Mocks:** Mock the `JWTService` class to return fixed payloads. Use `httpx.AsyncClient` to simulate requests to the app ASGI.
+- **Expected Assertions:**
+  - Request without `Authorization` header returns HTTP 401.
+  - Request with expired token returns HTTP 401 and JSON `{"detail": "Token expired"}`.
+- **Test Command:** `pytest tests/auth/test_middleware.py -v`
 
 **2. Code Specs:**
-- **Arquivos Afetados:** `src/auth/middleware.py` e `src/main.py`
-- **Lógica:**
-  - Extrair o token do cabeçalho HTTP: `header.split("Bearer ")[1]`.
-  - Capturar `TokenExpiredError` da `jwt_service.py` e mapear para Exception da Web Framework.
+- **Affected Files:** `src/auth/middleware.py` and `src/main.py`
+- **Logic:**
+  - Extract the token from the HTTP header: `header.split("Bearer ")[1]`.
+  - Catch `TokenExpiredError` from `jwt_service.py` and map it to the Web Framework's exception.
 
-**3. Integração:**
-- Registrar o middleware na instância do FastAPI em `src/main.py`.
+**3. Integration:**
+- Register the middleware in the FastAPI instance in `src/main.py`.
 
-**4. Edge Cases e Rollback:**
-- Certifique-se de que endpoints de Login não passam pelo Middleware (Whitelist ou rota não protegida).
+**4. Edge Cases and Rollback:**
+- Ensure that login endpoints do not pass through the Middleware (Whitelist or unprotected route).
 
-## 4. Validação Contínua (Continuous Validation)
+## 4. Continuous Validation
 ```bash
-# Validar Tipagem
+# Validate Typing
 mypy src/auth/
 
-# Validar Linting
+# Validate Linting
 ruff check src/auth/
 
-# Garantir Cobertura Final do Módulo
+# Ensure Final Module Coverage
 pytest tests/auth/ --cov=src/auth --cov-fail-under=100
 ```

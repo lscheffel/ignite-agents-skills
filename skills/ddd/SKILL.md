@@ -1,76 +1,87 @@
 ---
 name: ddd
-description: Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados. Use quando modelar domínios ricos, refatorar entidades anêmicas ou estruturar contextos delimitados.
 version: 2.0.0
-tags: [ddd, domain-driven-design, modeling, aggregates, events]
-related_skills: [architecture-review-kilo, testing, implementation]
+description: Guide to Domain-Driven Design (DDD) modeling. Defines guidelines for Entities, Value Objects, Aggregates, Repositories, Domain Events, Domain Services, and Bounded Contexts. Use when modeling rich domains, refactoring anemic entities, or structuring bounded contexts.
+domain: architecture-systems
+triggers:
+- ddd
+tags:
+- ddd
+- domain-driven-design
+- modeling
+- aggregates
+- events
+metadata:
+  author: Antigravity Refactored Architecture
+  provenance: internal
+  last_audited: '2026-08-05'
 ---
 
 # Domain-Driven Design (DDD)
 
-Guia para modelagem de domínio orientada a negócios.
+Guide to business-oriented domain modeling.
 
-## Quando Usar
+## When to Use
 
-### Use quando:
-- Modelando domínio complexo com regras de negócio
-- Refatorando entidades anêmicas
-- Estruturando Bounded Contexts
-- Definindo contratos de domínio
-- Trabalhando com Domain Events
+### Use when:
+- Modeling complex domains with business rules
+- Refactoring anemic entities
+- Structuring Bounded Contexts
+- Defining domain contracts
+- Working with Domain Events
 
-### Não use quando:
-- CRUD simples sem regras de negócio
-- Protótipo rápido
-- Projeto sem domínio complexo
+### Do not use when:
+- Simple CRUD without business rules
+- Rapid prototyping
+- Project without complex domain
 
-### Skills relacionadas:
-- `architecture-review-kilo` — para validar aderência a DDD
-- `testing` — para testar agregados e entidades
+### Related Skills:
+- `architecture-review-kilo` — to validate adherence to DDD
+- `testing` — to test aggregates and entities
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Objeto do domínio?] -->|Tem identidade própria| B[Entidade]
-    A -->|Definido por atributos| C[Value Object]
-    A -->|Cluster de objetos| D[Aggregate]
-    B -->|Raiz do agreggate| E[Aggregate Root]
-    C -->|Imutável| F[Value Object]
-    D -->|Única porta de entrada| G[Aggregate Root]
-    A -->|Lógica sem dono| H[Domain Service]
-    A -->|Algo aconteceu| I[Domain Event]
-    A -->|Persistência| J[Repository]
+    A[Domain Object?] -->|Has its own identity| B[Entity]
+    A -->|Defined by attributes| C[Value Object]
+    A -->|Cluster of objects| D[Aggregate]
+    B -->|Root of the aggregate| E[Aggregate Root]
+    C -->|Immutable| F[Value Object]
+    D -->|Single entry point| G[Aggregate Root]
+    A -->|Logic without owner| H[Domain Service]
+    A -->|Something happened| I[Domain Event]
+    A -->|Persistence| J[Repository]
 ```
 
 ## Workflow
 
-### Fase 1: Modelar Domínio
+### Phase 1: Model the Domain
 
-1. Realize Event Storming:
-   - Liste eventos de negócio
-   - Identifique comandos
-   - Mapeie aggregates
-2. Defina Bounded Contexts:
-   - Contexto de Usuário
-   - Contexto de Pedido
-   - Contexto de Pagamento
-3. Crie context map:
+1. Perform Event Storming:
+   - List business events
+   - Identify commands
+   - Map aggregates
+2. Define Bounded Contexts:
+   - User Context
+   - Order Context
+   - Payment Context
+3. Create a context map:
    ```
    User Context <---> Order Context (Customer-Supplier)
    ```
-4. **Checkpoint**: Contextos bem delimitados, sem overlap
+4. **Checkpoint**: Well-defined contexts, no overlap
 
-### Fase 2: Implementar Aggregate Root
+### Phase 2: Implement Aggregate Root
 
-1. Defina invariantes:
+1. Define invariants:
    ```typescript
    // Order invariants
-   - Status não pode pular (Draft -> Pending -> Paid -> Shipped)
-   - Total deve ser recalculado ao adicionar item
-   - Não pode modificar pedido pago
+   - Status cannot skip (Draft -> Pending -> Paid -> Shipped)
+   - Total must be recalculated when adding an item
+   - Cannot modify a paid order
    ```
-2. Crie classe com validação:
+2. Create a class with validation:
    ```typescript
    class Order {
      private status: OrderStatus = OrderStatus.Draft;
@@ -84,11 +95,11 @@ graph TD
      }
    }
    ```
-3. **Checkpoint**: Aggregate respeita todas as invariantes
+3. **Checkpoint**: Aggregate respects all invariants
 
-### Fase 3: Implementar Value Object
+### Phase 3: Implement Value Object
 
-1. Defina atributos imutáveis:
+1. Define immutable attributes:
    ```typescript
    class Money {
      constructor(
@@ -97,24 +108,24 @@ graph TD
      ) {}
    }
    ```
-2. Adicione validação no construtor:
+2. Add validation in the constructor:
    ```typescript
    if (amount < 0) {
      throw new DomainError("Amount cannot be negative");
    }
    ```
-3. Implemente equals:
+3. Implement equals:
    ```typescript
    equals(other: Money): boolean {
      return this.amount === other.amount && 
             this.currency === other.currency;
    }
    ```
-4. **Checkpoint**: Value Object imutável e validado
+4. **Checkpoint**: Immutable Value Object with validation
 
-### Fase 4: Implementar Domain Event
+### Phase 4: Implement Domain Event
 
-1. Crie evento no passado:
+1. Create an event in the past:
    ```typescript
    class OrderCreated {
      constructor(
@@ -124,7 +135,7 @@ graph TD
      ) {}
    }
    ```
-2. Publique no aggregate:
+2. Publish in the aggregate:
    ```typescript
    static create(userId: UserId, items: OrderItem[]): Order {
      const order = new Order(userId, items);
@@ -134,7 +145,7 @@ graph TD
      return order;
    }
    ```
-3. Crie handler:
+3. Create a handler:
    ```typescript
    class SendOrderConfirmationHandler {
      async handle(event: OrderCreated) {
@@ -142,11 +153,11 @@ graph TD
      }
    }
    ```
-4. **Checkpoint**: Evento publicado e handler funciona
+4. **Checkpoint**: Event published and handler works
 
-### Fase 5: Implementar Repository
+### Phase 5: Implement Repository
 
-1. Defina interface no domínio:
+1. Define the interface in the domain:
    ```typescript
    interface OrderRepository {
      add(order: Order): Promise<void>;
@@ -155,7 +166,7 @@ graph TD
      findByUserId(userId: UserId): Promise<Order[]>;
    }
    ```
-2. Implemente na infraestrutura:
+2. Implement in the infrastructure:
    ```typescript
    class PrismaOrderRepository implements OrderRepository {
      async findById(id: OrderId): Promise<Order | null> {
@@ -166,37 +177,37 @@ graph TD
      }
    }
    ```
-3. **Checkpoint**: Repository implementa interface corretamente
+3. **Checkpoint**: Repository implements the interface correctly
 
-### Fase 6: Definir Bounded Context
+### Phase 6: Define Bounded Context
 
-1. Mapeie contextos:
+1. Map contexts:
    ```
    User Context
    - Entities: User, Profile
    - Value Objects: Email, Name
    - Services: PasswordHasher
    ```
-2. Defina integrações:
+2. Define integrations:
    ```
    User Context publishes UserCreated
    Order Context subscribes UserCreated
    ```
-3. **Checkpoint**: Contextos bem delimitados com contratos claros
+3. **Checkpoint**: Well-defined contexts with clear contracts
 
-### Fase 7: Refatorar Entidade Anêmica
+### Phase 7: Refactor Anemic Entity
 
-1. Identifique entidade anêmica:
+1. Identify anemic entity:
    ```typescript
-   // Anêmica
+   // Anemic
    class User {
      id: string;
      name: string;
      email: string;
-     // só getters/setters
+     // only getters/setters
    }
    ```
-2. Mova regras para dentro:
+2. Move rules inside:
    ```typescript
    class User {
      changeEmail(newEmail: string) {
@@ -207,21 +218,21 @@ graph TD
      }
    }
    ```
-3. **Checkpoint**: Entidade tem comportamento, não só dados
+3. **Checkpoint**: Entity has behavior, not just data
 
-## Conceitos Fundamentais
+## Fundamental Concepts
 
-### Entidade
+### Entity
 
-Objeto com identidade própria, ciclos de vida e persistência.
+Object with its own identity, life cycle, and persistence.
 
 ```typescript
 class Order {
-  private id: OrderId;  // identidade
+  private id: OrderId;  // identity
   private items: OrderItem[];
   private status: OrderStatus;
   
-  // comportamento, não só dados
+  // behavior, not just data
   addItem(item: OrderItem): void {
     if (this.status !== OrderStatus.Draft) {
       throw new DomainError("Cannot modify");
@@ -233,7 +244,7 @@ class Order {
 
 ### Value Object
 
-Objeto imutável definido por seus atributos, sem identidade própria.
+Immutable object defined by its attributes, without its own identity.
 
 ```typescript
 class Money {
@@ -255,32 +266,32 @@ class Money {
 
 ### Aggregate
 
-Cluster de entidades e value objects com boundary e root.
+Cluster of entities and value objects with a boundary and root.
 
 ```typescript
-// Order é Aggregate Root
-// OrderItem é entidade filha (sem ID próprio)
+// Order is Aggregate Root
+// OrderItem is child entity (no ID of its own)
 class Order {
-  private items: OrderItem[] = [];  // sem IDs
+  private items: OrderItem[] = [];  // no IDs
   
   addItem(item: OrderItem): void {
-    this.items.push(item);  // só via root
+    this.items.push(item);  // only via root
   }
 }
 ```
 
 ### Repository
 
-Abstração de coleção para acesso a agregados.
+Abstraction of a collection for accessing aggregates.
 
 ```typescript
-// Interface no domínio
+// Interface in the domain
 interface OrderRepository {
   add(order: Order): Promise<void>;
   findById(id: OrderId): Promise<Order | null>;
 }
 
-// Implementação na infraestrutura
+// Implementation in the infrastructure
 class PrismaOrderRepository implements OrderRepository {
   async findById(id: OrderId): Promise<Order | null> {
     // ...
@@ -290,7 +301,7 @@ class PrismaOrderRepository implements OrderRepository {
 
 ### Domain Event
 
-Registro de algo relevante que aconteceu no domínio.
+Record of something relevant that happened in the domain.
 
 ```typescript
 class OrderCreated {
@@ -303,12 +314,12 @@ class OrderCreated {
 
 ### Domain Service
 
-Lógica que não pertence a uma entidade.
+Logic that does not belong to an entity.
 
 ```typescript
 class CurrencyConverter {
   convert(amount: Money, to: string): Money {
-    // lógica que envolve múltiplos agregados
+    // logic involving multiple aggregates
   }
 }
 ```
@@ -316,83 +327,83 @@ class CurrencyConverter {
 ## Templates
 
 ### entity.ts
-Localização: `templates/entity.ts`
+Location: `templates/entity.ts`
 
-Template para entidade de domínio.
+Template for a domain entity.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/entity.ts src/domain/{entity}/{entity}.ts
 ```
 
 ### value-object.ts
-Localização: `templates/value-object.ts`
+Location: `templates/value-object.ts`
 
-Template para value object imutável.
+Template for an immutable value object.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/value-object.ts src/domain/{vo}/{vo}.ts
 ```
 
 ### aggregate-root.ts
-Localização: `templates/aggregate-root.ts`
+Location: `templates/aggregate-root.ts`
 
-Template para aggregate root com invariantes.
+Template for an aggregate root with invariants.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/aggregate-root.ts src/domain/{aggregate}/{aggregate}.ts
 ```
 
 ### domain-event.ts
-Localização: `templates/domain-event.ts`
+Location: `templates/domain-event.ts`
 
-Template para domain event.
+Template for a domain event.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/domain-event.ts src/domain/{event}/{event}.ts
 ```
 
 ### repository.ts
-Localização: `templates/repository.ts`
+Location: `templates/repository.ts`
 
-Template para interface de repository.
+Template for a repository interface.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/repository.ts src/domain/{aggregate}/{aggregate}-repository.ts
 ```
 
 ### domain-service.ts
-Localização: `templates/domain-service.ts`
+Location: `templates/domain-service.ts`
 
-Template para domain service.
+Template for a domain service.
 
-**Uso:**
+**Usage:**
 ```bash
 cp templates/domain-service.ts src/domain/{service}/{service}.ts
 ```
 
 ## Anti-patterns
 
-### 🔴 Crítico
+### Critical
 
-#### Entidade Anêmica
-**O que é:** Classe com apenas getters/setters, sem comportamento.
-**Por que é ruim:** Regras de negócio espalhadas, impossível manter.
-**Como evitar:** Mova regras para dentro da entidade.
-**Exemplo:**
+#### Anemic Entity
+**What is it:** Class with only getters/setters, no behavior.
+**Why is it bad:** Business rules scattered, impossible to maintain.
+**How to avoid:** Move rules inside the entity.
+**Example:**
 ```typescript
-// ❌ ERRADO
+// ❌ WRONG
 class User {
   setEmail(email: string) {
     this.email = email;
   }
 }
 
-// ✅ CORRETO
+// ✅ RIGHT
 class User {
   setEmail(email: string) {
     if (!this.isValidEmail(email)) {
@@ -403,13 +414,13 @@ class User {
 }
 ```
 
-#### Aggregate Grosso
-**O que é:** Aggregate com muitas responsabilidades.
-**Por que é ruim:** Difícil de testar, acoplamento alto.
-**Como evitar:** Quebre em aggregates menores.
-**Exemplo:**
+#### Aggregate Bloat
+**What is it:** Aggregate with many responsibilities.
+**Why is it bad:** Difficult to test, high coupling.
+**How to avoid:** Break into smaller aggregates.
+**Example:**
 ```typescript
-// ❌ ERRADO
+// ❌ WRONG
 class Order {
   addItem() {}
   calculateShipping() {}
@@ -417,7 +428,7 @@ class Order {
   processPayment() {}
 }
 
-// ✅ CORRETO
+// ✅ RIGHT
 class Order {
   addItem() {}
 }
@@ -427,21 +438,21 @@ class ShippingService {
 }
 ```
 
-### 🟡 Médio
+### Medium
 
-#### Repository Genérico
-**O que é:** Repository com métodos genéricos como `save`, `find`.
-**Por que é ruim:** Perde semântico do domínio.
-**Como evitar:** Use nomes específicos do domínio.
-**Exemplo:**
+#### Generic Repository
+**What is it:** Repository with generic methods like `save`, `find`.
+**Why is it bad:** Loses semantic meaning of the domain.
+**How to avoid:** Use specific names from the domain.
+**Example:**
 ```typescript
-// ❌ ERRADO
+// ❌ WRONG
 interface Repository<T> {
   save(entity: T): Promise<void>;
   findById(id: string): Promise<T>;
 }
 
-// ✅ CORRETO
+// ✅ RIGHT
 interface OrderRepository {
   add(order: Order): Promise<void>;
   findById(id: OrderId): Promise<Order | null>;
@@ -449,22 +460,22 @@ interface OrderRepository {
 }
 ```
 
-#### Event como Command
-**O que é:** Usar evento para executar ação em vez de notificar.
-**Por que é ruim:** Acoplamento indesejado, difícil de debug.
-**Como evitar:** Event é notificação, command é ação.
-**Exemplo:**
+#### Event as Command
+**What is it:** Using an event to execute an action instead of notifying.
+**Why is it bad:** Unwanted coupling, difficult to debug.
+**How to avoid:** Event is notification, command is action.
+**Example:**
 ```typescript
-// ❌ ERRADO
+// ❌ WRONG
 class OrderCreated {
   async process() {
     await paymentService.charge(this.orderId);
   }
 }
 
-// ✅ CORRETO
+// ✅ RIGHT
 class OrderCreated {
-  // só dados
+  // only data
 }
 
 class ProcessOrderOnCreated {
@@ -474,22 +485,22 @@ class ProcessOrderOnCreated {
 }
 ```
 
-### 🟢 Baixo
+### Low
 
-#### Value Object Mutável
-**O que é:** Value Object com setters ou métodos que mudam estado.
-**Por que é ruim:** Comparação por valor falha, bugs difíceis.
-**Como evitar:** Sempre retorne novo objeto.
-**Exemplo:**
+#### Mutable Value Object
+**What is it:** Value Object with setters or methods that change state.
+**Why is it bad:** Value comparison fails, bugs difficult to find.
+**How to avoid:** Always return a new object.
+**Example:**
 ```typescript
-// ❌ ERRADO
+// ❌ WRONG
 class Money {
   setAmount(amount: number) {
     this.amount = amount;
   }
 }
 
-// ✅ CORRETO
+// ✅ RIGHT
 class Money {
   add(other: Money): Money {
     return new Money(this.amount + other.amount, this.currency);
@@ -499,44 +510,44 @@ class Money {
 
 ## Checklists
 
-### Checklist de DDD Modeling
-- [ ] Eventos de negócio identificados
-- [ ] Aggregates bem delimitados
-- [ ] Value Objects imutáveis
-- [ ] Domain Events para integração
-- [ ] Repositories como abstrações
-- [ ] Bounded Contexts mapeados
+### DDD Modeling Checklist
+- [ ] Business events identified
+- [ ] Aggregates well-defined
+- [ ] Value Objects immutable
+- [ ] Domain Events for integration
+- [ ] Repositories as abstractions
+- [ ] Bounded Contexts mapped
 
-### Checklist de Aggregate Consistency
-- [ ] Invariantes definidas
-- [ ] Métodos respeitam invariantes
-- [ ] Referências externas só por ID
-- [ ] Aggregate Root é única porta de entrada
-- [ ] Testes de invariantes passam
+### Aggregate Consistency Checklist
+- [ ] Invariants defined
+- [ ] Methods respect invariants
+- [ ] External references only by ID
+- [ ] Aggregate Root is single entry point
+- [ ] Tests for invariants pass
 
-### Checklist de Event Schema
-- [ ] Evento no passado (OrderCreated, não CreateOrder)
-- [ ] Evento imutável
-- [ ] Evento contém dados relevantes
-- [ ] Handler separado do evento
-- [ ] Evento versionado (se necessário)
+### Event Schema Checklist
+- [ ] Event in the past (OrderCreated, not CreateOrder)
+- [ ] Event is immutable
+- [ ] Event contains relevant data
+- [ ] Handler separate from event
+- [ ] Event versioned (if necessary)
 
 ## Edge Cases
 
-### Aggregate com Muitas Entidades
-**Situação:** Aggregate com 10+ entidades filhas.
-**Solução:** Quebre em aggregates menores, use eventual consistency.
-**Exceção:** Se todas são editadas atomicamente, mantenha junto.
+### Aggregate with Many Entities
+**Situation:** Aggregate with 10+ child entities.
+**Solution:** Break into smaller aggregates, use eventual consistency.
+**Exception:** If all are edited atomically, keep together.
 
 ```typescript
-// Quebrar Order + OrderItems + Shipments
-// Em Order, OrderItems, Shipments separados
+// Break Order + OrderItems + Shipments
+// In Order, OrderItems, Shipments separate
 ```
 
-### Evento com Rollback
-**Situação:** Evento publicado mas operação falha.
-**Solução:** Use transactional outbox ou compensação.
-**Exceção:** Se evento é crítico, use saga pattern.
+### Event with Rollback
+**Situation:** Event published but operation failed.
+**Solution:** Use transactional outbox or compensation.
+**Exception:** If event is critical, use saga pattern.
 
 ```typescript
 // Transactional outbox
@@ -550,9 +561,9 @@ class OrderService {
 ```
 
 ### Shared Kernel
-**Situação:** Dois contextos compartilham código.
-**Solução:** Extraia shared kernel, versionamento separado.
-**Exceção:** Se compartilhamento é mínimo, considere duplicação.
+**Situation:** Two contexts share code.
+**Solution:** Extract shared kernel, separate versioning.
+**Exception:** If sharing is minimal, consider duplication.
 
 ```typescript
 // shared-kernel/
@@ -561,8 +572,8 @@ class OrderService {
 // - Result.ts
 ```
 
-## Referências
+## References
 
 - [Domain-Driven Design Book](https://www.domainlanguage.com/ddd/)
-- `architecture-review-kilo` — para validar aderência
-- `testing` — para testar agregados
+- `architecture-review-kilo` — to validate adherence
+- `testing` — to test aggregates

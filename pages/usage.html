@@ -410,34 +410,31 @@
     <div class="nav-breadcrumb">USAGE</div>
   </nav>
   <div class="content">
-    <h1 id="usagemd--guia-completo-de-uso-das-skills">USAGE.md — Guia Completo de Uso das Skills</h1>
-<blockquote>Guia abrangente de como usar cada skill do repositório <code>ignite-agents-skills</code>.</blockquote>
+    <h1 id="guia-completo-de-uso-e-operao-usagemd">Guia Completo de Uso e Operação (USAGE.md)</h1>
+<blockquote>Manual técnico e operacional de consumo, roteamento semântico, servidor MCP, registry remoto e governança do repositório <code>ignite-agents-skills</code>.</blockquote>
 <hr>
-<h2 id="ndice">Índice</h2>
+<h2 id="1-modos-de-consumo-do-ecossistema">1. Modos de Consumo do Ecossistema</h2>
+<p>O <code>ignite-agents-skills</code> suporta quatro modos integrados de consumo:</p>
+<pre data-lang="mermaid"><code>graph TD
+    A[Agente de IA / Desenvolvedor] --&gt; B[1. Registry Remoto Kilo / OpenCode]
+    A --&gt; C[2. Servidor MCP Stdio JSON-RPC 2.0]
+    A --&gt; D[3. CLI Router &amp; Busca Semântica]
+    A --&gt; E[4. GitHub Pages / Web Hub]
+
+    B --&gt; B1[skills/index.json via HTTP]
+    C --&gt; C1[scripts/skills_mcp_server.py]
+    D --&gt; D1[scripts/skills_router.py]
+    E --&gt; E1[pages/index.html renderizado]</code></pre>
+<hr>
+<h2 id="2-configurao-por-ambiente">2. Configuração por Ambiente</h2>
+<h3 id="21-kilo-code-vs-code--ides-compatveis">2.1 Kilo Code (VS Code & IDEs compatíveis)</h3>
 <ol>
-<li><a href="#visão-geral">Visão Geral</a></li>
-<li><a href="#como-configurar">Como Configurar</a></li>
-<li><a href="#skills-por-categoria">Skills por Categoria</a></li>
-<li><a href="#guia-de-uso-por-skill">Guia de Uso por Skill</a></li>
-<li><a href="#fluxos-de-trabalho-comuns">Fluxos de Trabalho Comuns</a></li>
-<li><a href="#anti-patterns-gerais">Anti-patterns Gerais</a></li>
-<li><a href="#referências">Referências</a></li>
+<li>Abra as configurações do Kilo Code.</li>
+<li>Navegue até <strong>Comportamento do Agente → Habilidades → URLs de Habilidades</strong>.</li>
+<li>Adicione a URL canônica:</li>
 </ol>
-<hr>
-<h2 id="viso-geral">Visão Geral</h2>
-<p>O repositório <code>ignite-agents-skills</code> contém <strong>25 skills</strong> para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>. Cada skill é um módulo independente que pode ser carregado por agentes de IA para executar tarefas específicas.</p>
-<h3 id="total-de-skills-25">Total de Skills: 25</h3>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Quantidade</th><th>Skills</th></tr><tr><td>Architecture</td><td>2</td><td><code>architecture-review-kilo</code>, <code>ddd</code></td></tr><tr><td>Documentation</td><td>3</td><td><code>documentation</code>, <code>adr-generator</code>, <code>documentation-reconciliation</code></td></tr><tr><td>Governance</td><td>3</td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-generator</code></td></tr><tr><td>Planning</td><td>2</td><td><code>planning</code>, <code>writing-plans</code></td></tr><tr><td>Implementation</td><td>1</td><td><code>implementation</code></td></tr><tr><td>Quality</td><td>2</td><td><code>testing</code>, <code>code-review-lite</code></td></tr><tr><td>Security</td><td>1</td><td><code>security-review</code></td></tr><tr><td>AI</td><td>2</td><td><code>prompt-engineering</code>, <code>vibe-coding</code></td></tr><tr><td>Orchestration</td><td>1</td><td><code>agent-orchestration</code></td></tr><tr><td>Data</td><td>1</td><td><code>data-modeling</code></td></tr><tr><td>API</td><td>1</td><td><code>api-design</code></td></tr><tr><td>Operations</td><td>1</td><td><code>observability</code></td></tr><tr><td>Code Quality</td><td>1</td><td><code>refactoring</code></td></tr><tr><td>Tools</td><td>2</td><td><code>git</code>, <code>release</code></td></tr><tr><td>Audit</td><td>2</td><td><code>skill-audit-bulletin</code>, <code>adr-archive</code></td></tr></table></div>
-<hr>
-<h2 id="como-configurar">Como Configurar</h2>
-<h3 id="no-kilo-code-vs-code">No Kilo Code (VS Code)</h3>
-<ol>
-<li>Abra as configurações do Kilo</li>
-<li>Navegue até <strong>Comportamento do Agente → Habilidades → URLs de Habilidades</strong></li>
-<li>Adicione a URL do registry:</li>
-</ol>
-<pre><code>https://lscheffel.github.io/ignite-agents-skills/skills/</code></pre>
-<h3 id="via-arquivo-kilojson">Via arquivo <code>kilo.json</code></h3>
+<pre><code>   https://lscheffel.github.io/ignite-agents-skills/skills/</code></pre>
+<p>Ou edite diretamente o seu <code>kilo.json</code>:</p>
 <pre data-lang="json"><code>{
   &quot;skills&quot;: {
     &quot;urls&quot;: [
@@ -445,454 +442,161 @@
     ]
   }
 }</code></pre>
-<h3 id="via-cli">Via CLI</h3>
-<pre data-lang="bash"><code># Buscar skills disponíveis
-curl -s https://lscheffel.github.io/ignite-agents-skills/skills/index.json | jq &#x27;.skills[].name&#x27;</code></pre>
+<h3 id="22-servidor-mcp-stdio-skills-rag-mcp">2.2 Servidor MCP Stdio (<code>skills-rag-mcp</code>)</h3>
+<p>No arquivo de configuração MCP do seu cliente (ex.: Gemini CLI, Claude Desktop, Antigravity):</p>
+<pre data-lang="json"><code>{
+  &quot;mcpServers&quot;: {
+    &quot;skills-rag-mcp&quot;: {
+      &quot;command&quot;: &quot;python3&quot;,
+      &quot;args&quot;: [
+        &quot;/home/loupan/projetosVS/ignite-agents-skills/scripts/skills_mcp_server.py&quot;
+      ],
+      &quot;env&quot;: {
+        &quot;SKILLS_WORKSPACE_DIR&quot;: &quot;/home/loupan/projetosVS/ignite-agents-skills&quot;
+      }
+    }
+  }
+}</code></pre>
+<h4 id="ferramentas-mcp-disponveis">Ferramentas MCP Disponíveis:</h4>
+<div class="table-wrapper"><table><tr><th>Tool</th><th>Descrição</th><th>Parâmetros Principais</th></tr><tr><td><code>search_skills</code></td><td>Busca híbrida (BM25 + vetores)</td><td><code>query</code> (string), <code>top_k</code> (int), <code>category</code></td></tr><tr><td><code>route_task</code></td><td>Roteamento automático de tarefas</td><td><code>task_description</code> (string), <code>top_k</code></td></tr><tr><td><code>get_skill_details</code></td><td>Recupera o conteúdo completo e templates</td><td><code>skill_id</code> (string)</td></tr><tr><td><code>list_skills_catalog</code></td><td>Lista todas as skills indexadas</td><td><code>category_filter</code> (opcional)</td></tr><tr><td><code>bootstrap_agent_instructions</code></td><td>Provisiona AGENTS.md e GEMINI.md</td><td><code>workspace_path</code> (string)</td></tr><tr><td><code>get_rag_telemetry</code></td><td>Métricas de latência, footprint e cache</td><td>(nenhum)</td></tr><tr><td><code>inspect_rag_index</code></td><td>Inventário volumétrico de chunks e tokens</td><td><code>parent_skill</code>, <code>asset_type</code></td></tr></table></div>
 <hr>
-<h2 id="skills-por-categoria">Skills por Categoria</h2>
-<h3 id="-architecture">🏗️ Architecture</h3>
-<h4 id="architecture-review-kilo"><code>architecture-review-kilo</code></h4>
-<p><strong>Descrição:</strong> Realiza revisões arquiteturais de código, detectando violações de princípios SOLID, padrões arquiteturais (Clean Architecture, Hexagonal, DDD) e code smells estruturais.</p>
-<p><strong>Quando usar:</strong></p>
+<h2 id="3-cli-reference--roteamento-semntico">3. CLI Reference & Roteamento Semântico</h2>
+<p>O script <code>scripts/skills_router.py</code> oferece busca vetorial híbrida, expansão de acrônimos e descoberta local:</p>
+<pre data-lang="bash"><code># 1. Consulta simples em linguagem natural
+python3 scripts/skills_router.py &quot;como escrever testes automatizados e TDD&quot;
+
+# 2. Filtrar por tipo de ativo (skill_root, template, reference)
+python3 scripts/skills_router.py &quot;template de ADR e blueprint&quot; --asset-type template
+
+# 3. Retornar saída em JSON para automação
+python3 scripts/skills_router.py &quot;revisão de segurança e OWASP&quot; --json --top-k 2
+
+# 4. Obter prompt snippet XML formatado para injeção em LLM
+python3 scripts/skills_router.py &quot;planejar refatoração arquitetural&quot; --prompt-snippet
+
+# 5. Modo REPL interativo
+python3 scripts/skills_router.py --interactive</code></pre>
+<hr>
+<h2 id="4-guia-rpido-das-59-skills-sota">4. Guia Rápido das 59 Skills SOTA</h2>
+<h3 id="-architecture--modeling">🏗️ Architecture & Modeling</h3>
 <ul>
-<li>Precisa de revisão de arquitetura</li>
-<li>Quer analisar estrutura de código</li>
-<li>Precisa avaliar design</li>
+<li><code>architecture-review</code>: Revisões arquiteturais, detecção de violações SOLID, Hexagonal, Clean Architecture e code smells estruturais.</li>
+<li><code>database-architecture</code>: Modelagem de dados, otimização de índices SQL/NoSQL, migrações e auditoria de consultas.</li>
+<li><code>ddd</code>: Padrões de Domain-Driven Design (Entities, Value Objects, Aggregates, Domain Services, Bounded Contexts).</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Revise a arquitetura deste projeto e identifique violações de SOLID</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>adr-generator</code></p>
-<hr>
-<h4 id="ddd"><code>ddd</code></h4>
-<p><strong>Descrição:</strong> Guia para modelagem de domínio com Domain-Driven Design (DDD). Define diretrizes para Entidades, Value Objects, Agregados, Repositórios, Domain Events, Serviços de Domínio e Contextos Delimitados.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-documentation--decision-records">📝 Documentation & Decision Records</h3>
 <ul>
-<li>Modelar domínios ricos</li>
-<li>Refatorar entidades anêmicas</li>
-<li>Estruturar contextos delimitados</li>
+<li><code>adr-generator</code>: Criação de Architecture Decision Records com Decision Set completo (ADR, BP, PI, TODO).</li>
+<li><code>adr-archive</code>: Governança de ciclo de vida e arquivamento automatizado de ADRs implementadas.</li>
+<li><code>technical-documentation</code>: Reconciliação dos 6 pilares de documentação (README, CHANGELOG, USAGE, RELEASE-NOTES, STATE, AGENTS).</li>
+<li><code>changelog-generator</code>: Geração automatizada de changelogs a partir do git log.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um Aggregate Root para o domínio de Pedidos seguindo DDD</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>testing</code>, <code>implementation</code></p>
-<hr>
-<h3 id="-documentation">📚 Documentation</h3>
-<h4 id="adr-generator"><code>adr-generator</code></h4>
-<p><strong>Descrição:</strong> Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-governance--repository-setup">🏛️ Governance & Repository Setup</h3>
 <ul>
-<li>Precisa documentar decisão arquitetural</li>
-<li>Quer registrar trade-offs técnicos</li>
-<li>Precisa criar ADR</li>
+<li><code>governance</code>: Políticas de branching, code review, SemVer e aprovação.</li>
+<li><code>repo-bootstrap</code>: Estruturação inicial completa de novos repositórios com arquivos padrão.</li>
+<li><code>agents-md-management</code>: Geração e manutenção adaptativa de arquivos AGENTS.md.</li>
+<li><code>skill-audit-bulletin</code>: Auditoria forense contínua (Dual-Axis SOTA) de skills.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie uma ADR para documentar a decisão de usar PostgreSQL ao invés de MongoDB</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>documentation</code>, <code>architecture-review-kilo</code>, <code>implementation</code></p>
-<hr>
-<h4 id="documentation"><code>documentation</code></h4>
-<p><strong>Descrição:</strong> Guia para criação e manutenção de documentação técnica de alta qualidade. Define padrões para README, ADRs, guias de API, documentação de arquitetura e docs-as-code.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-planning--implementation">🎯 Planning & Implementation</h3>
 <ul>
-<li>Criar documentação</li>
-<li>Revisar docs</li>
-<li>Padronizar material técnico</li>
+<li><code>agent-planning-execution</code>: Decomposição estruturada de épicos e roadmaps em tarefas atômicas.</li>
+<li><code>product-spec-engineering</code>: Elaboração de PRDs, especificações técnicas e user stories.</li>
+<li><code>implementation</code>: Execução governada e incremental de mudanças planejadas com relatórios de progresso.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um README completo para este projeto</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>repo-bootstrap</code>, <code>implementation</code></p>
-<hr>
-<h4 id="documentation-reconciliation"><code>documentation-reconciliation</code></h4>
-<p><strong>Descrição:</strong> Audita e reconcilia documentação canônica (README, CHANGELOG, USAGE) e específica (ADRs, BP, TODOs) contra realidade do código.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-code-quality--refactoring">🧼 Code Quality & Refactoring</h3>
 <ul>
-<li>README/CHANGELOG/USAGE desatualizados</li>
-<li>ADRs/BPs/TODOs com status incorretos</li>
-<li>ADRs implementadas não arquivadas</li>
-<li>Antes de release ou deploy gh-pages</li>
-<li>Gaps entre documentação e implementação</li>
+<li><code>clean-code</code>: Princípios de código limpo, legibilidade, redução de complexidade ciclomática e remoção de code smells.</li>
+<li><code>refactoring</code>: Refatoração segura (Strangler Fig, Branch by Abstraction, catálogo de transformações).</li>
+<li><code>code-review</code>: Revisão unificada de código com suporte a <code>mode: lite</code> e <code>mode: full</code>.</li>
+<li><code>code-review-lite</code>: Revisão rápida e iterativa focada em commits e PRs pequenos.</li>
+<li><code>code-review-workflow</code>: Workflow estruturado para submissão e recebimento de reviews.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Execute reconciliação documental completa deste repositório</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>adr-generator</code>, <code>skill-audit-bulletin</code></p>
-<hr>
-<h3 id="-governance">🏛️ Governance</h3>
-<h4 id="governance"><code>governance</code></h4>
-<p><strong>Descrição:</strong> Define diretrizes de governança para repositórios e equipes. Cobre processos de revisão, aprovação, branching strategy, versionamento semântico e gestão de issues/PRs.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-testing--verification">🧪 Testing & Verification</h3>
 <ul>
-<li>Definir processos de equipe</li>
-<li>Implementar governance-as-code</li>
-<li>Padronizar workflows de desenvolvimento</li>
+<li><code>testing-mastery</code>: Estratégia unificada de testes (unitários, integração, aceitação, e2e).</li>
+<li><code>test-driven-development</code>: Ciclo rigoroso RED-GREEN-REFACTOR.</li>
+<li><code>verification-before-completion</code>: Protocolo Hard-Gate de 5 passos para verificação antes de concluir tarefas.</li>
+<li><code>systematic-debugging</code>: Investigação estruturada em 4 fases para eliminar depuração por tentativa e erro.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Configure branch protection e CODEOWNERS para este repositório</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>git</code>, <code>release</code>, <code>repo-bootstrap</code>, <code>implementation</code>, <code>skill-audit-bulletin</code></p>
-<hr>
-<h4 id="repo-bootstrap"><code>repo-bootstrap</code></h4>
-<p><strong>Descrição:</strong> Gera estrutura inicial de repositório com arquivos de governança: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-security--resilience">🔒 Security & Resilience</h3>
 <ul>
-<li>Inicializar novo repositório</li>
-<li>Padronizar estrutura existente</li>
-<li>Criar template de projeto</li>
+<li><code>security-review</code>: Auditoria de vulnerabilidades OWASP, modelagem de ameaças e verificação de dependências.</li>
+<li><code>circuit-breaker</code>: Proteção de loops autônomos, cooldown e prevenção de recursão infinita.</li>
+<li><code>resilient-execution</code>: Mecanismo de recuperação e tentativas com abordagens alternativas.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Gere a estrutura inicial para este novo repositório</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>documentation</code>, <code>git</code>, <code>skill-audit-bulletin</code></p>
-<hr>
-<h4 id="agents-md-generator"><code>agents-md-generator</code></h4>
-<p><strong>Descrição:</strong> Gera e mantém arquivos AGENTS.md adaptativos que se adaptam ao contexto do projeto. Detecta automaticamente tipo de projeto, tecnologias, padrões arquiteturais e governança.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-ai-prompting--multi-agent">🤖 AI, Prompting & Multi-Agent</h3>
 <ul>
-<li>Criar AGENTS.md para novo projeto</li>
-<li>Atualizar AGENTS.md existente</li>
-<li>Gerar documentação adaptativa</li>
+<li><code>prompt-engineering</code>: Técnicas avançadas de engenharia de prompts (few-shot, CoT, role prompting).</li>
+<li><code>llm-as-judge</code>: Avaliação estruturada de critérios subjetivos via rubricas LLM.</li>
+<li><code>agent-development</code>: Padrões para construção de agentes, memória, loop e guardrails.</li>
+<li><code>agent-orchestration</code>: Orquestração de múltiplos agentes (decomposição, roteamento de modelos, handoffs).</li>
+<li><code>subagent-driven-development</code>: Execução paralela de planos multi-tarefas com subagentes independentes.</li>
+<li><code>dispatching-parallel-agents</code>: Despacho e coordenação de subagentes paralelos sem dependências.</li>
+<li><code>cap</code>: Minimal Context Bootstrap para consumo eficiente de tokens no início de sessões.</li>
+<li><code>context7-mcp</code>: Integração com documentação atualizada via Context7 MCP.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Gere um AGENTS.md para este projeto CRM</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>repo-bootstrap</code>, <code>governance</code>, <code>documentation</code>, <code>skill-audit-bulletin</code></p>
-<hr>
-<h3 id="-planning">📋 Planning</h3>
-<h4 id="planning"><code>planning</code></h4>
-<p><strong>Descrição:</strong> Realiza planejamento estratégico e tático de projetos. Divide iniciativas em épicos, features, tasks, estima esforço e define priorização.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-frontend--uiux">🌐 Frontend & UI/UX</h3>
 <ul>
-<li>Planejar projeto</li>
-<li>Criar roadmap</li>
-<li>Estimar esforço</li>
-<li>Decompor trabalho</li>
+<li><code>ui-ux-pro-max</code>: Design tokens, design systems, responsividade, WCAG e heurísticas visuais.</li>
+<li><code>react-best-practices</code>: Padrões modernos de React (Server Components, hooks, memoização, context).</li>
+<li><code>artifacts-builder</code>: Criação de protótipos e mini-aplicações interativas em HTML/CSS/JS standalone.</li>
+<li><code>mobile-design</code>: Padrões para apps móveis (React Native, Flutter, SwiftUI).</li>
+<li><code>ux-researcher-designer</code>: Metodologias de pesquisa de usuário, personas e mapas de jornada.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um roadmap para as próximas 3 features</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>writing-plans</code>, <code>governance</code>, <code>implementation</code></p>
-<hr>
-<h4 id="writing-plans"><code>writing-plans</code></h4>
-<p><strong>Descrição:</strong> Cria planos de implementação detalhados, passo a passo, a partir de uma especificação técnica ou requisitos. Divide trabalho em tarefas executáveis com critérios de aceitação.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-operations--infrastructure">⚙️ Operations & Infrastructure</h3>
 <ul>
-<li>Criar plano de implementação</li>
-<li>Quebrar feature em tarefas</li>
-<li>Criar roadmap técnico</li>
+<li><code>observability</code>: Logs estruturados, métricas Prometheus/Grafana, traces OpenTelemetry e SLIs/SLOs.</li>
+<li><code>deployment</code>: Pipelines de CI/CD, configuração de staging/production e infraestrutura como código.</li>
+<li><code>performance-optimization</code>: Diagnóstico de bottlenecks, Core Web Vitals, queries SQL e caching.</li>
+<li><code>api-design</code>: Design de APIs RESTful e GraphQL, versionamento, paginação e contratos de erro.</li>
+<li><code>php-laravel-ecosystem</code>: Padrões e boas práticas para ecossistema PHP e framework Laravel.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um plano de implementação para a feature de autenticação</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>planning</code>, <code>ddd</code>, <code>implementation</code></p>
-<hr>
-<h3 id="-implementation">⚙️ Implementation</h3>
-<h4 id="implementation"><code>implementation</code></h4>
-<p><strong>Descrição:</strong> Executa mudanças previamente planejadas de forma governada e incremental. Consome ADRs, Blueprints e TODOs, valida Execution Contract, constrói DAG de execução.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-git-release--tools">🛠️ Git, Release & Tools</h3>
 <ul>
-<li>Implementar ADR aprovada</li>
-<li>Executar mudanças governadas</li>
-<li>Precisa de rastreabilidade completa</li>
+<li><code>git-workflow</code>: Operações avançadas de Git, commits convencionais e worktrees.</li>
+<li><code>release</code>: Gerenciamento de releases, tags SemVer, changelogs e deploys.</li>
+<li><code>mcp-builder</code>: Desenvolvimento de servidores e ferramentas MCP.</li>
+<li><code>skill-creator</code>: Framework para criação, validação e empacotamento de novas skills.</li>
+<li><code>skill-discovery</code>: Descoberta dinâmica de especializações no catálogo canônico.</li>
+<li><code>writing-skills</code>: Autoria e testes de skills para Claude Code e Gemini.</li>
 </ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Implemente a ADR-005 seguindo o processo governado</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>writing-plans</code>, <code>planning</code>, <code>testing</code>, <code>git</code>, <code>documentation</code>, <code>governance</code>, <code>release</code>, <code>architecture-review-kilo</code>, <code>ddd</code></p>
-<hr>
-<h3 id="-quality">🧪 Quality</h3>
-<h4 id="testing"><code>testing</code></h4>
-<p><strong>Descrição:</strong> Guia para escrita de testes automatizados de qualidade. Define padrões para testes unitários, de integração, E2E e contratuais. Inclui pirâmide de testes, naming conventions e boas práticas.</p>
-<p><strong>Quando usar:</strong></p>
+<h3 id="-content--office">📄 Content & Office</h3>
 <ul>
-<li>Escrever testes</li>
-<li>Revisar cobertura</li>
-<li>Definir estratégia de testes</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie testes unitários para o UserService</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>governance</code>, <code>implementation</code></p>
-<hr>
-<h4 id="code-review-lite"><code>code-review-lite</code></h4>
-<p><strong>Descrição:</strong> Lightweight code review optimized for AI-first and vibe-coding workflows. Use after completing features, refactors, or before commits to detect regressions, architectural drift, security mistakes, and broken assumptions while preserving development velocity.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Após completar features/refactors</li>
-<li>Antes de commits/push</li>
-<li>Detectar regressões óbvias</li>
-<li>Validar alinhamento com ADRs</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Revise este código para bugs óbvios e drift arquitetural</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>planning</code>, <code>adr-generator</code>, <code>testing</code>, <code>security-review</code>, <code>architecture-review-kilo</code></p>
-<hr>
-<h3 id="-security">🔒 Security</h3>
-<h4 id="security-review"><code>security-review</code></h4>
-<p><strong>Descrição:</strong> Realiza revisões de segurança em código, detectando vulnerabilidades, secrets, problemas de criptografia e dependências inseguras.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Revisar código por segurança</li>
-<li>Auditar dependências</li>
-<li>Validar práticas de criptografia</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Revise este código vulnerabilidades de segurança</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>architecture-review-kilo</code>, <code>testing</code></p>
-<hr>
-<h3 id="-ai">🤖 AI</h3>
-<h4 id="prompt-engineering"><code>prompt-engineering</code></h4>
-<p><strong>Descrição:</strong> Diretrizes para engenharia de prompts eficazes com agentes de IA. Cobre estrutura de prompts, few-shot, chain-of-thought, role prompting, constraints e técnicas avançadas.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Criar prompts para agentes de IA</li>
-<li>Otimizar interações</li>
-<li>Treinar equipes em IA</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um prompt eficaze para refatoração de código legado</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>vibe-coding</code></p>
-<hr>
-<h4 id="vibe-coding"><code>vibe-coding</code></h4>
-<p><strong>Descrição:</strong> Modalidade de desenvolvimento onde o desenvolvedor guia o agente de IA com intenção e direção, não comandos detalhados. Foca em resultado, velocidade e fluxo contínuo.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Pair programming com IA</li>
-<li>Desenvolvimento assistido por IA</li>
-<li>Session de vibe coding</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Vamos fazer uma sessão de vibe coding para esta feature</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>prompt-engineering</code>, <code>testing</code></p>
-<hr>
-<h3 id="-orchestration">🔀 Orchestration</h3>
-<h4 id="agent-orchestration"><code>agent-orchestration</code></h4>
-<p><strong>Descrição:</strong> Orquestração de múltiplos agentes de IA para tarefas complexas. Cobre decomposição de tarefas, roteamento de modelo, handoff com contrato I/O, paralelismo fan-out/fan-in.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Coordenar vários agentes</li>
-<li>Definir papéis</li>
-<li>Gerenciar handoffs</li>
-<li>Otimizar execução paralela</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Orquestre 3 agentes para revisar documentação, testes e segurança</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>prompt-engineering</code>, <code>vibe-coding</code>, <code>governance</code></p>
-<hr>
-<h3 id="-data">📊 Data</h3>
-<h4 id="data-modeling"><code>data-modeling</code></h4>
-<p><strong>Descrição:</strong> Guia para modelagem de dados relacional e não-relacional. Define diretrizes para schema SQL, normalização, índices, migrações versionadas e estratégias de performance.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Criar bancos de dados</li>
-<li>Projetar schemas</li>
-<li>Otimizar queries</li>
-<li>Gerenciar migrações</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um schema SQL para o domínio de usuários</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>ddd</code>, <code>testing</code>, <code>architecture-review-kilo</code></p>
-<hr>
-<h3 id="-api">🌐 API</h3>
-<h4 id="api-design"><code>api-design</code></h4>
-<p><strong>Descrição:</strong> Guia completo para design de APIs RESTful e GraphQL. Define padrões para endpoints, versionamento, contratos de erro, paginação e idempotência.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Projetar novas APIs</li>
-<li>Revisar contratos existentes</li>
-<li>Padronizar práticas de design</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie a especificação REST para o endpoint de usuários</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>documentation</code>, <code>testing</code>, <code>governance</code></p>
-<hr>
-<h3 id="-operations">⚙️ Operations</h3>
-<h4 id="observability"><code>observability</code></h4>
-<p><strong>Descrição:</strong> Guia completo para observabilidade de sistemas em produção. Define padrões para logging estruturado, métricas, tracing distribuído e alerting.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Configurar monitoramento</li>
-<li>Investigar incidentes</li>
-<li>Implementar observabilidade</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Configure métricas Prometheus para esta API</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>testing</code>, <code>release</code>, <code>governance</code></p>
-<hr>
-<h3 id="-code-quality">🧹 Code Quality</h3>
-<h4 id="refactoring"><code>refactoring</code></h4>
-<p><strong>Descrição:</strong> Guia completo para refatoração segura e incremental. Cobre técnicas de extração, Strangler Fig, Branch by Abstraction, testes antes de refatorar e migração de legado.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Refatorar código</li>
-<li>Melhorar estrutura existente</li>
-<li>Migrar sistemas legados</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Refatore este código usando a técnica Strangler Fig</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>ddd</code>, <code>testing</code></p>
-<hr>
-<h3 id="-tools">🛠️ Tools</h3>
-<h4 id="git"><code>git</code></h4>
-<p><strong>Descrição:</strong> Padrões e workflows para Git. Cobre Conventional Commits, branching strategies, merge vs rebase, resolução de conflitos e boas práticas.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Fazer commits</li>
-<li>Criar branches</li>
-<li>Resolver conflitos</li>
-<li>Ensinar Git</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie um commit seguindo Conventional Commits</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>governance</code>, <code>release</code>, <code>repo-bootstrap</code>, <code>implementation</code></p>
-<hr>
-<h4 id="release"><code>release</code></h4>
-<p><strong>Descrição:</strong> Guia para gestão de releases e versionamento. Define processo de release, changelog, tag, deploy e rollback.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Preparar releases</li>
-<li>Publicar pacotes</li>
-<li>Gerenciar versionamento semântico</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Crie uma release v1.2.0 com changelog</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>git</code>, <code>governance</code>, <code>implementation</code></p>
-<hr>
-<h3 id="-audit">🔍 Audit</h3>
-<h4 id="skill-audit-bulletin"><code>skill-audit-bulletin</code></h4>
-<p><strong>Descrição:</strong> Audita skills existentes avaliando qualidade, completude, acionabilidade e risco. Gera bulletins de auditoria com scores, recomendações e veredito final.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Revisar skills</li>
-<li>Validar registry</li>
-<li>Decidir adoção</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Audite a qualidade da skill governance</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>architecture-review-kilo</code>, <code>documentation</code></p>
-<hr>
-<h4 id="adr-archive"><code>adr-archive</code></h4>
-<p><strong>Descrição:</strong> Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz.</p>
-<p><strong>Quando usar:</strong></p>
-<ul>
-<li>Arquivar ADRs implementadas</li>
-<li>Limpar artefatos de execução (BP, TODO, PI) da raiz</li>
-<li>Garantir que apenas ADRs ativas e ERs de ADRs finalizadas fiquem visíveis</li>
-<li>Executar reconciliação documental pré-release</li>
-<li>Automatizar governança de ADRs</li>
-</ul>
-<p><strong>Exemplo de uso:</strong></p>
-<pre><code>Arquive as ADRs implementadas deste repositório</code></pre>
-<p><strong>Skills relacionadas:</strong> <code>adr-generator</code>, <code>implementation</code>, <code>documentation-reconciliation</code>, <code>governance</code></p>
-<hr>
-<h2 id="fluxos-de-trabalho-comuns">Fluxos de Trabalho Comuns</h2>
-<h3 id="fluxo-1-iniciar-novo-projeto">Fluxo 1: Iniciar Novo Projeto</h3>
-<pre data-lang="mermaid"><code>graph TD
-    A[Iniciar Projeto] --&gt; B[repo-bootstrap]
-    B --&gt; C[governance]
-    C --&gt; D[agents-md-generator]
-    D --&gt; E[documentation]
-    E --&gt; F[Projeto Pronto]</code></pre>
-<ol>
-<li><strong>repo-bootstrap</strong> — Gerar estrutura inicial</li>
-<li><strong>governance</strong> — Configurar processos</li>
-<li><strong>agents-md-generator</strong> — Gerar AGENTS.md</li>
-<li><strong>documentation</strong> — Criar documentação</li>
-</ol>
-<hr>
-<h3 id="fluxo-2-implementar-nova-feature">Fluxo 2: Implementar Nova Feature</h3>
-<pre data-lang="mermaid"><code>graph TD
-    A[Nova Feature] --&gt; B[planning]
-    B --&gt; C[writing-plans]
-    C --&gt; D[adr-generator]
-    D --&gt; E[implementation]
-    E --&gt; F[testing]
-    F --&gt; G[Feature Pronta]</code></pre>
-<ol>
-<li><strong>planning</strong> — Planejar a feature</li>
-<li><strong>writing-plans</strong> — Criar plano de implementação</li>
-<li><strong>adr-generator</strong> — Documentar decisões arquiteturais</li>
-<li><strong>implementation</strong> — Executar implementação</li>
-<li><strong>testing</strong> — Validar com testes</li>
-</ol>
-<hr>
-<h3 id="fluxo-3-reviso-de-cdigo">Fluxo 3: Revisão de Código</h3>
-<pre data-lang="mermaid"><code>graph TD
-    A[PR Aberto] --&gt; B[architecture-review-kilo]
-    B --&gt; C[security-review]
-    C --&gt; D[testing]
-    D --&gt; E[code-review-lite]
-    E --&gt; F[documentation]
-    F --&gt; G[Review Completo]</code></pre>
-<ol>
-<li><strong>architecture-review-kilo</strong> — Revisar arquitetura</li>
-<li><strong>security-review</strong> — Verificar segurança</li>
-<li><strong>testing</strong> — Validar testes</li>
-<li><strong>code-review-lite</strong> — Revisão leve (AI-first)</li>
-<li><strong>documentation</strong> — Verificar documentação</li>
-</ol>
-<hr>
-<h3 id="fluxo-4-migrao-de-legado">Fluxo 4: Migração de Legado</h3>
-<pre data-lang="mermaid"><code>graph TD
-    A[Código Legado] --&gt; B[architecture-review-kilo]
-    B --&gt; C[refactoring]
-    C --&gt; D[ddd]
-    D --&gt; E[testing]
-    E --&gt; F[Código Moderno]</code></pre>
-<ol>
-<li><strong>architecture-review-kilo</strong> — Analisar arquitetura atual</li>
-<li><strong>refactoring</strong> — Planejar refatoração</li>
-<li><strong>ddd</strong> — Reestruturar domínio</li>
-<li><strong>testing</strong> — Validar com testes</li>
-</ol>
-<hr>
-<h3 id="fluxo-5-deploy-e-release">Fluxo 5: Deploy e Release</h3>
-<pre data-lang="mermaid"><code>graph TD
-    A[Pronto para Deploy] --&gt; B[release]
-    B --&gt; C[git]
-    C --&gt; D[governance]
-    D --&gt; E[observability]
-    E --&gt; F[Deploy Concluído]</code></pre>
-<ol>
-<li><strong>release</strong> — Preparar release</li>
-<li><strong>git</strong> — Criar tags e branches</li>
-<li><strong>governance</strong> — Verificar processo</li>
-<li><strong>observability</strong> — Monitorar deploy</li>
-</ol>
-<hr>
-<h3 id="fluxo-6-reconciliao-documental-pr-release">Fluxo 6: Reconciliação Documental (Pré-Release)</h3>
-<pre data-lang="mermaid"><code>graph TD
-    A[Pré-Release] --&gt; B[documentation-reconciliation]
-    B --&gt; C[adr-archive]
-    C --&gt; D[validate-index]
-    D --&gt; E[CHANGELOG update]
-    E --&gt; F[Tag + Deploy]</code></pre>
-<ol>
-<li><strong>documentation-reconciliation</strong> — Auditar docs canônicas + ADR/BP/TODO</li>
-<li><strong>adr-archive</strong> — Arquivar ADRs implementadas</li>
-<li><strong>validate-index</strong> — Verificar registry</li>
-<li><strong>CHANGELOG update</strong> — Entradas para commits recentes</li>
-<li><strong>Tag + Deploy</strong> — SemVer + gh-pages sync</li>
-</ol>
-<hr>
-<h2 id="anti-patterns-gerais">Anti-patterns Gerais</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="usar-mltiplas-skills-para-a-mesma-tarefa">Usar múltiplas skills para a mesma tarefa</h4>
-<p><strong>O que é:</strong> Usar <code>adr-generator</code> + <code>documentation</code> + <code>repo-bootstrap</code> para criar documentação. <strong>Por que é ruim:</strong> Conflitos, redundância, inconsistência. <strong>Como evitar:</strong> Escolher a skill mais específica para a tarefa.</p>
-<h4 id="ignorar-dependncias-entre-skills">Ignorar dependências entre skills</h4>
-<p><strong>O que é:</strong> Usar <code>implementation</code> sem antes usar <code>adr-generator</code> e <code>writing-plans</code>. <strong>Por que é ruim:</strong> Falta de contexto, decisões não documentadas. <strong>Como evitar:</strong> Seguir o fluxo de trabalho recomendado.</p>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="no-validar-antes-de-usar">Não validar antes de usar</h4>
-<p><strong>O que é:</strong> Usar skills sem verificar se estão atualizadas. <strong>Por que é ruim:</strong> Padrões desatualizados, inconsistências. <strong>Como evitar:</strong> Verificar versão e changelog antes de usar.</p>
-<h4 id="no-documentar-decises">Não documentar decisões</h4>
-<p><strong>O que é:</strong> Tomar decisões arquiteturais sem criar ADR. <strong>Por que é ruim:</strong> Perda de contexto, dificuldade futura. <strong>Como evitar:</strong> Sempre criar ADR para decisões significativas.</p>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="no-usar-templates">Não usar templates</h4>
-<p><strong>O que é:</strong> Criar do zero quando existem templates. <strong>Por que é ruim:</strong> Mais trabalho, inconsistência. <strong>Como evitar:</strong> Usar templates disponíveis em cada skill.</p>
-<h4 id="no-revisar-output">Não revisar output</h4>
-<p><strong>O que é:</strong> Aceitar output sem verificar. <strong>Por que erros passam:</strong> Erros passam despercebidos. <strong>Como evitar:</strong> Sempre revisar antes de commitar.</p>
-<hr>
-<h2 id="referncias">Referências</h2>
-<ul>
-<li><a href="https://agentskills.io">Agent Skills Standard</a></li>
-<li><a href="https://kilocode.ai">Kilo Code Documentation</a></li>
-<li><a href="https://pages.github.com/">GitHub Pages Setup</a></li>
-<li><a href="https://www.conventionalcommits.org/">Conventional Commits</a></li>
-<li><a href="https://semver.org/">Semantic Versioning</a></li>
-<li><a href="https://www.domainlanguage.com/ddd/">Domain-Driven Design</a></li>
-<li><a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture</a></li>
+<li><code>content-creator</code>: Redação de conteúdo técnico, marketing e documentação.</li>
+<li><code>content-research-writer</code>: Pesquisa aprofundada, citações e artigos estruturados.</li>
+<li><code>email-composer</code>: Comunicação corporativa, notificações e templates de e-mail.</li>
+<li><code>seo-optimizer</code>: Otimização técnica para motores de busca e metadados.</li>
+<li><code>docx-processing</code>: Manipulação programática de arquivos Word (.docx).</li>
+<li><code>pdf-processing</code>: Geração, extração de texto e manipulação de arquivos PDF.</li>
+<li><code>xlsx-processing</code>: Processamento, fórmulas e geração de planilhas Excel (.xlsx).</li>
+<li><code>brainstorming</code>: Ideação estruturada e exploração de design antes do planejamento.</li>
 </ul>
 <hr>
-<p><em>Última atualização: 2026-07-15</em> <em>Total de skills: 25</em> <em>Versão do registry: 2.3.1</em></p>
+<h2 id="5-scripts-de-automao-do-repositrio">5. Scripts de Automação do Repositório</h2>
+<pre data-lang="bash"><code># Sincronização do registry Kilo
+./scripts/sync-index.sh
+
+# Validação do registry Kilo
+./scripts/validate-index.sh
+
+# Validação de qualidade de skills
+bash scripts/validate-skill.sh skills/nome-da-skill
+
+# Janitor de arquivamento de ADRs
+./scripts/archive-adrs.sh
+
+# Auditoria forense SOTA (8 dimensões)
+python3 scripts/audit_engine.py
+
+# Re-indexação do banco vetorial RAG
+python3 scripts/skills_rag_indexer.py
+
+# Testes automatizados do ecossistema
+python3 -m unittest discover -s scripts/tests -p &quot;test_*.py&quot;
+
+# Build das páginas estáticas do GitHub Pages
+python3 pages/build.py</code></pre>
   </div>
 <footer>
      <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>

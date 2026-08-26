@@ -410,40 +410,40 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">refactoring</a> &rsaquo; templates &rsaquo; test-before-refactor</div>
   </nav>
   <div class="content">
-    <h1 id="testes-antes-de-refatorar">Testes Antes de Refatorar</h1>
-<h2 id="viso-geral">Visão Geral</h2>
-<div class="table-wrapper"><table><tr><th>Campo</th><th>Valor</th></tr><tr><td>Módulo</td><td>{module-path}</td></tr><tr><td>Responsável</td><td>{your-name}</td></tr><tr><td>Data</td><td>{date}</td></tr><tr><td>Status</td><td>Em andamento/Concluído</td></tr></table></div>
-<h2 id="contexto">Contexto</h2>
-<h3 id="cdigo-a-ser-refatorado">Código a ser refatorado</h3>
+    <h1 id="pre-refactoring-tests">Pre-Refactoring Tests</h1>
+<h2 id="overview">Overview</h2>
+<div class="table-wrapper"><table><tr><th>Field</th><th>Value</th></tr><tr><td>Module</td><td>{module-path}</td></tr><tr><td>Responsible</td><td>{your-name}</td></tr><tr><td>Date</td><td>{date}</td></tr><tr><td>Status</td><td>In Progress/Completed</td></tr></table></div>
+<h2 id="context">Context</h2>
+<h3 id="code-to-be-refactored">Code to be Refactored</h3>
 <ul>
-<li><strong>Arquivo(s):</strong> {file-paths}</li>
-<li><strong>Função/Classe:</strong> {function-or-class-name}</li>
-<li><strong>Code Smell identificado:</strong> {code-smell}</li>
+<li><strong>Files:</strong> {file-paths}</li>
+<li><strong>Function/Class:</strong> {function-or-class-name}</li>
+<li><strong>Identified Code Smell:</strong> {code-smell}</li>
 </ul>
-<h3 id="por-que-testar-primeiro">Por que testar primeiro?</h3>
+<h3 id="why-test-first">Why Test First?</h3>
 <ul>
-<li>Código sem cobertura de testes</li>
-<li>Refatoração sem safety net é arriscada</li>
-<li>Testes documentam comportamento atual</li>
+<li>Code without test coverage</li>
+<li>Refactoring without a safety net is risky</li>
+<li>Tests document current behavior</li>
 </ul>
-<h2 id="plano-de-testes">Plano de Testes</h2>
-<h3 id="testes-de-caracterizao">Testes de Caracterização</h3>
-<p>Testes que documentam comportamento atual, sem validar se é "correto":</p>
-<pre data-lang="typescript"><code>// Caracterização - documentar comportamento existente
+<h2 id="testing-plan">Testing Plan</h2>
+<h3 id="characterization-tests">Characterization Tests</h3>
+<p>Tests that document current behavior without validating if it's "correct":</p>
+<pre data-lang="typescript"><code>// Characterization - document current behavior
 describe(&#x27;{module-name} - Characterization&#x27;, () =&gt; {
   it(&#x27;should return X when input is Y&#x27;, () =&gt; {
     // Arrange
-    const input = { /* dados reais do caso de uso */ };
+    const input = { /* actual usage data */ };
     
     // Act
     const result = functionUnderTest(input);
     
-    // Assert - documentar comportamento atual
+    // Assert - document current behavior
     expect(result).toBe({expected-output});
   });
 });</code></pre>
-<h3 id="testes-de-unidade">Testes de Unidade</h3>
-<p>Testes que validam lógica específica:</p>
+<h3 id="unit-tests">Unit Tests</h3>
+<p>Tests that validate specific logic:</p>
 <pre data-lang="typescript"><code>describe(&#x27;{module-name} - Unit&#x27;, () =&gt; {
   it(&#x27;should calculate total correctly&#x27;, () =&gt; {
     // Arrange
@@ -456,8 +456,8 @@ describe(&#x27;{module-name} - Characterization&#x27;, () =&gt; {
     expect(total).toBe(35);
   });
 });</code></pre>
-<h3 id="testes-de-integrao">Testes de Integração</h3>
-<p>Testes que validam pontos de integração:</p>
+<h3 id="integration-tests">Integration Tests</h3>
+<p>Tests that validate integration points:</p>
 <pre data-lang="typescript"><code>describe(&#x27;{module-name} - Integration&#x27;, () =&gt; {
   it(&#x27;should persist order to database&#x27;, async () =&gt; {
     // Arrange
@@ -472,39 +472,39 @@ describe(&#x27;{module-name} - Characterization&#x27;, () =&gt; {
     expect(saved.items).toHaveLength(1);
   });
 });</code></pre>
-<h2 id="checklist-de-execuo">Checklist de Execução</h2>
-<h3 id="antes-de-criar-testes">Antes de criar testes</h3>
+<h2 id="execution-checklist">Execution Checklist</h2>
+<h3 id="before-creating-tests">Before Creating Tests</h3>
 <ul>
-<li>[ ] Código fonte identificado e acessível</li>
-<li>[ ] Dependências mapeadas</li>
-<li>[ ] Casos de uso principais documentados</li>
+<li>[ ] Source code identified and accessible</li>
+<li>[ ] Dependencies mapped</li>
+<li>[ ] Primary use cases documented</li>
 </ul>
-<h3 id="criando-testes">Criando testes</h3>
+<h3 id="creating-tests">Creating Tests</h3>
 <ul>
-<li>[ ] Testes de caracterização criados para comportamento atual</li>
-<li>[ ] Testes unitários criados para lógica principal</li>
-<li>[ ] Testes de integração criados para pontos de integração</li>
-<li>[ ] Todos os testes passam</li>
+<li>[ ] Characterization tests created for current behavior</li>
+<li>[ ] Unit tests created for main logic</li>
+<li>[ ] Integration tests created for integration points</li>
+<li>[ ] All tests pass</li>
 </ul>
-<h3 id="validao">Validação</h3>
+<h3 id="validation">Validation</h3>
 <ul>
-<li>[ ] Testes cobrem caminho feliz</li>
-<li>[ ] Testes cobrem caminhos de erro</li>
-<li>[ ] Testes cobrem edge cases conhecidos</li>
-<li>[ ] Nenhum teste depende de estado externo</li>
-<li>[ ] Testes são independentes entre si</li>
+<li>[ ] Tests cover happy path</li>
+<li>[ ] Tests cover error paths</li>
+<li>[ ] Tests cover known edge cases</li>
+<li>[ ] No test depends on external state</li>
+<li>[ ] Tests are independent of each other</li>
 </ul>
 <h3 id="commit">Commit</h3>
 <ul>
-<li>[ ] Testes commitados ANTES da refatoração</li>
-<li>[ ] Mensagem de commit clara: "test: add characterization tests for {module}"</li>
-<li>[ ] CI passando com novos testes</li>
+<li>[ ] Tests committed BEFORE refactoring</li>
+<li>[ ] Commit message clear: "test: add characterization tests for {module}"</li>
+<li>[ ] CI passing with new tests</li>
 </ul>
-<h2 id="mtricas">Métricas</h2>
-<div class="table-wrapper"><table><tr><th>Métrica</th><th>Antes</th><th>Depois</th><th>Meta</th></tr><tr><td>Cobertura de linhas</td><td>{before}%</td><td>{after}%</td><td>>= 80%</td></tr><tr><td>Cobertura de branches</td><td>{before}%</td><td>{after}%</td><td>>= 70%</td></tr><tr><td>Número de testes</td><td>{before}</td><td>{after}</td><td>-</td></tr></table></div>
-<h2 id="referncias">Referências</h2>
+<h2 id="metrics">Metrics</h2>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Before</th><th>After</th><th>Target</th></tr><tr><td>Line coverage</td><td>{before}%</td><td>{after}%</td><td>>= 80%</td></tr><tr><td>Branch coverage</td><td>{before}%</td><td>{after}%</td><td>>= 70%</td></tr><tr><td>Number of tests</td><td>{before}</td><td>{after}</td><td>-</td></tr></table></div>
+<h2 id="references">References</h2>
 <ul>
-<li><code>testing</code> - para padrões de testes</li>
+<li><code>testing</code> - for testing standards</li>
 <li><a href="https://martinfowler.com/bliki/CharacterizationTest.html">Characterization Tests</a></li>
 </ul>
   </div>

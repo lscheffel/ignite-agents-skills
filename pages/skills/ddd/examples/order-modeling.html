@@ -410,18 +410,18 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">ddd</a> &rsaquo; examples &rsaquo; order-modeling</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-modelagem-ddd-de-order">Exemplo: Modelagem DDD de Order</h1>
-<h2 id="antes">Antes</h2>
-<pre data-lang="typescript"><code>// Order anêmico
+    <h1 id="example-ddd-modeling-of-order">Example: DDD Modeling of Order</h1>
+<h2 id="before">Before</h2>
+<pre data-lang="typescript"><code>// Anemic Order
 class Order {
   id: string;
   items: any[];
   total: number;
   status: string;
-  // só getters/setters
+  // only getters/setters
 }</code></pre>
-<h2 id="depois">Depois</h2>
-<pre data-lang="typescript"><code>// Order rico
+<h2 id="after">After</h2>
+<pre data-lang="typescript"><code>// Rich Order
 class Order {
   private items: OrderItem[] = [];
   private status: OrderStatus = OrderStatus.Draft;
@@ -441,11 +441,11 @@ class Order {
     this.status = OrderStatus.Pending;
   }
 }</code></pre>
-<h2 id="resultado">Resultado</h2>
+<h2 id="result">Result</h2>
 <ul>
-<li>Invariantes garantidas</li>
-<li>Comportamento encapsulado</li>
-<li>Testes mais simples</li>
+<li>Invariants ensured</li>
+<li>Encapsulated behavior</li>
+<li>Simpler tests</li>
 </ul>
   </div>
 <footer>

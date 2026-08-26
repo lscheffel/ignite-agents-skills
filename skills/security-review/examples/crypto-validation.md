@@ -1,82 +1,82 @@
-# Exemplo: Validação de Criptografia — AES-256-GCM
+# Example: Cryptography Validation — AES-256-GCM
 
-## Contexto
+## Context
 
-Aplicação armazena dados sensíveis (tokens, credenciais) criptografados com AES-256-GCM. Precisa validar que a implementação está correta e segura.
+Application stores sensitive data (tokens, credentials) encrypted with AES-256-GCM. Needs to validate that the implementation is correct and secure.
 
-## Checklist de Validação
+## Validation Checklist
 
-### 1. Geração de Chave
+### 1. Key Generation
 
 ```python
-# ✅ CORRETO: Usar PBKDF2/scrypt/Argon2 para derivar chave de senha
+# ✅ CORRECT: Use PBKDF2/scrypt/Argon2 to derive key from password
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 
 kdf = PBKDF2HMAC(
     algorithm=hashes.SHA256(),
     length=32,
-    salt=salt,  # 16 bytes aleatórios
-    iterations=600_000,  # mínimo OWASP 2023
+    salt=salt,  # 16 bytes random
+    iterations=600_000,  # minimum OWASP 2023
 )
 key = kdf.derive(password.encode())
 
-# ❌ ERRADO: Usar hash simples (MD5, SHA-256) como chave
-key = hashlib.sha256(password.encode()).digest()  # NÃO FAÇA ISSO
+# ❌ WRONG: Use simple hash (MD5, SHA-256) as key
+key = hashlib.sha256(password.encode()).digest()  # DO NOT DO THIS
 ```
 
-**Validação:**
-- [ ] KDF usa PBKDF2 (≥600k iterações), scrypt (N≥16384), ou Argon2id
-- [ ] Salt é aleatório e único por registro (≥16 bytes)
-- [ ] Salt é armazenado junto com o ciphertext (não secreto)
+**Validation:**
+- [ ] KDF uses PBKDF2 (≥600k iterations), scrypt (N≥16384), or Argon2id
+- [ ] Salt is random and unique per record (≥16 bytes)
+- [ ] Salt is stored along with the ciphertext (not secret)
 
 ### 2. Nonce/IV
 
 ```python
-# ✅ CORRETO: Nonce aleatório de 12 bytes (96 bits) para GCM
+# ✅ CORRECT: Random 12-byte nonce (96 bits) for GCM
 import os
-nonce = os.urandom(12)  # 96 bits = padrão para GCM
+nonce = os.urandom(12)  # 96 bits = standard for GCM
 
-# ❌ ERRADO: Reutilizar nonce com a mesma chave
-nonce = b'\x00' * 12  # NUNCA fazer isso
-nonce = bytes.fromhex('000000000000000000000000')  # NUNCA
+# ❌ WRONG: Reuse nonce with the same key
+nonce = b'\x00' * 12  # NEVER do this
+nonce = bytes.fromhex('000000000000000000000000')  # NEVER
 ```
 
-**Validação:**
-- [ ] Nonce tem 12 bytes (96 bits) para GCM
-- [ ] Nonce é gerado aleatoriamente (`os.urandom(12)`)
-- [ ] Nonce NÃO é derivado de counter sequencial (risco de colisão)
-- [ ] Nunca reutilizar par (chave, nonce)
+**Validation:**
+- [ ] Nonce has 12 bytes (96 bits) for GCM
+- [ ] Nonce is generated randomly (`os.urandom(12)`)
+- [ ] Nonce is not derived from sequential counter (risk of collision)
+- [ ] Never reuse key-nonce pair
 
-### 3. Autenticação (AAD)
+### 3. Authentication (AAD)
 
 ```python
-# ✅ CORRETO: Usar Additional Authenticated Data (AAD)
+# ✅ CORRECT: Use Additional Authenticated Data (AAD)
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
 aesgcm = AESGCM(key)
-# AAD autentica metadados sem criptografá-los
+# AAD authenticates metadata without encrypting it
 ciphertext = aesgcm.encrypt(nonce, plaintext, aad=user_id.encode())
 
-# ❌ ERRADO: Não usar AAD (perde autenticação de contexto)
+# ❌ WRONG: Do not use AAD (lose authentication context)
 ciphertext = aesgcm.encrypt(nonce, plaintext, None)
 ```
 
-**Validação:**
-- [ ] AAD inclui identificador do registro (user_id, record_id)
-- [ ] AAD é verificado na decriptação (se não bate, falha)
-- [ ] AAD não contém dados sensíveis (é autenticado, não criptografado)
+**Validation:**
+- [ ] AAD includes record identifier (user_id, record_id)
+- [ ] AAD is verified during decryption (if mismatch, fail)
+- [ ] AAD does not contain sensitive data (is authenticated, not encrypted)
 
-### 4. Armazenamento
+### 4. Storage
 
 ```python
-# ✅ CORRETO: Armazenar nonce + ciphertext + tag juntos
+# ✅ CORRECT: Store nonce + ciphertext + tag together
 import base64
 
-# Formato: base64(nonce || ciphertext || tag)
+# Format: base64(nonce || ciphertext || tag)
 encrypted = base64.b64encode(nonce + ciphertext).decode()
 
-# ✅ OU: Formato JSON estruturado
+# ✅ OR: Structured JSON format
 encrypted_data = {
     "ciphertext": base64.b64encode(ciphertext).decode(),
     "nonce": base64.b64encode(nonce).decode(),
@@ -85,19 +85,19 @@ encrypted_data = {
     "version": 1
 }
 
-# ❌ ERRADO: Armazenar só o ciphertext
-encrypted = base64.b64encode(ciphertext).decode()  # nonce perdido!
+# ❌ WRONG: Store only ciphertext
+encrypted = base64.b64encode(ciphertext).decode()  # nonce lost!
 ```
 
-**Validação:**
-- [ ] Nonce é armazenado (não recalculado)
-- [ ] Formato inclui todos os campos necessários para decriptação
-- [ ] Nonce não é considerado segredo (pode ser armazenado em plaintext)
+**Validation:**
+- [ ] Nonce is stored (not recalculated)
+- [ ] Format includes all necessary fields for decryption
+- [ ] Nonce is not considered secret (can be stored in plaintext)
 
-### 5. Decriptação
+### 5. Decryption
 
 ```python
-# ✅ CORRETO: Verificar autenticação antes de decriptar
+# ✅ CORRECT: Verify authentication before decrypting
 def decrypt(encrypted_data: dict, key: bytes) -> bytes:
     nonce = base64.b64decode(encrypted_data["nonce"])
     ciphertext = base64.b64decode(encrypted_data["ciphertext"])
@@ -108,35 +108,35 @@ def decrypt(encrypted_data: dict, key: bytes) -> bytes:
         plaintext = aesgcm.decrypt(nonce, ciphertext, aad)
         return plaintext
     except Exception:
-        # NÃO expor detalhes do erro
-        raise ValueError("Dados inválidos ou corrompidos")
+        # DO NOT expose decryption error details
+        raise ValueError("Invalid or corrupted data")
 
-# ❌ ERRADO: Expor detalhes do erro de criptografia
+# ❌ WRONG: Expose decryption error details
 except InvalidTag as e:
-    raise ValueError(f"Tag inválida: {e}")  # NUNCA fazer isso
+    raise ValueError(f"Invalid tag: {e}")  # NEVER do this
 ```
 
-**Validação:**
-- [ ] Erros de decriptação são genéricos (não expõem causa)
-- [ ] AAD é verificado na decriptação
-- [ ] Dados corrompidos causam falha (não output parcial)
+**Validation:**
+- [ ] Decryption errors are generic (do not expose cause)
+- [ ] AAD is verified during decryption
+- [ ] Corrupted data causes failure (do not output partial data)
 
-## Resumo da Auditoria
+## Audit Summary
 
-| Check | Status | Observação |
-|-------|--------|------------|
-| KDF correto | ✅ | PBKDF2 com 600k iterações |
-| Nonce único | ✅ | os.urandom(12) |
-| AAD utilizado | ✅ | user_id como AAD |
-| Armazenamento correto | ✅ | nonce + ciphertext + tag |
-| Decriptação segura | ✅ | Erros genéricos |
+| Check | Status | Observation |
+|-------|--------|-------------|
+| Correct KDF | ✅ | PBKDF2 with 600k iterations |
+| Unique nonce | ✅ | os.urandom(12) |
+| AAD used | ✅ | user_id as AAD |
+| Correct storage | ✅ | nonce + ciphertext + tag |
+| Secure decryption | ✅ | Generic errors |
 
-## Anti-patterns Encontrados
+## Anti-patterns Found
 
-| Anti-pattern | Severidade | Encontrado? |
+| Anti-pattern | Severity | Found? |
 |-------------|------------|-------------|
-| Reutilização de nonce | 🔴 Crítico | Não |
-| Nonce fixo/predizível | 🔴 Crítico | Não |
-| Sem AAD | 🟡 Médio | Não |
-| Erros expõem detalhes | 🟡 Médio | Não |
-| Nonce como counter | 🟡 Médio | Não |
+| Reusing nonce | 🔴 Critical | No |
+| Predictable nonce | 🔴 Critical | No |
+| No AAD | 🟡 Medium | No |
+| Exposing error details | 🟡 Medium | No |
+| Nonce as counter | 🟡 Medium | No |

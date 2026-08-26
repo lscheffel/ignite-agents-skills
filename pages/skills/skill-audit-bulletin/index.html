@@ -411,375 +411,232 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: skill-audit-bulletin description: Audita skills existentes avaliando qualidade, completude, acionabilidade e risco através de rubricas objetivas por dimensão, com fórmula de agregação explícita e veredito determinístico. Use quando revisar skills, validar registry, decidir adoção, investigar divergência entre avaliadores ou reconciliar múltiplos julgamentos (multi-judge) sobre a mesma skill. version: 3.0.0 tags:</p>
+<p>name: skill-audit-bulletin version: 5.1.0 description: Comprehensive Dual-Axis (Structural & Domain SOTA) audit framework for AI agent skills. Evaluates physical metadata/governance alongside metaphysical domain efficacy, best practices, SWOT analysis, and provides direct ADR generation handoff gates with continuous ledger persistence in docs/audit/skills/. domain: core-governance triggers:</p>
 <ul>
-<li>audit</li>
-<li>quality</li>
-<li>review</li>
-<li>validation</li>
-<li>skills</li>
+<li>skill-audit-bulletin</li>
+<li>audit-skill</li>
+<li>auditar-skill</li>
+<li>skill-evaluation</li>
+<li>skill-audit</li>
+<li>avaliar-skill</li>
+<li>domain-sota-audit</li>
+<li>swot-skill-analysis</li>
+<li>skill-audit-ledger</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>skill-audit</li>
 <li>governance</li>
-<li>scoring</li>
-<li>metrology</li>
+<li>sota</li>
+<li>dual-axis</li>
+<li>quality-assurance</li>
+<li>swot-analysis</li>
+<li>adr-handoff</li>
+<li>audit-ledger</li>
 </ul>
 <p>related_skills:</p>
 <ul>
-<li>architecture-review-kilo</li>
-<li>documentation</li>
-<li>governance</li>
+<li>adr-generator</li>
+<li>adr-archive</li>
+<li>skill-creator</li>
+<li>skill-discovery</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: "2026-08-26" ---</p>
+<h1 id="skill-audit-bulletin-engine-v510--sota-dual-axis--ledger-edition">Skill Audit Bulletin Engine (v5.1.0 — SOTA Dual-Axis & Ledger Edition)</h1>
+<p>Audits agent skills through an advanced <strong>Dual-Axis Evaluation Engine</strong>:</p>
+<ol>
+<li><strong>Axis 1 (Physical / Structural & Governance)</strong>: 8 dimensions evaluating metadata, SemVer, triggers, templates, boundaries, and operational risk.</li>
+<li><strong>Axis 2 (Metaphysical / Domain SOTA & Cognitive Efficacy)</strong>: 4 dimensions evaluating whether the skill's substantive knowledge represents true State-of-the-Art industry best practices, heuristic depth, SWOT analysis, and operational elegance.</li>
+</ol>
+<p>Automatically synchronizes and persists results into the <strong>Continuous Skill Audit Ledger</strong> at <a href="../../skills/audit/skills/SKILL_AUDIT_LEDGER.html"><code>docs/audit/skills/SKILL_AUDIT_LEDGER.md</code></a> and concludes with an interactive <strong>ADR Decision Gate</strong> linking directly to <code>adr-generator</code>.</p>
+<hr>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use When:</h3>
+<ul>
+<li>Auditing skills for quality, domain accuracy, structural conformance, or SOTA alignment.</li>
+<li>Performing pre-adoption, pre-release, or CI/CD compliance evaluations of new/updated skills.</li>
+<li>Evaluating whether a skill's procedural advice represents modern industry standards or outdated paradigms.</li>
+<li>Maintaining the continuous catalog audit history and score tracking in <code>docs/audit/skills/</code>.</li>
+<li>Deciding whether a skill warrants an architectural decision record (ADR) for refactoring, replacement, or deprecation.</li>
+</ul>
+<h3 id="do-not-use-when">Do Not Use When:</h3>
+<ul>
+<li>Scaffolding a brand new skill directory from scratch (use <code>skill-creator</code>).</li>
+<li>Discovering or routing natural language queries across the catalog (use <code>skill-discovery</code> or <code>find-skills</code>).</li>
+<li>Executing code implementations or ADR Decision Sets (use <code>implementation</code> or <code>adr-generator</code>).</li>
+</ul>
+<h3 id="related-skills">Related Skills:</h3>
+<ul>
+<li><code>adr-generator</code> — triggered by the completion gate to formalize corrective Decision Sets (ADR, Blueprint, TODO, Plan).</li>
+<li><code>skill-creator</code> — creates and packages new skills following audit guidelines.</li>
+<li><code>skill-discovery</code> — routes user queries to validated catalog skills.</li>
+<li><code>technical-documentation</code> — reconciles repository documentation following skill audits.</li>
 </ul>
 <hr>
-<h1 id="skill-audit-bulletin">Skill Audit Bulletin</h1>
-<p>Audita skills existentes avaliando qualidade, completude, acionabilidade e risco, produzindo um score reproduzível (fórmula explícita, não estimativa) e um veredito determinístico.</p>
-<blockquote><strong>Nota de proveniência (v3.0.0):</strong> esta versão corrige um gap estrutural da
-v2.0.0 — os pesos das 8 categorias já somavam 100%, mas não existia fórmula
-declarada de como o score bruto por categoria (0-10) se converte no score
-final (0-100). v3.0.0 fecha essa lacuna, adiciona rubricas por dimensão,
-sanitização obrigatória de parâmetros interpolados em shell, template
-autocontido (fallback sem dependências externas) e protocolo de agregação
-multi-juiz. Mudança <strong>breaking</strong>: o schema do bulletin ganhou campos
-obrigatórios novos (score bruto + contribuição ponderada por dimensão).</blockquote>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
-<ul>
-<li>Precisa revisar uma skill existente</li>
-<li>Precisa validar registry de skills</li>
-<li>Precisa decidir adoção de skill</li>
-<li>Precisa comparar skills similares</li>
-<li>Precisa auditoria de qualidade</li>
-<li>Precisa reconciliar scores divergentes de múltiplos avaliadores/agentes sobre a mesma skill</li>
-</ul>
-<h3 id="no-use-quando">Não use quando:</h3>
-<ul>
-<li>Skill é nova (use skill-template)</li>
-<li>Skill é trivial (não precisa auditoria)</li>
-<li>Apenas leitura exploratória, sem decisão a tomar</li>
-<li>Não há como aplicar as rubricas de dimensão (skill incompleta demais para avaliar — nesse caso, reportar como <code>INCOMPLETA</code>, não forçar um score)</li>
-</ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
-<ul>
-<li><code>architecture-review-kilo</code> — para revisão de código</li>
-<li><code>documentation</code> — para padrões de documentação</li>
-<li><code>governance</code> — para políticas de ciclo de vida e registro do bulletin</li>
-</ul>
-<h2 id="decision-tree">Decision Tree</h2>
+<h2 id="dual-axis-evaluation-architecture">Dual-Axis Evaluation Architecture</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Skill para auditar?] --&gt;|Nova| B[Não auditar - use template]
-    A --&gt;|Existente| C[Skill Audit Bulletin]
-    C --&gt; S1[Fase 1: Estrutural]
-    S1 --&gt; S2[Fase 2: Semântica]
-    S2 --&gt; S3[Fase 3: Workflow]
-    S3 --&gt; S4[Fase 4: Correção Técnica]
-    S4 --&gt; S5[Fase 5: Calcular score via fórmula]
-    S5 --&gt;|Score ≥ 85| D[ADOTAR AS-IS - Grade S/A]
-    S5 --&gt;|Score 70-84| E[ADOTAR COM AJUSTES - Grade B]
-    S5 --&gt;|Score 50-69| F[REFATORAR - Grade C/D]
-    S5 --&gt;|Score &lt; 50| G[DEPRECIAR - Grade F]</code></pre>
-<h3 id="tabela-score--grade--ao-fonte-nica-substitui-qualquer-outra-referncia">Tabela Score → Grade → Ação (fonte única, substitui qualquer outra referência)</h3>
-<div class="table-wrapper"><table><tr><th>Score final</th><th>Grade</th><th>Ação</th></tr><tr><td>95-100</td><td>S</td><td>ADOTAR AS-IS</td></tr><tr><td>85-94</td><td>A</td><td>ADOTAR AS-IS</td></tr><tr><td>70-84</td><td>B</td><td>ADOTAR COM AJUSTES</td></tr><tr><td>60-69</td><td>C</td><td>REFATORAR</td></tr><tr><td>50-59</td><td>D</td><td>REFATORAR</td></tr><tr><td>0-49</td><td>F</td><td>DEPRECIAR</td></tr></table></div>
-<p>Arredondamento: score final sempre arredondado ao inteiro mais próximo, 0.5 arredonda para cima (<code>round-half-up</code>). Bandas são fechadas nos limites mostrados — não há gap nem sobreposição entre elas.</p>
-<h2 id="frmula-de-scoring-fonte-nica-de-verdade">Fórmula de Scoring (fonte única de verdade)</h2>
-<pre><code>score_final = Σ (raw_i / 10 × peso_i)   para i em 1..8</code></pre>
-<p>Onde <code>raw_i</code> é o score bruto 0-10 atribuído na Fase 5 para a categoria <code>i</code>, e <code>peso_i</code> é o peso percentual da tabela abaixo. Os pesos somam exatamente 100% — verificado abaixo; se uma revisão futura desta skill alterar os pesos, a soma DEVE ser recalculada e validada antes do merge (ver Anti-pattern "Pesos que Não Fecham em 100%").</p>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Peso</th><th>Verificação</th></tr><tr><td>Semantic Triggering Precision</td><td>20%</td><td></td></tr><tr><td>Aplicabilidade / Clareza de Fronteira</td><td>10%</td><td></td></tr><tr><td>Profundidade e Cobertura</td><td>15%</td><td></td></tr><tr><td>Correção Técnica</td><td>15%</td><td></td></tr><tr><td>Universalidade / Portabilidade</td><td>10%</td><td></td></tr><tr><td>Manutenibilidade</td><td>10%</td><td></td></tr><tr><td>Ergonomia do Agente Executor</td><td>10%</td><td></td></tr><tr><td>Perfil de Risco (invertido)</td><td>10%</td><td></td></tr><tr><td><strong>Total</strong></td><td><strong>100%</strong></td><td>20+10+15+15+10+10+10+10 = 100 ✓</td></tr></table></div>
-<p><strong>"Perfil de Risco (invertido)" — operacionalização:</strong> avalie o risco bruto em 0-10 (10 = risco máximo). O valor usado na fórmula é <code>raw_i = 10 - risco_bruto</code>. Documente ambos os números no bulletin (risco bruto E valor invertido usado).</p>
-<h3 id="exemplo-de-clculo-verificado">Exemplo de cálculo (verificado)</h3>
-<p>Skill fictícia <code>example-widget-generator</code> v1.2.0:</p>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Peso</th><th>Raw (0-10)</th><th>Contribuição (raw/10 × peso)</th></tr><tr><td>Triggering</td><td>20%</td><td>8</td><td>16.0</td></tr><tr><td>Aplicabilidade</td><td>10%</td><td>7</td><td>7.0</td></tr><tr><td>Profundidade</td><td>15%</td><td>6</td><td>9.0</td></tr><tr><td>Correção</td><td>15%</td><td>9</td><td>13.5</td></tr><tr><td>Universalidade</td><td>10%</td><td>7</td><td>7.0</td></tr><tr><td>Manutenibilidade</td><td>10%</td><td>8</td><td>8.0</td></tr><tr><td>Ergonomia</td><td>10%</td><td>7</td><td>7.0</td></tr><tr><td>Risco (bruto 3 → invertido 7)</td><td>10%</td><td>7</td><td>7.0</td></tr><tr><td><strong>Score final</strong></td><td></td><td></td><td><strong>74.5 → 75</strong></td></tr></table></div>
-<p>Score 75 → Grade B → <strong>ADOTAR COM AJUSTES</strong>.</p>
-<h2 id="rubricas-por-dimenso-ncoras-objetivas--substitui-julgamento-livre">Rubricas por Dimensão (âncoras objetivas — substitui julgamento livre)</h2>
-<p>Cada dimensão usa âncoras em 0 / 3-4 / 6-7 / 9-10. Escolha o raw score mais próximo da âncora que descreve a skill; não interpole por "sensação".</p>
-<p><strong>Semantic Triggering Precision</strong></p>
+    A[&quot;Skill Under Audit&quot;] --&gt; B[&quot;Axis 1: Structural &amp; Governance Evaluation (Physical - 100 Pts)&quot;]
+    A --&gt; C[&quot;Axis 2: Domain SOTA &amp; Cognitive Evaluation (Metaphysical - 100 Pts)&quot;]
+    
+    B --&gt; D[&quot;8 Structural Dimensions (Triggers, Boundaries, SemVer, Templates, Risk)&quot;]
+    C --&gt; E[&quot;4 Cognitive Dimensions (Best Practices, Heuristic Depth, Efficiency, SWOT)&quot;]
+    
+    D --&gt; F[&quot;2D Diagnostic Matrix Classification&quot;]
+    E --&gt; F
+    
+    F --&gt; G[&quot;Audit Bulletin &amp; JSON Contract Generation&quot;]
+    G --&gt; H[&quot;Continuous Ledger Persistence (docs/audit/skills/)&quot;]
+    H --&gt; I[&quot;Interactive ADR Completion Gate (/adr-generator)&quot;]</code></pre>
+<hr>
+<h2 id="1-axis-1-physical-structural--governance-rubric-100-pts">1. Axis 1: Physical Structural & Governance Rubric (100 Pts)</h2>
+<div class="table-wrapper"><table><tr><th>Dimension</th><th>Weight</th><th>Target & Verification Criteria</th></tr><tr><td><strong>1. Semantic Triggering</strong></td><td>20%</td><td>Frontmatter <code>triggers</code> richness in EN/PT, exact match with description, distinct keyword coverage.</td></tr><tr><td><strong>2. Applicability & Boundaries</strong></td><td>10%</td><td>Clear <code>When to Use</code> and explicit <code>Do Not Use When</code> sections with specific delegations.</td></tr><tr><td><strong>3. Depth & Coverage</strong></td><td>15%</td><td>Multi-phase workflows, step-by-step procedures, and progressive disclosure support.</td></tr><tr><td><strong>4. Technical Accuracy</strong></td><td>15%</td><td>Executable commands, working code snippets, valid template references, zero placeholders.</td></tr><tr><td><strong>5. Universality & Portability</strong></td><td>10%</td><td>Stack-agnostic POSIX/standard library operations, zero hardcoded absolute host paths.</td></tr><tr><td><strong>6. Maintainability & SemVer</strong></td><td>10%</td><td>Valid SemVer (<code>X.Y.Z</code>), <code>related_skills:</code> in frontmatter, structured anti-patterns with badges.</td></tr><tr><td><strong>7. Executor Ergonomics</strong></td><td>10%</td><td>Visual Mermaid decision trees, copy-pasteable checklists, imperative verb-first instructions.</td></tr><tr><td><strong>8. Risk Profile (Inverted)</strong></td><td>10%</td><td>Operational safety: <code>Inverted Score = 10 - Raw Risk (0-10)</code>. Zero destructive surprises.</td></tr></table></div>
+<p>$$\text{Score}_{\text{Physical}} = \sum_{i=1}^{8} \left( \frac{\text{raw}_i}{10} \times \text{weight}_i \right)$$</p>
+<hr>
+<h2 id="2-axis-2-metaphysical-domain-sota--cognitive-rubric-100-pts">2. Axis 2: Metaphysical Domain SOTA & Cognitive Rubric (100 Pts)</h2>
+<p>Acting as a Senior Principal Domain Architect, the model evaluates the substantive intelligence and real-world efficacy of the skill:</p>
+<h3 id="21-methodological-adequacy--state-of-the-art-weight-35">2.1 Methodological Adequacy & State of the Art (Weight: 35%)</h3>
 <ul>
-<li>0-2: description genérica, sem keywords, colide com outras skills do registry</li>
-<li>3-5: menciona o domínio, mas keywords fracas ou fronteira "Quando usar / Não use" ausente</li>
-<li>6-8: keywords claras, seções "Quando usar" e "Não use quando" presentes e não sobrepostas com outras skills</li>
-<li>9-10: triggering testado contra queries reais/histórico de uso, zero falso-positivo conhecido</li>
+<li>Does the skill prescribe modern, industry-standard SOTA methodologies or outdated/naive heuristics?</li>
+<li>Are the algorithms, architectural patterns, and security practices current (e.g. Clean Architecture, modern CSS clamp, OWASP top 10, deterministic RAG)?</li>
+<li><em>Score (0–10)</em>: 10 = Industry Benchmark, 7 = Standard/Acceptable, 4 = Outdated/Naive, 1 = Flawed.</li>
 </ul>
-<p><strong>Aplicabilidade / Clareza de Fronteira</strong></p>
+<h3 id="22-conceptual-depth--heuristic-robustness-weight-25">2.2 Conceptual Depth & Heuristic Robustness (Weight: 25%)</h3>
 <ul>
-<li>0-2: não fica claro quando parar de usar a skill</li>
-<li>3-5: fronteira implícita, exige inferência</li>
-<li>6-8: "Não use quando" explícito e cobre os casos óbvios de mau uso</li>
-<li>9-10: fronteira testada contra edge cases reais, documentada com exemplos de rejeição</li>
+<li>Does the skill anticipate real-world friction, edge cases, race conditions, memory leaks, and failure modes?</li>
+<li>Are the decision trees and troubleshooting guidance comprehensive, or do they only cover naive happy paths?</li>
+<li><em>Score (0–10)</em>: 10 = Exhaustive edge-case resilience, 7 = Good core coverage, 4 = Happy-path only, 1 = Fragile.</li>
 </ul>
-<p><strong>Profundidade e Cobertura</strong></p>
+<h3 id="23-operational-efficiency--token-ergonomics-weight-20">2.3 Operational Efficiency & Token Ergonomics (Weight: 20%)</h3>
 <ul>
-<li>0-2: workflow de 1 fase ou menos, sem checkpoints</li>
-<li>3-5: workflow presente, mas checkpoints sem critério de pass/fail</li>
-<li>6-8: fases com checkpoints verificáveis</li>
-<li>9-10: fases + checkpoints + fallback documentado para cada checkpoint</li>
+<li>Is the workflow lean, deterministic, and token-efficient, or does it impose cognitive bloat, unnecessary loops, or token wastage?</li>
+<li>Does it respect the agent's context window through progressive disclosure and crisp instructions?</li>
+<li><em>Score (0–10)</em>: 10 = Ultra-lean & token-optimal, 7 = Balanced, 4 = Token-heavy/redundant, 1 = Severe bloat.</li>
 </ul>
-<p><strong>Correção Técnica</strong></p>
+<h3 id="24-forensic-swot-domain-analysis-weight-20">2.4 Forensic SWOT Domain Analysis (Weight: 20%)</h3>
 <ul>
-<li>0-2: exemplos não testados, comandos incorretos ou pseudocódigo quebrado</li>
-<li>3-5: exemplos plausíveis mas não verificados</li>
-<li>6-8: exemplos testados manualmente pelo auditor durante a Fase 4</li>
-<li>9-10: exemplos com verificação automatizável (script/assert) embutida</li>
+<li>Qualitative depth of the domain evaluation:</li>
+<li><strong>Strengths (S)</strong>: Competitive differentiators and high-value heuristics.</li>
+<li><strong>Weaknesses (W)</strong>: Conceptual gaps, omitted modern techniques, or blind spots.</li>
+<li><strong>Opportunities (O)</strong>: Potential architectural integrations and advanced capabilities.</li>
+<li><strong>Threats (T)</strong>: Risks of agent hallucination, misexecution, or technological obsolescence.</li>
+<li><em>Score (0–10)</em>: 10 = Insightful, actionable SWOT, 7 = Standard assessment, 4 = Generic observations, 1 = Superficial.</li>
 </ul>
-<p><strong>Universalidade / Portabilidade</strong></p>
-<ul>
-<li>0-2: assume ferramentas/SO específicos sem alternativa</li>
-<li>3-5: portável na maior parte, com 1-2 dependências implícitas</li>
-<li>6-8: dependências externas declaradas explicitamente</li>
-<li>9-10: zero dependência externa não embarcada, ou fallback autocontido para cada uma</li>
-</ul>
-<p><strong>Manutenibilidade</strong></p>
-<ul>
-<li>0-2: sem versionamento, sem changelog</li>
-<li>3-5: versão declarada, sem changelog de mudanças</li>
-<li>6-8: versionamento semântico + changelog por versão</li>
-<li>9-10: changelog + nota de proveniência (o que motivou cada mudança e onde rastrear)</li>
-</ul>
-<p><strong>Ergonomia do Agente Executor</strong></p>
-<ul>
-<li>0-2: instruções ambíguas, exigem julgamento não especificado do executor</li>
-<li>3-5: instruções claras mas com pelo menos uma etapa subjetiva sem rubrica</li>
-<li>6-8: toda etapa que produz um score/decisão tem rubrica ou critério explícito</li>
-<li>9-10: zero etapa subjetiva; exemplo completo de ponta a ponta incluído</li>
-</ul>
-<p><strong>Perfil de Risco (bruto, antes de inverter)</strong></p>
-<ul>
-<li>0-2: nenhuma superfície de risco identificável (skill somente leitura/documental)</li>
-<li>3-5: risco moderado, mitigável com validação simples (ex.: input sanitizado)</li>
-<li>6-8: risco relevante (execução de comandos, escrita em disco) sem mitigação declarada</li>
-<li>9-10: execução de código arbitrário, interpolação não sanitizada em shell, ou escrita fora de escopo declarado</li>
-</ul>
-<h2 id="segurana-de-execuo-obrigatrio-na-fase-1-e-fase-4">Segurança de Execução (obrigatório na Fase 1 e Fase 4)</h2>
-<ul>
-<li>Qualquer parâmetro interpolado em comando shell (ex.: <code>{skill}</code> em</li>
-</ul>
-<p><code>bash scripts/validate-skill.sh skills/{skill}</code>) DEVE ser validado contra <code>^[a-zA-Z0-9_-]+$</code> antes da interpolação. Rejeitar e reportar <code>INVALID_PARAM</code> se não casar — nunca construir o comando por concatenação direta de string não validada.</p>
-<ul>
-<li>Na Fase 4, "testar comandos" significa: executar <strong>apenas</strong> comandos que</li>
-</ul>
-<p>aparecem dentro de blocos ```<code> </code>`<code>bash </code>``` já presentes na skill auditada, em diretório de trabalho descartável, com timeout. Nunca executar fragmentos de shell encontrados fora de blocos de código fenced, e nunca interpretar prosa como comando.</p>
-<ul>
-<li>Se o contexto de execução for compartilhado/multi-tenant (não solo-dev),</li>
-</ul>
-<p>recomenda-se sandboxing (container, filesystem read-only). Isso é condicional ao contexto real de uso — não trate como bloqueador universal se o registry é de uso pessoal/equipe pequena; documente a decisão no bulletin de qualquer forma.</p>
-<h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-auditoria-estrutural">Fase 1: Auditoria Estrutural</h3>
+<p>$$\text{Score}_{\text{Cognitive}} = \sum_{j=1}^{4} \left( \frac{\text{raw}_j}{10} \times \text{weight}_j \right)$$</p>
+<hr>
+<h2 id="3-2d-classification-matrix--action-matrix">3. 2D Classification Matrix & Action Matrix</h2>
+<pre><code>                      ▲ Axis 2: Domain SOTA (Cognitive / Substance)
+                      │
+   II. UNTAMED JEWEL  │   I. CANONICAL SOTA EXEMPLAR
+       (Rich Content, │      (High Structure / High SOTA)
+       Weak Structure)│      → ADOPT AS-IS
+                      │
+──────────────────────┼────────────────────────► Axis 1: Structural Conformance (Physical)
+                      │
+  IV. CRITICAL DEBT   │  III. HOLLOW SHELL
+      (Low Structure, │       (Perfect Format,
+       Weak Content)  │        Outdated / Weak Substance)
+      → REWRITE / ADR │       → CREATE DOMAIN ADR
+                      │</code></pre>
+<div class="table-wrapper"><table><tr><th>Quadrant</th><th>Physical Grade</th><th>Cognitive Grade</th><th>Diagnosis</th><th>Recommended Action</th></tr><tr><td><strong>I</strong></td><td><strong>Grade A (≥85)</strong></td><td><strong>Grade A (≥85)</strong></td><td>🏆 <strong>Canonical SOTA Exemplar</strong></td><td><strong>ADOPT AS-IS</strong></td></tr><tr><td><strong>II</strong></td><td><strong>Grade B/C (<85)</strong></td><td><strong>Grade A (≥85)</strong></td><td>💎 <strong>Untamed Jewel</strong> (Great depth, needs formatting)</td><td><strong>HOTFIX / FORMATTING</strong></td></tr><tr><td><strong>III</strong></td><td><strong>Grade A (≥85)</strong></td><td><strong>Grade B/C (<85)</strong></td><td>🎭 <strong>Hollow Shell</strong> (Good metadata, weak domain advice)</td><td><strong>CREATE DOMAIN REFACTOR ADR</strong></td></tr><tr><td><strong>IV</strong></td><td><strong>Grade C/F (<70)</strong></td><td><strong>Grade C/F (<70)</strong></td><td>⚠️ <strong>Critical Tech Debt</strong> (Fails both axes)</td><td><strong>CREATE REPLACEMENT ADR / DEPRECATE</strong></td></tr></table></div>
+<hr>
+<h2 id="4-hard-fail-gating">4. Hard-Fail Gating</h2>
+<p>A Hard-Fail on either axis caps the entire evaluation to <strong>Grade C (REFACTOR)</strong> or <strong>Grade F (DEPRECATE)</strong>:</p>
 <ol>
-<li>Verifique frontmatter:</li>
+<li><strong>Destructive Execution Risk</strong>: Skill suggests dangerous shell commands without safety gates.</li>
+<li><strong>Fabricated / Hallucinated Core Commands</strong>: Tools, flags, or paths that do not exist.</li>
+<li><strong>Severe Token Flooding</strong>: Monolithic unformatted dumps (>15,000 tokens) crashing context windows.</li>
 </ol>
-<pre data-lang="bash"><code>   head -10 skills/{skill}/SKILL.md</code></pre>
-<ol>
-<li>Valide campos obrigatórios: <code>name</code>, <code>description</code>, <code>version</code>, <code>tags</code>, <code>related_skills</code></li>
-<li>Se <code>scripts/validate-skill.sh</code> existir:</li>
-</ol>
-<pre data-lang="bash"><code>   [[ &quot;{skill}&quot; =~ ^[a-zA-Z0-9_-]+$ ]] &amp;&amp; bash scripts/validate-skill.sh &quot;skills/{skill}&quot; || echo &quot;INVALID_PARAM&quot;</code></pre>
-<ol>
-<li><strong>Se o script não existir</strong>: aplique o "Checklist de Auditoria Manual"</li>
-</ol>
-<p>(seção Checklists) como fallback e registre <code>SCRIPT_AUSENTE</code> no bulletin, com penalidade de -1 ponto em Manutenibilidade.</p>
-<ol>
-<li><strong>Checkpoint</strong> (pass/fail): frontmatter válido E (script executado com</li>
-</ol>
-<p>sucesso OU fallback manual aplicado e documentado).</p>
-<h3 id="fase-2-anlise-semntica">Fase 2: Análise Semântica</h3>
-<ol>
-<li>Aplique a rubrica "Semantic Triggering Precision" e a rubrica</li>
-</ol>
-<p>"Aplicabilidade / Clareza de Fronteira" (seção acima) — atribua raw score 0-10 para cada uma, citando o trecho do SKILL.md que justifica a nota.</p>
-<ol>
-<li>Verifique se a description colide semanticamente com outra skill do</li>
-</ol>
-<p>registry (<code>grep</code> por keywords compartilhadas em <code>skills/index.json</code>).</p>
-<ol>
-<li><strong>Checkpoint</strong>: dois raw scores atribuídos com citação textual de suporte.</li>
-</ol>
-<h3 id="fase-3-avaliao-de-workflow">Fase 3: Avaliação de Workflow</h3>
-<ol>
-<li>Conte fases de workflow:</li>
-</ol>
-<pre data-lang="bash"><code>   grep -c &quot;^### Fase&quot; skills/{skill}/SKILL.md</code></pre>
-<ol>
-<li>Verifique se cada checkpoint tem critério verificável (não apenas a</li>
-</ol>
-<p>palavra "Checkpoint" presente):</p>
-<pre data-lang="bash"><code>   grep -A1 &quot;Checkpoint&quot; skills/{skill}/SKILL.md</code></pre>
-<ol>
-<li>Aplique a rubrica "Profundidade e Cobertura".</li>
-<li><strong>Checkpoint</strong>: todo checkpoint listado tem critério pass/fail explícito</li>
-</ol>
-<p>(não apenas menção).</p>
-<h3 id="fase-4-correo-tcnica">Fase 4: Correção Técnica</h3>
-<ol>
-<li>Teste exemplos sob as regras da seção "Segurança de Execução" acima.</li>
-<li>Verifique coerência numérica de qualquer tabela ou soma declarada na</li>
-</ol>
-<p>skill auditada (pesos, percentuais, contagens) — some manualmente, não assuma que o texto está certo. Este passo existe precisamente porque afirmações numéricas erradas e não verificadas são o defeito mais comum e mais caro em documentos de auditoria.</p>
-<ol>
-<li>Verifique anti-patterns: severidade (🔴🟡🟢) presente, exemplo antes/depois presente.</li>
-<li>Aplique as rubricas "Correção Técnica" e "Universalidade / Portabilidade".</li>
-<li><strong>Checkpoint</strong>: todo exemplo testado; toda soma numérica verificada manualmente.</li>
-</ol>
-<h3 id="fase-5-gerar-bulletin">Fase 5: Gerar Bulletin</h3>
-<ol>
-<li>Se <code>templates/audit-bulletin.md</code> existir, use-o. Caso contrário, use o</li>
-</ol>
-<p>template inline da seção "Conceitos Fundamentais" abaixo (autocontido, sem dependência externa).</p>
-<ol>
-<li>Preencha os 8 raw scores (com rubrica citada) e calcule cada contribuição</li>
-</ol>
-<p>ponderada usando a fórmula declarada.</p>
-<ol>
-<li>Some as contribuições → score final → aplique a tabela Score→Grade→Ação.</li>
-<li>Registre a execução em <code>docs/audits/LOG.md</code>:</li>
-</ol>
-<p><code>{data} | {skill} | {versão} | {score} | {grade} | {veredito} | {auditor}</code></p>
-<ol>
-<li><strong>Checkpoint</strong>: bulletin completo, fórmula aplicada e visível, log registrado.</li>
-</ol>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="template-de-bulletin-autocontido--use-mesmo-sem-templatesaudit-bulletinmd">Template de Bulletin (autocontido — use mesmo sem <code>templates/audit-bulletin.md</code>)</h3>
-<pre data-lang="markdown"><code># Skill Audit Bulletin — {skill_name} (v{version})
+<hr>
+<h2 id="5-dual-axis-audit-output-format">5. Dual-Axis Audit Output Format</h2>
+<p>Every audit must produce the following structured Markdown bulletin:</p>
+<pre data-lang="`markdown"><code># Skill Audit Bulletin — &lt;skill-name&gt; (&lt;version&gt;)
 
-**Audit date:** {date}
-**Auditor:** {nome/agente}
+**Audit Date:** YYYY-MM-DD  
+**Auditor:** Antigravity SOTA Dual-Axis Auditor  
+**Auditor Independence:** INDEPENDENT  
 
-## Scores por dimensão
+---
 
-| Categoria | Peso | Raw (0-10) | Contribuição | Evidência |
-|---|---|---|---|---|
-| Triggering | 20% | | | |
-| Aplicabilidade | 10% | | | |
-| Profundidade | 15% | | | |
-| Correção | 15% | | | |
-| Universalidade | 10% | | | |
-| Manutenibilidade | 10% | | | |
-| Ergonomia | 10% | | | |
-| Risco (bruto → invertido) | 10% | | | |
-| **Score final** | 100% | | **{soma}** | |
+## 1. Axis 1: Physical Structural &amp; Governance Scorecard (Score: X/100 — Grade X)
 
-**Overall grade:** {S/A/B/C/D/F} — {score}/100 (via tabela Score→Grade→Ação)
-**One-line verdict:** {frase única}
-**Recommended action:** {ADOTAR AS-IS / ADOTAR COM AJUSTES / REFATORAR / DEPRECIAR}
+| Category | Weight | Raw (0-10) | Contribution | Evidence &amp; Verification |
+|---|:---:|:---:|:---:|---|
+| **Semantic Triggering** | 20% | X | X.X | [Evidence] |
+| **Applicability &amp; Boundary** | 10% | X | X.X | [Evidence] |
+| **Depth &amp; Coverage** | 15% | X | X.X | [Evidence] |
+| **Technical Accuracy** | 15% | X | X.X | [Evidence] |
+| **Universality &amp; Portability** | 10% | X | X.X | [Evidence] |
+| **Maintainability &amp; SemVer** | 10% | X | X.X | [Evidence] |
+| **Executor Ergonomics** | 10% | X | X.X | [Evidence] |
+| **Risk Profile (Inverted)** | 10% | X | X.X | [Evidence] |
+| **Total Physical Score** | **100%** | — | **XX / 100** | **Grade X** |
 
-## Achados críticos (se houver)
-{lista com severidade 🔴🟡🟢}
+---
 
-## Plano de remediação (se aplicável)
-{P0/P1/P2/P3}</code></pre>
-<h3 id="agregao-multi-juiz-quando-mais-de-um-avaliadoragente-audita-a-mesma-skill">Agregação Multi-Juiz (quando mais de um avaliador/agente audita a mesma skill)</h3>
-<p>Relevante sempre que este processo é executado por múltiplos agentes independentes sobre o mesmo alvo (ex.: pipelines tipo SkillBench).</p>
+## 2. Axis 2: Metaphysical Domain SOTA Scorecard (Score: Y/100 — Grade Y)
+
+| Cognitive Category | Weight | Raw (0-10) | Contribution | Domain Rationale &amp; Evidence |
+|---|:---:|:---:|:---:|---|
+| **Methodological SOTA &amp; Best Practices** | 35% | Y | Y.Y | [Evaluation of modern industry practices] |
+| **Conceptual Depth &amp; Robustness** | 25% | Y | Y.Y | [Evaluation of edge cases and heuristic quality] |
+| **Operational Efficiency &amp; Token Cost** | 20% | Y | Y.Y | [Evaluation of execution flow and ergonomics] |
+| **SWOT Domain Analysis** | 20% | Y | Y.Y | [Evaluation of substantive strengths and blindspots] |
+| **Total Cognitive Score** | **100%** | — | **YY / 100** | **Grade Y** |
+
+---
+
+## 3. Forensic SWOT Domain Analysis
+
+- **Strengths (S):** [Key architectural strengths and unique advantages]
+- **Weaknesses (W):** [Substantive gaps, missing modern patterns, or vulnerabilities]
+- **Opportunities (O):** [Enhancements to elevate this skill to world-class status]
+- **Threats (T):** [Operational risks, drift, or agent execution failure modes]
+
+---
+
+## 4. 2D Matrix Classification &amp; Verdict
+
+- **2D Quadrant:** [Quadrant I / II / III / IV] — [Diagnosis Label]
+- **Structural Score:** XX/100 (Grade X)
+- **Domain SOTA Score:** YY/100 (Grade Y)
+- **Aggregated Verdict:** [ADOPT_AS_IS / HOTFIX_FORMATTING / CREATE_DOMAIN_ADR / REWRITE]
+
+---
+
+## 5. Machine-Readable Dual-Axis JSON Contract
+</code></pre>
+<p>{ "skill": "<skill-name>", "version": "<version>", "audit_date": "YYYY-MM-DD", "auditor": "Antigravity SOTA Dual-Axis Auditor", "auditor_independence": "INDEPENDENT", "axis_1_physical": { "scores": { "triggering": {"raw": 0, "weight": 0.20, "contribution": 0.0}, "applicability": {"raw": 0, "weight": 0.10, "contribution": 0.0}, "depth": {"raw": 0, "weight": 0.15, "contribution": 0.0}, "accuracy": {"raw": 0, "weight": 0.15, "contribution": 0.0}, "universality": {"raw": 0, "weight": 0.10, "contribution": 0.0}, "maintainability": {"raw": 0, "weight": 0.10, "contribution": 0.0}, "ergonomics": {"raw": 0, "weight": 0.10, "contribution": 0.0}, "risk": {"raw_risk": 0, "raw_inverted": 0, "weight": 0.10, "contribution": 0.0} }, "score": 0, "grade": "X" }, "axis_2_cognitive": { "scores": { "methodology_sota": {"raw": 0, "weight": 0.35, "contribution": 0.0}, "conceptual_depth": {"raw": 0, "weight": 0.25, "contribution": 0.0}, "operational_efficiency": {"raw": 0, "weight": 0.20, "contribution": 0.0}, "swot_quality": {"raw": 0, "weight": 0.20, "contribution": 0.0} }, "score": 0, "grade": "Y", "swot": { "strengths": [], "weaknesses": [], "opportunities": [], "threats": [] } }, "quadrant": "I_CANONICAL_SOTA", "action": "ADOPT_AS_IS", "adr_recommended": false }</p>
+<pre><code></code></pre>
+<hr>
+<h2 id="6-continuous-skill-audit-ledger-persistence-docsauditskills">6. Continuous Skill Audit Ledger Persistence (<code>docs/audit/skills/</code>)</h2>
+<p>At the conclusion of each skill audit, the auditor <strong>MUST</strong> persist and update the repository ledger using the integrated ledger tool:</p>
+<pre data-lang="bash"><code># Global canonical execution
+python3 ~/.gemini/config/skills/skill-audit-bulletin/scripts/update_audit_ledger.py \
+  --skill &lt;skill-name&gt; \
+  --version &lt;version&gt; \
+  --grade &lt;grade&gt; \
+  --score &lt;aggregated_score&gt; \
+  --physical-score &lt;physical_score&gt; \
+  --cognitive-score &lt;cognitive_score&gt; \
+  --action &lt;verdict_action&gt;</code></pre>
+<p>This updates:</p>
 <ol>
-<li>Colete o score final de cada juiz individualmente — nunca apenas a</li>
+<li><code>docs/audit/skills/SKILL_AUDIT_LEDGER.md</code> (Human-readable Markdown scorecard table)</li>
+<li><code>docs/audit/skills/SKILL_AUDIT_LEDGER.json</code> (Machine-readable stateful database)</li>
 </ol>
-<p>síntese textual; a tabela de raw scores por dimensão de cada juiz é obrigatória e deve ser preservada no bulletin final.</p>
-<ol>
-<li>Agregue por <strong>mediana</strong>, não média — reduz sensibilidade a outliers de</li>
-</ol>
-<p>um único juiz mal calibrado.</p>
-<ol>
-<li>Calcule variância entre juízes. Se variância > 2.0 (escala 0-10 por</li>
-</ol>
-<p>dimensão) em qualquer categoria isolada, marque <code>BAIXA_CONFIANCA</code> nessa categoria e exija revisão humana antes de aceitar o veredito — não resolva a divergência silenciosamente pela média.</p>
-<ol>
-<li>Qualquer afirmação numérica feita por um juiz (somas, percentuais) deve</li>
-</ol>
-<p>ser reverificada por aritmética simples antes de ser aceita na síntese final — não propague uma soma incorreta de um juiz para o bulletin consolidado só porque foi apresentada com confiança retórica alta ("Alta Severidade", "crítico", etc.). Confiança retórica não é evidência.</p>
-<ol>
-<li>Se os juízes compartilham o mesmo modelo subjacente, documente isso</li>
-</ol>
-<p>explicitamente no bulletin — a concordância entre eles tem menos valor epistêmico do que concordância entre modelos independentes, e o bulletin deve refletir esse desconto.</p>
-<h2 id="templates">Templates</h2>
-<h3 id="audit-bulletinmd-opcional-verso-estendida">audit-bulletin.md (opcional, versão estendida)</h3>
-<p>Localização: <code>templates/audit-bulletin.md</code></p>
-<p>Versão estendida do template acima, com seção de achados detalhados e histórico de auditorias anteriores da mesma skill. Se ausente, use o template inline acima — a skill funciona sem este arquivo.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/audit-bulletin.md docs/audits/{skill}-audit.md 2&gt;/dev/null || echo &quot;usando template inline&quot;</code></pre>
-<h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="audit-sem-scoring-objetivo">Audit sem Scoring Objetivo</h4>
-<p><strong>O que é:</strong> Auditoria sem scores numéricos. <strong>Por que é ruim:</strong> Decisão subjetiva, impossível comparar. <strong>Como evitar:</strong> Use as rubricas de âncora desta skill para cada dimensão. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Skill está boa&quot;
-
-# ✅ CORRETO
-&quot;Skill: 85/100 (A) — ADOTAR COM AJUSTES, ver tabela de scores&quot;</code></pre>
-<h4 id="falso-veredito">Falso Veredito</h4>
-<p><strong>O que é:</strong> Recomendação que não corresponde ao score. <strong>Por que é ruim:</strong> Confusão, decisões erradas. <strong>Como evitar:</strong> Veredito deve vir exclusivamente da tabela Score→Grade→Ação. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-Score 45/100, mas &quot;ADOTAR AS-IS&quot;
-
-# ✅ CORRETO
-Score 45/100 → tabela → &quot;DEPRECIAR&quot;</code></pre>
-<h4 id="pesos-que-no-fecham-em-100">Pesos que Não Fecham em 100%</h4>
-<p><strong>O que é:</strong> Tabela de pesos cuja soma ≠ 100%, ou uso da fórmula sem verificar a soma antes. <strong>Por que é ruim:</strong> O score final deixa de ser matematicamente definido; qualquer resultado subsequente é inválido, mesmo que pareça plausível. <strong>Como evitar:</strong> Some os pesos manualmente antes de aplicar a fórmula, todas as vezes — nunca assuma que uma tabela já publicada está correta. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Pesos somam 105%&quot; (afirmado sem checar) → score final indefinido
-
-# ✅ CORRETO
-20+10+15+15+10+10+10+10 = 100 → verificado → fórmula aplicável</code></pre>
-<h4 id="interpolao-no-sanitizada-em-comandos-shell">Interpolação Não Sanitizada em Comandos Shell</h4>
-<p><strong>O que é:</strong> Construir comando shell por concatenação direta de um parâmetro sem validação. <strong>Por que é ruim:</strong> Vetor de injeção de comando (command injection). <strong>Como evitar:</strong> Valide contra regex fechada antes de interpolar. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-bash validate.sh skills/{skill}
-
-# ✅ CORRETO
-[[ &quot;{skill}&quot; =~ ^[a-zA-Z0-9_-]+$ ]] &amp;&amp; bash validate.sh &quot;skills/{skill}&quot;</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="audit-superficial">Audit superficial</h4>
-<p><strong>O que é:</strong> Auditoria que só verifica estrutura. <strong>Por que é ruim:</strong> Problemas técnicos não detectados. <strong>Como evitar:</strong> Teste exemplos, verifique código, reverifique somas numéricas. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-&quot;Frontmatter OK, skill aprovada&quot;
-
-# ✅ CORRETO
-&quot;Frontmatter OK, exemplos testados, workflow validado, somas conferidas&quot;</code></pre>
-<h4 id="score-sem-frmula-explcita">Score sem Fórmula Explícita</h4>
-<p><strong>O que é:</strong> Categorias e pesos definidos, mas sem a equação que os combina. <strong>Por que é ruim:</strong> O score final não é reproduzível por dois auditores diferentes. <strong>Como evitar:</strong> Declare <code>score_final = Σ(raw_i/10 × peso_i)</code> e mostre o cálculo.</p>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="audit-sem-data">Audit sem Data</h4>
-<p><strong>O que é:</strong> Bulletin sem data de auditoria. <strong>Por que é ruim:</strong> Impossível rastrear histórico. <strong>Como evitar:</strong> Sempre inclua data. <strong>Exemplo:</strong></p>
-<pre data-lang="markdown"><code># ✅ CORRETO
-**Audit date:** 2026-07-15</code></pre>
-<h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-auditoria-manual-fallback-quando-validate-skillsh-est-ausente">Checklist de Auditoria Manual (fallback quando validate-skill.sh está ausente)</h3>
-<ul>
-<li>[ ] Frontmatter válido (todos os campos obrigatórios presentes)</li>
-<li>[ ] Description com keywords de triggering claras</li>
-<li>[ ] Decision tree presente e sem overlap/gap entre bandas</li>
-<li>[ ] Workflows com checkpoints verificáveis (não apenas mencionados)</li>
-<li>[ ] Anti-patterns com severidade e exemplo antes/depois</li>
-<li>[ ] Todo exemplo de comando/código testado manualmente</li>
-<li>[ ] Toda soma/percentual verificado manualmente (não assumido)</li>
-<li>[ ] Cross-references (<code>related_skills</code>) válidas e não circulares sem propósito</li>
-<li>[ ] Score calculado via fórmula, com tabela de contribuições visível</li>
-</ul>
-<h3 id="checklist-de-scoring">Checklist de Scoring</h3>
-<ul>
-<li>[ ] Triggering (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Aplicabilidade (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Profundidade (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Correção (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Universalidade (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Manutenibilidade (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Ergonomia (0-10) — rubrica aplicada, evidência citada</li>
-<li>[ ] Risco bruto (0-10) — invertido corretamente (<code>10 - bruto</code>)</li>
-<li>[ ] Fórmula aplicada e soma conferida</li>
-<li>[ ] Grade obtido via tabela Score→Grade→Ação (não inventado)</li>
-</ul>
-<h2 id="edge-cases">Edge Cases</h2>
-<h3 id="skill-sem-templates">Skill sem Templates</h3>
-<p><strong>Situação:</strong> Skill sem pasta <code>templates/</code>. <strong>Solução:</strong> Score reduzido em 10-15% na dimensão Manutenibilidade. <strong>Exceção:</strong> Skills conceituais podem não precisar.</p>
-<h3 id="skill-sem-examples">Skill sem Examples</h3>
-<p><strong>Situação:</strong> Skill sem exemplos práticos. <strong>Solução:</strong> Score reduzido em 5-10% na dimensão Correção Técnica. <strong>Exceção:</strong> Skills teóricas.</p>
-<h3 id="skill-com-conflito">Skill com Conflito</h3>
-<p><strong>Situação:</strong> Skill sobrescreve outra (triggering colide). <strong>Solução:</strong> Marcar Risco como alto (raw ≥ 7 antes de inverter). <strong>Exceção:</strong> Se é intencional, documentar a intenção no bulletin.</p>
-<h3 id="scripts-de-validao-ausentes">Scripts de validação ausentes</h3>
-<p><strong>Situação:</strong> <code>scripts/validate-skill.sh</code> referenciado mas não existe no repo. <strong>Solução:</strong> Aplicar Checklist de Auditoria Manual; registrar <code>SCRIPT_AUSENTE</code>; penalizar Manutenibilidade em -1 ponto (não zerar a categoria). <strong>Exceção:</strong> Nenhuma — este é sempre um achado a reportar, mesmo que a skill seja aprovada.</p>
-<h3 id="score-no-limite-exato-de-banda">Score no limite exato de banda</h3>
-<p><strong>Situação:</strong> Score final é exatamente 85.0 ou 70.0 etc. <strong>Solução:</strong> Usar a tabela Score→Grade→Ação, que é fechada nos limites mostrados — 85 é Grade A, 84 é Grade B. Sem ambiguidade.</p>
-<h3 id="juzesavaliadores-discordam-multi-agent-audit">Juízes/avaliadores discordam (multi-agent audit)</h3>
-<p><strong>Situação:</strong> Mais de um agente/juiz avaliou a mesma skill com scores divergentes. <strong>Solução:</strong> Ver seção "Agregação Multi-Juiz" — mediana, checagem de variância por categoria, reverificação de qualquer soma numérica antes de aceitar a síntese. <strong>Exceção:</strong> Se há apenas um avaliador, esta seção não se aplica.</p>
-<h2 id="referncias">Referências</h2>
-<ul>
-<li><code>architecture-review-kilo</code> — para revisão de código</li>
-<li><code>documentation</code> — para padrões de documentação</li>
-<li><code>governance</code> — para política de ciclo de vida e registro de auditorias</li>
-</ul>
+<hr>
+<h2 id="7-interactive-completion-gate--transition">7. Interactive Completion Gate & Transition</h2>
+<p>Present the user with explicit next steps:</p>
+<pre data-lang="text"><code>================================================================================
+🎯 DECISION GATE: PRÓXIMOS PASSOS PARA ESTA SKILL
+================================================================================
+[1] Criar ADR para Refatoração / Evolução via /adr-generator
+    (Formaliza o Decision Set: ADR, Blueprint, TODO e Implementation Plan)
+[2] Aplicar correções estruturais no ato (Hotfix imediato de metadados e formato)
+[3] Adotar como está e encerrar auditoria
+================================================================================</code></pre>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>deployment — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; deployment</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: deployment version: 1.0.0 description: 'Use when setting up CI/CD pipelines, creating deployment configurations, generating deploy checklists, or configuring infrastructure. Triggers: new project needs deployment, migrating CI/CD provider, adding staging/production environments, automating release process, setting up monitoring for deploys.' domain: domain-stack triggers:</p>
+<ul>
+<li>deployment</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>deployment</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="deployment">Deployment</h1>
+<h2 id="overview">Overview</h2>
+<p>Set up CI/CD pipelines and deployment configurations that automate the path from code to production. This skill detects the deployment target, generates pipeline config, creates pre/post-deploy checklists, and configures monitoring — producing a fully automated, rollback-ready deployment pipeline.</p>
+<p><strong>Announce at start:</strong> "I am using the deployment skill to set up the deployment pipeline."</p>
+<h2 id="phase-1-detect-deployment-target">Phase 1: Detect Deployment Target</h2>
+<p><strong>STOP after this phase — present findings to user for confirmation before proceeding.</strong></p>
+<p>Ask questions to identify the full deployment context:</p>
+<p><strong>Platform Detection:</strong></p>
+<ul>
+<li>Where does this deploy? (Vercel, AWS, GCP, Azure, DigitalOcean, self-hosted)</li>
+<li>Container-based? (Docker, Kubernetes)</li>
+<li>Serverless? (Lambda, Cloud Functions, Edge Functions)</li>
+</ul>
+<p><strong>CI/CD Detection:</strong></p>
+<ul>
+<li>What CI system? (GitHub Actions, GitLab CI, CircleCI, Jenkins)</li>
+<li>What triggers deployments? (push to main, tags, manual)</li>
+<li>Multi-environment? (dev, staging, production)</li>
+</ul>
+<p><strong>Infrastructure Detection:</strong></p>
+<ul>
+<li>Database migrations needed?</li>
+<li>Environment variables management? (secrets manager, .env)</li>
+<li>CDN/caching? Asset pipeline?</li>
+<li>Monitoring/alerting? (Datadog, Sentry, New Relic)</li>
+</ul>
+<h3 id="platform-selection-decision-table">Platform Selection Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Project Type</th><th>Recommended Platform</th><th>CI/CD</th><th>Why</th></tr><tr><td>Static site / SPA</td><td>Vercel, Netlify, Cloudflare Pages</td><td>Built-in</td><td>Zero config, edge CDN</td></tr><tr><td>Node.js API</td><td>AWS ECS, Cloud Run, Railway</td><td>GitHub Actions</td><td>Container support, auto-scaling</td></tr><tr><td>Monorepo (frontend + backend)</td><td>Vercel + AWS / Railway</td><td>GitHub Actions</td><td>Split concerns, independent scaling</td></tr><tr><td>Enterprise / compliance-heavy</td><td>AWS EKS, GKE</td><td>GitLab CI, Jenkins</td><td>Full control, audit trails</td></tr><tr><td>Hobby / side project</td><td>Railway, Fly.io, Render</td><td>Built-in or GitHub Actions</td><td>Simple, low cost</td></tr><tr><td>ML / data pipelines</td><td>AWS SageMaker, GCP Vertex</td><td>GitHub Actions + Airflow</td><td>GPU support, pipeline orchestration</td></tr></table></div>
+<h2 id="phase-2-design-pipeline">Phase 2: Design Pipeline</h2>
+<p><strong>STOP after this phase — present pipeline design to user for approval before generating config.</strong></p>
+<h3 id="standard-pipeline-stages">Standard Pipeline Stages</h3>
+<pre><code>┌─────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
+│  Build   │──▶│   Test   │──▶│  Lint/   │──▶│  Deploy  │──▶│  Verify  │
+│          │   │          │   │  Check   │   │          │   │          │
+└─────────┘   └──────────┘   └──────────┘   └──────────┘   └──────────┘</code></pre>
+<p><strong>Build:</strong> Install dependencies, compile, bundle <strong>Test:</strong> Unit tests, integration tests, coverage check <strong>Lint/Check:</strong> Linting, type checking, security audit <strong>Deploy:</strong> Push to target environment <strong>Verify:</strong> Health checks, smoke tests, monitoring</p>
+<h3 id="branch-strategy-decision-table">Branch Strategy Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Branch</th><th>Action</th><th>Environment</th><th>Gate</th></tr><tr><td><code>feature/*</code></td><td>Build + Test + Lint</td><td>None</td><td>PR checks pass</td></tr><tr><td><code>main</code></td><td>Build + Test + Lint + Deploy</td><td>Staging</td><td>All checks green</td></tr><tr><td><code>release/*</code> or tags</td><td>Build + Test + Lint + Deploy</td><td>Production</td><td>Manual approval</td></tr><tr><td><code>hotfix/*</code></td><td>Build + Test + Deploy</td><td>Production (expedited)</td><td>Senior approval</td></tr></table></div>
+<h3 id="deployment-strategy-decision-table">Deployment Strategy Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Strategy</th><th>When to Use</th><th>Risk Level</th><th>Rollback Speed</th></tr><tr><td>Direct deploy</td><td>Solo/hobby projects, staging</td><td>High</td><td>Slow (redeploy)</td></tr><tr><td>Blue-green</td><td>Apps with health checks, low-downtime needs</td><td>Low</td><td>Instant (switch)</td></tr><tr><td>Canary</td><td>High-traffic production, gradual rollout</td><td>Very Low</td><td>Fast (reroute)</td></tr><tr><td>Rolling</td><td>Kubernetes clusters, stateless services</td><td>Low</td><td>Medium</td></tr><tr><td>Feature flags</td><td>Decoupled deploy from release</td><td>Very Low</td><td>Instant (toggle)</td></tr></table></div>
+<h2 id="phase-3-generate-config">Phase 3: Generate Config</h2>
+<h3 id="github-actions-example">GitHub Actions Example</h3>
+<pre data-lang="yaml"><code>name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: &#x27;20&#x27;
+          cache: &#x27;npm&#x27;
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm test -- --coverage
+      - run: npm run build
+
+  deploy-staging:
+    needs: build-and-test
+    if: github.ref == &#x27;refs/heads/main&#x27;
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      # [platform-specific deploy steps]
+
+  deploy-production:
+    needs: build-and-test
+    if: startsWith(github.ref, &#x27;refs/tags/v&#x27;)
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      # [platform-specific deploy steps]</code></pre>
+<h3 id="gitlab-ci-example">GitLab CI Example</h3>
+<pre data-lang="yaml"><code>stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths: [dist/]
+
+test:
+  stage: test
+  script:
+    - npm run lint
+    - npm run type-check
+    - npm test -- --coverage
+
+deploy-staging:
+  stage: deploy
+  environment: staging
+  script:
+    - # platform-specific deploy
+  only:
+    - main
+
+deploy-production:
+  stage: deploy
+  environment: production
+  script:
+    - # platform-specific deploy
+  when: manual
+  only:
+    - tags</code></pre>
+<h2 id="phase-4-create-deployment-checklists">Phase 4: Create Deployment Checklists</h2>
+<p><strong>STOP — present checklists to user. Customize based on their stack.</strong></p>
+<h3 id="pre-deploy-checklist">Pre-Deploy Checklist</h3>
+<pre data-lang="markdown"><code>## Pre-Deploy Checklist
+
+- [ ] All tests passing on CI
+- [ ] Code reviewed and approved
+- [ ] No critical/high security vulnerabilities
+- [ ] Environment variables configured for target environment
+- [ ] Database migrations tested (if applicable)
+- [ ] Feature flags configured (if applicable)
+- [ ] Rollback plan documented
+- [ ] Monitoring/alerts configured
+- [ ] Changelog updated
+- [ ] Version bumped</code></pre>
+<h3 id="post-deploy-verification">Post-Deploy Verification</h3>
+<pre data-lang="markdown"><code>## Post-Deploy Verification
+
+- [ ] Health check endpoint returns 200
+- [ ] Smoke tests passing
+- [ ] Error rate within normal range
+- [ ] Response times within SLA
+- [ ] Database migrations applied successfully
+- [ ] Feature flags active/inactive as expected
+- [ ] Monitoring dashboard showing expected metrics
+- [ ] No new errors in error tracking (Sentry, etc.)</code></pre>
+<h2 id="phase-5-review-and-finalize">Phase 5: Review and Finalize</h2>
+<p>Present the complete pipeline configuration to the user:</p>
+<ol>
+<li>VERIFY CI/CD config file syntax is valid</li>
+<li>VERIFY all environment variables are documented</li>
+<li>VERIFY rollback plan exists</li>
+<li>VERIFY pre/post-deploy checklists are complete</li>
+<li>VERIFY the pipeline can be tested locally (act, etc.)</li>
+</ol>
+<p>Save config to <code>.github/workflows/</code> or equivalent.</p>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Is Wrong</th><th>What to Do Instead</th></tr><tr><td>Manual production deploys</td><td>Error-prone, no audit trail</td><td>Automate via CI/CD pipeline</td></tr><tr><td>No rollback plan</td><td>Stuck if deploy breaks production</td><td>Define rollback before every deploy</td></tr><tr><td>Skipping staging</td><td>Bugs found in production</td><td>Always deploy to staging first</td></tr><tr><td>Secrets in code/config files</td><td>Security breach risk</td><td>Use secrets manager or env vars</td></tr><tr><td><code>latest</code> tag for production images</td><td>Non-reproducible deploys</td><td>Pin specific version tags</td></tr><tr><td>No concurrency control</td><td>Conflicting deploys</td><td>Add concurrency groups to CI</td></tr><tr><td>Deploying without health checks</td><td>No visibility into deploy health</td><td>Add health endpoint + post-deploy check</td></tr><tr><td>Alert fatigue from noisy monitors</td><td>Real issues get missed</td><td>Alert on symptoms, tune thresholds</td></tr></table></div>
+<h2 id="key-principles">Key Principles</h2>
+<ul>
+<li><strong>Automate everything</strong> — no manual steps in the critical path</li>
+<li><strong>Fast feedback</strong> — fail early, fail fast</li>
+<li><strong>Environment parity</strong> — staging matches production</li>
+<li><strong>Rollback-ready</strong> — every deploy has a rollback plan</li>
+<li><strong>Observable</strong> — monitoring before, during, and after deploy</li>
+<li><strong>Secure</strong> — no secrets in code, use secrets management</li>
+<li><strong>Idempotent</strong> — deploying the same version twice produces the same result</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>senior-devops</code></td><td>Provides Docker, K8s, and IaC patterns used in deploy config</td></tr><tr><td><code>git-commit-helper</code></td><td>Conventional commits drive changelog and version bumping</td></tr><tr><td><code>finishing-a-development-branch</code></td><td>Branch completion triggers deployment pipeline</td></tr><tr><td><code>verification-before-completion</code></td><td>Post-deploy verification gate</td></tr><tr><td><code>security-review</code></td><td>Security scan stage in the pipeline</td></tr><tr><td><code>planning</code></td><td>Deployment plan is part of the implementation plan</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Adapt pipeline design, platform selection, and tooling to the project's cloud provider, team size, and operational maturity. The principles (automation, rollback, observability) are constant; specific tools are interchangeable.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

@@ -1,19 +1,19 @@
-# Exemplo: Mudança Complexa (Multi-ADR)
+# Example: Complex Change (Multi-ADR)
 
-> Exemplo de implementação governada para uma mudança que envolve múltiplas ADRs e 10+ tarefas.
-
----
-
-## Contexto
-
-- **ADR principal:** ADR-004 (Implementação das Recomendações da Ultra-Auditoria)
-- **ADR secundária:** ADR-005 (Skill `implementation`)
-- **Blueprint:** ADR-004-BP.md (7 tarefas Fase A + 6 skills Fase B)
-- **TODO:** ADR-004-TODO.md (124 tarefas, 3 fases)
+> Example of a governed implementation for a change that involves multiple ADRs and 10+ tasks.
 
 ---
 
-## Fluxo Completo
+## Context
+
+- **Primary ADR:** ADR-004 (Implementation of Ultra-Audit Recommendations)
+- **Secondary ADR:** ADR-005 (Skill implementation)
+- **Blueprint:** ADR-004-BP.md (7 tasks Phase A + 6 skills Phase B)
+- **TODO:** ADR-004-TODO.md (124 tasks, 3 phases)
+
+---
+
+## Complete Flow
 
 ### 1. Artifact Resolution
 
@@ -23,34 +23,34 @@ BP_PATH="docs/adr/ADR-004-BP.md"
 TODO_PATH="docs/adr/ADR-004-TODO.md"
 ```
 
-**Resultado:**
-- ADR existe ✅
-- Blueprint existe ✅
-- TODO existe ✅
-- 124 tarefas identificadas
-- 3 fases: Débitos (7), Skills (6), Validação (1)
+**Result:**
+- ADR exists ✅
+- Blueprint exists ✅
+- TODO exists ✅
+- 124 tasks identified
+- 3 phases: Debts (7), Skills (6), Validation (1)
 
 ---
 
 ### 2. Execution Contract
 
 ```markdown
-## Artefatos
-| Artefato | Status | Coerente |
-|----------|--------|----------|
-| ADR-004.md | Aceito | ✅ |
-| ADR-004-BP.md | Existente | ✅ |
-| ADR-004-TODO.md | Existente | ✅ |
+## Artifacts
+| Artifact | Status | Consistent |
+|----------|--------|-------------|
+| ADR-004.md | Accepted | ✅ |
+| ADR-004-BP.md | Exists | ✅ |
+| ADR-004-TODO.md | Exists | ✅ |
 
-## Ambiente
-| Campo | Valor |
+## Environment
+| Field | Value |
 |-------|-------|
 | Branch | feature/adr-004-audit-fixes |
-| Workspace limpo | Sim |
-| Arquivos impactados | 20+ skills, index.json, CI workflow |
+| Clean Workspace | Yes |
+| Affected Files | 20+ skills, index.json, CI workflow |
 ```
 
-**Contrato validado ✅**
+**Contract validated ✅**
 
 ---
 
@@ -64,7 +64,7 @@ graph TD
     A1 --> B4[api-design]
     A1 --> B5[observability]
     A1 --> B6[refactoring]
-    A2[CHANGELOG] --> C1[Validação]
+    A2[CHANGELOG] --> C1[Validation]
     A3[Renomear arch-review] --> C1
     A4[Desambiguar planning] --> C1
     A5[Grafo related] --> C1
@@ -78,100 +78,100 @@ graph TD
     B6 --> C1
 ```
 
-**Ordem de execução:**
+**Execution order:**
 
-| Fase | Tarefas | Paralelizável? |
-|------|---------|----------------|
-| 1 | A1-A7 (débitos) | Sim (todas independentes) |
-| 2 | B1-B6 (skills) | Não (sequencial, cada uma depende de A1) |
-| 3 | C1 (validação) | Não (depende de todas) |
+| Phase | Tasks | Parallelizable? |
+|------|---------|------------------|
+| 1 | A1-A7 (debts) | Yes (all independent) |
+| 2 | B1-B6 (skills) | No (sequential, each depends on A1) |
+| 3 | C1 (validation) | No (depends on all) |
 
 ---
 
-### 4. Execution Loop (resumo)
+### 4. Execution Loop (summary)
 
-#### Fase 1: Débitos Técnicos (7 tarefas)
+#### Phase 1: Technical Debts (7 tasks)
 
-| Tarefa | Estado | Duração | Validações |
+| Task | Status | Duration | Validations |
 |--------|--------|---------|------------|
-| A1: CI validate-skill.sh | ✅ | 30min | CI passa |
-| A2: CHANGELOG v2.0.x | ✅ | 20min | Formato OK |
-| A3: Renomear arch-review | ✅ | 30min | 0 refs quebradas |
+| A1: CI validate-skill.sh | ✅ | 30min | CI passes |
+| A2: CHANGELOG v2.0.x | ✅ | 20min | Format OK |
+| A3: Renomear arch-review | ✅ | 30min | 0 broken refs |
 | A4: Desambiguar planning | ✅ | 20min | Cross-refs OK |
-| A5: Grafo related_skills | ✅ | 10min | Grafo conexo |
-| A6: Checklists/ | ✅ | 15min | Pasta existe |
-| A7: Peer review | ✅ | 10min | Nota presente |
+| A5: Grafo related_skills | ✅ | 10min | Graph connected |
+| A6: Checklists/ | ✅ | 15min | Folder exists |
+| A7: Peer review | ✅ | 10min | Note present |
 
-**Fase 1 concluída ✅ (2h15min)**
+**Phase 1 completed ✅ (2h15min)**
 
 ---
 
-#### Fase 2: Skills Novas (6 skills)
+#### Phase 2: New Skills (6 skills)
 
-| Skill | Estado | Linhas | Templates | Validação |
+| Skill | Status | Lines | Templates | Validation |
 |-------|--------|--------|-----------|-----------|
-| security-review | ✅ | 285 | 3 | validate-skill.sh passa |
-| agent-orchestration | ✅ | 270 | 3 | validate-skill.sh passa |
-| data-modeling | ✅ | 260 | 3 | validate-skill.sh passa |
-| api-design | ✅ | 245 | 3 | validate-skill.sh passa |
-| observability | ✅ | 255 | 3 | validate-skill.sh passa |
-| refactoring | ✅ | 240 | 3 | validate-skill.sh passa |
+| security-review | ✅ | 285 | 3 | validate-skill.sh passes |
+| agent-orchestration | ✅ | 270 | 3 | validate-skill.sh passes |
+| data-modeling | ✅ | 260 | 3 | validate-skill.sh passes |
+| api-design | ✅ | 245 | 3 | validate-skill.sh passes |
+| observability | ✅ | 255 | 3 | validate-skill.sh passes |
+| refactoring | ✅ | 240 | 3 | validate-skill.sh passes |
 
-**Fase 2 concluída ✅ (14h)**
+**Phase 2 completed ✅ (14h)**
 
 ---
 
-#### Fase 3: Validação Final
+#### Phase 3: Final Validation
 
-| Validação | Resultado |
+| Validation | Result |
 |-----------|-----------|
 | validate-index.sh | ✅ 20/20 skills |
-| validate-skill.sh (todas) | ✅ 0 erros |
-| related_skills | ✅ Grafo conexo |
-| index.json | ✅ 20 entradas |
+| validate-skill.sh (all) | ✅ 0 errors |
+| related_skills | ✅ Graph connected |
+| index.json | ✅ 20 entries |
 
-**Fase 3 concluída ✅ (30min)**
+**Phase 3 completed ✅ (30min)**
 
 ---
 
 ### 5. Documentation Synchronization
 
-- CHANGELOG.md: atualizado com v2.0.2 ✅
-- README.md: atualizado com 20 skills ✅
-- ADR-004.md: status "Aceito (Implementação concluída)" ✅
-- ADR-004-TODO.md: todas as tarefas ✅
+- CHANGELOG.md: updated with v2.0.2 ✅
+- README.md: updated with 20 skills ✅
+- ADR-004.md: status "Accepted (Implementation completed)" ✅
+- ADR-004-TODO.md: all tasks ✅
 
 ---
 
 ### 6. Execution Report
 
 ```markdown
-## Resumo
-| Campo | Valor |
+## Summary
+| Field | Value |
 |-------|-------|
-| Duração total | ~16.5h |
-| Tarefas totais | 124 |
-| Concluídas | 124 |
-| Adiadas | 0 |
-| Bloqueadas | 0 |
-| Taxa de conclusão | 100% |
+| Total duration | ~16.5h |
+| Total tasks | 124 |
+| Completed | 124 |
+| Deferred | 0 |
+| Blocked | 0 |
+| Completion rate | 100% |
 
-## Validações
-| Validação | Resultado |
+## Validations
+| Validation | Result |
 |-----------|-----------|
 | validate-index.sh | ✅ |
 | validate-skill.sh (20 skills) | ✅ |
-| related_skills grafo | ✅ |
+| related_skills graph | ✅ |
 ```
 
-**Implementação concluída com sucesso ✅**
+**Implementation completed successfully ✅**
 
 ---
 
-## Lições
+## Lessons
 
-1. **Mudanças grandes benefitiam de DAG:** a visualização das dependências evita execução fora de ordem
-2. **Fases paralelizáveis aceleram:** a Fase 1 (débitos) foi toda paralelizável
-3. **Validação contínua evita retrabalho:** cada skill foi validada individualmente antes de prosseguir
-4. **Execution Report documenta tudo:** future reference para decisões similares
-5. **Múltiplas ADRs podem ser encadeadas:** ADR-004 gerou ADR-005 como consequência
+1. **Large changes benefit from DAG:** visualizing dependencies avoids out-of-order execution
+2. **Parallelizable phases accelerate:** Phase 1 (debts) was entirely parallelizable
+3. **Continuous validation avoids rework:** each skill was validated individually before proceeding
+4. **Execution Report documents everything:** future reference for similar decisions
+5. **Multiple ADRs can be chained:** ADR-004 generated ADR-005 as a consequence

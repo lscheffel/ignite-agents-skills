@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>subagent-driven-development — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; subagent-driven-development</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: subagent-driven-development version: 1.0.0 description: Use when executing multi-task plans where each task can be implemented independently by a subagent. Triggers when a plan has 3+ independent tasks, when speed of execution is important, when tasks have clear acceptance criteria suitable for delegation, or when two-stage review gates (spec compliance and code quality) are needed for iterative fix cycles. domain: agentic-workflow triggers:</p>
+<ul>
+<li>subagent-driven-development</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>subagent-driven-development</li>
+<li>agentic-workflow</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="subagent-driven-development">Subagent-Driven Development</h1>
+<h2 id="overview">Overview</h2>
+<p>This skill orchestrates implementation through dedicated subagents with built-in quality gates. Each task is implemented by an implementer subagent, then reviewed by two specialized reviewer agents (spec compliance and code quality) before acceptance. Failed reviews trigger iterative fix cycles with a maximum of 3 retries before escalation. This ensures consistent quality at scale while maximizing parallel throughput.</p>
+<p><strong>Announce at start:</strong> "I'm using the subagent-driven-development skill to dispatch implementation tasks with two-stage review gates."</p>
+<h2 id="trigger-conditions">Trigger Conditions</h2>
+<ul>
+<li>Plan has 3+ tasks that can be implemented independently</li>
+<li>Tasks have well-specified acceptance criteria suitable for delegation</li>
+<li>Speed of execution is a priority</li>
+<li>Tasks have few interdependencies</li>
+<li>Quality gates are needed for delegated work</li>
+</ul>
+<hr>
+<h2 id="phase-1-task-preparation">Phase 1: Task Preparation</h2>
+<p><strong>Goal:</strong> Ensure every task is fully specified before dispatching to any subagent.</p>
+<h3 id="task-specification-requirements-7-sections">Task Specification Requirements (7 Sections)</h3>
+<p>Every task dispatched to a subagent MUST include ALL of these:</p>
+<div class="table-wrapper"><table><tr><th>Section</th><th>Content</th><th>Example</th></tr><tr><td>1. Task description</td><td>Clear, unambiguous statement</td><td>"Implement JWT token generation with RS256 signing"</td></tr><tr><td>2. Files to create/modify</td><td>Explicit list</td><td><code>src/auth/jwt.ts</code>, <code>tests/auth/jwt.test.ts</code></td></tr><tr><td>3. Acceptance criteria</td><td>Specific, testable conditions</td><td>"Tokens expire after 1 hour", "Invalid keys throw AuthError"</td></tr><tr><td>4. TDD requirements</td><td>Tests to write, behaviors to cover</td><td>"Test: valid token generation, expired token rejection, invalid key handling"</td></tr><tr><td>5. Quality standards</td><td>Code style, patterns, conventions</td><td>"Follow existing service pattern in src/services/, use Result type for errors"</td></tr><tr><td>6. Context</td><td>Relevant code, interfaces, deps</td><td>"Logger API: logger.info(msg, meta). Import from ../utils/logger"</td></tr><tr><td>7. Constraints</td><td>What NOT to do</td><td>"Do NOT modify existing auth middleware. Do NOT add new dependencies."</td></tr></table></div>
+<h3 id="pre-dispatch-checklist">Pre-Dispatch Checklist</h3>
+<ul>
+<li>[ ] Task spec has all 7 sections filled</li>
+<li>[ ] Task is independent (no unresolved dependencies on in-progress tasks)</li>
+<li>[ ] Acceptance criteria are specific and testable</li>
+<li>[ ] Files to modify are identified and accessible</li>
+<li>[ ] Relevant context has been gathered and included in the spec</li>
+</ul>
+<h3 id="task-independence-decision-table">Task Independence Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Dependency Type</th><th>Can Dispatch?</th><th>Action</th></tr><tr><td>No dependencies</td><td>Yes</td><td>Dispatch immediately</td></tr><tr><td>Depends on completed task</td><td>Yes</td><td>Include completed task's output as context</td></tr><tr><td>Depends on in-progress task</td><td>No</td><td>Wait for dependency to complete</td></tr><tr><td>Shared file with another task</td><td>No</td><td>Serialize — one task at a time for that file</td></tr><tr><td>Shared interface only</td><td>Yes</td><td>Include interface definition as context</td></tr></table></div>
+<p><strong>STOP — Do NOT dispatch until:</strong></p>
+<ul>
+<li>[ ] All 7 spec sections are complete</li>
+<li>[ ] Independence is verified</li>
+<li>[ ] Acceptance criteria are testable</li>
+</ul>
+<hr>
+<h2 id="phase-2-implementation-dispatch">Phase 2: Implementation Dispatch</h2>
+<p><strong>Goal:</strong> Send the task to an implementer subagent with full context.</p>
+<ol>
+<li>Prepare the implementer prompt using <code>implementer-prompt.md</code> template</li>
+<li>Include the full task specification (all 7 sections)</li>
+<li>Include relevant code context (existing files, interfaces, types)</li>
+<li>Dispatch the implementer subagent</li>
+<li>Collect the implementation output</li>
+</ol>
+<blockquote><strong>Dispatch mechanism:</strong> Use the <code>Agent</code> tool with <code>subagent_type="general-purpose"</code> and include the implementer prompt (from <code>implementer-prompt.md</code>) in the <code>prompt</code> parameter. Set <code>description</code> to a short task label.</blockquote>
+<h3 id="implementer-expectations">Implementer Expectations</h3>
+<p>The implementer subagent MUST:</p>
+<ul>
+<li>Follow the TDD cycle (RED-GREEN-REFACTOR)</li>
+<li>Write tests before production code</li>
+<li>Only modify files listed in the task spec</li>
+<li>Follow the quality standards specified</li>
+<li>Report any questions or blockers encountered</li>
+<li>Document all assumptions made</li>
+</ul>
+<h3 id="question-handling-protocol">Question Handling Protocol</h3>
+<div class="table-wrapper"><table><tr><th>Question Type</th><th>During Implementation</th><th>Action</th></tr><tr><td>Non-blocking</td><td>Can proceed with reasonable assumption</td><td>Note assumption, continue, flag in output</td></tr><tr><td>Blocking</td><td>Cannot proceed without answer</td><td>STOP immediately, escalate to orchestrator</td></tr><tr><td>Scope question</td><td>Asks about work outside assigned task</td><td>Report it, do NOT fix it</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to review until:</strong></p>
+<ul>
+<li>[ ] Implementer has returned complete output</li>
+<li>[ ] All listed files have been created/modified</li>
+<li>[ ] Tests exist for every acceptance criterion</li>
+<li>[ ] Any assumptions are documented</li>
+</ul>
+<hr>
+<h2 id="phase-3-spec-review-gate">Phase 3: Spec Review Gate</h2>
+<p><strong>Goal:</strong> Verify the implementation matches the original task specification.</p>
+<ol>
+<li>Prepare the spec reviewer prompt using <code>spec-reviewer-prompt.md</code> template</li>
+<li>Provide the original task specification AND the implementer's output</li>
+<li>Dispatch the spec-reviewer subagent</li>
+<li>Collect the review result</li>
+</ol>
+<blockquote><strong>Dispatch mechanism:</strong> Use the <code>Agent</code> tool with the spec-reviewer prompt (from <code>spec-reviewer-prompt.md</code>) in the <code>prompt</code> parameter.</blockquote>
+<h3 id="spec-review-criteria">Spec Review Criteria</h3>
+<div class="table-wrapper"><table><tr><th>Criterion</th><th>Assessment</th><th>What to Check</th></tr><tr><td>All acceptance criteria met</td><td>PASS / FAIL per criterion</td><td>Each criterion individually verified</td></tr><tr><td>Tests cover specified behaviors</td><td>PASS / FAIL</td><td>Test file contains tests for all behaviors</td></tr><tr><td>Files modified match spec</td><td>PASS / FAIL</td><td>No unauthorized file modifications</td></tr><tr><td>No out-of-scope changes</td><td>PASS / FAIL</td><td>Only listed files touched</td></tr><tr><td>Implementation matches intent</td><td>PASS / FAIL</td><td>Behavior is correct, not just syntactically valid</td></tr><tr><td>All constraints respected</td><td>PASS / FAIL</td><td>None of the "do NOT" items violated</td></tr></table></div>
+<h3 id="gate-decision">Gate Decision</h3>
+<div class="table-wrapper"><table><tr><th>Result</th><th>Action</th></tr><tr><td>All PASS</td><td>Proceed to Phase 4 (quality review)</td></tr><tr><td>Any FAIL</td><td>Return to implementer with specific failure details</td></tr></table></div>
+<p><strong>STOP — Do NOT proceed to quality review if any spec criterion fails.</strong></p>
+<hr>
+<h2 id="phase-4-quality-review-gate">Phase 4: Quality Review Gate</h2>
+<p><strong>Goal:</strong> Verify code meets quality standards independent of spec compliance.</p>
+<ol>
+<li>Prepare the quality reviewer prompt using <code>code-quality-reviewer-prompt.md</code> template</li>
+<li>Provide the implementation code, test code, and project quality standards</li>
+<li>Dispatch the quality-reviewer subagent</li>
+<li>Collect the review result</li>
+</ol>
+<blockquote><strong>Dispatch mechanism:</strong> Use the <code>Agent</code> tool with the quality-reviewer prompt (from <code>code-quality-reviewer-prompt.md</code>) in the <code>prompt</code> parameter.</blockquote>
+<h3 id="quality-review-areas">Quality Review Areas</h3>
+<div class="table-wrapper"><table><tr><th>Area</th><th>What to Check</th></tr><tr><td>Code quality</td><td>Readability, naming, structure, complexity</td></tr><tr><td>Pattern compliance</td><td>Follows project patterns and conventions</td></tr><tr><td>Security</td><td>No injection vulnerabilities, proper validation, safe defaults</td></tr><tr><td>Performance</td><td>No unnecessary allocations, efficient algorithms, no N+1 queries</td></tr><tr><td>Error handling</td><td>All error paths handled, meaningful error messages</td></tr><tr><td>Test quality</td><td>Tests are meaningful, not testing implementation details</td></tr></table></div>
+<h3 id="issue-severity-classification">Issue Severity Classification</h3>
+<div class="table-wrapper"><table><tr><th>Severity</th><th>Definition</th><th>Action Required</th></tr><tr><td><strong>Critical</strong></td><td>Security vulnerability, data loss risk, incorrect behavior</td><td>MUST fix before acceptance</td></tr><tr><td><strong>Important</strong></td><td>Performance issue, maintainability concern, missing error handling</td><td>SHOULD fix (escalate to user for decision)</td></tr><tr><td><strong>Suggestion</strong></td><td>Style improvement, alternative approach, documentation</td><td>MAY fix, at developer's discretion</td></tr></table></div>
+<h3 id="gate-decision">Gate Decision</h3>
+<div class="table-wrapper"><table><tr><th>Result</th><th>Action</th></tr><tr><td>No Critical or Important issues</td><td>PASS — proceed to acceptance</td></tr><tr><td>Any Critical issues</td><td>FAIL — must fix and re-review</td></tr><tr><td>Only Important issues</td><td>Conditional — escalate to user for decision</td></tr></table></div>
+<hr>
+<h2 id="phase-5-fix-and-re-review-cycle">Phase 5: Fix and Re-Review Cycle</h2>
+<p><strong>Goal:</strong> Iteratively fix review failures with a bounded retry limit.</p>
+<h3 id="fix-cycle-process">Fix Cycle Process</h3>
+<pre><code>1. Collect all failure details from the failing review gate
+2. Send failures back to implementer subagent with specific instructions
+3. Implementer fixes the specific issues (not a full rewrite)
+4. Re-run ONLY the failing review gate
+5. If still failing: repeat (max 3 cycles)
+6. After 3 failed cycles: escalate to user</code></pre>
+<h3 id="retry-decision-table">Retry Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Attempt</th><th>Spec Review</th><th>Quality Review</th><th>Action</th></tr><tr><td>1</td><td>FAIL</td><td>—</td><td>Return to implementer with failure details</td></tr><tr><td>2</td><td>FAIL</td><td>—</td><td>Return with additional context/examples</td></tr><tr><td>3</td><td>FAIL</td><td>—</td><td>Escalate to user</td></tr><tr><td>1</td><td>PASS</td><td>FAIL</td><td>Return to implementer with quality issues</td></tr><tr><td>2</td><td>PASS</td><td>FAIL</td><td>Return with project patterns as reference</td></tr><tr><td>3</td><td>PASS</td><td>FAIL</td><td>Escalate to user</td></tr></table></div>
+<h3 id="escalation-report-format">Escalation Report Format</h3>
+<pre><code>ESCALATION: REPEATED REVIEW FAILURE
+====================================
+Task: [task description]
+Review Gate: [spec / quality]
+Attempts: 3
+
+Failure Pattern:
+  Attempt 1: [what failed and why]
+  Attempt 2: [what failed and why]
+  Attempt 3: [what failed and why]
+
+Root Cause Assessment: [why the implementer cannot resolve this]
+
+Options:
+  A. Simplify the task specification
+  B. Provide additional context/examples
+  C. Break into smaller sub-tasks
+  D. Implement manually (skip subagent)
+
+Awaiting direction.</code></pre>
+<hr>
+<h2 id="phase-6-acceptance-and-integration">Phase 6: Acceptance and Integration</h2>
+<p><strong>Goal:</strong> After both gates pass, integrate the work and verify no regressions.</p>
+<ol>
+<li>Run the full project test suite (not just the new tests)</li>
+<li>Run all verification commands (lint, type-check, build)</li>
+<li>Confirm no regressions were introduced</li>
+<li>Mark the task as complete</li>
+<li>Proceed to next task or report completion</li>
+</ol>
+<h3 id="multi-task-orchestration">Multi-Task Orchestration</h3>
+<pre><code>1. Identify independent tasks (no dependencies on each other)
+2. For each independent task: run Phases 2-6
+3. After all independent tasks complete:
+   a. Run full test suite
+   b. Run all verification commands
+   c. Checkpoint review
+4. Identify next set of tasks (now that dependencies are met)
+5. Repeat until all tasks complete</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>Dispatching without complete task spec</td><td>Implementer makes wrong assumptions</td><td>Fill out all 7 spec sections first</td></tr><tr><td>Skipping spec review ("code looks right")</td><td>Spec deviations accumulate</td><td>Always run both review gates</td></tr><tr><td>Accepting despite Critical issues</td><td>Security/correctness compromised</td><td>Critical issues must be fixed</td></tr><tr><td>Letting implementer review its own code</td><td>Bias, blind spots</td><td>Separate agents for implementation and review</td></tr><tr><td>Dispatching dependent tasks in parallel</td><td>Race conditions, integration failures</td><td>Only parallelize independent tasks</td></tr><tr><td>Ignoring questions from implementer</td><td>Wrong assumptions baked into code</td><td>Address all questions before proceeding</td></tr><tr><td>More than 3 fix cycles without escalating</td><td>Diminishing returns, same mistakes</td><td>Escalate to user for direction</td></tr><tr><td>Skipping verification after acceptance</td><td>Regressions go unnoticed</td><td>Always run full verification</td></tr><tr><td>Vague acceptance criteria</td><td>Reviewer cannot assess objectively</td><td>Specific, testable criteria only</td></tr><tr><td>Not including constraints</td><td>Implementer touches files it should not</td><td>Explicit "do NOT" list in every spec</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<p><HARD-GATE> Do NOT skip either review gate. Do NOT accept implementations with Critical issues. Do NOT dispatch tasks without complete specifications. Both review gates must PASS before any task is marked complete. </HARD-GATE></p>
+<p>If you catch yourself thinking:</p>
+<ul>
+<li>"The implementation looks good enough..." — Run both review gates. Always.</li>
+<li>"The spec review is just a formality..." — Spec deviations cause integration failures. Run it.</li>
+<li>"Three retries is too many, just accept it..." — If it fails 3 times, escalate. Do not lower the bar.</li>
+</ul>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th><th>When</th></tr><tr><td><code>planning</code></td><td>Upstream — provides approved plan with tasks</td><td>Task source</td></tr><tr><td><code>executing-plans</code></td><td>Upstream — may delegate to this skill</td><td>For independent tasks in plan</td></tr><tr><td><code>test-driven-development</code></td><td>Per-task — implementer follows TDD</td><td>Phase 2 implementation</td></tr><tr><td><code>verification-before-completion</code></td><td>Post-acceptance — final verification</td><td>Phase 6 integration</td></tr><tr><td><code>code-review</code></td><td>Complementary — quality review gate</td><td>Phase 4 quality review</td></tr><tr><td><code>dispatching-parallel-agents</code></td><td>Complementary — parallelization strategy</td><td>When dispatching independent tasks</td></tr><tr><td><code>resilient-execution</code></td><td>On failure — retry strategies</td><td>When fix cycles exhaust</td></tr><tr><td><code>task-management</code></td><td>Tracking — task status management</td><td>Progress tracking</td></tr><tr><td><code>Agent</code> tool</td><td>Dispatch mechanism for all subagent phases</td></tr></table></div>
+<hr>
+<h2 id="concrete-examples">Concrete Examples</h2>
+<h3 id="example-task-spec-for-subagent">Example: Task Spec for Subagent</h3>
+<pre><code>TASK SPECIFICATION
+==================
+1. Description: Implement user registration endpoint with email validation
+
+2. Files:
+   - Create: src/routes/auth/register.ts
+   - Create: tests/routes/auth/register.test.ts
+   - Modify: src/routes/index.ts (add route import)
+
+3. Acceptance Criteria:
+   - POST /api/auth/register accepts { email, password, name }
+   - Returns 201 with user object (no password) on success
+   - Returns 400 if email format is invalid
+   - Returns 409 if email already exists
+   - Password is hashed before storage
+
+4. TDD Requirements:
+   - Test: valid registration returns 201
+   - Test: invalid email returns 400
+   - Test: duplicate email returns 409
+   - Test: password is not in response body
+   - Test: password is hashed in database
+
+5. Quality Standards:
+   - Follow route pattern in src/routes/auth/login.ts
+   - Use Zod for input validation (existing pattern)
+   - Use Result&lt;T, E&gt; type for service errors
+
+6. Context:
+   - Auth service: src/services/auth.ts (has hashPassword method)
+   - Route pattern: see src/routes/auth/login.ts
+   - Zod schemas: see src/schemas/auth.ts
+
+7. Constraints:
+   - Do NOT modify auth service
+   - Do NOT add new dependencies
+   - Do NOT create migration files</code></pre>
+<hr>
+<h2 id="prompt-templates">Prompt Templates</h2>
+<p>This skill uses three prompt templates:</p>
+<div class="table-wrapper"><table><tr><th>Template</th><th>Purpose</th><th>File</th></tr><tr><td>Implementer Prompt</td><td>Dispatches implementation work</td><td><code>implementer-prompt.md</code></td></tr><tr><td>Spec Reviewer Prompt</td><td>Reviews against task specification</td><td><code>spec-reviewer-prompt.md</code></td></tr><tr><td>Quality Reviewer Prompt</td><td>Reviews code quality</td><td><code>code-quality-reviewer-prompt.md</code></td></tr></table></div>
+<p>Each template provides a structured format for the subagent interaction. See the individual files for details.</p>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Follow this process exactly. All 7 spec sections are mandatory. Both review gates are mandatory. The 3-retry escalation limit is mandatory. No shortcuts.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

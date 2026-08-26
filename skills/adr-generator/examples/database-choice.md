@@ -1,35 +1,35 @@
-# Exemplo: ADR para Escolha de Database
+# Example: ADR for Database Choice
 
-## Contexto
-Precisávamos escolher entre PostgreSQL, MongoDB e DynamoDB para novo serviço.
+## Context
+We needed to choose between PostgreSQL, MongoDB, and DynamoDB for the new service.
 
-## Decisão
-Escolhemos PostgreSQL por:
-- Equipe já tem experiência
-- Suporte a JSONB para flexibilidade
-- Replicação síncrona para HA
+## Decision
+We chose PostgreSQL for:
+- The team already has experience
+- Support for JSONB for flexibility
+- Synchronous replication for HA
 
-## Alternativas
-- **MongoDB**: Schema flexível, mas operação mais cara
-- **DynamoDB**: Serverless, mas vendor lock-in
+## Alternatives
+- **MongoDB**: Flexible schema, but more expensive operation
+- **DynamoDB**: Serverless, but vendor lock-in
 
-## Resultado
-```
+## Result
+```markdown
 # ADR-003: Database Choice
 ## Status
-Aceito
+Accepted
 
-## Contexto
-Novo serviço de pedidos precisa de database.
+## Context
+The new order service requires a database.
 
-## Decisão
-PostgreSQL com replicação síncrona.
+## Decision
+PostgreSQL with synchronous replication.
 
-## Consequências
-### Positivas
-- Equipe produtiva desde início
-- Consultas flexíveis com JSONB
+## Consequences
+### Positive
+- The team is productive from the start
+- Flexible queries with JSONB
 
-### Negativas
-- Operacional mais complexo que DynamoDB
+### Negative
+- More operationally complex than DynamoDB
 ```

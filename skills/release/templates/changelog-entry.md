@@ -3,13 +3,13 @@
 ## [Unreleased]
 
 ### Added
-- {nova funcionalidade}
+- {new feature}
 
 ### Changed
-- {mudança existente}
+- {existing change}
 
 ### Fixed
-- {bug corrigido}
+- {bug fixed}
 
 ### Security
-- {vulnerabilidade corrigida}
+- {vulnerability fixed}

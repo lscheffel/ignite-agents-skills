@@ -411,291 +411,325 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: adr-generator description: Cria Architecture Decision Records (ADRs) para documentar decisões arquiteturais importantes. Gera templates padronizados com contexto, decisão, consequências e status. Use quando o usuário mencionar ADR, decisão arquitetural, ou precisar documentar trade-offs técnicos. version: 2.0.0 tags:</p>
+<p>name: adr-generator version: 3.1.1 description: Creates and governs Architecture Decision Records (ADRs) and the associated Decision Set (Blueprint, TODO, Implementation Plan). Generates standardized MADR-style artifacts with diagnosis, context, decision, alternatives, consequences, and status. Consumes registered technical debts to create corrective ADRs. Use whenever the user mentions ADR, architectural decision, "I need to record this decision," chooses between competing technologies/ approaches, relevant technical trade-offs, or requests to plan/document an architectural change before coding. Also use to review, replace, or repair existing ADR governance retroactively. domain: core-governance triggers:</p>
+<ul>
+<li>adr-generator</li>
+<li>adr</li>
+<li>architecture-decision-record</li>
+<li>decision-record</li>
+</ul>
+<p>tags:</p>
 <ul>
 <li>architecture</li>
 <li>decisions</li>
 <li>adr</li>
 <li>documentation</li>
+<li>governance</li>
+<li>tech-debt</li>
 </ul>
 <p>related_skills:</p>
 <ul>
-<li>documentation</li>
-<li>architecture-review-kilo</li>
+<li>technical-documentation</li>
+<li>architecture-review</li>
+<li>adr-archive</li>
 <li>implementation</li>
+<li>agent-planning-execution</li>
 </ul>
-<hr>
+<p>metadata: provenance: internal last_audited: "2026-08-26" ---</p>
 <h1 id="adr-generator">ADR Generator</h1>
-<p>Gera Architecture Decision Records (ADRs) seguindo o formato MADR ou similar.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Generates and governs the complete Decision Set of an architectural decision — not just the isolated ADR document. Follows the extended MADR (Markdown ADR) format with Blueprint, TODO, and, for more autonomous decisions, an Implementation Plan (PI). Also provides native integration with the Tech Debt Registry (<code>docs/governance/tech-debt-registry.json</code>) for deterministic conversion of technical debts into refactoring/remediation ADRs.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Decisão arquitetural significativa precisa ser documentada</li>
-<li>Usuário solicita criação de ADR</li>
-<li>Registro de trade-offs técnicos</li>
-<li>Decisões que afetam múltiplos módulos ou equipes</li>
+<li>A significant architectural decision needs to be documented</li>
+<li>The user requests the creation of an ADR</li>
+<li>Recording technical trade-offs between competing alternatives</li>
+<li>Decisions affecting multiple modules, services, or teams</li>
+<li>Governance of a legacy project needs to be reconstructed retroactively</li>
+<li>Converting technical debts from <code>tech-debt-registry.json</code> into remediation ADRs</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Decisão é óbvia (ex: usar tabs vs spaces)</li>
-<li>Decisão é reversível sem custo</li>
-<li>Protótipo rápido</li>
+<li>The decision is obvious and does not generate real debate (e.g., using tabs vs spaces)</li>
+<li>The decision is trivially reversible and of very low cost</li>
+<li>It is just a disposable prototype, with no intention of becoming production</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<blockquote>If the decision is small but still worth a light audit trail, this is not "do not use" — it is the use case for <strong>Tier 0</strong> (see Workflow). The threshold between "not worth a note" and "worth a light note" is the only thing that changes.</blockquote>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>documentation</code> — para padrões de documentação</li>
-<li><code>architecture-review-kilo</code> — para revisar decisões arquiteturais</li>
+<li><code>documentation</code> — for documentation standards</li>
+<li><code>architecture-review</code> — for reviewing architectural decisions and for the silent gate of Tier 2</li>
+<li><code>adr-archive</code> — for archiving, auditing, and synchronizing technical debts</li>
+<li><code>implementation</code> — consumes the Quadra, writes code, registers incidental debts in <code>tech-debt-registry.json</code>, and produces the Evidence Record (ER)</li>
+<li><code>agent-planning-execution</code> — rules and guidelines used to generate the PI</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Nova Decisão Arquitetural?] --&gt; B{Nível de Autonomia}
-    B --&gt;|Apenas Documentar| C[Tier 1: ADR Simples]
-    B --&gt;|Planejar Código| D[Tier 2: ADR Padrão Zen-Mode]
-    B --&gt;|Codar Agora| E[Tier 3: ADR Emergencial]
-    C --&gt; F[Gera Tríade: ADR+BP+TODO]
-    D --&gt; F
-    F --&gt; G[Gera PI: Implementation Plan]
-    G --&gt; H[Review Silencioso Kilo]
-    E --&gt; F
-    E --&gt; G
-    E --&gt; I[Invoca skill &#x27;implementation&#x27;]</code></pre>
+    A[New Architectural Decision?] --&gt; B{Origin?}
+    B --&gt;|Technical Debt in Registry| TDR[Fase 6: Remediação Tech Debt]
+    B --&gt;|New Demand/Idea| C{Worth recording?}
+    C --&gt;|No, see &#x27;Do not use when&#x27;| SKIP[Não gerar ADR]
+    C --&gt;|Is small, but want audit trail| T0[Tier 0: ADR Leve]
+    C --&gt;|Is significant| D{Autonomy Level}
+    D --&gt;|Just document/plan| T1[Tier 1: Triade ADR+BP+TODO]
+    D --&gt;|Plan + code already| T2[Tier 2: Quadra SOTA +PI]
+    D --&gt;|Code now| T3[Tier 3: Emergencial Direta]
+    P0[Incident P0 / zero time for ADR] --&gt; TX[Tier X: ADR Flash pos-fato]
+
+    TDR --&gt; T1
+    TDR --&gt; T2
+    T0 --&gt; Z[Fase 5: Fechamento]
+    T1 --&gt; Z
+    T2 --&gt; REV[Review silencioso &#x27;architecture-review&#x27;] --&gt; Z
+    T3 --&gt; IMPL[Aciona skill &#x27;implementation&#x27;] --&gt; Z
+    TX --&gt; IMPL
+    TX -.obrigatorio em ate 24h.-&gt; AR[Fase 4: Auto-Repair]
+    AR --&gt; T1
+
+    Z --&gt; ER[ER vinculado = Decision Set fechado]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<p>O processo de criação de ADRs agora suporta três níveis (Tiers) baseados no grau de autonomia desejada:</p>
-<h3 id="tier-1-adr-simples-trade-base">Tier 1: ADR Simples (Tríade Base)</h3>
-<p>Use para documentação pura e planejamento macro, sem gerar código de imediato.</p>
+<h3 id="phase-1-creation--five-tiers-by-autonomy-grade">Phase 1: Creation — Five Tiers by Autonomy Grade</h3>
+<div class="table-wrapper"><table><tr><th>Tier</th><th>When to use</th><th>Artifacts</th><th>Templates to copy</th></tr><tr><td><strong>0 — ADR Leve</strong></td><td>Small decision, but want audit trail; below the threshold of a complete Triade</td><td>1: ADR standalone</td><td><code>adr-simple.md</code></td></tr><tr><td><strong>1 — Triade</strong></td><td>Document and plan macro, without coding yet</td><td>3: ADR + BP + TODO</td><td><code>adr.md</code>, <code>adr-bp.md</code>, <code>adr-todo.md</code></td></tr><tr><td><strong>2 — Quadra SOTA</strong></td><td>Architecture defined, want code plan ready with autonomous gate</td><td>4: Triade + PI</td><td>+ <code>adr-pi.md</code></td></tr><tr><td><strong>3 — Emergencial Direta</strong></td><td>Urgent correction or obvious task that must be coded immediately</td><td>4: Quadra (review skipped)</td><td>same as Tier 2</td></tr><tr><td><strong>X — ADR Flash</strong></td><td>Critical incident, decision already made and coded by necessity — zero time for ADR before</td><td>1 now, 3 later (obligatory)</td><td><code>adr-emergency.md</code>, then complete via Phase 4</td></tr></table></div>
+<h4 id="tier-0-adr-leve-note-of-decision">Tier 0: ADR Leve (Note of Decision)</h4>
+<p>For small decisions that still merit a record — without the overhead of Blueprint/TODO.</p>
 <ol>
-<li>Gere a Tríade de artefatos simultaneamente:</li>
+<li><code>cp templates/adr-simple.md docs/adr/ADR-XXX.md</code></li>
+<li>Fill in Context, Decision, Consequences. Do not generate BP nor TODO.</li>
+<li><strong>Checkpoint:</strong> ADR Leve created. (Stop here — do not scale to Triade.)</li>
 </ol>
-<ul>
-<li><code>docs/adr/ADR-XXX.md</code> (A decisão e contexto)</li>
-<li><code>docs/adr/ADR-XXX-BP.md</code> (Fases de implementação macro)</li>
-<li><code>docs/adr/ADR-XXX-TODO.md</code> (Critérios de aceite e checklist macro)</li>
-</ul>
+<h4 id="tier-1-triade-base">Tier 1: Triade Base</h4>
+<p>Use for pure documentation and macro planning, without generating code immediately.</p>
 <ol>
-<li>Preencha os três arquivos com base na solicitação.</li>
-<li><strong>Checkpoint Final:</strong> Tríade gerada e linkada. (Pare aqui).</li>
+<li>Generate the Triade of artifacts simultaneously:</li>
 </ol>
-<h3 id="tier-2-adr-padro-zen-mode-quadra">Tier 2: ADR Padrão ("Zen-Mode" Quadra)</h3>
-<p>Use quando a arquitetura está definida e deseja-se gerar o plano de código imediato, porém com gatekeeper autônomo.</p>
+<pre data-lang="bash"><code>   cp templates/adr.md docs/adr/ADR-XXX.md
+   cp templates/adr-bp.md docs/adr/ADR-XXX-BP.md
+   cp templates/adr-todo.md docs/adr/ADR-XXX-TODO.md</code></pre>
 <ol>
-<li><strong>Round 1:</strong> Siga todos os passos do Tier 1 (Gere a Tríade completa).</li>
-<li><strong>Round 2:</strong> Leia o conteúdo recém-gerado no <code>ADR-XXX-TODO.md</code>.</li>
-<li><strong>Round 3:</strong> Invoque as regras e diretrizes da skill <code>writing-plans</code> nativamente. <strong>Antes de gerar o PI, leia atentamente a pasta <code>examples/quadra/</code></strong> para usar como <em>Few-Shot Prompt</em> e garantir qualidade Enterprise. Crie o 4º artefato: <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan), usando o template <code>templates/adr-pi.md</code> para quebrar os requisitos do TODO em passos microscópicos (TDD, arquivos específicos, edge cases, rollback e comandos de terminal).</li>
-<li><strong>Round 4:</strong> Acione a skill <code>architecture-review-kilo</code> em modo <strong>silencioso</strong> para analisar a Quadra gerada. O output visível para o usuário deve ser apenas a confirmação dos 4 arquivos gerados e aprovados.</li>
-<li><strong>Checkpoint Final:</strong> Apresente os links para a Quadra finalizada.</li>
+<li>Fill in the three files based on the request, linking them between each other (the BP and TODO reference the ADR; see frontmatter <code>adr_ref</code>).</li>
+<li><strong>Checkpoint Final:</strong> Triade generated and linked. (Stop here.)</li>
 </ol>
-<h3 id="tier-3-adr-emergencial-execuo-direta">Tier 3: ADR Emergencial (Execução Direta)</h3>
-<p>Use para correções urgentes ou tarefas óbvias que devem ser codadas no mesmo instante.</p>
+<h4 id="tier-2-quadra-sota-state-of-the-art">Tier 2: Quadra SOTA (State of the Art)</h4>
+<p>Use when the architecture is defined and wants to generate the code plan immediately, but with autonomous gate.</p>
 <ol>
-<li><strong>Round 1:</strong> Execute os Rounds 1 a 3 do "ADR Padrão" (Gere a Quadra). O review silencioso (Round 4) é opcional e pode ser pulado para velocidade.</li>
-<li><strong>Round 2:</strong> Acione automaticamente a skill <code>implementation</code> (passando a Quadra recém-criada) para que os agentes já comecem a escrever o código e modificar o repositório no mesmo momento.</li>
+<li><strong>Round 1:</strong> Follow all steps of Tier 1 (Generate the complete Triade).</li>
+<li><strong>Round 2:</strong> Read the newly generated content in <code>ADR-XXX-TODO.md</code>.</li>
+<li><strong>Round 3:</strong> Invoke the rules and guidelines of the <code>agent-planning-execution</code> skill natively. <strong>Before generating the PI, read attentively the <code>examples/quadra/</code> folder</strong> to use as a <em>Few-Shot Prompt</em> and ensure Enterprise quality. Create the 4th artifact level SOTA:</li>
 </ol>
-<blockquote><strong>Regra obrigatória:</strong> Uma decisão nunca existe isoladamente. Sempre que uma ADR é criada, seja qual for o Tier, a Tríade inicial (ADR + BP + TODO) deve ser preenchida para manter a governança ativa. O 4º arquivo (PI) entra para Tiers elevados.</blockquote>
-<h3 id="fase-2-revisar-adr-existente">Fase 2: Revisar ADR Existente</h3>
+<pre data-lang="bash"><code>   cp templates/adr-pi.md docs/adr/ADR-XXX-PI.md</code></pre>
+<p>to break down the TODO requirements into microscopic steps (TDD, specific files, edge cases, rollback, and terminal commands).</p>
 <ol>
-<li>Leia ADR:</li>
+<li><strong>Round 4:</strong> Activate the <code>architecture-review</code> skill in <strong>silent mode</strong> to analyze the generated Quadra. The visible output for the user should be only the confirmation of the 4 generated and approved artifacts.</li>
+<li><strong>Checkpoint Final:</strong> Present the links to the final Quadra.</li>
+</ol>
+<h4 id="tier-3-adr-emergencial-direct-execution">Tier 3: ADR Emergencial (Direct Execution)</h4>
+<p>Use for urgent corrections or obvious tasks that must be coded immediately — but that still comport generating the complete Quadra first (the difference with Tier 2 is only speed, not rigor).</p>
+<ol>
+<li><strong>Round 1:</strong> Execute Rounds 1 to 3 of Tier 2 (Generate the complete Quadra: ADR + BP + TODO + PI). The silent review (Round 4) is optional and can be skipped for speed.</li>
+<li><strong>Round 2:</strong> Automatically invoke the <code>implementation</code> skill (passing the newly created Quadra) to start the agents writing the code and modifying the repository at the same time.</li>
+</ol>
+<h4 id="tier-x-adr-flash-post-facto-hotfix">Tier X: ADR Flash (Post-Facto Hotfix)</h4>
+<p>Reserved for real incidents (P0) where there is <strong>no</strong> time available to generate even the Triade before acting — the code is already being or has been written to contain the incident. This is the only legitimate case of "code before documenting," and therefore requires follow-up.</p>
+<ol>
+<li><strong>Immediate:</strong></li>
+</ol>
+<pre data-lang="bash"><code>   cp templates/adr-emergency.md docs/adr/ADR-XXX.md</code></pre>
+<p>Fill in only the essentials: what was broken, what was done, assumed risks.</p>
+<ol>
+<li><strong>Obligatory in up to 24 hours (or at the start of the next work session):</strong></li>
+</ol>
+<p>Trigger the <strong>Phase 4 (Auto-Repair)</strong> to promote this ADR Flash to a complete Triade (BP + TODO retroactively). An ADR Flash without this follow-up is governance debt — treat as a TODO of high priority.</p>
+<blockquote><strong>Obligatory Rule:</strong> A decision never exists in isolation. Outside of Tier 0 (which is intentionally standalone) and Tier X (which is an exception with obligatory follow-up), whenever an ADR is created, the initial Triade (ADR + BP + TODO) must be filled to maintain active governance. The 4th artifact (PI) enters for Tiers 2 and 3.</blockquote>
+<h3 id="phase-2-review-existing-adr">Phase 2: Review Existing ADR</h3>
+<ol>
+<li>Read ADR:</li>
 </ol>
 <pre data-lang="bash"><code>   cat docs/adr/ADR-00X.md</code></pre>
 <ol>
-<li>Verifique se ainda é válido:</li>
+<li>Check if still valid:</li>
 </ol>
 <ul>
-<li>Contexto mudou?</li>
-<li>Alternativas mudaram?</li>
+<li>Context changed?</li>
+<li>Alternatives changed?</li>
 </ul>
 <ol>
-<li>Atualize status:</li>
+<li>Update status:</li>
 </ol>
 <ul>
-<li>Aceito → Substituído (se aplicável)</li>
+<li>Proposed → Accepted (if applicable)</li>
 </ul>
 <ol>
-<li><strong>Checkpoint</strong>: ADR revisado ou mantido</li>
+<li><strong>Checkpoint:</strong> ADR reviewed or maintained</li>
 </ol>
-<h3 id="fase-3-substituir-adr">Fase 3: Substituir ADR</h3>
+<h3 id="phase-3-replace-adr">Phase 3: Replace ADR</h3>
 <ol>
-<li>Crie novo ADR:</li>
+<li>Create new ADR:</li>
 </ol>
 <pre data-lang="bash"><code>   cp templates/adr.md docs/adr/ADR-NEW.md</code></pre>
 <ol>
-<li>No ADR antigo, atualize status:</li>
+<li>In the old ADR, update status:</li>
 </ol>
 <pre data-lang="markdown"><code>   ## Status
-   Substituído por ADR-NEW</code></pre>
+
+   Replaced by ADR-NEW</code></pre>
 <ol>
-<li>Link no novo ADR:</li>
+<li>Link in the new ADR:</li>
 </ol>
-<pre data-lang="markdown"><code>   ## Referências
-   - Substitui ADR-OLD</code></pre>
+<pre data-lang="markdown"><code>   ## References
+
+   - Replaces ADR-OLD</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Substituição documentada</li>
+<li><strong>Checkpoint Final:</strong> Replacement documented</li>
 </ol>
-<h3 id="fase-4-auto-repair-e-retroactive-governance">Fase 4: Auto-Repair e Retroactive Governance</h3>
-<p>Use para projetos legado ou para "consertar" uma governança quebrada que a skill <code>implementation</code> tenha rejeitado.</p>
+<h3 id="phase-4-auto-repair-and-retroactive-governance">Phase 4: Auto-Repair and Retroactive Governance</h3>
+<p>Use for legacy projects, to "fix" a broken governance that the <code>implementation</code> skill has rejected, or to promote an ADR Flash (Tier X) pending.</p>
 <ol>
-<li><strong>Diagnóstico:</strong> Analise o que está faltando:</li>
+<li><strong>Diagnosis:</strong> Analyze what is missing:</li>
 </ol>
 <ul>
-<li>Só existe código, mas sem decisão formal documentada? → Criar "ADR Retrospectivo" usando a flag emergencial de auto-repair.</li>
-<li>Existe ADR, mas não BP nem TODO? → Gerar a Tríade (ou Quadra) faltante, extraindo dados do ADR original e do código existente.</li>
-<li>Artefatos estão com formato errado (sem frontmatter)? → Reescrever usando os templates obrigatórios.</li>
+<li>Only code exists, but no formal decision is documented? → Create "ADR Retrospectivo" using the emergency flag of auto-repair.</li>
+<li>ADR (including a pending Tier X) exists, but no BP nor TODO? → Generate the missing Triade (or Quadra) by extracting data from the original ADR and existing code.</li>
+<li>Artifacts are in the wrong format (without frontmatter)? → Rewrite using the obligatory templates.</li>
 </ul>
 <ol>
-<li><strong>Auto-Correção:</strong> Gere os artefatos faltantes e linke-os entre si.</li>
-<li><strong>Checkpoint:</strong> Governança restaurada; a skill <code>implementation</code> pode continuar.</li>
+<li><strong>Auto-Correction:</strong> Generate the missing artifacts and link them between each other.</li>
+<li><strong>Checkpoint:</strong> Governance restored; the <code>implementation</code> skill can continue, or the Decision Set can proceed to Phase 5.</li>
 </ol>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="estrutura-do-adr">Estrutura do ADR</h3>
-<pre data-lang="markdown"><code># ADR-XXX: [Título da Decisão]
+<h3 id="phase-5-cycle-closure-evidence-record">Phase 5: Cycle Closure (Evidence Record)</h3>
+<p>A Decision Set is not considered closed just because the Quadra exists — it closes when the implementation is <strong>evidenced</strong>. This skill does not generate the Evidence Record (this is the responsibility of <code>implementation</code> and/or <code>adr-archive</code>, which have the real execution context); however, it is responsible for leaving the Decision Set ready to receive it:</p>
+<ol>
+<li>Confirm that the ADR has a placeholder reference for the ER in <code>## References</code> (e.g., <code>- Evidence Record: (pending)</code>).</li>
+<li>Do not treat <code>implementation_status</code> in the frontmatter as a definitive signal of completion — it is a cache of convenience. <strong>The source of truth is the existence of a linked ER</strong>. If an agent asks "has this decision been implemented?", the correct answer is to verify the ER link, not just read the frontmatter.</li>
+<li><strong>Checkpoint:</strong> ADR ready to receive the ER as soon as <code>implementation</code> (or <code>adr-archive</code>) produces it.</li>
+</ol>
+<h3 id="phase-6-technical-debt-remediation-tech-debt-registry">Phase 6: Technical Debt Remediation (Tech Debt Registry)</h3>
+<p>Use when the ADR has the goal of solving one or more registered technical debts in <code>docs/governance/tech-debt-registry.json</code>.</p>
+<ol>
+<li><strong>Reading and Selection:</strong> Inspect <code>docs/governance/tech-debt-registry.json</code>. Identify the items with status <code>OPEN</code> targeted for remediation (either by specific ID <code>TD-YYYY-NNN</code>, or by grouping correlated debts by domain or severity).</li>
+<li><strong>Generating the Decision Set:</strong> Create the Triade (Tier 1) or Quadra (Tier 2/3) of remediation:</li>
+</ol>
+<ul>
+<li>In the Context of the ADR, formally reference the IDs of the debts attacked.</li>
+<li>In the TODO and BP, define the exact steps to mitigate and test the debt solution.</li>
+</ul>
+<ol>
+<li><strong>Vinculation in Registry:</strong> In the <code>docs/governance/tech-debt-registry.json</code> file, update the item of the debt:</li>
+</ol>
+<ul>
+<li><code>status</code>: <code>"IN_PROGRESS"</code></li>
+<li><code>mitigation_ref</code>: <code>"ADR-XXX"</code></li>
+</ul>
+<ol>
+<li><strong>Checkpoint:</strong> Debt formally linked to the ADR of mitigation and in progress. The definitive closure to <code>RESOLVED</code> will occur automatically via <code>audit.py</code> when the ADR is implemented.</li>
+</ol>
+<h2 id="fundamental-concepts">Fundamental Concepts</h2>
+<h3 id="adr-structure">ADR Structure</h3>
+<pre data-lang="markdown"><code>---
+id: ADR-XXX
+type: adr
+title: [Decision Title]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+
+# ADR-XXX: [Decision Title]
 
 ## Status
-Proposto | Aceito | Rejeitado | Suspenso | Substituído
 
-## Contexto
-Descreva o problema, motivação e restrições.
+Proposed | Accepted | Rejected | Suspended | Replaced
 
-## Decisão
-Descreva a solução escolhida.
+## Context
 
-## Alternativas Consideradas
-- Alternativa A: descrição, prós e contras
-- Alternativa B: descrição, prós e contras
+Describe the problem, motivation, and restrictions. (If originated from technical debt, cite TD-YYYY-NNN).
 
-## Consequências
-### Positivas
+## Decision
+
+Describe the chosen solution.
+
+## Alternatives Considered
+
+- Alternative A: description, pros, and cons
+- Alternative B: description, pros, and cons
+
+## Consequences
+
+### Positive
+
 - ...
 
-### Negativas
-- ...</code></pre>
+### Negative
+
+- ...
+
+## References
+
+- Evidence Record: (pending)
+- Tech Debt Registry: TD-YYYY-NNN (if applicable)</code></pre>
 <h3 id="status-values">Status Values</h3>
 <ul>
-<li><strong>Proposto</strong>: Em discussão</li>
-<li><strong>Aceito</strong>: Aprovado e implementado</li>
-<li><strong>Rejeitado</strong>: Rejeitado, não implementado</li>
-<li><strong>Suspenso</strong>: Em espera</li>
-<li><strong>Substituído</strong>: Reemplazado por outro ADR</li>
+<li><strong>Proposed</strong>: In discussion</li>
+<li><strong>Accepted</strong>: Approved for implementation</li>
+<li><strong>Frozen / Congelado</strong>: Approved, but waiting voluntarily for future execution. Should not be considered in the active scope, does not generate technical debts, and remains archived in <code>docs/adr/frozen/</code>.</li>
+<li><strong>Rejected</strong>: Rejected, not implemented</li>
+<li><strong>Suspended</strong>: Waiting / pause in discussion</li>
+<li><strong>Replaced</strong>: Replaced by another ADR</li>
 </ul>
+<p>The frontmatter of each artifact can carry a <code>implementation_status</code> field (<code>PENDING</code>, <code>IN_PROGRESS</code>, <code>FROZEN</code>, <code>CONCLUDED</code>) as a <strong>cache of quick read</strong> for tooling and dashboards. It is never the source of truth: in case of divergence between this field and the existence (or not) of a linked Evidence Record, the ER wins. See <a href="#phase-5-cycle-closure-evidence-record">Phase 5</a>.</p>
 <h2 id="templates">Templates</h2>
-<h3 id="adrmd">adr.md</h3>
-<p>Localização: <code>templates/adr.md</code></p>
-<p>Template para Architecture Decision Record.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/adr.md docs/adr/ADR-00X.md</code></pre>
-<h3 id="adr-bpmd">adr-bp.md</h3>
-<p>Localização: <code>templates/adr-bp.md</code></p>
-<p>Template para Blueprint de Implementação do ADR. Define fases, dependências e critérios de aceitação.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/adr-bp.md docs/adr/ADR-00X-BP.md</code></pre>
-<h3 id="adr-todomd">adr-todo.md</h3>
-<p>Localização: <code>templates/adr-todo.md</code></p>
-<p>Template para lista de tarefas verificáveis do ADR. Cada tarefa deve ter um comando de validação.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md</code></pre>
-<h3 id="adr-emergencymd">adr-emergency.md</h3>
-<p>Localização: <code>templates/adr-emergency.md</code></p>
-<p>Template para ADR emergencial (implementação imediata sem BP/TODO). Use para correções críticas.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/adr-emergency.md docs/adr/ADR-00X.md</code></pre>
-<h3 id="adr-simplemd">adr-simple.md</h3>
-<p>Localização: <code>templates/adr-simple.md</code></p>
-<p>Template para ADR simples (sem necessidade de BP/TODO). Use para decisões menores.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/adr-simple.md docs/adr/ADR-00X.md</code></pre>
-<h3 id="adr-pimd">adr-pi.md</h3>
-<p>Localização: <code>templates/adr-pi.md</code></p>
-<p>Template para Implementation Plan (PI) Nível Enterprise. Focado em TDD granular, isolamento de escopo, mocks, tratamento de exceções (edge cases) e regras estritas de Rollback.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/adr-pi.md docs/adr/ADR-00X-PI.md</code></pre>
+<div class="table-wrapper"><table><tr><th>Template</th><th>Location</th><th>Use</th><th>Command</th></tr><tr><td><code>adr.md</code></td><td><code>templates/adr.md</code></td><td>Complete ADR (Tiers 1–3)</td><td><code>cp templates/adr.md docs/adr/ADR-00X.md</code></td></tr><tr><td><code>adr-simple.md</code></td><td><code>templates/adr-simple.md</code></td><td>Lightweight ADR, standalone (Tier 0)</td><td><code>cp templates/adr-simple.md docs/adr/ADR-00X.md</code></td></tr><tr><td><code>adr-emergency.md</code></td><td><code>templates/adr-emergency.md</code></td><td>Post-facto ADR Flash (Tier X, hotfix)</td><td><code>cp templates/adr-emergency.md docs/adr/ADR-00X.md</code></td></tr><tr><td><code>adr-bp.md</code></td><td><code>templates/adr-bp.md</code></td><td>Implementation Blueprint (phases, dependencies, criteria)</td><td><code>cp templates/adr-bp.md docs/adr/ADR-00X-BP.md</code></td></tr><tr><td><code>adr-todo.md</code></td><td><code>templates/adr-todo.md</code></td><td>Verifiable checklist, elastic scope</td><td><code>cp templates/adr-todo.md docs/adr/ADR-00X-TODO.md</code></td></tr><tr><td><code>adr-pi.md</code></td><td><code>templates/adr-pi.md</code></td><td>Enterprise Implementation Plan (Tiers 2–3): TDD granular, mocks, edge cases, rollback</td><td><code>cp templates/adr-pi.md docs/adr/ADR-00X-PI.md</code></td></tr></table></div>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="adr-sem-blueprint-e-todo">ADR sem Blueprint e TODO</h4>
-<p><strong>O que é:</strong> Criar ADR sem gerar simultaneamente seu BP e TODO. <strong>Por que é ruim:</strong> ADR fica sem plano de implementação e sem tarefas verificáveis — quebra o ciclo ADR→Blueprint→TODO→Implementation. <strong>Como evitar:</strong> Sempre crie os 3 arquivos juntos: <code>ADR-XXX.md</code>, <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-mkdir -p docs/adr
-cp templates/adr.md docs/adr/ADR-009.md
-# (esqueceu BP e TODO)
-
-# ✅ CORRETO
-cp templates/adr.md docs/adr/ADR-009.md
-cp templates/adr-bp.md docs/adr/ADR-009-BP.md
-cp templates/adr-todo.md docs/adr/ADR-009-TODO.md</code></pre>
+<h3 id="critical">Critical</h3>
+<h4 id="adr-without-blueprint-and-todo">ADR without Blueprint and TODO</h4>
+<p><strong>What is it:</strong> Creating an ADR of Tier 1+ without generating the Blueprint and TODO simultaneously. <strong>Why is it bad:</strong> ADR remains without an implementation plan and verifiable tasks — breaks the ADR→Blueprint→TODO→Implementation cycle. <strong>How to avoid:</strong> Always create the 3 artifacts together, except for Tier 0 (intentionally standalone) and Tier X (exception with obligatory follow-up).</p>
 <h4 id="adr-retrospectivo">ADR Retrospectivo</h4>
-<p><strong>O que é:</strong> Criar ADR após decisão já implementada. <strong>Por que é ruim:</strong> Não registra trade-offs reais, parece justificação. <strong>Como evitar:</strong> Crie ADR antes da implementação. <strong>Exceção de Auto-Repair:</strong> É permitido gerar um ADR retrospectivamente EXCLUSIVAMENTE para fins de <strong>Retroactive Governance</strong> em projetos legados que estão sendo padronizados para o Zen-Mode. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-Decisão tomada em 2024-01-01
-ADR criado em 2024-06-01 (sem ser projeto legado)
-
-# ✅ CORRETO (em modo regular)
-ADR criado em 2024-01-01
-Decisão implementada em 2024-01-15</code></pre>
-<h4 id="adr-sem-alternativas">ADR sem Alternativas</h4>
-<p><strong>O que é:</strong> ADR que não lista alternativas consideradas. <strong>Por que é ruim:</strong> Não mostra trade-offs, parece decisão aleatória. <strong>Como evitar:</strong> Sempre liste pelo menos 2 alternativas. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-Escolhemos React porque é bom
-
-# ✅ CORRETO
-Alternativas:
-- React: comunidade grande, curva aprendizado média
-- Vue: curva aprendizado baixa, comunidade menor
-- Svelte: performance alta, comunidade pequena
-Escolhemos React por comunidade e documentação</code></pre>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="adr-vago">ADR Vago</h4>
-<p><strong>O que é:</strong> ADR sem contexto ou decisão clara. <strong>Por que é ruim:</strong> Futuro desenvolvedor não entende motivação. <strong>Como evitar:</strong> Seja específico, inclua dados. <strong>Exemplo:</strong></p>
-<pre><code># ❌ ERRADO
-Usamos PostgreSQL
-
-# ✅ CORRETO
-Usamos PostgreSQL por:
-- Suporte a JSONB para queries flexíveis
-- Replicação síncrona para HA
-- Equipe já tem experiência</code></pre>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="adr-sem-data">ADR sem Data</h4>
-<p><strong>O que é:</strong> ADR sem data de criação. <strong>Por que é ruim:</strong> Difícil rastrear histórico. <strong>Como evitar:</strong> Sempre inclua data. <strong>Exemplo:</strong></p>
-<pre data-lang="markdown"><code># ✅ CORRETO
-# ADR-001: Database Choice
-## Status
-Aceito
-
-## Date
-2024-01-15</code></pre>
+<p><strong>What is it:</strong> Creating an ADR after a decision has already been implemented. <strong>Why is it bad:</strong> Does not record real trade-offs, seems like justification. <strong>How to avoid:</strong> Create the ADR before implementation. <strong>Exceptions:</strong> (1) <strong>Auto-Repair</strong> — permitted exclusively for <strong>Retroactive Governance</strong> in legacy projects being standardized. (2) <strong>Tier X (ADR Flash)</strong> — permitted for P0 incidents, with obligatory follow-up in up to 24 hours via Phase 4.</p>
+<h4 id="adr-without-alternatives">ADR without Alternatives</h4>
+<p><strong>What is it:</strong> An ADR that does not list considered alternatives. <strong>Why is it bad:</strong> Does not show trade-offs, seems like a random decision. This also applies to examples used as few-shot — an example canonical without alternatives teaches the agent to skip this section. <strong>How to avoid:</strong> Always list at least 2 alternatives, including in examples of reference in <code>examples/</code>.</p>
+<h4 id="template-orphan">Template Orphan</h4>
+<p><strong>What is it:</strong> A template cataloged in the "Templates" section of the SKILL.md, but which no Tier or Phase of the workflow actually references or copies. <strong>Why is it bad:</strong> The agent does not know when to use it, so either it is never used (dead weight) or it is used incorrectly by analogy.</p>
+<h4 id="divergent-status-frontmatter-vs-evidence-record">Divergent Status (Frontmatter vs. Evidence Record)</h4>
+<p><strong>What is it:</strong> Trusting the <code>implementation_status</code> field in the frontmatter as if it were the source of truth about whether a decision has been implemented. <strong>Why is it bad:</strong> The field is manually filled or cached and can desynchronize from the real state — breaks the principle that the implementation status is signaled by the existence of a linked ER. <strong>How to avoid:</strong> Treat <code>implementation_status</code> as a cache of quick read. Before declaring a decision "implemented," verify the ER link (see <a href="#phase-5-cycle-closure-evidence-record">Phase 5</a>).</p>
+<h3 id="medium">Medium</h3>
+<h4 id="vague-adr">Vague ADR</h4>
+<p><strong>What is it:</strong> An ADR without clear context or decision. <strong>Why is it bad:</strong> Future developer does not understand motivation. <strong>How to avoid:</strong> Be specific, include data.</p>
+<h4 id="todo-with-fabricated-phases">TODO with Fabricated Phases</h4>
+<p><strong>What is it:</strong> Filling phases/sub-phases of a TODO just to reach a "standard" count of tasks, even when the real scope of the decision does not justify it. <strong>Why is it bad:</strong> Inflates the checklist with artificial tasks, dilutes the signal of the tasks that really matter. <strong>How to avoid:</strong> Use exactly the phases and steps that the real scope requires — the <code>adr-todo.md</code> template is elastic, not a fixed grid to fill.</p>
+<h3 id="low">Low</h3>
+<h4 id="adr-without-date">ADR without Date</h4>
+<p><strong>What is it:</strong> An ADR without a creation date. <strong>Why is it bad:</strong> Difficult to track history. <strong>How to avoid:</strong> Always include the date in the frontmatter (<code>created</code>).</p>
+<h4 id="placeholders-with-accentuation">Placeholders with Accentuation</h4>
+<p><strong>What is it:</strong> Using accented characters within template placeholders, e.g., <code>{{ação}}</code>, <code>{{contexto}}</code>. <strong>Why is it bad:</strong> Simple substitution scripts (regex, encoding poorly configured) may silently fail on these placeholders. <strong>How to avoid:</strong> Template placeholders always in pure ASCII (e.g., <code>{{action_summary}}</code>), even if the filled content is in Portuguese.</p>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-de-adr">Checklist de ADR</h3>
+<h3 id="adr-checklist">ADR Checklist</h3>
 <ul>
-<li>[ ] Título claro e descritivo</li>
-<li>[ ] Contexto completo</li>
-<li>[ ] Alternativas listadas</li>
-<li>[ ] Decisão justificada</li>
-<li>[ ] Consequências documentadas</li>
-<li>[ ] Data incluída</li>
-<li>[ ] Stakeholders identificados</li>
-<li>[ ] <strong>Blueprint (BP) criado em <code>ADR-XXX-BP.md</code></strong></li>
-<li>[ ] <strong>TODO criado em <code>ADR-XXX-TODO.md</code></strong></li>
-<li>[ ] <strong>PI (Implementation Plan) criado em <code>ADR-XXX-PI.md</code> (Para Tiers 2 e 3)</strong></li>
-<li>[ ] <strong>Arquivos linkados entre si no ADR</strong></li>
+<li>[ ] Clear and descriptive title</li>
+<li>[ ] Complete context (including mention of technical debt TD-YYYY-NNN if applicable)</li>
+<li>[ ] Listed alternatives (at least 2, even in few-shot examples)</li>
+<li>[ ] Justified decision</li>
+<li>[ ] Documented consequences</li>
+<li>[ ] Included date (<code>created</code> in frontmatter)</li>
+<li>[ ] <strong>Blueprint (BP) created in <code>ADR-XXX-BP.md</code></strong> (except Tier 0)</li>
+<li>[ ] <strong>TODO created in <code>ADR-XXX-TODO.md</code></strong> (except Tier 0)</li>
+<li>[ ] <strong>PI (Implementation Plan) created in <code>ADR-XXX-PI.md</code></strong> (Tiers 2 and 3)</li>
+<li>[ ] Artifacts linked between each other (<code>adr_ref</code> in frontmatter of derivatives)</li>
+<li>[ ] Reference to Evidence Record present (even if "pending")</li>
+<li>[ ] Technical debt updated to <code>IN_PROGRESS</code> in <code>tech-debt-registry.json</code> (if originated from debt)</li>
 </ul>
-<h3 id="checklist-de-review">Checklist de Review</h3>
+<h3 id="review-checklist">Review Checklist</h3>
 <ul>
-<li>[ ] Contexto ainda relevante?</li>
-<li>[ ] Decisão ainda válida?</li>
-<li>[ ] Alternativas precisam atualização?</li>
-<li>[ ] Status atualizado</li>
+<li>[ ] Context still relevant?</li>
+<li>[ ] Decision still valid?</li>
+<li>[ ] Alternatives need update?</li>
+<li>[ ] Status updated</li>
+<li>[ ] <code>implementation_status</code> in frontmatter reflects the existence (or not) of a linked ER?</li>
 </ul>
-<h2 id="edge-cases">Edge Cases</h2>
-<h3 id="adr-de-emergncia">ADR de Emergência</h3>
-<p><strong>Situação:</strong> Decisão urgente precisa ser documentada. <strong>Solução:</strong> Crie ADR simplificado, detalhe depois. <strong>Exceção:</strong> Se emergência é crítica, documente imediatamente.</p>
-<pre data-lang="markdown"><code>## Status
-Aceito (emergencial)</code></pre>
-<h3 id="adr-para-experimento">ADR para Experimento</h3>
-<p><strong>Situação:</strong> Decisão experimental precisa ser documentada. <strong>Solução:</strong> Use status "Suspenso" ou "Experimental". <strong>Exceção:</strong> Se experimento é pequeno, use Decision Doc.</p>
-<pre data-lang="markdown"><code>## Status
-Suspenso (experimental)</code></pre>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
 <li><a href="https://adr.github.io/madr/">MADR</a></li>
-<li><code>documentation</code> — para padrões</li>
-<li><code>architecture-review-kilo</code> — para revisões</li>
+<li><code>technical-documentation</code> — for standards</li>
+<li><code>architecture-review</code> — for reviews</li>
+<li><code>adr-archive</code> — for auditing and archiving</li>
+<li>Governance principle of the Decision Set: implementation status is signaled by the existence of a linked Evidence Record (ER), not by a standalone frontmatter field.</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
@@ -709,6 +743,7 @@ Suspenso (experimental)</code></pre>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/README.html">README.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/database-choice.html">database-choice.md</a></li>
 </ul>
 

@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pdf-processing — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; pdf-processing</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: pdf-processing version: 1.0.0 description: 'Use when the user needs PDF generation, manipulation, form filling, table extraction, OCR, merging, splitting, watermarking, or metadata handling. Trigger conditions: generate PDF reports, extract text or tables from PDFs, fill PDF forms programmatically, merge or split PDF files, add watermarks, OCR scanned documents, read or write PDF metadata, convert HTML to PDF.' domain: domain-stack triggers:</p>
+<ul>
+<li>pdf-processing</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>pdf-processing</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="pdf-processing">PDF Processing</h1>
+<h2 id="overview">Overview</h2>
+<p>Generate, manipulate, and extract data from PDF documents. This skill covers the Python PDF ecosystem: pypdf for merging/splitting/metadata, pdfplumber for text and table extraction, reportlab for generation, pytesseract for OCR, and strategies for form filling, watermarking, and complex document assembly.</p>
+<p>Apply this skill whenever PDFs need to be created, parsed, transformed, or combined through code.</p>
+<h2 id="multi-phase-process">Multi-Phase Process</h2>
+<h3 id="phase-1-requirements">Phase 1: Requirements</h3>
+<ol>
+<li>Determine operation type (generate, extract, manipulate)</li>
+<li>Identify input PDF characteristics (scanned, digital, forms)</li>
+<li>Define output requirements (format, quality, size)</li>
+<li>Plan data pipeline (source data to PDF or PDF to data)</li>
+<li>Assess volume and performance requirements</li>
+</ol>
+<blockquote><strong>STOP — Do NOT select a library until the operation type and input characteristics are clear.</strong></blockquote>
+<h3 id="phase-2-implementation">Phase 2: Implementation</h3>
+<ol>
+<li>Select appropriate library for the task (see decision table)</li>
+<li>Implement core processing logic</li>
+<li>Handle edge cases (corrupted files, encrypted PDFs, mixed content)</li>
+<li>Add error handling and validation</li>
+<li>Optimize for file size and processing speed</li>
+</ol>
+<blockquote><strong>STOP — Do NOT skip edge case handling for encrypted, rotated, or scanned PDFs.</strong></blockquote>
+<h3 id="phase-3-validation">Phase 3: Validation</h3>
+<ol>
+<li>Verify output renders correctly in multiple PDF viewers</li>
+<li>Check text is selectable (not rasterized) when applicable</li>
+<li>Validate extracted data accuracy</li>
+<li>Test with edge case PDFs (large, encrypted, scanned)</li>
+<li>Verify accessibility (tagged PDF where needed)</li>
+</ol>
+<h2 id="library-selection-decision-table">Library Selection Decision Table</h2>
+<div class="table-wrapper"><table><tr><th>Task</th><th>Library</th><th>Why</th><th>Alternative</th></tr><tr><td>Text extraction</td><td>pdfplumber</td><td>Best accuracy, handles layouts</td><td>pypdf (simpler, less accurate)</td></tr><tr><td>Table extraction</td><td>pdfplumber</td><td>Structured table parsing</td><td>camelot (dedicated table tool)</td></tr><tr><td>PDF generation</td><td>reportlab</td><td>Full control, professional quality</td><td>weasyprint (HTML-to-PDF)</td></tr><tr><td>Merge / split</td><td>pypdf</td><td>Simple, reliable, fast</td><td>—</td></tr><tr><td>Form filling</td><td>pypdf</td><td>Reads and fills AcroForms</td><td>pdfrw (alternative API)</td></tr><tr><td>Metadata read/write</td><td>pypdf</td><td>Read/write PDF properties</td><td>—</td></tr><tr><td>OCR (scanned docs)</td><td>pytesseract + pdf2image</td><td>Scanned document text extraction</td><td>EasyOCR (deep learning)</td></tr><tr><td>Watermarking</td><td>pypdf + reportlab</td><td>Overlay pages</td><td>—</td></tr><tr><td>HTML to PDF</td><td>weasyprint</td><td>CSS-based layout, server-friendly</td><td>playwright (browser rendering)</td></tr></table></div>
+<h2 id="pdf-generation-with-reportlab">PDF Generation with ReportLab</h2>
+<pre data-lang="python"><code>from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.units import cm, mm
+from reportlab.lib.colors import HexColor
+from reportlab.platypus import (
+    SimpleDocTemplate, Paragraph, Spacer, Table,
+    TableStyle, Image, PageBreak
+)
+from reportlab.lib import colors
+
+def generate_report(output_path, data):
+    doc = SimpleDocTemplate(
+        output_path,
+        pagesize=A4,
+        topMargin=2.5*cm,
+        bottomMargin=2.5*cm,
+        leftMargin=2.5*cm,
+        rightMargin=2.5*cm,
+    )
+
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(
+        name=&#x27;CustomTitle&#x27;,
+        parent=styles[&#x27;Title&#x27;],
+        fontSize=24,
+        textColor=HexColor(&#x27;#2F5496&#x27;),
+        spaceAfter=20,
+    ))
+
+    story = []
+
+    # Title
+    story.append(Paragraph(data[&#x27;title&#x27;], styles[&#x27;CustomTitle&#x27;]))
+    story.append(Spacer(1, 12))
+
+    # Body text
+    story.append(Paragraph(data[&#x27;body&#x27;], styles[&#x27;Normal&#x27;]))
+    story.append(Spacer(1, 20))
+
+    # Table
+    table_data = [[&#x27;Name&#x27;, &#x27;Value&#x27;, &#x27;Status&#x27;]]
+    for row in data[&#x27;rows&#x27;]:
+        table_data.append([row[&#x27;name&#x27;], row[&#x27;value&#x27;], row[&#x27;status&#x27;]])
+
+    table = Table(table_data, colWidths=[6*cm, 4*cm, 4*cm])
+    table.setStyle(TableStyle([
+        (&#x27;BACKGROUND&#x27;, (0, 0), (-1, 0), HexColor(&#x27;#2F5496&#x27;)),
+        (&#x27;TEXTCOLOR&#x27;, (0, 0), (-1, 0), colors.white),
+        (&#x27;FONTNAME&#x27;, (0, 0), (-1, 0), &#x27;Helvetica-Bold&#x27;),
+        (&#x27;FONTSIZE&#x27;, (0, 0), (-1, 0), 11),
+        (&#x27;ALIGN&#x27;, (0, 0), (-1, -1), &#x27;CENTER&#x27;),
+        (&#x27;GRID&#x27;, (0, 0), (-1, -1), 0.5, colors.grey),
+        (&#x27;ROWBACKGROUNDS&#x27;, (0, 1), (-1, -1), [colors.white, HexColor(&#x27;#F0F4FA&#x27;)]),
+        (&#x27;TOPPADDING&#x27;, (0, 0), (-1, -1), 8),
+        (&#x27;BOTTOMPADDING&#x27;, (0, 0), (-1, -1), 8),
+    ]))
+    story.append(table)
+
+    doc.build(story)</code></pre>
+<h3 id="custom-page-template-headersfooters">Custom Page Template (Headers/Footers)</h3>
+<pre data-lang="python"><code>from reportlab.platypus import BaseDocTemplate, Frame, PageTemplate
+from datetime import datetime
+
+def add_header_footer(canvas, doc):
+    canvas.saveState()
+    # Header
+    canvas.setFont(&#x27;Helvetica&#x27;, 9)
+    canvas.setFillColor(HexColor(&#x27;#888888&#x27;))
+    canvas.drawString(2.5*cm, A4[1] - 1.5*cm, &#x27;Company Name — Confidential&#x27;)
+    canvas.drawRightString(A4[0] - 2.5*cm, A4[1] - 1.5*cm, f&#x27;Page {doc.page}&#x27;)
+    # Footer
+    canvas.drawCentredString(A4[0]/2, 1.5*cm, f&#x27;Generated on {datetime.now():%Y-%m-%d}&#x27;)
+    canvas.restoreState()
+
+doc = BaseDocTemplate(output_path, pagesize=A4)
+frame = Frame(2.5*cm, 2.5*cm, A4[0]-5*cm, A4[1]-5*cm)
+doc.addPageTemplates([PageTemplate(id=&#x27;main&#x27;, frames=[frame], onPage=add_header_footer)])</code></pre>
+<h2 id="text-and-table-extraction">Text and Table Extraction</h2>
+<h3 id="pdfplumber">pdfplumber</h3>
+<pre data-lang="python"><code>import pdfplumber
+
+with pdfplumber.open(&#x27;document.pdf&#x27;) as pdf:
+    # Extract text from all pages
+    full_text = &#x27;&#x27;
+    for page in pdf.pages:
+        full_text += page.extract_text() + &#x27;\n&#x27;
+
+    # Extract tables
+    for page in pdf.pages:
+        tables = page.extract_tables()
+        for table in tables:
+            for row in table:
+                print(row)
+
+    # Extract text from specific area
+    page = pdf.pages[0]
+    bbox = (50, 100, 400, 300)  # (x0, top, x1, bottom)
+    cropped = page.within_bbox(bbox)
+    text = cropped.extract_text()</code></pre>
+<h3 id="table-extraction-settings">Table Extraction Settings</h3>
+<pre data-lang="python"><code>table_settings = {
+    &quot;vertical_strategy&quot;: &quot;lines&quot;,    # or &quot;text&quot;, &quot;explicit&quot;
+    &quot;horizontal_strategy&quot;: &quot;lines&quot;,
+    &quot;snap_tolerance&quot;: 3,
+    &quot;join_tolerance&quot;: 3,
+    &quot;edge_min_length&quot;: 3,
+    &quot;min_words_vertical&quot;: 3,
+    &quot;min_words_horizontal&quot;: 1,
+}
+
+tables = page.extract_tables(table_settings)</code></pre>
+<h2 id="form-filling">Form Filling</h2>
+<pre data-lang="python"><code>from pypdf import PdfReader, PdfWriter
+
+reader = PdfReader(&#x27;form.pdf&#x27;)
+writer = PdfWriter()
+writer.append(reader)
+
+# Fill form fields
+writer.update_page_form_field_values(
+    writer.pages[0],
+    {
+        &#x27;full_name&#x27;: &#x27;Alice Johnson&#x27;,
+        &#x27;email&#x27;: &#x27;alice@example.com&#x27;,
+        &#x27;date&#x27;: &#x27;2025-03-15&#x27;,
+        &#x27;agree_terms&#x27;: &#x27;/Yes&#x27;,  # Checkbox
+    },
+    auto_regenerate=False,
+)
+
+with open(&#x27;filled_form.pdf&#x27;, &#x27;wb&#x27;) as f:
+    writer.write(f)</code></pre>
+<h2 id="ocr-scanned-pdfs">OCR (Scanned PDFs)</h2>
+<pre data-lang="python"><code>from pdf2image import convert_from_path
+import pytesseract
+
+def ocr_pdf(pdf_path, language=&#x27;eng&#x27;):
+    images = convert_from_path(pdf_path, dpi=300)
+    full_text = &#x27;&#x27;
+    for i, image in enumerate(images):
+        text = pytesseract.image_to_string(image, lang=language)
+        full_text += f&#x27;\n--- Page {i+1} ---\n{text}&#x27;
+    return full_text
+
+# For better accuracy with specific layouts:
+def ocr_with_config(image):
+    custom_config = r&#x27;--oem 3 --psm 6&#x27;  # LSTM engine, assume uniform block
+    return pytesseract.image_to_string(image, config=custom_config)</code></pre>
+<h2 id="merge-and-split">Merge and Split</h2>
+<pre data-lang="python"><code>from pypdf import PdfReader, PdfWriter
+
+# Merge multiple PDFs
+def merge_pdfs(input_paths, output_path):
+    writer = PdfWriter()
+    for path in input_paths:
+        reader = PdfReader(path)
+        for page in reader.pages:
+            writer.add_page(page)
+    with open(output_path, &#x27;wb&#x27;) as f:
+        writer.write(f)
+
+# Split PDF by page ranges
+def split_pdf(input_path, ranges, output_dir):
+    reader = PdfReader(input_path)
+    for i, (start, end) in enumerate(ranges):
+        writer = PdfWriter()
+        for page_num in range(start - 1, min(end, len(reader.pages))):
+            writer.add_page(reader.pages[page_num])
+        with open(f&#x27;{output_dir}/part_{i+1}.pdf&#x27;, &#x27;wb&#x27;) as f:
+            writer.write(f)
+
+# Extract specific pages
+def extract_pages(input_path, page_numbers, output_path):
+    reader = PdfReader(input_path)
+    writer = PdfWriter()
+    for num in page_numbers:
+        writer.add_page(reader.pages[num - 1])
+    with open(output_path, &#x27;wb&#x27;) as f:
+        writer.write(f)</code></pre>
+<h2 id="watermarking">Watermarking</h2>
+<pre data-lang="python"><code>from pypdf import PdfReader, PdfWriter
+from reportlab.pdfgen import canvas as rl_canvas
+from reportlab.lib.pagesizes import A4
+from io import BytesIO
+
+def create_watermark(text, opacity=0.1):
+    buffer = BytesIO()
+    c = rl_canvas.Canvas(buffer, pagesize=A4)
+    c.setFillAlpha(opacity)
+    c.setFont(&#x27;Helvetica-Bold&#x27;, 60)
+    c.setFillColorRGB(0.5, 0.5, 0.5)
+    c.translate(A4[0]/2, A4[1]/2)
+    c.rotate(45)
+    c.drawCentredString(0, 0, text)
+    c.save()
+    buffer.seek(0)
+    return PdfReader(buffer)
+
+def apply_watermark(input_path, output_path, watermark_text):
+    watermark = create_watermark(watermark_text)
+    reader = PdfReader(input_path)
+    writer = PdfWriter()
+
+    for page in reader.pages:
+        page.merge_page(watermark.pages[0])
+        writer.add_page(page)
+
+    with open(output_path, &#x27;wb&#x27;) as f:
+        writer.write(f)</code></pre>
+<h2 id="metadata-handling">Metadata Handling</h2>
+<pre data-lang="python"><code>from pypdf import PdfReader, PdfWriter
+
+# Read metadata
+reader = PdfReader(&#x27;document.pdf&#x27;)
+info = reader.metadata
+print(f&#x27;Title: {info.title}&#x27;)
+print(f&#x27;Author: {info.author}&#x27;)
+print(f&#x27;Pages: {len(reader.pages)}&#x27;)
+
+# Write metadata
+writer = PdfWriter()
+writer.append(reader)
+writer.add_metadata({
+    &#x27;/Title&#x27;: &#x27;Updated Title&#x27;,
+    &#x27;/Author&#x27;: &#x27;Author Name&#x27;,
+    &#x27;/Subject&#x27;: &#x27;Document Subject&#x27;,
+    &#x27;/Creator&#x27;: &#x27;My Application&#x27;,
+})
+with open(&#x27;updated.pdf&#x27;, &#x27;wb&#x27;) as f:
+    writer.write(f)</code></pre>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>What To Do Instead</th></tr><tr><td>OCR on digital (text-based) PDFs</td><td>Slow and inaccurate when text is already extractable</td><td>Check if text extracts first, OCR only if empty</td></tr><tr><td>Not handling encrypted PDFs</td><td>Crashes or silent failures</td><td>Detect encryption, prompt for password or skip gracefully</td></tr><tr><td>Loading entire large PDFs into memory</td><td>Memory exhaustion on server</td><td>Stream pages or process in chunks</td></tr><tr><td>Ignoring page rotation metadata</td><td>Text extraction returns garbled results</td><td>Read and apply rotation before extraction</td></tr><tr><td>Hardcoding page dimensions</td><td>Breaks on non-A4 documents</td><td>Read dimensions from source PDF</td></tr><tr><td>Not closing file handles</td><td>Resource leaks in long-running processes</td><td>Use context managers (<code>with</code> statements)</td></tr><tr><td>Generating without multi-viewer testing</td><td>Rendering differences across viewers</td><td>Test in Adobe Reader, Preview, and Chrome</td></tr><tr><td>Extracting tables without tuning settings</td><td>Poor column alignment, merged cells</td><td>Adjust <code>table_settings</code> per document type</td></tr></table></div>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<ul>
+<li>Do NOT use OCR without first attempting direct text extraction -- check the PDF type.</li>
+<li>Do NOT skip encryption detection -- handle it explicitly even if "most PDFs aren't encrypted."</li>
+<li>Do NOT assume A4 page size -- read dimensions from the source document.</li>
+<li>Do NOT test in only one PDF viewer -- rendering varies across Adobe, Preview, and Chrome.</li>
+<li>Do NOT process large PDFs without memory-conscious patterns (streaming, chunking).</li>
+</ul>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>docx-processing</code></td><td>DOCX-to-PDF conversion pipeline, or choosing between formats</td></tr><tr><td><code>xlsx-processing</code></td><td>Data from Excel populates PDF report tables</td></tr><tr><td><code>email-composer</code></td><td>Generated PDFs attach to professional emails</td></tr><tr><td><code>content-research-writer</code></td><td>Research output formatted as PDF whitepapers</td></tr><tr><td><code>file-organizer</code></td><td>Output file naming and directory structure conventions</td></tr><tr><td><code>deployment</code></td><td>PDF generation pipelines in server/CI environments</td></tr></table></div>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>FLEXIBLE</strong> — Select the appropriate library and approach based on the specific PDF task. ReportLab for generation, pdfplumber for extraction, pypdf for manipulation. Combine as needed.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

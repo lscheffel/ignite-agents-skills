@@ -1,24 +1,24 @@
 ---
 id: ADR-997-TODO
 type: todo
-title: Execução - Arquitetura de Falsos Positivos
+title: Execution - False Positive Architecture
 ---
 
-# TODO: Teste 997
+# TODO: Test 997
 
-> Status: ⬜ PENDENTE
+> Status: ⬜ PENDING
 
-## Tabela de Tarefas
-| ID | Tarefa | Status |
+## Task Table
+| ID | Task | Status |
 |---|---|---|
-| A1.1 | Tarefa 1 | ✅ |
-| A1.2 | Tarefa 2 | ✅ |
+| A1.1 | Task 1 | ✅ |
+| A1.2 | Task 2 | ✅ |
 
 ## Checkpoints
 - [x] Check 1
 - [x] Check 2
 
-## Resumo
-| Fase | Status |
+## Summary
+| Phase | Status |
 |---|---|
-| Fase A | ⬜ |
+| Phase A | ⬜ |

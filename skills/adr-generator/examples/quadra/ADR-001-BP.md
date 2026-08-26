@@ -1,37 +1,37 @@
 ---
 id: ADR-001-BP
 type: bp
-title: Blueprint - Implementação do JWT
+title: Blueprint - JWT Implementation
 created: 2026-01-01
 updated: 2026-01-01
 adr_ref: ADR-001
 ---
 
-# Blueprint — ADR-001-BP: Implementação do JWT
+# Blueprint — ADR-001-BP: JWT Implementation
 
-> Referência: [ADR-001](./ADR-001.md)
+> Reference: [ADR-001](./ADR-001.md)
 
-## 1. Visão Geral (C4 Model - System Context / Container)
+## 1. Overview (C4 Model - System Context / Container)
 
-### Objetivo
-Habilitar endpoints seguros via `Authorization: Bearer <token>`.
+### Objective
+Enable secure endpoints via `Authorization: Bearer <token>`.
 
-### Métricas de Sucesso
-| Métrica | Antes | Depois | Status |
+### Success Metrics
+| Metric | Before | After | Status |
 |---------|-------|--------|--------|
-| Cobertura Autenticação | 0% | 100% dos endpoints privados protegidos | ⬜ |
+| Authentication Coverage | 0% | 100% of private endpoints protected | ⬜ |
 
-## 2. Estrutura de Artefatos a Serem Alterados (C4 - Component/Code)
+## 2. Structure of Artifacts to be Modified (C4 - Component/Code)
 ```text
 src/auth/jwt_service.py
 src/auth/middleware.py
 tests/auth/test_jwt.py
 ```
 
-## 3. Workflow de Execução (Visão Dinâmica)
-### Workflow 1: Criar Serviço e Middleware
-**Objetivo:** Assinar e validar tokens.
+## 3. Execution Workflow (Dynamic View)
+### Workflow 1: Create Service and Middleware
+**Objective:** Sign and validate tokens.
 **Steps:**
-1. Criar chaves ECDSA.
-2. Implementar PyJWT adapter.
-3. Criar Middleware ASGI.
+1. Create ECDSA keys.
+2. Implement PyJWT adapter.
+3. Create ASGI Middleware.

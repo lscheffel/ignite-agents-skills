@@ -410,65 +410,65 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">api-design</a> &rsaquo; examples &rsaquo; rest-crud-spec</div>
   </nav>
   <div class="content">
-    <h1 id="exemplo-especificao-rest-crud--gesto-de-produtos">Exemplo: Especificação REST CRUD — Gestão de Produtos</h1>
-<h2 id="contexto">Contexto</h2>
-<p>API para gestão de catálogo de produtos em e-commerce. Backend: Express + TypeScript + PostgreSQL.</p>
-<h2 id="contrato">Contrato</h2>
-<h3 id="recursos">Recursos</h3>
-<div class="table-wrapper"><table><tr><th>Recurso</th><th>URL</th><th>Método</th><th>Descrição</th></tr><tr><td>Produto</td><td><code>/api/v1/products</code></td><td>GET</td><td>Lista produtos (paginado)</td></tr><tr><td>Produto</td><td><code>/api/v1/products/:id</code></td><td>GET</td><td>Detalhes de um produto</td></tr><tr><td>Produto</td><td><code>/api/v1/products</code></td><td>POST</td><td>Cria produto</td></tr><tr><td>Produto</td><td><code>/api/v1/products/:id</code></td><td>PUT</td><td>Atualiza produto completo</td></tr><tr><td>Produto</td><td><code>/api/v1/products/:id</code></td><td>PATCH</td><td>Atualização parcial</td></tr><tr><td>Produto</td><td><code>/api/v1/products/:id</code></td><td>DELETE</td><td>Remove produto</td></tr><tr><td>Categorias</td><td><code>/api/v1/products/:id/categories</code></td><td>GET</td><td>Lista categorias do produto</td></tr><tr><td>Categorias</td><td><code>/api/v1/products/:id/categories</code></td><td>POST</td><td>Adiciona categoria</td></tr></table></div>
-<h3 id="schema-do-produto">Schema do Produto</h3>
+    <h1 id="example-rest-crud-specification--product-management">Example: REST CRUD Specification — Product Management</h1>
+<h2 id="context">Context</h2>
+<p>API for product catalog management in e-commerce. Backend: Express + TypeScript + PostgreSQL.</p>
+<h2 id="contract">Contract</h2>
+<h3 id="resources">Resources</h3>
+<div class="table-wrapper"><table><tr><th>Resource</th><th>URL</th><th>Method</th><th>Description</th></tr><tr><td>Product</td><td><code>/api/v1/products</code></td><td>GET</td><td>List products (paginated)</td></tr><tr><td>Product</td><td><code>/api/v1/products/:id</code></td><td>GET</td><td>Product details</td></tr><tr><td>Product</td><td><code>/api/v1/products</code></td><td>POST</td><td>Create product</td></tr><tr><td>Product</td><td><code>/api/v1/products/:id</code></td><td>PUT</td><td>Update product completely</td></tr><tr><td>Product</td><td><code>/api/v1/products/:id</code></td><td>PATCH</td><td>Partial update</td></tr><tr><td>Product</td><td><code>/api/v1/products/:id</code></td><td>DELETE</td><td>Remove product</td></tr><tr><td>Categories</td><td><code>/api/v1/products/:id/categories</code></td><td>GET</td><td>List product categories</td></tr><tr><td>Categories</td><td><code>/api/v1/products/:id/categories</code></td><td>POST</td><td>Add category</td></tr></table></div>
+<h3 id="product-schema">Product Schema</h3>
 <pre data-lang="typescript"><code>interface Product {
   id: string;           // UUID v4
-  name: string;         // 3-200 caracteres
-  description: string;  // máx 5000 caracteres
-  price: number;        // &gt; 0, máx 2 casas decimais
-  sku: string;          // único, regex: ^[A-Z]{3}-\d{4}$
+  name: string;         // 3-200 characters
+  description: string;  // max 5000 characters
+  price: number;        // &gt; 0, max 2 decimal places
+  sku: string;          // unique, regex: ^[A-Z]{3}-\d{4}$
   status: &#x27;active&#x27; | &#x27;inactive&#x27; | &#x27;draft&#x27;;
   created_at: string;   // ISO 8601
   updated_at: string;   // ISO 8601
 }</code></pre>
-<h3 id="paginao">Paginação</h3>
+<h3 id="pagination">Pagination</h3>
 <pre><code>GET /api/v1/products?page=1&amp;limit=20&amp;sort=created_at&amp;order=desc
 
 Response Headers:
   X-Total-Count: 156
   X-Page-Count: 8
   Link: &lt;/api/v1/products?page=2&amp;limit=20&gt;; rel=&quot;next&quot;</code></pre>
-<h3 id="formato-de-erro-rfc-7807">Formato de Erro (RFC 7807)</h3>
+<h3 id="error-format-rfc-7807">Error Format (RFC 7807)</h3>
 <pre data-lang="json"><code>{
   &quot;type&quot;: &quot;https://api.example.com/errors/validation&quot;,
-  &quot;title&quot;: &quot;Dados inválidos&quot;,
+  &quot;title&quot;: &quot;Invalid data&quot;,
   &quot;status&quot;: 422,
-  &quot;detail&quot;: &quot;O campo &#x27;price&#x27; deve ser maior que 0&quot;,
+  &quot;detail&quot;: &quot;The &#x27;price&#x27; field must be greater than 0&quot;,
   &quot;instance&quot;: &quot;/api/v1/products&quot;,
   &quot;errors&quot;: [
     {
       &quot;field&quot;: &quot;price&quot;,
-      &quot;message&quot;: &quot;deve ser maior que 0&quot;,
+      &quot;message&quot;: &quot;must be greater than 0&quot;,
       &quot;rejected_value&quot;: -5
     }
   ]
 }</code></pre>
 <h3 id="status-codes">Status Codes</h3>
-<div class="table-wrapper"><table><tr><th>Método</th><th>Sucesso</th><th>Erro Comum</th></tr><tr><td>GET</td><td>200 OK</td><td>404 Not Found</td></tr><tr><td>POST</td><td>201 Created</td><td>422 Unprocessable Entity</td></tr><tr><td>PUT</td><td>200 OK</td><td>404 Not Found, 422 Unprocessable</td></tr><tr><td>PATCH</td><td>200 OK</td><td>404 Not Found, 422 Unprocessable</td></tr><tr><td>DELETE</td><td>204 No Content</td><td>404 Not Found</td></tr></table></div>
-<h3 id="versionamento">Versionamento</h3>
+<div class="table-wrapper"><table><tr><th>Method</th><th>Success</th><th>Common Error</th></tr><tr><td>GET</td><td>200 OK</td><td>404 Not Found</td></tr><tr><td>POST</td><td>201 Created</td><td>422 Unprocessable Entity</td></tr><tr><td>PUT</td><td>200 OK</td><td>404 Not Found, 422 Unprocessable</td></tr><tr><td>PATCH</td><td>200 OK</td><td>404 Not Found, 422 Unprocessable</td></tr><tr><td>DELETE</td><td>204 No Content</td><td>404 Not Found</td></tr></table></div>
+<h3 id="versioning">Versioning</h3>
 <ul>
 <li>URL path: <code>/api/v1/products</code></li>
-<li>Header aceito: <code>Accept: application/vnd.api.v1+json</code></li>
-<li>Breaking changes requerem nova versão (v2)</li>
-<li>Non-breaking changes (campos novos) vão para versão atual</li>
+<li>Accepted header: <code>Accept: application/vnd.api.v1+json</code></li>
+<li>Breaking changes require new version (v2)</li>
+<li>Non-breaking changes (new fields) go to current version</li>
 </ul>
-<h3 id="idempotncia">Idempotência</h3>
+<h3 id="idempotence">Idempotence</h3>
 <ul>
-<li>PUT e DELETE são idempotentes por design</li>
-<li>POST aceita header <code>Idempotency-Key: <uuid></code> para prevenir duplicação</li>
-<li>Chave de idempotência expira após 24h</li>
+<li>PUT and DELETE are idempotent by design</li>
+<li>POST accepts <code>Idempotency-Key: <uuid></code> header to prevent duplication</li>
+<li>Idempotency key expires after 24 hours</li>
 </ul>
-<h3 id="autenticao">Autenticação</h3>
+<h3 id="authentication">Authentication</h3>
 <ul>
-<li>Bearer token via header <code>Authorization: Bearer <token></code></li>
-<li>Rate limiting: 100 req/min por usuário</li>
-<li>Endpoints de escrita requerem role <code>admin</code> ou <code>editor</code></li>
+<li>Bearer token via <code>Authorization: Bearer <token></code> header</li>
+<li>Rate limiting: 100 req/min per user</li>
+<li>Write endpoints require <code>admin</code> or <code>editor</code> role</li>
 </ul>
   </div>
 <footer>

@@ -1,28 +1,28 @@
 # Example: Multi-Agent Decomposition
 
-Exemplo de decomposição de tarefa complexa em multi-agente.
+Example of complex task decomposition in multi-agent systems.
 
-## Tarefa Original
+## Original Task
 
-"Analisar repositório, identificar code smells, sugerir refatorações e gerar relatório"
+"Analyze repository, identify code smells, suggest refactorings, and generate report"
 
-## Decomposição
+## Decomposition
 
 ```mermaid
 graph TD
-    A[Analisar Repositório] --> B[Identificar Code Smells]
-    B --> C1[Sugerir Refatorações - Design]
-    B --> C2[Sugerir Refatorações - Performance]
-    B --> C3[Sugerir Refatorações - Segurança]
-    C1 --> D[Consolidar Sugestões]
+    A[Analyze Repository] --> B[Identify Code Smells]
+    B --> C1[Suggest Refactorings - Design]
+    B --> C2[Suggest Refactorings - Performance]
+    B --> C3[Suggest Refactorings - Security]
+    C1 --> D[Consolidate Suggestions]
     C2 --> D
     C3 --> D
-    D --> E[Gerar Relatório]
+    D --> E[Generate Report]
 ```
 
-## Papéis
+## Roles
 
-| Agente | Papel | Modelo |
+| Agent | Role | Model |
 |--------|-------|--------|
 | Scanner | Specialist | Standard |
 | Design Analyzer | Specialist | Advanced |
@@ -31,7 +31,7 @@ graph TD
 | Consolidator | Specialist | Standard |
 | Report Generator | Formatter | Lightweight |
 
-## Contratos
+## Contracts
 
 ### Scanner → Analyzer
 
@@ -81,15 +81,15 @@ output:
       required: true
 ```
 
-## Execução
+## Execution
 
-1. Scanner analisa repositório (paralelo)
-2. 3 Analyzers processam code smells (paralelo - fan-out)
-3. Consolidator agrega sugestões (fan-in)
-4. Report Generator formata relatório
+1. Scanner analyzes repository (parallel)
+2. 3 Analyzers process code smells (parallel - fan-out)
+3. Consolidator aggregates suggestions (fan-in)
+4. Report Generator formats report
 
-## Resultado
+## Result
 
-- Tempo total: 45s (vs 180s sequencial)
-- Custo: $0.12 (vs $0.45 com modelo único avançado)
-- Qualidade: 95% code smells identificados
+- Total time: 45s (vs 180s sequential)
+- Cost: $0.12 (vs $0.45 with single advanced model)
+- Quality: 95% code smells identified

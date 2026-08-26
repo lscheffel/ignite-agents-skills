@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>circuit-breaker — ignite-agents-skills</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #1e2a3a;
+      --bg-card-hover: #253447;
+      --accent: #ff6b2b;
+      --accent-glow: rgba(255, 107, 43, 0.25);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a0aec0;
+      --text-muted: #6b7a8d;
+      --border: #2d3a4a;
+      --tag-bg: rgba(255, 107, 43, 0.12);
+      --tag-border: rgba(255, 107, 43, 0.3);
+      --code-bg: #0d1117;
+      --code-border: #21262d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+    }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #ff8f5a; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-brand .accent { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+    .nav-links a {
+      color: var(--text-secondary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+      background: var(--tag-bg);
+    }
+    .nav-breadcrumb {
+      margin-left: auto;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .nav-breadcrumb a { color: var(--text-muted); }
+    .nav-breadcrumb a:hover { color: var(--accent); }
+
+    /* ── Content ── */
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    .content-full {
+      max-width: 1200px;
+    }
+
+    /* ── Typography ── */
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    h1 .accent { color: var(--accent); }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    /* ── Fancy title ── */
+    .fancy-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(135deg, #ff6b2b 0%, #ff9b6a 40%, #ffffff 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .fancy-title .ver {
+      font-size: 0.45em;
+      font-weight: 600;
+      letter-spacing: 0;
+      background: linear-gradient(135deg, #ff6b2b, #ff9b6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      vertical-align: middle;
+      margin-left: 0.3em;
+      border: 1px solid rgba(255,107,43,0.4);
+      padding: 0.1em 0.5em;
+      border-radius: 8px;
+      position: relative;
+      top: -0.1em;
+    }
+    .fancy-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .fancy-sub strong { color: var(--accent); }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--text-primary);
+    }
+    h4 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    p { margin-bottom: 1rem; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+
+    /* ── Tags ── */
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 1rem 0; }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .version-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* ── Code ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+    pre code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #e6edf3;
+      background: none;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+    }
+    pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 0.88em;
+      background: var(--code-bg);
+      border: 1px solid var(--code-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ff9b6a;
+    }
+
+    /* ── Lists ── */
+    ul, ol {
+      margin: 0.75rem 0 1rem 1.5rem;
+      color: var(--text-secondary);
+    }
+    li { margin-bottom: 0.4rem; }
+    li::marker { color: var(--accent); }
+
+    /* ── Tables ── */
+    .table-wrapper { overflow-x: auto; margin: 1rem 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    td { color: var(--text-secondary); }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Blockquote ── */
+    blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1.25rem;
+      margin: 1rem 0;
+      background: rgba(255, 107, 43, 0.05);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-secondary);
+    }
+    blockquote p { margin-bottom: 0; }
+
+    /* ── HR ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* ── Cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: all 0.25s;
+    }
+    .card::before {
+      content: '';
+      display: block;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-bottom: 0;
+      transition: all 0.25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .card:hover::before {
+      height: 3px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-title a { color: var(--text-primary); }
+    .card-title a:hover { color: var(--accent); }
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── File list ── */
+    .file-list {
+      list-style: none;
+      margin: 1rem 0;
+      padding: 0;
+    }
+    .file-list li {
+      margin: 0;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s;
+    }
+    .file-list li:hover {
+      background: rgba(255,255,255,0.03);
+    }
+    .file-list li:last-child { border-bottom: none; }
+    .file-icon {
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .file-list a { font-weight: 500; }
+    .file-size {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── Search ── */
+    .search-wrapper {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+    }
+    .search-wrapper input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-wrapper input::placeholder { color: var(--text-muted); }
+    .search-wrapper input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0.75rem 1rem; gap: 0.75rem; }
+      .content { padding: 1.5rem 1rem; }
+      h1 { font-size: 1.6rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../../index.html" class="nav-brand"><span class="accent">ignite</span>-agents-skills</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="active">Skills</a>
+      <a href="../../readme.html">README</a>
+      <a href="../../usage.html">USAGE</a>
+    </div>
+    <div class="nav-breadcrumb"><a href="../../index.html">Skills</a> &rsaquo; circuit-breaker</div>
+  </nav>
+  <div class="content">
+    <hr>
+<p>name: circuit-breaker version: 1.0.0 description: Use when running autonomous loops, repeated operations, or when detecting stagnation patterns - enforces rate limits, protects configuration files, manages recovery with cooldown periods, and prevents infinite loops during autonomous development domain: domain-stack triggers:</p>
+<ul>
+<li>circuit-breaker</li>
+</ul>
+<p>tags:</p>
+<ul>
+<li>circuit-breaker</li>
+<li>domain-stack</li>
+</ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
+<h1 id="circuit-breaker">Circuit Breaker</h1>
+<h2 id="overview">Overview</h2>
+<p>The circuit-breaker skill is a safety mechanism that prevents infinite loops, resource exhaustion, and accidental destruction during autonomous development. It operates at the <strong>loop level</strong> (complementing <code>resilient-execution</code> which operates at the <strong>task level</strong>). Without circuit-breaker protection, autonomous loops can waste hours on stagnant problems, exhaust API limits, or accidentally destroy configuration files. This skill enforces hard boundaries that keep autonomous operations productive and safe.</p>
+<p><strong>Announce at start:</strong> "Circuit breaker is active — monitoring for stagnation, rate limits, and file protection."</p>
+<hr>
+<h2 id="phase-1-circuit-state-check">Phase 1: Circuit State Check</h2>
+<p>Before each loop iteration, check the current circuit state:</p>
+<pre><code>+-----------+     threshold     +-----------+     cooldown     +------------+
+|  CLOSED   |----exceeded-----&gt;|   OPEN    |----elapsed------&gt;| HALF-OPEN  |
+|  (normal) |                  |  (halted) |                  |  (probe)   |
++-----------+                  +-----------+                  +-----+------+
+     ^                                                              |
+     |                          success                             |
+     +--------------------------------------------------------------+
+     |                          failure                             |
+     |                    +-----------+                              |
+     +--------------------+   OPEN    |&lt;----------------------------+
+                          +-----------+</code></pre>
+<div class="table-wrapper"><table><tr><th>State</th><th>Meaning</th><th>Action</th></tr><tr><td><strong>CLOSED</strong></td><td>Normal operation</td><td>Execute iteration, monitor all thresholds</td></tr><tr><td><strong>OPEN</strong></td><td>Halted due to threshold breach</td><td>Report status, wait for cooldown, or escalate</td></tr><tr><td><strong>HALF-OPEN</strong></td><td>Probing after cooldown</td><td>Allow ONE iteration. If success: close. If failure: re-open.</td></tr></table></div>
+<blockquote><strong>STOP: Check circuit state BEFORE executing any loop iteration. Do NOT execute if circuit is OPEN.</strong></blockquote>
+<hr>
+<h2 id="phase-2-stagnation-detection">Phase 2: Stagnation Detection</h2>
+<p>Monitor these thresholds continuously during autonomous operation:</p>
+<div class="table-wrapper"><table><tr><th>Condition</th><th>Threshold</th><th>Detection Method</th><th>Action</th></tr><tr><td>No progress</td><td>3 consecutive loops with zero meaningful changes</td><td>Track files modified + tasks completed per loop</td><td>OPEN circuit</td></tr><tr><td>Identical errors</td><td>5 consecutive loops producing the same error</td><td>Compare error messages across iterations</td><td>OPEN circuit</td></tr><tr><td>Output decline</td><td>70% decline in output volume across iterations</td><td>Compare output line count across last 3 iterations</td><td>OPEN circuit</td></tr><tr><td>Permission denials</td><td>3 consecutive tool permission failures</td><td>Track permission errors</td><td>OPEN circuit</td></tr><tr><td>Test fix loop</td><td>>80% of effort spent on test fixes only</td><td>Track work type per iteration</td><td>OPEN circuit, investigate root cause</td></tr><tr><td>Circular approach</td><td>Same 2-3 approaches alternating without resolution</td><td>Track approach history</td><td>OPEN circuit</td></tr></table></div>
+<h3 id="stagnation-scoring">Stagnation Scoring</h3>
+<p>Each iteration, compute a progress score:</p>
+<div class="table-wrapper"><table><tr><th>Indicator</th><th>Score</th></tr><tr><td>New test passing that was previously failing</td><td>+3</td></tr><tr><td>Task marked complete</td><td>+5</td></tr><tr><td>File modified with meaningful changes</td><td>+1</td></tr><tr><td>Build/lint error resolved</td><td>+2</td></tr><tr><td>Same error as previous iteration</td><td>-2</td></tr><tr><td>No files modified</td><td>-3</td></tr><tr><td>Reverted previous changes</td><td>-1</td></tr></table></div>
+<p><strong>Threshold:</strong> If cumulative score across 3 iterations is negative, OPEN the circuit.</p>
+<blockquote><strong>STOP: If any threshold is breached, OPEN the circuit immediately. Do NOT attempt "one more try."</strong></blockquote>
+<hr>
+<h2 id="phase-3-recovery-protocol">Phase 3: Recovery Protocol</h2>
+<p>When the circuit opens, follow this recovery sequence:</p>
+<h3 id="cooldown-period">Cooldown Period</h3>
+<ul>
+<li><strong>Default:</strong> 30 minutes before retry</li>
+<li><strong>Purpose:</strong> Prevents rapid cycling through the same failing state</li>
+<li><strong>After cooldown:</strong> Circuit enters HALF-OPEN state</li>
+</ul>
+<h3 id="half-open-behavior">HALF-OPEN Behavior</h3>
+<ol>
+<li>Allow exactly ONE iteration to execute</li>
+<li>If successful (positive progress score): Close circuit, resume normal operation</li>
+<li>If failed (same stagnation pattern): Re-open circuit, double the cooldown timer</li>
+</ol>
+<h3 id="recovery-strategy-decision-table">Recovery Strategy Decision Table</h3>
+<div class="table-wrapper"><table><tr><th>Stagnation Type</th><th>Strategy 1</th><th>Strategy 2</th><th>Strategy 3</th><th>Strategy 4</th></tr><tr><td>No progress (stuck on same task)</td><td>Regenerate plan with fresh analysis</td><td>Break stuck task into 3+ subtasks</td><td>Skip to next task, return later</td><td>Escalate to user</td></tr><tr><td>Identical errors (same error repeating)</td><td>Change approach entirely</td><td>Check if error is environmental</td><td>Search for known issue/workaround</td><td>Escalate with error log</td></tr><tr><td>Test fix loop (tests keep breaking)</td><td>Review test assumptions</td><td>Check if implementation approach is flawed</td><td>Simplify implementation scope</td><td>Escalate with test analysis</td></tr><tr><td>Circular approach (alternating same fixes)</td><td>Step back and re-analyze root cause</td><td>Try approach NOT yet attempted</td><td>Reduce scope to minimal working version</td><td>Escalate with approach history</td></tr></table></div>
+<blockquote><strong>STOP: After recovery, monitor the next 3 iterations closely. If stagnation recurs, escalate immediately.</strong></blockquote>
+<hr>
+<h2 id="phase-4-rate-limiting">Phase 4: Rate Limiting</h2>
+<p>Track and enforce API usage limits:</p>
+<div class="table-wrapper"><table><tr><th>Parameter</th><th>Default</th><th>Purpose</th></tr><tr><td>MAX_CALLS_PER_HOUR</td><td>100</td><td>Prevents API overuse</td></tr><tr><td>Reset window</td><td>Hourly (rolling)</td><td>Automatic counter reset</td></tr><tr><td>Countdown display</td><td>Active</td><td>Shows remaining calls before limit</td></tr></table></div>
+<h3 id="rate-limit-behavior">Rate Limit Behavior</h3>
+<ol>
+<li>Track API calls per rolling hour</li>
+<li>At 80% of limit: display warning, prioritize remaining calls</li>
+<li>At 100% of limit: pause execution, display countdown to reset</li>
+<li>Never exceed limit — wait for reset window</li>
+</ol>
+<h3 id="three-layer-timeout-detection">Three-Layer Timeout Detection</h3>
+<p>For long-running operations (especially API calls with extended limits):</p>
+<div class="table-wrapper"><table><tr><th>Layer</th><th>Detection</th><th>Fallback</th></tr><tr><td>1. Timeout guard</td><td>Exit code 124 or timeout signal</td><td>Capture partial output, log what completed</td></tr><tr><td>2. JSON validation</td><td>Parse response structure</td><td>Attempt text extraction from raw response</td></tr><tr><td>3. Text fallback</td><td>Raw output capture</td><td>Log everything, report for human review</td></tr></table></div>
+<hr>
+<h2 id="phase-5-file-protection">Phase 5: File Protection</h2>
+<p><HARD-GATE> Configuration files must NEVER be deleted during autonomous operations. This is non-negotiable. </HARD-GATE></p>
+<h3 id="protected-paths">Protected Paths</h3>
+<div class="table-wrapper"><table><tr><th>Path</th><th>Type</th><th>Why Protected</th></tr><tr><td><code>.ralph/</code></td><td>Directory</td><td>Loop state and configuration</td></tr><tr><td><code>.ralphrc</code></td><td>File</td><td>Ralph configuration</td></tr><tr><td><code>IMPLEMENTATION_PLAN.md</code></td><td>File</td><td>Current plan — source of truth for loop</td></tr><tr><td><code>AGENTS.md</code></td><td>File</td><td>Agent definitions</td></tr><tr><td><code>specs/</code></td><td>Directory</td><td>Specifications — source of truth for features</td></tr><tr><td><code>.claude/</code></td><td>Directory</td><td>Claude Code configuration</td></tr><tr><td><code>CLAUDE.md</code></td><td>File</td><td>Agent operating manual</td></tr><tr><td><code>memory/</code></td><td>Directory</td><td>Persisted learnings across sessions</td></tr></table></div>
+<h3 id="protection-mechanisms">Protection Mechanisms</h3>
+<div class="table-wrapper"><table><tr><th>Mechanism</th><th>How It Works</th><th>When It Triggers</th></tr><tr><td>Allowlist enforcement</td><td>Only permitted tools can modify protected files</td><td>Before any file write to protected path</td></tr><tr><td>Integrity validation</td><td>Check protected files exist after each iteration</td><td>End of every loop iteration</td></tr><tr><td>Pre-operation checks</td><td>Verify protected files before destructive operations</td><td>Before <code>rm</code>, <code>git clean</code>, <code>git checkout .</code></td></tr><tr><td>Restricted commands</td><td>Block <code>git clean</code>, <code>git rm</code> on protected paths, <code>rm -rf</code> on config dirs</td><td>When command targets protected path</td></tr></table></div>
+<h3 id="pre-destructive-operation-checklist">Pre-Destructive Operation Checklist</h3>
+<p>Before any <code>rm</code>, <code>git clean</code>, or <code>git checkout .</code>:</p>
+<ol>
+<li>List all files that will be affected</li>
+<li>Check each against the protected paths list</li>
+<li>If ANY protected file would be affected: ABORT and report</li>
+<li>If safe: proceed with caution</li>
+<li>After operation: verify all protected files still exist</li>
+</ol>
+<blockquote><strong>STOP: If a protected file is missing after any operation, halt immediately and restore it.</strong></blockquote>
+<hr>
+<h2 id="phase-6-monitoring-and-metrics">Phase 6: Monitoring and Metrics</h2>
+<p>Track these metrics across loop iterations:</p>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Purpose</th><th>Alert Threshold</th></tr><tr><td>Loop count</td><td>Total iterations executed</td><td>>20 for a single task</td></tr><tr><td>Tasks completed</td><td>Progress measurement</td><td>0 for 3+ iterations</td></tr><tr><td>Files modified</td><td>Change velocity</td><td>0 for 3+ iterations</td></tr><tr><td>Test pass rate</td><td>Quality trend</td><td>Declining for 3+ iterations</td></tr><tr><td>Error frequency</td><td>Stagnation early warning</td><td>Increasing for 3+ iterations</td></tr><tr><td>Output volume</td><td>Productivity trend</td><td>70% decline</td></tr><tr><td>API calls remaining</td><td>Rate limit proximity</td><td><20% remaining</td></tr><tr><td>Progress score</td><td>Overall health</td><td>Negative for 3 iterations</td></tr></table></div>
+<h3 id="per-iteration-status-log">Per-Iteration Status Log</h3>
+<pre data-lang="markdown"><code>## Iteration [N] — [timestamp]
+- Circuit state: CLOSED / HALF-OPEN
+- Tasks completed: [N]
+- Files modified: [list]
+- Tests: [X passed, Y failed, Z skipped]
+- Errors encountered: [list]
+- Progress score: [+/- N]
+- API calls remaining: [N]
+- Stagnation risk: LOW / MEDIUM / HIGH</code></pre>
+<hr>
+<h2 id="anti-patterns--common-mistakes">Anti-Patterns / Common Mistakes</h2>
+<div class="table-wrapper"><table><tr><th>What NOT to Do</th><th>Why It Fails</th><th>What to Do Instead</th></tr><tr><td>Ignore stagnation signals</td><td>Wastes hours on unsolvable problems</td><td>Open circuit at threshold breach</td></tr><tr><td>Manually override open circuit</td><td>Bypasses safety mechanism</td><td>Follow recovery protocol properly</td></tr><tr><td>Skip file protection checks</td><td>Config deletion derails entire project</td><td>Always verify protected files after operations</td></tr><tr><td>Set cooldown to zero</td><td>Rapid cycling through same failure</td><td>Respect 30-minute minimum cooldown</td></tr><tr><td>Count test-fix-only iterations as progress</td><td>Masks the real problem (flawed approach)</td><td>Flag >80% test-fix effort as stagnation</td></tr><tr><td>Delete and recreate protected files</td><td>Loses configuration state</td><td>Never delete protected files, only update</td></tr><tr><td>Ignore rate limit warnings</td><td>Hits hard limit mid-operation</td><td>Prioritize when at 80% of limit</td></tr><tr><td>Run destructive commands without pre-checks</td><td>May delete protected files</td><td>Always check affected files first</td></tr></table></div>
+<hr>
+<h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
+<div class="table-wrapper"><table><tr><th>Thought</th><th>Reality</th></tr><tr><td>"One more try will fix it"</td><td>That is what you said 3 iterations ago. Open the circuit.</td></tr><tr><td>"The error is almost fixed"</td><td>"Almost" for 5 iterations means the approach is wrong.</td></tr><tr><td>"I cannot stop now, I am so close"</td><td>Sunk cost fallacy. Open circuit, reassess.</td></tr><tr><td>"The cooldown is too long"</td><td>The cooldown prevents wasting more time on the same failure.</td></tr><tr><td>"These config files are not important"</td><td>They are protected for a reason. Do not delete them.</td></tr><tr><td>"The rate limit will not be hit"</td><td>Track it. Do not guess.</td></tr><tr><td>"This is a different error"</td><td>Check if it is truly different or the same root cause manifesting differently.</td></tr></table></div>
+<blockquote><strong>Do NOT override an open circuit. Follow the recovery protocol.</strong></blockquote>
+<hr>
+<h2 id="integration-points">Integration Points</h2>
+<div class="table-wrapper"><table><tr><th>Skill</th><th>Relationship</th></tr><tr><td><code>resilient-execution</code></td><td>Task-level retries (3 attempts). Circuit-breaker activates AFTER resilient-execution exhausts retries within individual tasks.</td></tr><tr><td><code>autonomous-loop</code></td><td>Circuit-breaker monitors the loop. Opens circuit when loop-level stagnation detected.</td></tr><tr><td><code>ralph-status</code></td><td>Status block provides metrics for stagnation detection.</td></tr><tr><td><code>verification-before-completion</code></td><td>Circuit-breaker ensures verification passes before closing a loop.</td></tr><tr><td><code>self-learning</code></td><td>Stagnation patterns are persisted to memory for future avoidance.</td></tr><tr><td><code>auto-improvement</code></td><td>Circuit-breaker events feed into improvement metrics.</td></tr></table></div>
+<h3 id="scope-clarification">Scope Clarification</h3>
+<div class="table-wrapper"><table><tr><th>Scope</th><th>Skill</th><th>Behavior</th></tr><tr><td>Task-level</td><td><code>resilient-execution</code></td><td>Try 3 approaches for a single failing task</td></tr><tr><td>Loop-level</td><td><code>circuit-breaker</code></td><td>Halt the entire loop when patterns indicate systemic failure</td></tr></table></div>
+<p>The circuit breaker activates AFTER resilient-execution has exhausted its retries within individual tasks. If tasks keep failing despite 3 retries each, the circuit breaker detects the pattern.</p>
+<hr>
+<h2 id="process-summary">Process Summary</h2>
+<ol>
+<li><strong>Before each loop iteration:</strong> Check circuit state (CLOSED/HALF-OPEN/OPEN)</li>
+<li><strong>If OPEN:</strong> Report status, wait for cooldown, or escalate</li>
+<li><strong>If HALF-OPEN:</strong> Allow one probe iteration, evaluate result</li>
+<li><strong>If CLOSED:</strong> Execute normally, monitor all thresholds</li>
+<li><strong>After each iteration:</strong> Update metrics, compute progress score, evaluate thresholds</li>
+<li><strong>If threshold exceeded:</strong> Open circuit, report reason, begin cooldown</li>
+<li><strong>After cooldown:</strong> Enter HALF-OPEN, allow one probe</li>
+<li><strong>After probe:</strong> Close if successful, re-open with doubled cooldown if failed</li>
+</ol>
+<hr>
+<h2 id="skill-type">Skill Type</h2>
+<p><strong>RIGID</strong> — Thresholds and protection rules must be followed exactly. Do not relax circuit breaker conditions. Do not override open circuits. Do not skip file protection checks. Do not ignore stagnation signals.</p>
+
+  </div>
+<footer>
+     <p><strong>ignite-agents-skills</strong> v2.3.0 &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
+     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+   </footer>
+</body>
+</html>

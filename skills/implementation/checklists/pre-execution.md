@@ -1,96 +1,96 @@
-# Checklist de Pré-Execução
+# Pre-Execution Checklist
 
-> Executar este checklist antes de iniciar qualquer implementação governada.
-
----
-
-## 1. Validação de Artefatos
-
-- [ ] ADR existe e está em `docs/adr/ADR-XXX.md`
-- [ ] ADR contém seção "Decisão" preenchida
-- [ ] ADR contém seção "Contexto" preenchida
-- [ ] ADR contém seção "Consequências" preenchida
-- [ ] Blueprint existe em `docs/adr/ADR-XXX-BP.md`
-- [ ] Blueprint contém tarefas documentadas com dependências
-- [ ] Blueprint contém estimativas de tempo
-- [ ] TODO existe em `docs/adr/ADR-XXX-TODO.md`
-- [ ] TODO contém tarefas com estados (pendente/em andamento/concluído)
-- [ ] TODO contém dependências entre tarefas
-- [ ] TODO contém prioridades definidas
+> Execute this checklist before initiating any governed implementation.
 
 ---
 
-## 2. Validação de Coerência
+## 1. Artifact Validation
 
-- [ ] Tarefas do Blueprint existem no TODO
-- [ ] Dependências no TODO são consistentes com Blueprint
-- [ ] Estimativas no TODO são consistentes com Blueprint
-- [ ] Nenhuma tarefa está duplicada entre Blueprint e TODO
-- [ ] ADR está alinhada com o escopo do Blueprint
-
----
-
-## 3. Validação do Ambiente
-
-- [ ] Branch atual não é main/master (ou há PR aberto)
-- [ ] Workspace está limpo (sem uncommitted changes)
-- [ ] Branch está atualizada com remote
-- [ ] Não há conflitos de merge pendentes
-- [ ] Diretório de trabalho está correto
+- [ ] ADR exists and is in `docs/adr/ADR-XXX.md`
+- [ ] ADR contains a filled "Decision" section
+- [ ] ADR contains a filled "Context" section
+- [ ] ADR contains a filled "Consequences" section
+- [ ] Blueprint exists in `docs/adr/ADR-XXX-BP.md`
+- [ ] Blueprint contains documented tasks with dependencies
+- [ ] Blueprint contains time estimates
+- [ ] TODO exists in `docs/adr/ADR-XXX-TODO.md`
+- [ ] TODO contains tasks with states (pending/in progress/completed)
+- [ ] TODO contains dependencies between tasks
+- [ ] TODO contains defined priorities
 
 ---
 
-## 4. Validação de Arquivos Impactados
+## 2. Coherence Validation
 
-- [ ] Todos os arquivos listados no Blueprint existem
-- [ ] Arquivos estão acessíveis (permissões corretas)
-- [ ] Não há arquivos lockados por outro processo
-- [ ] Backup foi considerado (se aplicável)
-
----
-
-## 5. Validação de Critérios
-
-- [ ] Critérios de aceite estão definidos no TODO
-- [ ] Critérios de rollback estão definidos no Blueprint
-- [ ] Testes relevantes foram identificados
-- [ ] Comandos de validação foram documentados
+- [ ] Tasks from the Blueprint exist in the TODO
+- [ ] Dependencies in the TODO are consistent with the Blueprint
+- [ ] Estimates in the TODO are consistent with the Blueprint
+- [ ] No task is duplicated between the Blueprint and TODO
+- [ ] ADR is aligned with the scope of the Blueprint
 
 ---
 
-## 6. Validação de Dependências Externas
+## 3. Environment Validation
 
-- [ ] Skills relacionadas estão disponíveis no registry
-- [ ] Dependências de build estão instaladas
-- [ ] Ferramentas de lint/test estão configuradas
-- [ ] CI/CD está funcional (se aplicável)
-
----
-
-## 7. Geração do Execution Contract
-
-- [ ] Execution Contract foi gerado a partir do template
-- [ ] Todos os campos obrigatórios foram preenchidos
-- [ ] Contrato foi validado pelo agente
-- [ ] Próximo passo foi definido
+- [ ] Current branch is not main/master (or a PR is open)
+- [ ] Workspace is clean (no uncommitted changes)
+- [ ] Branch is up-to-date with remote
+- [ ] No pending merge conflicts
+- [ ] Working directory is correct
 
 ---
 
-## 8. Construção do Change Plan
+## 4. Affected File Validation
 
-- [ ] DAG foi construído a partir do TODO
-- [ ] DAG está livre de ciclos
-- [ ] Ordem de execução foi definida (topological sort)
-- [ ] Tarefas paralelizáveis foram identificadas
-- [ ] Estimativa total foi calculada
+- [ ] All files listed in the Blueprint exist
+- [ ] Files are accessible (correct permissions)
+- [ ] No files are locked by another process
+- [ ] Backup was considered (if applicable)
 
 ---
 
-## Aprovação
+## 5. Criteria Validation
 
-| Campo | Valor |
+- [ ] Acceptance criteria are defined in the TODO
+- [ ] Rollback criteria are defined in the Blueprint
+- [ ] Relevant tests were identified
+- [ ] Validation commands were documented
+
+---
+
+## 6. External Dependency Validation
+
+- [ ] Related skills are available in the registry
+- [ ] Build dependencies are installed
+- [ ] Lint/test tools are configured
+- [ ] CI/CD is functional (if applicable)
+
+---
+
+## 7. Execution Contract Generation
+
+- [ ] Execution Contract was generated from the template
+- [ ] All mandatory fields were filled
+- [ ] Contract was validated by the agent
+- [ ] Next step was defined
+
+---
+
+## 8. Change Plan Construction
+
+- [ ] DAG was constructed from the TODO
+- [ ] DAG is free of cycles
+- [ ] Execution order was defined (topological sort)
+- [ ] Parallelizable tasks were identified
+- [ ] Total estimate was calculated
+
+---
+
+## Approval
+
+| Field | Value |
 |-------|-------|
-| Checklist completo | ✅/❌ |
-| Contrato aprovado | ✅/❌ |
-| Plano aprovado | ✅/❌ |
-| Implementação autorizada | ✅/❌ |
+| Checklist complete | ✅/❌ |
+| Contract approved | ✅/❌ |
+| Plan approved | ✅/❌ |
+| Implementation authorized | ✅/❌ |

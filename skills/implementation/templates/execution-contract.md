@@ -1,60 +1,60 @@
 # Execution Contract
 
-> Contrato obrigatório que valida se todos os artefatos necessários estão presentes antes da execução.
+> Mandatory contract that validates the presence of all necessary artifacts before execution.
 
 ---
 
-## Identificação
+## Identification
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
 | ADR | {{adr_path}} |
 | Blueprint | {{blueprint_path}} |
 | TODO | {{todo_path}} |
-| Data de geração | {{date}} |
-| Responsável | {{agent_name}} |
+| Generation Date | {{date}} |
+| Responsible Agent | {{agent_name}} |
 
 ---
 
-## Artefatos
+## Artifacts
 
-| Artefato | Path | Status | Coerente |
+| Artifact | Path | Status | Coherent |
 |----------|------|--------|----------|
 | ADR | {{adr_path}} | {{adr_status}} | {{adr_coherent}} |
 | Blueprint | {{blueprint_path}} | {{bp_exists}} | {{bp_coherent}} |
 | TODO | {{todo_path}} | {{todo_exists}} | {{todo_coherent}} |
 
-### Validação de Coerência
+### Coherence Validation
 
-- [ ] ADR contém seção "Decisão" preenchida
-- [ ] Blueprint contém tarefas documentadas
-- [ ] TODO contém tarefas com estados
-- [ ] Tarefas do Blueprint existem no TODO
-- [ ] Dependências no TODO são consistentes com Blueprint
+- [ ] ADR contains filled "Decision" section
+- [ ] Blueprint contains documented tasks
+- [ ] TODO contains tasks with states
+- [ ] Blueprint tasks exist in TODO
+- [ ] TODO dependencies are consistent with Blueprint
 
 ---
 
-## Ambiente
+## Environment
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Branch atual | {{branch_name}} |
-| Workspace limpo | {{workspace_clean}} |
+| Current Branch | {{branch_name}} |
+| Clean Workspace | {{workspace_clean}} |
 | Commit HEAD | {{head_commit}} |
-| Diretório de trabalho | {{working_dir}} |
+| Working Directory | {{working_dir}} |
 
-### Validação do Ambiente
+### Environment Validation
 
-- [ ] Branch não é main/master (ou há PR aberto)
-- [ ] Sem alterações não commitadas (git status limpo)
-- [ ] Todos os arquivos impactados existem no workspace
-- [ ] Branch está atualizada com remote (sem divergência)
+- [ ] Branch is not main/master (or PR is open)
+- [ ] No uncommitted changes (git status clean)
+- [ ] All impacted files exist in workspace
+- [ ] Branch is up-to-date with remote (no divergence)
 
 ---
 
-## Arquivos Impactados
+## Affected Files
 
-| Arquivo | Tipo de Mudança | Skill Relacionada |
+| File | Type of Change | Related Skill |
 |---------|-----------------|-------------------|
 {{#each affected_files}}
 | {{path}} | {{change_type}} | {{related_skill}} |
@@ -62,9 +62,9 @@
 
 ---
 
-## Critérios de Aceite
+## Acceptance Criteria
 
-| # | Critério | Verificável |
+| # | Criterion | Verifiable |
 |---|----------|-------------|
 {{#each acceptance_criteria}}
 | {{number}} | {{criterion}} | {{verifiable}} |
@@ -72,9 +72,9 @@
 
 ---
 
-## Critérios de Rollback
+## Rollback Criteria
 
-| # | Critério | Critério de Ativação |
+| # | Criterion | Trigger Criterion |
 |---|----------|---------------------|
 {{#each rollback_criteria}}
 | {{number}} | {{criterion}} | {{trigger}} |
@@ -82,21 +82,21 @@
 
 ---
 
-## Validação Final
+## Final Validation
 
-- [ ] Todos os campos obrigatórios estão preenchidos
-- [ ] Todos os artefatos existem e estão coerentes
-- [ ] Ambiente está limpo e pronto para execução
-- [ ] Critérios de aceite estão definidos e verificáveis
-- [ ] Critérios de rollback estão definidos
-- [ ] Contrato aprovado pelo agente executor
+- [ ] All mandatory fields are filled
+- [ ] All artifacts exist and are coherent
+- [ ] Environment is clean and ready for execution
+- [ ] Acceptance criteria are defined and verifiable
+- [ ] Rollback criteria are defined
+- [ ] Contract approved by executing agent
 
 ---
 
-## Assinatura
+## Signature
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| Contrato validado em | {{validation_date}} |
+| Contract validated on | {{validation_date}} |
 | Status | {{contract_status}} |
-| Próximo passo | {{next_step}} |
+| Next Step | {{next_step}} |

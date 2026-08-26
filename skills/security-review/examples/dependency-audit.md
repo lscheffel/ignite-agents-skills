@@ -1,18 +1,18 @@
-# Exemplo: Auditoria de Dependências — Projeto Node.js
+# Example: Dependency Audit — Node.js Project
 
-## Contexto
+## Context
 
-Aplicação Express.js com 47 dependências diretas. Precisa de auditoria de segurança antes de deploy.
+Express.js application with 47 direct dependencies. Requires security audit before deployment.
 
-## Ferramentas Utilizadas
+## Tools Used
 
-- `npm audit` (nativo)
-- `snyk test` (complementar)
-- Revisão manual de dependências criticas
+- `npm audit` (native)
+- `snyk test` (complementary)
+- Manual review of critical dependencies
 
-## Execução
+## Execution
 
-### Passo 1: npm audit
+### Step 1: npm audit
 
 ```bash
 $ npm audit --json | jq '.metadata.vulnerabilities'
@@ -26,65 +26,65 @@ $ npm audit --json | jq '.metadata.vulnerabilities'
 }
 ```
 
-### Passo 2: Detalhar Vulnerabilidades
+### Step 2: Detailing Vulnerabilities
 
-| Pacote | Severidade | Vulnerabilidade | Versão Afetada | Fix |
+| Package | Severity | Vulnerability | Affected Version | Fix |
 |--------|------------|-----------------|----------------|-----|
-| `lodash` | 🟡 Medium | Prototype Pollution | <4.17.21 | Atualizar para 4.17.21 |
-| `minimist` | 🟡 Medium | Prototype Pollution | <1.2.6 | Atualizar para 1.2.6 |
-| `node-fetch` | 🔴 High | Information Exposure | <2.6.7 | Atualizar para 2.6.7 |
-| `express` | 🟢 Low | Open Redirect | <4.18.2 | Atualizar para 4.18.2 |
-| `qs` | 🟢 Low | Prototype Pollution | <6.11.0 | Atualizar para 6.11.0 |
-| `cookie` | 🟢 Low | Insufficient Validation | <0.5.0 | Atualizar para 0.5.0 |
+| `lodash` | 🟡 Medium | Prototype Pollution | <4.17.21 | Update to 4.17.21 |
+| `minimist` | 🟡 Medium | Prototype Pollution | <1.2.6 | Update to 1.2.6 |
+| `node-fetch` | 🔴 High | Information Exposure | <2.6.7 | Update to 2.6.7 |
+| `express` | 🟢 Low | Open Redirect | <4.18.2 | Update to 4.18.2 |
+| `qs` | 🟢 Low | Prototype Pollution | <6.11.0 | Update to 6.11.0 |
+| `cookie` | 🟢 Low | Insufficient Validation | <0.5.0 | Update to 0.5.0 |
 
-### Passo 3: Análise de Impacto
+### Step 3: Impact Analysis
 
 **`node-fetch` (High):**
-- Vulnerabilidade: expõe headers de autorização em redirects cross-origin
-- Impacto: tokens de acesso podem ser vazados se houver redirect malicioso
-- Mitigação: verificar se a aplicação segue redirects (raro em APIs)
-- Ação: ATUALIZAR URGENTE
+- Vulnerability: exposes authorization headers in cross-origin redirects
+- Impact: access tokens may be leaked if malicious redirect occurs
+- Mitigation: verify if the application follows redirects (rare in APIs)
+- Action: URGENTLY UPDATE
 
-**`lodash` e `minimist` (Medium):**
-- Vulnerabilidade: prototype pollution permite injeção de propriedades
-- Impacto: depende de como a aplicação processa input do usuário
-- Mitigação: verificar se há input não sanitizado passado para essas libs
-- Ação: ATUALIZAR
+**`lodash` and `minimist` (Medium):**
+- Vulnerability: prototype pollution allows property injection
+- Impact: depends on how the application processes user input
+- Mitigation: verify if unsanitized user input is passed to these libs
+- Action: UPDATE
 
-### Passo 4: Correção
+### Step 4: Correction
 
 ```bash
-# Atualizar dependências vulneráveis
+# Update vulnerable dependencies
 npm install lodash@4.17.21 minimist@1.2.6 node-fetch@2.6.7 express@4.18.2 qs@6.11.0 cookie@0.5.0
 
-# Verificar correção
+# Verify correction
 npm audit
 # expected: 0 vulnerabilities
 ```
 
-### Passo 5: Validação
+### Step 5: Validation
 
 ```bash
-# Rodar testes para garantir que atualizações não quebraram nada
+# Run tests to ensure updates did not break anything
 npm test
 
-# Verificar que nenhum lockfile mudou inesperadamente
+# Verify no unexpected lockfile changes
 git diff package-lock.json | grep -E "^\+.*version" | head -10
 ```
 
-## Resultado
+## Result
 
-| Métrica | Antes | Depois |
+| Metric | Before | After |
 |---------|-------|--------|
-| Vulnerabilidades | 6 | 0 |
+| Vulnerabilities | 6 | 0 |
 | High | 1 | 0 |
 | Medium | 2 | 0 |
 | Low | 3 | 0 |
-| Dependências atualizadas | — | 6 |
+| Updated Dependencies | — | 6 |
 
-## Recomendações
+## Recommendations
 
-1. **Automatizar:** Adicionar `npm audit --audit-level=high` ao CI
-2. **Dependabot:** Habilitar dependabot para PRs automáticos
-3. **Revisão trimestral:** Auditoria completa a cada trimestre
-4. **Lockfile:** Commitar `package-lock.json` sempre
+1. **Automate:** Add `npm audit --audit-level=high` to CI
+2. **Dependabot:** Enable dependabot for automatic PRs
+3. **Quarterly Review:** Perform complete audit every quarter
+4. **Lockfile:** Commit `package-lock.json` always

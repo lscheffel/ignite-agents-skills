@@ -411,180 +411,219 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: adr-archive description: Automatiza o arquivamento de ADRs plenamente implementadas de forma token-efficient. Avalia silenciosamente o status das tarefas nos arquivos TODO e, se a ADR estiver finalizada, gerencia a criação do ER faltante e arquiva os artefatos de execução, deixando apenas os ERs e ADRs pendentes visíveis na raiz. version: 2.0.0 tags:</p>
+<p>name: adr-archive version: 3.0.0 description: Automates the archiving, auditing, and lifecycle governance of Architecture Decision Records (ADRs) and the structured Tech Debt Registry. Silently parses TODO/PI completion, auto-generates canonical Evidence Records (ER.md), moves executed Decision Sets (ADR, BP, TODO, PI) to archive while keeping ER certificates visible in the root, manages frozen ADRs, and prunes resolved technical debts for maximum token efficiency. domain: core-governance triggers:</p>
+<ul>
+<li>adr-archive</li>
+<li>janitor</li>
+<li>archive adr</li>
+<li>arquivar adr</li>
+<li>clean adrs</li>
+<li>adr janitor</li>
+<li>prune tech debt</li>
+<li>sync tech debt</li>
+<li>generate er</li>
+<li>freeze adr</li>
+</ul>
+<p>tags:</p>
 <ul>
 <li>architecture</li>
 <li>adr</li>
 <li>cleanup</li>
 <li>governance</li>
 <li>archive</li>
-<li>automation</li>
+<li>tech-debt</li>
+<li>gatekeeper</li>
+<li>evidence-record</li>
 </ul>
 <p>related_skills:</p>
 <ul>
 <li>adr-generator</li>
 <li>implementation</li>
-<li>documentation-reconciliation</li>
+<li>technical-documentation</li>
 <li>governance</li>
+<li>architecture-review</li>
 </ul>
+<p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: "2026-08-26" ---</p>
+<h1 id="adr-archive-janitor--governance-gatekeeper">ADR Archive (Janitor & Governance Gatekeeper)</h1>
+<p>Governs the completion, archival, and hygiene of Architecture Decision Records (ADRs), serving as the algorithmic gatekeeper for *<em>Evidence Records (<code></em>-ER.md</code>)<strong> and the garbage collector for the </strong>Tech Debt Registry** (<code>docs/governance/tech-debt-registry.json</code>).</p>
+<p>The Janitor enforces root directory hygiene so agents and developers immediately perceive which architectures are <strong>in progress</strong> (visible ADRs in root) and which are <strong>concluded</strong> (visible <code>ER.md</code> certificates in root, with working artifacts archived).</p>
 <hr>
-<h1 id="adr-archive-janitor">ADR Archive (Janitor)</h1>
-<p>Audita todas as ADRs do repositório para manter a pasta de governança organizada. Funciona como um "garbage collector" para artefatos de execução.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use When:</h3>
 <ul>
-<li>Precisar arquivar ADRs implementadas</li>
-<li>Limpar artefatos de execução (BP, TODO, PI) da raiz</li>
-<li>Garantir que apenas ADRs ativas e ERs de ADRs finalizadas fiquem visíveis</li>
-<li>Executar reconciliação documental pré-release</li>
-<li>Automatizar governança de ADRs</li>
+<li>An ADR and its associated TODO/PI have been fully implemented (100% of checklist tasks checked).</li>
+<li>You need to generate the official, structured Evidence Record (<code>ADR-XXX-ER.md</code>) algorithmically.</li>
+<li>Auditing the repository's ADR governance state for anomalies (e.g. prematurely archived ADRs or missing ERs).</li>
+<li>Synchronizing the Tech Debt Registry (<code>tech-debt-registry.json</code>) to promote mitigated debts to <code>RESOLVED</code>.</li>
+<li>Running garbage collection on resolved/obsolete technical debts (<code>--prune-debts</code>) to minimize token overhead.</li>
+<li>Voluntarily freezing approved ADRs that are out of active scope (<code>--freeze</code>).</li>
+<li>Regenerating the consolidated <code>docs/adr/ADR-INDEX.md</code> table.</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do Not Use When:</h3>
 <ul>
-<li>ADR ainda estiver em implementação</li>
-<li>Houver tarefas pendentes no TODO</li>
-<li>ER ainda não foi gerado</li>
-<li>Apenas leitura de status for necessária (use <code>./scripts/archive-adrs.sh --dry-run</code>)</li>
+<li>The implementation of the ADR is still in progress (use <code>implementation</code> to continue executing tasks).</li>
+<li>Designing, creating, or planning new ADRs (use <code>adr-generator</code>).</li>
+<li>Reviewing software code quality or architectural patterns (use <code>architecture-review</code>).</li>
+<li>The project does not use ADR-based governance.</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>adr-generator</code> — criação de ADRs</li>
-<li><code>implementation</code> — execução governada que gera ERs</li>
-<li><code>documentation-reconciliation</code> — auditoria documental completa</li>
-<li><code>governance</code> — processos de arquivamento obrigatório</li>
+<li><code>adr-generator</code> — creates the Decision Set (ADR, BP, TODO, PI) consumed by the Janitor.</li>
+<li><code>implementation</code> — executes code changes and hands off completed TODOs to <code>audit.py</code>.</li>
+<li><code>technical-documentation</code> — synchronizes repository documentation pillars with ADR decisions.</li>
+<li><code>governance</code> — repository lifecycle policies and architectural standards.</li>
 </ul>
 <hr>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Invocar ADR Archive] --&gt; B{Executar script auditoria}
-    B --&gt; C[Ler relatório gerado]
-    C --&gt; D{Flags encontradas?}
-    D --&gt;|READY_TO_ARCHIVE| E[Arquivar ADR + BP + TODO + PI]
-    D --&gt;|ARCHIVED_NEEDS_ER| F[Criar ER na raiz]
-    D --&gt;|ARCHIVED_MISTAKE_RETURN| G[Devolver artefatos do archive para raiz]
-    D --&gt;|Nenhuma flag| H[Nada a fazer]
-    E --&gt; I[Atualizar docs/adr/INDEX.md]
-    F --&gt; I
-    G --&gt; I
-    H --&gt; I
-    I --&gt; J[Consolidar débitos técnicos]
-    J --&gt; K[Reportar ao usuário]</code></pre>
+    A[&quot;Run Janitor Audit: audit.py .&quot;] --&gt; B{&quot;Audit Findings&quot;}
+    
+    B --&gt;|&quot;READY_TO_ARCHIVE (TODO Complete)&quot;| C[&quot;Execute: audit.py . --archive ADR-XXX&quot;]
+    C --&gt; C1[&quot;Auto-generates ADR-XXX-ER.md in root&quot;]
+    C1 --&gt; C2[&quot;Moves ADR+BP+TODO+PI to docs/adr/archive/&quot;]
+    C2 --&gt; C3[&quot;Promotes linked Tech Debts to RESOLVED&quot;]
+    C3 --&gt; C4[&quot;Updates docs/adr/ADR-INDEX.md&quot;]
+    
+    B --&gt;|&quot;ARCHIVED_NEEDS_ER (Missing ER)&quot;| D[&quot;Execute: audit.py . --generate-er ADR-XXX&quot;]
+    D --&gt; D1[&quot;Emits canonical ER.md in docs/adr/ root&quot;]
+    
+    B --&gt;|&quot;ARCHIVED_MISTAKE_RETURN (Pending TODOs)&quot;| E[&quot;Execute: Move back to root&quot;]
+    E --&gt; E1[&quot;mv docs/adr/archive/ADR-XXX* docs/adr/&quot;]
+    
+    B --&gt;|&quot;Voluntary Pause / Out-of-Scope ADR&quot;| F[&quot;Execute: audit.py . --freeze ADR-XXX&quot;]
+    F --&gt; F1[&quot;Moves Decision Set to docs/adr/frozen/&quot;]
+    
+    B --&gt;|&quot;Resolved Debts Accumulating&quot;| G[&quot;Execute: audit.py . --prune-debts&quot;]
+    G --&gt; G1[&quot;Transfers RESOLVED debts to tech-debt-archive.json&quot;]</code></pre>
 <hr>
-<h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-auditoria-nativa-zero-tokens">Fase 1: Auditoria Nativa (Zero Tokens)</h3>
+<h2 id="archiving-strategy--root-hygiene">Archiving Strategy & Root Hygiene</h2>
+<p>To maintain minimal token consumption for AI agents and absolute visual clarity:</p>
+<div class="table-wrapper"><table><tr><th>Location</th><th>Contents</th><th>Purpose</th></tr><tr><td><strong>Root (<code>docs/adr/</code>)</strong></td><td>1. <strong>Active ADR Decision Sets:</strong> <code>ADR-XXX.md</code>, <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>, <code>ADR-XXX-PI.md</code><br>2. <strong>Evidence Records:</strong> <code>ADR-XXX-ER.md</code> (all completed ADRs)</td><td>High visibility of active work and verifiable proof of completed decisions.</td></tr><tr><td><strong>Archive (<code>docs/adr/archive/</code>)</strong></td><td>Working artifacts of completed ADRs: <code>ADR-XXX.md</code>, <code>ADR-XXX-BP.md</code>, <code>ADR-XXX-TODO.md</code>, <code>ADR-XXX-PI.md</code></td><td>Historical trail preserved without cluttering active agent context.</td></tr><tr><td><strong>Frozen (<code>docs/adr/frozen/</code>)</strong></td><td>Voluntarily paused/deferred ADRs (<code>implementation_status: FROZEN</code>)</td><td>Parked architectures excluded from active implementation loops.</td></tr></table></div>
+<hr>
+<h2 id="tech-debt-management-lifecycle">Tech Debt Management Lifecycle</h2>
+<p>The Janitor automatically reconciles and cleans <code>docs/governance/tech-debt-registry.json</code>:</p>
 <ol>
-<li>Execute o script Python interno para mapear ADRs:</li>
+<li><strong>Auto-Resolution:</strong> When an ADR linked via <code>mitigation_ref</code> has its <code>ER.md</code> generated, <code>audit.py</code> automatically updates the debt's status to <code>RESOLVED</code> and records the resolution timestamp.</li>
+<li><strong>Atomic Registration (<code>--register-debt</code>):</strong> Allows agents during implementation to register out-of-scope discoveries without drive-by refactoring:</li>
 </ol>
-<pre data-lang="bash"><code>   python scripts/adr_archive_audit.py .</code></pre>
+<pre data-lang="bash"><code>   python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
 <ol>
-<li>O script imprime flags no terminal e gera relatório em <code>docs/reports/adr-archive-report-*.md</code></li>
+<li><strong>Garbage Collection of Tokens (<code>--prune-debts</code>):</strong> Moves <code>RESOLVED</code> and obsolete debts from the active registry to <code>docs/governance/archive/tech-debt-archive.json</code>. This keeps the active registry microscopically small (< 1KB), preventing context dilution.</li>
 </ol>
-<p><strong>Checkpoint:</strong> [ ] Script executado [ ] Flags e relatório disponíveis</p>
 <hr>
-<h3 id="fase-2-anlise-de-flags-e-ao">Fase 2: Análise de Flags e Ação</h3>
-<div class="table-wrapper"><table><tr><th>Flag</th><th>Significado</th><th>Ação Obrigatória</th></tr><tr><td><code>READY_TO_ARCHIVE: ADR-XXX</code></td><td>ADR + TODO concluídos, ER existe na raiz</td><td><code>python scripts/adr_archive_audit.py . --archive ADR-XXX</code></td></tr><tr><td><code>ARCHIVED_NEEDS_ER: ADR-XXX</code></td><td>ADR arquivada mas sem ER na raiz</td><td>Criar <code>docs/adr/ADR-XXX-ER.md</code> manualmente na raiz</td></tr><tr><td><code>ARCHIVED_MISTAKE_RETURN: ADR-XXX</code></td><td>ADR arquivada prematuramente (TODO incompleto)</td><td><code>mv docs/adr/archive/ADR-XXX* docs/adr/</code></td></tr></table></div>
-<p><strong>Checkpoint:</strong> [ ] Todas as flags processadas [ ] Ações executadas</p>
-<hr>
-<h3 id="fase-3-consolidao-de-dbitos-tcnicos">Fase 3: Consolidação de Débitos Técnicos</h3>
-<ol>
-<li>Ler relatório gerado (<code>docs/reports/adr-archive-report-*.md</code>)</li>
-<li>Avaliar seção "Débitos Técnicos Consolidados"</li>
-<li>Se débitos relevantes existirem → sugerir nova ADR de Refatoração e Débito Técnico</li>
-</ol>
-<p><strong>Checkpoint:</strong> [ ] Débitos avaliados [ ] Sugestão feita se aplicável</p>
-<hr>
-<h3 id="fase-4-atualizao-de-ndice">Fase 4: Atualização de Índice</h3>
-<ol>
-<li>Executar <code>./scripts/archive-adrs.sh</code> (move arquivos, atualiza INDEX.md)</li>
-<li>Verificar <code>docs/adr/INDEX.md</code> reflete estado atual</li>
-</ol>
-<p><strong>Checkpoint:</strong> [ ] INDEX.md sincronizado [ ] Arquivamento completo</p>
-<hr>
-<h2 id="conceitos-fundamentais">Conceitos Fundamentais</h2>
-<h3 id="estratgia-de-visibilidade">Estratégia de Visibilidade</h3>
+<h2 id="workflow-step-by-step-for-the-agent">Workflow (Step-by-Step for the Agent)</h2>
+<h3 id="phase-1-diagnostic-sweep">Phase 1: Diagnostic Sweep</h3>
+<p>Run the native auditor against the target repository root:</p>
+<pre data-lang="bash"><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></pre>
 <ul>
-<li><strong>Raiz <code>docs/adr/</code></strong>: Apenas ADRs ativas (pendentes) + ERs de ADRs finalizadas</li>
-<li><strong>Archive <code>docs/adr/archive/</code></strong>: ADRs implementadas + BP + TODO + PI</li>
-<li><strong>ER (Execution Report)</strong>: Certificado de implementação, sempre na raiz</li>
+<li>The script runs in milliseconds, parses all ADRs/TODOs, synchronizes tech debts, generates <code>docs/adr/ADR-INDEX.md</code>, and writes a detailed audit report to <code>docs/reports/adr-archive-report-*.md</code>.</li>
 </ul>
-<h3 id="ciclo-de-vida-da-adr">Ciclo de Vida da ADR</h3>
-<pre><code>Criação (ADR+BP+TODO) → Implementação → ER gerado → Arquivamento (ADR+BP+TODO+PI → archive) → ER permanece na raiz</code></pre>
+<h3 id="phase-2-anomaly-resolution--action-routing">Phase 2: Anomaly Resolution & Action Routing</h3>
+<p>Inspect the CLI stdout and report flags:</p>
+<h4 id="1-readytoarchive-adr-xxx">1. <code>READY_TO_ARCHIVE: ADR-XXX</code></h4>
+<ul>
+<li><strong>Condition:</strong> All checklist items in <code>ADR-XXX-TODO.md</code> (or <code>ADR-XXX-PI.md</code>) are marked <code>[x]</code> or <code>✅</code>.</li>
+<li><strong>Action:</strong> Execute automated archival and ER emission:</li>
+</ul>
+<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
+<ul>
+<li><strong>Checkpoint:</strong> <code>docs/adr/ADR-XXX-ER.md</code> created in root, working files moved to <code>docs/adr/archive/</code>, index updated.</li>
+</ul>
+<h4 id="2-archivedneedser-adr-xxx">2. <code>ARCHIVED_NEEDS_ER: ADR-XXX</code></h4>
+<ul>
+<li><strong>Condition:</strong> An ADR was archived in <code>docs/adr/archive/</code> but lacks its implementation certificate (<code>ER.md</code>) in root.</li>
+<li><strong>Action:</strong> Trigger algorithmic ER generation:</li>
+</ul>
+<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX</code></pre>
+<p><em>(Never create or edit <code></em>-ER.md</code> files manually — see Anti-patterns).*</p>
+<h4 id="3-archivedmistakereturn-adr-xxx">3. <code>ARCHIVED_MISTAKE_RETURN: ADR-XXX</code></h4>
+<ul>
+<li><strong>Condition:</strong> An ADR is in <code>docs/adr/archive/</code> but still has incomplete tasks in its TODO.</li>
+<li><strong>Action:</strong> Restore the Decision Set to the active root:</li>
+</ul>
+<pre data-lang="bash"><code>  mv docs/adr/archive/ADR-XXX* docs/adr/</code></pre>
+<h4 id="4-freezerequest-adr-xxx">4. <code>FREEZE_REQUEST: ADR-XXX</code></h4>
+<ul>
+<li><strong>Condition:</strong> An approved ADR needs to be deferred to a future cycle without triggering tech debt alerts.</li>
+<li><strong>Action:</strong></li>
+</ul>
+<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --freeze ADR-XXX</code></pre>
+<h3 id="phase-3-token-garbage-collection-tech-debts">Phase 3: Token Garbage Collection (Tech Debts)</h3>
+<p>When resolved technical debts accumulate in the active registry:</p>
+<pre data-lang="bash"><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --prune-debts</code></pre>
+<ul>
+<li><strong>Checkpoint:</strong> Active <code>tech-debt-registry.json</code> contains only open/in-progress items.</li>
+</ul>
+<h3 id="phase-4-verification--handoff">Phase 4: Verification & Handoff</h3>
+<ol>
+<li>Review the generated markdown report in <code>docs/reports/adr-archive-report-*.md</code>.</li>
+<li>Present a concise summary to the user highlighting:</li>
+</ol>
+<ul>
+<li>Archived ADRs and generated Evidence Records.</li>
+<li>Status of active vs resolved technical debts.</li>
+<li>Restored or frozen items.</li>
+</ul>
 <hr>
-<h2 id="templates">Templates</h2>
-<h3 id="adrarchiveauditpy">adr_archive_audit.py</h3>
-<p>Localização: <code>scripts/adr_archive_audit.py</code></p>
-<p>Script de auditoria nativa (Python, zero LLM tokens).</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code># Auditoria completa com relatório
-python scripts/adr_archive_audit.py .
-
-# Arquivar ADR específica
-python scripts/adr_archive_audit.py . --archive ADR-007
-
-# Dry run
-python scripts/adr_archive_audit.py . --dry-run</code></pre>
-<h3 id="archivereportmd">archive_report.md</h3>
-<p>Localização: <code>templates/archive_report.md</code></p>
-<p>Template para relatório de auditoria gerado pelo script.</p>
-<p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code>cp templates/archive_report.md docs/reports/adr-archive-report-$(date +%Y%m%d).md</code></pre>
+<h2 id="cli-reference--flags-matrix">CLI Reference & Flags Matrix</h2>
+<p>The script <code>audit.py</code> provides a complete CLI interface:</p>
+<div class="table-wrapper"><table><tr><th>Operation</th><th>Command</th><th>Description</th></tr><tr><td><strong>Audit & Sync</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></td><td>Audits ADRs, syncs debt statuses, generates ADR-INDEX and report.</td></tr><tr><td><strong>Archive ADR</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></td><td>Validates completion, creates <code>ER.md</code>, moves files to archive.</td></tr><tr><td><strong>Generate ER</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX</code></td><td>Emits missing <code>ER.md</code> from archived or root Decision Set.</td></tr><tr><td><strong>Freeze ADR</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --freeze ADR-XXX</code></td><td>Moves unexecuted ADR to <code>docs/adr/frozen/</code> and updates status.</td></tr><tr><td><strong>Register Debt</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity <S> --domain <D> --desc "<T>"</code></td><td>Appends new technical debt atomically.</td></tr><tr><td><strong>Prune Debts</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --prune-debts</code></td><td>Archives resolved debts to keep active registry token-efficient.</td></tr><tr><td><strong>Verify Tests</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX --verify-test "npm test"</code></td><td>Runs test command before allowing archival.</td></tr></table></div>
 <hr>
 <h2 id="anti-patterns">Anti-patterns</h2>
-<h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="arquivar-adr-sem-er">Arquivar ADR sem ER</h4>
-<p><strong>O que é:</strong> Mover ADR para archive sem ter <code>ADR-XXX-ER.md</code> na raiz. <strong>Por que é ruim:</strong> Perde o certificado de implementação, governança quebrada. <strong>Como evitar:</strong> Sempre verificar flag <code>ARCHIVED_NEEDS_ER</code> antes de arquivar. ER é pré-requisito.</p>
-<h4 id="arquivar-adr-com-todo-incompleto">Arquivar ADR com TODO incompleto</h4>
-<p><strong>O que é:</strong> Mover ADR para archive enquanto <code>ADR-XXX-TODO.md</code> tem tarefas <code>[ ]</code>. <strong>Por que é ruim:</strong> ADR volta como "mistake return", polui histórico, confunde auditoria. <strong>Como evitar:</strong> Script valida TODO 100% completo antes de permitir arquivamento.</p>
-<h4 id="deletar-er-da-raiz">Deletar ER da raiz</h4>
-<p><strong>O que é:</strong> Remover <code>docs/adr/ADR-XXX-ER.md</code> achando que é lixo. <strong>Por que é ruim:</strong> ER é o único registro visível de que a ADR foi implementada. <strong>Como evitar:</strong> ERs NUNCA vão para archive. Regra imutável.</p>
-<h3 id="-mdio">🟡 Médio</h3>
-<h4 id="no-atualizar-indexmd-aps-arquivar">Não atualizar INDEX.md após arquivar</h4>
-<p><strong>O que é:</strong> Executar arquivamento mas esquecer de mover entrada no INDEX.md. <strong>Por que é ruim:</strong> Índice mostra ADR ativa que já foi arquivada. <strong>Como evitar:</strong> <code>./scripts/archive-adrs.sh</code> atualiza INDEX.md automaticamente.</p>
-<h4 id="ignorar-dbitos-tcnicos-consolidados">Ignorar débitos técnicos consolidados</h4>
-<p><strong>O que é:</strong> Relatório mostra débitos mas não se cria ADR de refatoração. <strong>Por que é ruim:</strong> Débitos acumulam, tornam-se ingerenciáveis. <strong>Como evitar:</strong> Sempre avaliar seção "Débitos Técnicos" do relatório.</p>
-<h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="executar-auditoria-manual-sem-script">Executar auditoria manual sem script</h4>
-<p><strong>O que é:</strong> Ler ADRs uma a uma em vez de usar <code>adr_archive_audit.py</code>. <strong>Por que é ruim:</strong> Gasta tokens, propenso a erro humano, não escala. <strong>Como evitar:</strong> Sempre usar script nativo primeiro.</p>
+<h3 id="-critical">🔴 Critical</h3>
+<h4 id="premature-archiving-without-completed-todo">Premature Archiving without Completed TODO</h4>
+<ul>
+<li><strong>What is it:</strong> Archiving an ADR while tasks in <code>ADR-XXX-TODO.md</code> or <code>ADR-XXX-PI.md</code> remain unchecked.</li>
+<li><strong>Why is it bad:</strong> Falsely marks architecture as finished, creating invisible technical debt.</li>
+<li><strong>How to avoid:</strong> Always let <code>audit.py . --archive ADR-XXX</code> verify task completion programmatically.</li>
+</ul>
+<h4 id="manual-creation-or-editing-of-evidence-records--ermd">Manual Creation or Editing of Evidence Records (<code>*-ER.md</code>)</h4>
+<ul>
+<li><strong>What is it:</strong> An agent manually authoring or mocking files ending in <code>*-ER.md</code>.</li>
+<li><strong>Why is it bad:</strong> Bypasses algorithmic verification and metric calculations, breaking SDLC audit integrity.</li>
+<li><strong>How to avoid:</strong> Hard-gate: ER creation is the exclusive domain of <code>audit.py --archive</code> or <code>audit.py --generate-er</code>.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<h4 id="accumulating-stale-resolved-debts-in-active-registry">Accumulating Stale Resolved Debts in Active Registry</h4>
+<ul>
+<li><strong>What is it:</strong> Leaving hundreds of <code>RESOLVED</code> items inside <code>docs/governance/tech-debt-registry.json</code>.</li>
+<li><strong>Why is it bad:</strong> Bloats agent prompt context and degrades token budget on every governance read.</li>
+<li><strong>How to avoid:</strong> Run <code>audit.py . --prune-debts</code> periodically to archive resolved entries.</li>
+</ul>
+<h4 id="deleting-working-artifacts-instead-of-archiving">Deleting Working Artifacts Instead of Archiving</h4>
+<ul>
+<li><strong>What is it:</strong> Deleting <code>ADR-XXX-BP.md</code> or <code>ADR-XXX-TODO.md</code> once implementation finishes.</li>
+<li><strong>Why is it bad:</strong> Destroys historical decision rationale and execution decomposition.</li>
+<li><strong>How to avoid:</strong> Move them to <code>docs/adr/archive/</code> via <code>audit.py . --archive ADR-XXX</code>.</li>
+</ul>
+<h3 id="-low">🟢 Low</h3>
+<h4 id="missing-date-in-debt-registration">Missing Date in Debt Registration</h4>
+<ul>
+<li><strong>What is it:</strong> Registering a technical debt without provenance or timestamp.</li>
+<li><strong>How to avoid:</strong> Always use the <code>--register-debt</code> CLI flag which automatically injects ISO timestamps and origin metadata.</li>
+</ul>
 <hr>
 <h2 id="checklists">Checklists</h2>
-<h3 id="checklist-pr-arquivamento">Checklist Pré-Arquivamento</h3>
+<h3 id="pre-archival-checklist">Pre-Archival Checklist</h3>
 <ul>
-<li>[ ] <code>./scripts/archive-adrs.sh --dry-run</code> retorna ADRs para arquivar</li>
-<li>[ ] Cada ADR candidata tem <code>ER</code> correspondente na raiz <code>docs/adr/</code></li>
-<li>[ ] Cada ADR candidata tem <code>TODO</code> 100% completo (<code>[x]</code> em todas tarefas)</li>
-<li>[ ] Nenhuma ADR ativa (status "Proposto" ou "Em Implementação") será arquivada</li>
+<li>[ ] All code changes for the ADR are committed and tested.</li>
+<li>[ ] Every checklist item in <code>ADR-XXX-TODO.md</code> (and <code>ADR-XXX-PI.md</code>) is physically marked <code>[x]</code> or <code>✅</code>.</li>
+<li>[ ] No peripheral refactoring was performed (incidental debts registered via <code>--register-debt</code>).</li>
+<li>[ ] Executed <code>audit.py . --archive ADR-XXX</code>.</li>
+<li>[ ] Verified that <code>ADR-XXX-ER.md</code> is present in <code>docs/adr/</code> root.</li>
 </ul>
-<h3 id="checklist-ps-arquivamento">Checklist Pós-Arquivamento</h3>
+<h3 id="janitor-health-checklist">Janitor Health Checklist</h3>
 <ul>
-<li>[ ] <code>docs/adr/INDEX.md</code> atualizado (entradas movidas para "Archived ADRs")</li>
-<li>[ ] <code>docs/adr/archive/ADR-XXX.md</code> + BP + TODO + PI presentes</li>
-<li>[ ] <code>docs/adr/ADR-XXX-ER.md</code> permanece na raiz</li>
-<li>[ ] Relatório de auditoria salvo em <code>docs/reports/</code></li>
-</ul>
-<h3 id="checklist-de-dbitos-tcnicos">Checklist de Débitos Técnicos</h3>
-<ul>
-<li>[ ] Ler seção "Débitos Técnicos Consolidados" do relatório</li>
-<li>[ ] Classificar cada débito: Crítico / Médio / Baixo</li>
-<li>[ ] Se ≥1 Crítico ou ≥3 Médios → sugerir ADR de Refatoração</li>
-<li>[ ] Documentar decisão no relatório ou criar nova ADR</li>
+<li>[ ] <code>docs/adr/ADR-INDEX.md</code> is up to date and reflects true implementation states.</li>
+<li>[ ] <code>docs/governance/tech-debt-registry.json</code> is clean and free of stale resolved items.</li>
+<li>[ ] Zero uncertified ADRs in <code>docs/adr/archive/</code> (all archived items have corresponding root ERs).</li>
 </ul>
 <hr>
-<h2 id="edge-cases">Edge Cases</h2>
-<h3 id="adr-arquivada-mas-er-corrompidoausente">ADR arquivada mas ER corrompido/ausente</h3>
-<p><strong>Situação:</strong> <code>ARCHIVED_NEEDS_ER</code> flagged mas ER foi deletado acidentalmente. <strong>Solução:</strong> Recriar ER a partir do <code>execution-report.md</code> no archive (se existir) ou gerar novo resumindo implementação. <strong>Exceção:</strong> Se nem execution-report existe, documentar como "ER perdido - reconstruído".</p>
-<h3 id="adr-com-mltiplas-implementaes-parciais">ADR com múltiplas implementações parciais</h3>
-<p><strong>Situação:</strong> ADR implementada em múltiplos branches/PRs, TODO nunca 100% completo. <strong>Solução:</strong> Não arquivar. Criar ADRs filhas para cada implementação parcial, manter ADR-mãe ativa até consolidação. <strong>Exceção:</strong> Se implementação é contínua e intencional, documentar no TODO e manter ativa.</p>
-<h3 id="er-criado-mas-adr-no-arquivada-por-meses">ER criado mas ADR não arquivada por meses</h3>
-<p><strong>Situação:</strong> ER existe na raiz, ADR+BP+TODO ainda na raiz (não arquivados). <strong>Solução:</strong> Executar <code>./scripts/archive-adrs.sh</code> — script detecta <code>READY_TO_ARCHIVE</code> e arquiva automaticamente. <strong>Exceção:</strong> Se equipe decide manter ADR visível por contexto, documentar exceção no ER.</p>
-<h3 id="conflito-entre-archive-adrssh-e-script-python">Conflito entre archive-adrs.sh e script Python</h3>
-<p><strong>Situação:</strong> Dois mecanismos de arquivamento com lógica diferente. <strong>Solução:</strong> <code>archive-adrs.sh</code> é wrapper que chama script Python. Usar apenas o script Python diretamente para controle fino. <strong>Exceção:</strong> Para arquivamento em lote padrão, usar shell script.</p>
-<hr>
-<h2 id="referncias">Referências</h2>
+<h2 id="references">References</h2>
 <ul>
-<li><code>scripts/adr_archive_audit.py</code> — Auditoria nativa</li>
-<li><code>scripts/archive-adrs.sh</code> — Arquivamento em lote + INDEX.md update</li>
-<li><code>docs/adr/INDEX.md</code> — Índice de ADRs</li>
-<li><a href="../../adr/ADR-011.html">ADR-011</a> — Documentation Reconciliation Skill</li>
+<li><a href="../../skills/adr-generator/index.html">Skill adr-generator</a> — Source for ADR creation and Decision Set templates.</li>
+<li><a href="../../skills/implementation/index.html">Skill implementation</a> — Consumes Quadra and respects ER Hard-Gate.</li>
+<li><a href="../../skills/technical-documentation/index.html">Skill technical-documentation</a> — Standards for documentation reconciliation.</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
