@@ -37,15 +37,15 @@ DEFAULT_NIM_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 # Cascatas de Modelos (ADR-026)
 TRANSLATION_MODELS = [
-    "meta/llama-3.1-8b-instruct",
     "nvidia/nemotron-3.5-lightning-30b-a3b",
+    "meta/llama-3.1-8b-instruct",
     "nvidia/riva-translate-4b-instruct-v2",
 ]
 
 CODE_JUDGE_MODELS = [
-    "deepseek-ai/deepseek-v4-flash-0731",
-    "meta/llama-3.3-70b-instruct",
+    "nvidia/nemotron-3.5-lightning-30b-a3b",
     "meta/llama-3.1-8b-instruct",
+    "deepseek-ai/deepseek-v4-flash-0731",
 ]
 
 # Diretivas e Metadados que NUNCA devem ser traduzidos
@@ -418,7 +418,7 @@ def call_nvidia_nim_api(
                     headers=headers,
                     method="POST"
                 )
-                with urllib.request.urlopen(req, timeout=45) as resp:
+                with urllib.request.urlopen(req, timeout=15) as resp:
                     if resp.status == 200:
                         data = json.loads(resp.read().decode("utf-8"))
                         content = data["choices"][0]["message"]["content"].strip()
