@@ -5,7 +5,9 @@ on:
     branches: [master]
     paths:
       - "skills/**"
-      - "pages/build.py"
+      - "pages/**"
+      - "docs/**"
+      - "scripts/**"
   workflow_dispatch:
 
 permissions:
@@ -70,14 +72,12 @@ jobs:
 
       # ── Deploy to gh-pages ──
       - name: Checkout gh-pages
-        if: steps.changes.outputs.changed == 'true'
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages-deploy
 
       - name: Sync ALL files from master to gh-pages
-        if: steps.changes.outputs.changed == 'true'
         run: |
           cd gh-pages-deploy
           git config user.name "github-actions[bot]"
