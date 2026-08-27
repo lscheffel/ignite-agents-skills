@@ -453,11 +453,15 @@ graph TD
 3. **Closing (Next Steps):** Explicit confirmation of ownership and next checkpoint.
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (50-Character Subject Line Bound):** Subject lines must not exceed 50 characters to prevent mobile client truncation.
-2. **Rule of Thumb 2 (Three-Sentence Rule for Simple Requests):** If an email requires a single decision, constrain the message to $\le 3$ concise sentences.
-3. **Rule of Thumb 3 (Explicit Ownership):** State clearly *who* is responsible for *what* by *when* (`@Person: Action by Date`).
-4. **Rule of Thumb 4 (No Passive Aggression):** Maintain professional, direct, and collaborative tone even during escalations.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

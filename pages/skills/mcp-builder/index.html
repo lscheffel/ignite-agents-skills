@@ -760,12 +760,17 @@ describe(&#x27;MCP Server&#x27;, () =&gt; {
        │─── JSON-RPC 2.0 Request (&quot;tools/call&quot;) ───────&gt;│
        │&lt;── JSON-RPC 2.0 Result (Execution Payload) ────│</code></pre>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Stdio Cleanliness Invariant):</strong> An MCP Stdio server MUST NEVER print debug strings or raw text to <code>stdout</code>; all logging must use <code>stderr</code> to prevent JSON-RPC parsing crashes.</li>
-<li><strong>Rule of Thumb 2 (Strict Tool Typing):</strong> Every tool schema must specify <code>type: "object"</code>, <code>properties</code>, and <code>required</code> arrays.</li>
-<li><strong>Rule of Thumb 3 (Backpressure & Timeout):</strong> Async tool handlers must complete within 30 seconds or return a structured JSON-RPC timeout error.</li>
-<li><strong>Rule of Thumb 4 (Atomic Tool Returns):</strong> Return values must follow the canonical <code>{ content: [{ type: "text", text: "..." }], isError: false }</code> format.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -789,6 +794,10 @@ describe(&#x27;MCP Server&#x27;, () =&gt; {
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/mcp-builder-example.html">mcp-builder-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

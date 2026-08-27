@@ -660,12 +660,17 @@ AGENT 3 - OpenAPI Spec:
 <h3 id="dynamic-token-budget-partitioning-formula">Dynamic Token Budget Partitioning Formula:</h3>
 <p>$$B_{\text{subagent}}^{(i)} = \frac{B_{\text{total}} - B_{\text{orchestrator}}}{M} \times W_i \quad \text{where} \quad \sum_{i=1}^M W_i = 1.0$$</p>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (File Partitioning Invariant):</strong> Two parallel subagents MUST NEVER be assigned to modify the same file concurrently (Strict File Ownership Isolation).</li>
-<li><strong>Rule of Thumb 2 (Concurrency Limit):</strong> Maximum concurrent active subagents is bounded by $M_{\text{max}} = 5$ to prevent API throttling and lock contention.</li>
-<li><strong>Rule of Thumb 3 (Join Synchronization Gate):</strong> The orchestrator must block on <code>Promise.all</code> / <code>gather</code> until all dispatched subagents report completion or timeout.</li>
-<li><strong>Rule of Thumb 4 (Deterministic Conflict Resolution):</strong> If merge conflicts arise, the orchestrator triggers an isolated resolution agent with AST diff context.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="completion-gate--verification">Completion Gate & Verification</h2>
 <p>Before declaring parallel dispatching complete:</p>
 <ul>
@@ -681,6 +686,10 @@ AGENT 3 - OpenAPI Spec:
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/dispatching-parallel-agents-example.html">dispatching-parallel-agents-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

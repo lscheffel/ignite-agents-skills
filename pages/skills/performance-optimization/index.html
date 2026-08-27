@@ -614,12 +614,17 @@ ORDER BY seq_scan DESC;</code></pre>
 <p>$$L = \lambda \cdot W \implies \text{Concurrency} = \text{Throughput (RPS)} \times \text{Latency (Seconds)}$$</p>
 <p><em>Example:</em> At 1,000 RPS with mean latency of $200\text{ms}$ ($0.2\text{s}$), the server must support $L = 1000 \times 0.2 = 200$ concurrent active threads/connections.</p>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Eliminate N+1 Queries):</strong> Never execute queries inside loops; use eager loading (<code>with()</code>, <code>include()</code>, <code>JOIN FETCH</code>) or batching (<code>DataLoader</code>).</li>
-<li><strong>Rule of Thumb 2 (Cache Stampede Prevention):</strong> High-traffic cache keys must implement Probabilistic Early Expiration (XFetch) or Mutex locking to prevent cache dogpiling.</li>
-<li><strong>Rule of Thumb 3 (Measure Before Optimizing):</strong> Never optimize based on intuition; always capture CPU/memory profiler snapshots (Flamegraphs / pprof) before and after changes.</li>
-<li><strong>Rule of Thumb 4 (Payload Compression):</strong> Enable Brotli/Gzip compression for all text-based HTTP responses ($>1\text{KB}$).</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="completion-gate--verification">Completion Gate & Verification</h2>
 <p>Before concluding performance optimization:</p>
 <ul>
@@ -635,6 +640,10 @@ ORDER BY seq_scan DESC;</code></pre>
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/performance-optimization-example.html">performance-optimization-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

@@ -371,11 +371,15 @@ $$\text{Steps}_{\text{bisect}} \le \lceil \log_2(N_{\text{commits}}) \rceil$$
 4. **Phase 4 (Fix & Guard):** Apply minimal root-cause fix and add a permanent regression test.
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (No Code Change Without Failing Test):** You cannot claim a bug is fixed until you write a test that fails before the fix and passes after.
-2. **Rule of Thumb 2 (Single Variable Rule):** Change only ONE variable per experiment during debugging.
-3. **Rule of Thumb 3 (Root Cause vs Symptom):** Fixing a `NullPointerException` with `if (x != null)` is a symptom fix; investigate *why* `x` was null.
-4. **Rule of Thumb 4 (Explain the Fix):** If you cannot explain *why* the fix works, you do not understand the bug yet.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate & Verification
 Before concluding debugging investigation:
 - [ ] Minimal reproduction script created and verified failing

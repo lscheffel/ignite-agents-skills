@@ -345,11 +345,15 @@ $$\text{ErrorRate}_{\text{canary}} \le \text{ErrorRate}_{\text{baseline}} + \eps
 If $\text{ErrorRate}_{\text{canary}} > \text{Threshold}$, trigger automated instant rollback ($T_{\text{rollback}} \le 30\text{s}$).
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Readiness Probe Mandate):** Never send production traffic to a pod/container until its Readiness Probe explicitly returns HTTP 200.
-2. **Rule of Thumb 2 (Immutable Artifacts):** Build container images and binary packages ONCE; propagate the exact same immutable SHA through Staging and Production.
-3. **Rule of Thumb 3 (Database First Deployment):** Run database schema expansion BEFORE deploying application code; never deploy code that depends on unapplied migrations.
-4. **Rule of Thumb 4 (Fast Rollback Capability):** Every production deploy must have an automated one-click or zero-click rollback vector.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate & Verification
 Before concluding deployment execution:
 - [ ] Immutable build artifact verified with green automated test suite

@@ -629,19 +629,17 @@ Cycle 2 - Behavior 2:
 <h3 id="mutation-testing-score-formula">Mutation Testing Score Formula:</h3>
 <p>$$MS = \frac{M_{\text{killed}}}{M_{\text{total}} - M_{\text{equivalent}}} \ge 0.85 \quad (85\%)$$</p>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Three Laws of TDD):</strong></li>
-</ol>
 <ul>
-<li>You may not write production code until you have written a failing unit test.</li>
-<li>You may not write more of a unit test than is sufficient to fail.</li>
-<li>You may not write more production code than is sufficient to pass the failing test.</li>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
 </ul>
-<ol>
-<li><strong>Rule of Thumb 2 (Fake It Till You Make It):</strong> In the Green phase, write the simplest code that passes (even returning hardcoded literals) to verify test harness.</li>
-<li><strong>Rule of Thumb 3 (Refactor on Green Only):</strong> Clean code and eliminate duplication ONLY when all tests are green.</li>
-<li><strong>Rule of Thumb 4 (Fast Test Execution):</strong> Unit test suite must execute in $<5$ seconds to maintain rapid feedback loop.</li>
-</ol>
 <h2 id="completion-gate--verification">Completion Gate & Verification</h2>
 <p>Before concluding TDD cycle:</p>
 <ul>
@@ -657,6 +655,10 @@ Cycle 2 - Behavior 2:
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/test-driven-development-example.html">test-driven-development-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

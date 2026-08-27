@@ -602,11 +602,15 @@ Modifying multiple aggregates in the same database transaction is an anti-patter
 $$\text{Aggregate } A_1 \xrightarrow{\text{Mutate}} \text{Emit DomainEvent } E_1 \xrightarrow{\text{Outbox Async}} \text{Handler updates Aggregate } A_2$$
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Value Object Immutability):** Value Objects must be 100% immutable; equality is defined by structural attribute comparison, not identity ID.
-2. **Rule of Thumb 2 (No Anemic Domain Models):** Business logic and invariants MUST reside inside Entity/Aggregate methods, not leaked into procedural Service classes.
-3. **Rule of Thumb 3 (Transactional Boundary Rule):** If two entities must be updated transactionally with immediate consistency, they belong to the SAME Aggregate.
-4. **Rule of Thumb 4 (Anti-Corruption Layer):** Never allow external third-party DTOs or models to leak into domain core; translate via an explicit ACL Adapter.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate
 
 A tarefa associada à skill `ddd` só pode ser declarada concluída quando:

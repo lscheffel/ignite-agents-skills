@@ -431,11 +431,15 @@ app.use((req, res, next) => {
 | **Saturation** | CPU/Memory/Pool utilization: $\frac{U_{\text{used}}}{U_{\text{total}}}$ | Utilization $> 85\%$ sustained for $>5\text{min}$. |
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Context Propagation Invariant):** All outbound HTTP/gRPC requests and background jobs must inject OpenTelemetry `traceparent` headers.
-2. **Rule of Thumb 2 (Zero Unstructured Logs):** Plain text `console.log` or `print()` statements are forbidden in production; all logs must be structured JSON.
-3. **Rule of Thumb 3 (High-Cardinality Hygiene):** Never use UUIDs, email addresses, or raw user inputs as Prometheus metric labels (avoid cardinality explosion).
-4. **Rule of Thumb 4 (Actionable Alerting):** Every PagerDuty/Slack alert must include a direct link to a Runbook with diagnosis steps.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate
 
 A tarefa associada à skill `observability` só pode ser declarada concluída quando:

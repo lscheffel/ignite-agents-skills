@@ -380,11 +380,15 @@ const state = new Proxy({ count: 0 }, {
 ```
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Zero-Build Invariant):** The artifact must execute instantly by double-clicking the `.html` file in any modern browser without requiring `npm install` or local servers.
-2. **Rule of Thumb 2 (Sandboxed Security):** Never load external third-party CDN scripts in artifacts; embed styles and scripts inline to guarantee portability and security.
-3. **Rule of Thumb 3 (Responsive Fit):** The artifact must fluidly scale from mobile viewport ($360\text{px}$) to ultra-wide desktop ($2560\text{px}$).
-4. **Rule of Thumb 4 (Rich Aesthetics):** Always use dark mode palettes, vibrant accent gradients, and micro-animations; plain default styling is strictly prohibited.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate & Verification
 Before declaring artifact deliverable complete:
 - [ ] Single HTML file opens and executes cleanly in modern browsers

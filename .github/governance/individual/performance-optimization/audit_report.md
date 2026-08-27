@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/performance-optimization` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `d0377b10b1e3c599f90f2ef8426e39b3d71620c8d2bffce4e29ab491de1b2672` | **Score Global:** | `92.0 / 100` |
+| **Hash SHA-256:** | `6885522ad827340a60815d578296652770c6637bd9efc77d4a8d81abdfe04b12` | **Score Global:** | `92.0 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~5143 tokens); templates e referências devem usar lazy loading. |
+| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~5653 tokens); templates e referências devem usar lazy loading. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
@@ -38,7 +38,7 @@
 * **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Footprint estático atual do pacote: ~5143 tokens
+// Footprint estático atual do pacote: ~5653 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml

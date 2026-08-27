@@ -437,6 +437,34 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-24' ---</p>
 <h1 id="code-review-lite-unified-alias">Code Review Lite (Unified Alias)</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Conducting fast, lightweight peer reviews on PRs with small diffs (<200 lines)</li>
+<li>Checking for obvious bugs, regression risks, and naming inconsistencies</li>
+<li>Rapid sanity checks before deploying patch releases or hotfixes</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Major architectural changes or security-critical core domain refactorings (use <code>code-review</code>)</li>
+</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<ul>
+<li><strong>Rubber-Stamping Diffs:</strong> Approving PRs without reading the changed files or verifying test output.</li>
+<li><strong>Ignoring Security in Small Diffs:</strong> Overlooking SQL injection, XSS, or leaked credentials because the diff is short.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<ul>
+<li><strong>Nitpicking Style Over Substance:</strong> Prioritizing minor cosmetic indentation over logic errors.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding code review:</p>
+<ul>
+<li>[ ] Logic correctness and edge cases verified</li>
+<li>[ ] No hardcoded secrets or unvalidated inputs</li>
+<li>[ ] Regression test included for any bug fix</li>
+</ul>
 <blockquote>💡 <strong>Nota de Arquitetura (ADR-024):</strong> Esta skill opera como alias canônico e rápido do motor consolidado <a href="../../skills/code-review/index.html"><code>code-review</code></a> configurado no modo <code>mode: lite</code>.</blockquote>
 <h2 id="execuo-rpida-30-90-segundos">Execução Rápida (30-90 segundos)</h2>
 <p>Ao receber solicitações de revisão iterativa, inspeção pré-commit ou vibe-coding:</p>
@@ -670,12 +698,17 @@ Do not move blindly.</code></pre>
 <p>A Pull Request qualifies for Lite Review if:</p>
 <p>$$N_{\text{lines}} \le 200 \quad \text{and} \quad \text{FilesModified} \le 5 \quad \text{and} \quad \text{BreakingChanges} = \text{False}$$</p>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Fast-Path Escalation):</strong> If a Lite Review reveals hidden architectural complexity or migration risk, immediately escalate to full <code>code-review</code>.</li>
-<li><strong>Rule of Thumb 2 (Automated Test Pass Invariant):</strong> Never approve a Lite Review if CI pipeline or automated tests have failing status.</li>
-<li><strong>Rule of Thumb 3 (Focus on Correctness):</strong> Focus exclusively on logic correctness, security, and test coverage; avoid bike-shedding on personal style preferences.</li>
-<li><strong>Rule of Thumb 4 (Single-Pass Approval):</strong> If only minor non-blocking nits remain, approve the PR and trust the author to apply them before merging.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture` | **Versão:** | `v2.0.0` |
-| **Hash SHA-256:** | `2f7687aabf0fabcb7a1116d95c8377734c37d4ece53d31b061b1444d08e88bad` | **Score Global:** | `93.5 / 100` |
+| **Hash SHA-256:** | `2cfc20cf3fbda9ccca596ff836cc33e80bb5e40ce75ddf1f1530795adf950c60` | **Score Global:** | `93.5 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3533 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3865 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 8.8 | [OK] | Módulo auto-contido com sub-rotinas utilitárias isoladas em scripts/. |

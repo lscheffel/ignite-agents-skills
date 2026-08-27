@@ -1,6 +1,6 @@
 # Skill Audit Bulletin — adr-generator (v3.1.1)
 
-**Audit Date:** 2026-08-26  
+**Audit Date:** 2026-08-27  
 **Auditor Engine:** `skill-audit-bulletin` (v5.1.0 — SOTA Dual-Axis & Ledger Edition)  
 **Overall Grade:** **S (Diamond)** — **97.9 / 100**  
 **One-Line Verdict:** *Definitive SOTA Benchmark grade. State-of-the-art capability with zero structural debt.*  
@@ -43,7 +43,7 @@
 | Dimension | Weight | Score | Evaluation & Evidence |
 |:---|:---:|:---:|:---|
 | **1. Domain SOTA & Best Practices** | 30% | **30.0 / 30.0** | Aderência a padrões industriais SOTA comprovada por 8 marcadores conceituais de engenharia de software. |
-| **2. Heuristic Depth & Edge Cases** | 25% | **25.0 / 25.0** | 9 regras heurísticas explícitas, seção de Edge Cases presente. |
+| **2. Heuristic Depth & Edge Cases** | 25% | **25.0 / 25.0** | 41 regras heurísticas explícitas, seção de Edge Cases presente. |
 | **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 5639 tokens com alta proporção sinal-ruído e linguagem imperativa. |
 | **4. Strategic Alignment & SWOT** | 20% | **18.5 / 20.0** | Acoplamento sinérgico com 5 skills complementares no catálogo. |
 

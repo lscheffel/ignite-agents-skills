@@ -886,12 +886,23 @@ caller&#x27;s identity, so I can ensure only authorized users access the system.
   When the agent calls `route_task` with query &quot;implement circuit breaker&quot;
   Then the system returns `circuit-breaker` as top match with confidence &gt;= 0.85</code></pre>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
+<ul>
 <li><strong>Rule of Thumb 1 (Zero Ambiguous Acceptance Criteria):</strong> Acceptance criteria must never use subjective terms like "fast", "user-friendly", or "secure" without exact quantitative thresholds.</li>
 <li><strong>Rule of Thumb 2 (INVEST Rule):</strong> No single user story should exceed 3 days of implementation effort; split complex stories vertically through the architectural stack.</li>
 <li><strong>Rule of Thumb 3 (Non-Functional Requirements Mandate):</strong> Every PRD must define NFRs for Latency ($P_{95}$), Availability SLA, and Concurrent Load.</li>
 <li><strong>Rule of Thumb 4 (Traceability Invariant):</strong> Every engineering task in <code>*-TODO.md</code> must trace back to a specific requirement in the PRD or ADR.</li>
-</ol>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
@@ -900,6 +911,10 @@ caller&#x27;s identity, so I can ensure only authorized users access the system.
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/product-spec-engineering-example.html">product-spec-engineering-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

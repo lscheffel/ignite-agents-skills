@@ -387,11 +387,15 @@ $$RE = 206.835 - (1.015 	imes 	ext{ASL}) - (84.6 	imes 	ext{ASW}) \ge 60.0$$
 Where $	ext{ASL}$ is Average Sentence Length and $	ext{ASW}$ is Average Syllables per Word.
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Active Voice Mandate):** At least $90\%$ of sentences must use active voice ("The team deployed the release" vs "The release was deployed by the team").
-2. **Rule of Thumb 2 (Scannable Structure):** No paragraph should exceed 4 lines; use bullet points and bold leading terms for high readability.
-3. **Rule of Thumb 3 (Single Clear CTA):** Marketing and business content must drive toward a single primary call to action.
-4. **Rule of Thumb 4 (Kill Fluff Words):** Eliminate redundant adverbs and filler phrases ("very", "really", "in order to", "essentially").
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

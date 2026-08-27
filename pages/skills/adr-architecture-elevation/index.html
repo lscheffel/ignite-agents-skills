@@ -664,12 +664,23 @@ Operational Requirements (SLOs, SLAs, observability, recovery)</code></pre>
 <li><strong>Domain-Driven Design (DDD):</strong> Verification of Bounded Context boundaries, Aggregate roots, and anti-corruption layers.</li>
 </ul>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
+<ul>
 <li><strong>Rule of Thumb 1 (Reversibility Invariant):</strong> If a decision cannot be reversed within $H_{\text{rollback}} \le 2$ hours without data loss, it is a One-Way Door and MUST undergo independent adversarial review.</li>
 <li><strong>Rule of Thumb 2 (Blast Radius Containment):</strong> If $N_{\text{dependents}} \ge 3$, the interface must introduce an Anti-Corruption Layer (ACL) to shield legacy consumers.</li>
 <li><strong>Rule of Thumb 3 (State Migration Idempotency):</strong> Every database migration script must be strictly idempotent and re-runnable with zero data drift.</li>
 <li><strong>Rule of Thumb 4 (Cognitive Budget Limit):</strong> The architectural decision payload must maintain a Signal-to-Noise Ratio (SNR) $> 0.85$, removing speculative fluff.</li>
-</ol>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

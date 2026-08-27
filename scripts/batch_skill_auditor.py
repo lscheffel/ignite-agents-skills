@@ -49,6 +49,7 @@ class SkillDualAxisAuditor:
         self.examples = list((skill_dir / "examples").glob("*")) if (skill_dir / "examples").exists() else []
         self.scripts = list((skill_dir / "scripts").glob("*")) if (skill_dir / "scripts").exists() else []
         self.references = list((skill_dir / "references").glob("*")) if (skill_dir / "references").exists() else []
+        self.checklists = list((skill_dir / "checklists").glob("*")) if (skill_dir / "checklists").exists() else []
 
     def _parse_frontmatter(self) -> dict:
         fm = {}
@@ -115,7 +116,7 @@ class SkillDualAxisAuditor:
 
         # 3. Depth & Coverage (15%)
         word_count = len(self.content.split())
-        subdirs_count = len(self.templates) + len(self.examples) + len(self.scripts) + len(self.references)
+        subdirs_count = len(self.templates) + len(self.examples) + len(self.scripts) + len(self.references) + len(self.checklists)
         has_workflow = bool(re.search(r"##\s+(?:Workflow|Processo|Decision Tree|Fluxo)", self.content, re.IGNORECASE))
         d_score = 0.0
         if word_count >= 800:
@@ -196,9 +197,8 @@ class SkillDualAxisAuditor:
         scores["best_practices"] = sota_score
         evidences["best_practices"] = f"Aderência a padrões industriais SOTA comprovada por {matches} marcadores conceituais de engenharia de software."
 
-        # 2. Heuristic Depth & Edge Cases (25%)
         has_edge_cases = bool(re.search(r"##\s+(?:Edge Cases|Casos Extremos|Failure Modes)", self.content, re.IGNORECASE))
-        rule_count = len(re.findall(r"^\s*-\s*\*\*.*?\*\*:", self.content, re.MULTILINE))
+        rule_count = len(re.findall(r"^\s*(?:-\s*|\d+\.\s+)\*\*.*?(?:\*\*|:\*\*):?", self.content, re.MULTILINE))
         h_score = (12.0 if has_edge_cases else 8.0) + min(13.0, rule_count * 1.5)
         scores["heuristic_depth"] = min(25.0, h_score)
         evidences["heuristic_depth"] = f"{rule_count} regras heurísticas explícitas, seção de Edge Cases {'presente' if has_edge_cases else 'ausente'}."

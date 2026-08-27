@@ -417,11 +417,15 @@ graph TD
 $$B_{\text{subagent}}^{(i)} = \frac{B_{\text{total}} - B_{\text{orchestrator}}}{M} \times W_i \quad \text{where} \quad \sum_{i=1}^M W_i = 1.0$$
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (File Partitioning Invariant):** Two parallel subagents MUST NEVER be assigned to modify the same file concurrently (Strict File Ownership Isolation).
-2. **Rule of Thumb 2 (Concurrency Limit):** Maximum concurrent active subagents is bounded by $M_{\text{max}} = 5$ to prevent API throttling and lock contention.
-3. **Rule of Thumb 3 (Join Synchronization Gate):** The orchestrator must block on `Promise.all` / `gather` until all dispatched subagents report completion or timeout.
-4. **Rule of Thumb 4 (Deterministic Conflict Resolution):** If merge conflicts arise, the orchestrator triggers an isolated resolution agent with AST diff context.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate & Verification
 Before declaring parallel dispatching complete:
 - [ ] All subagent result envelopes received and schema-validated

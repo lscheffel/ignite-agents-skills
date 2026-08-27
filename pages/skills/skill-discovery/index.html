@@ -438,6 +438,34 @@
 </ul>
 <p>metadata: author: "Luciano Scheffel / Antigravity Refactored" provenance: "internal" last_audited: "2026-08-05" ---</p>
 <h1 id="skill-discovery--router-engine">Skill Discovery & Router Engine</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Dynamically finding and routing tasks to the most appropriate skill in the catalog</li>
+<li>Querying the local SQLite3 + FTS5 vector index for semantic tool matching</li>
+<li>Resolving complex user intentions into multi-skill composite execution pipelines</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Searching for static documentation or general web information outside the skills repository</li>
+</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<ul>
+<li><strong>Hallucinated Skill Routing:</strong> Routing tasks to non-existent or irrelevant skills when confidence is low.</li>
+<li><strong>Over-Filtering Top-K:</strong> Returning too many irrelevant skills that pollute agent context.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<ul>
+<li><strong>Stale Vector Embeddings:</strong> Failing to re-index SQLite database after adding or editing skills.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding skill discovery:</p>
+<ul>
+<li>[ ] Reciprocal Rank Fusion ($k=60$) executed across BM25 and vector embeddings</li>
+<li>[ ] Confidence threshold ($\ge 0.75$) enforced</li>
+<li>[ ] Top-3 ranked skills returned with executable descriptions</li>
+</ul>
 <p>Single authoritative router and dynamic indexing engine for the canonical Skills Repository.</p>
 <h2 id="executable-cli-engine">Executable CLI Engine</h2>
 <p>The engine is backed by <code>scripts/discovery.py</code>. Execute via Python:</p>
@@ -491,12 +519,23 @@
 <p>$$	ext{RRF\_Score}(d) = rac{1}{60 + r_{	ext{BM25}}(d)} + rac{1}{60 + r_{	ext{Vector}}(d)}$$</p>
 <p>Where $r_{	ext{BM25}}(d)$ and $r_{	ext{Vector}}(d)$ are the 1-indexed ranks from the lexical and vector retrievers.</p>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Hybrid Query Invariant):</strong> Always fuse keyword search with vector semantic search to capture both exact token matches and conceptual intents.</li>
-<li><strong>Rule of Thumb 2 (Sub-100ms Response Bound):</strong> Skill routing must execute in under 100ms using local embedded databases (SQLite/FTS5).</li>
-<li><strong>Rule of Thumb 3 (Top-K Routing Limit):</strong> Return at most 3 most relevant skills for complex tasks to prevent agent context pollution.</li>
-<li><strong>Rule of Thumb 4 (Confidence Gating):</strong> If no skill meets the $0.75$ confidence cutoff, return an empty set rather than hallucinating irrelevant skills.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Edge Case 1 (Low-Confidence Query Hallucinations):</strong> Return empty results rather than routing to irrelevant skills if confidence $< 0.75$.</li>
+<li><strong>Edge Case 2 (Over-Filtering Top-K Results):</strong> Return at most 3 targeted skills to preserve downstream agent context.</li>
+<li><strong>Edge Case 3 (Vector Drift After Edits):</strong> Re-embed skill descriptions into the local SQLite/ChromaDB index on file saves.</li>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
@@ -505,6 +544,10 @@
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/skill-discovery-example.html">skill-discovery-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

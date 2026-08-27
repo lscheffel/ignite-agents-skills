@@ -435,6 +435,34 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="subagent-driven-development">Subagent-Driven Development</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Decomposing large, complex software engineering tasks across multiple specialized subagents</li>
+<li>Running parallel subtasks with strict file boundary isolation (e.g. frontend + backend)</li>
+<li>Delegating deep exploratory investigation to subagents to preserve primary orchestrator context</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Simple, linear 1-step coding tasks that can be completed directly</li>
+</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<ul>
+<li><strong>Unbounded Subagent Proliferation:</strong> Spawning dozens of subagents without concurrency limits ($N \le 8$).</li>
+<li><strong>File Collision Overwrites:</strong> Allowing two subagents to write to the same file simultaneously.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<ul>
+<li><strong>Context Starvation:</strong> Failing to provide subagents with required architectural context and specifications.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding subagent delegation:</p>
+<ul>
+<li>[ ] Subagent deliverables verified with automated linters and test suites</li>
+<li>[ ] No file collision or git working tree conflicts</li>
+<li>[ ] Clean synthesis report returned to primary orchestrator</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>This skill orchestrates implementation through dedicated subagents with built-in quality gates. Each task is implemented by an implementer subagent, then reviewed by two specialized reviewer agents (spec compliance and code quality) before acceptance. Failed reviews trigger iterative fix cycles with a maximum of 3 retries before escalation. This ensures consistent quality at scale while maximizing parallel throughput.</p>
 <p><strong>Announce at start:</strong> "I'm using the subagent-driven-development skill to dispatch implementation tasks with two-stage review gates."</p>
@@ -671,12 +699,23 @@ Awaiting direction.</code></pre>
 <li><strong>Observability & Tracing:</strong> OpenTelemetry-compatible span tracking across parent and child agent executions.</li>
 </ul>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
+<ul>
 <li><strong>Rule of Thumb 1 (Single Responsibility Subagent):</strong> A subagent must be assigned exactly ONE discrete unit of work (e.g., "implement function X with tests").</li>
 <li><strong>Rule of Thumb 2 (Parent Synthesizer Rule):</strong> The parent agent must verify subagent test results before accepting any code modifications.</li>
 <li><strong>Rule of Thumb 3 (Subagent Context Pruning):</strong> Never pass the full conversation transcript to a subagent; inject only the minimal necessary context (CAP).</li>
 <li><strong>Rule of Thumb 4 (Failure Escalation):</strong> If a subagent fails its task twice, terminate the subagent and escalate to human review or alternate strategy.</li>
-</ol>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

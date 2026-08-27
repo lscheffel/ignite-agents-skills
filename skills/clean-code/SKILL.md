@@ -423,11 +423,15 @@ Where $E$ is edges, $N$ is nodes, and $P$ is connected components in the control
 | **Parameter Count** | $\le 3$ params | Encapsulate into Parameter Object or Options Dict. |
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Guard Clause Priority):** Always exit early with guard clauses to minimize indentation depth ($Depth \le 2$).
-2. **Rule of Thumb 2 (Side-Effect Free Queries):** Functions that return values must never mutate external state (Command-Query Separation).
-3. **Rule of Thumb 3 (Zero Magic Literals):** Every constant, timeout, or magic number must be defined as an exported named constant.
-4. **Rule of Thumb 4 (Intent-Revealing Naming):** Variable names must state *why* it exists and *what* it represents without requiring inline comments.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate & Verification
 Before concluding Clean Code audit:
 - [ ] Cyclomatic complexity verified $\le 10$ per function

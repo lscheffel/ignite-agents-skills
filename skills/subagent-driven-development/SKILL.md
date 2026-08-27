@@ -31,6 +31,31 @@ metadata:
 
 # Subagent-Driven Development
 
+## When to Use
+
+### Use when:
+- Decomposing large, complex software engineering tasks across multiple specialized subagents
+- Running parallel subtasks with strict file boundary isolation (e.g. frontend + backend)
+- Delegating deep exploratory investigation to subagents to preserve primary orchestrator context
+
+### Do not use when:
+- Simple, linear 1-step coding tasks that can be completed directly
+
+## Anti-patterns
+
+### 🔴 Critical
+- **Unbounded Subagent Proliferation:** Spawning dozens of subagents without concurrency limits ($N \le 8$).
+- **File Collision Overwrites:** Allowing two subagents to write to the same file simultaneously.
+
+### 🟡 Medium
+- **Context Starvation:** Failing to provide subagents with required architectural context and specifications.
+
+## Completion Gate & Verification
+Before concluding subagent delegation:
+- [ ] Subagent deliverables verified with automated linters and test suites
+- [ ] No file collision or git working tree conflicts
+- [ ] Clean synthesis report returned to primary orchestrator
+
 ## Overview
 
 This skill orchestrates implementation through dedicated subagents with built-in quality gates. Each task is implemented by an implementer subagent, then reviewed by two specialized reviewer agents (spec compliance and code quality) before acceptance. Failed reviews trigger iterative fix cycles with a maximum of 3 retries before escalation. This ensures consistent quality at scale while maximizing parallel throughput.
@@ -433,7 +458,17 @@ graph TD
 - **Observability & Tracing:** OpenTelemetry-compatible span tracking across parent and child agent executions.
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Single Responsibility Subagent):** A subagent must be assigned exactly ONE discrete unit of work (e.g., "implement function X with tests").
-2. **Rule of Thumb 2 (Parent Synthesizer Rule):** The parent agent must verify subagent test results before accepting any code modifications.
-3. **Rule of Thumb 3 (Subagent Context Pruning):** Never pass the full conversation transcript to a subagent; inject only the minimal necessary context (CAP).
-4. **Rule of Thumb 4 (Failure Escalation):** If a subagent fails its task twice, terminate the subagent and escalate to human review or alternate strategy.
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
+
+- **Rule of Thumb 1 (Single Responsibility Subagent):** A subagent must be assigned exactly ONE discrete unit of work (e.g., "implement function X with tests").
+- **Rule of Thumb 2 (Parent Synthesizer Rule):** The parent agent must verify subagent test results before accepting any code modifications.
+- **Rule of Thumb 3 (Subagent Context Pruning):** Never pass the full conversation transcript to a subagent; inject only the minimal necessary context (CAP).
+- **Rule of Thumb 4 (Failure Escalation):** If a subagent fails its task twice, terminate the subagent and escalate to human review or alternate strategy.

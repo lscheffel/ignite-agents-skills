@@ -39,7 +39,7 @@
 | **P2** | `adr-generator` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `agent-development` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `agent-orchestration` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P2** | `agents-md-management` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
+| **P2** | `agents-md-management` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `api-design` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `architecture-review` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `artifacts-builder` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
@@ -52,7 +52,7 @@
 | **P2** | `ddd` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `deployment` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `docx-processing` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
-| **P2** | `email-composer` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
+| **P2** | `email-composer` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `governance` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `implementation` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `mcp-builder` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
@@ -64,7 +64,7 @@
 | **P2** | `refactoring` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `repo-bootstrap` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `security-review` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P2** | `seo-optimizer` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
+| **P2** | `seo-optimizer` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `skill-audit-bulletin` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `skill-discovery` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `systematic-debugging` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |

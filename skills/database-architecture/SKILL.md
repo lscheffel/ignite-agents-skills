@@ -138,10 +138,20 @@ $$S_{\text{idx}} = \frac{D_{\text{distinct}}}{N_{\text{total}}} \in (0, 1]$$
 4. **Phase 4 (Contract):** Remove old column/table safely after 30-day soak period.
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Zero Table Locks in Production):** Never execute blocking `ALTER TABLE ADD COLUMN NOT NULL DEFAULT ...` without PostgreSQL 11+ metadata-only optimizations or Expand-Contract pattern.
-2. **Rule of Thumb 2 (Foreign Key Indexing):** Every foreign key column MUST be indexed to prevent full table scans during parent cascade deletes.
-3. **Rule of Thumb 3 (Query Optimization SLA):** Any OLTP query taking $>50\text{ms}$ must be analyzed with `EXPLAIN (ANALYZE, BUFFERS)` to eliminate Seq Scans on large tables.
-4. **Rule of Thumb 4 (Idempotent Migrations):** Migration scripts must be deterministic and provide verifiable down/rollback vectors.
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
+## Edge Cases & Failure Modes
+
+- **Edge Case 1 (Table-Locking DDL Migrations):** Mandate `ADD COLUMN ... NULL` without table locks on production tables exceeding 1M rows.
+- **Edge Case 2 (N+1 Query Explosion):** Detect un-eager-loaded relationships in ORM access paths using telemetry profilers.
+- **Edge Case 3 (Missing Composite Index Ordering):** Order multi-column composite index keys by highest cardinality first (`(tenant_id, status, created_at)`).
 
 ## Completion Gate & Verification
 Before declaring database architecture change complete:

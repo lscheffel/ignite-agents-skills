@@ -28,6 +28,31 @@ metadata:
 
 # Writing Skills
 
+## When to Use
+
+### Use when:
+- Authoring, editing, or refactoring skills according to the Agent Skills Standard (v1.0.0)
+- Defining typed YAML frontmatter (`name`, `description`, `version`, `tags`, `related_skills`)
+- Applying progressive disclosure architecture to keep `SKILL.md` instruction-dense ($\le 4,000$ tokens)
+
+### Do not use when:
+- Writing general prose, marketing copy, or technical documentation outside the skills ecosystem
+
+## Anti-patterns
+
+### 🔴 Critical
+- **Unbounded Instruction Bloat:** Exceeding the 4,000 token ceiling on `SKILL.md` without offloading details to `references/`.
+- **Untyped YAML Frontmatter:** Omitting required fields (`name`, `description`, `version`, `tags`).
+
+### 🟡 Medium
+- **Conversational Prose:** Using passive or verbose prose instead of direct imperative commands.
+
+## Completion Gate & Verification
+Before declaring skill authoring complete:
+- [ ] Frontmatter validates against Agent Skills specification schema
+- [ ] Token count of `SKILL.md` is within $\le 4,000$ token ceiling
+- [ ] Concrete `When to Use`, `Anti-patterns`, and `Completion Gate` sections present
+
 ## Overview
 
 Create effective, well-tested Claude Code skills that trigger reliably, load efficiently, and produce consistent results. This skill enforces a TDD approach to skill creation — define test prompts first, write the minimal skill, then harden against misfire and rationalization.
@@ -325,11 +350,15 @@ related_skills:
 ```
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Imperative Command Voice):** Write instructions as direct commands ("Execute", "Validate", "Inject") rather than passive descriptions ("The agent should execute").
-2. **Rule of Thumb 2 (Token Ceiling Constraint):** Keep `SKILL.md` under 4,000 tokens; move detailed tables, background theory, or heavy code snippets into `references/` or companion scripts.
-3. **Rule of Thumb 3 (Explicit Negative Triggers):** Always include an explicit "Do not use when" section under `## When to Use` to prevent false-positive agent routing.
-4. **Rule of Thumb 4 (Executable Verification Gate):** Every skill must end with a concrete, checkable `## Completion Gate & Verification` checklist.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

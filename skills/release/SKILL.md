@@ -426,11 +426,15 @@ graph LR
 ```
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Cryptographic Checksums):** Every released binary or archive MUST be accompanied by an official `SHA256SUMS` manifest.
-2. **Rule of Thumb 2 (Immutable Release Tags):** Never delete, move, or overwrite an existing release tag in git.
-3. **Rule of Thumb 3 (Release Verification Checklist):** Release manager or agent must verify all CI checks are green before tagging.
-4. **Rule of Thumb 4 (SLSA Provenance):** Generate machine-readable build provenance attestations for all production distribution artifacts.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate
 
 A tarefa associada à skill `release` só pode ser declarada concluída quando:

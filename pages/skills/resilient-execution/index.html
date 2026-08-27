@@ -435,6 +435,34 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="resilient-execution">Resilient Execution</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Executing distributed agent tasks subject to network latency, rate limits, or transient timeouts</li>
+<li>Wrapping unreliable external API calls and database connections with circuit breakers</li>
+<li>Implementing exponential backoff with full jitter and fallback degradation</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Purely deterministic local synchronous operations without network I/O</li>
+</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<ul>
+<li><strong>Unbounded Retry Storms:</strong> Retrying failed calls in a tight loop without exponential backoff or jitter.</li>
+<li><strong>Silent Exception Swallowing:</strong> Catching errors without logging telemetry context or metrics.</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<ul>
+<li><strong>Missing Fallback Degradation:</strong> Crashing the application when a non-essential peripheral service fails.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring resilient execution configured:</p>
+<ul>
+<li>[ ] Circuit breaker threshold configured with half-open probe recovery</li>
+<li>[ ] Exponential backoff with jitter implemented</li>
+<li>[ ] Structured telemetry logs emitted for all retry attempts</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>The resilient-execution skill prevents premature failure by enforcing a minimum of 3 genuinely different approaches before escalating to the user. It provides a structured error classification system, an approach cascade methodology, and transparent logging of each attempt. Without this skill, agents give up too early — with it, they systematically exhaust alternatives and only escalate with full evidence.</p>
 <p><strong>Announce at start:</strong> "I'm using the resilient-execution skill — I will try multiple approaches before escalating."</p>
@@ -611,12 +639,17 @@ Attempt 3: Use GraphQL endpoint instead of REST
 <li><strong>Tier 4 (Safe Refusal):</strong> Fast-fail with structured error diagnostic when data corruption risk is detected.</li>
 </ol>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Idempotent Retry Mandate):</strong> Retries are strictly forbidden on non-idempotent operations without transaction rollback capabilities.</li>
-<li><strong>Rule of Thumb 2 (Max Retry Limit):</strong> Maximum retry attempts is capped at $K_{\text{max}} = 3$; subsequent failures escalate down the degradation ladder.</li>
-<li><strong>Rule of Thumb 3 (State Checkpointing):</strong> Save execution state before executing any high-risk file modification or external API invocation.</li>
-<li><strong>Rule of Thumb 4 (Self-Healing Recovery):</strong> When an unhandled exception occurs, the system must capture the stack trace, rollback disk state, and alert the orchestrator.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -633,6 +666,10 @@ Attempt 3: Use GraphQL endpoint instead of REST
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/resilient-execution-example.html">resilient-execution-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/llm-as-judge` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `5585b2df2d297a18807e89b0addaf8b0f0edfb3730614860f18c9a63774e6a13` | **Score Global:** | `85.6 / 100` |
+| **Hash SHA-256:** | `ca355140595daa3d03e67beff899361419681d6e10993142cd864a448d1c38a8` | **Score Global:** | `85.6 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
 | **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3650 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~4167 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |

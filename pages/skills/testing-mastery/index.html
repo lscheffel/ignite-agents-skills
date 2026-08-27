@@ -939,12 +939,23 @@ test(&#x27;page has no accessibility violations&#x27;, async ({ page }) =&gt; {
 <h3 id="mike-cohn-test-pyramid-ratio-algebra">Mike Cohn Test Pyramid Ratio Algebra:</h3>
 <p>$$\frac{N_{\text{unit}}}{N_{\text{total}}} \approx 0.70, \quad \frac{N_{\text{integration}}}{N_{\text{total}}} \approx 0.20, \quad \frac{N_{\text{e2e}}}{N_{\text{total}}} \approx 0.10$$</p>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Pyramid Distribution Rule):</strong> The vast majority (70%) of tests must be fast, isolated unit tests.</li>
-<li><strong>Rule of Thumb 2 (Don't Mock What You Don't Own):</strong> Only write test doubles for your own domain interfaces; wrap external libraries in adapters.</li>
-<li><strong>Rule of Thumb 3 (Test Behavior, Not Implementation):</strong> Assert on observable outputs and state transitions, not private internal methods.</li>
-<li><strong>Rule of Thumb 4 (Deterministic Isolation):</strong> Tests must never depend on execution order or share mutable global state (Hermetic Tests).</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Edge Case 1 (Over-Mocking External Dependencies):</strong> Use real in-memory databases or testcontainers rather than brittle mock objects.</li>
+<li><strong>Edge Case 2 (Flaky Time-Dependent Tests):</strong> Inject frozen clock providers rather than relying on system wall-clock timers.</li>
+<li><strong>Edge Case 3 (Un-tested Error Handling Paths):</strong> Explicitly test network failures, database exceptions, and malformed inputs.</li>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
@@ -953,6 +964,10 @@ test(&#x27;page has no accessibility violations&#x27;, async ({ page }) =&gt; {
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/testing-mastery-example.html">testing-mastery-example.md</a></li>
+</ul>
+<h3>Checklists</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#9745;</span><a href="checklists/operational-checklist.html">operational-checklist.md</a></li>
 </ul>
 
   </div>

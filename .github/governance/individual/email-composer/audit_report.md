@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/email-composer` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `698e738929c559c0d35f4d7f696d7f3f579bc4830f5ca406e6cf299662921603` | **Score Global:** | `93.8 / 100` |
+| **Hash SHA-256:** | `b59410e862f1066d67c8519fad82859c5a0673179431a283e9060c25a1f249eb` | **Score Global:** | `92.0 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~4502 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~5032 tokens); templates e referências devem usar lazy loading. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
@@ -33,16 +33,16 @@
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Hardening de Telemetria e Tracing Transacional
+#### 3.1 Context Budget Optimization & Lazy Loading de Referências
 * **Severidade:** Baixa
-* **Impacto:** Padronização de correlação de spans (trace_id) e métricas operacionais.
+* **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Execução direta sem emissão de telemetria estruturada
+// Footprint estático atual do pacote: ~5032 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-// Injeção de hook de telemetria com trace_id, latência e status de execução
+// Particionamento de referências e exemplos em pasta references/ sob demanda via view_file
 ```
 
 ---

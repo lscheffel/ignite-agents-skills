@@ -29,6 +29,31 @@ metadata:
 
 # Code Review Lite (Unified Alias)
 
+## When to Use
+
+### Use when:
+- Conducting fast, lightweight peer reviews on PRs with small diffs (<200 lines)
+- Checking for obvious bugs, regression risks, and naming inconsistencies
+- Rapid sanity checks before deploying patch releases or hotfixes
+
+### Do not use when:
+- Major architectural changes or security-critical core domain refactorings (use `code-review`)
+
+## Anti-patterns
+
+### 🔴 Critical
+- **Rubber-Stamping Diffs:** Approving PRs without reading the changed files or verifying test output.
+- **Ignoring Security in Small Diffs:** Overlooking SQL injection, XSS, or leaked credentials because the diff is short.
+
+### 🟡 Medium
+- **Nitpicking Style Over Substance:** Prioritizing minor cosmetic indentation over logic errors.
+
+## Completion Gate & Verification
+Before concluding code review:
+- [ ] Logic correctness and edge cases verified
+- [ ] No hardcoded secrets or unvalidated inputs
+- [ ] Regression test included for any bug fix
+
 > 💡 **Nota de Arquitetura (ADR-024):** Esta skill opera como alias canônico e rápido do motor consolidado [`code-review`](../code-review/SKILL.md) configurado no modo `mode: lite`.
 
 ## Execução Rápida (30-90 segundos)
@@ -355,11 +380,15 @@ A Pull Request qualifies for Lite Review if:
 $$N_{\text{lines}} \le 200 \quad \text{and} \quad \text{FilesModified} \le 5 \quad \text{and} \quad \text{BreakingChanges} = \text{False}$$
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Fast-Path Escalation):** If a Lite Review reveals hidden architectural complexity or migration risk, immediately escalate to full `code-review`.
-2. **Rule of Thumb 2 (Automated Test Pass Invariant):** Never approve a Lite Review if CI pipeline or automated tests have failing status.
-3. **Rule of Thumb 3 (Focus on Correctness):** Focus exclusively on logic correctness, security, and test coverage; avoid bike-shedding on personal style preferences.
-4. **Rule of Thumb 4 (Single-Pass Approval):** If only minor non-blocking nits remain, approve the PR and trust the author to apply them before merging.
-
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

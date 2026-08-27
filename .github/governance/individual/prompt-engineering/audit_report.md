@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering` | **Versão:** | `v2.0.0` |
-| **Hash SHA-256:** | `a5508136ea09b898ca86af159b16f1fe30af01c977cb7f419097f13bf1e6ae88` | **Score Global:** | `92.8 / 100` |
+| **Hash SHA-256:** | `af84aeddcb47f761fab4d574f99e6f8ad8d5066c7ca8f318ade40f47d1b6e114` | **Score Global:** | `93.8 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,9 +22,9 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3046 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3267 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
-| **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
+| **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
 | **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
 | **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v2.0.0). |

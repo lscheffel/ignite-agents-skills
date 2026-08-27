@@ -677,12 +677,17 @@
 ├── SECURITY.md               # Vulnerability reporting &amp; security policy
 └── LICENSE                   # Open-source license (MIT/Apache-2.0)</code></pre>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (SSOT Governance Invariant):</strong> Every repository must contain an <code>AGENTS.md</code> specifying canonical tool use, architecture, and constraints.</li>
-<li><strong>Rule of Thumb 2 (Security Policy Mandate):</strong> Provide a clear <code>SECURITY.md</code> with private vulnerability disclosure instructions before public release.</li>
-<li><strong>Rule of Thumb 3 (Deterministic Bootstrap Script):</strong> Provide a single bootstrap command (<code>./scripts/bootstrap.sh</code> or <code>npm run setup</code>) that installs all dependencies and hooks.</li>
-<li><strong>Rule of Thumb 4 (Consistent License):</strong> Explicitly declare the open-source license in both <code>LICENSE</code> and <code>README.md</code>.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>repo-bootstrap</code> só pode ser declarada concluída quando:</p>
 <ol>

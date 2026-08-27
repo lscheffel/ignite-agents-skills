@@ -763,12 +763,23 @@ git tag v1.2.0-rollback-20240115</code></pre>
 <li><strong>Supply Chain Security:</strong> SLSA (Supply-chain Levels for Software Artifacts) framework alignment and cryptographically attested gates.</li>
 </ul>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
+<ul>
 <li><strong>Rule of Thumb 1 (Branch Isolation Rule):</strong> Direct commits to protected branches (<code>master</code>/<code>main</code>/<code>gh-pages</code>) are strictly rejected.</li>
 <li><strong>Rule of Thumb 2 (Conventional Commit Strictness):</strong> All commit messages must strictly adhere to the type/scope contract.</li>
 <li><strong>Rule of Thumb 3 (Pre-Commit Zero-Warning Mandate):</strong> Commits are blocked if the 8-Dimension SOTA Audit Engine reports critical violations.</li>
 <li><strong>Rule of Thumb 4 (Runtime SSOT Parity):</strong> Post-commit hooks must synchronize the canonical skills repository with local agent runtimes.</li>
-</ol>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

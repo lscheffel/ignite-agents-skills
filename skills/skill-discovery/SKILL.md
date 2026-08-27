@@ -30,6 +30,31 @@ metadata:
 
 # Skill Discovery & Router Engine
 
+## When to Use
+
+### Use when:
+- Dynamically finding and routing tasks to the most appropriate skill in the catalog
+- Querying the local SQLite3 + FTS5 vector index for semantic tool matching
+- Resolving complex user intentions into multi-skill composite execution pipelines
+
+### Do not use when:
+- Searching for static documentation or general web information outside the skills repository
+
+## Anti-patterns
+
+### 🔴 Critical
+- **Hallucinated Skill Routing:** Routing tasks to non-existent or irrelevant skills when confidence is low.
+- **Over-Filtering Top-K:** Returning too many irrelevant skills that pollute agent context.
+
+### 🟡 Medium
+- **Stale Vector Embeddings:** Failing to re-index SQLite database after adding or editing skills.
+
+## Completion Gate & Verification
+Before concluding skill discovery:
+- [ ] Reciprocal Rank Fusion ($k=60$) executed across BM25 and vector embeddings
+- [ ] Confidence threshold ($\ge 0.75$) enforced
+- [ ] Top-3 ranked skills returned with executable descriptions
+
 Single authoritative router and dynamic indexing engine for the canonical Skills Repository.
 
 ## Executable CLI Engine
@@ -129,7 +154,17 @@ $$	ext{RRF\_Score}(d) = rac{1}{60 + r_{	ext{BM25}}(d)} + rac{1}{60 + r_{	ext{V
 Where $r_{	ext{BM25}}(d)$ and $r_{	ext{Vector}}(d)$ are the 1-indexed ranks from the lexical and vector retrievers.
 
 ### Exhaustive Heuristic Decision Rules:
-1. **Rule of Thumb 1 (Hybrid Query Invariant):** Always fuse keyword search with vector semantic search to capture both exact token matches and conceptual intents.
-2. **Rule of Thumb 2 (Sub-100ms Response Bound):** Skill routing must execute in under 100ms using local embedded databases (SQLite/FTS5).
-3. **Rule of Thumb 3 (Top-K Routing Limit):** Return at most 3 most relevant skills for complex tasks to prevent agent context pollution.
-4. **Rule of Thumb 4 (Confidence Gating):** If no skill meets the $0.75$ confidence cutoff, return an empty set rather than hallucinating irrelevant skills.
+- **Rule of Thumb 1 (Zero-Trust Architectural Boundaries):** Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.
+- **Rule of Thumb 2 (Fail-Fast & Deterministic Errors):** Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.
+- **Rule of Thumb 3 (Idempotency & AST Preservation):** State mutations and code transformations must maintain semantic idempotency across repeated executions.
+- **Rule of Thumb 4 (Benchmark & Telemetry Alignment):** Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.
+- **Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):** Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.
+- **Rule of Thumb 6 (Contract-First DDD Modeling):** Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.
+- **Rule of Thumb 7 (RAG & Semantic Retrieval Precision):** Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.
+- **Rule of Thumb 8 (OWASP & Supply Chain Verification):** Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.
+- **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
+## Edge Cases & Failure Modes
+
+- **Edge Case 1 (Low-Confidence Query Hallucinations):** Return empty results rather than routing to irrelevant skills if confidence $< 0.75$.
+- **Edge Case 2 (Over-Filtering Top-K Results):** Return at most 3 targeted skills to preserve downstream agent context.
+- **Edge Case 3 (Vector Drift After Edits):** Re-embed skill descriptions into the local SQLite/ChromaDB index on file saves.

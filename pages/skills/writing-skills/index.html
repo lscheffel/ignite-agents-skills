@@ -435,6 +435,34 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="writing-skills">Writing Skills</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Authoring, editing, or refactoring skills according to the Agent Skills Standard (v1.0.0)</li>
+<li>Defining typed YAML frontmatter (<code>name</code>, <code>description</code>, <code>version</code>, <code>tags</code>, <code>related_skills</code>)</li>
+<li>Applying progressive disclosure architecture to keep <code>SKILL.md</code> instruction-dense ($\le 4,000$ tokens)</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Writing general prose, marketing copy, or technical documentation outside the skills ecosystem</li>
+</ul>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<h3 id="-critical">🔴 Critical</h3>
+<ul>
+<li><strong>Unbounded Instruction Bloat:</strong> Exceeding the 4,000 token ceiling on <code>SKILL.md</code> without offloading details to <code>references/</code>.</li>
+<li><strong>Untyped YAML Frontmatter:</strong> Omitting required fields (<code>name</code>, <code>description</code>, <code>version</code>, <code>tags</code>).</li>
+</ul>
+<h3 id="-medium">🟡 Medium</h3>
+<ul>
+<li><strong>Conversational Prose:</strong> Using passive or verbose prose instead of direct imperative commands.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring skill authoring complete:</p>
+<ul>
+<li>[ ] Frontmatter validates against Agent Skills specification schema</li>
+<li>[ ] Token count of <code>SKILL.md</code> is within $\le 4,000$ token ceiling</li>
+<li>[ ] Concrete <code>When to Use</code>, <code>Anti-patterns</code>, and <code>Completion Gate</code> sections present</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Create effective, well-tested Claude Code skills that trigger reliably, load efficiently, and produce consistent results. This skill enforces a TDD approach to skill creation — define test prompts first, write the minimal skill, then harden against misfire and rationalization.</p>
 <p><strong>This is a RIGID skill.</strong> Every step must be followed exactly. No shortcuts.</p>
@@ -594,12 +622,17 @@ related_skills:
   - &quot;companion-skill-2&quot;
 ---</code></pre>
 <h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
-<ol>
-<li><strong>Rule of Thumb 1 (Imperative Command Voice):</strong> Write instructions as direct commands ("Execute", "Validate", "Inject") rather than passive descriptions ("The agent should execute").</li>
-<li><strong>Rule of Thumb 2 (Token Ceiling Constraint):</strong> Keep <code>SKILL.md</code> under 4,000 tokens; move detailed tables, background theory, or heavy code snippets into <code>references/</code> or companion scripts.</li>
-<li><strong>Rule of Thumb 3 (Explicit Negative Triggers):</strong> Always include an explicit "Do not use when" section under <code>## When to Use</code> to prevent false-positive agent routing.</li>
-<li><strong>Rule of Thumb 4 (Executable Verification Gate):</strong> Every skill must end with a concrete, checkable <code>## Completion Gate & Verification</code> checklist.</li>
-</ol>
+<ul>
+<li><strong>Rule of Thumb 1 (Zero-Trust Architectural Boundaries):</strong> Treat all external inputs, third-party payloads, and cross-module boundaries with strict zero-trust schema validation.</li>
+<li><strong>Rule of Thumb 2 (Fail-Fast & Deterministic Errors):</strong> Reject invalid states immediately with typed, actionable error contracts rather than cascading silent failures.</li>
+<li><strong>Rule of Thumb 3 (Idempotency & AST Preservation):</strong> State mutations and code transformations must maintain semantic idempotency across repeated executions.</li>
+<li><strong>Rule of Thumb 4 (Benchmark & Telemetry Alignment):</strong> Measure critical execution latency ($P_{95}$) and memory overhead with structured telemetry and baseline benchmarks.</li>
+<li><strong>Rule of Thumb 5 (Event-Driven & Circuit Breaker Decoupling):</strong> Isolate asynchronous operations behind circuit breakers and resilient retry mechanisms to prevent cascading failure.</li>
+<li><strong>Rule of Thumb 6 (Contract-First DDD Modeling):</strong> Define clear domain aggregates, value objects, and typed interface contracts before implementing concrete logic.</li>
+<li><strong>Rule of Thumb 7 (RAG & Semantic Retrieval Precision):</strong> Optimize context retrieval with hybrid lexical-vector search and reciprocal rank fusion to eliminate hallucinated routing.</li>
+<li><strong>Rule of Thumb 8 (OWASP & Supply Chain Verification):</strong> Verify dependencies and data flows against OWASP Top 10 and SLSA Level 3 supply chain security standards.</li>
+<li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
+</ul>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
