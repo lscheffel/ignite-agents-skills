@@ -178,6 +178,30 @@ def atomic_copy_tree(src: Path, dst: Path):
     temp_dst.rename(dst)
 
 
+PROTECTED_PATTERNS = {
+    ".git", ".github", ".githooks", ".kilo", ".local", ".vscode", ".idea",
+    ".env", ".env.example", ".gitignore", "data", "docs", "scripts", "pages",
+    "README.md", "AGENTS.md", "GEMINI.md", "CHANGELOG.md", "USAGE.md",
+    "STATE.md", "RELEASE-NOTES.md", "LICENSE", "package.json", "requirements.txt",
+    "CLAUDE.md", "rules", "plugins", "hooks.json", "mcp_config.json"
+}
+
+def is_protected(item: Path) -> bool:
+    name = item.name
+    if name in PROTECTED_PATTERNS or name.startswith("."):
+        return True
+    if name.endswith(".md") or name.endswith(".json") or name.endswith(".sh") or name.endswith(".py") or name.endswith(".sqlite3"):
+        return True
+    return False
+
+def is_orphan_skill(item: Path, canonical_skills: dict) -> bool:
+    if is_protected(item):
+        return False
+    if not item.is_dir():
+        return False
+    return item.name not in canonical_skills
+
+
 # ─── Core Audit & Synchronization Engine ─────────────────────────────────────
 
 def audit_runtime_targets(canonical_skills: dict) -> list:
@@ -193,9 +217,11 @@ def audit_runtime_targets(canonical_skills: dict) -> list:
 
         if exists and tpath.is_dir():
             for item in tpath.iterdir():
-                if item.name in canonical_names and (item / "SKILL.md").exists():
+                if is_protected(item):
+                    continue
+                if item.name in canonical_names and item.is_dir() and (item / "SKILL.md").exists():
                     active_skills.add(item.name)
-                else:
+                elif is_orphan_skill(item, canonical_skills):
                     orphan_items.add(item.name)
 
         missing_skills = canonical_names - active_skills
@@ -250,17 +276,17 @@ def execute_sync_and_purge(canonical_skills: dict, prune_all_orphans: bool = Tru
         # Ensure parent directory exists
         tpath.mkdir(parents=True, exist_ok=True)
 
-        # 1. Prune orphans and non-canonical entries
+        # 1. Prune ONLY unmanaged orphan skill directories (NEVER touch protected repo/governance files)
         existing_items = list(tpath.iterdir())
         pruned_here = 0
         for item in existing_items:
-            if item.name not in canonical_skills:
+            if is_orphan_skill(item, canonical_skills):
                 try:
                     if item.is_dir() and not item.is_symlink():
                         shutil.rmtree(item)
                     else:
                         item.unlink()
-                    print(f"   🗑️  [PURGED ORPHAN] {item.name}")
+                    print(f"   🗑️  [PURGED ORPHAN SKILL] {item.name}")
                     pruned_here += 1
                 except Exception as e:
                     print(f"   ⚠️  Falha ao remover {item.name}: {e}")
