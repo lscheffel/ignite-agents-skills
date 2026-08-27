@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# SOTA Post-Commit Hook: Automated Multi-Target Runtime Deployment & Purge
+# ==============================================================================
+# Executed automatically after every successful git commit.
+# Synchronizes the 60 canonical skills to:
+#   1. Antigravity IDE / Gemini CLI (~/.gemini/config/skills)
+#   2. Kilo Code Extension Cache (~/.cache/kilo/skills)
+#   3. Kilo Code Global (~/.kilo/skills)
+#   4. Agent Skills Standard (~/.agents/skills)
+#   5. Copilot & Lingma Hubs (~/.copilot/skills, ~/.lingma/skills)
+#
+# Eliminates runtime drift, zombie skills and cache staleness instantly.
+# ==============================================================================
+
+set -eo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+echo
+echo "🚀 [Git Hook: post-commit] Disparando Sincronização e Purge de Runtimes..."
+python3 "$REPO_ROOT/scripts/sync_runtime.py" --deploy
+
+echo "✅ [Git Hook: post-commit] Runtimes locais 100% sincronizados com a SSOT!"
+echo

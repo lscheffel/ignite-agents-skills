@@ -74,6 +74,8 @@ Antes de responder ou executar qualquer tarefa técnica (planejamento, codifica�
 | **Suíte de Testes Automatizados** | `python3 -m unittest discover -s scripts/tests -p "test_*.py"` |
 | **Compilar Páginas HTML do Site** | `python3 pages/build.py` |
 | **Janitor de Arquivamento de ADRs** | `./scripts/archive-adrs.sh` |
+| **Deploy & Sincronização de Runtimes (Purge)** | `python3 scripts/sync_runtime.py --deploy` |
+| **Auditoria de Drift de Runtimes** | `python3 scripts/sync_runtime.py --status` |
 
 ---
 

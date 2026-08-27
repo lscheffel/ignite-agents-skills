@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-26T22:52:45.822557+00:00",
+    "generated_at": "2026-08-27T01:08:37.073384+00:00",
     "omission_rate": "0.00%",
     "total_assets": 82,
     "persistence_target": ".github/governance/"
@@ -1886,8 +1886,8 @@
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin",
       "primary_sha256": "357a4f2a7afac9f38a2363374b16ff4ba13eea36f1cb18ba6db69c8c854008fb",
       "total_files": 4,
-      "total_bytes": 28537,
-      "total_tokens": 7069,
+      "total_bytes": 28566,
+      "total_tokens": 7076,
       "audit_status": "completed",
       "files": [
         {
@@ -1907,9 +1907,9 @@
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/scripts/update_audit_ledger.py",
           "relpath": "scripts/update_audit_ledger.py",
-          "sha256": "ecf3193e152ee681323dddc74bd86135ff631f9ac27696e0990b6c037c880b0f",
-          "bytes": 10251,
-          "tokens": 2561
+          "sha256": "279655baa28b74a45f779d415fe5cd03d620b198913987867bd7345920035279",
+          "bytes": 10280,
+          "tokens": 2568
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/templates/audit-bulletin.md",
