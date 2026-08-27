@@ -5,16 +5,13 @@ description: Authoritative UI/UX visual engine, design tokens, component archite
 domain: frontend-ux
 triggers:
   - ui-ux-pro-max
-  - ui-design
-  - ux-design
-  - frontend-ux
-  - design-tokens
-  - styling-guidelines
-  - wcag-accessibility
-  - dark-mode-tokens
-  - glassmorphism
   - design-system
-  - design-tokens-and-palettes
+  - wcag-accessibility
+  - responsive-ui
+  - design-ui-ux-sota
+  - sistema-de-design
+  - acessibilidade-wcag
+  - tokens-de-design
 tags:
   - ui-ux-pro-max
   - frontend-ux
@@ -183,3 +180,19 @@ graph TD
 - [ ] **Responsive**: Verified across 375px (Mobile), 768px (Tablet), and 1280px+ (Desktop).
 - [ ] **Forms**: Labels positioned above inputs; validation on `blur`.
 - [ ] **Dark Mode**: Elevation by illumination applied, desaturated accent colors.
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `ui-ux-pro-max` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

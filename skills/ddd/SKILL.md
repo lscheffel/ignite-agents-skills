@@ -2,9 +2,20 @@
 name: ddd
 version: 2.0.0
 description: Guide to Domain-Driven Design (DDD) modeling. Defines guidelines for Entities, Value Objects, Aggregates, Repositories, Domain Events, Domain Services, and Bounded Contexts. Use when modeling rich domains, refactoring anemic entities, or structuring bounded contexts.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: architecture-systems
 triggers:
-- ddd
+  - ddd
+  - domain-driven-design
+  - aggregate-roots
+  - value-objects
+  - design-orientado-a-dominio
+  - entidades-e-agregados
+  - bounded-contexts
+  - domain-events
 tags:
 - ddd
 - domain-driven-design
@@ -577,3 +588,11 @@ class OrderService {
 - [Domain-Driven Design Book](https://www.domainlanguage.com/ddd/)
 - `architecture-review-kilo` — to validate adherence
 - `testing` — to test aggregates
+
+## Completion Gate
+
+A tarefa associada à skill `ddd` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

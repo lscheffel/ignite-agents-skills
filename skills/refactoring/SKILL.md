@@ -2,9 +2,20 @@
 name: refactoring
 version: 2.0.0
 description: Comprehensive guide to safe and incremental refactoring. Covers techniques for extraction, Strangler Fig, Branch by Abstraction, testing before refactoring, and legacy migration. Use when refactoring code, improving existing structure, or migrating legacy systems.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: engineering-quality
 triggers:
-- refactoring
+  - refactoring
+  - safe-refactoring
+  - strangler-fig
+  - branch-by-abstraction
+  - refatoracao-segura
+  - refatorar-codigo
+  - migracao-legada
+  - melhorar-design-codigo
 tags:
 - refactoring
 - code-quality
@@ -358,3 +369,12 @@ function processPayment(order) {
 - `architecture-review-kilo` — to identify where to refactor
 - `ddd` — to model domain during refactoring
 - `testing` — to create safety net
+
+
+## Completion Gate
+
+A tarefa associada à skill `refactoring` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

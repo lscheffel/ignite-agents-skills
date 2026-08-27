@@ -2,12 +2,23 @@
 name: react-best-practices
 version: 1.0.0
 description: 'Use when the user needs React-specific patterns — hooks, component composition,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   Server Components, error boundaries, rendering optimization, and testing strategies.
   Triggers: hooks design, component composition, Server vs Client component decision,
   error boundary placement, context optimization, rendering performance.'
 domain: frontend-ux
 triggers:
-- react-best-practices
+  - react-best-practices
+  - react-hooks
+  - server-components
+  - component-composition
+  - boas-praticas-react
+  - otimizacao-render-react
+  - componentes-react
+  - custom-hooks
 tags:
 - react-best-practices
 - frontend-ux
@@ -375,3 +386,38 @@ Use `mcp__context7__resolve-library-id` then `mcp__context7__query-docs` for up-
 ## Skill Type
 
 **FLEXIBLE** — Apply these patterns based on the specific React version, project structure, and team conventions. The principles are consistent, but implementation details may vary. Always profile before optimizing.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (react-best-practices)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

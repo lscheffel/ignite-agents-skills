@@ -37,15 +37,13 @@ DEFAULT_NIM_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 
 # Cascatas de Modelos (ADR-026)
 TRANSLATION_MODELS = [
-    "nvidia/nemotron-3.5-lightning-30b-a3b",
-    "meta/llama-3.1-8b-instruct",
     "nvidia/riva-translate-4b-instruct-v2",
+    "meta/llama-3.3-70b-instruct",
 ]
 
 CODE_JUDGE_MODELS = [
-    "nvidia/nemotron-3.5-lightning-30b-a3b",
-    "meta/llama-3.1-8b-instruct",
-    "deepseek-ai/deepseek-v4-flash-0731",
+    "nvidia/riva-translate-4b-instruct-v2",
+    "meta/llama-3.3-70b-instruct",
 ]
 
 # Diretivas e Metadados que NUNCA devem ser traduzidos
@@ -398,6 +396,9 @@ def call_nvidia_nim_api(
         "Authorization": f"Bearer {api_key}"
     }
 
+    if not api_key or api_key.strip() == "":
+        return False, "NVIDIA_API_KEY ausente ou não configurada", "none"
+
     last_error = ""
     for model in models:
         payload = {
@@ -437,13 +438,15 @@ def call_nvidia_nim_api(
                     last_error = f"HTTP {he.code}: {err_json.get('message', err_body)}"
                 except Exception:
                     last_error = f"HTTP {he.code}: {he.reason}"
+                if he.code in (401, 403, 404, 410, 422):
+                    return False, f"NIM Auth/Endpoint Error HTTP {he.code}: {last_error}", "none"
                 time.sleep(2 ** attempt)
             except urllib.error.URLError as ue:
                 last_error = f"URLError: {str(ue.reason)}"
-                time.sleep(2 ** attempt)
+                return False, f"NIM Connection Error: {last_error}", "none"
             except Exception as ex:
                 last_error = f"Exception: {str(ex)}"
-                time.sleep(2 ** attempt)
+                time.sleep(1)
                 
     return False, f"Falha em todos os modelos da cascata. Último erro: {last_error}", "none"
 

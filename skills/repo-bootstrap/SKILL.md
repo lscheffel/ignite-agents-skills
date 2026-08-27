@@ -2,12 +2,23 @@
 name: repo-bootstrap
 version: 2.0.0
 description: 'Generates an initial repository structure with governance files: README.md,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE,
   docs/ directory, and CI/CD examples. Use when initializing a new repository or
   standardizing project structure.'
 domain: core-governance
 triggers:
-- repo-bootstrap
+  - repo-bootstrap
+  - bootstrap-repository
+  - scaffold-project
+  - governance-files
+  - inicializar-repositorio
+  - estruturar-projeto
+  - criar-arquivos-governanca
+  - scaffolding
 tags:
 - repository
 - scaffolding
@@ -314,3 +325,11 @@ packages/
 - `governance` — for team processes
 - `documentation` — for documentation standards
 - `git` — for .gitignore
+
+## Completion Gate
+
+A tarefa associada à skill `repo-bootstrap` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

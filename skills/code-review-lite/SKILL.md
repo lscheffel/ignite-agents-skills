@@ -2,9 +2,20 @@
 name: code-review-lite
 version: 5.0.0-alias
 description: Lightweight code review optimized for AI-first and vibe-coding workflows. Delegates directly to unified code-review (mode: lite).
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: engineering-quality
 triggers:
-- code-review-lite
+  - code-review-lite
+  - quick-code-review
+  - fast-pr-check
+  - diff-review
+  - revisao-rapida-codigo
+  - revisao-lite
+  - analisar-diff
+  - lightweight-review
 tags:
 - code-review-lite
 - engineering-quality
@@ -294,3 +305,48 @@ ESCALATE_TO_FULL_REVIEW
 Move fast.
 Do not move blindly.
 ```
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (code-review-lite)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+

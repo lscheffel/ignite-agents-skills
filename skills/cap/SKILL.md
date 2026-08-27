@@ -5,13 +5,13 @@ description: Minimal Context Bootstrap for AI Coding Agents. Acquire only the re
 domain: core-governance
 triggers:
   - cap
-  - context acquisition
-  - context bootstrap
-  - minimal context
-  - token optimization bootstrap
-  - repo context
-  - acquire context
-  - adquirir contexto
+  - minimal-context
+  - context-acquisition
+  - token-optimization
+  - adquirir-contexto
+  - contexto-minimo
+  - otimizar-tokens
+  - cheapest-evidence
 tags:
   - cap
   - context
@@ -253,3 +253,11 @@ Once Context Saturation is reached, **do not begin implementation automatically*
 3. **Stop and wait for further user instructions**
 
 *Execute only the option explicitly selected by the user.*
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

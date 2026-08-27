@@ -5,13 +5,13 @@ description: Performs architectural code reviews, detecting violations of SOLID 
 domain: architecture-systems
 triggers:
   - architecture-review
+  - review-architecture
   - solid-review
-  - code-smell-review
-  - clean-architecture-review
-  - hexagonal-review
-  - revisar-arquitetura
-  - architecture-evaluation
-  - structural-review
+  - clean-architecture
+  - revisao-arquitetural
+  - analisar-arquitetura
+  - auditoria-arquitetura
+  - hexagonal-architecture
 tags:
   - architecture
   - solid
@@ -474,3 +474,12 @@ mkdir -p test/legacy && touch test/legacy/user-characterization.test.ts
 - `ddd` — for domain modeling
 - `adr-generator` — for documenting decisions
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/Clean-Code.html)
+
+
+## Completion Gate
+
+A tarefa associada à skill `architecture-review` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

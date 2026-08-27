@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-27T01:39:44.677360+00:00",
+    "generated_at": "2026-08-27T02:20:23.235861+00:00",
     "omission_rate": "0.00%",
     "total_assets": 82,
     "persistence_target": ".github/governance/"
@@ -12,18 +12,25 @@
       "name": "adr-architecture-elevation",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation",
-      "primary_sha256": "aaab888975d81233e8d31496bfc812c970953355d0c61a2ef1c167ab0537f96b",
-      "total_files": 11,
-      "total_bytes": 160145,
-      "total_tokens": 38618,
+      "primary_sha256": "f294471da804a85d98846aa810590cd420df77c68f4f6dd99a3876d1047b3d92",
+      "total_files": 13,
+      "total_bytes": 161472,
+      "total_tokens": 38940,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "aaab888975d81233e8d31496bfc812c970953355d0c61a2ef1c167ab0537f96b",
-          "bytes": 11367,
-          "tokens": 2803
+          "sha256": "f294471da804a85d98846aa810590cd420df77c68f4f6dd99a3876d1047b3d92",
+          "bytes": 12215,
+          "tokens": 3009
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/examples/adr-architecture-elevation-example.md",
+          "relpath": "examples/adr-architecture-elevation-example.md",
+          "sha256": "7a38130ed4f23b8d62e6e5992f365c4248ff652060a5eb12c1cafe985f2e5bf7",
+          "bytes": 180,
+          "tokens": 44
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/references/amplification-patterns.md",
@@ -94,6 +101,13 @@
           "sha256": "a17c57f3e8411d58af506538a0bd48184c75e9926faaadea673bf9065ac46857",
           "bytes": 15818,
           "tokens": 3645
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-architecture-elevation/templates/adr-architecture-elevation-template.md",
+          "relpath": "templates/adr-architecture-elevation-template.md",
+          "sha256": "9847c2506be4e0e9ea2b77b1b35eb9f35e8a2f136770a8f6a07cc918f0eac6ea",
+          "bytes": 299,
+          "tokens": 72
         }
       ],
       "global_score": 87.7,
@@ -105,18 +119,18 @@
       "name": "adr-archive",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive",
-      "primary_sha256": "fc0f3656dc7fa4e611a612c08315145673b580a37c51c8ed642b97a9a3fcbd5d",
-      "total_files": 9,
-      "total_bytes": 56163,
-      "total_tokens": 13959,
+      "primary_sha256": "20e4f385267a167eb9e05ad9fdfac97378dee3c5824457230c1a01f4ff7a1e2a",
+      "total_files": 11,
+      "total_bytes": 57464,
+      "total_tokens": 14276,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "fc0f3656dc7fa4e611a612c08315145673b580a37c51c8ed642b97a9a3fcbd5d",
-          "bytes": 12369,
-          "tokens": 3085
+          "sha256": "20e4f385267a167eb9e05ad9fdfac97378dee3c5824457230c1a01f4ff7a1e2a",
+          "bytes": 13239,
+          "tokens": 3296
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive/examples/ADR-997-TODO.md",
@@ -140,6 +154,13 @@
           "tokens": 59
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive/examples/adr-archive-example.md",
+          "relpath": "examples/adr-archive-example.md",
+          "sha256": "ce675de849b1cda0e27b8eab16b92dd9ca885bed8caf7371c56839e8215d8e0f",
+          "bytes": 165,
+          "tokens": 40
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive/examples/archive-workflow.md",
           "relpath": "examples/archive-workflow.md",
           "sha256": "106dda1d1652e2435a69b4c66336d5e0d500eb8b93d4c3c23b90e12bcdef597c",
@@ -152,6 +173,13 @@
           "sha256": "bacdbe300d97f66a9d285389107d44da8afee715bc59b4620c5a867b8b9f4268",
           "bytes": 36480,
           "tokens": 9066
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive/templates/adr-archive-template.md",
+          "relpath": "templates/adr-archive-template.md",
+          "sha256": "48494e286d979177494b07904201fb5fa76b1e702f091cf1d121cb9587a4be20",
+          "bytes": 266,
+          "tokens": 66
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-archive/templates/archive-checklist.md",
@@ -184,18 +212,18 @@
       "name": "adr-generator",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator",
-      "primary_sha256": "58d1275caa46e7acba34aef7b82d362271613b8964ba75e745d803a80ca6e5f7",
-      "total_files": 13,
-      "total_bytes": 39262,
-      "total_tokens": 9749,
+      "primary_sha256": "6fea978b239e416761fa4592bf551374693eb4a63f4b726f9863cd6c2a7e3d95",
+      "total_files": 15,
+      "total_bytes": 40630,
+      "total_tokens": 10082,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "58d1275caa46e7acba34aef7b82d362271613b8964ba75e745d803a80ca6e5f7",
-          "bytes": 19346,
-          "tokens": 4815
+          "sha256": "6fea978b239e416761fa4592bf551374693eb4a63f4b726f9863cd6c2a7e3d95",
+          "bytes": 20284,
+          "tokens": 5044
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator/examples/README.md",
@@ -203,6 +231,13 @@
           "sha256": "0d28101ab1000e28f17243dfc2e2c666c6af04dac208bd31f2bbfa3851922b75",
           "bytes": 1230,
           "tokens": 304
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator/examples/adr-generator-example.md",
+          "relpath": "examples/adr-generator-example.md",
+          "sha256": "e69d9a1043df64d7151163725a1cf4fc8e708ce38e0b0ed0d9dbfaedeaee6401",
+          "bytes": 156,
+          "tokens": 38
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator/examples/database-choice.md",
@@ -254,6 +289,13 @@
           "tokens": 297
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator/templates/adr-generator-template.md",
+          "relpath": "templates/adr-generator-template.md",
+          "sha256": "cc15854a7e37355b6c91054316d6c8a98168b4bd2127e887dc3c1db60e8304ba",
+          "bytes": 274,
+          "tokens": 66
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/adr-generator/templates/adr-pi.md",
           "relpath": "templates/adr-pi.md",
           "sha256": "828e304f081989bea8580b412d311f39aac602e752b0f49d19542d535d7b40e4",
@@ -282,7 +324,7 @@
           "tokens": 352
         }
       ],
-      "global_score": 92.0,
+      "global_score": 90.1,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -291,21 +333,35 @@
       "name": "agent-development",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-development",
-      "primary_sha256": "e5eb33376b83568c24b58afb74c5573027e5d72bed5047c8f1d9acb27a8872ee",
-      "total_files": 1,
-      "total_bytes": 11318,
-      "total_tokens": 2827,
+      "primary_sha256": "183612777bec7317647f68ce452c61cb08ac5ce583522a100f78d7197e21ff48",
+      "total_files": 3,
+      "total_bytes": 14172,
+      "total_tokens": 3521,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-development/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "e5eb33376b83568c24b58afb74c5573027e5d72bed5047c8f1d9acb27a8872ee",
-          "bytes": 11318,
-          "tokens": 2827
+          "sha256": "183612777bec7317647f68ce452c61cb08ac5ce583522a100f78d7197e21ff48",
+          "bytes": 13724,
+          "tokens": 3411
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-development/examples/agent-development-example.md",
+          "relpath": "examples/agent-development-example.md",
+          "sha256": "d0ea676aac1c3f3878373a8a334de373b9e897076238468f7c1acf272cd175b9",
+          "bytes": 171,
+          "tokens": 42
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-development/templates/agent-development-template.md",
+          "relpath": "templates/agent-development-template.md",
+          "sha256": "01ab3b1059f169e54a91219bd687a456a6874a0f8f95b4eb236c45b569aa9dde",
+          "bytes": 277,
+          "tokens": 68
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -314,18 +370,25 @@
       "name": "agent-orchestration",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-orchestration",
-      "primary_sha256": "1c50a8ebd9c3ee2081c82462067017339b8b615c236f2fa01794c63a2e3831c3",
-      "total_files": 8,
-      "total_bytes": 20202,
-      "total_tokens": 5034,
+      "primary_sha256": "b4cc532af9e09600375f3ad96f7e05709d47c68c1e88f03eb0c8fb27aff81e18",
+      "total_files": 10,
+      "total_bytes": 21236,
+      "total_tokens": 5287,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-orchestration/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "1c50a8ebd9c3ee2081c82462067017339b8b615c236f2fa01794c63a2e3831c3",
-          "bytes": 10315,
-          "tokens": 2567
+          "sha256": "b4cc532af9e09600375f3ad96f7e05709d47c68c1e88f03eb0c8fb27aff81e18",
+          "bytes": 10895,
+          "tokens": 2709
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-orchestration/examples/agent-orchestration-example.md",
+          "relpath": "examples/agent-orchestration-example.md",
+          "sha256": "d26c74a085cad5efd25d93cf4e030e3bf773cdc7078c7a0a8b118ea61462137c",
+          "bytes": 173,
+          "tokens": 42
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-orchestration/examples/fan-out-fan-in.md",
@@ -354,6 +417,13 @@
           "sha256": "46f214f62b5f494427a437a5b3427c808e6bfcb27b592c26565b891af871892c",
           "bytes": 877,
           "tokens": 219
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-orchestration/templates/agent-orchestration-template.md",
+          "relpath": "templates/agent-orchestration-template.md",
+          "sha256": "07524aef2bba13afb5748d3b0665a5762b7480a48afff795021e1578562a79f7",
+          "bytes": 281,
+          "tokens": 69
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-orchestration/templates/agent-role-card.md",
@@ -386,21 +456,35 @@
       "name": "agent-planning-execution",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-planning-execution",
-      "primary_sha256": "5981798c40f2a094e2b4e37a9c744985afcbbc9fad3380060eddaadc9434f564",
-      "total_files": 1,
-      "total_bytes": 93026,
-      "total_tokens": 23086,
+      "primary_sha256": "b00030ee036d3d7764ba4027621c8a5463523b2bf52abca139247f1120091202",
+      "total_files": 3,
+      "total_bytes": 95547,
+      "total_tokens": 23700,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-planning-execution/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "5981798c40f2a094e2b4e37a9c744985afcbbc9fad3380060eddaadc9434f564",
-          "bytes": 93026,
-          "tokens": 23086
+          "sha256": "b00030ee036d3d7764ba4027621c8a5463523b2bf52abca139247f1120091202",
+          "bytes": 94975,
+          "tokens": 23559
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-planning-execution/examples/agent-planning-execution-example.md",
+          "relpath": "examples/agent-planning-execution-example.md",
+          "sha256": "baa2d4f58bd6aad1cefdf6c969001e8bf1bf7623ff3e3885c4635e5f58216fb1",
+          "bytes": 280,
+          "tokens": 69
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agent-planning-execution/templates/agent-planning-execution-template.md",
+          "relpath": "templates/agent-planning-execution-template.md",
+          "sha256": "5f0a5921705c9d508b114d53dfce784dd1edc57cb66a04e9a5b7451c3940df09",
+          "bytes": 292,
+          "tokens": 72
         }
       ],
-      "global_score": 88.8,
+      "global_score": 81.9,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -409,21 +493,35 @@
       "name": "agents-md-management",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agents-md-management",
-      "primary_sha256": "fc6377a22346f7b740dfda637e87260d7dc94cc95f3e5f42d22e7e805ee2e2e2",
-      "total_files": 1,
-      "total_bytes": 16395,
-      "total_tokens": 4076,
+      "primary_sha256": "fd9146d1045cc029abc734e1b64b0b96ca54c2bf5b55529dabf0183cb4352166",
+      "total_files": 3,
+      "total_bytes": 17411,
+      "total_tokens": 4324,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agents-md-management/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "fc6377a22346f7b740dfda637e87260d7dc94cc95f3e5f42d22e7e805ee2e2e2",
-          "bytes": 16395,
-          "tokens": 4076
+          "sha256": "fd9146d1045cc029abc734e1b64b0b96ca54c2bf5b55529dabf0183cb4352166",
+          "bytes": 16950,
+          "tokens": 4212
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agents-md-management/examples/agents-md-management-example.md",
+          "relpath": "examples/agents-md-management-example.md",
+          "sha256": "e08df95e45913af951bd51a6765af0dc3089c6f44969bc5f38b6ab1acc7588fd",
+          "bytes": 174,
+          "tokens": 43
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/agents-md-management/templates/agents-md-management-template.md",
+          "relpath": "templates/agents-md-management-template.md",
+          "sha256": "fa1c304ded4c3f3eb8c81e614906699ee9e785e086c3ad9d1962102561c1bada",
+          "bytes": 287,
+          "tokens": 69
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -432,18 +530,25 @@
       "name": "api-design",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/api-design",
-      "primary_sha256": "de9b70c24ac88c52d3bff65f8ca3a00cff9f47c5eb0fd91b3e07ef208eb57fcc",
-      "total_files": 7,
-      "total_bytes": 29343,
-      "total_tokens": 7313,
+      "primary_sha256": "38cf97fe4b7a90089c69b7a7b8d3d8b6b60220b3a32ca1701024eedd39b28d08",
+      "total_files": 9,
+      "total_bytes": 30394,
+      "total_tokens": 7571,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/api-design/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "de9b70c24ac88c52d3bff65f8ca3a00cff9f47c5eb0fd91b3e07ef208eb57fcc",
-          "bytes": 10104,
-          "tokens": 2513
+          "sha256": "38cf97fe4b7a90089c69b7a7b8d3d8b6b60220b3a32ca1701024eedd39b28d08",
+          "bytes": 10728,
+          "tokens": 2666
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/api-design/examples/api-design-example.md",
+          "relpath": "examples/api-design-example.md",
+          "sha256": "edf16c92dc8c56d445246e65ddc6e92a456d1d4d78596391cf32801f5ede65cd",
+          "bytes": 164,
+          "tokens": 40
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/api-design/examples/error-handling-contract.md",
@@ -465,6 +570,13 @@
           "sha256": "3b52eeb72a63a16b214c6b4be6891498891e112e894f0f775bada20587cae7d5",
           "bytes": 2655,
           "tokens": 663
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/api-design/templates/api-design-template.md",
+          "relpath": "templates/api-design-template.md",
+          "sha256": "0e4e464b637d7e44c777d9ef0e449c579ea9c049cddf86f2b75aedf66983cbfd",
+          "bytes": 263,
+          "tokens": 65
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/api-design/templates/api-versioning.md",
@@ -497,18 +609,25 @@
       "name": "architecture-review",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/architecture-review",
-      "primary_sha256": "70b003af2186ef47804e59ab2f6a3d49dc0b88b67aef735324f757ca574138c7",
-      "total_files": 4,
-      "total_bytes": 14356,
-      "total_tokens": 3562,
+      "primary_sha256": "f2b060354f53de884653dab793ee625a4ed347c1e09100c136d1ebdd3bca60bd",
+      "total_files": 6,
+      "total_bytes": 15157,
+      "total_tokens": 3757,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/architecture-review/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "70b003af2186ef47804e59ab2f6a3d49dc0b88b67aef735324f757ca574138c7",
-          "bytes": 12268,
-          "tokens": 3044
+          "sha256": "f2b060354f53de884653dab793ee625a4ed347c1e09100c136d1ebdd3bca60bd",
+          "bytes": 12617,
+          "tokens": 3128
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/architecture-review/examples/architecture-review-example.md",
+          "relpath": "examples/architecture-review-example.md",
+          "sha256": "e68fb009c6e5cba9c96292a11c0356cb3ff542755f26ad86ba385fb37d04ea0a",
+          "bytes": 173,
+          "tokens": 42
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/architecture-review/examples/god-class-refactor.md",
@@ -523,6 +642,13 @@
           "sha256": "564cff55d45e81350bac1362787eb6ee62584ce2a7fbf36159f665d3c0fdca55",
           "bytes": 1152,
           "tokens": 285
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/architecture-review/templates/architecture-review-template.md",
+          "relpath": "templates/architecture-review-template.md",
+          "sha256": "b5095b722cf55555a5c2d845edb0479e93e2f8a7f46ee4490018563ba0181983",
+          "bytes": 279,
+          "tokens": 69
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/architecture-review/templates/tech-debt-item.md",
@@ -541,21 +667,35 @@
       "name": "artifacts-builder",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder",
-      "primary_sha256": "e40dc0c1a28d84bc9d02a429af0ec2d9ccf5289776aa6520e6905f2aede60a20",
-      "total_files": 1,
-      "total_bytes": 9704,
-      "total_tokens": 2423,
+      "primary_sha256": "4e1608e5b47d18341fe3273858aadc125506ff4218efaaac3d7b88c82bfc812e",
+      "total_files": 3,
+      "total_bytes": 12204,
+      "total_tokens": 3032,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "e40dc0c1a28d84bc9d02a429af0ec2d9ccf5289776aa6520e6905f2aede60a20",
-          "bytes": 9704,
-          "tokens": 2423
+          "sha256": "4e1608e5b47d18341fe3273858aadc125506ff4218efaaac3d7b88c82bfc812e",
+          "bytes": 11671,
+          "tokens": 2901
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder/examples/artifacts-builder-example.md",
+          "relpath": "examples/artifacts-builder-example.md",
+          "sha256": "0f6ffaf726546041ebe49343d65837dfe8f399004bb04a14c2dd941d8d89f86f",
+          "bytes": 171,
+          "tokens": 42
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder/templates/artifacts-builder-template.md",
+          "relpath": "templates/artifacts-builder-template.md",
+          "sha256": "f0e97cf8f31cefdfcc29db8dd9232887b3ffe0ce2eb90c08d966d8a568c85d53",
+          "bytes": 362,
+          "tokens": 89
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -564,18 +704,18 @@
       "name": "brainstorming",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming",
-      "primary_sha256": "342c466a2520f39c46b01342835558f04c2a6b90057a40bfaeff3441f3ffd8a1",
-      "total_files": 8,
-      "total_bytes": 76709,
-      "total_tokens": 19137,
+      "primary_sha256": "709ad44a865dd3090a8659a6fcad17f7afe241aa929e75a58a6c5b5bff33d5d8",
+      "total_files": 10,
+      "total_bytes": 78502,
+      "total_tokens": 19574,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "342c466a2520f39c46b01342835558f04c2a6b90057a40bfaeff3441f3ffd8a1",
-          "bytes": 12190,
-          "tokens": 3037
+          "sha256": "709ad44a865dd3090a8659a6fcad17f7afe241aa929e75a58a6c5b5bff33d5d8",
+          "bytes": 13455,
+          "tokens": 3344
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming/spec-document-reviewer-prompt.md",
@@ -590,6 +730,13 @@
           "sha256": "3321a044c777d03d7177df41c77bb83155ff2a6d0c16b8a3d752426d29f14ea8",
           "bytes": 13084,
           "tokens": 3251
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming/examples/brainstorming-example.md",
+          "relpath": "examples/brainstorming-example.md",
+          "sha256": "e3451305d625bdd27190504d3c620c20bd1339a2384e1b0129dafa1f20e745cd",
+          "bytes": 259,
+          "tokens": 64
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming/scripts/frame-template.html",
@@ -625,6 +772,13 @@
           "sha256": "0b5ccbbd57f62d3ed88993f7940b5ee0e5c0fc9b21c550c623da4f6292e47daf",
           "bytes": 3263,
           "tokens": 815
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming/templates/brainstorming-template.md",
+          "relpath": "templates/brainstorming-template.md",
+          "sha256": "174561862cc70c41c3b39e2095140d185c54dea52e240c0011c36d1710b04ae7",
+          "bytes": 269,
+          "tokens": 66
         }
       ],
       "global_score": 87.7,
@@ -636,21 +790,35 @@
       "name": "cap",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/cap",
-      "primary_sha256": "d654f51b6b7b1eadf854ece34337e37de08391b596d7fb932fd88c6f07a2dfb0",
-      "total_files": 1,
-      "total_bytes": 8727,
-      "total_tokens": 2170,
+      "primary_sha256": "869d39b7f6f4339fe09b721a6a4d3786b47fd7a8f79ee43dc7829ea2cb377bb2",
+      "total_files": 3,
+      "total_bytes": 9735,
+      "total_tokens": 2417,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/cap/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "d654f51b6b7b1eadf854ece34337e37de08391b596d7fb932fd88c6f07a2dfb0",
-          "bytes": 8727,
-          "tokens": 2170
+          "sha256": "869d39b7f6f4339fe09b721a6a4d3786b47fd7a8f79ee43dc7829ea2cb377bb2",
+          "bytes": 9245,
+          "tokens": 2297
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/cap/examples/cap-example.md",
+          "relpath": "examples/cap-example.md",
+          "sha256": "588c4676488327d63ff0f95b4bcbe003c9b6dc6dc7abada7ba743828e3807644",
+          "bytes": 241,
+          "tokens": 59
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/cap/templates/cap-template.md",
+          "relpath": "templates/cap-template.md",
+          "sha256": "72202bff7b223cad5131c8ad2185d0b571e4735f45f8ebf39e2d5bb785d75863",
+          "bytes": 249,
+          "tokens": 61
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -659,21 +827,35 @@
       "name": "changelog-generator",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/changelog-generator",
-      "primary_sha256": "1d929f58d87e6348510cfb6762688f299568218b114b291bbcb9192977df9f1c",
-      "total_files": 1,
-      "total_bytes": 3536,
-      "total_tokens": 881,
+      "primary_sha256": "8ee9cefd0bff2e8e1e2a8e7993d6484c64ff209159a257e67f3cf26a1fa53ad8",
+      "total_files": 3,
+      "total_bytes": 6401,
+      "total_tokens": 1578,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/changelog-generator/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "1d929f58d87e6348510cfb6762688f299568218b114b291bbcb9192977df9f1c",
-          "bytes": 3536,
-          "tokens": 881
+          "sha256": "8ee9cefd0bff2e8e1e2a8e7993d6484c64ff209159a257e67f3cf26a1fa53ad8",
+          "bytes": 5947,
+          "tokens": 1467
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/changelog-generator/examples/changelog-generator-example.md",
+          "relpath": "examples/changelog-generator-example.md",
+          "sha256": "2f54023240847b38ead5348e6ff7a4fbcf1c3f751686ce38d884eee8e990373a",
+          "bytes": 173,
+          "tokens": 42
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/changelog-generator/templates/changelog-generator-template.md",
+          "relpath": "templates/changelog-generator-template.md",
+          "sha256": "b7d0db43c11d0227aaff46a291b23b89cc2c647da7f28a81500f6d0269971338",
+          "bytes": 281,
+          "tokens": 69
         }
       ],
-      "global_score": 92.3,
+      "global_score": 84.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -682,21 +864,35 @@
       "name": "circuit-breaker",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/circuit-breaker",
-      "primary_sha256": "ce7a7c2694d5be31a9a15677ed2f38d2427126cf77b433e8279fe0cb78dba295",
-      "total_files": 1,
-      "total_bytes": 13065,
-      "total_tokens": 3263,
+      "primary_sha256": "356e38703919d013e5e711f8b87673f5c45125e339a1dfc2b336a4f463031c80",
+      "total_files": 3,
+      "total_bytes": 16062,
+      "total_tokens": 3992,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/circuit-breaker/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "ce7a7c2694d5be31a9a15677ed2f38d2427126cf77b433e8279fe0cb78dba295",
-          "bytes": 13065,
-          "tokens": 3263
+          "sha256": "356e38703919d013e5e711f8b87673f5c45125e339a1dfc2b336a4f463031c80",
+          "bytes": 15494,
+          "tokens": 3853
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/circuit-breaker/examples/circuit-breaker-example.md",
+          "relpath": "examples/circuit-breaker-example.md",
+          "sha256": "44f1e4415e3c5ea8ef5bfc24197449516c122004a47ecc0ddd39ea595394faf4",
+          "bytes": 265,
+          "tokens": 65
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/circuit-breaker/templates/circuit-breaker-template.md",
+          "relpath": "templates/circuit-breaker-template.md",
+          "sha256": "a514569096d46132193f10d19b8bf0f1088b711d30b6c48c357d2462f00365fa",
+          "bytes": 303,
+          "tokens": 74
         }
       ],
-      "global_score": 92.6,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -705,21 +901,35 @@
       "name": "clean-code",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/clean-code",
-      "primary_sha256": "3188bcdadf08017eb3859350ca03e1b654db64ce4de05b3bc11f2c4dbc4a76a3",
-      "total_files": 1,
-      "total_bytes": 10986,
-      "total_tokens": 2741,
+      "primary_sha256": "840684dc01691a7ecd4265a2c36c39d55c55f4c99f8bf10c77c6fea10112448a",
+      "total_files": 3,
+      "total_bytes": 13373,
+      "total_tokens": 3322,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/clean-code/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "3188bcdadf08017eb3859350ca03e1b654db64ce4de05b3bc11f2c4dbc4a76a3",
-          "bytes": 10986,
-          "tokens": 2741
+          "sha256": "840684dc01691a7ecd4265a2c36c39d55c55f4c99f8bf10c77c6fea10112448a",
+          "bytes": 12946,
+          "tokens": 3217
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/clean-code/examples/clean-code-example.md",
+          "relpath": "examples/clean-code-example.md",
+          "sha256": "2a5b7ba1199fdb33f15bd85d26574ac02d77e13a65afd3c1d06ca39eb8626d89",
+          "bytes": 164,
+          "tokens": 40
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/clean-code/templates/clean-code-template.md",
+          "relpath": "templates/clean-code-template.md",
+          "sha256": "13a8273e53342f1e344cae5cc3287edd4bb5adbd89dce8d04b0ed31e89e297a3",
+          "bytes": 263,
+          "tokens": 65
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -728,21 +938,35 @@
       "name": "code-review",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review",
-      "primary_sha256": "225026f9887c6a6a852e106fa0ff92699c96294de6848dcf85eb3d4c823f3edf",
-      "total_files": 1,
-      "total_bytes": 7719,
-      "total_tokens": 1890,
+      "primary_sha256": "b03bcb12a99de48210fd8ba79077150f0f82c351b3099fa8fbd88374ca77270f",
+      "total_files": 3,
+      "total_bytes": 8527,
+      "total_tokens": 2069,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "225026f9887c6a6a852e106fa0ff92699c96294de6848dcf85eb3d4c823f3edf",
-          "bytes": 7719,
-          "tokens": 1890
+          "sha256": "b03bcb12a99de48210fd8ba79077150f0f82c351b3099fa8fbd88374ca77270f",
+          "bytes": 8099,
+          "tokens": 1964
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review/examples/code-review-example.md",
+          "relpath": "examples/code-review-example.md",
+          "sha256": "adf4e1bda55120282271edae38153b3d50059d68a0589babe2ef297c3367f9ad",
+          "bytes": 165,
+          "tokens": 40
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review/templates/code-review-template.md",
+          "relpath": "templates/code-review-template.md",
+          "sha256": "a6ac38deebe16222c4ca2396c473bcb7b5f016227b63b5a260a9081dc3529a90",
+          "bytes": 263,
+          "tokens": 65
         }
       ],
-      "global_score": 84.3,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -751,18 +975,25 @@
       "name": "code-review-lite",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-lite",
-      "primary_sha256": "9a9a82c465a5ed72993eb482f3d423499301f17f10527d57fe865e5484f0faa4",
-      "total_files": 3,
-      "total_bytes": 8719,
-      "total_tokens": 2165,
+      "primary_sha256": "009dbf7856c91bc2eca997675313b93fc96b70c40724fe376938bd636135e7d7",
+      "total_files": 5,
+      "total_bytes": 11564,
+      "total_tokens": 2858,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-lite/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "9a9a82c465a5ed72993eb482f3d423499301f17f10527d57fe865e5484f0faa4",
-          "bytes": 4182,
-          "tokens": 1040
+          "sha256": "009dbf7856c91bc2eca997675313b93fc96b70c40724fe376938bd636135e7d7",
+          "bytes": 6584,
+          "tokens": 1624
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-lite/examples/code-review-lite-example.md",
+          "relpath": "examples/code-review-lite-example.md",
+          "sha256": "b9f73b5346e900d823225ffdad240cb2f03add8c0505d7a5543b1388b315fc70",
+          "bytes": 170,
+          "tokens": 42
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-lite/examples/review-session.md",
@@ -770,6 +1001,13 @@
           "sha256": "aa91cf8c876030c3e1dbf3f38414906ff3fe35e95d33cb49d06523a82136428f",
           "bytes": 2759,
           "tokens": 683
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-lite/templates/code-review-lite-template.md",
+          "relpath": "templates/code-review-lite-template.md",
+          "sha256": "4028d2362ec299c0e0cb61be3fe622cc2de2c7e21671019b5ef710b1d0c8b5bb",
+          "bytes": 273,
+          "tokens": 67
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-lite/templates/review-checklist.md",
@@ -788,21 +1026,35 @@
       "name": "code-review-workflow",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-workflow",
-      "primary_sha256": "7d8beb3a2fb6dd59061b5223cd84d088f6eea3ac4f69251eccf3648566316bd7",
-      "total_files": 1,
-      "total_bytes": 9380,
-      "total_tokens": 2335,
+      "primary_sha256": "d0e4c2ce14165c822df4576f41228f742fc4ae701ba41e7ac3e092eab4c92e73",
+      "total_files": 3,
+      "total_bytes": 12255,
+      "total_tokens": 3035,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-workflow/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "7d8beb3a2fb6dd59061b5223cd84d088f6eea3ac4f69251eccf3648566316bd7",
-          "bytes": 9380,
-          "tokens": 2335
+          "sha256": "d0e4c2ce14165c822df4576f41228f742fc4ae701ba41e7ac3e092eab4c92e73",
+          "bytes": 11767,
+          "tokens": 2915
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-workflow/examples/code-review-workflow-example.md",
+          "relpath": "examples/code-review-workflow-example.md",
+          "sha256": "066182ef698b740a1e5dc0248bdfb11f444a4db299a1e46afec6125fa977cbb9",
+          "bytes": 174,
+          "tokens": 43
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-workflow/templates/code-review-workflow-template.md",
+          "relpath": "templates/code-review-workflow-template.md",
+          "sha256": "469ea464b19f6038618d2f5fe775999657789fa934c043c43dd30489ee3f5f37",
+          "bytes": 314,
+          "tokens": 77
         }
       ],
-      "global_score": 89.0,
+      "global_score": 90.3,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -811,21 +1063,35 @@
       "name": "content-creator",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-creator",
-      "primary_sha256": "da52e56bbeb672f7ab5d9bc58c21666ca289e70cc1c58d8129f011c3bf3510fb",
-      "total_files": 1,
-      "total_bytes": 11576,
-      "total_tokens": 2887,
+      "primary_sha256": "69394ac099bdebaedbbfbe66623ee4454dc66ba067ecf196a712b288223852e1",
+      "total_files": 3,
+      "total_bytes": 14442,
+      "total_tokens": 3581,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-creator/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "da52e56bbeb672f7ab5d9bc58c21666ca289e70cc1c58d8129f011c3bf3510fb",
-          "bytes": 11576,
-          "tokens": 2887
+          "sha256": "69394ac099bdebaedbbfbe66623ee4454dc66ba067ecf196a712b288223852e1",
+          "bytes": 13982,
+          "tokens": 3472
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-creator/examples/content-creator-example.md",
+          "relpath": "examples/content-creator-example.md",
+          "sha256": "b0d925a4d2c0c4d2a3aa90f0950437d4e885f9c358c4e7a444e062a0872097f5",
+          "bytes": 169,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-creator/templates/content-creator-template.md",
+          "relpath": "templates/content-creator-template.md",
+          "sha256": "d35f69138c09b93fd880292ea60e497c80186a4526ab443ecc6006ab3011ac28",
+          "bytes": 291,
+          "tokens": 68
         }
       ],
-      "global_score": 91.5,
+      "global_score": 92.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -834,21 +1100,35 @@
       "name": "content-research-writer",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-research-writer",
-      "primary_sha256": "90ba438dff7ad2cbdece7c1662dc0e00e69007f21a97e93a688d9dc7a868cc29",
-      "total_files": 1,
-      "total_bytes": 12770,
-      "total_tokens": 3190,
+      "primary_sha256": "6247453e954daa42ef53349b7e4d7b9a09549abaf15b23cc5ef5751da9f6cac1",
+      "total_files": 3,
+      "total_bytes": 15651,
+      "total_tokens": 3889,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-research-writer/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "90ba438dff7ad2cbdece7c1662dc0e00e69007f21a97e93a688d9dc7a868cc29",
-          "bytes": 12770,
-          "tokens": 3190
+          "sha256": "6247453e954daa42ef53349b7e4d7b9a09549abaf15b23cc5ef5751da9f6cac1",
+          "bytes": 15183,
+          "tokens": 3776
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-research-writer/examples/content-research-writer-example.md",
+          "relpath": "examples/content-research-writer-example.md",
+          "sha256": "72f41c62290748deed01448acf2102a1f385074a7c951c2547efa2f0ee48da10",
+          "bytes": 177,
+          "tokens": 43
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/content-research-writer/templates/content-research-writer-template.md",
+          "relpath": "templates/content-research-writer-template.md",
+          "sha256": "c0b9851253d466dbd28a7a4730456b593483c5dacc5483d0b1bc3ba96f25eef7",
+          "bytes": 291,
+          "tokens": 70
         }
       ],
-      "global_score": 91.5,
+      "global_score": 92.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -857,21 +1137,35 @@
       "name": "context7-mcp",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/context7-mcp",
-      "primary_sha256": "5e076a3315e260337d307aedcda6976b5b14201ada13edcd08bbca4e16f66e6e",
-      "total_files": 1,
-      "total_bytes": 2395,
-      "total_tokens": 598,
+      "primary_sha256": "58a89335e8b7c0a8c006f2c9b2645d99e683c49ab9305e697e79aa5d16b31e0a",
+      "total_files": 3,
+      "total_bytes": 5333,
+      "total_tokens": 1315,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/context7-mcp/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "5e076a3315e260337d307aedcda6976b5b14201ada13edcd08bbca4e16f66e6e",
-          "bytes": 2395,
-          "tokens": 598
+          "sha256": "58a89335e8b7c0a8c006f2c9b2645d99e683c49ab9305e697e79aa5d16b31e0a",
+          "bytes": 4807,
+          "tokens": 1185
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/context7-mcp/examples/context7-mcp-example.md",
+          "relpath": "examples/context7-mcp-example.md",
+          "sha256": "abec9e0768a613ddd6706be91187cab0350310c401124a720eca80d5c0f5138a",
+          "bytes": 259,
+          "tokens": 64
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/context7-mcp/templates/context7-mcp-template.md",
+          "relpath": "templates/context7-mcp-template.md",
+          "sha256": "c96d1dde573020013e2300cf73fe6a5b72254f7e3a29adb9c852e7497b6aaa6f",
+          "bytes": 267,
+          "tokens": 66
         }
       ],
-      "global_score": 92.3,
+      "global_score": 85.3,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -880,18 +1174,25 @@
       "name": "database-architecture",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture",
-      "primary_sha256": "80d883b4a95c2b4845b51d82471ab96446687cb83a171bd61b0d27509c5b7e0f",
-      "total_files": 4,
-      "total_bytes": 9535,
-      "total_tokens": 2375,
+      "primary_sha256": "3d33129e4f2b19a5ce2b0a814449d999476d7bb3cefe27aeb8da9995ba80fa33",
+      "total_files": 6,
+      "total_bytes": 11331,
+      "total_tokens": 2820,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "80d883b4a95c2b4845b51d82471ab96446687cb83a171bd61b0d27509c5b7e0f",
-          "bytes": 3444,
-          "tokens": 859
+          "sha256": "3d33129e4f2b19a5ce2b0a814449d999476d7bb3cefe27aeb8da9995ba80fa33",
+          "bytes": 4780,
+          "tokens": 1191
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture/examples/database-architecture-example.md",
+          "relpath": "examples/database-architecture-example.md",
+          "sha256": "c08960f314f50b04a4362d041de16b0f868f6a688200d1f760f4295daab94311",
+          "bytes": 175,
+          "tokens": 43
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture/references/patterns-and-migrations.md",
@@ -908,6 +1209,13 @@
           "tokens": 347
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture/templates/database-architecture-template.md",
+          "relpath": "templates/database-architecture-template.md",
+          "sha256": "8451b76df420918e9319fd2b57bdb3bf53668cfa8d3077291f8361ce33e9b74b",
+          "bytes": 285,
+          "tokens": 70
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/database-architecture/templates/migration-template.sql",
           "relpath": "templates/migration-template.sql",
           "sha256": "a28e1c76dbabe8409bf341a8fe6e9ab11eb96224b75460f2ca5c8c0993751094",
@@ -915,7 +1223,7 @@
           "tokens": 238
         }
       ],
-      "global_score": 92.5,
+      "global_score": 93.5,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -924,18 +1232,25 @@
       "name": "ddd",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ddd",
-      "primary_sha256": "ba103f52f6a831f35bf72d94a2e58b988500c57023af25b25c84ab8892edbe89",
-      "total_files": 8,
-      "total_bytes": 21228,
-      "total_tokens": 5296,
+      "primary_sha256": "08165cc6956d8c6dcf4d5e91d55766403c03228954d0c51ed077bc16d5adc411",
+      "total_files": 10,
+      "total_bytes": 22284,
+      "total_tokens": 5554,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ddd/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "ba103f52f6a831f35bf72d94a2e58b988500c57023af25b25c84ab8892edbe89",
-          "bytes": 12942,
-          "tokens": 3228
+          "sha256": "08165cc6956d8c6dcf4d5e91d55766403c03228954d0c51ed077bc16d5adc411",
+          "bytes": 13504,
+          "tokens": 3366
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ddd/examples/ddd-example.md",
+          "relpath": "examples/ddd-example.md",
+          "sha256": "98daee252f635734431278c012b64b575530a4e3f196285c7e3a2f77937b6f0c",
+          "bytes": 241,
+          "tokens": 59
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ddd/examples/order-modeling.md",
@@ -950,6 +1265,13 @@
           "sha256": "7c26199b1643341e0c6f374500a872629d25cfc0abdd7e2a3691d5325a6c6879",
           "bytes": 1822,
           "tokens": 455
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ddd/templates/ddd-template.md",
+          "relpath": "templates/ddd-template.md",
+          "sha256": "3b9151350b5deeb98a61b232f97795335a3b5219e634a4eb3cb462ed0d8e4450",
+          "bytes": 253,
+          "tokens": 61
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ddd/templates/domain-event.ts",
@@ -996,21 +1318,35 @@
       "name": "deployment",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/deployment",
-      "primary_sha256": "76116604c1ecf1dc8710c3d7c35dc4c1246fbb1166e55d554ec17a62394b3a12",
-      "total_files": 1,
-      "total_bytes": 9405,
-      "total_tokens": 2270,
+      "primary_sha256": "22c55411b79f621fada872efaf1c320c3a92310a99194f5c5b881ecba15c0fd6",
+      "total_files": 3,
+      "total_bytes": 11797,
+      "total_tokens": 2852,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/deployment/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "76116604c1ecf1dc8710c3d7c35dc4c1246fbb1166e55d554ec17a62394b3a12",
-          "bytes": 9405,
-          "tokens": 2270
+          "sha256": "22c55411b79f621fada872efaf1c320c3a92310a99194f5c5b881ecba15c0fd6",
+          "bytes": 11372,
+          "tokens": 2747
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/deployment/examples/deployment-example.md",
+          "relpath": "examples/deployment-example.md",
+          "sha256": "5db102b2cb0e86a3ab180a504d53ba632960f167b545471dcd8156df1b1c7749",
+          "bytes": 164,
+          "tokens": 40
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/deployment/templates/deployment-template.md",
+          "relpath": "templates/deployment-template.md",
+          "sha256": "335dcc0151fb7e4b95fd6550a5f4882c5b0d8087eb46ced22136568f83ddf8fa",
+          "bytes": 261,
+          "tokens": 65
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1019,21 +1355,35 @@
       "name": "dispatching-parallel-agents",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/dispatching-parallel-agents",
-      "primary_sha256": "bd234dde693007e3ea813362b31b92ff3acc2076d45805d87f31a74bb22381a6",
-      "total_files": 1,
-      "total_bytes": 13845,
-      "total_tokens": 3447,
+      "primary_sha256": "f05d5b49b721ee0143444abb1fe7232a4ab6206226711bc3b0d3d0203907f043",
+      "total_files": 3,
+      "total_bytes": 16417,
+      "total_tokens": 4073,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/dispatching-parallel-agents/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "bd234dde693007e3ea813362b31b92ff3acc2076d45805d87f31a74bb22381a6",
-          "bytes": 13845,
-          "tokens": 3447
+          "sha256": "f05d5b49b721ee0143444abb1fe7232a4ab6206226711bc3b0d3d0203907f043",
+          "bytes": 15830,
+          "tokens": 3929
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/dispatching-parallel-agents/examples/dispatching-parallel-agents-example.md",
+          "relpath": "examples/dispatching-parallel-agents-example.md",
+          "sha256": "b4d100f41e6633c0d372fc96e1a89a4d720b2d298f150d3c38870b27e66d9a3d",
+          "bytes": 286,
+          "tokens": 71
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/dispatching-parallel-agents/templates/dispatching-parallel-agents-template.md",
+          "relpath": "templates/dispatching-parallel-agents-template.md",
+          "sha256": "7000c1ea684d6931d65c551b4ffbc6ca90602ca0d91104302978df2f8ee677e7",
+          "bytes": 301,
+          "tokens": 73
         }
       ],
-      "global_score": 92.6,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1042,21 +1392,35 @@
       "name": "docx-processing",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/docx-processing",
-      "primary_sha256": "14fa19ed65813530e868fee73519abc32b0fe36f92edcae2db51fd0c44d8d089",
-      "total_files": 1,
-      "total_bytes": 11797,
-      "total_tokens": 2943,
+      "primary_sha256": "18f0edb119c2bc39d89d95f5f0c30297c7cb2f951662afa9581b588c90bf088d",
+      "total_files": 3,
+      "total_bytes": 14750,
+      "total_tokens": 3662,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/docx-processing/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "14fa19ed65813530e868fee73519abc32b0fe36f92edcae2db51fd0c44d8d089",
-          "bytes": 11797,
-          "tokens": 2943
+          "sha256": "18f0edb119c2bc39d89d95f5f0c30297c7cb2f951662afa9581b588c90bf088d",
+          "bytes": 14212,
+          "tokens": 3530
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/docx-processing/examples/docx-processing-example.md",
+          "relpath": "examples/docx-processing-example.md",
+          "sha256": "703039c0764de736cba79f82b9a20ddadc6bda344dbd51993353a2299795a7ed",
+          "bytes": 265,
+          "tokens": 65
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/docx-processing/templates/docx-processing-template.md",
+          "relpath": "templates/docx-processing-template.md",
+          "sha256": "493ccaa978a7464f8122c5b9a3849fcda20119025b6ce5be24225544f7a9b945",
+          "bytes": 273,
+          "tokens": 67
         }
       ],
-      "global_score": 90.5,
+      "global_score": 91.9,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1065,21 +1429,35 @@
       "name": "email-composer",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/email-composer",
-      "primary_sha256": "5fa46be264e161eb2acc26675e256e4e556b0687f17d5810e4c54be22175034d",
-      "total_files": 1,
-      "total_bytes": 13066,
-      "total_tokens": 3255,
+      "primary_sha256": "c4665396d54d515a5345c952ddfd438387770a229e12015b37578a213e93c1e1",
+      "total_files": 3,
+      "total_bytes": 16025,
+      "total_tokens": 3974,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/email-composer/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "5fa46be264e161eb2acc26675e256e4e556b0687f17d5810e4c54be22175034d",
-          "bytes": 13066,
-          "tokens": 3255
+          "sha256": "c4665396d54d515a5345c952ddfd438387770a229e12015b37578a213e93c1e1",
+          "bytes": 15489,
+          "tokens": 3844
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/email-composer/examples/email-composer-example.md",
+          "relpath": "examples/email-composer-example.md",
+          "sha256": "d56d157d1ee3ef8091dd281e4a18ff0caddf3ad9bdc11d520409fd2c33d925a1",
+          "bytes": 261,
+          "tokens": 64
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/email-composer/templates/email-composer-template.md",
+          "relpath": "templates/email-composer-template.md",
+          "sha256": "eecf787f3a0b36f3c1f83944898cc224f666c0d5c9029deb3053ceeac6180a2a",
+          "bytes": 275,
+          "tokens": 66
         }
       ],
-      "global_score": 91.5,
+      "global_score": 92.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1088,21 +1466,35 @@
       "name": "find-skills",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/find-skills",
-      "primary_sha256": "1d41fd2b6138ac2aef1d88646601f0ab9f67b0acb982f09fff12a5894a594b7b",
-      "total_files": 1,
-      "total_bytes": 5728,
-      "total_tokens": 1428,
+      "primary_sha256": "7cd345234b7326bf3bba305c7e85cb4d12c199e5fc3eaa8b2e5ede8a91bb8d28",
+      "total_files": 3,
+      "total_bytes": 8564,
+      "total_tokens": 2117,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/find-skills/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "1d41fd2b6138ac2aef1d88646601f0ab9f67b0acb982f09fff12a5894a594b7b",
-          "bytes": 5728,
-          "tokens": 1428
+          "sha256": "7cd345234b7326bf3bba305c7e85cb4d12c199e5fc3eaa8b2e5ede8a91bb8d28",
+          "bytes": 8134,
+          "tokens": 2012
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/find-skills/examples/find-skills-example.md",
+          "relpath": "examples/find-skills-example.md",
+          "sha256": "baaa6feadc0eec57ae874202d0a56f7eaa7c2567cc114753181bb3d747f694b8",
+          "bytes": 165,
+          "tokens": 40
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/find-skills/templates/find-skills-template.md",
+          "relpath": "templates/find-skills-template.md",
+          "sha256": "8267554188403e128a8fc87f729e991d9dc0fc441077db1af2ae0035a1b199af",
+          "bytes": 265,
+          "tokens": 65
         }
       ],
-      "global_score": 92.3,
+      "global_score": 84.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1111,21 +1503,35 @@
       "name": "git-workflow",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/git-workflow",
-      "primary_sha256": "8eb2307b4e5168607e8abdd335df2d6a28e42ecab3b1f13d964a527b93221526",
-      "total_files": 1,
-      "total_bytes": 36430,
-      "total_tokens": 9046,
+      "primary_sha256": "2474222300a24b9490424979358079a16e3655c59091e6d9369ac42cb103e8ff",
+      "total_files": 3,
+      "total_bytes": 37421,
+      "total_tokens": 9289,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/git-workflow/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "8eb2307b4e5168607e8abdd335df2d6a28e42ecab3b1f13d964a527b93221526",
-          "bytes": 36430,
-          "tokens": 9046
+          "sha256": "2474222300a24b9490424979358079a16e3655c59091e6d9369ac42cb103e8ff",
+          "bytes": 36957,
+          "tokens": 9175
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/git-workflow/examples/git-workflow-example.md",
+          "relpath": "examples/git-workflow-example.md",
+          "sha256": "7ad30d3daf2cf34233c75ad44f13eba8a1b4f2b4feef995b1ee5a742505f981b",
+          "bytes": 166,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/git-workflow/templates/git-workflow-template.md",
+          "relpath": "templates/git-workflow-template.md",
+          "sha256": "1bd685d4783560ce4edf43b052c49f856c61a354431f75ceab4c709400963ede",
+          "bytes": 298,
+          "tokens": 73
         }
       ],
-      "global_score": 90.8,
+      "global_score": 83.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1134,18 +1540,18 @@
       "name": "governance",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance",
-      "primary_sha256": "32dddd989b291eebe54ac18182261d7f2b818f0c90cc4f36c2304750a22b6413",
-      "total_files": 5,
-      "total_bytes": 12188,
-      "total_tokens": 3030,
+      "primary_sha256": "a63db8203c63478cddf01c53fa002e0b65029d05946cc4bc778f4e3740727e2c",
+      "total_files": 7,
+      "total_bytes": 13259,
+      "total_tokens": 3294,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "32dddd989b291eebe54ac18182261d7f2b818f0c90cc4f36c2304750a22b6413",
-          "bytes": 9607,
-          "tokens": 2389
+          "sha256": "a63db8203c63478cddf01c53fa002e0b65029d05946cc4bc778f4e3740727e2c",
+          "bytes": 10253,
+          "tokens": 2548
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance/examples/branch-protection.md",
@@ -1155,11 +1561,25 @@
           "tokens": 109
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance/examples/governance-example.md",
+          "relpath": "examples/governance-example.md",
+          "sha256": "2219ad30a3bbadc8e0a1d020316f01d5ab8a4a83a19e8873ca2d12522878943d",
+          "bytes": 164,
+          "tokens": 40
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance/templates/codeowners",
           "relpath": "templates/codeowners",
           "sha256": "7d64fb91d972cf82d3a7b88dd62c7a3614941befbaca0b4354ccf5b470e7017a",
           "bytes": 697,
           "tokens": 172
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance/templates/governance-template.md",
+          "relpath": "templates/governance-template.md",
+          "sha256": "d84db13fb6400dee97c51e1b44037c733659db89b4e90c915a8c4104c061ccdf",
+          "bytes": 261,
+          "tokens": 65
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/governance/templates/issue-template.md",
@@ -1185,18 +1605,18 @@
       "name": "implementation",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation",
-      "primary_sha256": "ccf86d2ee15d8b391d613f2d6d1c74a99f5381b451edb81fe52ead170eaaac12",
-      "total_files": 10,
-      "total_bytes": 40373,
-      "total_tokens": 10023,
+      "primary_sha256": "ae579da91029403dbff9cb9c62cd0b8f22921be9ab2c5eeebc1336141bf1832d",
+      "total_files": 12,
+      "total_bytes": 42143,
+      "total_tokens": 10456,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "ccf86d2ee15d8b391d613f2d6d1c74a99f5381b451edb81fe52ead170eaaac12",
-          "bytes": 15663,
-          "tokens": 3899
+          "sha256": "ae579da91029403dbff9cb9c62cd0b8f22921be9ab2c5eeebc1336141bf1832d",
+          "bytes": 16996,
+          "tokens": 4224
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation/examples/complex-change.md",
@@ -1204,6 +1624,13 @@
           "sha256": "6af9b75a7a8e207fdeeddd2253f472e9a2cef7758aecbd47a3ba77d097688ee9",
           "bytes": 4453,
           "tokens": 1095
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation/examples/implementation-example.md",
+          "relpath": "examples/implementation-example.md",
+          "sha256": "6a20303214103225cc256bde0bb1ddcb709e1392ccfd1ca311750172cf26cb91",
+          "bytes": 168,
+          "tokens": 41
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation/examples/simple-change.md",
@@ -1248,6 +1675,13 @@
           "tokens": 813
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation/templates/implementation-template.md",
+          "relpath": "templates/implementation-template.md",
+          "sha256": "ec8b41c0ba8338503375a9b11dbd64e25199c027c581a1a613f97100b99e9a33",
+          "bytes": 269,
+          "tokens": 67
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/implementation/templates/rollback-report.md",
           "relpath": "templates/rollback-report.md",
           "sha256": "6b9a911bdc61f6973d4b456b585b779c06068b040be8dde29f748a22f45a363b",
@@ -1271,21 +1705,35 @@
       "name": "llm-as-judge",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/llm-as-judge",
-      "primary_sha256": "e797d151dc51113dabd5ce7ff5bfb7149f658be77eed8db62b8e498cec518c3b",
-      "total_files": 1,
-      "total_bytes": 10075,
-      "total_tokens": 2514,
+      "primary_sha256": "f237d3eb1ba55a4037d693dd057385e9dbe09a013e0a99a303a99fcc67d10ffa",
+      "total_files": 3,
+      "total_bytes": 12503,
+      "total_tokens": 3106,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/llm-as-judge/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "e797d151dc51113dabd5ce7ff5bfb7149f658be77eed8db62b8e498cec518c3b",
-          "bytes": 10075,
-          "tokens": 2514
+          "sha256": "f237d3eb1ba55a4037d693dd057385e9dbe09a013e0a99a303a99fcc67d10ffa",
+          "bytes": 12072,
+          "tokens": 3000
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/llm-as-judge/examples/llm-as-judge-example.md",
+          "relpath": "examples/llm-as-judge-example.md",
+          "sha256": "898bfb054f5dbc0f80c1f04b442049b85929d14dc20d726ee173436262603e32",
+          "bytes": 166,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/llm-as-judge/templates/llm-as-judge-template.md",
+          "relpath": "templates/llm-as-judge-template.md",
+          "sha256": "1c82f227527c7ce94ec9c9f40ea097fbda74f122efc54416b395351704060f25",
+          "bytes": 265,
+          "tokens": 65
         }
       ],
-      "global_score": 92.6,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1294,21 +1742,35 @@
       "name": "mcp-builder",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mcp-builder",
-      "primary_sha256": "850c0fef0d64a838d9e969b3f6e6d5307b8dcb8188a740a765bfbb45b746daba",
-      "total_files": 1,
-      "total_bytes": 12380,
-      "total_tokens": 3089,
+      "primary_sha256": "acee3cb840457b749e14f31e19bdd036b8068c1eeb673fe667bc5736fd6ab9e2",
+      "total_files": 3,
+      "total_bytes": 15222,
+      "total_tokens": 3779,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mcp-builder/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "850c0fef0d64a838d9e969b3f6e6d5307b8dcb8188a740a765bfbb45b746daba",
-          "bytes": 12380,
-          "tokens": 3089
+          "sha256": "acee3cb840457b749e14f31e19bdd036b8068c1eeb673fe667bc5736fd6ab9e2",
+          "bytes": 14788,
+          "tokens": 3674
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mcp-builder/examples/mcp-builder-example.md",
+          "relpath": "examples/mcp-builder-example.md",
+          "sha256": "77510c2ee0d4766aae370fbc6f6ea4ca66d3ac6a279efc69fb03beae28037a2c",
+          "bytes": 165,
+          "tokens": 40
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mcp-builder/templates/mcp-builder-template.md",
+          "relpath": "templates/mcp-builder-template.md",
+          "sha256": "343e46c9db13a5ea16d92574b5c96b1e8655a89717cf267e423d080606d34198",
+          "bytes": 269,
+          "tokens": 65
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1317,21 +1779,35 @@
       "name": "mobile-design",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design",
-      "primary_sha256": "a72d852c65d339301f229da8ee3c6cadab770521ab5108f2157ce5c8851df0df",
-      "total_files": 1,
-      "total_bytes": 10355,
-      "total_tokens": 2584,
+      "primary_sha256": "716fae14950911665190e7c04e7f2e0e4426184892494ae3430156739e734729",
+      "total_files": 3,
+      "total_bytes": 12750,
+      "total_tokens": 3167,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "a72d852c65d339301f229da8ee3c6cadab770521ab5108f2157ce5c8851df0df",
-          "bytes": 10355,
-          "tokens": 2584
+          "sha256": "716fae14950911665190e7c04e7f2e0e4426184892494ae3430156739e734729",
+          "bytes": 12316,
+          "tokens": 3060
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design/examples/mobile-design-example.md",
+          "relpath": "examples/mobile-design-example.md",
+          "sha256": "d4577f69639c477a42a3380411c296fdb56541604c1aafcebeb0472c7eb6e6ea",
+          "bytes": 167,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design/templates/mobile-design-template.md",
+          "relpath": "templates/mobile-design-template.md",
+          "sha256": "3575d9b23b45d7c31fe2b42cb36bd6d880269209e969799cd53fbc2dc448eebe",
+          "bytes": 267,
+          "tokens": 66
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1340,18 +1816,18 @@
       "name": "observability",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/observability",
-      "primary_sha256": "ab0a20a51fc9cda6b03b6c5bc0e8482844a47e0816e87a2174d20ac0c1f47131",
-      "total_files": 8,
-      "total_bytes": 28170,
-      "total_tokens": 7029,
+      "primary_sha256": "2e5a500321fca7d2f80363b1171fdc7cf6a2c49904eaf05dc889118d8d2b12e5",
+      "total_files": 10,
+      "total_bytes": 29185,
+      "total_tokens": 7276,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/observability/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "ab0a20a51fc9cda6b03b6c5bc0e8482844a47e0816e87a2174d20ac0c1f47131",
-          "bytes": 11260,
-          "tokens": 2807
+          "sha256": "2e5a500321fca7d2f80363b1171fdc7cf6a2c49904eaf05dc889118d8d2b12e5",
+          "bytes": 11832,
+          "tokens": 2947
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/observability/examples/express-logging.ts",
@@ -1359,6 +1835,13 @@
           "sha256": "7abd05d9ca98201e57d77dd9398b69e470521779574d6f4eb746f735b3205492",
           "bytes": 1299,
           "tokens": 324
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/observability/examples/observability-example.md",
+          "relpath": "examples/observability-example.md",
+          "sha256": "635acac977ae62bdcac294cc1fa1a60e7bf5977b35d00ea1e52048a9d6d2db6d",
+          "bytes": 167,
+          "tokens": 41
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/observability/examples/prometheus-metrics.ts",
@@ -1401,9 +1884,16 @@
           "sha256": "747b9226d7cda3c29e086276c3c632d22e5999744c588974b31213fca226d5b6",
           "bytes": 3127,
           "tokens": 781
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/observability/templates/observability-template.md",
+          "relpath": "templates/observability-template.md",
+          "sha256": "4c944ca80db4a0184e8263f6a4c721ac6ecee8c21f4b4e6fdb96a1a3df386a2e",
+          "bytes": 276,
+          "tokens": 66
         }
       ],
-      "global_score": 91.7,
+      "global_score": 83.4,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1412,21 +1902,35 @@
       "name": "pdf-processing",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/pdf-processing",
-      "primary_sha256": "bf540c42607b4183ce0e9fca904ea7832c106d32d6d556014b878e90c4327df2",
-      "total_files": 1,
-      "total_bytes": 12402,
-      "total_tokens": 3097,
+      "primary_sha256": "6a95d8bda183db2d39b26cd712fc616ec0d324ad0a32a504722793e87bcd1dfb",
+      "total_files": 3,
+      "total_bytes": 15345,
+      "total_tokens": 3812,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/pdf-processing/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "bf540c42607b4183ce0e9fca904ea7832c106d32d6d556014b878e90c4327df2",
-          "bytes": 12402,
-          "tokens": 3097
+          "sha256": "6a95d8bda183db2d39b26cd712fc616ec0d324ad0a32a504722793e87bcd1dfb",
+          "bytes": 14803,
+          "tokens": 3680
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/pdf-processing/examples/pdf-processing-example.md",
+          "relpath": "examples/pdf-processing-example.md",
+          "sha256": "ad19da255062e782d5f2e64cb6d5f569e881e894735cf77bbbbb45191daf7063",
+          "bytes": 263,
+          "tokens": 65
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/pdf-processing/templates/pdf-processing-template.md",
+          "relpath": "templates/pdf-processing-template.md",
+          "sha256": "7e1f39f5fc564e7f0d695abb1ed357e81b51712d4e457be92647171fb6a260b2",
+          "bytes": 279,
+          "tokens": 67
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1435,18 +1939,18 @@
       "name": "performance-optimization",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/performance-optimization",
-      "primary_sha256": "fc111fde5e679b9b8b1c29700475d250d3e69bdca4488b3a92f31a80428ccc44",
-      "total_files": 2,
-      "total_bytes": 15947,
-      "total_tokens": 3983,
+      "primary_sha256": "5594f10827bde5880e001ab6c5a7212456d12be147029ca51654afc2efdd9ae9",
+      "total_files": 4,
+      "total_bytes": 18399,
+      "total_tokens": 4580,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/performance-optimization/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "fc111fde5e679b9b8b1c29700475d250d3e69bdca4488b3a92f31a80428ccc44",
-          "bytes": 11474,
-          "tokens": 2865
+          "sha256": "5594f10827bde5880e001ab6c5a7212456d12be147029ca51654afc2efdd9ae9",
+          "bytes": 13458,
+          "tokens": 3347
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/performance-optimization/performance-budgets.md",
@@ -1454,9 +1958,23 @@
           "sha256": "515c3f42541b9ab7043c431ddc1939b2321ad0c562c72aa889522e252129a93f",
           "bytes": 4473,
           "tokens": 1118
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/performance-optimization/examples/performance-optimization-example.md",
+          "relpath": "examples/performance-optimization-example.md",
+          "sha256": "757016dc4c1e1314d360350d0c7f6d1616471ca7a653702e44d139e3d035104e",
+          "bytes": 178,
+          "tokens": 44
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/performance-optimization/templates/performance-optimization-template.md",
+          "relpath": "templates/performance-optimization-template.md",
+          "sha256": "755dbcd99345a467568b18e54b0a5746a25526facd026054a819b116fb771037",
+          "bytes": 290,
+          "tokens": 71
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1465,21 +1983,35 @@
       "name": "php-laravel-ecosystem",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/php-laravel-ecosystem",
-      "primary_sha256": "a7612280491ea99ce209f91b06f7fe7f55f3d85db8c2a56f63ba5b610bbf63d3",
-      "total_files": 1,
-      "total_bytes": 49630,
-      "total_tokens": 12325,
+      "primary_sha256": "98c3bb8414a633b39772fc78f6ea98447a9eeabdab40387d1c503e30db837130",
+      "total_files": 3,
+      "total_bytes": 52668,
+      "total_tokens": 13065,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/php-laravel-ecosystem/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "a7612280491ea99ce209f91b06f7fe7f55f3d85db8c2a56f63ba5b610bbf63d3",
-          "bytes": 49630,
-          "tokens": 12325
+          "sha256": "98c3bb8414a633b39772fc78f6ea98447a9eeabdab40387d1c503e30db837130",
+          "bytes": 52106,
+          "tokens": 12927
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/php-laravel-ecosystem/examples/php-laravel-ecosystem-example.md",
+          "relpath": "examples/php-laravel-ecosystem-example.md",
+          "sha256": "b875e53ffc3fc732fb87ddc2b28811aa2a6b57e066c7a639e8d5fdb0867e4711",
+          "bytes": 277,
+          "tokens": 68
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/php-laravel-ecosystem/templates/php-laravel-ecosystem-template.md",
+          "relpath": "templates/php-laravel-ecosystem-template.md",
+          "sha256": "dbe4964348187f77f811db76370af11e0d79de795a93b85fbd18e348e05521ce",
+          "bytes": 285,
+          "tokens": 70
         }
       ],
-      "global_score": 88.8,
+      "global_score": 81.9,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1488,21 +2020,35 @@
       "name": "product-spec-engineering",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/product-spec-engineering",
-      "primary_sha256": "3c14868c22c296c41e6f30c65ee9ec795b3d5d62e77503e7a5bd1de54326633f",
-      "total_files": 1,
-      "total_bytes": 30477,
-      "total_tokens": 7558,
+      "primary_sha256": "09a3f79922f6d2fec37d385b305e83eacc77473b6718d7b11737c978dc6da675",
+      "total_files": 3,
+      "total_bytes": 32492,
+      "total_tokens": 8048,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/product-spec-engineering/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "3c14868c22c296c41e6f30c65ee9ec795b3d5d62e77503e7a5bd1de54326633f",
-          "bytes": 30477,
-          "tokens": 7558
+          "sha256": "09a3f79922f6d2fec37d385b305e83eacc77473b6718d7b11737c978dc6da675",
+          "bytes": 31922,
+          "tokens": 7908
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/product-spec-engineering/examples/product-spec-engineering-example.md",
+          "relpath": "examples/product-spec-engineering-example.md",
+          "sha256": "e69fc97fec3b3b5d6febc2d20060aa82db1697ea695d3442fcc065a7f2861e1b",
+          "bytes": 281,
+          "tokens": 69
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/product-spec-engineering/templates/product-spec-engineering-template.md",
+          "relpath": "templates/product-spec-engineering-template.md",
+          "sha256": "be7cd234c5e73385fc1a4903012794bfd8555d032206f00cc5082ed95d91708f",
+          "bytes": 289,
+          "tokens": 71
         }
       ],
-      "global_score": 88.2,
+      "global_score": 89.5,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1511,18 +2057,25 @@
       "name": "prompt-engineering",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering",
-      "primary_sha256": "d3a2edbc205633bd06da3ccb2586209da1f7ac0ab5e4553c4352527118c071f5",
-      "total_files": 5,
-      "total_bytes": 10193,
-      "total_tokens": 2533,
+      "primary_sha256": "890e4557a56fdb4bd04f109744fcd0ec1d5b07449e9a69c5d5d5004adf4ba700",
+      "total_files": 7,
+      "total_bytes": 11051,
+      "total_tokens": 2732,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "d3a2edbc205633bd06da3ccb2586209da1f7ac0ab5e4553c4352527118c071f5",
-          "bytes": 8126,
-          "tokens": 2025
+          "sha256": "890e4557a56fdb4bd04f109744fcd0ec1d5b07449e9a69c5d5d5004adf4ba700",
+          "bytes": 8700,
+          "tokens": 2166
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/examples/prompt-engineering-example.md",
+          "relpath": "examples/prompt-engineering-example.md",
+          "sha256": "765e26de4e5c3f3f1d041aac806b13116893df58e0757e3aca7dae9c2918e24f",
+          "bytes": 172,
+          "tokens": 42
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/examples/refactoring-prompt.md",
@@ -1539,11 +2092,18 @@
           "tokens": 155
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/templates/prompt-engineering-template.md",
+          "relpath": "templates/prompt-engineering-template.md",
+          "sha256": "6e78af99fd06348901aabddf7524518573da6dbb3e5be35d979eb2c05e67e4a7",
+          "bytes": 279,
+          "tokens": 69
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/templates/prompt-evaluation.md",
           "relpath": "templates/prompt-evaluation.md",
-          "sha256": "0936a86a1ad03d01fe746795dd6f02cf86eb2f0d6df320749feda912910c7e72",
-          "bytes": 564,
-          "tokens": 137
+          "sha256": "6b672ec56c80777f9504463181dc4fc0b2bc28771ab7691362e12c393421000f",
+          "bytes": 397,
+          "tokens": 84
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/templates/prompt-simple.md",
@@ -1562,21 +2122,35 @@
       "name": "react-best-practices",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices",
-      "primary_sha256": "c5a47d79063ce42902d53b2278d641392fc48b4c730a03c45a84e71475c11253",
-      "total_files": 1,
-      "total_bytes": 12153,
-      "total_tokens": 3033,
+      "primary_sha256": "526647dfd74f35b9d0702f44ba9de19730c18bb831f7d935be1076fbbdc9c1c0",
+      "total_files": 3,
+      "total_bytes": 14588,
+      "total_tokens": 3627,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "c5a47d79063ce42902d53b2278d641392fc48b4c730a03c45a84e71475c11253",
-          "bytes": 12153,
-          "tokens": 3033
+          "sha256": "526647dfd74f35b9d0702f44ba9de19730c18bb831f7d935be1076fbbdc9c1c0",
+          "bytes": 14131,
+          "tokens": 3514
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices/examples/react-best-practices-example.md",
+          "relpath": "examples/react-best-practices-example.md",
+          "sha256": "2e6b2c3e7ea0c79db2f2fd0b1fef8ab7c7dcc7e6fd3cae4c980926bcf5d0da72",
+          "bytes": 174,
+          "tokens": 43
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices/templates/react-best-practices-template.md",
+          "relpath": "templates/react-best-practices-template.md",
+          "sha256": "5b2c8782ef060def0d5d1fbb3ab993d4fd68a70939bf91e2ebfb09efe70c186b",
+          "bytes": 283,
+          "tokens": 70
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1585,18 +2159,18 @@
       "name": "refactoring",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring",
-      "primary_sha256": "16c2a6787cd2624803355179280ff6c85d1662990757b55e85c75bd53dba868c",
-      "total_files": 6,
-      "total_bytes": 23512,
-      "total_tokens": 5720,
+      "primary_sha256": "cd85908f3ce6388d079a3509ce5ffc36f73d1f12e096dd213c8eb5970a9297a0",
+      "total_files": 8,
+      "total_bytes": 24507,
+      "total_tokens": 5964,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "16c2a6787cd2624803355179280ff6c85d1662990757b55e85c75bd53dba868c",
-          "bytes": 11175,
-          "tokens": 2776
+          "sha256": "cd85908f3ce6388d079a3509ce5ffc36f73d1f12e096dd213c8eb5970a9297a0",
+          "bytes": 11742,
+          "tokens": 2915
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring/examples/extract-method.ts",
@@ -1604,6 +2178,13 @@
           "sha256": "74f800b16f71693571f795299b4c84b5c6deddd4e7e549a5fe56fc44c6f681fe",
           "bytes": 1939,
           "tokens": 481
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring/examples/refactoring-example.md",
+          "relpath": "examples/refactoring-example.md",
+          "sha256": "d6db29752b2ddd02aef55d296b7fa851d3501d69d40b7d3fd577b9d7b9d02684",
+          "bytes": 165,
+          "tokens": 40
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring/examples/strangler-fig.ts",
@@ -1627,6 +2208,13 @@
           "tokens": 482
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring/templates/refactoring-template.md",
+          "relpath": "templates/refactoring-template.md",
+          "sha256": "07b127a4d3b3883903b45fd81d442876dcbc55ba314f057190f9f056ece14acc",
+          "bytes": 263,
+          "tokens": 65
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/refactoring/templates/test-before-refactor.md",
           "relpath": "templates/test-before-refactor.md",
           "sha256": "ef2dfb4868a31d6c2ae8f828d128e82bd80675141ab5851ff9be1df55c768019",
@@ -1643,18 +2231,25 @@
       "name": "release",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release",
-      "primary_sha256": "512ccc3d9a04469c54c300a4fe427b5ed81b665417c5791fcc1ce257baf22491",
-      "total_files": 7,
-      "total_bytes": 11797,
-      "total_tokens": 2937,
+      "primary_sha256": "34582d3c4ac9ab1f1e7cc0cda91ba776f808bbfd3a179528d72867e227aa48a0",
+      "total_files": 9,
+      "total_bytes": 12669,
+      "total_tokens": 3149,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "512ccc3d9a04469c54c300a4fe427b5ed81b665417c5791fcc1ce257baf22491",
-          "bytes": 8846,
-          "tokens": 2202
+          "sha256": "34582d3c4ac9ab1f1e7cc0cda91ba776f808bbfd3a179528d72867e227aa48a0",
+          "bytes": 9409,
+          "tokens": 2340
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/examples/release-example.md",
+          "relpath": "examples/release-example.md",
+          "sha256": "a9cc5c2b4f6caf493f7f17ce97563acac0f7da2beb0f3202c1685940646648d2",
+          "bytes": 161,
+          "tokens": 39
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/examples/release-process.md",
@@ -1680,9 +2275,9 @@
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/templates/changelog-entry.md",
           "relpath": "templates/changelog-entry.md",
-          "sha256": "026042a6a0e54fae52633f6e22b4a05af38432e4a96b226b6c826cc026c29378",
-          "bytes": 166,
-          "tokens": 41
+          "sha256": "1ca2a1b6e2722c07b713a777e5b3bfa0c6b55d3af9402f9de5bed393183943f8",
+          "bytes": 52,
+          "tokens": 13
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/templates/release-checklist.md",
@@ -1692,6 +2287,13 @@
           "tokens": 90
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/templates/release-template.md",
+          "relpath": "templates/release-template.md",
+          "sha256": "08308c06f6145e117414d0caa6374d832d0bdc56017c756134c770907b3f5b64",
+          "bytes": 262,
+          "tokens": 63
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/templates/rollback-plan.md",
           "relpath": "templates/rollback-plan.md",
           "sha256": "40edd57d94902ce52c43bd4549554d0180b3bd42afbe859131160ff4adcce1c9",
@@ -1699,7 +2301,7 @@
           "tokens": 80
         }
       ],
-      "global_score": 93.8,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1708,18 +2310,18 @@
       "name": "repo-bootstrap",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap",
-      "primary_sha256": "c9ce337e3d387e7aa7e290512424a5529b59caca6d2f58b992e27f2c236ab8fe",
-      "total_files": 7,
-      "total_bytes": 10167,
-      "total_tokens": 2467,
+      "primary_sha256": "e5f62d210024776b79a0b19e6f0eefbb6609904be7bffc88f0a36913de13c3cb",
+      "total_files": 9,
+      "total_bytes": 11188,
+      "total_tokens": 2715,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "c9ce337e3d387e7aa7e290512424a5529b59caca6d2f58b992e27f2c236ab8fe",
-          "bytes": 6330,
-          "tokens": 1547
+          "sha256": "e5f62d210024776b79a0b19e6f0eefbb6609904be7bffc88f0a36913de13c3cb",
+          "bytes": 6908,
+          "tokens": 1688
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap/examples/bootstrap-example.md",
@@ -1727,6 +2329,13 @@
           "sha256": "a257188ee0cac335703066811afa940f1a061c820431dcd708c3e66582bd7813",
           "bytes": 689,
           "tokens": 146
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap/examples/repo-bootstrap-example.md",
+          "relpath": "examples/repo-bootstrap-example.md",
+          "sha256": "d9ed23958841d1604bb14b806aa6a982258fc457a206698cf53306db6654cd3b",
+          "bytes": 168,
+          "tokens": 41
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap/templates/AGENTS.md",
@@ -1762,6 +2371,13 @@
           "sha256": "9cd570e8101383d746581c5237aa3028898836ee6c224a60e73ceba5a216bd75",
           "bytes": 1195,
           "tokens": 298
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap/templates/repo-bootstrap-template.md",
+          "relpath": "templates/repo-bootstrap-template.md",
+          "sha256": "31bfbab43b663b96497d1d998f70dd0003512e6d354f83dfc17de110506315a1",
+          "bytes": 275,
+          "tokens": 66
         }
       ],
       "global_score": 92.8,
@@ -1773,21 +2389,35 @@
       "name": "resilient-execution",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/resilient-execution",
-      "primary_sha256": "e4467c3bf4712bb6b1dc08e3c97bf9a921da663dac2e6d9d227b1fdc852141e8",
-      "total_files": 1,
-      "total_bytes": 11424,
-      "total_tokens": 2841,
+      "primary_sha256": "dede223abbcc22d9d60c1c88690a2ca47b879183e9ed8b92f17efb5c290fe928",
+      "total_files": 3,
+      "total_bytes": 14306,
+      "total_tokens": 3543,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/resilient-execution/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "e4467c3bf4712bb6b1dc08e3c97bf9a921da663dac2e6d9d227b1fdc852141e8",
-          "bytes": 11424,
-          "tokens": 2841
+          "sha256": "dede223abbcc22d9d60c1c88690a2ca47b879183e9ed8b92f17efb5c290fe928",
+          "bytes": 13851,
+          "tokens": 3431
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/resilient-execution/examples/resilient-execution-example.md",
+          "relpath": "examples/resilient-execution-example.md",
+          "sha256": "6e56991658e2e296f0babb2d07ea7bc61afe3f98a7b5caae041d98eda0f9a2d5",
+          "bytes": 173,
+          "tokens": 42
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/resilient-execution/templates/resilient-execution-template.md",
+          "relpath": "templates/resilient-execution-template.md",
+          "sha256": "c8a19a58aefcba78249f951e331977bcecd9400ccca3fb171515d3cab2cb6cb9",
+          "bytes": 282,
+          "tokens": 70
         }
       ],
-      "global_score": 92.6,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1796,18 +2426,18 @@
       "name": "security-review",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review",
-      "primary_sha256": "f9b5f7f8098a2c218b890283c8da506aa8655edbd7b6321011b853b9b351c7a3",
-      "total_files": 7,
-      "total_bytes": 32477,
-      "total_tokens": 8076,
+      "primary_sha256": "65ef2da5c8cb83b6941cb7c4f9d8b2d285b30979e97a2a162bf96c9a0cf9fccc",
+      "total_files": 9,
+      "total_bytes": 34897,
+      "total_tokens": 8665,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "f9b5f7f8098a2c218b890283c8da506aa8655edbd7b6321011b853b9b351c7a3",
-          "bytes": 10975,
-          "tokens": 2741
+          "sha256": "65ef2da5c8cb83b6941cb7c4f9d8b2d285b30979e97a2a162bf96c9a0cf9fccc",
+          "bytes": 12955,
+          "tokens": 3222
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review/owasp-checklist.md",
@@ -1831,11 +2461,25 @@
           "tokens": 616
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review/examples/security-review-example.md",
+          "relpath": "examples/security-review-example.md",
+          "sha256": "799814458ce4f8353910ee060e17b95dd510346bcd5f77ab3f001e95fd532ee9",
+          "bytes": 169,
+          "tokens": 41
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review/templates/security-checklist.md",
           "relpath": "templates/security-checklist.md",
           "sha256": "896c45bc66057a0c29dd9aba3a0b42d3ab5be7564a98f1114f6462a02356e44f",
           "bytes": 1274,
           "tokens": 317
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review/templates/security-review-template.md",
+          "relpath": "templates/security-review-template.md",
+          "sha256": "1387d9576f85ef6fbed80f43631f4744cd47139d266aa0900ba4dc0f9b1b71a8",
+          "bytes": 271,
+          "tokens": 67
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/security-review/templates/threat-model.md",
@@ -1861,21 +2505,35 @@
       "name": "seo-optimizer",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer",
-      "primary_sha256": "97006d4f078df3f7c0617438f209f74210dee686a4eda1e6fec43783d33c078a",
-      "total_files": 1,
-      "total_bytes": 14296,
-      "total_tokens": 3572,
+      "primary_sha256": "8800fb74d9cfd236afd9913248717e8d3331a4da8b477344b55881ad7a0c1bab",
+      "total_files": 3,
+      "total_bytes": 17350,
+      "total_tokens": 4316,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "97006d4f078df3f7c0617438f209f74210dee686a4eda1e6fec43783d33c078a",
-          "bytes": 14296,
-          "tokens": 3572
+          "sha256": "8800fb74d9cfd236afd9913248717e8d3331a4da8b477344b55881ad7a0c1bab",
+          "bytes": 16914,
+          "tokens": 4209
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer/examples/seo-optimizer-example.md",
+          "relpath": "examples/seo-optimizer-example.md",
+          "sha256": "d29104bf40a9c049883e2a03add32c496b802009167e230a0371cc45448343be",
+          "bytes": 167,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer/templates/seo-optimizer-template.md",
+          "relpath": "templates/seo-optimizer-template.md",
+          "sha256": "78b926c6790053839aca19f1325b80b6d4191b1827530b9ae7e98b5327755ba3",
+          "bytes": 269,
+          "tokens": 66
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1884,18 +2542,18 @@
       "name": "skill-audit-bulletin",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin",
-      "primary_sha256": "357a4f2a7afac9f38a2363374b16ff4ba13eea36f1cb18ba6db69c8c854008fb",
-      "total_files": 4,
-      "total_bytes": 30580,
-      "total_tokens": 7580,
+      "primary_sha256": "d930e384bd6b05d7d718741e6937f84cc96104389389368d7d77cca041feac34",
+      "total_files": 6,
+      "total_bytes": 32715,
+      "total_tokens": 8099,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "357a4f2a7afac9f38a2363374b16ff4ba13eea36f1cb18ba6db69c8c854008fb",
-          "bytes": 14371,
-          "tokens": 3545
+          "sha256": "d930e384bd6b05d7d718741e6937f84cc96104389389368d7d77cca041feac34",
+          "bytes": 16018,
+          "tokens": 3944
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/examples/git-audit.md",
@@ -1903,6 +2561,13 @@
           "sha256": "35e4718bc09e1c1007eaec214c7cb556e3cea58d59e84eea9ba184fd8598b257",
           "bytes": 845,
           "tokens": 209
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/examples/skill-audit-bulletin-example.md",
+          "relpath": "examples/skill-audit-bulletin-example.md",
+          "sha256": "04f4c597f7b678ed1f4c46e147b2e1539f75318e14277bbc0908935a4699d31d",
+          "bytes": 174,
+          "tokens": 43
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/scripts/update_audit_ledger.py",
@@ -1917,6 +2582,13 @@
           "sha256": "e82e7238820f71b9e2f8072259baa1bcd88d19d8bedbef646c4c51055c049522",
           "bytes": 3070,
           "tokens": 754
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-audit-bulletin/templates/skill-audit-bulletin-template.md",
+          "relpath": "templates/skill-audit-bulletin-template.md",
+          "sha256": "bb53357b34b6db237dbc17398758a1c66f50894afa5b6c11b4912123387cddfe",
+          "bytes": 314,
+          "tokens": 77
         }
       ],
       "global_score": 90.7,
@@ -1928,10 +2600,10 @@
       "name": "skill-creator",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator",
-      "primary_sha256": "20a841a8684886b9229efcefe50db1bd7f5017fa374240a8611d18b37bd1b87a",
-      "total_files": 7,
-      "total_bytes": 56787,
-      "total_tokens": 14153,
+      "primary_sha256": "1a1682fd82b97eb9ca0241e5d1d3cee271976573a87097ac0c3e7f68294087a7",
+      "total_files": 9,
+      "total_bytes": 58200,
+      "total_tokens": 14499,
       "audit_status": "completed",
       "files": [
         {
@@ -1951,9 +2623,9 @@
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "20a841a8684886b9229efcefe50db1bd7f5017fa374240a8611d18b37bd1b87a",
-          "bytes": 9297,
-          "tokens": 2306
+          "sha256": "1a1682fd82b97eb9ca0241e5d1d3cee271976573a87097ac0c3e7f68294087a7",
+          "bytes": 10274,
+          "tokens": 2545
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator/local.patch",
@@ -1961,6 +2633,13 @@
           "sha256": "fb0c2b0add66237bb6fe06ae1c4f0fdd966e101db3c2cde7fb14582cec10aa67",
           "bytes": 8518,
           "tokens": 2128
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator/examples/skill-creator-example.md",
+          "relpath": "examples/skill-creator-example.md",
+          "sha256": "36343aa155f74fcb75e3d8c2c0bbb702663ebd203436ff908100b18dcba856da",
+          "bytes": 167,
+          "tokens": 41
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator/scripts/init_skill.py",
@@ -1982,9 +2661,16 @@
           "sha256": "41647b79d15e7e51b944d56843e9f87a33f4c66e64ded5964d1f95bad2fe634a",
           "bytes": 2165,
           "tokens": 541
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator/templates/skill-creator-template.md",
+          "relpath": "templates/skill-creator-template.md",
+          "sha256": "bd4e657525aab849fdbd398b0b49c8a13692d432f18b1c18734bf90c2042dcc7",
+          "bytes": 269,
+          "tokens": 66
         }
       ],
-      "global_score": 88.4,
+      "global_score": 89.7,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -1993,18 +2679,25 @@
       "name": "skill-discovery",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-discovery",
-      "primary_sha256": "103c464d295d1241045a4e9fd368514767e30d1c506f7bfd6912fabc04ef8a6b",
-      "total_files": 2,
-      "total_bytes": 9287,
-      "total_tokens": 2315,
+      "primary_sha256": "31ba42306e593693be7310d8a4c3e05d3d2ad1a52d659bd660317d0f834bca1c",
+      "total_files": 4,
+      "total_bytes": 11611,
+      "total_tokens": 2887,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-discovery/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "103c464d295d1241045a4e9fd368514767e30d1c506f7bfd6912fabc04ef8a6b",
-          "bytes": 2204,
-          "tokens": 551
+          "sha256": "31ba42306e593693be7310d8a4c3e05d3d2ad1a52d659bd660317d0f834bca1c",
+          "bytes": 4088,
+          "tokens": 1015
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-discovery/examples/skill-discovery-example.md",
+          "relpath": "examples/skill-discovery-example.md",
+          "sha256": "e66dfad48c17daec0ff1124e33abca4980a9bab49fc27c688dfe3d7c2b17e6ce",
+          "bytes": 169,
+          "tokens": 41
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-discovery/scripts/discovery.py",
@@ -2012,9 +2705,16 @@
           "sha256": "e525730fa0f46b4bb68fcb84031c1e15dd4383a603918ec9d533b7812d1660f1",
           "bytes": 7083,
           "tokens": 1764
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/skill-discovery/templates/skill-discovery-template.md",
+          "relpath": "templates/skill-discovery-template.md",
+          "sha256": "19951f4436cb3234fb923d6fe91d86d0603ac2d3ffa36384a8a68842f5b4b9e3",
+          "bytes": 271,
+          "tokens": 67
         }
       ],
-      "global_score": 92.2,
+      "global_score": 93.5,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2023,18 +2723,18 @@
       "name": "subagent-driven-development",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/subagent-driven-development",
-      "primary_sha256": "1d133b4a060d2390cf93ad31c7dbca8f0796d568b72d70104a2a44141ca280ed",
-      "total_files": 8,
-      "total_bytes": 43659,
-      "total_tokens": 10874,
+      "primary_sha256": "0b09c79caa5e7891228255c3a528914774c922a70649af2b8ea8ae189184b8cd",
+      "total_files": 10,
+      "total_bytes": 46251,
+      "total_tokens": 11506,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/subagent-driven-development/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "1d133b4a060d2390cf93ad31c7dbca8f0796d568b72d70104a2a44141ca280ed",
-          "bytes": 15197,
-          "tokens": 3788
+          "sha256": "0b09c79caa5e7891228255c3a528914774c922a70649af2b8ea8ae189184b8cd",
+          "bytes": 17206,
+          "tokens": 4276
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/subagent-driven-development/code-quality-reviewer-prompt.md",
@@ -2065,6 +2765,13 @@
           "tokens": 1962
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/subagent-driven-development/examples/subagent-driven-development-example.md",
+          "relpath": "examples/subagent-driven-development-example.md",
+          "sha256": "5fab95eaf07add87dc444e47d49c403bc81cb8af1894720fef2bc8fa239a9df1",
+          "bytes": 286,
+          "tokens": 71
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/subagent-driven-development/scripts/review-package",
           "relpath": "scripts/review-package",
           "sha256": "0c0629f6e2c46fc8bf68dcfb8a247ab24eb548b7004fe494035e6fcba9b5cdfb",
@@ -2084,9 +2791,16 @@
           "sha256": "5380283f00bffa99ab82ae78482b7d248abe10655129c72ca7050bdc0b6a85e1",
           "bytes": 1102,
           "tokens": 275
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/subagent-driven-development/templates/subagent-driven-development-template.md",
+          "relpath": "templates/subagent-driven-development-template.md",
+          "sha256": "e8f88150c63338bf5e820e2e2ed960aa9973b22c2ba16dc3b64a7512af1c251f",
+          "bytes": 297,
+          "tokens": 73
         }
       ],
-      "global_score": 88.4,
+      "global_score": 81.4,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2095,10 +2809,10 @@
       "name": "systematic-debugging",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/systematic-debugging",
-      "primary_sha256": "6cd272131fe8ecef5873fc8b8097d119c1f7b2fb66c3b755a53d2a8f451e16ee",
-      "total_files": 11,
-      "total_bytes": 56243,
-      "total_tokens": 13824,
+      "primary_sha256": "42a4cb1154da404241020a670b424fe4919c61b03f399ce699bb4770ed512336",
+      "total_files": 13,
+      "total_bytes": 58782,
+      "total_tokens": 14443,
       "audit_status": "completed",
       "files": [
         {
@@ -2111,9 +2825,9 @@
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/systematic-debugging/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "6cd272131fe8ecef5873fc8b8097d119c1f7b2fb66c3b755a53d2a8f451e16ee",
-          "bytes": 12325,
-          "tokens": 3004
+          "sha256": "42a4cb1154da404241020a670b424fe4919c61b03f399ce699bb4770ed512336",
+          "bytes": 14308,
+          "tokens": 3486
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/systematic-debugging/condition-based-waiting-example.ts",
@@ -2177,6 +2891,20 @@
           "sha256": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708",
           "bytes": 2692,
           "tokens": 673
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/systematic-debugging/examples/systematic-debugging-example.md",
+          "relpath": "examples/systematic-debugging-example.md",
+          "sha256": "dff5fe915ca38363382d0f1b1432bef73f365ec190c766aa4055abea4d9539db",
+          "bytes": 275,
+          "tokens": 68
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/systematic-debugging/templates/systematic-debugging-template.md",
+          "relpath": "templates/systematic-debugging-template.md",
+          "sha256": "c535ababebe88c152fbcc5e399aa9bdcbcda6ae18481cbc9438eb5691d655f5c",
+          "bytes": 281,
+          "tokens": 69
         }
       ],
       "global_score": 90.4,
@@ -2188,18 +2916,25 @@
       "name": "technical-documentation",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/technical-documentation",
-      "primary_sha256": "c6c1334154c8d134f6c7cabc4d74321b878d6fc466438bf33b35ad72811390ab",
-      "total_files": 8,
-      "total_bytes": 24420,
-      "total_tokens": 6086,
+      "primary_sha256": "2b778fe3c96ef785d2618d3b7b578dfb372340403f18aba3cd182022aa01a3f9",
+      "total_files": 10,
+      "total_bytes": 25693,
+      "total_tokens": 6395,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/technical-documentation/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "c6c1334154c8d134f6c7cabc4d74321b878d6fc466438bf33b35ad72811390ab",
-          "bytes": 12356,
-          "tokens": 3083
+          "sha256": "2b778fe3c96ef785d2618d3b7b578dfb372340403f18aba3cd182022aa01a3f9",
+          "bytes": 13163,
+          "tokens": 3278
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/technical-documentation/examples/technical-documentation-example.md",
+          "relpath": "examples/technical-documentation-example.md",
+          "sha256": "36fd30016372092e7ea23f65e8dd0e1f62451689a4abbb03af74ec0ff4fb61ad",
+          "bytes": 177,
+          "tokens": 43
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/technical-documentation/templates/agents.template.md",
@@ -2244,6 +2979,13 @@
           "tokens": 453
         },
         {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/technical-documentation/templates/technical-documentation-template.md",
+          "relpath": "templates/technical-documentation-template.md",
+          "sha256": "6eee5d90a9c7149e4e7593a19fc834497ec644dab129792dfcb389eaa69c2500",
+          "bytes": 289,
+          "tokens": 71
+        },
+        {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/technical-documentation/templates/usage.template.md",
           "relpath": "templates/usage.template.md",
           "sha256": "4d641cafc66d7843b056ae11600c59179ea0bdab3a17a8e8960d96d952c37b92",
@@ -2260,18 +3002,18 @@
       "name": "test-driven-development",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/test-driven-development",
-      "primary_sha256": "3b0151df3380edf4815413d44ccde91d6865c415f85340f68dc6e57884e38e1c",
-      "total_files": 2,
-      "total_bytes": 23321,
-      "total_tokens": 5675,
+      "primary_sha256": "c09776d0125cce180a39ef1371f572201eefcfa8f0884dd7a8a8b10ddb3d1697",
+      "total_files": 4,
+      "total_bytes": 25874,
+      "total_tokens": 6296,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/test-driven-development/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "3b0151df3380edf4815413d44ccde91d6865c415f85340f68dc6e57884e38e1c",
-          "bytes": 12373,
-          "tokens": 2938
+          "sha256": "c09776d0125cce180a39ef1371f572201eefcfa8f0884dd7a8a8b10ddb3d1697",
+          "bytes": 14356,
+          "tokens": 3419
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/test-driven-development/testing-anti-patterns.md",
@@ -2279,6 +3021,20 @@
           "sha256": "c4864ff11a26c15145cee1acb7f042bc278946cbb0737f49ad7cd1a58a1cff5a",
           "bytes": 10948,
           "tokens": 2737
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/test-driven-development/examples/test-driven-development-example.md",
+          "relpath": "examples/test-driven-development-example.md",
+          "sha256": "9adc2c7b93b8fc64debcc7993b62f7384c29da81b8720c10d9068a3444f0d4af",
+          "bytes": 281,
+          "tokens": 69
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/test-driven-development/templates/test-driven-development-template.md",
+          "relpath": "templates/test-driven-development-template.md",
+          "sha256": "3c7a10878aac93ed650f248d329cfda4e6079394d9253b29f90594077531a175",
+          "bytes": 289,
+          "tokens": 71
         }
       ],
       "global_score": 92.8,
@@ -2290,21 +3046,35 @@
       "name": "testing-mastery",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/testing-mastery",
-      "primary_sha256": "cc00eb306fbe0c47f0420b2709750ce01f6c1dedfc67a3d322582de1ed564544",
-      "total_files": 1,
-      "total_bytes": 39330,
-      "total_tokens": 9628,
+      "primary_sha256": "0d440932b94d517f4460fce75ce795d7d0e5172ac41e42fac8857600047413c6",
+      "total_files": 3,
+      "total_bytes": 29712,
+      "total_tokens": 7259,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/testing-mastery/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "cc00eb306fbe0c47f0420b2709750ce01f6c1dedfc67a3d322582de1ed564544",
-          "bytes": 39330,
-          "tokens": 9628
+          "sha256": "0d440932b94d517f4460fce75ce795d7d0e5172ac41e42fac8857600047413c6",
+          "bytes": 29272,
+          "tokens": 7151
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/testing-mastery/examples/testing-mastery-example.md",
+          "relpath": "examples/testing-mastery-example.md",
+          "sha256": "36c0f7e23a7f4f9643bf1d6772e6a662a0aaf8c548d42889f42b9b27844a49b3",
+          "bytes": 169,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/testing-mastery/templates/testing-mastery-template.md",
+          "relpath": "templates/testing-mastery-template.md",
+          "sha256": "0d4e0112e14c845ad5cbbcd4649097ed5a43540e6306c966c86cc54e87709d99",
+          "bytes": 271,
+          "tokens": 67
         }
       ],
-      "global_score": 90.8,
+      "global_score": 84.5,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2313,18 +3083,25 @@
       "name": "ui-ux-pro-max",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max",
-      "primary_sha256": "56444bc3f596b71fd57f8b4b870af51822a27e4de43e2e834f7f1447234c3801",
-      "total_files": 2,
-      "total_bytes": 11799,
-      "total_tokens": 2762,
+      "primary_sha256": "b566e4c1b368a5c686ef1051c9630bc82be758cea9af5862a289cd6d46069e8c",
+      "total_files": 4,
+      "total_bytes": 13144,
+      "total_tokens": 3089,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "56444bc3f596b71fd57f8b4b870af51822a27e4de43e2e834f7f1447234c3801",
-          "bytes": 8607,
-          "tokens": 1966
+          "sha256": "b566e4c1b368a5c686ef1051c9630bc82be758cea9af5862a289cd6d46069e8c",
+          "bytes": 9424,
+          "tokens": 2164
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max/examples/ui-ux-pro-max-example.md",
+          "relpath": "examples/ui-ux-pro-max-example.md",
+          "sha256": "c71ac11a2486ab3e98f671ddf2dee320f8342b7a8b5fd620e1e152d30c09f07c",
+          "bytes": 259,
+          "tokens": 64
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max/references/design-tokens-and-palettes.md",
@@ -2332,9 +3109,16 @@
           "sha256": "48467434089b9f5823cfc1aad953d253debb6477bc9ef4e5f8419532181faf5e",
           "bytes": 3192,
           "tokens": 796
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max/templates/ui-ux-pro-max-template.md",
+          "relpath": "templates/ui-ux-pro-max-template.md",
+          "sha256": "cf7f69f07ce4f63493f79ac62da6ed4b35e3f68ee905412835d6d88aa714033f",
+          "bytes": 269,
+          "tokens": 65
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2343,21 +3127,35 @@
       "name": "ux-researcher-designer",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer",
-      "primary_sha256": "e9cf2793254cf23cc7d3f8aae93e7b3c8e664d9104c0ada6a53498b813b74ec4",
-      "total_files": 1,
-      "total_bytes": 11932,
-      "total_tokens": 2979,
+      "primary_sha256": "49b2eed7515b872989fdbe4e4eb0fd09c6a329860ed6f8c9107ccd58b515a3c4",
+      "total_files": 3,
+      "total_bytes": 14495,
+      "total_tokens": 3602,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "e9cf2793254cf23cc7d3f8aae93e7b3c8e664d9104c0ada6a53498b813b74ec4",
-          "bytes": 11932,
-          "tokens": 2979
+          "sha256": "49b2eed7515b872989fdbe4e4eb0fd09c6a329860ed6f8c9107ccd58b515a3c4",
+          "bytes": 13927,
+          "tokens": 3464
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer/examples/ux-researcher-designer-example.md",
+          "relpath": "examples/ux-researcher-designer-example.md",
+          "sha256": "1ffcc67d3039c7d86aa8850ac84027934f3e724ba0e852817eab6326c4a9b26a",
+          "bytes": 277,
+          "tokens": 68
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer/templates/ux-researcher-designer-template.md",
+          "relpath": "templates/ux-researcher-designer-template.md",
+          "sha256": "9898e8f5d3ff7e064e85830a92b1da804472b543a689b442f6ce8212b36016f1",
+          "bytes": 291,
+          "tokens": 70
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2366,21 +3164,35 @@
       "name": "verification-before-completion",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/verification-before-completion",
-      "primary_sha256": "d5e9b76db4623ac22e143b7452e58207f151abda81c7d286116b4e3e5bc08aac",
-      "total_files": 1,
-      "total_bytes": 11516,
-      "total_tokens": 2877,
+      "primary_sha256": "c76d8e6c342fde43032f79fafd4844d25aa1cc61b5ad34ca47201277222b9712",
+      "total_files": 3,
+      "total_bytes": 14469,
+      "total_tokens": 3589,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/verification-before-completion/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "d5e9b76db4623ac22e143b7452e58207f151abda81c7d286116b4e3e5bc08aac",
-          "bytes": 11516,
-          "tokens": 2877
+          "sha256": "c76d8e6c342fde43032f79fafd4844d25aa1cc61b5ad34ca47201277222b9712",
+          "bytes": 13958,
+          "tokens": 3471
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/verification-before-completion/examples/verification-before-completion-example.md",
+          "relpath": "examples/verification-before-completion-example.md",
+          "sha256": "88da7096bd523e0f57db81863b9fc7a23598ecabb2461f0d2c127a9b3ecd7ccc",
+          "bytes": 184,
+          "tokens": 45
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/verification-before-completion/templates/verification-before-completion-template.md",
+          "relpath": "templates/verification-before-completion-template.md",
+          "sha256": "c31627322c43a7b1e0cd96a380034a6c914c74516f2c477e901354fee32297e8",
+          "bytes": 327,
+          "tokens": 73
         }
       ],
-      "global_score": 92.6,
+      "global_score": 85.6,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2389,18 +3201,18 @@
       "name": "writing-skills",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/writing-skills",
-      "primary_sha256": "83092ceb439c14cd07220e583eeb8d484192a17dbe6730cf41107f02fda4383a",
-      "total_files": 7,
-      "total_bytes": 49180,
-      "total_tokens": 12272,
+      "primary_sha256": "bc78041603c215f6fdddb9d9985b8e4bc423379911bdf3ab6ceced23c4365f87",
+      "total_files": 9,
+      "total_bytes": 51636,
+      "total_tokens": 12875,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/writing-skills/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "83092ceb439c14cd07220e583eeb8d484192a17dbe6730cf41107f02fda4383a",
-          "bytes": 10262,
-          "tokens": 2558
+          "sha256": "bc78041603c215f6fdddb9d9985b8e4bc423379911bdf3ab6ceced23c4365f87",
+          "bytes": 12279,
+          "tokens": 3053
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/writing-skills/anthropic-best-practices.md",
@@ -2443,9 +3255,23 @@
           "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0",
           "bytes": 5423,
           "tokens": 1355
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/writing-skills/examples/writing-skills-example.md",
+          "relpath": "examples/writing-skills-example.md",
+          "sha256": "cde121352819a8a8e5b4c6527d38530f33d23f90739731bbac184bbe9df38194",
+          "bytes": 168,
+          "tokens": 41
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/writing-skills/templates/writing-skills-template.md",
+          "relpath": "templates/writing-skills-template.md",
+          "sha256": "7648cafc912db981fe6c58bacb8e876a07e296ade34d7fc52c9c0d50cd0583c2",
+          "bytes": 271,
+          "tokens": 67
         }
       ],
-      "global_score": 88.4,
+      "global_score": 80.2,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -2454,21 +3280,35 @@
       "name": "xlsx-processing",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/xlsx-processing",
-      "primary_sha256": "cdc8905afd830e4b89f8d277985c70fc0f7b8a2f70c68306b84b9ceed96675e0",
-      "total_files": 1,
-      "total_bytes": 12034,
-      "total_tokens": 3006,
+      "primary_sha256": "784efd830a5b9c32ece1d37cb963852fd47ea4a8a1adc29b8c753333061c0c30",
+      "total_files": 3,
+      "total_bytes": 15016,
+      "total_tokens": 3727,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/xlsx-processing/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "cdc8905afd830e4b89f8d277985c70fc0f7b8a2f70c68306b84b9ceed96675e0",
-          "bytes": 12034,
-          "tokens": 3006
+          "sha256": "784efd830a5b9c32ece1d37cb963852fd47ea4a8a1adc29b8c753333061c0c30",
+          "bytes": 14453,
+          "tokens": 3594
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/xlsx-processing/examples/xlsx-processing-example.md",
+          "relpath": "examples/xlsx-processing-example.md",
+          "sha256": "375ae4ec51d11fb40598a15bb6d446dca8e9d309ec578bdd5af5a3343618eb09",
+          "bytes": 265,
+          "tokens": 65
+        },
+        {
+          "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/xlsx-processing/templates/xlsx-processing-template.md",
+          "relpath": "templates/xlsx-processing-template.md",
+          "sha256": "71e0a388b8e076a63ba71c05c4f8f120cbd0da3261757045a347f2448c446f86",
+          "bytes": 298,
+          "tokens": 68
         }
       ],
-      "global_score": 92.6,
+      "global_score": 93.8,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },

@@ -2,12 +2,23 @@
 name: systematic-debugging
 version: 1.0.0
 description: 'Use when encountering bugs, unexpected behavior, test failures, or errors
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   during development. Enforces a rigorous 4-phase investigation process that prevents
   shotgun debugging. Triggers: test failure, runtime error, unexpected behavior, production
   incident, performance regression.'
 domain: engineering-quality
 triggers:
-- systematic-debugging
+  - systematic-debugging
+  - debug-error
+  - root-cause-analysis
+  - fix-bug-systematic
+  - depuracao-sistematica
+  - encontrar-causa-raiz
+  - corrigir-bug
+  - investigacao-de-defeitos
 tags:
 - systematic-debugging
 - engineering-quality
@@ -294,3 +305,38 @@ Can you reproduce it?
 ## Skill Type
 
 **RIGID** — The 4-phase process is mandatory and must be followed in order. Each phase has a HARD-GATE that must be satisfied before proceeding. Never change code without understanding why it is broken.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (systematic-debugging)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

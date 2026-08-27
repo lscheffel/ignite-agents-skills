@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: agent-orchestration version: 2.0.0 description: Orchestrates multiple AI agents for complex tasks. Covers task decomposition, model routing, I/O contract handoff, fan-out/fan-in parallelism, and multi-agent coordination. Use when needing to coordinate multiple agents, define roles, manage handoffs, or optimize parallel execution. domain: agentic-workflow triggers:</p>
+<p>name: agent-orchestration version: 2.0.0 description: Orchestrates multiple AI agents for complex tasks. Covers task decomposition, model routing, I/O contract handoff, fan-out/fan-in parallelism, and multi-agent coordination. Use when needing to coordinate multiple agents, define roles, manage handoffs, or optimize parallel execution. related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>domain: agentic-workflow triggers:</p>
 <ul>
 <li>agent-orchestration</li>
+<li>orchestrate-agents</li>
+<li>multi-agent</li>
+<li>task-decomposition</li>
+<li>orquestrar-agentes</li>
+<li>orquestracao-multi-agente</li>
+<li>decomposicao-de-tarefas</li>
+<li>model-routing</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -672,15 +685,24 @@ else:
 <li><a href="https://docs.crewai.com/">CrewAI Documentation</a></li>
 <li><a href="https://langchain-ai.github.io/langgraph/">LangGraph Multi-Agent</a></li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>agent-orchestration</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/agent-orchestration-template.html">agent-orchestration-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/agent-role-card.html">agent-role-card.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/handoff-protocol.html">handoff-protocol.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/routing-decision.html">routing-decision.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/agent-orchestration-example.html">agent-orchestration-example.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/fan-out-fan-in.html">fan-out-fan-in.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/multi-agent-decomposition.html">multi-agent-decomposition.md</a></li>
 </ul>
@@ -692,7 +714,7 @@ else:
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

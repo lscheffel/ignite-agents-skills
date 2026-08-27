@@ -2,13 +2,24 @@
 name: artifacts-builder
 version: 1.0.0
 description: 'Use when the user needs standalone HTML/CSS/JS artifacts — interactive
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   demos, prototypes, single-file applications, or visual tools that run independently
   in a browser. Triggers: user says "artifact", "demo", "prototype", "single-file
   app", "HTML tool", "interactive widget", "standalone page", building something that
   runs in a browser without a build step.'
 domain: domain-stack
 triggers:
-- artifacts-builder
+  - artifacts-builder
+  - create-artifact
+  - interactive-widget
+  - standalone-html
+  - construir-artefato
+  - gerar-artefato
+  - pagina-interativa
+  - single-file-app
 tags:
 - artifacts-builder
 - domain-stack
@@ -302,3 +313,38 @@ function syncStateWithURL(store) {
 ## Skill Type
 
 **FLEXIBLE** — Adapt the architecture, dependencies, and complexity to the artifact's requirements. Simple demos should remain as minimal as possible; complex tools may use lightweight frameworks and multiple CDN dependencies.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (artifacts-builder)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

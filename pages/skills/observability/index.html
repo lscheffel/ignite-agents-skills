@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: observability version: 2.0.0 description: Comprehensive guide to system observability in production. Defines standards for structured logging, metrics, distributed tracing, and alerting. Use when configuring monitoring, investigating incidents, or implementing observability in microservices. domain: architecture-systems triggers:</p>
+<p>name: observability version: 2.0.0 description: Comprehensive guide to system observability in production. Defines standards related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>for structured logging, metrics, distributed tracing, and alerting. Use when configuring monitoring, investigating incidents, or implementing observability in microservices. domain: architecture-systems triggers:</p>
 <ul>
 <li>observability</li>
+<li>metrics-logging-tracing</li>
+<li>prometheus-grafana</li>
+<li>opentelemetry</li>
+<li>observabilidade</li>
+<li>configurar-metricas</li>
+<li>logs-estruturados</li>
+<li>tracing-distribuido</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -724,15 +737,24 @@ app.use((req, res, next) =&gt; {
 <li><code>release</code> — for metrics of deploy</li>
 <li><code>governance</code> — for policies of retention</li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>observability</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="templates/alert-rules.html">alert-rules.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/logging-spec.html">logging-spec.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/metrics-sla.html">metrics-sla.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/observability-template.html">observability-template.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/observability-example.html">observability-example.md</a></li>
 </ul>
 <h3>Checklists</h3>
 <ul class="file-list">
@@ -741,7 +763,7 @@ app.use((req, res, next) =&gt; {
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

@@ -2,12 +2,23 @@
 name: find-skills
 version: 1.0.0
 description: Helps users discover and install agent skills when they ask questions
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   like "how do I do X", "find a skill for X", "is there a skill that can...", or express
   interest in extending capabilities. This skill should be used when the user is looking
   for functionality that might exist as an installable skill.
 domain: domain-stack
 triggers:
-- find-skills
+  - find-skills
+  - discover-skills
+  - locate-agent-skill
+  - skill-search
+  - encontrar-skills
+  - buscar-habilidades
+  - localizar-skill
+  - skill-registry-search
 tags:
 - find-skills
 - domain-stack
@@ -22,6 +33,22 @@ metadata:
 This skill helps you discover and install skills from the open agent skills ecosystem.
 
 ## When to Use This Skill
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (find-skills)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
 
 Use this skill when the user:
 
@@ -154,3 +181,31 @@ I can still help you with this task directly! Would you like me to proceed?
 If this is something you do often, you could create your own skill:
 npx skills init my-xyz-skill
 ```
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+

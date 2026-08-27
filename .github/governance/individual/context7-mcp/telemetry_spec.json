@@ -4,9 +4,9 @@
   "category": "config_skill",
   "telemetry_metrics": {
     "schema_tokens": 280,
-    "prompt_overhead_tokens": 598,
-    "estimated_payload_return_bytes": 2395,
-    "estimated_payload_return_tokens": 598,
+    "prompt_overhead_tokens": 1315,
+    "estimated_payload_return_bytes": 4096,
+    "estimated_payload_return_tokens": 1024,
     "estimated_latency_ms": 110,
     "p95_latency_ms": 240,
     "timeout_seconds": 30,
@@ -14,7 +14,7 @@
     "side_effects": "Read-Only / Pure Logic"
   },
   "cost_model": {
-    "cost_per_1k_invocations_usd": 0.0897,
+    "cost_per_1k_invocations_usd": 0.1972,
     "context_cache_efficiency": "N/A (Ultra-Lightweight)"
   },
   "governance_thresholds": {

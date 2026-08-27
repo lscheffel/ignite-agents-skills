@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: deployment version: 1.0.0 description: 'Use when setting up CI/CD pipelines, creating deployment configurations, generating deploy checklists, or configuring infrastructure. Triggers: new project needs deployment, migrating CI/CD provider, adding staging/production environments, automating release process, setting up monitoring for deploys.' domain: domain-stack triggers:</p>
+<p>name: deployment version: 1.0.0 description: 'Use when setting up CI/CD pipelines, creating deployment configurations, related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>generating deploy checklists, or configuring infrastructure. Triggers: new project needs deployment, migrating CI/CD provider, adding staging/production environments, automating release process, setting up monitoring for deploys.' domain: domain-stack triggers:</p>
 <ul>
 <li>deployment</li>
+<li>ci-cd-pipeline</li>
+<li>docker-deploy</li>
+<li>infrastructure-setup</li>
+<li>deploy-de-aplicacao</li>
+<li>configurar-deploy</li>
+<li>pipeline-de-entrega</li>
+<li>release-checklist</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -596,10 +609,38 @@ deploy-production:
 <div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>senior-devops</code></td><td>Provides Docker, K8s, and IaC patterns used in deploy config</td></tr><tr><td><code>git-commit-helper</code></td><td>Conventional commits drive changelog and version bumping</td></tr><tr><td><code>finishing-a-development-branch</code></td><td>Branch completion triggers deployment pipeline</td></tr><tr><td><code>verification-before-completion</code></td><td>Post-deploy verification gate</td></tr><tr><td><code>security-review</code></td><td>Security scan stage in the pipeline</td></tr><tr><td><code>planning</code></td><td>Deployment plan is part of the implementation plan</td></tr></table></div>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>FLEXIBLE</strong> — Adapt pipeline design, platform selection, and tooling to the project's cloud provider, team size, and operational maturity. The principles (automation, rollback, observability) are constant; specific tools are interchangeable.</p>
+<h2 id="decision-workflow">Decision Workflow</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Início: Ativação da Skill (deployment)&quot;] --&gt; B[&quot;Validação de Pré-requisitos &amp; Escopo&quot;]
+    B --&gt; C{&quot;Requisitos Claros &amp; Completos?&quot;}
+    C --&gt;|Não| D[&quot;Solicitar Clarificação / Coletar Contexto (cap)&quot;]
+    C --&gt;|Sim| E[&quot;Execução do Procedimento Canônico&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;Verificação de Qualidade &amp; Critérios de Aceite&quot;]
+    F --&gt; G{&quot;Checklist 100% Aprovado?&quot;}
+    G --&gt;|Não| E
+    G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
+<h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/deployment-template.html">deployment-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/deployment-example.html">deployment-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

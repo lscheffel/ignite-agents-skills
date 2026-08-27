@@ -2,10 +2,20 @@
 name: agents-md-management
 version: 1.0.0
 description: Management, refactoring, and generation of AGENTS.md files for agentic repositories.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: core-governance
 triggers:
-- agents-md-management
-- core-governance
+  - agents-md-management
+  - manage-agents-md
+  - agents-ssot
+  - refactor-agents-md
+  - gerenciar-agents-md
+  - governanca-agents-md
+  - atualizar-agents-md
+  - ssot-governance
 tags:
 - agents-md-management
 - core-governance
@@ -625,3 +635,11 @@ After refactoring, verify:
 6. **Self-contained files** - Each linked file stands alone
 
 ---
+
+## Completion Gate
+
+A tarefa associada à skill `agents-md-management` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

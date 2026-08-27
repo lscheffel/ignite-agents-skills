@@ -5,15 +5,13 @@ description: Automates the archiving, auditing, and lifecycle governance of Arch
 domain: core-governance
 triggers:
   - adr-archive
-  - janitor
-  - archive adr
-  - arquivar adr
-  - clean adrs
-  - adr janitor
-  - prune tech debt
-  - sync tech debt
-  - generate er
-  - freeze adr
+  - archive-adrs
+  - evidence-record
+  - tech-debt-pruning
+  - arquivar-adrs
+  - registro-evidencias
+  - limpeza-debito-tecnico
+  - lifecycle-governance
 tags:
   - architecture
   - adr
@@ -249,3 +247,19 @@ The script `audit.py` provides a complete CLI interface:
 - [Skill adr-generator](../adr-generator/SKILL.md) — Source for ADR creation and Decision Set templates.
 - [Skill implementation](../implementation/SKILL.md) — Consumes Quadra and respects ER Hard-Gate.
 - [Skill technical-documentation](../technical-documentation/SKILL.md) — Standards for documentation reconciliation.
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `adr-archive` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

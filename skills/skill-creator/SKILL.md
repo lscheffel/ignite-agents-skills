@@ -6,12 +6,12 @@ domain: domain-stack
 triggers:
   - skill-creator
   - create-skill
-  - build-skill
-  - new-skill
-  - criar-skill
+  - scaffold-agent-skill
   - package-skill
-  - init-skill
-  - skill-generator
+  - criar-skill
+  - gerar-nova-skill
+  - empacotar-skill
+  - authoring-skills
 tags:
   - skill-creator
   - skills
@@ -112,9 +112,14 @@ version: 1.0.0
 description: Precise explanation of capabilities and invocation triggers in 3rd person.
 domain: domain-stack
 triggers:
-  - my-skill-name
-  - alternate-trigger-1
-  - alternate-trigger-2
+  - skill-creator
+  - create-skill
+  - scaffold-agent-skill
+  - package-skill
+  - criar-skill
+  - gerar-nova-skill
+  - empacotar-skill
+  - authoring-skills
 tags:
   - my-skill-name
   - category
@@ -224,3 +229,20 @@ Before publishing, audit the skill using `skill-audit-bulletin` to ensure it rea
 - [ ] All code snippets, CLI commands, and scripts verified without placeholders.
 - [ ] Validated with `quick_validate.py`.
 - [ ] Audited with `skill-audit-bulletin` achieving Grade A (≥85/100).
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `skill-creator` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

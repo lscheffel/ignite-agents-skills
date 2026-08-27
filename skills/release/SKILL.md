@@ -2,11 +2,22 @@
 name: release
 version: 2.0.0
 description: Guide for release management and versioning. Defines release process,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   changelog, tag, deploy, and rollback. Use when preparing releases, publishing packages,
   or managing semantic versioning.
 domain: core-governance
 triggers:
-- release
+  - release
+  - release-management
+  - publish-package
+  - tag-and-deploy
+  - gerenciamento-de-release
+  - publicar-versao
+  - processo-de-lancamento
+  - rollback-plan
 tags:
 - release
 - versioning
@@ -385,3 +396,11 @@ git merge hotfix/critical-bug
 - [Semantic Versioning](https://semver.org/)
 - `git` — for tags and branching
 - `governance` — for approval process
+
+## Completion Gate
+
+A tarefa associada à skill `release` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

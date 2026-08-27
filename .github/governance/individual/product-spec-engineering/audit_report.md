@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/product-spec-engineering` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `3c14868c22c296c41e6f30c65ee9ec795b3d5d62e77503e7a5bd1de54326633f` | **Score Global:** | `88.2 / 100` |
+| **Hash SHA-256:** | `09a3f79922f6d2fec37d385b305e83eacc77473b6718d7b11737c978dc6da675` | **Score Global:** | `89.5 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,11 +22,11 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 8.5 | [OK] | Frontmatter válido com delimitadores formais e tipagem de metadados. |
 | **D2. Determinismo Semântico** | 8.8 | [OK] | Condições de ativação claras com boa especificidade semântica. |
-| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~7558 tokens); templates e referências devem usar lazy loading. |
+| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~8048 tokens); templates e referências devem usar lazy loading. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
 | **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
 
 ---
@@ -38,7 +38,7 @@
 * **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Footprint estático atual do pacote: ~7558 tokens
+// Footprint estático atual do pacote: ~8048 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml

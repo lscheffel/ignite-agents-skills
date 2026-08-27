@@ -2,12 +2,23 @@
 name: security-review
 version: 1.0.0
 description: 'Use when reviewing code for security vulnerabilities, implementing authentication
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   or authorization, handling user input, managing secrets, or auditing dependencies
   for known CVEs. Triggers: auth implementation, input handling, secrets management,
   dependency audit, pre-deployment security check, OWASP compliance review.'
 domain: engineering-quality
 triggers:
-- security-review
+  - security-review
+  - security-audit
+  - owasp-top-10
+  - vulnerability-assessment
+  - revisao-de-seguranca
+  - auditoria-de-seguranca
+  - analise-vulnerabilidades
+  - auth-review
 tags:
 - security-review
 - engineering-quality
@@ -277,3 +288,38 @@ Follow the `dispatching-parallel-agents` skill protocol when dispatching.
 ## Skill Type
 
 **FLEXIBLE** — Adapt the depth of review to the change type using the decision table. The OWASP checklist and STRIDE analysis are strongly recommended for any auth or input-handling changes. Secrets management rules are non-negotiable.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (security-review)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

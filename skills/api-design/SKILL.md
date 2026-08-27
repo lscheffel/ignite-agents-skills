@@ -2,9 +2,21 @@
 name: api-design
 version: 2.0.0
 description: Comprehensive guide to designing robust, consistent, and scalable RESTful and GraphQL APIs. Define standards for endpoints, versioning, error contracts, pagination, and idempotence. Use when designing new APIs, reviewing existing contracts, or standardizing interface design practices.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: architecture-systems
 triggers:
-- api-design
+  - api-design
+  - rest-api
+  - graphql-design
+  - api-contract
+  - design-de-api
+  - projetar-api
+  - contrato-de-api
+  - error-contracts
+  - api-versioning
 tags:
 - api
 - rest
@@ -142,6 +154,10 @@ Formal agreement on data format.
        responses:
          200:
            description: List of users
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
    ```
 2. Use the `endpoint-spec.md` template
 3. Document request/response
@@ -433,3 +449,11 @@ X-RateLimit-Reset: 1623456789
 - `documentation` — for API documentation
 - `testing` — for contract testing
 - `governance` — for review processes
+
+## Completion Gate
+
+A tarefa associada à skill `api-design` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

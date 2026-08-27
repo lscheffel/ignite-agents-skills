@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: ddd version: 2.0.0 description: Guide to Domain-Driven Design (DDD) modeling. Defines guidelines for Entities, Value Objects, Aggregates, Repositories, Domain Events, Domain Services, and Bounded Contexts. Use when modeling rich domains, refactoring anemic entities, or structuring bounded contexts. domain: architecture-systems triggers:</p>
+<p>name: ddd version: 2.0.0 description: Guide to Domain-Driven Design (DDD) modeling. Defines guidelines for Entities, Value Objects, Aggregates, Repositories, Domain Events, Domain Services, and Bounded Contexts. Use when modeling rich domains, refactoring anemic entities, or structuring bounded contexts. related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>domain: architecture-systems triggers:</p>
 <ul>
 <li>ddd</li>
+<li>domain-driven-design</li>
+<li>aggregate-roots</li>
+<li>value-objects</li>
+<li>design-orientado-a-dominio</li>
+<li>entidades-e-agregados</li>
+<li>bounded-contexts</li>
+<li>domain-events</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -875,18 +888,27 @@ class OrderService {
 <li><code>architecture-review-kilo</code> — to validate adherence</li>
 <li><code>testing</code> — to test aggregates</li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>ddd</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/ddd-template.html">ddd-template.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/ddd-example.html">ddd-example.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/order-modeling.html">order-modeling.md</a></li>
 </ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

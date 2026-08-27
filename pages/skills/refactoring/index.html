@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: refactoring version: 2.0.0 description: Comprehensive guide to safe and incremental refactoring. Covers techniques for extraction, Strangler Fig, Branch by Abstraction, testing before refactoring, and legacy migration. Use when refactoring code, improving existing structure, or migrating legacy systems. domain: engineering-quality triggers:</p>
+<p>name: refactoring version: 2.0.0 description: Comprehensive guide to safe and incremental refactoring. Covers techniques for extraction, Strangler Fig, Branch by Abstraction, testing before refactoring, and legacy migration. Use when refactoring code, improving existing structure, or migrating legacy systems. related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>domain: engineering-quality triggers:</p>
 <ul>
 <li>refactoring</li>
+<li>safe-refactoring</li>
+<li>strangler-fig</li>
+<li>branch-by-abstraction</li>
+<li>refatoracao-segura</li>
+<li>refatorar-codigo</li>
+<li>migracao-legada</li>
+<li>melhorar-design-codigo</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -668,20 +681,29 @@ function processPayment(order) {
 <li><code>ddd</code> — to model domain during refactoring</li>
 <li><code>testing</code> — to create safety net</li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>refactoring</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="templates/legacy-migration.html">legacy-migration.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/refactoring-catalog.html">refactoring-catalog.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/refactoring-template.html">refactoring-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/test-before-refactor.html">test-before-refactor.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/refactoring-example.html">refactoring-example.md</a></li>
 </ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

@@ -2,13 +2,24 @@
 name: pdf-processing
 version: 1.0.0
 description: 'Use when the user needs PDF generation, manipulation, form filling,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   table extraction, OCR, merging, splitting, watermarking, or metadata handling. Trigger
   conditions: generate PDF reports, extract text or tables from PDFs, fill PDF forms
   programmatically, merge or split PDF files, add watermarks, OCR scanned documents,
   read or write PDF metadata, convert HTML to PDF.'
 domain: domain-stack
 triggers:
-- pdf-processing
+  - pdf-processing
+  - generate-pdf
+  - pdf-extraction
+  - fill-pdf-forms
+  - processamento-pdf
+  - gerar-relatorio-pdf
+  - extrair-texto-pdf
+  - manipular-pdf
 tags:
 - pdf-processing
 - domain-stack
@@ -370,3 +381,48 @@ with open('updated.pdf', 'wb') as f:
 ## Skill Type
 
 **FLEXIBLE** — Select the appropriate library and approach based on the specific PDF task. ReportLab for generation, pdfplumber for extraction, pypdf for manipulation. Combine as needed.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (pdf-processing)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+

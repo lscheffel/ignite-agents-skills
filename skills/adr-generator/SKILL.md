@@ -6,9 +6,13 @@ description:
 domain: core-governance
 triggers:
   - adr-generator
-  - adr
-  - architecture-decision-record
-  - decision-record
+  - create-adr
+  - architectural-decision
+  - record-decision
+  - gerar-adr
+  - criar-adr
+  - decisao-arquitetural
+  - madr-generator
 tags:
   - architecture
   - decisions
@@ -387,3 +391,20 @@ The frontmatter of each artifact can carry a `implementation_status` field (`PEN
 - `architecture-review` — for reviews
 - `adr-archive` — for auditing and archiving
 - Governance principle of the Decision Set: implementation status is signaled by the existence of a linked Evidence Record (ER), not by a standalone frontmatter field.
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `adr-generator` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

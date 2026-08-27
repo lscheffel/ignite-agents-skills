@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/skill-creator` | **Versão:** | `v2.0.0` |
-| **Hash SHA-256:** | `20a841a8684886b9229efcefe50db1bd7f5017fa374240a8611d18b37bd1b87a` | **Score Global:** | `88.4 / 100` |
+| **Hash SHA-256:** | `1a1682fd82b97eb9ca0241e5d1d3cee271976573a87097ac0c3e7f68294087a7` | **Score Global:** | `89.7 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,11 +22,11 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~14153 tokens); risco de saturação precoce da janela de contexto. |
+| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~14499 tokens); risco de saturação precoce da janela de contexto. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 8.8 | [OK] | Módulo auto-contido com sub-rotinas utilitárias isoladas em scripts/. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
 | **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v2.0.0). |
 
 ---
@@ -38,7 +38,7 @@
 * **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Footprint estático atual do pacote: ~14153 tokens
+// Footprint estático atual do pacote: ~14499 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml

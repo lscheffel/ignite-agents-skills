@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/systematic-debugging` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `6cd272131fe8ecef5873fc8b8097d119c1f7b2fb66c3b755a53d2a8f451e16ee` | **Score Global:** | `90.4 / 100` |
+| **Hash SHA-256:** | `42a4cb1154da404241020a670b424fe4919c61b03f399ce699bb4770ed512336` | **Score Global:** | `90.4 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use when encountering bugs, unexpected behavior, test failures, or errors during development. Enforces a rigorous 4-phase investigation process that prevents shotgun debugging. Triggers: test failure, runtime error, unexpected behavior, production incident, performance regression.
+* **Descrição Funcional:** Use when encountering bugs, unexpected behavior, test failures, or errors related_skills: - cap - implementation - technical-documentation during development. Enforces a rigorous 4-phase investigation process that prevents shotgun debugging. Triggers: test failure, runtime error, unexpected behavior, production incident, performance regression.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~13824 tokens); risco de saturação precoce da janela de contexto. |
+| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~14443 tokens); risco de saturação precoce da janela de contexto. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 8.8 | [OK] | Módulo auto-contido com sub-rotinas utilitárias isoladas em scripts/. |
@@ -38,7 +38,7 @@
 * **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Footprint estático atual do pacote: ~13824 tokens
+// Footprint estático atual do pacote: ~14443 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml

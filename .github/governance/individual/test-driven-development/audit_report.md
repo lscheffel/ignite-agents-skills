@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/test-driven-development` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `3b0151df3380edf4815413d44ccde91d6865c415f85340f68dc6e57884e38e1c` | **Score Global:** | `92.8 / 100` |
+| **Hash SHA-256:** | `c09776d0125cce180a39ef1371f572201eefcfa8f0884dd7a8a8b10ddb3d1697` | **Score Global:** | `92.8 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use when writing any new code, adding features, or fixing bugs that require code changes. Enforces strict RED-GREEN-REFACTOR cycle with no production code without a failing test first. Triggers: new feature implementation, bug fix, refactoring existing code, adding behavior to existing modules.
+* **Descrição Funcional:** Use when writing any new code, adding features, or fixing bugs that related_skills: - cap - implementation - technical-documentation require code changes. Enforces strict RED-GREEN-REFACTOR cycle with no production code without a failing test first. Triggers: new feature implementation, bug fix, refactoring existing code, adding behavior to existing modules.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~5675 tokens); templates e referências devem usar lazy loading. |
+| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~6296 tokens); templates e referências devem usar lazy loading. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
@@ -38,7 +38,7 @@
 * **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Footprint estático atual do pacote: ~5675 tokens
+// Footprint estático atual do pacote: ~6296 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml

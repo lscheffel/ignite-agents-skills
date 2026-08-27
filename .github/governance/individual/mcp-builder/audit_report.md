@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/mcp-builder` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `850c0fef0d64a838d9e969b3f6e6d5307b8dcb8188a740a765bfbb45b746daba` | **Score Global:** | `92.6 / 100` |
+| **Hash SHA-256:** | `acee3cb840457b749e14f31e19bdd036b8068c1eeb673fe667bc5736fd6ab9e2` | **Score Global:** | `93.8 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use when the user needs to build MCP (Model Context Protocol) servers — tool definitions, resource management, prompt templates, transport layers, and client integration. Triggers: user says "MCP", "MCP server", "model context protocol", building tools for AI clients, creating AI integrations.
+* **Descrição Funcional:** Use when the user needs to build MCP (Model Context Protocol) servers related_skills: - cap - implementation - technical-documentation — tool definitions, resource management, prompt templates, transport layers, and client integration. Triggers: user says "MCP", "MCP server", "model context protocol", building tools for AI clients, creating AI integrations.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -22,29 +22,27 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3089 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3779 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
 | **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
 
 ---
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Incorporação de Suíte de Testes e Fixtures de Regressão
+#### 3.1 Hardening de Telemetria e Tracing Transacional
 * **Severidade:** Baixa
-* **Impacto:** Garantia de não-regressão comportamental em upgrades de modelos de linguagem.
+* **Impacto:** Padronização de correlação de spans (trace_id) e métricas operacionais.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Sem arquivo de teste dedicado em tests/
+// Execução direta sem emissão de telemetria estruturada
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_mcp_builder.py
-def test_mcp_builder_contract():
-    assert True, 'Contract verified against specification'
+// Injeção de hook de telemetria com trace_id, latência e status de execução
 ```
 
 ---

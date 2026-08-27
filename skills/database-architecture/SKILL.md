@@ -2,13 +2,20 @@
 name: database-architecture
 version: 2.0.0
 description: Unified database modeling, schema design, migrations, and performance optimization.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: architecture-systems
 triggers:
-- database-architecture
-- database_design
-- schema_modeling
-- sql_migration
-- query_optimization
+  - database-architecture
+  - database-design
+  - sql-modeling
+  - schema-migrations
+  - arquitetura-de-banco
+  - modelagem-de-dados
+  - migracao-de-schema
+  - performance-db
 tags:
 - database-architecture
 - schema-design
@@ -30,6 +37,8 @@ metadata:
 
 ## 1. Decision Tree for Modeling & Storage
 
+
+
 ```mermaid
 graph TD
     A[Data Modeling] -->|Relational?| B{Access Type}
@@ -43,6 +52,8 @@ graph TD
     G --> H[Migrated Versions UP/DOWN]
     H --> I[CI/CD Validation & Rollback]
 ```
+
+
 
 ---
 
@@ -83,3 +94,11 @@ graph TD
 
 To consult detailed DDL scripts, partitioning examples, and an exhaustive catalog of anti-patterns:
 - 👉 [references/patterns-and-migrations.md](./references/patterns-and-migrations.md)
+| Anti-Pattern | Severity | Negative Impact | Canonical Mitigation |
+| :--- | :---: | :--- | :--- |
+| **Early Execution without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Enable the `cap` skill to acquire minimal evidence before editing. |
+| **Omission of Validation Checklists** | 🟡 Medium | Delivery of artifacts with syntactic inconsistencies | Rigorously execute the checklist step by step before handoff. |
+| **Lack of Decision Documentation** | 🟢 Low | Loss of technical traceability and architectural drift | Record relevant trade-offs via the `adr-generator` skill. |- **Restricted Environment / Read-Only:** If the filesystem or sandbox is locked against writing, report the lock with immediate evidence and generate the patch in markdown diff.- [ ] All prerequisites and target files were inspected before the modification.A task associated with the `database-architecture` skill can only be declared complete when:
+1. All operational checklist checks have been met.
+2. The result has been validated deterministically through execution evidence.
+3. There are no outstanding structural issues, placeholders, or unresolved errors.

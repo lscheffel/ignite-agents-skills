@@ -414,13 +414,13 @@
 <p>name: cap version: 3.0.0 description: Minimal Context Bootstrap for AI Coding Agents. Acquire only the repository knowledge strictly required to execute the supplied task. Optimize for minimal token consumption, deterministic discovery, and early execution. domain: core-governance triggers:</p>
 <ul>
 <li>cap</li>
-<li>context acquisition</li>
-<li>context bootstrap</li>
-<li>minimal context</li>
-<li>token optimization bootstrap</li>
-<li>repo context</li>
-<li>acquire context</li>
-<li>adquirir contexto</li>
+<li>minimal-context</li>
+<li>context-acquisition</li>
+<li>token-optimization</li>
+<li>adquirir-contexto</li>
+<li>contexto-minimo</li>
+<li>otimizar-tokens</li>
+<li>cheapest-evidence</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -627,10 +627,25 @@ fd docs</code></pre>
 <li><strong>Stop and wait for further user instructions</strong></li>
 </ol>
 <p><em>Execute only the option explicitly selected by the user.</em></p>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/cap-template.html">cap-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/cap-example.html">cap-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

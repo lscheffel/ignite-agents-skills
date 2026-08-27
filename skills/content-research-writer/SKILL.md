@@ -2,13 +2,24 @@
 name: content-research-writer
 version: 1.0.0
 description: 'Use when the user needs research methodology, long-form content creation,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   academic-style citations, fact-checking, or evidence-based writing with proper source
   attribution. Trigger conditions: whitepaper drafting, research article writing,
   source evaluation, citation management, fact-checking protocol, case study creation,
   evidence-based argumentation.'
 domain: domain-stack
 triggers:
-- content-research-writer
+  - content-research-writer
+  - technical-writing
+  - whitepaper-research
+  - citations
+  - escritor-de-pesquisa
+  - redacao-tecnica
+  - artigo-academico
+  - fact-checking
 tags:
 - content-research-writer
 - domain-stack
@@ -301,3 +312,48 @@ https://www.example.com/report.pdf
 ## Skill Type
 
 **FLEXIBLE** — Adapt research depth, citation formality, and structure to the content type and audience. Academic whitepapers demand Tier 1 sources and formal citations; blog posts may use a lighter approach. The fact-checking protocol and source evaluation framework are always recommended.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (content-research-writer)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+

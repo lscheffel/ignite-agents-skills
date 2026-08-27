@@ -2,13 +2,20 @@
 name: llm-as-judge
 version: 1.0.0
 description: 'Use when validating subjective quality criteria that cannot be deterministically
-  tested — applies LLM-based evaluation with structured rubrics for tone, aesthetics,
-  UX feel, documentation quality, and code readability. Triggers: documentation quality
-  check, error message tone review, UX copy evaluation, code readability assessment,
-  design aesthetic review.'
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: domain-stack
 triggers:
-- llm-as-judge
+  - llm-as-judge
+  - evaluate-quality
+  - subjective-evaluation
+  - llm-rubric
+  - avaliar-com-llm
+  - avaliacao-subjetiva
+  - rubrica-de-qualidade
+  - prompt-evaluation
 tags:
 - llm-as-judge
 - domain-stack
@@ -35,7 +42,7 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
 ### Decision Table: LLM-as-Judge vs Deterministic Tests
 
 | Criterion Type | Method | Example |
-|---------------|--------|---------|
+| --------------- | -------- | --------- |
 | **Objective, measurable** | Deterministic test | "Response time < 200ms" |
 | **Structural, verifiable** | Deterministic test | "Returns valid JSON" |
 | **Subjective, qualitative** | LLM-as-judge | "Error messages are friendly and helpful" |
@@ -45,7 +52,8 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
 
 **Rule of thumb:** If you can write a boolean assertion, use a deterministic test. If evaluation requires judgment, use LLM-as-judge.
 
-### STOP — Do NOT proceed to Phase 2 until:
+### STOP — Do NOT proceed to Phase 2 until
+
 - [ ] Confirmed that criteria are genuinely subjective
 - [ ] Deterministic testing has been ruled out
 - [ ] Specific artifacts to evaluate are identified
@@ -72,12 +80,13 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
 ### Threshold Selection Table
 
 | Quality Level | Threshold | Use For |
-|--------------|-----------|---------|
+| -------------- | ----------- | --------- |
 | Minimum viable | 5.0 | Internal docs, draft content |
 | Production quality | 7.0 | User-facing content, public APIs |
 | Excellence | 8.5 | Marketing, critical UX flows |
 
-### STOP — Do NOT proceed to Phase 3 until:
+### STOP — Do NOT proceed to Phase 3 until
+
 - [ ] 3-5 dimensions are defined with clear descriptions
 - [ ] Weights sum to exactly 1.0
 - [ ] Anchor points are specific (not vague)
@@ -97,9 +106,25 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
   artifact: "The content to be evaluated (code, text, UI markup, etc.)",
   rubric: [
     { dimension: "Clarity", weight: 0.3, description: "Is the content easy to understand?" },
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
     { dimension: "Tone", weight: 0.3, description: "Is the tone appropriate for the audience?" },
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
     { dimension: "Completeness", weight: 0.2, description: "Does it cover all necessary points?" },
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
     { dimension: "Engagement", weight: 0.2, description: "Does it hold the reader's interest?" }
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   ],
   passing_threshold: 7.0,
   intelligence: "opus"
@@ -126,7 +151,8 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
 }
 ```
 
-### STOP — Do NOT proceed to Phase 4 until:
+### STOP — Do NOT proceed to Phase 4 until
+
 - [ ] Artifact has been submitted with full rubric
 - [ ] Each dimension has been scored independently
 - [ ] Reasoning is provided for every score
@@ -141,13 +167,14 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
 ### Result Action Table
 
 | Result | Action | Max Iterations |
-|--------|--------|---------------|
+| -------- | -------- | --------------- |
 | **Pass** (score >= threshold) | Accept the artifact, proceed | Done |
 | **Marginal fail** (within 1 point) | Apply suggestions, re-evaluate once | 1 |
 | **Clear fail** (> 1 point below) | Significant revision, apply all suggestions | 2 |
 | **Repeated fail** (3+ attempts) | Escalate — rubric or approach may need adjustment | Escalate |
 
-### STOP — Evaluation complete when:
+### STOP — Evaluation complete when
+
 - [ ] Artifact passes threshold, OR
 - [ ] 3 iterations completed and escalation decision made
 
@@ -156,6 +183,7 @@ Some quality criteria are inherently subjective — tone of voice, visual aesthe
 ## Common Rubric Templates
 
 ### Documentation Quality
+
 ```
 Clarity (0.3): Is the content easy to understand for the target audience?
   1=incomprehensible  5=adequate but requires re-reading  10=crystal clear
@@ -169,6 +197,7 @@ Threshold: 7.0
 ```
 
 ### Error Message Quality
+
 ```
 Helpfulness (0.4): Does the message help the user fix the problem?
   1=no help at all  5=vague direction  10=exact fix steps
@@ -182,6 +211,7 @@ Threshold: 7.5
 ```
 
 ### Code Readability
+
 ```
 Naming (0.3): Are variable/function names descriptive and consistent?
   1=single letters everywhere  5=adequate  10=self-documenting
@@ -195,6 +225,7 @@ Threshold: 7.0
 ```
 
 ### UX Copy
+
 ```
 Clarity (0.3): Is the copy easy to understand?
   1=confusing  5=understandable  10=immediately clear
@@ -214,7 +245,7 @@ Threshold: 7.5
 ## Anti-Patterns / Common Mistakes
 
 | Anti-Pattern | Why It Is Wrong | Correct Approach |
-|-------------|----------------|-----------------|
+| ------------- | ---------------- | ----------------- |
 | Using LLM-as-judge for measurable criteria | Wastes tokens, less reliable than assertions | Use deterministic tests for anything quantifiable |
 | Vague rubric dimensions ("is it good?") | Produces unreliable, inconsistent scores | Specific dimensions with anchored examples |
 | No passing threshold defined | No way to determine pass/fail objectively | Always set threshold before evaluation |
@@ -228,7 +259,7 @@ Threshold: 7.5
 ## Integration Points
 
 | Skill | Relationship |
-|-------|-------------|
+| ------- | ------------- |
 | `acceptance-testing` | LLM-as-judge handles subjective acceptance criteria |
 | `spec-writing` | Specs may include subjective quality criteria |
 | `code-review` | Readability evaluation during code review |
@@ -258,3 +289,32 @@ Deterministic tests validate objective criteria. LLM-as-judge validates subjecti
 ## Skill Type
 
 **FLEXIBLE** — Adapt rubric dimensions and thresholds to context. The pattern structure (define rubric, evaluate, score, iterate) is fixed. Always set the threshold before evaluation, never after.
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (llm-as-judge)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+| :--- | :---: | :--- | :--- |
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.

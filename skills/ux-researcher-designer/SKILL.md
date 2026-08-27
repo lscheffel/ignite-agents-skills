@@ -2,13 +2,24 @@
 name: ux-researcher-designer
 version: 1.0.0
 description: 'Use when the user needs user research methodologies, persona development,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   journey mapping, usability testing plans, or information architecture analysis.
   Triggers: user says "user research", "persona", "journey map", "usability test",
   "card sort", "heuristic evaluation", "information architecture", "user interview",
   understanding user behavior.'
 domain: frontend-ux
 triggers:
-- ux-researcher-designer
+  - ux-researcher-designer
+  - user-research
+  - persona-development
+  - journey-mapping
+  - pesquisa-de-ux
+  - desenvolvimento-de-personas
+  - mapa-da-jornada-do-usuario
+  - testes-de-usabilidade
 tags:
 - ux-researcher-designer
 - frontend-ux
@@ -294,3 +305,38 @@ Touchpoints: [Channels and interfaces involved]
 ## Skill Type
 
 **FLEXIBLE** — Select and combine research methods based on project constraints (budget, timeline, access to users). Lightweight methods (heuristic evaluation, guerrilla testing) are acceptable when full research is impractical.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (ux-researcher-designer)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

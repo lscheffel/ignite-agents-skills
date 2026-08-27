@@ -2,9 +2,20 @@
 name: agent-orchestration
 version: 2.0.0
 description: Orchestrates multiple AI agents for complex tasks. Covers task decomposition, model routing, I/O contract handoff, fan-out/fan-in parallelism, and multi-agent coordination. Use when needing to coordinate multiple agents, define roles, manage handoffs, or optimize parallel execution.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: agentic-workflow
 triggers:
-- agent-orchestration
+  - agent-orchestration
+  - orchestrate-agents
+  - multi-agent
+  - task-decomposition
+  - orquestrar-agentes
+  - orquestracao-multi-agente
+  - decomposicao-de-tarefas
+  - model-routing
 tags:
 - orchestration
 - agents
@@ -352,3 +363,11 @@ else:
 - `governance` — for approval processes
 - [CrewAI Documentation](https://docs.crewai.com/)
 - [LangGraph Multi-Agent](https://langchain-ai.github.io/langgraph/)
+
+## Completion Gate
+
+A tarefa associada à skill `agent-orchestration` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

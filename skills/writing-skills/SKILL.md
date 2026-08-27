@@ -2,10 +2,21 @@
 name: writing-skills
 version: 1.0.0
 description: Use when creating new skills, commands, or agent definitions for Claude
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   Code, including writing SKILL.md files, defining triggers, and testing skill behavior
 domain: domain-stack
 triggers:
-- writing-skills
+  - writing-skills
+  - write-agent-skill
+  - claude-code-skills
+  - skill-prompting
+  - escrever-skills
+  - criar-instrucoes-de-agente
+  - formatacao-de-skills
+  - skill-authoring
 tags:
 - writing-skills
 - domain-stack
@@ -73,6 +84,10 @@ Every SKILL.md MUST contain ALL of these elements:
 ---
 name: skill-name          # lowercase with hyphens, unique identifier
 description: "Use when [trigger conditions]"  # Max 1024 chars
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 ---
 ```
 
@@ -92,11 +107,19 @@ The `description` field determines when a skill is selected. Optimize it like a 
 **Good:**
 ```yaml
 description: "Use when creating database migrations, designing table schemas, adding indexes, or optimizing SQL queries"
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 ```
 
 **Bad:**
 ```yaml
 description: "A comprehensive guide to database design covering normalization, indexing, query optimization, and migration strategies"
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 ```
 
 ### Trigger Condition Patterns
@@ -215,6 +238,10 @@ STOP — Re-run test prompts mentally. Does the skill trigger correctly for all 
 ---
 name: docker-setup
 description: "Use when creating Dockerfiles, docker-compose configurations, or containerizing an application for development or production"
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 ---
 
 # Docker Setup
@@ -247,3 +274,38 @@ STOP — present for review.
 ## Skill Type
 
 **Rigid** — The TDD approach (test prompts first), required structure elements, and validation checklist must be followed exactly. No elements may be skipped.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (writing-skills)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+

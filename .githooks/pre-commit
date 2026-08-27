@@ -42,20 +42,18 @@ echo "[*] Normalizing line endings across staged files..."
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM || true)
 
 if [ -n "$STAGED_FILES" ]; then
-    for f in $STAGED_FILES; do
-        if [ -f "$f" ]; then
-            python3 -c "
-import sys
-fp = sys.argv[1]
-with open(fp, 'rb') as fh:
-    c = fh.read()
-if b'\r\n' in c:
-    with open(fp, 'wb') as fh:
-        fh.write(c.replace(b'\r\n', b'\n'))
-" "$f" 2>/dev/null || true
-            git add "$f"
-        fi
-    done
+    python3 -c "
+import sys, pathlib
+for arg in sys.argv[1:]:
+    p = pathlib.Path(arg)
+    if p.is_file():
+        try:
+            b = p.read_bytes()
+            if b'\r\n' in b:
+                p.write_bytes(b.replace(b'\r\n', b'\n'))
+        except Exception:
+            pass
+" $STAGED_FILES 2>/dev/null || true
 fi
 
 # 1.5. Auto-Tradução para Inglês (ADR-026) quando PT-BR/outro idioma for detectado em skills/
@@ -70,14 +68,9 @@ if [ -n "$TRANSLATE_SCRIPT" ]; then
     SKILL_STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^skills/.*\.(md|py|sh|ts|js)$' || true)
     if [ -n "$SKILL_STAGED" ]; then
         echo "[*] Verificando detecção de idioma e auto-tradução para EN-US (ADR-026)..."
-        for sf in $SKILL_STAGED; do
-            if [ -f "$sf" ]; then
-                python3 "$TRANSLATE_SCRIPT" --file "$sf" > /tmp/precommit_translate.log 2>&1 || {
-                    echo "⚠️  [WARN] Auto-tradução ignorada ou com erro em $sf (veja /tmp/precommit_translate.log)"
-                }
-                git add "$sf"
-            fi
-        done
+        python3 "$TRANSLATE_SCRIPT" > /tmp/precommit_translate.log 2>&1 || {
+            echo "⚠️  [WARN] Auto-tradução ignorada (NIM offline ou erro no pipeline)."
+        }
         echo "✅ [PASS] Verificação de idioma / auto-tradução concluída."
     fi
 fi

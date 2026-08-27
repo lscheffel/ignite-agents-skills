@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: governance version: 2.0.0 description: Define governance guidelines for repositories and teams. Covers review, approval, branching strategy, semantic versioning, and issue/PR management processes. Use when defining team processes, implementing governance-as-code, or standardizing development workflows. domain: core-governance triggers:</p>
+<p>name: governance version: 2.0.0 description: Define governance guidelines for repositories and teams. Covers review, approval, branching strategy, semantic versioning, and issue/PR management processes. Use when defining team processes, implementing governance-as-code, or standardizing development workflows. related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>domain: core-governance triggers:</p>
 <ul>
 <li>governance</li>
+<li>repository-governance</li>
+<li>branch-protection</li>
+<li>semver-governance</li>
+<li>governanca-de-repositorio</li>
+<li>politicas-de-branch</li>
+<li>processo-de-aprovacao</li>
+<li>compliance</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -521,7 +534,11 @@
 <ol>
 <li>Open a PR with a complete description:</li>
 </ol>
-<pre data-lang="bash"><code>   gh pr create --title &quot;feat: add user validation&quot; \
+<pre data-lang="bash"><code>related_skills:
+  - cap
+  - implementation
+  - technical-documentation
+   gh pr create --title &quot;feat: add user validation&quot; \
      --body-file templates/pull-request-template.md</code></pre>
 <ol>
 <li>Wait for CI to be green:</li>
@@ -721,20 +738,29 @@ git tag v1.2.0-rollback-20240115</code></pre>
 <li><code>git</code> — for commit and branch standards</li>
 <li><code>release</code> — for semantic versioning</li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>governance</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/governance-template.html">governance-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/issue-template.html">issue-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/pull-request-template.html">pull-request-template.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/branch-protection.html">branch-protection.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/governance-example.html">governance-example.md</a></li>
 </ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: ux-researcher-designer version: 1.0.0 description: 'Use when the user needs user research methodologies, persona development, journey mapping, usability testing plans, or information architecture analysis. Triggers: user says "user research", "persona", "journey map", "usability test", "card sort", "heuristic evaluation", "information architecture", "user interview", understanding user behavior.' domain: frontend-ux triggers:</p>
+<p>name: ux-researcher-designer version: 1.0.0 description: 'Use when the user needs user research methodologies, persona development, related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>journey mapping, usability testing plans, or information architecture analysis. Triggers: user says "user research", "persona", "journey map", "usability test", "card sort", "heuristic evaluation", "information architecture", "user interview", understanding user behavior.' domain: frontend-ux triggers:</p>
 <ul>
 <li>ux-researcher-designer</li>
+<li>user-research</li>
+<li>persona-development</li>
+<li>journey-mapping</li>
+<li>pesquisa-de-ux</li>
+<li>desenvolvimento-de-personas</li>
+<li>mapa-da-jornada-do-usuario</li>
+<li>testes-de-usabilidade</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -563,10 +576,38 @@ Touchpoints: [Channels and interfaces involved]</code></pre>
 <div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>ui-ux-pro-max</code></td><td>UX guidelines and design patterns</td></tr><tr><td><code>mobile-design</code></td><td>Mobile usability testing patterns</td></tr><tr><td><code>planning</code></td><td>Research plan is part of the implementation plan</td></tr><tr><td><code>spec-writing</code></td><td>User research informs JTBD specifications</td></tr><tr><td><code>prd-generation</code></td><td>Personas and journey maps feed into PRDs</td></tr><tr><td><code>llm-as-judge</code></td><td>Evaluate design quality with rubrics</td></tr></table></div>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>FLEXIBLE</strong> — Select and combine research methods based on project constraints (budget, timeline, access to users). Lightweight methods (heuristic evaluation, guerrilla testing) are acceptable when full research is impractical.</p>
+<h2 id="decision-workflow">Decision Workflow</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Início: Ativação da Skill (ux-researcher-designer)&quot;] --&gt; B[&quot;Validação de Pré-requisitos &amp; Escopo&quot;]
+    B --&gt; C{&quot;Requisitos Claros &amp; Completos?&quot;}
+    C --&gt;|Não| D[&quot;Solicitar Clarificação / Coletar Contexto (cap)&quot;]
+    C --&gt;|Sim| E[&quot;Execução do Procedimento Canônico&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;Verificação de Qualidade &amp; Critérios de Aceite&quot;]
+    F --&gt; G{&quot;Checklist 100% Aprovado?&quot;}
+    G --&gt;|Não| E
+    G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
+<h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/ux-researcher-designer-template.html">ux-researcher-designer-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/ux-researcher-designer-example.html">ux-researcher-designer-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

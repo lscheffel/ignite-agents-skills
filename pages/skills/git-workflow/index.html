@@ -411,10 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: git-workflow version: 1.0.0 description: Unified Git operations, commit styling, worktree management, and branch completion workflows. domain: agentic-workflow triggers:</p>
+<p>name: git-workflow version: 1.0.0 description: Unified Git operations, commit styling, worktree management, and branch related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>completion workflows. domain: agentic-workflow triggers:</p>
 <ul>
 <li>git-workflow</li>
-<li>agentic-workflow</li>
+<li>git-branching</li>
+<li>git-commits</li>
+<li>worktree-management</li>
+<li>fluxo-git</li>
+<li>gerenciar-branches</li>
+<li>padrao-de-commits</li>
+<li>git-worktree</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -1151,10 +1163,26 @@ git log --oneline -5</code></pre>
 <div class="table-wrapper"><table><tr><th>Skill</th><th>Integration</th></tr><tr><td><code>verification-before-completion</code></td><td>Must invoke in Phase 1 before any merge activity</td></tr><tr><td><code>using-git-worktrees</code></td><td>Cleanup includes worktree removal if applicable</td></tr><tr><td><code>git-commit-helper</code></td><td>Squash commit message follows conventional commit format</td></tr><tr><td><code>code-review</code></td><td>PR creation (Option A) feeds into code review workflow</td></tr><tr><td><code>planning</code></td><td>Branch completion is the final step of plan execution</td></tr><tr><td><code>deployment</code></td><td>Merge to main/release may trigger deployment pipeline</td></tr></table></div>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>RIGID</strong> — Follow this process exactly. Every phase must be completed in order. Do NOT skip verification. Do NOT merge without user confirmation. Do NOT assume a merge strategy. Do NOT delete branches without asking.</p>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>git-workflow</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/git-workflow-template.html">git-workflow-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/git-workflow-example.html">git-workflow-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

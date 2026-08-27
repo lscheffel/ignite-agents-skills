@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/brainstorming` | **Versão:** | `v2.1.0` |
-| **Hash SHA-256:** | `342c466a2520f39c46b01342835558f04c2a6b90057a40bfaeff3441f3ffd8a1` | **Score Global:** | `87.7 / 100` |
+| **Hash SHA-256:** | `709ad44a865dd3090a8659a6fcad17f7afe241aa929e75a58a6c5b5bff33d5d8` | **Score Global:** | `87.7 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~19137 tokens); risco de saturação precoce da janela de contexto. |
+| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~19574 tokens); risco de saturação precoce da janela de contexto. |
 | **D4. Segurança & Ameaças** | 8.8 | [OK] | Operações com efeitos colaterais (I/O) contidas sob sandboxing do runtime Antigravity. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 8.8 | [OK] | Módulo auto-contido com sub-rotinas utilitárias isoladas em scripts/. |
@@ -38,7 +38,7 @@
 * **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Footprint estático atual do pacote: ~19137 tokens
+// Footprint estático atual do pacote: ~19574 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml

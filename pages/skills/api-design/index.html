@@ -411,9 +411,23 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: api-design version: 2.0.0 description: Comprehensive guide to designing robust, consistent, and scalable RESTful and GraphQL APIs. Define standards for endpoints, versioning, error contracts, pagination, and idempotence. Use when designing new APIs, reviewing existing contracts, or standardizing interface design practices. domain: architecture-systems triggers:</p>
+<p>name: api-design version: 2.0.0 description: Comprehensive guide to designing robust, consistent, and scalable RESTful and GraphQL APIs. Define standards for endpoints, versioning, error contracts, pagination, and idempotence. Use when designing new APIs, reviewing existing contracts, or standardizing interface design practices. related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>domain: architecture-systems triggers:</p>
 <ul>
 <li>api-design</li>
+<li>rest-api</li>
+<li>graphql-design</li>
+<li>api-contract</li>
+<li>design-de-api</li>
+<li>projetar-api</li>
+<li>contrato-de-api</li>
+<li>error-contracts</li>
+<li>api-versioning</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -535,7 +549,11 @@ DELETE /users/{id}    → Delete user</code></pre>
              default: 1
        responses:
          200:
-           description: List of users</code></pre>
+           description: List of users
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation</code></pre>
 <ol>
 <li>Use the <code>endpoint-spec.md</code> template</li>
 <li>Document request/response</li>
@@ -760,15 +778,24 @@ X-RateLimit-Reset: 1623456789</code></pre>
 <li><code>testing</code> — for contract testing</li>
 <li><code>governance</code> — for review processes</li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>api-design</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/api-design-template.html">api-design-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/api-versioning.html">api-versioning.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/endpoint-spec.html">endpoint-spec.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/error-contract.html">error-contract.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/api-design-example.html">api-design-example.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/error-handling-contract.html">error-handling-contract.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/python-flask-rest.html">python-flask-rest.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/rest-crud-spec.html">rest-crud-spec.md</a></li>
@@ -776,7 +803,7 @@ X-RateLimit-Reset: 1623456789</code></pre>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

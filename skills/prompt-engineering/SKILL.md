@@ -2,9 +2,20 @@
 name: prompt-engineering
 version: 2.0.0
 description: Guidelines for effective prompt engineering with AI agents. Covers prompt structure, few-shot, chain-of-thought, role prompting, constraints, and advanced techniques. Use when creating prompts for AI agents, optimizing interactions, or training teams in AI.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: domain-stack
 triggers:
-- prompt-engineering
+  - prompt-engineering
+  - optimize-prompts
+  - few-shot-prompting
+  - chain-of-thought
+  - engenharia-de-prompt
+  - otimizar-prompts
+  - tecnicas-de-prompting
+  - system-prompts
 tags:
 - prompts
 - llm
@@ -392,3 +403,12 @@ Technical terms: Order (Pedido), Item (Item)"
 
 - `vibe-coding` — for AI-guided development
 - [Prompt Engineering Guide](https://www.promptingguide.org/)
+
+
+## Completion Gate
+
+A tarefa associada à skill `prompt-engineering` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

@@ -2,11 +2,21 @@
 name: testing-mastery
 version: 1.0.0
 description: Unified testing framework covering unit, integration, acceptance, webapp,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   and strategy testing.
 domain: engineering-quality
 triggers:
-- testing-mastery
-- engineering-quality
+  - testing-mastery
+  - testing-strategy
+  - integration-tests
+  - e2e-testing
+  - maestria-em-testes
+  - estrategia-de-testes
+  - testes-de-integracao
+  - testes-ponta-a-ponta
 tags:
 - testing-mastery
 - engineering-quality
@@ -20,366 +30,29 @@ metadata:
 
 Unified testing framework covering unit, integration, acceptance, webapp, and strategy testing.
 
-
 ## Sub-Domain / Component: `testing`
 
-# Testing
+# Testing### When to use:
+- Need to write tests for new functionality
+- Want to increase existing test coverage
+- Need to define a test strategy for the project
+- Want to standardize tests across teams
+- Need to review test quality## Decision Tree### Workflow### Key Concepts### unit-test.ts
+Location: `templates/unit-test.ts`
 
-Guia para escrita de testes automatizados robustos.
+Template for unit tests with Vitest/Jest.### 🔴 Critical- [ ] Follows AAA (Arrange, Act, Assert) pattern
+- [ ] Clear name following `should X when Y`
+- [ ] One concept per test
+- [ ] Happy path tests
+- [ ] Error path tests
+- [ ] Edge case tests
+- [ ] Mocks only for external dependencies
+- [ ] No logic in the test### Order-Dependent Tests
+**Situation:** Test A passes only if it is run before Test B.
+**Solution:** Use `beforeEach`/`afterEach` to isolate state.
+**Exception:** Database migration tests may need to be ordered.
 
-## Quando Usar
 
-### Use quando:
-- Precisa escrever testes para nova funcionalidade
-- Quer aumentar cobertura de testes existente
-- Precisa definir estratégia de testes para projeto
-- Quer padronizar testes entre equipes
-- Precisa revisar qualidade de testes
-
-### Não use quando:
-- Trabalhando em script muito simples (protótipo)
-- Projeto sem suporte a testes automatizados
-- Precisa de teste manual (UI/UX)
-
-### Skills relacionadas:
-- `ddd` — para testar agregados e entidades de domínio
-- `governance` — para políticas de coverage mínima
-
-## Decision Tree
-
-```mermaid
-graph TD
-    A[Preciso de teste?] -->|Unidade de lógica| B[Unitário]
-    A -->|Integração entre módulos| C[Integração]
-    A -->|Fluxo completo do usuário| D[E2E]
-    A -->|Contrato de API| E[Contract]
-    B -->|Classe pura| F[Mock dependencies]
-    B -->|Função pura| G[Sem mocks]
-    C -->|Database| H[Test DB separado]
-    C -->|API externa| I[Mock server]
-    D -->|Web UI| J[Playwright/Cypress]
-    D -->|API| K[Supertest]
-```
-
-## Workflow
-
-### Fase 1: Escrever Teste Unitário
-
-1. Identifique a unidade a ser testada (classe, função, método)
-2. Crie arquivo de teste ao lado do código fonte:
-   ```bash
-   # Estrutura
-   src/
-   ├── services/
-   │   ├── user-service.ts
-   │   └── user-service.test.ts
-   ```
-3. Use o template `templates/unit-test.ts`:
-   ```bash
-   cp templates/unit-test.ts src/services/user-service.test.ts
-   ```
-4. Preencha os placeholders do template
-5. Execute o teste:
-   ```bash
-   npm test -- user-service.test.ts
-   ```
-6. **Checkpoint**: Teste passa e cobre caminho feliz
-
-### Fase 2: Escrever Teste de Integração
-
-1. Identifique o ponto de integração (database, API, serviço externo)
-2. Configure ambiente de teste:
-   ```bash
-   # docker-compose.test.yml
-   services:
-     postgres:
-       image: postgres:15
-       environment:
-         POSTGRES_DB: test_db
-   ```
-3. Use o template `templates/integration-test.ts`
-4. Configure setup/teardown no `beforeAll`/`afterAll`
-5. Execute testes:
-   ```bash
-   npm run test:integration
-   ```
-6. **Checkpoint**: Teste passa e verifica persistência
-
-### Fase 3: Escrever Teste E2E
-
-1. Identifique o fluxo crítico do usuário
-2. Configure ambiente E2E:
-   ```bash
-   # .env.test
-   BASE_URL=http://localhost:3000
-   ```
-3. Use o template `templates/e2e-test.ts`
-4. Adicione `data-testid` aos elementos UI:
-   ```html
-   <button data-testid="submit-button">Submit</button>
-   ```
-5. Execute teste:
-   ```bash
-   npm run test:e2e
-   ```
-6. **Checkpoint**: Fluxo completo funciona
-
-### Fase 4: Analisar Cobertura
-
-1. Execute testes com coverage:
-   ```bash
-   npm run test:coverage
-   ```
-2. Abra relatório:
-   ```bash
-   open coverage/lcov-report/index.html
-   ```
-3. Identifique áreas sem cobertura
-4. Crie plano de cobertura:
-   ```bash
-   cp templates/test-plan.md docs/test-plan.md
-   ```
-5. **Checkpoint**: Coverage ≥ 80% para unidades
-
-### Fase 5: Refatorar com Testes como Safety Net
-
-1. Execute todos os testes antes de refatorar:
-   ```bash
-   npm test
-   ```
-2. Refatore código mantendo API pública
-3. Execute testes após cada mudança:
-   ```bash
-   npm test
-   ```
-4. Se teste quebra, revert ou ajuste refatoração
-5. **Checkpoint**: Todos os testes passam após refatoração
-
-## Conceitos Fundamentais
-
-### Pirâmide de Testes
-
-```
-         /\
-        /  \      E2E (poucos, críticos)
-       /____\
-      /      \    Integração (médio)
-     /________\
-    /          \  Unitários (muitos)
-   /____________\
-```
-
-### AAA Pattern
-
-```typescript
-it('should return total when items provided', () => {
-  // Arrange - preparar dados
-  const cart = new ShoppingCart();
-  const item = { id: 1, price: 100 };
-  
-  // Act - executar ação
-  cart.addItem(item);
-  const total = cart.getTotal();
-  
-  // Assert - verificar resultado
-  expect(total).toBe(100);
-});
-```
-
-### Naming Convention
-
-Padrão: `should [expected behavior] when [condition]`
-
-```typescript
-// ✅ CORRETO
-it('should throw ValidationError when email is invalid')
-it('should return user when id exists')
-it('should calculate total when items provided')
-
-// ❌ ERRADO
-it('test user')
-it('email validation')
-it('works')
-```
-
-## Templates
-
-### unit-test.ts
-Localização: `templates/unit-test.ts`
-
-Template para testes unitários com Vitest/Jest.
-
-**Uso:**
-```bash
-cp templates/unit-test.ts src/{module}/{module}.test.ts
-```
-
-### integration-test.ts
-Localização: `templates/integration-test.ts`
-
-Template para testes de integração com setup/teardown.
-
-**Uso:**
-```bash
-cp templates/integration-test.ts test/integration/{module}.test.ts
-```
-
-### e2e-test.ts
-Localização: `templates/e2e-test.ts`
-
-Template para testes E2E com Playwright.
-
-**Uso:**
-```bash
-cp templates/e2e-test.ts e2e/{flow}.spec.ts
-```
-
-### test-plan.md
-Localização: `templates/test-plan.md`
-
-Template para planejar cobertura de testes.
-
-**Uso:**
-```bash
-cp templates/test-plan.md docs/test-plan.md
-```
-
-## Anti-patterns
-
-### 🔴 Crítico
-
-#### Test Leaky
-**O que é:** Teste que depende de estado externo ou ordem de execução.
-**Por que é ruim:** Testes passam/falham aleatoriamente, impossível debug.
-**Como evitar:** Use setup/teardown, testes independentes.
-**Exemplo:**
-```typescript
-// ❌ ERRADO - depende de banco real
-it('should create user', () => {
-  const user = userService.createUser({ name: 'John' });
-  // espera que user.id seja 1 - pode falhar se outro teste rodou antes
-  expect(user.id).toBe(1);
-});
-
-// ✅ CORRETO - isolado
-it('should create user', async () => {
-  await setupTestDatabase();
-  const user = await userService.createUser({ name: 'John' });
-  expect(user.id).toBeDefined();
-  await teardownTestDatabase();
-});
-```
-
-#### Mock Excessivo
-**O que é:** Mockar tudo, incluindo código que deveria ser testado.
-**Por que é ruim:** Teste não valida integração real, falso positivo.
-**Como evitar:** Mock apenas dependências externas.
-**Exemplo:**
-```typescript
-// ❌ ERRADO - mockando tudo
-const result = await jest.fn().mockReturnValue('mocked');
-
-// ✅ CORRETO - mockando apenas externo
-const httpClient = new MockHttpClient();
-const service = new UserService(httpClient);
-```
-
-### 🟡 Médio
-
-#### Test Sem Assertion
-**O que é:** Teste que não verifica nada.
-**Por que é ruim:** Teste sempre passa, não detecta bugs.
-**Como evitar:** Sempre use expect().
-**Exemplo:**
-```typescript
-// ❌ ERRADO
-it('should work', () => {
-  userService.createUser({ name: 'John' });
-});
-
-// ✅ CORRETO
-it('should create user successfully', () => {
-  const user = userService.createUser({ name: 'John' });
-  expect(user.id).toBeDefined();
-  expect(user.name).toBe('John');
-});
-```
-
-#### Test Frágil
-**O que é:** Teste que quebra com mudanças não relacionadas.
-**Por que é ruim:** Alto custo de manutenção.
-**Como evitar:** Use seletores estáveis, teste comportamento não implementação.
-**Exemplo:**
-```typescript
-// ❌ ERRADO - usa classe CSS que muda
-await page.click('.btn-primary');
-
-// ✅ CORRETO - usa data-testid estável
-await page.click('[data-testid="submit-button"]');
-```
-
-### 🟢 Baixo
-
-#### Test com Lógica
-**O que é:** Teste que contém lógica condicional ou loops.
-**Por que é ruim:** Teste difícil de entender, pode ter bugs.
-**Como evitar:** Teste uma coisa, sem lógica.
-**Exemplo:**
-```typescript
-// ❌ ERRADO
-it('should validate users', () => {
-  users.forEach(user => {
-    if (user.age > 18) {
-      expect(validate(user)).toBe(true);
-    }
-  });
-});
-
-// ✅ CORRETO
-it('should validate adult user', () => {
-  const user = { name: 'John', age: 25 };
-  expect(validate(user)).toBe(true);
-});
-
-it('should reject minor user', () => {
-  const user = { name: 'Jane', age: 15 };
-  expect(validate(user)).toBe(false);
-});
-```
-
-## Checklists
-
-### Checklist de Review de Teste
-- [ ] Segue padrão AAA (Arrange, Act, Assert)
-- [ ] Nome claro seguindo `should X when Y`
-- [ ] Um conceito por teste
-- [ ] Teste caminho feliz
-- [ ] Teste caminhos de erro
-- [ ] Teste edge cases
-- [ ] Mocks apenas para dependências externas
-- [ ] Não tem lógica no teste
-
-### Checklist de Coverage
-- [ ] Coverage ≥ 80% para unidades
-- [ ] Coverage ≥ 70% para integração
-- [ ] Coverage ≥ 60% para E2E
-- [ ] Nenhum arquivo com < 50% coverage
-- [ ] Nenhum branch não coberto
-- [ ] Nenhum path não coberto
-
-### Checklist de CI
-- [ ] Testes rodam em CI
-- [ ] Coverage é reportado
-- [ ] Build falha se coverage < meta
-- [ ] Testes paralelos habilitados
-- [ ] Cache de dependências configurado
-
-## Edge Cases
-
-### Teste Dependente de Ordem
-**Situação:** Teste A passa apenas se executado antes do Teste B.
-**Solução:** Use `beforeEach`/`afterEach` para isolar estado.
-**Exceção:** Testes de migração de banco podem precisar de ordem.
 
 ```typescript
 // Isolar estado entre testes
@@ -389,10 +62,14 @@ beforeEach(() => {
 });
 ```
 
+
+
 ### Flaky Test
-**Situação:** Teste que passa/falha aleatoriamente.
-**Solução:** Identifique causa (timing, estado compartilhado, rede) e isole.
-**Exceção:** Testes com `setTimeout` para debounce podem ser flaky.
+**Situation:** Test passes/fails randomly.
+**Solution:** Identify the cause (timing, shared state, network) and isolate it.
+**Exception:** Tests with `setTimeout` for debouncing may be flaky.
+
+
 
 ```typescript
 // ❌ Pode ser flaky
@@ -405,10 +82,14 @@ await page.waitForSelector('[data-testid="element"]', { state: 'visible' });
 expect(element).toBeVisible();
 ```
 
-### Teste com I/O Externo
-**Situação:** Teste faz chamada real a API externa.
-**Solução:** Use mock server (MSW, nock) ou fixtures.
-**Exceção:** Testes de contrato podem precisar de I/O real.
+
+
+### Test with External I/O
+**Situation:** Test makes a real call to an external API.
+**Solution:** Use a mock server (MSW, nock) or fixtures.
+**Exception:** Contract tests may need real I/O.
+
+
 
 ```typescript
 // Usar MSW para mockar API
@@ -418,23 +99,13 @@ const server = setupServer(
     return res(ctx.json([{ id: 1, name: 'John' }]));
   })
 );
-```
-
-## Referências
-
-- [Testing Library](https://testing-library.com/)
+```- [Testing Library](https://testing-library.com/)
 - [Vitest](https://vitest.dev/)
 - [Playwright](https://playwright.dev/)
-- `ddd` — para testar agregados
-- `governance` — para políticas de CI/CD
-
----
-
-
-## Sub-Domain / Component: `testing-strategy`
+- `ddd` — for testing aggregates
+- `governance` — for CI/CD policies## Sub-Domain / Component: `testing-strategy`
 
 # Testing Strategy
-
 ## Overview
 
 Analyze the project context and recommend a comprehensive testing strategy. This skill selects appropriate frameworks, defines the testing pyramid, establishes coverage thresholds, and generates test configuration files. The goal is a repeatable, measurable testing foundation that the team can maintain.
@@ -457,6 +128,8 @@ Analyze the project context and recommend a comprehensive testing strategy. This
 
 ### Discovery Commands
 
+
+
 ```bash
 # Identify test files
 find . -name "*.test.*" -o -name "*.spec.*" | head -30
@@ -470,6 +143,8 @@ cat coverage/coverage-summary.json 2>/dev/null || echo "No coverage report found
 # Check CI config
 cat .github/workflows/*.yml 2>/dev/null | head -50
 ```
+
+
 
 ### STOP — Do NOT proceed to Phase 2 until:
 - [ ] Tech stack is identified
@@ -496,6 +171,8 @@ cat .github/workflows/*.yml 2>/dev/null | head -50
 
 ### Testing Pyramid Ratios
 
+
+
 ```
         /\
        /  \     E2E Tests (10%)
@@ -507,6 +184,8 @@ cat .github/workflows/*.yml 2>/dev/null | head -50
  /              \ Unit Tests (60%)
 /                \ Pure functions, business logic, utilities
 ```
+
+
 
 ### What to Test at Each Level
 
@@ -565,6 +244,8 @@ cat .github/workflows/*.yml 2>/dev/null | head -50
 
 ### Example: Vitest Config
 
+
+
 ```typescript
 import { defineConfig } from 'vitest/config';
 
@@ -586,6 +267,8 @@ export default defineConfig({
   },
 });
 ```
+
+
 
 ### STOP — Do NOT proceed to Phase 5 until:
 - [ ] Config files are syntactically valid
@@ -673,11 +356,7 @@ export default defineConfig({
 
 ---
 
-
 ## Sub-Domain / Component: `acceptance-testing`
-
-# Acceptance Testing
-
 ## Overview
 
 Acceptance-driven backpressure connects specification acceptance criteria directly to test requirements, creating a validation chain that prevents premature completion claims. The system cannot cheat — you cannot claim a feature is done unless tests derived from spec acceptance criteria actually pass.
@@ -687,6 +366,8 @@ Acceptance-driven backpressure connects specification acceptance criteria direct
 ---
 
 ## The Backpressure Chain
+
+
 
 ```
 +------------+     derives      +------------+     validates    +------------+
@@ -701,6 +382,8 @@ Acceptance-driven backpressure connects specification acceptance criteria direct
       If tests fail, implementation must change (not the spec or test)
 ```
 
+
+
 ---
 
 ## Phase 1: Extract Acceptance Criteria
@@ -714,6 +397,8 @@ Acceptance-driven backpressure connects specification acceptance criteria direct
 3. Document in structured format
 
 ### Example Extraction
+
+
 
 ```markdown
 ## From spec: 01-color-extraction.md
@@ -731,6 +416,8 @@ Acceptance-driven backpressure connects specification acceptance criteria direct
 - And no partial results are produced
 ```
 
+
+
 ### STOP — HARD-GATE: Do NOT proceed to Phase 2 until:
 - [ ] All spec files are located and read
 - [ ] Every acceptance criterion is extracted with an ID
@@ -743,6 +430,8 @@ Acceptance-driven backpressure connects specification acceptance criteria direct
 
 **Goal:** Map every acceptance criterion to at least one test case.
 
+
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  HARD-GATE: Every acceptance criterion must have at least one   │
@@ -750,6 +439,8 @@ Acceptance-driven backpressure connects specification acceptance criteria direct
 │  test, the feature is NOT complete.                             │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+
 
 ### Traceability Table
 
@@ -818,6 +509,8 @@ This phase integrates with `test-driven-development`:
 | Lint | No violations | Linter | Always |
 | Typecheck | No type errors | Type checker | When applicable |
 
+
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  HARD-GATE: ACCEPTANCE                                         │
@@ -827,6 +520,8 @@ This phase integrates with `test-driven-development`:
 │  Fix the implementation, not the spec or the test.             │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+
 
 ### STOP — HARD-GATE: Do NOT proceed to Phase 5 until:
 - [ ] All validation gates pass
@@ -840,6 +535,8 @@ This phase integrates with `test-driven-development`:
 **Goal:** Produce a report linking every spec criterion to its test and result.
 
 ### Report Template
+
+
 
 ```markdown
 ## Acceptance Test Report
@@ -857,6 +554,8 @@ This phase integrates with `test-driven-development`:
 - Failing: 0
 - Coverage: 100%
 ```
+
+
 
 ---
 
@@ -906,11 +605,9 @@ This phase integrates with `test-driven-development`:
 
 ---
 
-
 ## Sub-Domain / Component: `webapp-testing`
 
 # Web App Testing
-
 ## Overview
 
 Comprehensive web application testing using Playwright as the primary tool. This skill covers end-to-end testing workflows including screenshot capture for visual verification, browser console log analysis, user interaction simulation, visual regression testing, accessibility auditing with axe-core, network request mocking, and mobile viewport testing.
@@ -964,6 +661,8 @@ Comprehensive web application testing using Playwright as the primary tool. This
 
 ### Playwright Configuration
 
+
+
 ```typescript
 import { defineConfig, devices } from '@playwright/test';
 
@@ -998,7 +697,11 @@ export default defineConfig({
 });
 ```
 
+
+
 ### Page Object Model
+
+
 
 ```typescript
 class LoginPage {
@@ -1020,6 +723,8 @@ class LoginPage {
   }
 }
 ```
+
+
 
 ### Locator Selection Decision Table
 
@@ -1068,71 +773,10 @@ class LoginPage {
 - [ ] Flaky tests are identified and fixed (not skipped)
 
 ---
-
-## Screenshot Capture Patterns
-
-### Full Page
-
-```typescript
-test('homepage renders correctly', async ({ page }) => {
-  await page.goto('/');
-  await expect(page).toHaveScreenshot('homepage.png', {
-    fullPage: true,
-    maxDiffPixelRatio: 0.01,
-  });
-});
-```
-
-### Element-Level
-
-```typescript
-test('navigation bar matches design', async ({ page }) => {
-  await page.goto('/');
-  const nav = page.getByRole('navigation');
-  await expect(nav).toHaveScreenshot('navbar.png');
-});
-```
-
-### Dynamic Content Masking
-
-```typescript
-test('dashboard layout', async ({ page }) => {
-  await page.goto('/dashboard');
-  await expect(page).toHaveScreenshot('dashboard.png', {
-    mask: [
-      page.locator('[data-testid="timestamp"]'),
-      page.locator('[data-testid="user-avatar"]'),
-      page.locator('.chart-container'),
-    ],
-    animations: 'disabled',
-  });
-});
-```
-
----
-
-## Browser Log Analysis
-
-```typescript
-test('no console errors on page load', async ({ page }) => {
-  const consoleErrors: string[] = [];
-
-  page.on('console', msg => {
-    if (msg.type() === 'error') consoleErrors.push(msg.text());
-  });
-  page.on('pageerror', error => {
-    consoleErrors.push(error.message);
-  });
-
-  await page.goto('/');
-  await page.waitForLoadState('networkidle');
-  expect(consoleErrors).toEqual([]);
-});
-```
-
----
-
+### 全ページのスクリーンショット## ブラウザログ分析
 ## Accessibility Testing with axe-core
+
+
 
 ```typescript
 import AxeBuilder from '@axe-core/playwright';
@@ -1147,74 +791,10 @@ test('page has no accessibility violations', async ({ page }) => {
 });
 ```
 
----
 
-## Network Request Mocking
-
-```typescript
-test('displays users from API', async ({ page }) => {
-  await page.route('**/api/users', async route => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify([{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }]),
-    });
-  });
-  await page.goto('/users');
-  await expect(page.getByText('Alice')).toBeVisible();
-});
-
-test('handles API errors gracefully', async ({ page }) => {
-  await page.route('**/api/users', route =>
-    route.fulfill({ status: 500, body: 'Internal Server Error' })
-  );
-  await page.goto('/users');
-  await expect(page.getByText('Something went wrong')).toBeVisible();
-});
-```
 
 ---
-
-## Mobile Viewport Testing
-
-```typescript
-test.describe('mobile responsive', () => {
-  test.use({ viewport: { width: 375, height: 667 } });
-
-  test('hamburger menu works', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.getByRole('navigation')).not.toBeVisible();
-    await page.getByRole('button', { name: 'Menu' }).click();
-    await expect(page.getByRole('navigation')).toBeVisible();
-  });
-});
-```
-
----
-
-## Test Organization
-
-```
-tests/
-  e2e/
-    auth/
-      login.spec.ts
-      register.spec.ts
-    checkout/
-      cart.spec.ts
-      payment.spec.ts
-    fixtures/
-      test-data.ts
-      auth.setup.ts
-    pages/
-      login.page.ts
-      dashboard.page.ts
-    utils/
-      helpers.ts
-```
-
----
-
+## Network Request Mocking## Mobile viewport testing## Test Organization
 ## Anti-Patterns / Common Mistakes
 
 | Anti-Pattern | Why It Is Wrong | Correct Approach |
@@ -1261,3 +841,7 @@ tests/
 ## Skill Type
 
 **FLEXIBLE** — Adapt test depth to the project's critical paths. The page object model pattern and accessible locators are strongly recommended. Accessibility checks are mandatory on every page. Visual regression baselines must be reviewed before merge.
+A task associated with the `testing-mastery` skill can only be declared complete when:
+1. All checks on the operational checklist have been met.
+2. The result has been validated deterministically through execution evidence.
+3. There are no outstanding structural issues, placeholders, or unresolved errors.

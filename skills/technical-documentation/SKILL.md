@@ -5,15 +5,13 @@ description: Technical documentation generation, architectural diagrams, and com
 domain: domain-stack
 triggers:
   - technical-documentation
-  - documentation-reconciliation
-  - tech-docs-generator
-  - doc-reconcile
   - reconcile-docs
-  - reconcile-documentation
-  - sync-documentation
-  - atualizar-documentacao
-  - reconciliar-documentacao
-  - generate-technical-documentation
+  - architecture-diagrams
+  - docs-pillars
+  - documentacao-tecnica
+  - reconciliacao-de-documentos
+  - diagramas-arquiteturais
+  - gerar-documentacao
 tags:
   - technical-documentation
   - documentation
@@ -239,3 +237,19 @@ Generates technical documentation from in-depth analysis of the actual codebase 
 - [Semantic Versioning 2.0.0](https://semver.org/lang/pt-BR/)
 - [ADR Generator](../adr-generator/SKILL.md) — for ADR lifecycle
 - [ADR Archive](../adr-archive/SKILL.md) — for auditing and governance of artifacts
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `technical-documentation` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

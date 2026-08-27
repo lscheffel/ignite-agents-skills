@@ -2,12 +2,23 @@
 name: performance-optimization
 version: 1.0.0
 description: 'Use when optimizing application performance, reducing load times, improving
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   database queries, meeting performance budgets, or diagnosing bottlenecks in web
   applications or APIs. Triggers: slow page loads, poor Web Vitals, database timeouts,
   large bundle size, user-reported sluggishness, scaling preparation.'
 domain: engineering-quality
 triggers:
-- performance-optimization
+  - performance-optimization
+  - optimize-speed
+  - web-vitals
+  - memory-profiling
+  - otimizacao-de-performance
+  - melhorar-velocidade
+  - reduzir-latencia
+  - gargalos-de-desempenho
 tags:
 - performance-optimization
 - engineering-quality
@@ -299,3 +310,38 @@ Follow the `dispatching-parallel-agents` skill protocol when dispatching.
 ## Skill Type
 
 **FLEXIBLE** — Adapt the depth of optimization to the project context. The MEASURE-IDENTIFY-OPTIMIZE-VERIFY cycle is mandatory for every optimization. Revert any change that does not produce measurable improvement.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (performance-optimization)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

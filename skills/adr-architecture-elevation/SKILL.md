@@ -5,14 +5,13 @@ description: Independent Architecture Adversarial Review, Design Space Explorati
 domain: domain-stack
 triggers:
   - adr-architecture-elevation
-  - audit this ADR
-  - challenge this architecture
-  - elevate this decision set
-  - architecture review
-  - adversarial review
-  - design space exploration
-  - decision set amplification
-  - SOTA architecture review
+  - elevate-adr
+  - challenge-architecture
+  - adversarial-architecture-review
+  - elevar-adr
+  - desafio-arquitetural
+  - revisao-arquitetural-adversarial
+  - decision-set-amplification
 tags:
   - architecture
   - adr
@@ -266,3 +265,19 @@ architecture-elevation-report/
 - [`scripts/run_elevation.py`](./scripts/run_elevation.py) — Orchestrates the 8-phase pipeline and produces final package
 - [`scripts/comparative_matrix.py`](./scripts/comparative_matrix.py) — Helper for Phase 4 matrix scoring and visualization
 - [`scripts/reconstruct_problem.py`](./scripts/reconstruct_problem.py) — Guided problem reconstruction questionnaire
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `adr-architecture-elevation` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

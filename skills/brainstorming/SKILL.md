@@ -5,15 +5,13 @@ description: Structured collaborative ideation and design exploration engine. Tr
 domain: domain-stack
 triggers:
   - brainstorming
-  - /brainstorm
   - brainstorm
-  - exploring-ideas
-  - design-exploration
   - ideation
-  - feature-ideation
-  - explorar-ideias
-  - brainstorming-ideas
-  - idea-exploration
+  - design-exploration
+  - gerar-ideias
+  - exploracao-de-design
+  - ideacao
+  - collaborative-design
 tags:
   - brainstorming
   - ideation
@@ -292,3 +290,30 @@ If you catch yourself rationalizing:
 | `adr-generator` | Phase 3 & 5 | Converts selected architectural trade-offs into formal MADR decision sets. |
 | `agent-planning-execution`| Phase 5 | Receives approved design and creates the work breakdown structure (WBS). |
 | `implementation` | Post-Design | Executes the planned tasks with test-driven verification. |
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `brainstorming` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

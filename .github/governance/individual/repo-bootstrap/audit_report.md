@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/repo-bootstrap` | **Versão:** | `v2.0.0` |
-| **Hash SHA-256:** | `c9ce337e3d387e7aa7e290512424a5529b59caca6d2f58b992e27f2c236ab8fe` | **Score Global:** | `92.8 / 100` |
+| **Hash SHA-256:** | `e5f62d210024776b79a0b19e6f0eefbb6609904be7bffc88f0a36913de13c3cb` | **Score Global:** | `92.8 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Generates an initial repository structure with governance files: README.md, AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, docs/ directory, and CI/CD examples. Use when initializing a new repository or standardizing project structure.
+* **Descrição Funcional:** Generates an initial repository structure with governance files: README.md, related_skills: - cap - implementation - technical-documentation AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, docs/ directory, and CI/CD examples. Use when initializing a new repository or standardizing project structure.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~2467 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~2715 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |

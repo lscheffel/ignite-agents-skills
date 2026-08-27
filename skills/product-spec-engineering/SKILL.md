@@ -2,10 +2,20 @@
 name: product-spec-engineering
 version: 1.0.0
 description: PRD generation, technical spec writing, and reverse engineering requirements.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: domain-stack
 triggers:
-- product-spec-engineering
-- domain-stack
+  - product-spec-engineering
+  - write-prd
+  - product-requirements
+  - technical-specs
+  - especificacao-de-produto
+  - criar-prd
+  - requisitos-tecnicos
+  - engenharia-de-especificacao
 tags:
 - product-spec-engineering
 - domain-stack
@@ -742,3 +752,29 @@ Before claiming reverse engineering is complete:
 ## Skill Type
 
 **Flexible** — Adapt investigation depth and subagent count to codebase size while preserving the exhaustive-investigation and implementation-free output rules. No code paths may be skipped.
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (product-spec-engineering)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+

@@ -411,10 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: product-spec-engineering version: 1.0.0 description: PRD generation, technical spec writing, and reverse engineering requirements. domain: domain-stack triggers:</p>
+<p>name: product-spec-engineering version: 1.0.0 description: PRD generation, technical spec writing, and reverse engineering requirements. related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>domain: domain-stack triggers:</p>
 <ul>
 <li>product-spec-engineering</li>
-<li>domain-stack</li>
+<li>write-prd</li>
+<li>product-requirements</li>
+<li>technical-specs</li>
+<li>especificacao-de-produto</li>
+<li>criar-prd</li>
+<li>requisitos-tecnicos</li>
+<li>engenharia-de-especificacao</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -846,10 +858,32 @@ caller&#x27;s identity, so I can ensure only authorized users access the system.
 </ol>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>Flexible</strong> — Adapt investigation depth and subagent count to codebase size while preserving the exhaustive-investigation and implementation-free output rules. No code paths may be skipped.</p>
+<h2 id="decision-workflow">Decision Workflow</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Início: Ativação da Skill (product-spec-engineering)&quot;] --&gt; B[&quot;Validação de Pré-requisitos &amp; Escopo&quot;]
+    B --&gt; C{&quot;Requisitos Claros &amp; Completos?&quot;}
+    C --&gt;|Não| D[&quot;Solicitar Clarificação / Coletar Contexto (cap)&quot;]
+    C --&gt;|Sim| E[&quot;Execução do Procedimento Canônico&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;Verificação de Qualidade &amp; Critérios de Aceite&quot;]
+    F --&gt; G{&quot;Checklist 100% Aprovado?&quot;}
+    G --&gt;|Não| E
+    G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
+<h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/product-spec-engineering-template.html">product-spec-engineering-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/product-spec-engineering-example.html">product-spec-engineering-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

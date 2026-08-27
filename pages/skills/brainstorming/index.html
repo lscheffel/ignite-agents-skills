@@ -414,15 +414,13 @@
 <p>name: brainstorming version: 2.1.0 description: Structured collaborative ideation and design exploration engine. Transforms vague requirements and ideas into validated, documented designs before planning and implementation. domain: domain-stack triggers:</p>
 <ul>
 <li>brainstorming</li>
-<li>/brainstorm</li>
 <li>brainstorm</li>
-<li>exploring-ideas</li>
-<li>design-exploration</li>
 <li>ideation</li>
-<li>feature-ideation</li>
-<li>explorar-ideias</li>
-<li>brainstorming-ideas</li>
-<li>idea-exploration</li>
+<li>design-exploration</li>
+<li>gerar-ideias</li>
+<li>exploracao-de-design</li>
+<li>ideacao</li>
+<li>collaborative-design</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -638,10 +636,40 @@ Handoff to `agent-planning-execution` for work breakdown decomposition.</code></
 <hr>
 <h2 id="integration-matrix-with-canonical-catalog">Integration Matrix with Canonical Catalog</h2>
 <div class="table-wrapper"><table><tr><th>Canonical Skill</th><th>Phase</th><th>Integration Role</th></tr><tr><td><code>technical-documentation</code></td><td>Phase 1 & 5</td><td>Ingests <code>STATE.md</code> and repository pillars; updates persistent memory.</td></tr><tr><td><code>ux-researcher-designer</code></td><td>Phase 2</td><td>Provides user persona and journey insights for frontend features.</td></tr><tr><td><code>adr-generator</code></td><td>Phase 3 & 5</td><td>Converts selected architectural trade-offs into formal MADR decision sets.</td></tr><tr><td><code>agent-planning-execution</code></td><td>Phase 5</td><td>Receives approved design and creates the work breakdown structure (WBS).</td></tr><tr><td><code>implementation</code></td><td>Post-Design</td><td>Executes the planned tasks with test-driven verification.</td></tr></table></div>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
+<ul>
+<li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
+<li>[ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.</li>
+<li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
+<li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
+<li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>brainstorming</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/brainstorming-template.html">brainstorming-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/brainstorming-example.html">brainstorming-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

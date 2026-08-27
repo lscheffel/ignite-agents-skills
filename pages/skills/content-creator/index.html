@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: content-creator version: 1.0.0 description: 'Use when the user needs marketing copy, social media content, brand voice development, ad copy, newsletters, or persuasive writing for business audiences. Trigger conditions: social media post drafting, email campaign copy, landing page text, ad copy creation, brand voice definition, content calendar planning, headline writing, A/B test copy variations, newsletter composition.' domain: domain-stack triggers:</p>
+<p>name: content-creator version: 1.0.0 description: 'Use when the user needs marketing copy, social media content, brand related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>voice development, ad copy, newsletters, or persuasive writing for business audiences. Trigger conditions: social media post drafting, email campaign copy, landing page text, ad copy creation, brand voice definition, content calendar planning, headline writing, A/B test copy variations, newsletter composition.' domain: domain-stack triggers:</p>
 <ul>
 <li>content-creator</li>
+<li>marketing-copy</li>
+<li>social-media-post</li>
+<li>brand-voice</li>
+<li>criador-de-conteudo</li>
+<li>redacao-publicitaria</li>
+<li>post-redes-sociais</li>
+<li>copywriting</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -608,10 +621,46 @@ Here&#x27;s what [Customer/Number] are saying:
 <div class="table-wrapper"><table><tr><th>Skill</th><th>How It Connects</th></tr><tr><td><code>seo-optimizer</code></td><td>Keywords and meta tag strategy inform content headlines and structure</td></tr><tr><td><code>content-research-writer</code></td><td>Research findings provide evidence for marketing claims</td></tr><tr><td><code>email-composer</code></td><td>Brand voice and templates feed directly into email campaigns</td></tr><tr><td><code>llm-as-judge</code></td><td>Evaluate content quality against brand voice rubric</td></tr><tr><td><code>frontend-ui-design</code></td><td>Landing page copy must align with visual hierarchy and CTA placement</td></tr><tr><td><code>senior-prompt-engineer</code></td><td>AI-generated copy benefits from structured prompt patterns</td></tr></table></div>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>FLEXIBLE</strong> — Adapt voice, format, and framework to the brand guidelines, target audience, and distribution channel. The copywriting frameworks and platform guidelines are recommendations; brand voice consistency is the non-negotiable.</p>
+<h2 id="decision-workflow">Decision Workflow</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Início: Ativação da Skill (content-creator)&quot;] --&gt; B[&quot;Validação de Pré-requisitos &amp; Escopo&quot;]
+    B --&gt; C{&quot;Requisitos Claros &amp; Completos?&quot;}
+    C --&gt;|Não| D[&quot;Solicitar Clarificação / Coletar Contexto (cap)&quot;]
+    C --&gt;|Sim| E[&quot;Execução do Procedimento Canônico&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;Verificação de Qualidade &amp; Critérios de Aceite&quot;]
+    F --&gt; G{&quot;Checklist 100% Aprovado?&quot;}
+    G --&gt;|Não| E
+    G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
+<h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
+<ul>
+<li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
+<li>[ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.</li>
+<li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
+<li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
+<li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/content-creator-template.html">content-creator-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/content-creator-example.html">content-creator-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

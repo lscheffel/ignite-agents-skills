@@ -415,12 +415,12 @@
 <ul>
 <li>skill-creator</li>
 <li>create-skill</li>
-<li>build-skill</li>
-<li>new-skill</li>
-<li>criar-skill</li>
+<li>scaffold-agent-skill</li>
 <li>package-skill</li>
-<li>init-skill</li>
-<li>skill-generator</li>
+<li>criar-skill</li>
+<li>gerar-nova-skill</li>
+<li>empacotar-skill</li>
+<li>authoring-skills</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -499,9 +499,14 @@ version: 1.0.0
 description: Precise explanation of capabilities and invocation triggers in 3rd person.
 domain: domain-stack
 triggers:
-  - my-skill-name
-  - alternate-trigger-1
-  - alternate-trigger-2
+  - skill-creator
+  - create-skill
+  - scaffold-agent-skill
+  - package-skill
+  - criar-skill
+  - gerar-nova-skill
+  - empacotar-skill
+  - authoring-skills
 tags:
   - my-skill-name
   - category
@@ -603,10 +608,32 @@ python3 ~/.gemini/config/skills/skill-creator/scripts/package_skill.py &lt;path/
 <li>[ ] Validated with <code>quick_validate.py</code>.</li>
 <li>[ ] Audited with <code>skill-audit-bulletin</code> achieving Grade A (≥85/100).</li>
 </ul>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>skill-creator</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/skill-creator-template.html">skill-creator-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/skill-creator-example.html">skill-creator-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

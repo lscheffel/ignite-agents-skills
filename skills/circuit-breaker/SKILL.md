@@ -2,11 +2,22 @@
 name: circuit-breaker
 version: 1.0.0
 description: Use when running autonomous loops, repeated operations, or when detecting
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   stagnation patterns - enforces rate limits, protects configuration files, manages
   recovery with cooldown periods, and prevents infinite loops during autonomous development
 domain: domain-stack
 triggers:
-- circuit-breaker
+  - circuit-breaker
+  - infinite-loop-prevention
+  - cooldown-rate-limit
+  - safe-agent-loop
+  - disjuntor-de-execucao
+  - prevencao-loop-infinito
+  - limite-de-taxa
+  - autonomous-safety
 tags:
 - circuit-breaker
 - domain-stack
@@ -283,3 +294,48 @@ The circuit breaker activates AFTER resilient-execution has exhausted its retrie
 ## Skill Type
 
 **RIGID** — Thresholds and protection rules must be followed exactly. Do not relax circuit breaker conditions. Do not override open circuits. Do not skip file protection checks. Do not ignore stagnation signals.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (circuit-breaker)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+

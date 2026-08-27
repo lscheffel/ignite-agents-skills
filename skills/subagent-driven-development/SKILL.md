@@ -2,13 +2,24 @@
 name: subagent-driven-development
 version: 1.0.0
 description: Use when executing multi-task plans where each task can be implemented
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   independently by a subagent. Triggers when a plan has 3+ independent tasks, when
   speed of execution is important, when tasks have clear acceptance criteria suitable
   for delegation, or when two-stage review gates (spec compliance and code quality)
   are needed for iterative fix cycles.
 domain: agentic-workflow
 triggers:
-- subagent-driven-development
+  - subagent-driven-development
+  - multi-task-delegation
+  - subagent-execution
+  - two-stage-review
+  - desenvolvimento-com-subagentes
+  - delegar-para-subagentes
+  - revisao-em-duas-etapas
+  - subagent-loops
 tags:
 - subagent-driven-development
 - agentic-workflow
@@ -377,3 +388,38 @@ Each template provides a structured format for the subagent interaction. See the
 ## Skill Type
 
 **RIGID** — Follow this process exactly. All 7 spec sections are mandatory. Both review gates are mandatory. The 3-retry escalation limit is mandatory. No shortcuts.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (subagent-driven-development)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

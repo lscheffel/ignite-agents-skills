@@ -2,9 +2,20 @@
 name: governance
 version: 2.0.0
 description: Define governance guidelines for repositories and teams. Covers review, approval, branching strategy, semantic versioning, and issue/PR management processes. Use when defining team processes, implementing governance-as-code, or standardizing development workflows.
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: core-governance
 triggers:
-- governance
+  - governance
+  - repository-governance
+  - branch-protection
+  - semver-governance
+  - governanca-de-repositorio
+  - politicas-de-branch
+  - processo-de-aprovacao
+  - compliance
 tags:
 - governance
 - branching
@@ -116,6 +127,10 @@ graph TD
    ```
 3. Open a PR with a complete description:
    ```bash
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
    gh pr create --title "feat: add user validation" \
      --body-file templates/pull-request-template.md
    ```
@@ -382,3 +397,11 @@ git tag v1.2.0-rollback-20240115
 - [Semantic Versioning](https://semver.org/)
 - `git` — for commit and branch standards
 - `release` — for semantic versioning
+
+## Completion Gate
+
+A tarefa associada à skill `governance` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

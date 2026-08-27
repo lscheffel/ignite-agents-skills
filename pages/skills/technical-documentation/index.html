@@ -414,15 +414,13 @@
 <p>name: technical-documentation version: 2.1.0 description: Technical documentation generation, architectural diagrams, and comprehensive SOTA documentation reconciliation across all 6 canonical repository pillars (README, CHANGELOG, USAGE, RELEASE-NOTES, STATE, AGENTS/GEMINI). domain: domain-stack triggers:</p>
 <ul>
 <li>technical-documentation</li>
-<li>documentation-reconciliation</li>
-<li>tech-docs-generator</li>
-<li>doc-reconcile</li>
 <li>reconcile-docs</li>
-<li>reconcile-documentation</li>
-<li>sync-documentation</li>
-<li>atualizar-documentacao</li>
-<li>reconciliar-documentacao</li>
-<li>generate-technical-documentation</li>
+<li>architecture-diagrams</li>
+<li>docs-pillars</li>
+<li>documentacao-tecnica</li>
+<li>reconciliacao-de-documentos</li>
+<li>diagramas-arquiteturais</li>
+<li>gerar-documentacao</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -618,6 +616,19 @@
 <li><a href="../../skills/adr-generator/index.html">ADR Generator</a> — for ADR lifecycle</li>
 <li><a href="../../skills/adr-archive/index.html">ADR Archive</a> — for auditing and governance of artifacts</li>
 </ul>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>technical-documentation</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
@@ -627,12 +638,17 @@
   <li><span class="file-icon">&#128196;</span><a href="templates/readme.template.html">readme.template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/release-notes.template.html">release-notes.template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/state.template.html">state.template.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/technical-documentation-template.html">technical-documentation-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/usage.template.html">usage.template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/technical-documentation-example.html">technical-documentation-example.md</a></li>
 </ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

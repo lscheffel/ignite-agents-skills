@@ -2,12 +2,23 @@
 name: clean-code
 version: 1.0.0
 description: 'Use when the user needs code quality review, refactoring guidance, SOLID
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   principles application, or help identifying and fixing code smells. Triggers: code
   smell detection, refactoring planning, naming convention review, complexity reduction,
   DRY analysis, error handling improvement.'
 domain: engineering-quality
 triggers:
-- clean-code
+  - clean-code
+  - refactoring-code
+  - solid-principles
+  - code-smells
+  - codigo-limpo
+  - revisar-codigo
+  - remover-code-smells
+  - complexidade-ciclomatica
 tags:
 - clean-code
 - engineering-quality
@@ -344,3 +355,38 @@ function parseConfig(raw: string): Result<Config, ParseError> {
 ## Skill Type
 
 **FLEXIBLE** — Apply principles based on context. Not every function needs to be 5 lines; not every pattern needs to be SOLID. Use judgment and optimize for team readability over theoretical purity.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (clean-code)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: writing-skills version: 1.0.0 description: Use when creating new skills, commands, or agent definitions for Claude Code, including writing SKILL.md files, defining triggers, and testing skill behavior domain: domain-stack triggers:</p>
+<p>name: writing-skills version: 1.0.0 description: Use when creating new skills, commands, or agent definitions for Claude related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>Code, including writing SKILL.md files, defining triggers, and testing skill behavior domain: domain-stack triggers:</p>
 <ul>
 <li>writing-skills</li>
+<li>write-agent-skill</li>
+<li>claude-code-skills</li>
+<li>skill-prompting</li>
+<li>escrever-skills</li>
+<li>criar-instrucoes-de-agente</li>
+<li>formatacao-de-skills</li>
+<li>skill-authoring</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -443,15 +456,27 @@ Should NOT trigger: testing-strategy, code-review, writing-skills</code></pre>
 <pre data-lang="yaml"><code>---
 name: skill-name          # lowercase with hyphens, unique identifier
 description: &quot;Use when [trigger conditions]&quot;  # Max 1024 chars
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 ---</code></pre>
 <p><strong>[HARD-GATE]</strong> The <code>description</code> field MUST start with "Use when".</p>
 <h3 id="cso-claude-search-optimization-rules">CSO (Claude Search Optimization) Rules</h3>
 <p>The <code>description</code> field determines when a skill is selected. Optimize it like a search query.</p>
 <div class="table-wrapper"><table><tr><th>Rule</th><th>Explanation</th></tr><tr><td>Start with "Use when..."</td><td>Trigger condition format</td></tr><tr><td>List specific conditions, not capabilities</td><td>What activates the skill, not what it teaches</td></tr><tr><td>Maximum 1024 characters</td><td>Be concise</td></tr><tr><td>Use action verbs</td><td>"creating", "debugging", "designing", "reviewing"</td></tr></table></div>
 <p><strong>Good:</strong></p>
-<pre data-lang="yaml"><code>description: &quot;Use when creating database migrations, designing table schemas, adding indexes, or optimizing SQL queries&quot;</code></pre>
+<pre data-lang="yaml"><code>description: &quot;Use when creating database migrations, designing table schemas, adding indexes, or optimizing SQL queries&quot;
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation</code></pre>
 <p><strong>Bad:</strong></p>
-<pre data-lang="yaml"><code>description: &quot;A comprehensive guide to database design covering normalization, indexing, query optimization, and migration strategies&quot;</code></pre>
+<pre data-lang="yaml"><code>description: &quot;A comprehensive guide to database design covering normalization, indexing, query optimization, and migration strategies&quot;
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation</code></pre>
 <h3 id="trigger-condition-patterns">Trigger Condition Patterns</h3>
 <div class="table-wrapper"><table><tr><th>Pattern</th><th>Format</th><th>Example</th></tr><tr><td>Action-based</td><td>"Use when creating..., updating..., deleting..."</td><td>CRUD operations</td></tr><tr><td>Problem-based</td><td>"Use when debugging..., fixing..., resolving..."</td><td>Bug fixes</td></tr><tr><td>Artifact-based</td><td>"Use when working with Docker files, CI configs..."</td><td>File types</td></tr><tr><td>Phase-based</td><td>"Use when starting a project, finishing a feature..."</td><td>Workflow stage</td></tr></table></div>
 <p>STOP — Verify the description would match test prompts from Phase 1 before proceeding.</p>
@@ -499,6 +524,10 @@ description: &quot;Use when [trigger conditions]&quot;  # Max 1024 chars
 <pre data-lang="markdown"><code>---
 name: docker-setup
 description: &quot;Use when creating Dockerfiles, docker-compose configurations, or containerizing an application for development or production&quot;
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 ---
 
 # Docker Setup
@@ -528,15 +557,45 @@ STOP — present for review.
 **Flexible**</code></pre>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>Rigid</strong> — The TDD approach (test prompts first), required structure elements, and validation checklist must be followed exactly. No elements may be skipped.</p>
+<h2 id="decision-workflow">Decision Workflow</h2>
+<pre data-lang="mermaid"><code>graph TD
+    A[&quot;Início: Ativação da Skill (writing-skills)&quot;] --&gt; B[&quot;Validação de Pré-requisitos &amp; Escopo&quot;]
+    B --&gt; C{&quot;Requisitos Claros &amp; Completos?&quot;}
+    C --&gt;|Não| D[&quot;Solicitar Clarificação / Coletar Contexto (cap)&quot;]
+    C --&gt;|Sim| E[&quot;Execução do Procedimento Canônico&quot;]
+    D --&gt; E
+    E --&gt; F[&quot;Verificação de Qualidade &amp; Critérios de Aceite&quot;]
+    F --&gt; G{&quot;Checklist 100% Aprovado?&quot;}
+    G --&gt;|Não| E
+    G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
+<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
+<ul>
+<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
+<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
+<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
+<ul>
+<li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
+<li>[ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.</li>
+<li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
+<li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
+<li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
 <h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/writing-skills-template.html">writing-skills-template.md</a></li>
+</ul>
 <h3>Examples</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="examples/CLAUDE_MD_TESTING.html">CLAUDE_MD_TESTING.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="examples/writing-skills-example.html">writing-skills-example.md</a></li>
 </ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

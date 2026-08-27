@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/llm-as-judge` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `e797d151dc51113dabd5ce7ff5bfb7149f658be77eed8db62b8e498cec518c3b` | **Score Global:** | `92.6 / 100` |
+| **Hash SHA-256:** | `f237d3eb1ba55a4037d693dd057385e9dbe09a013e0a99a303a99fcc67d10ffa` | **Score Global:** | `85.6 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use when validating subjective quality criteria that cannot be deterministically tested — applies LLM-based evaluation with structured rubrics for tone, aesthetics, UX feel, documentation quality, and code readability. Triggers: documentation quality check, error message tone review, UX copy evaluation, code readability assessment, design aesthetic review.
+* **Descrição Funcional:** Módulo de execução autônomo para llm-as-judge.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -20,31 +20,52 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
-| **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~2514 tokens), com densidade instrucional eficiente. |
+| **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
+| **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3106 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
-| **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
+| **D8. Conformidade & Lifecycle** | 8.0 | [WARN] | Compatível funcionalmente, porém necessita padronização estrita de metadados SemVer. |
 
 ---
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Incorporação de Suíte de Testes e Fixtures de Regressão
-* **Severidade:** Baixa
-* **Impacto:** Garantia de não-regressão comportamental em upgrades de modelos de linguagem.
+#### 3.1 Padronização Estrita de Contrato YAML Frontmatter & Tipagem
+* **Severidade:** Média
+* **Impacto:** Otimização do despacho semântico no orquestrador multi-agente e prevenção de roteamento ambíguo.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Sem arquivo de teste dedicado em tests/
+---
+name: llm-as-judge
+version: 1.0.0
+description: 'Use when validating subjective quality criteria that cannot be deterministically
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
+domain: domain-s
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_llm_as_judge.py
-def test_llm_as_judge_contract():
-    assert True, 'Contract verified against specification'
+---
+name: llm-as-judge
+version: 1.0.0
+description: Especialista em llm-as-judge com contratos formais e tipagem estrita.
+triggers:
+  - llm-as-judge
+---
+
+---
+name: llm-as-judge
+version: 1.0.0
+description: 'Use when validating subjective quality criteria that cannot be deterministically
+related_skills:
+  - cap
+  - implementation
+  - 
 ```
 
 ---

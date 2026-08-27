@@ -411,9 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: release version: 2.0.0 description: Guide for release management and versioning. Defines release process, changelog, tag, deploy, and rollback. Use when preparing releases, publishing packages, or managing semantic versioning. domain: core-governance triggers:</p>
+<p>name: release version: 2.0.0 description: Guide for release management and versioning. Defines release process, related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>changelog, tag, deploy, and rollback. Use when preparing releases, publishing packages, or managing semantic versioning. domain: core-governance triggers:</p>
 <ul>
 <li>release</li>
+<li>release-management</li>
+<li>publish-package</li>
+<li>tag-and-deploy</li>
+<li>gerenciamento-de-release</li>
+<li>publicar-versao</li>
+<li>processo-de-lancamento</li>
+<li>rollback-plan</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -721,15 +734,24 @@ git merge hotfix/critical-bug</code></pre>
 <li><code>git</code> — for tags and branching</li>
 <li><code>governance</code> — for approval process</li>
 </ul>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>release</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
   <li><span class="file-icon">&#128196;</span><a href="templates/changelog-entry.html">changelog-entry.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/release-checklist.html">release-checklist.md</a></li>
+  <li><span class="file-icon">&#128196;</span><a href="templates/release-template.html">release-template.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="templates/rollback-plan.html">rollback-plan.md</a></li>
 </ul>
 <h3>Examples</h3>
 <ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/release-example.html">release-example.md</a></li>
   <li><span class="file-icon">&#128196;</span><a href="examples/release-process.html">release-process.md</a></li>
 </ul>
 <h3>Checklists</h3>
@@ -740,7 +762,7 @@ git merge hotfix/critical-bug</code></pre>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>

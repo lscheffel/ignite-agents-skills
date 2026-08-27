@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/email-composer` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `5fa46be264e161eb2acc26675e256e4e556b0687f17d5810e4c54be22175034d` | **Score Global:** | `91.5 / 100` |
+| **Hash SHA-256:** | `c4665396d54d515a5345c952ddfd438387770a229e12015b37578a213e93c1e1` | **Score Global:** | `92.8 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use when the user needs professional email drafting, tone adjustment, template creation, or communication strategy for business correspondence. Trigger conditions: draft professional email, adjust email tone, create email template, write cold outreach, compose follow-up, draft escalation email, write apology email, craft meeting request, compose status update, plan email communication strategy.
+* **Descrição Funcional:** Use when the user needs professional email drafting, tone adjustment, related_skills: - cap - implementation - technical-documentation template creation, or communication strategy for business correspondence. Trigger conditions: draft professional email, adjust email tone, create email template, write cold outreach, compose follow-up, draft escalation email, write apology email, craft meeting request, compose status update, plan email communication strategy.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -22,29 +22,27 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
 | **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3255 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3974 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
 | **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
 
 ---
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Incorporação de Suíte de Testes e Fixtures de Regressão
+#### 3.1 Hardening de Telemetria e Tracing Transacional
 * **Severidade:** Baixa
-* **Impacto:** Garantia de não-regressão comportamental em upgrades de modelos de linguagem.
+* **Impacto:** Padronização de correlação de spans (trace_id) e métricas operacionais.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Sem arquivo de teste dedicado em tests/
+// Execução direta sem emissão de telemetria estruturada
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_email_composer.py
-def test_email_composer_contract():
-    assert True, 'Contract verified against specification'
+// Injeção de hook de telemetria com trace_id, latência e status de execução
 ```
 
 ---

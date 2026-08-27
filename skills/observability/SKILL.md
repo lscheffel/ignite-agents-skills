@@ -2,11 +2,22 @@
 name: observability
 version: 2.0.0
 description: Comprehensive guide to system observability in production. Defines standards
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   for structured logging, metrics, distributed tracing, and alerting. Use when configuring
   monitoring, investigating incidents, or implementing observability in microservices.
 domain: architecture-systems
 triggers:
-- observability
+  - observability
+  - metrics-logging-tracing
+  - prometheus-grafana
+  - opentelemetry
+  - observabilidade
+  - configurar-metricas
+  - logs-estruturados
+  - tracing-distribuido
 tags:
 - observability
 - logging
@@ -402,3 +413,11 @@ app.use((req, res, next) => {
 - `testing` — for testing instrumentation
 - `release` — for metrics of deploy
 - `governance` — for policies of retention
+
+## Completion Gate
+
+A tarefa associada à skill `observability` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

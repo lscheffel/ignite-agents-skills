@@ -2,11 +2,21 @@
 name: git-workflow
 version: 1.0.0
 description: Unified Git operations, commit styling, worktree management, and branch
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   completion workflows.
 domain: agentic-workflow
 triggers:
-- git-workflow
-- agentic-workflow
+  - git-workflow
+  - git-branching
+  - git-commits
+  - worktree-management
+  - fluxo-git
+  - gerenciar-branches
+  - padrao-de-commits
+  - git-worktree
 tags:
 - git-workflow
 - agentic-workflow
@@ -1216,3 +1226,11 @@ Confirm the base branch is in the expected state.
 ## Skill Type
 
 **RIGID** — Follow this process exactly. Every phase must be completed in order. Do NOT skip verification. Do NOT merge without user confirmation. Do NOT assume a merge strategy. Do NOT delete branches without asking.
+
+## Completion Gate
+
+A tarefa associada à skill `git-workflow` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

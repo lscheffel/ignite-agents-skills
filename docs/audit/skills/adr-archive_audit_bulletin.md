@@ -2,7 +2,7 @@
 
 **Audit Date:** 2026-08-26  
 **Auditor Engine:** `skill-audit-bulletin` (v5.1.0 — SOTA Dual-Axis & Ledger Edition)  
-**Overall Grade:** **B (Silver)** — **82.9 / 100**  
+**Overall Grade:** **B (Silver)** — **85.3 / 100**  
 **One-Line Verdict:** *Solid foundation with minor improvement opportunities in triggers or visual ergonomics.*  
 **Recommended Action:** **AUGMENT_SOTA**
 
@@ -13,10 +13,10 @@
 | Axis | Score | Grade | Status |
 |:---|:---:|:---:|:---:|
 | **Axis 1: Physical Structural & Governance** | **98.5 / 100** | **B** | ✅ PASSED |
-| **Axis 2: Domain SOTA & Cognitive Efficacy** | **72.5 / 100** | **B** | ✅ PASSED |
-| **Combined 2D Score** | **82.9 / 100** | **B** | 🏆 CONFORMING |
+| **Axis 2: Domain SOTA & Cognitive Efficacy** | **76.5 / 100** | **B** | ✅ PASSED |
+| **Combined 2D Score** | **85.3 / 100** | **B** | 🏆 CONFORMING |
 
-- **Strongest Point:** Cobertura aprofundada com arquitetura modular (7 artefatos de apoio).
+- **Strongest Point:** Cobertura aprofundada com arquitetura modular (9 artefatos de apoio).
 - **Weakest Point:** Oportunidade de expansão de cenários avançados de borda.
 - **Principal Risk if Implemented Without Changes:** Possível inconsistência em casos extremos não mapeados.
 - **Effort to Reach Perfection (100/100):** **HIGH**
@@ -27,9 +27,9 @@
 
 | Dimension | Weight | Score | Evaluation & Evidence |
 |:---|:---:|:---:|:---|
-| **1. Semantic Triggering** | 20% | **18.5 / 20.0** | 10 triggers definidos, descrição com 423 caracteres, tags: 8. |
+| **1. Semantic Triggering** | 20% | **18.5 / 20.0** | 8 triggers definidos, descrição com 423 caracteres, tags: 8. |
 | **2. Applicability & Boundaries** | 10% | **10.0 / 10.0** | Seção 'When to Use': ✓ | 'Do Not Use When': ✓. |
-| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 1546 palavras, 8 arquivos modulares de apoio, workflow formal presente. |
+| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 1650 palavras, 10 arquivos modulares de apoio, workflow formal presente. |
 | **4. Technical Accuracy** | 15% | **15.0 / 15.0** | 16 blocos de código/comandos, zero placeholders genéricos: ✓. |
 | **5. Universality & Portability** | 10% | **10.0 / 10.0** | Zero caminhos absolutos de hosts externos, portabilidade POSIX/AST universal. |
 | **6. Maintainability & SemVer** | 10% | **10.0 / 10.0** | SemVer v3.0.0 (✓), 5 related_skills, taxonomia de riscos (✓). |
@@ -43,8 +43,8 @@
 | Dimension | Weight | Score | Evaluation & Evidence |
 |:---|:---:|:---:|:---|
 | **1. Domain SOTA & Best Practices** | 30% | **21.0 / 30.0** | Aderência a padrões industriais SOTA comprovada por 2 marcadores conceituais de engenharia de software. |
-| **2. Heuristic Depth & Edge Cases** | 25% | **8.0 / 25.0** | 0 regras heurísticas explícitas, seção de Edge Cases ausente. |
-| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 3085 tokens com alta proporção sinal-ruído e linguagem imperativa. |
+| **2. Heuristic Depth & Edge Cases** | 25% | **12.0 / 25.0** | 0 regras heurísticas explícitas, seção de Edge Cases presente. |
+| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 3296 tokens com alta proporção sinal-ruído e linguagem imperativa. |
 | **4. Strategic Alignment & SWOT** | 20% | **18.5 / 20.0** | Acoplamento sinérgico com 5 skills complementares no catálogo. |
 
 ---
@@ -54,7 +54,7 @@
 ```
 +--------------------------------------------------+--------------------------------------------------+
 |                  STRENGTHS (S)                   |                  WEAKNESSES (W)                  |
-| • Cobertura aprofundada com arquitetura modular (7 artefatos de apoio). |
+| • Cobertura aprofundada com arquitetura modular (9 artefatos de apoio). |
 | • Ergonomia exemplar com fluxos visuais em Mermaid e checklists determinísticos. |
 +--------------------------------------------------+--------------------------------------------------+
 |                OPPORTUNITIES (O)                 |                   THREATS (T)                    |
@@ -66,5 +66,5 @@
 
 ## 5. Veredito Final & Próximos Passos
 
-A skill [`skills/adr-archive`](../../../skills/adr-archive) foi **Classificada como Grau B (82.9 / 100)**.  
+A skill [`skills/adr-archive`](../../../skills/adr-archive) foi **Classificada como Grau B (85.3 / 100)**.  
 Status de Adoção: **AUGMENT_SOTA**.

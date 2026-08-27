@@ -2,13 +2,24 @@
 name: mobile-design
 version: 1.0.0
 description: 'Use when the user needs mobile app design and development patterns for
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   React Native, Flutter, or SwiftUI — including platform HIG compliance, gestures,
   and offline-first architecture. Triggers: user says "mobile", "iOS", "Android",
   "React Native", "Flutter", "SwiftUI", "app design", "mobile navigation", "touch
   targets", "offline-first".'
 domain: frontend-ux
 triggers:
-- mobile-design
+  - mobile-design
+  - react-native-design
+  - flutter-ui
+  - swiftui-patterns
+  - design-mobile
+  - desenvolvimento-mobile
+  - padroes-ui-mobile
+  - offline-first
 tags:
 - mobile-design
 - frontend-ux
@@ -290,3 +301,38 @@ Use `mcp__context7__resolve-library-id` then `mcp__context7__query-docs` for up-
 ## Skill Type
 
 **FLEXIBLE** — Adapt patterns to the chosen framework and target platforms. Platform-specific guidelines should be followed when targeting a single platform; cross-platform apps may blend conventions thoughtfully.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (mobile-design)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

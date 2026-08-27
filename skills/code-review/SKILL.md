@@ -2,17 +2,20 @@
 name: code-review
 version: 5.0.0
 description: Unified code review engine supporting fast iterative review (mode: lite) and rigorous multi-agent consensus verification (mode: full).
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
 domain: engineering-quality
 triggers:
-- code-review
-- code-review-lite
-- review_code
-- task_completion
-- feature_completion
-- pre_commit
-- pre_merge
-- release_candidate
-- production_deployment
+  - code-review
+  - review-pr
+  - code-audit
+  - pull-request-review
+  - revisao-de-codigo
+  - analisar-pr
+  - auditoria-de-codigo
+  - pr-review
 tags:
 - code-review
 - governance
@@ -31,6 +34,8 @@ metadata:
 
 This unified engine operates in two interchangeable modes of intensity:
 
+
+
 ```
                                   UNIFIED CODE REVIEW ENGINE
                                                 │
@@ -42,6 +47,8 @@ This unified engine operates in two interchangeable modes of intensity:
         - Immediate Security Sanity Checks              - Consensus Voting (Council)
         - Vibe-coding and Iterative PRs                  - Audit Trail and Immutability
 ```
+
+
 
 ## Mode Selection
 
@@ -74,75 +81,7 @@ When executed in `mode: lite`:
 4. **Rapid Verdict:** Return immediately with a list of improvements and approval/blocking in direct format.
 
 ---
-
-## Operational Flow: Full Mode (Multi-Agent Protocol)
-
----
-
-# Runtime State Machine
-
-```text
-INITIALIZED
-    ↓
-DEPENDENCY_VERIFICATION
-    ↓
-INPUT_SANITIZATION
-    ↓
-SEMANTIC_EXTRACTION
-    ↓
-REVIEW_DISPATCH
-    ↓
-CONSENSUS_EVALUATION
-    ↓
-AUDIT_PERSISTENCE
-    ↓
-MERGE_APPROVED
-```
-
-Terminal states:
-
-```text
-MERGE_BLOCKED
-ESCALATED
-FAILED
-```
-
----
-
-# Phase 0 — Dependency Verification
-
-## Generate SBOM
-
-```bash
-syft . -o json > sbom.json
-```
-
-## Dependency Security Scanning
-
-Python:
-
-```bash
-pip-audit
-```
-
-Node:
-
-```bash
-npm audit --audit-level high
-```
-
-Rust:
-
-```bash
-cargo audit
-```
-
-Containers:
-
-```bash
-grype .
-```
-
+## 操作流程：全模式（多代理协议）## Generate SBOM## Dependency Security Scanning
 ## Approved Tool Verification
 
 Every executable dependency MUST satisfy:
@@ -153,40 +92,18 @@ Every executable dependency MUST satisfy:
 
 Failure result:
 
+
+
 ```text
 BLOCK_EXECUTION
 ```
 
+
+
 ---
 
 # Phase 1 — Input Sanitization
-
-## Objective
-
-Transform untrusted inputs into trusted semantic artifacts.
-
-## Security Gateway Pipeline
-
-```text
-RAW INPUT
-    ↓
-Tokenizer
-    ↓
-Parser
-    ↓
-Metadata Extractor
-    ↓
-Normalizer
-    ↓
-Schema Validator
-    ↓
-Policy Validator
-    ↓
-Serializer
-    ↓
-TRUSTED ARTIFACT
-```
-
+## Cél## Security Gateway Pipeline
 ## Forbidden Inputs
 
 Never expose directly to reviewer agents:
@@ -197,60 +114,10 @@ Never expose directly to reviewer agents:
 - secrets
 - credentials
 - configuration files
-
-## Secret Detection
-
-Execute:
-
-```bash
-gitleaks detect
-detect-secrets scan
-trufflehog git .
-```
-
-Detection result:
-
-```text
-BLOCK_MERGE
-ESCALATE_SECURITY
-```
-
----
-
-# Phase 2 — Semantic Extraction
-
-## Allowed Artifacts
-- Abstract Syntax Tree (AST)
-- Semantic Graph
-- Code Property Graph
-- Dependency Graph
-
-## Forbidden Artifact
-
-```text
-RAW_DIFF
-```
-
-## Semantic Change Schema
-
-```json
-{
-  "change_id": "uuid",
-  "change_type": "function_added",
-  "module": "auth.py",
-  "symbol": "validate_token",
-  "dependencies_added": ["jwt"],
-  "security_impact": true,
-  "behavior_change": true,
-  "breaking_change": false,
-  "risk_score": 0.82
-}
-```
-
----
-
-# Phase 3 — Review Dispatch
-
+## 潛在的脆弱性檢測- 概念語法樹 (AST)
+- 意義圖
+- 代碼屬性圖
+- 依賴關係圖## Zakazany artefakt## Semantic Change Schema
 ## Reviewer Swarm
 
 ### Architecture Reviewer
@@ -293,6 +160,8 @@ Responsibilities:
 
 Example:
 
+
+
 ```yaml
 agent_id: security-reviewer
 
@@ -317,19 +186,17 @@ permissions:
       - pytest
 ```
 
+
+
 ---
 
 # Phase 4 — Consensus Evaluation
-
-## Voting Weights
-
-| Reviewer     | Weight |
+| Reviewer | Weight |
 | ------------ | ------ |
-| Security     | 0.35   |
-| Architecture | 0.25   |
-| Quality      | 0.20   |
-| Performance  | 0.20   |
-
+| Security | 0.35 |
+| Architecture | 0.25 |
+| Quality | 0.20 |
+| Performance | 0.20 |
 ## Decision Rules
 
 Automatic rejection:
@@ -354,6 +221,8 @@ Automatic approval:
 
 ## Audit Artifact
 
+
+
 ```json
 {
   "review_id": "uuid",
@@ -368,26 +237,40 @@ Automatic approval:
 }
 ```
 
+
+
 ## Protection
 
 Encryption:
+
+
 
 ```text
 AES256-GCM
 ```
 
+
+
 Integrity:
+
+
 
 ```text
 SHA256
 Ed25519
 ```
 
+
+
 Access:
+
+
 
 ```text
 RBAC_REQUIRED
 ```
+
+
 
 ---
 
@@ -409,15 +292,7 @@ RBAC_REQUIRED
 - MAJOR → Runtime changes
 - MINOR → New reviewers or capabilities
 - PATCH → Policy updates
-
-## Change Requirements
-
-Every change requires:
-- ADR
-- Security Review
-- Architecture Approval
-- Migration Guide
-
+Każda zmiana wymaga:
 ## Deprecation Policy
 - minimum support period: 24 months
 - migration window: 12 months
@@ -439,6 +314,8 @@ Mandatory scenarios:
 
 # Iron Law
 
+
+
 ```text
 NO MERGE WITHOUT REVIEW
 NO REVIEW WITHOUT CONSENSUS
@@ -447,14 +324,53 @@ NO AUDIT WITHOUT TRACEABILITY
 NO EXCEPTIONS
 ```
 
+
+
 ---
 
 # Final Rule
 
 If uncertainty exists:
 
+
+
 ```text
 FAIL_CLOSED
 BLOCK_MERGE
 ESCALATE
 ```
+
+
+
+## Decision Workflow
+
+
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (code-review)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+
+| Anti-Pattern | Severity | Negative Impact | Canonical Mitigation |
+| :--- | :---: | :--- | :--- |
+| **Early Execution without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Enable the `cap` skill to acquire minimal evidence before editing. |
+| **Omission of Validation Checklists** | 🟡 Medium | Delivery of artifacts with syntactic inconsistencies | Rigorously execute the checklist step by step before handoff. |
+| **Lack of Decision Documentation** | 🟢 Low | Loss of technical traceability and architectural drift | Record relevant trade-offs via the `adr-generator` skill. |- **Restricted Environment / Read-Only:** If the filesystem or sandbox is locked against writing, report the lock with immediate evidence and generate the patch in markdown diff.
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.

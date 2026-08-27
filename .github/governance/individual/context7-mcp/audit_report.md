@@ -3,15 +3,15 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/context7-mcp` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `5e076a3315e260337d307aedcda6976b5b14201ada13edcd08bbca4e16f66e6e` | **Score Global:** | `92.3 / 100` |
+| **Hash SHA-256:** | `58a89335e8b7c0a8c006f2c9b2645d99e683c49ab9305e697e79aa5d16b31e0a` | **Score Global:** | `85.3 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks like React, Vue, Next.js, Prisma, Supabase, etc.
-* **Consumo de Schema:** `~598 tokens` (System Prompt footprint)
-* **Payload Médio (Retorno):** `~2395 bytes / ~598 tokens`
+* **Descrição Funcional:** Módulo de execução autônomo para context7-mcp.
+* **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
+* **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
 
 ---
@@ -20,31 +20,52 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
-| **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~598 tokens totais), permitindo injeção com overhead mínimo. |
+| **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
+| **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
+| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~1315 tokens totais), permitindo injeção com overhead mínimo. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
-| **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
+| **D8. Conformidade & Lifecycle** | 8.0 | [WARN] | Compatível funcionalmente, porém necessita padronização estrita de metadados SemVer. |
 
 ---
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Incorporação de Suíte de Testes e Fixtures de Regressão
-* **Severidade:** Baixa
-* **Impacto:** Garantia de não-regressão comportamental em upgrades de modelos de linguagem.
+#### 3.1 Padronização Estrita de Contrato YAML Frontmatter & Tipagem
+* **Severidade:** Média
+* **Impacto:** Otimização do despacho semântico no orquestrador multi-agente e prevenção de roteamento ambíguo.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Sem arquivo de teste dedicado em tests/
+---
+name: context7-mcp
+version: 1.0.0
+description: This skill should be used when the user asks about libraries, frameworks,
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
+  API references, or nee
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_context7_mcp.py
-def test_context7_mcp_contract():
-    assert True, 'Contract verified against specification'
+---
+name: context7-mcp
+version: 1.0.0
+description: Especialista em context7-mcp com contratos formais e tipagem estrita.
+triggers:
+  - context7-mcp
+---
+
+---
+name: context7-mcp
+version: 1.0.0
+description: This skill should be used when the user asks about libraries, frameworks,
+related_skills:
+  - cap
+  - implementation
+  - technica
 ```
 
 ---

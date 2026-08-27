@@ -1,6 +1,17 @@
 --- a/SKILL.md
 +++ b/SKILL.md
 @@ -1,8 +1,16 @@
-+// Particionamento de referências e exemplos em pasta references/ sob demanda via view_file
++---
+name: agent-planning-execution
+version: 1.0.0
+description: Especialista em agent-planning-execution com contratos formais e tipagem estrita.
+triggers:
+  - agent-planning-execution
+---
+
+---
+name: agent-planning-execution
+version: 1.0.0
+description: Comprehensive planning, roadmap management, task
 + # [SOTA-TELEMETRY-HOOK]: trace_id, duration_ms, error_boundary
-+ # [AUDIT-VERIFICATION]: Evaluated under 8-Dimension SOTA Framework (Score: 88.8/100)
++ # [AUDIT-VERIFICATION]: Evaluated under 8-Dimension SOTA Framework (Score: 81.9/100)

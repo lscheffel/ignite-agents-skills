@@ -2,13 +2,24 @@
 name: dispatching-parallel-agents
 version: 1.0.0
 description: Use when a task has multiple independent subtasks that can be executed
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   concurrently by separate agents. Triggers when decomposed work has 2+ subtasks with
   no data dependencies, when subtasks operate on different files or codebase sections,
   when serial execution time would be significantly longer than parallel, or when
   independent analyses or deliverables need concurrent generation.
 domain: agentic-workflow
 triggers:
-- dispatching-parallel-agents
+  - dispatching-parallel-agents
+  - parallel-agents
+  - concurrent-subtasks
+  - fan-out
+  - disparo-de-agentes-paralelos
+  - subagentes-concorrentes
+  - execucao-paralela
+  - task-fanout
 tags:
 - dispatching-parallel-agents
 - agentic-workflow
@@ -345,3 +356,38 @@ If you catch yourself thinking:
 ## Skill Type
 
 **RIGID** — Follow this process exactly. Independence verification is mandatory. All four prompt sections are mandatory. Integration verification is mandatory. No shortcuts on parallelism safety.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (dispatching-parallel-agents)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

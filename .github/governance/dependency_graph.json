@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T01:39:44.847032+00:00",
+    "generated_at": "2026-08-27T02:20:23.786131+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -479,6 +479,11 @@
     },
     {
       "source": "adr-architecture-elevation",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-architecture-elevation",
       "target": "systematic-debugging",
       "relationship": "references_skill"
     },
@@ -505,6 +510,11 @@
     {
       "source": "adr-archive",
       "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-archive",
+      "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
     {
@@ -544,7 +554,17 @@
     },
     {
       "source": "adr-generator",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "adr-generator",
       "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -570,6 +590,16 @@
     {
       "source": "agent-development",
       "target": "mcp-builder",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -600,6 +630,11 @@
     {
       "source": "agent-orchestration",
       "target": "prompt-engineering",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-orchestration",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -664,6 +699,11 @@
     },
     {
       "source": "agent-planning-execution",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
       "target": "test-driven-development",
       "relationship": "references_skill"
     },
@@ -689,6 +729,11 @@
     },
     {
       "source": "agents-md-management",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agents-md-management",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -703,6 +748,11 @@
       "relationship": "references_skill"
     },
     {
+      "source": "agents-md-management",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
       "source": "api-design",
       "target": "governance",
       "relationship": "references_skill"
@@ -710,6 +760,11 @@
     {
       "source": "api-design",
       "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "api-design",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -739,12 +794,27 @@
     },
     {
       "source": "artifacts-builder",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
       "target": "implementation",
       "relationship": "references_skill"
     },
     {
       "source": "artifacts-builder",
       "target": "mobile-design",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -794,6 +864,11 @@
     },
     {
       "source": "brainstorming",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "brainstorming",
       "target": "systematic-debugging",
       "relationship": "references_skill"
     },
@@ -834,6 +909,11 @@
     },
     {
       "source": "cap",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "cap",
       "target": "systematic-debugging",
       "relationship": "references_skill"
     },
@@ -844,12 +924,37 @@
     },
     {
       "source": "changelog-generator",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "changelog-generator",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "changelog-generator",
       "target": "refactoring",
       "relationship": "references_skill"
     },
     {
       "source": "changelog-generator",
       "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "changelog-generator",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "changelog-generator",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -864,12 +969,32 @@
     },
     {
       "source": "circuit-breaker",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
       "target": "verification-before-completion",
       "relationship": "references_skill"
     },
     {
       "source": "clean-code",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
       "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "implementation",
       "relationship": "references_skill"
     },
     {
@@ -884,7 +1009,17 @@
     },
     {
       "source": "clean-code",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
       "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "clean-code",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -894,7 +1029,7 @@
     },
     {
       "source": "code-review",
-      "target": "code-review-lite",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -904,7 +1039,27 @@
     },
     {
       "source": "code-review",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review",
       "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -915,6 +1070,21 @@
     {
       "source": "code-review-lite",
       "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-workflow",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -938,6 +1108,21 @@
       "relationship": "references_skill"
     },
     {
+      "source": "code-review-workflow",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-workflow",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
       "source": "content-creator",
       "target": "content-research-writer",
       "relationship": "references_skill"
@@ -949,12 +1134,32 @@
     },
     {
       "source": "content-creator",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
       "target": "llm-as-judge",
       "relationship": "references_skill"
     },
     {
       "source": "content-creator",
       "target": "seo-optimizer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -988,6 +1193,36 @@
       "relationship": "references_skill"
     },
     {
+      "source": "content-research-writer",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
       "source": "context7-mcp",
       "target": "mcp__context7",
       "relationship": "references_skill"
@@ -999,12 +1234,32 @@
     },
     {
       "source": "database-architecture",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
       "target": "deployment",
       "relationship": "references_skill"
     },
     {
       "source": "database-architecture",
       "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "database-architecture",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1020,6 +1275,16 @@
     {
       "source": "ddd",
       "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ddd",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1044,12 +1309,32 @@
     },
     {
       "source": "deployment",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
       "target": "verification-before-completion",
       "relationship": "references_skill"
     },
     {
       "source": "dispatching-parallel-agents",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
       "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
+      "target": "implementation",
       "relationship": "references_skill"
     },
     {
@@ -1064,7 +1349,17 @@
     },
     {
       "source": "dispatching-parallel-agents",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
       "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1094,7 +1389,22 @@
     },
     {
       "source": "docx-processing",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
       "target": "xlsx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1114,6 +1424,11 @@
     },
     {
       "source": "email-composer",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
       "target": "llm-as-judge",
       "relationship": "references_skill"
     },
@@ -1124,7 +1439,22 @@
     },
     {
       "source": "email-composer",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
       "target": "xlsx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1134,7 +1464,22 @@
     },
     {
       "source": "find-skills",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
       "target": "react-best-practices",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1159,6 +1504,11 @@
     },
     {
       "source": "git-workflow",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -1170,6 +1520,11 @@
     {
       "source": "git-workflow",
       "target": "repo-bootstrap",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "git-workflow",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1205,6 +1560,11 @@
     {
       "source": "governance",
       "target": "repo-bootstrap",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "governance",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1259,6 +1619,11 @@
     },
     {
       "source": "implementation",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "implementation",
       "target": "technical-documentation",
       "relationship": "references_skill"
     },
@@ -1269,12 +1634,37 @@
     },
     {
       "source": "llm-as-judge",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
       "target": "code-review",
       "relationship": "references_skill"
     },
     {
       "source": "llm-as-judge",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
       "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1304,6 +1694,16 @@
     },
     {
       "source": "mcp-builder",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
       "target": "test-driven-development",
       "relationship": "references_skill"
     },
@@ -1319,6 +1719,11 @@
     },
     {
       "source": "mobile-design",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
       "target": "deployment",
       "relationship": "references_skill"
     },
@@ -1330,6 +1735,16 @@
     {
       "source": "mobile-design",
       "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1368,6 +1783,16 @@
       "relationship": "references_skill"
     },
     {
+      "source": "observability",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
       "source": "pdf-processing",
       "target": "content-research-writer",
       "relationship": "references_skill"
@@ -1394,7 +1819,22 @@
     },
     {
       "source": "pdf-processing",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
       "target": "xlsx-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1414,7 +1854,22 @@
     },
     {
       "source": "performance-optimization",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
       "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1449,6 +1904,16 @@
     },
     {
       "source": "php-laravel-ecosystem",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
       "target": "test-driven-development",
       "relationship": "references_skill"
     },
@@ -1461,6 +1926,11 @@
       "source": "php-laravel-ecosystem",
       "target": "mcp__context7",
       "relationship": "uses_mcp_tool"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "adr-generator",
+      "relationship": "references_skill"
     },
     {
       "source": "product-spec-engineering",
@@ -1489,6 +1959,11 @@
     },
     {
       "source": "product-spec-engineering",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
       "target": "test-driven-development",
       "relationship": "references_skill"
     },
@@ -1499,7 +1974,22 @@
     },
     {
       "source": "prompt-engineering",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "prompt-engineering",
       "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "prompt-engineering",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1524,6 +2014,16 @@
     },
     {
       "source": "react-best-practices",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
       "target": "mcp__context7",
       "relationship": "references_skill"
     },
@@ -1543,6 +2043,11 @@
       "relationship": "references_skill"
     },
     {
+      "source": "refactoring",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
       "source": "release",
       "target": "deployment",
       "relationship": "references_skill"
@@ -1553,13 +2058,38 @@
       "relationship": "references_skill"
     },
     {
+      "source": "release",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "release",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
       "source": "repo-bootstrap",
       "target": "governance",
       "relationship": "references_skill"
     },
     {
       "source": "repo-bootstrap",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "repo-bootstrap",
       "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "repo-bootstrap",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1574,7 +2104,22 @@
     },
     {
       "source": "resilient-execution",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
       "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1604,7 +2149,22 @@
     },
     {
       "source": "security-review",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
       "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1630,6 +2190,16 @@
     {
       "source": "seo-optimizer",
       "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1675,6 +2245,11 @@
     {
       "source": "skill-audit-bulletin",
       "target": "skill-discovery",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-audit-bulletin",
+      "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
     {
@@ -1729,6 +2304,11 @@
     },
     {
       "source": "skill-creator",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-creator",
       "target": "technical-documentation",
       "relationship": "references_skill"
     },
@@ -1744,7 +2324,17 @@
     },
     {
       "source": "skill-discovery",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-discovery",
       "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-discovery",
+      "target": "implementation",
       "relationship": "references_skill"
     },
     {
@@ -1754,7 +2344,22 @@
     },
     {
       "source": "skill-discovery",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-discovery",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "skill-discovery",
       "target": "ui-ux-pro-max",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1779,12 +2384,22 @@
     },
     {
       "source": "subagent-driven-development",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
       "target": "test-driven-development",
       "relationship": "references_skill"
     },
     {
       "source": "subagent-driven-development",
       "target": "verification-before-completion",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1810,6 +2425,16 @@
     {
       "source": "systematic-debugging",
       "target": "resilient-execution",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "systematic-debugging",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1858,6 +2483,16 @@
       "relationship": "references_skill"
     },
     {
+      "source": "technical-documentation",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
       "source": "test-driven-development",
       "target": "code-review",
       "relationship": "references_skill"
@@ -1874,7 +2509,17 @@
     },
     {
       "source": "test-driven-development",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
       "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "test-driven-development",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -1919,6 +2564,11 @@
     },
     {
       "source": "testing-mastery",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "testing-mastery",
       "target": "test-driven-development",
       "relationship": "references_skill"
     },
@@ -1944,12 +2594,22 @@
     },
     {
       "source": "ui-ux-pro-max",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ui-ux-pro-max",
       "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
       "source": "ui-ux-pro-max",
       "target": "ux-researcher-designer",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -1969,12 +2629,32 @@
     },
     {
       "source": "ux-researcher-designer",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
       "target": "ui-ux-pro-max",
       "relationship": "references_skill"
     },
     {
       "source": "verification-before-completion",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
       "target": "code-review",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "implementation",
       "relationship": "references_skill"
     },
     {
@@ -1995,6 +2675,11 @@
     {
       "source": "verification-before-completion",
       "target": "systematic-debugging",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {
@@ -2029,7 +2714,17 @@
     },
     {
       "source": "writing-skills",
+      "target": "technical-documentation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "writing-skills",
       "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "adr-generator",
       "relationship": "references_skill"
     },
     {
@@ -2055,6 +2750,16 @@
     {
       "source": "xlsx-processing",
       "target": "pdf-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "subagent-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "technical-documentation",
       "relationship": "references_skill"
     },
     {

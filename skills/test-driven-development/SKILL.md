@@ -2,12 +2,23 @@
 name: test-driven-development
 version: 1.0.0
 description: 'Use when writing any new code, adding features, or fixing bugs that
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   require code changes. Enforces strict RED-GREEN-REFACTOR cycle with no production
   code without a failing test first. Triggers: new feature implementation, bug fix,
   refactoring existing code, adding behavior to existing modules.'
 domain: engineering-quality
 triggers:
-- test-driven-development
+  - test-driven-development
+  - tdd-cycle
+  - red-green-refactor
+  - unit-testing
+  - desenvolvimento-orientado-a-testes
+  - ciclo-tdd
+  - escrever-testes-primeiro
+  - testes-unitarios
 tags:
 - test-driven-development
 - engineering-quality
@@ -285,3 +296,38 @@ If you observe any of these, STOP and reassess:
 ## Skill Type
 
 **RIGID** — The RED-GREEN-REFACTOR cycle is mandatory and cannot be reordered, skipped, or combined. Every phase has a HARD-GATE that must be satisfied before proceeding. No production code without a failing test first.
+
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (test-driven-development)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
+
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

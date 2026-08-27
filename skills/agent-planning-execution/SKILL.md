@@ -2,11 +2,21 @@
 name: agent-planning-execution
 version: 1.0.0
 description: Comprehensive planning, roadmap management, task decomposition, and plan
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
   execution hub.
 domain: agentic-workflow
 triggers:
-- agent-planning-execution
-- agentic-workflow
+  - agent-planning-execution
+  - plan-execution
+  - roadmap-planning
+  - task-plan
+  - planejamento-de-agente
+  - execucao-de-plano
+  - criar-roadmap
+  - executar-tarefas
 tags:
 - agent-planning-execution
 - agentic-workflow
@@ -1677,6 +1687,22 @@ Roadmap planning is the process of:
 - Onboarding new stakeholders (align on direction)
 - Reframing existing roadmap (shift from feature-driven to outcome-driven)
 
+
+## Decision Workflow
+
+```mermaid
+graph TD
+    A["Início: Ativação da Skill (agent-planning-execution)"] --> B["Validação de Pré-requisitos & Escopo"]
+    B --> C{"Requisitos Claros & Completos?"}
+    C -->|Não| D["Solicitar Clarificação / Coletar Contexto (cap)"]
+    C -->|Sim| E["Execução do Procedimento Canônico"]
+    D --> E
+    E --> F["Verificação de Qualidade & Critérios de Aceite"]
+    F --> G{"Checklist 100% Aprovado?"}
+    G -->|Não| E
+    G -->|Sim| H["Completion Gate: Entrega do Artefato Certificado"]
+```
+
 ### When NOT to Use This
 - For tactical sprint planning (use backlog instead)
 - When strategy is unclear (run product-strategy-session first)
@@ -2377,3 +2403,20 @@ Use a clear, scannable format. Tables work well for roadmap items. Use text stat
 - Flag capacity issues early. If the roadmap has more work than the team can handle, say so.
 - Dependencies are the biggest risk to roadmaps. Surface them explicitly.
 - If the user asks to add something, always ask what comes off or moves. Roadmaps are zero-sum against capacity.
+
+## Anti-Patterns & Operational Guardrails
+
+| Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
+|:---|:---:|:---|:---|
+| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
+| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
+
+
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+

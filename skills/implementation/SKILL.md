@@ -6,13 +6,13 @@ description:
 domain: domain-stack
 triggers:
   - implementation
-  - implement adr
-  - execute adr
-  - executar adr
-  - apply blueprint
-  - apply quadra
-  - sdlc execution
-  - execucao adr
+  - execute-changes
+  - implement-feature
+  - apply-plan
+  - implementar-mudancas
+  - executar-codigo
+  - desenvolver-feature
+  - fechar-ciclo-sdlc
 tags:
   - implementation
   - execution
@@ -356,3 +356,29 @@ Execute after completing all implementation. Validates tasks, build, quality, te
 - [Skill technical-documentation](../technical-documentation/SKILL.md)
 - [Skill testing-mastery](../testing-mastery/SKILL.md)
 - [Skill git-workflow](../git-workflow/SKILL.md)
+
+## Edge Cases & Failure Modes
+
+- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
+- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
+- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+
+## Operational Verification Checklist
+
+- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
+- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
+- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
+- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
+- [ ] O artefato final foi inspecionado contra o completion gate.
+
+
+
+## Completion Gate
+
+A tarefa associada à skill `implementation` só pode ser declarada concluída quando:
+1. Todas as verificações do checklist operacional foram atendidas.
+2. O resultado foi validado deterministamente através de evidências de execução.
+3. Não restam pendências estruturais, placeholders ou erros não tratados.
+

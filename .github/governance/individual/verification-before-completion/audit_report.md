@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/verification-before-completion` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `d5e9b76db4623ac22e143b7452e58207f151abda81c7d286116b4e3e5bc08aac` | **Score Global:** | `92.6 / 100` |
+| **Hash SHA-256:** | `c76d8e6c342fde43032f79fafd4844d25aa1cc61b5ad34ca47201277222b9712` | **Score Global:** | `85.6 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use before claiming any task is complete, any feature works, or any bug is fixed - enforces fresh verification evidence through a 5-step HARD-GATE protocol that prevents false completion claims
+* **Descrição Funcional:** Módulo de execução autônomo para verification-before-completion.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -20,31 +20,51 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
-| **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~2877 tokens), com densidade instrucional eficiente. |
+| **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
+| **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3589 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
-| **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
+| **D8. Conformidade & Lifecycle** | 8.0 | [WARN] | Compatível funcionalmente, porém necessita padronização estrita de metadados SemVer. |
 
 ---
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Incorporação de Suíte de Testes e Fixtures de Regressão
-* **Severidade:** Baixa
-* **Impacto:** Garantia de não-regressão comportamental em upgrades de modelos de linguagem.
+#### 3.1 Padronização Estrita de Contrato YAML Frontmatter & Tipagem
+* **Severidade:** Média
+* **Impacto:** Otimização do despacho semântico no orquestrador multi-agente e prevenção de roteamento ambíguo.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Sem arquivo de teste dedicado em tests/
+---
+name: verification-before-completion
+version: 1.0.0
+description: Use before claiming any task is complete, any feature works, or any bug
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
+  is fix
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_verification_before_completion.py
-def test_verification_before_completion_contract():
-    assert True, 'Contract verified against specification'
+---
+name: verification-before-completion
+version: 1.0.0
+description: Especialista em verification-before-completion com contratos formais e tipagem estrita.
+triggers:
+  - verification-before-completion
+---
+
+---
+name: verification-before-completion
+version: 1.0.0
+description: Use before claiming any task is complete, any feature works, or any bug
+related_skills:
+  - cap
+  - implementat
 ```
 
 ---

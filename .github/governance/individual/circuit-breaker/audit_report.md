@@ -3,13 +3,13 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/circuit-breaker` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `ce7a7c2694d5be31a9a15677ed2f38d2427126cf77b433e8279fe0cb78dba295` | **Score Global:** | `92.6 / 100` |
+| **Hash SHA-256:** | `356e38703919d013e5e711f8b87673f5c45125e339a1dfc2b336a4f463031c80` | **Score Global:** | `85.6 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Use when running autonomous loops, repeated operations, or when detecting stagnation patterns - enforces rate limits, protects configuration files, manages recovery with cooldown periods, and prevents infinite loops during autonomous development
+* **Descrição Funcional:** Módulo de execução autônomo para circuit-breaker.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** Read-Only / Pure Logic
@@ -20,31 +20,52 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | YAML Frontmatter rigorosamente estruturado com contrato SemVer, triggers e description detalhada. |
-| **D2. Determinismo Semântico** | 9.5 | [OK] | Triggers explícitos com fronteiras semânticas nítidas, minimizando risco de alucinação e colisões de ativação. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3263 tokens), com densidade instrucional eficiente. |
+| **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
+| **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~3992 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
-| **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
-| **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v1.0.0). |
+| **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
+| **D8. Conformidade & Lifecycle** | 8.0 | [WARN] | Compatível funcionalmente, porém necessita padronização estrita de metadados SemVer. |
 
 ---
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Incorporação de Suíte de Testes e Fixtures de Regressão
-* **Severidade:** Baixa
-* **Impacto:** Garantia de não-regressão comportamental em upgrades de modelos de linguagem.
+#### 3.1 Padronização Estrita de Contrato YAML Frontmatter & Tipagem
+* **Severidade:** Média
+* **Impacto:** Otimização do despacho semântico no orquestrador multi-agente e prevenção de roteamento ambíguo.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Sem arquivo de teste dedicado em tests/
+---
+name: circuit-breaker
+version: 1.0.0
+description: Use when running autonomous loops, repeated operations, or when detecting
+related_skills:
+  - cap
+  - implementation
+  - technical-documentation
+  stagnation patterns
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_circuit_breaker.py
-def test_circuit_breaker_contract():
-    assert True, 'Contract verified against specification'
+---
+name: circuit-breaker
+version: 1.0.0
+description: Especialista em circuit-breaker com contratos formais e tipagem estrita.
+triggers:
+  - circuit-breaker
+---
+
+---
+name: circuit-breaker
+version: 1.0.0
+description: Use when running autonomous loops, repeated operations, or when detecting
+related_skills:
+  - cap
+  - implementation
+  - techn
 ```
 
 ---

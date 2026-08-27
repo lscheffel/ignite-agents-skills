@@ -411,10 +411,22 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: testing-mastery version: 1.0.0 description: Unified testing framework covering unit, integration, acceptance, webapp, and strategy testing. domain: engineering-quality triggers:</p>
+<p>name: testing-mastery version: 1.0.0 description: Unified testing framework covering unit, integration, acceptance, webapp, related_skills:</p>
+<ul>
+<li>cap</li>
+<li>implementation</li>
+<li>technical-documentation</li>
+</ul>
+<p>and strategy testing. domain: engineering-quality triggers:</p>
 <ul>
 <li>testing-mastery</li>
-<li>engineering-quality</li>
+<li>testing-strategy</li>
+<li>integration-tests</li>
+<li>e2e-testing</li>
+<li>maestria-em-testes</li>
+<li>estrategia-de-testes</li>
+<li>testes-de-integracao</li>
+<li>testes-ponta-a-ponta</li>
 </ul>
 <p>tags:</p>
 <ul>
@@ -1272,10 +1284,26 @@ test(&#x27;handles API errors gracefully&#x27;, async ({ page }) =&gt; {
 <hr>
 <h2 id="skill-type">Skill Type</h2>
 <p><strong>FLEXIBLE</strong> — Adapt test depth to the project's critical paths. The page object model pattern and accessible locators are strongly recommended. Accessibility checks are mandatory on every page. Visual regression baselines must be reviewed before merge.</p>
+<h2 id="completion-gate">Completion Gate</h2>
+<p>A tarefa associada à skill <code>testing-mastery</code> só pode ser declarada concluída quando:</p>
+<ol>
+<li>Todas as verificações do checklist operacional foram atendidas.</li>
+<li>O resultado foi validado deterministamente através de evidências de execução.</li>
+<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+</ol>
+<h2 id="files">Arquivos</h2>
+<h3>Templates</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="templates/testing-mastery-template.html">testing-mastery-template.md</a></li>
+</ul>
+<h3>Examples</h3>
+<ul class="file-list">
+  <li><span class="file-icon">&#128196;</span><a href="examples/testing-mastery-example.html">testing-mastery-example.md</a></li>
+</ul>
 
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 61 templates &middot; 30 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>
