@@ -32,6 +32,16 @@ metadata:
 
 # XLSX Processing
 
+## When to Use
+
+### Use when:
+- Generating complex multi-sheet Excel spreadsheets with formulas and conditional formatting
+- Processing large tabular datasets ($>10,000$ rows) via streaming memory mode (`read_only=True`)
+- Applying data validation dropdowns, column auto-sizing, and formula injection defenses
+
+### Do not use when:
+- Simple lightweight CSV dumps without formula or styling requirements
+
 ## Overview
 
 Manipulate Excel files programmatically using openpyxl for rich formatting and pandas for data analysis. This skill covers reading/writing spreadsheets, formulas, charts, conditional formatting, data validation, pivot table generation, CSV import/export, and strategies for handling large files.
@@ -429,6 +439,33 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Streaming Memory Bounds:** OpenPyXL Read-Only / Write-Only streaming mode (`read_only=True`, `write_only=True`) for large datasets.
+- **Formula & Syntax Engine:** OpenPyXL Formula syntax trees, dynamic named ranges, and formula caching (`data_only=True`).
+- **Data Validation & Styling:** Cell data validation dropdowns, conditional formatting rules, and column auto-fit sizing.
+- **Type Safety & Sanitization:** Strict CSV/XLSX formula injection prevention (sanitize leading `=`, `+`, `-`, `@`).
+
+### Streaming Memory Algebra:
+For worksheets exceeding 10,000 rows, memory consumption must remain bounded:
+
+$$	ext{Memory}(	ext{Stream}) = O(1) \quad 	ext{vs} \quad 	ext{Memory}(	ext{DOM}) = O(N_{	ext{rows}} 	imes N_{	ext{cols}})$$
+
+### Formula Injection Sanitization Pattern:
+```python
+def sanitize_cell(value: str) -> str:
+    if isinstance(value, str) and value.startswith(('=', '+', '-', '@', '	', '
+')):
+        return "'" + value
+    return value
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Stream on Large Datasets):** Any spreadsheet with $>10,000$ rows MUST be processed using OpenPyXL `read_only=True` streaming mode.
+2. **Rule of Thumb 2 (Formula Injection Defense):** All user-supplied spreadsheet cell values must be sanitized to prevent CSV/Excel Formula Injection attacks.
+3. **Rule of Thumb 3 (Data Only for Analysis):** When reading spreadsheets for mathematical data analysis, use `data_only=True` to retrieve cached computed values.
+4. **Rule of Thumb 4 (Auto-Fit Column Widths):** Generated spreadsheets must calculate maximum character length per column and apply proportional widths.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -437,3 +474,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding spreadsheet generation:
+- [ ] Large files ($>10,000$ rows) processed using memory streaming
+- [ ] All user-supplied inputs sanitized against formula injection (`=`, `+`, `-`, `@`)
+- [ ] Column widths auto-fitted and formulas validated

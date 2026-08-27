@@ -31,6 +31,16 @@ metadata:
 
 # Content Creator
 
+## When to Use
+
+### Use when:
+- Drafting marketing copy, landing page headlines, and social media posts
+- Optimizing text for Flesch Reading Ease ($RE \ge 60$) and active voice ($\ge 90\%$)
+- Applying AIDA, PAS, or BAB conversion copywriting frameworks
+
+### Do not use when:
+- Writing dense academic research papers with formal bibliography citations
+
 ## Overview
 
 Create compelling marketing content across channels including social media, email campaigns, landing pages, ad copy, newsletters, and brand messaging. This skill covers brand voice development, audience targeting, copywriting frameworks (AIDA, PAS, BAB), platform-specific optimization, A/B testing copy, content calendars, and conversion-focused writing.
@@ -363,6 +373,25 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Readability & Ergonomics:** Flesch Reading Ease ($RE$), Flesch-Kincaid Grade Level ($FKGL$), and Gunning Fog Index.
+- **Copywriting Frameworks:** AIDA (Attention, Interest, Desire, Action), PAS (Problem, Agitation, Solution), and BAB (Before, After, Bridge).
+- **Voice & Tone Consistency:** Formal Brand Voice Guidelines, active voice ratio ($\ge 90\%$), and conversational cadence.
+- **Conversion Optimization:** Action-oriented CTAs, scannable subheadings, and inverted pyramid journalism hierarchy.
+
+### Flesch Reading Ease Formula:
+
+$$RE = 206.835 - (1.015 	imes 	ext{ASL}) - (84.6 	imes 	ext{ASW}) \ge 60.0$$
+
+Where $	ext{ASL}$ is Average Sentence Length and $	ext{ASW}$ is Average Syllables per Word.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Active Voice Mandate):** At least $90\%$ of sentences must use active voice ("The team deployed the release" vs "The release was deployed by the team").
+2. **Rule of Thumb 2 (Scannable Structure):** No paragraph should exceed 4 lines; use bullet points and bold leading terms for high readability.
+3. **Rule of Thumb 3 (Single Clear CTA):** Marketing and business content must drive toward a single primary call to action.
+4. **Rule of Thumb 4 (Kill Fluff Words):** Eliminate redundant adverbs and filler phrases ("very", "really", "in order to", "essentially").
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -371,3 +400,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding copywriting draft:
+- [ ] Readability verified ($RE \ge 60$) with concise paragraphs ($\le 4$ lines)
+- [ ] Active voice ratio verified $\ge 90\%$
+- [ ] Single clear call-to-action (CTA) included

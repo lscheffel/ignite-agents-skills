@@ -31,6 +31,16 @@ metadata:
 
 # DOCX Processing
 
+## When to Use
+
+### Use when:
+- Programmatically generating Word documents (.docx) from structured data templates
+- Performing mail-merge operations and filling document tables dynamically
+- Modifying OOXML paragraph styles, headers, footers, and table layouts
+
+### Do not use when:
+- Unstyled plain text files or raw Markdown documentation
+
 ## Overview
 
 Generate, manipulate, and template Word documents programmatically. This skill covers python-docx for direct document creation, docxtpl for Jinja2-based template filling, formatting control (headings, tables, images, headers/footers), mail merge operations, style management, and conversion strategies.
@@ -428,6 +438,24 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Document Object Model (DOM):** Open Packaging Conventions (OPC), Office Open XML (OOXML - ECMA-376), and AST manipulation.
+- **Template Engines:** `docxtpl` Jinja2-style document template rendering with mail-merge safety.
+- **Style Inheritance & Layout:** Native Word styles, table formatting with explicit column widths, and header/footer relationships.
+- **Safety & Portability:** XML entity protection, namespace isolation, and clean font embedding.
+
+### Document Generation Protocol:
+1. Load base corporate template containing pre-configured styles (`Heading 1`, `Table Grid`).
+2. Populate template context dictionary validating all keys against JSON Schema.
+3. Render document and verify all table columns have explicit percentage/point widths.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Template-Driven Generation):** Never construct complex DOCX files programmatically from scratch; use pre-styled `.docx` templates via `docxtpl`.
+2. **Rule of Thumb 2 (Explicit Table Widths):** All table cells and columns must specify explicit widths to prevent Word rendering collapses.
+3. **Rule of Thumb 3 (Namespace Isolation):** When modifying raw XML parts, preserve all original OOXML schema namespaces (`w:`, `r:`, `m:`).
+4. **Rule of Thumb 4 (Zero Broken Placeholders):** Validate that all template variables `{{ key }}` are resolved before saving the final `.docx` artifact.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -436,3 +464,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding Word document generation:
+- [ ] All template placeholder variables `{{ key }}` successfully resolved
+- [ ] Explicit column widths defined for all table grids
+- [ ] Output opens cleanly in Microsoft Word and LibreOffice without XML errors

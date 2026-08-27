@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T02:49:40.900878+00:00",
+    "generated_at": "2026-08-27T02:53:50.365118+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -1159,6 +1159,11 @@
     },
     {
       "source": "content-creator",
+      "target": "release",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
       "target": "seo-optimizer",
       "relationship": "references_skill"
     },
@@ -1950,6 +1955,11 @@
     {
       "source": "product-spec-engineering",
       "target": "brainstorming",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "product-spec-engineering",
+      "target": "circuit-breaker",
       "relationship": "references_skill"
     },
     {

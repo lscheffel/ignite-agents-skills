@@ -31,6 +31,16 @@ metadata:
 
 # Email Composer
 
+## When to Use
+
+### Use when:
+- Drafting executive emails, project status updates, and stakeholder proposals
+- Formatting messages according to the Bottom Line Up Front (BLUF) hierarchy
+- Optimizing subject lines for mobile open rates ($N_{	ext{chars}} \le 50$)
+
+### Do not use when:
+- Real-time chat messages (Slack/Discord) or long-form documentation
+
 ## Overview
 
 Draft clear, effective professional emails with appropriate tone, structure, and purpose. This skill covers business correspondence, cold outreach, follow-ups, escalations, apologies, negotiations, internal communications, and stakeholder updates. Includes tone calibration, cultural sensitivity, and templates for common business scenarios.
@@ -430,6 +440,24 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Executive Communication:** Bottom Line Up Front (BLUF), Minto Pyramid Principle, and MECE (Mutually Exclusive, Collectively Exhaustive).
+- **Subject Line Geometry:** Character length $\le 50$ characters, front-loaded action verbs, and clear urgency tags (`[Action Required]`, `[FYI]`).
+- **Email Deliverability & Hygiene:** Plain-text formatting fallback, spam trigger avoidance, and clear unsubscribe/signature blocks.
+- **Tone Modulation:** Formal executive, collaborative peer, empathetic customer service, and firm escalation ladders.
+
+### BLUF (Bottom Line Up Front) Structure:
+1. **Line 1 (The Ask / Conclusion):** State the exact action requested and deadline.
+2. **Body (Context / Bulleted Data):** Present 2-3 concise supporting facts or options.
+3. **Closing (Next Steps):** Explicit confirmation of ownership and next checkpoint.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (50-Character Subject Line Bound):** Subject lines must not exceed 50 characters to prevent mobile client truncation.
+2. **Rule of Thumb 2 (Three-Sentence Rule for Simple Requests):** If an email requires a single decision, constrain the message to $\le 3$ concise sentences.
+3. **Rule of Thumb 3 (Explicit Ownership):** State clearly *who* is responsible for *what* by *when* (`@Person: Action by Date`).
+4. **Rule of Thumb 4 (No Passive Aggression):** Maintain professional, direct, and collaborative tone even during escalations.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -438,3 +466,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding email draft:
+- [ ] Subject line constrained to $\le 50$ characters with urgency tag
+- [ ] BLUF ask placed on the very first line of the email body
+- [ ] Explicit ownership and deadlines assigned for all next steps

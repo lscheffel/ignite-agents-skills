@@ -31,6 +31,16 @@ metadata:
 
 # PDF Processing
 
+## When to Use
+
+### Use when:
+- Extracting text, tables, and form fields from PDF documents programmatically
+- Generating ISO 19005 compliant PDF/A archival reports and certificates
+- Running OCR fallback pipelines on scanned image-only PDF files
+
+### Do not use when:
+- Simple plain text or Markdown document generation without PDF styling requirements
+
 ## Overview
 
 Generate, manipulate, and extract data from PDF documents. This skill covers the Python PDF ecosystem: pypdf for merging/splitting/metadata, pdfplumber for text and table extraction, reportlab for generation, pytesseract for OCR, and strategies for form filling, watermarking, and complex document assembly.
@@ -418,6 +428,27 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Archival Standards:** ISO 19005 (PDF/A-1b, PDF/A-2b) for long-term digital document preservation.
+- **Spatial Table Extraction:** Vector bounding box analysis (PDFPlumber, Tabula) and layout-aware text extraction.
+- **OCR Fallback Pipeline:** Tesseract OCR (v5.x) preprocessing (deskew, binarization, DPI scaling to 300 DPI).
+- **Security & Metadata:** PDF metadata stripping (exif), encryption (AES-256), and digital signature verification.
+
+### Spatial Extraction vs OCR Fallback Pipeline:
+
+```text
+Input PDF ──> Native Text Layer Present?
+                 ├── YES ──> Spatial Vector Extraction (PDFPlumber) ──> Structured Data
+                 └── NO  ──> Render Page to Image (300 DPI) ──> Tesseract OCR ──> Text
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Check Native Text First):** Always check for native vector font glyphs before invoking expensive OCR engines.
+2. **Rule of Thumb 2 (DPI Scaling for OCR):** Scanned PDF pages must be rasterized at exactly 300 DPI with grayscale binarization before OCR processing.
+3. **Rule of Thumb 3 (PDF/A Archival Output):** Generated business reports, invoices, and certificates must be saved in PDF/A compliant format with embedded fonts.
+4. **Rule of Thumb 4 (Sanitize Metadata):** Strip author paths, printer IDs, and sensitive metadata before distributing generated PDF files.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -426,3 +457,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding PDF processing:
+- [ ] Native vector text extracted without rasterization if text layer is present
+- [ ] Generated PDFs validated for PDF/A compliance and font embedding
+- [ ] Sensitive author metadata stripped from generated outputs

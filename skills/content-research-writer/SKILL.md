@@ -349,6 +349,26 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Academic Citation Standards:** APA 7th Edition, IEEE Citation Style, and BibTeX structured bibliographies.
+- **Source Credibility Evaluation:** CRAAP Test (Currency, Relevance, Authority, Accuracy, Purpose).
+- **Evidence-Based Argumentation:** Toulmin Model of Argument (Claim, Data, Warrant, Backing, Counterclaim, Rebuttal).
+- **Fact-Checking & Provenance:** Primary source attribution, DOI verification, and hallucination elimination.
+
+### CRAAP Source Evaluation Rubric (Target $\ge 80/100$):
+- **Currency:** Published within past 24 months (or seminal foundational paper).
+- **Relevance:** Directly addresses the technical research question.
+- **Authority:** Peer-reviewed journal, IEEE/ACM conference, or official technical vendor documentation.
+- **Accuracy:** Backed by reproducible empirical data and statistical methodology.
+- **Purpose:** Informative and objective; free from undisclosed commercial bias.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Primary Source Attribution):** Cite the original primary research or RFC rather than third-party blog summaries.
+2. **Rule of Thumb 2 (Counterclaim Invariant):** Technical whitepapers must address competing alternative architectures and trade-offs before asserting recommendations.
+3. **Rule of Thumb 3 (Verified DOIs):** All academic citations must include valid DOIs or canonical archive URLs.
+4. **Rule of Thumb 4 (Zero Unsubstantiated Claims):** Quantitative assertions ("X is 5x faster than Y") must be backed by benchmark citations.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

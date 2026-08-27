@@ -778,3 +778,34 @@ graph TD
 | **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
 | **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Behavior-Driven Development (BDD):** Gherkin Syntax (Given-When-Then) for executable acceptance criteria.
+- **Product Prioritization Frameworks:** Kano Model (Must-be, One-dimensional, Attractive), MoSCoW, and RICE Scoring.
+- **User Story Quality Standards:** INVEST Criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable).
+- **Specification Formats:** Product Requirement Documents (PRD), RFC/Technical Specs, and Decision Records.
+
+### Kano Model Feature Classification Matrix:
+
+| Category | Customer Satisfaction Dynamic | Engineering Mandate |
+|:---|:---|:---|
+| **Must-Be (Baseline)** | Absence causes extreme dissatisfaction; presence taken for granted. | Non-negotiable P0; absolute prerequisite. |
+| **Performance (Linear)** | Satisfaction scales proportionally with capability (e.g. speed, latency). | Core competitive differentiator. |
+| **Delighters (Attractive)** | Absence causes no dissatisfaction; presence triggers unexpected delight. | High-ROI innovation features. |
+
+### Gherkin BDD Acceptance Criteria Contract:
+
+```gherkin
+Scenario: Agent queries skills by domain intention
+  Given the dedicated Skills RAG database is synchronized
+  When the agent calls `route_task` with query "implement circuit breaker"
+  Then the system returns `circuit-breaker` as top match with confidence >= 0.85
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Zero Ambiguous Acceptance Criteria):** Acceptance criteria must never use subjective terms like "fast", "user-friendly", or "secure" without exact quantitative thresholds.
+2. **Rule of Thumb 2 (INVEST Rule):** No single user story should exceed 3 days of implementation effort; split complex stories vertically through the architectural stack.
+3. **Rule of Thumb 3 (Non-Functional Requirements Mandate):** Every PRD must define NFRs for Latency ($P_{95}$), Availability SLA, and Concurrent Load.
+4. **Rule of Thumb 4 (Traceability Invariant):** Every engineering task in `*-TODO.md` must trace back to a specific requirement in the PRD or ADR.

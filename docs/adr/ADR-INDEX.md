@@ -45,3 +45,4 @@
 | ADR-032 | ADR-032: Engineering, Coding & Quality Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-033 | ADR-033: Backend, Data, Cloud & Security Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-034 | ADR-034: Frontend, UI/UX & Web Domain SOTA Hardening | Sim | 9/9 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-035 | ADR-035: Product, Content & Document Processing Domain SOTA Hardening | Sim | 13/13 | CONSOLIDADA | - | ARCHIVED_OK |

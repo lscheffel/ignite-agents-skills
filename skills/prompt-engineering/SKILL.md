@@ -405,6 +405,24 @@ Technical terms: Order (Pedido), Item (Item)"
 - [Prompt Engineering Guide](https://www.promptingguide.org/)
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Prompt Optimization Paradigms:** Chain-of-Density (CoD), Few-Shot Chain-of-Thought (CoT), Tree of Thoughts (ToT), and DSPy Declarative Signatures.
+- **Security & Delimiters:** XML/Markdown boundary tags (`<context>`, `<instruction>`, `<schema>`) preventing prompt injection.
+- **Context Compaction:** High signal-to-noise ratio prompt compaction eliminating conversational fluff.
+- **Output Determinism:** Strict JSON Schema generation and constrained decoding formats.
+
+### Chain-of-Density (CoD) Stepwise Compression:
+1. **Step 1 (Draft):** Generate initial summary capturing main points.
+2. **Step 2 (Identify Missing Entities):** Identify 1-3 critical missing domain entities.
+3. **Step 3 (Fuse & Condense):** Re-write summary retaining exact word count while infusing missing entities.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (XML Tag Delimitation):** Always encapsulate untrusted user inputs or retrieved documents within explicit XML tags (`<user_data>...</user_data>`).
+2. **Rule of Thumb 2 (Few-Shot Exemplar Rule):** When asking for complex structured output, provide at least 2 diverse few-shot input/output examples.
+3. **Rule of Thumb 3 (Positive Constraints Over Negative):** Instruct the model on *what to do* rather than what *not* to do (e.g., "Output JSON only" vs "Do not output prose").
+4. **Rule of Thumb 4 (Role & Target Persona):** Clearly declare the persona, expertise domain, and operational constraints at the start of system prompts.
+
 ## Completion Gate
 
 A tarefa associada à skill `prompt-engineering` só pode ser declarada concluída quando:

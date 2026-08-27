@@ -168,6 +168,27 @@ guidelines from CHANGELOG_STYLE.md
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Specification Standards:** Keep a Changelog (v1.1.0) and Semantic Versioning (SemVer v2.0.0).
+- **Commit Parsing Standards:** Conventional Commits (v1.0.0) format (`feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`).
+- **Release Categorization:** Automatic grouping into `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.
+- **Breaking Change Semantics:** Automatic Major bump detection on `BREAKING CHANGE:` or `!` commit syntax.
+
+### SemVer 2.0.0 Automated Bump Decision Matrix:
+
+| Commit Types in Release Range | SemVer Bump | Example Version Transition |
+|:---|:---:|:---|
+| Any commit with `BREAKING CHANGE:` or `type!:` | **MAJOR** | `1.4.2` $	o$ `2.0.0` |
+| Contains `feat:` commits with zero breaking changes | **MINOR** | `1.4.2` $	o$ `1.5.0` |
+| Only `fix:`, `perf:`, `refactor:` commits | **PATCH** | `1.4.2` $	o$ `1.4.3` |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Keep a Changelog Conformity):** All changelog outputs must strictly follow the Keep a Changelog format with dated ISO headers (`## [1.5.0] - 2026-08-26`).
+2. **Rule of Thumb 2 (Human-Centric Summaries):** Transform technical git commit messages into clear, user-facing descriptions of what changed.
+3. **Rule of Thumb 3 (Unreleased Section):** Always maintain an active `## [Unreleased]` section at the top of `CHANGELOG.md` for in-progress changes.
+4. **Rule of Thumb 4 (PR & Issue Linkage):** Include clickable links to corresponding pull requests, issues, and commit SHAs for full traceability.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -176,3 +197,10 @@ guidelines from CHANGELOG_STYLE.md
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding changelog generation:
+- [ ] Keep a Changelog categories (`Added`, `Changed`, `Fixed`, etc.) respected
+- [ ] SemVer bump calculated accurately based on commit types
+- [ ] Clickable links included for PRs, issues, and commit SHAs

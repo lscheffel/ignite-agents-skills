@@ -27,6 +27,16 @@ metadata:
 
 # LLM-as-Judge
 
+## When to Use
+
+### Use when:
+- Establishing automated LLM evaluation benchmarks and model grading
+- Evaluating conversational outputs against 1-5 rubrics with CoT justifications
+- Measuring Cohen's Kappa ($\kappa \ge 0.70$) agreement between model and human evaluators
+
+### Do not use when:
+- Deterministic unit tests with exact binary assertion matching
+
 ## Overview
 
 Some quality criteria are inherently subjective — tone of voice, visual aesthetics, UX feel, documentation clarity, code readability. These cannot be verified by deterministic tests. The LLM-as-judge pattern provides structured, repeatable evaluation using an LLM reviewer with defined rubrics, ensuring subjective quality is measured consistently.
@@ -318,3 +328,33 @@ graph TD
 - **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Evaluation Frameworks:** G-Eval (GPT-4 evaluation with CoT), MT-Bench, and AlpacaEval 2.0.
+- **Statistical Reliability:** Cohen's Kappa ($\kappa \ge 0.70$) and Fleiss' Kappa for inter-annotator agreement.
+- **Bias Mitigation:** Position Bias calibration (swapped pair scoring), Verbosity Bias normalization, and Self-Enhancement bias prevention.
+- **Grading Scales:** Explicit 1-to-5 Rubric scales with distinct anchor definitions for each score.
+
+### Cohen's Kappa Inter-Annotator Agreement Formula:
+
+$$\kappa = rac{P_o - P_e}{1 - P_e} \ge 0.70$$
+
+Where $P_o$ is relative observed agreement and $P_e$ is hypothetical chance agreement probability.
+
+### Pairwise Position Bias Normalization Formula:
+
+$$	ext{FinalScore}(A, B) = rac{	ext{Judge}(A 	ext{ first}, B 	ext{ second}) + 	ext{Judge}(B 	ext{ first}, A 	ext{ second})}{2}$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Symmetric Pairwise Evaluation):** Always run pairwise comparisons twice with candidate order swapped to eliminate first-position bias.
+2. **Rule of Thumb 2 (Chain-of-Thought Evaluation):** The judge LLM must output its step-by-step reasoning *before* emitting the final numerical score.
+3. **Rule of Thumb 3 (Rubric Anchor Points):** Never ask for a score of 1-5 without providing explicit, unambiguous definitions for what constitutes a 1, 3, and 5.
+4. **Rule of Thumb 4 (Reference Ground Truth):** Provide the golden reference output whenever evaluating factual correctness.
+
+## Completion Gate & Verification
+Before concluding LLM judge evaluation:
+- [ ] Symmetric pairwise evaluation executed to eliminate position bias
+- [ ] Step-by-step reasoning emitted before numerical score
+- [ ] Inter-annotator agreement ($\kappa \ge 0.70$) verified across evaluation sample
