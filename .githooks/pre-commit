@@ -126,6 +126,19 @@ if [ -n "$SKILL_CHANGES" ] && [ -n "$RAG_INDEXER" ]; then
     echo "✅ [PASS] Dedicated Skills RAG DB sincronizado."
 fi
 
+# 5. Sincronização e Auditoria do Ledger Contínuo SOTA (skill-audit-bulletin)
+LEDGER_SCRIPT="skills/skill-audit-bulletin/scripts/update_audit_ledger.py"
+if [ -f "$LEDGER_SCRIPT" ]; then
+    echo "[*] Sincronizando Continuous Skill Audit Ledger SOTA ($LEDGER_SCRIPT)..."
+    python3 "$LEDGER_SCRIPT" --sync-all > /tmp/precommit_ledger.log 2>&1 || {
+        echo "⚠️  [WARN] Falha na sincronização do ledger (consulte /tmp/precommit_ledger.log)"
+    }
+    if [ -d "docs/audit/skills" ]; then
+        git add docs/audit/skills/
+    fi
+    echo "✅ [PASS] Continuous Skill Audit Ledger sincronizado."
+fi
+
 echo "================================================================================"
 echo "✨ Pre-Commit Governance Check Passed! Proceeding with commit."
 echo "================================================================================"

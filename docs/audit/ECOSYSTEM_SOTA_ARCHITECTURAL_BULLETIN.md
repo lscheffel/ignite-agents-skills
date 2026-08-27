@@ -86,6 +86,7 @@ sequenceDiagram
     participant Trans as scripts/translate_catalog_nim.py
     participant Audit as scripts/audit_engine.py
     participant RAG as scripts/skills_rag_indexer.py
+    participant Ledger as skills/skill-audit-bulletin/scripts/update_audit_ledger.py
     participant Git as Git Staging / Index
 
     Dev->>Git: git commit -m "feat: new skill"
@@ -99,15 +100,18 @@ sequenceDiagram
         Hook-->>Dev: ❌ COMMIT REJEITADO (Bloqueio de Não-Regressão)
     else Conformidade Aprovada ou Aviso Suave
         Audit-->>Hook: 3. Atualiza relatórios em .github/governance/
-        Hook->>Git: Auto-stage dos relatórios atualizados
+        Hook->>Git: Auto-stage dos relatórios atualizados (.github/governance/)
         Hook->>RAG: 4. Gatilho inteligente de re-indexação vetorial
         RAG-->>Hook: Dedicated Skills RAG DB sincronizado
+        Hook->>Ledger: 5. Sincroniza Continuous Skill Audit Ledger SOTA
+        Ledger->>Git: Auto-stage de docs/audit/skills/ (MD + JSON)
         Hook-->>Dev: ✅ PRE-COMMIT PASSED -> Commit Gravado
     end
 ```
 
-### Regras Específicas de Avaliação & Tradução:
+### Regras Específicas de Avaliação, Tradução & Ledger:
 - **Detecção & Tradução Automática (ADR-026):** O script `scripts/translate_catalog_nim.py` inspeciona os arquivos modificados em `skills/`. Se detectar stopwords em PT-BR com proporção >1.5x em relação ao inglês, invoca os modelos NVIDIA NIM para traduzir a prosa e comentários para EN-US preservando rigorosamente código procedural, YAML frontmatter e tags XML.
+- **Sincronização Contínua do Audit Ledger (ADR-025/026):** Como último passo, o motor `update_audit_ledger.py` varre o catálogo, recalcula métricas de conformidade global e atualiza atomicamente o [`SKILL_AUDIT_LEDGER.md`](file:///home/loupan/projetosVS/ignite-agents-skills/docs/audit/skills/SKILL_AUDIT_LEDGER.md) e [`SKILL_AUDIT_LEDGER.json`](file:///home/loupan/projetosVS/ignite-agents-skills/docs/audit/skills/SKILL_AUDIT_LEDGER.json).
 - **Tolerância a Avisos:** Skills com pequenos avisos (ex.: ausência de diagramas Mermaid em tarefas simples) são classificadas como `AVISO` e permitidas no commit, gerando um registro no backlog de remediação ([`.github/governance/REMEDIATION_BACKLOG.md`](file:///home/loupan/projetosVS/ignite-agents-skills/.github/governance/REMEDIATION_BACKLOG.md)).
 - **Bloqueio Incondicional:** Falta de `SKILL.md`, ausência de frontmatter YAML mínimo, caracteres ilegais ou quebra estrutural grave acionam status `CRÍTICA` e bloqueiam o commit.
 
