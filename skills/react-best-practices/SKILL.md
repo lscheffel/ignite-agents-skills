@@ -30,6 +30,16 @@ metadata:
 
 # React Best Practices
 
+## When to Use
+
+### Use when:
+- Designing React 19 component architectures, hooks, and data-fetching boundaries
+- Deciding between Server Components (RSC) and Client Components (`'use client'`)
+- Optimizing rendering performance, memoization, and Server Actions
+
+### Do not use when:
+- Pure vanilla HTML/CSS projects without React framework requirements
+
 ## Overview
 
 Apply modern React patterns to build maintainable, performant, and testable applications. This skill covers React 18/19 features including Server Components, hooks best practices, component composition, error boundaries, Suspense, context optimization, and rendering performance. It complements the senior-frontend skill with React-specific depth.
@@ -421,3 +431,33 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **React 19 Architecture:** React Server Components (RSC), Server Actions (`'use server'`), and Client Boundaries (`'use client'`).
+- **New Hooks & Primitives:** `use()` hook (promise & context unwrapping), `useActionState()`, `useOptimistic()`, and `useFormStatus()`.
+- **Compiler & Memoization:** React Compiler automatic memoization (replacing manual `useMemo` / `useCallback` boilerplate).
+- **Security & Data Boundaries:** Server Action argument sanitization, CSRF protection, and zero-bundle server logic.
+
+### Server vs Client Boundary Architecture:
+
+```text
+Server Component (Default)                    Client Component ('use client')
+      │                                                     │
+      ├── Direct DB / Backend Data Access                   ├── Interactive State (useState, useReducer)
+      ├── Zero Client JS Bundle Impact                      ├── DOM Event Handlers (onClick, onChange)
+      └── Renders Static HTML Tree                          └── Browser APIs & Custom Hooks
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Default to Server Components):** Every component must remain a Server Component by default; add `'use client'` only to leaf components requiring interactive state or browser events.
+2. **Rule of Thumb 2 (Server Action Parameter Validation):** All Server Actions must validate incoming parameters with a schema validator (Zod/Valibot) before executing mutations.
+3. **Rule of Thumb 3 (Suspense Streaming with Skeleton Fallbacks):** Wrap async data-fetching Server Components in `<Suspense>` boundaries with layout-stable skeleton fallbacks.
+4. **Rule of Thumb 4 (Optimistic UI Updates):** Mutating actions should use `useOptimistic()` to render instant UI transitions before server response resolves.
+
+## Completion Gate & Verification
+Before concluding React architecture review:
+- [ ] Server Component boundaries respected with minimal `'use client'` usage
+- [ ] Server Action parameters validated with schema library
+- [ ] Zero unnecessary re-renders or unmemoized object dependencies

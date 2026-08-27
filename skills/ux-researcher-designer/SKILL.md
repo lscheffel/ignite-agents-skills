@@ -31,6 +31,16 @@ metadata:
 
 # UX Researcher & Designer
 
+## When to Use
+
+### Use when:
+- Planning usability testing protocols, user interviews, and field studies
+- Calculating empirical usability metrics (System Usability Scale - SUS)
+- Conducting heuristic evaluations against Nielsen Norman Group standards
+
+### Do not use when:
+- Writing low-level frontend code or implementing CSS styles directly
+
 ## Overview
 
 Apply systematic UX research and design methods to understand users, validate assumptions, and create evidence-based designs. This skill covers the full research-to-design pipeline: discovery research, persona creation, journey mapping, information architecture, usability testing, and heuristic evaluation.
@@ -340,3 +350,33 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Empirical Usability Metrics:** System Usability Scale (SUS), Single Ease Question (SEQ), and Task Completion Rate ($TCR \ge 85\%$).
+- **Heuristic Evaluation:** Jakob Nielsen's 10 Usability Heuristics and Severity Rating (0 to 4).
+- **Discovery Frameworks:** Jobs-to-be-Done (JTBD) Outcome-Driven Innovation and Double Diamond user discovery.
+- **Information Architecture:** Tree Testing, Open/Closed Card Sorting, and User Journey Mapping.
+
+### System Usability Scale (SUS) Score Equation:
+
+$$\text{SUS} = 2.5 \times \left( \sum_{i \in \text{Odd}} (R_i - 1) + \sum_{j \in \text{Even}} (5 - R_j) \right) \in [0, 100]$$
+
+| SUS Score Range | Grade | Usability Quality |
+|:---|:---:|:---|
+| **$\ge 80.3$** | **A** | World-Class / Highly Delightful |
+| **$68.0 \le \text{SUS} < 80.3$** | **B / C** | Industry Average / Acceptable |
+| **$< 68.0$** | **D / F** | Deficient / Critical Usability Friction |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Five-User Usability Rule):** Testing 5 users uncovers $>85\%$ of core usability problems (Nielsen Norman Group).
+2. **Rule of Thumb 2 (SUS Target $\ge 75$):** Any new workflow or redesign must achieve an empirical SUS score $\ge 75$ before production sign-off.
+3. **Rule of Thumb 3 (Observe Actions Over Words):** In user interviews, observe actual user behavior rather than relying on what users say they do.
+4. **Rule of Thumb 4 (Visibility of System Status):** The interface must always keep users informed about what is happening through appropriate feedback within reasonable time ($T \le 100\text{ms}$).
+
+## Completion Gate & Verification
+Before concluding UX research study:
+- [ ] SUS score calculated with sample size $\ge 5$ users
+- [ ] Usability friction points mapped with severity ratings (0 to 4)
+- [ ] Actionable design recommendations presented to product team

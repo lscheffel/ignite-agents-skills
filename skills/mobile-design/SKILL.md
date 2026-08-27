@@ -31,6 +31,16 @@ metadata:
 
 # Mobile Design
 
+## When to Use
+
+### Use when:
+- Designing mobile user interfaces for React Native, Flutter, iOS, or Android
+- Ensuring touch target ergonomic compliance ($48 \times 48\text{dp}$ / $44 \times 44\text{pt}$)
+- Implementing bottom navigation, gesture controls, and offline-first mobile sync
+
+### Do not use when:
+- Desktop-only admin consoles or terminal CLI applications
+
 ## Overview
 
 Design and build mobile applications that feel native on each platform. This skill covers React Native, Flutter, and SwiftUI with deep knowledge of platform-specific Human Interface Guidelines (Apple HIG) and Material Design, gesture handling, responsive layouts, offline-first patterns, and app store submission requirements.
@@ -336,3 +346,27 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Platform Guidelines:** Apple Human Interface Guidelines (HIG) and Google Material Design 3 (M3).
+- **Ergonomics & Touch Targets:** Minimum $48 \times 48\text{dp}$ (Android) / $44 \times 44\text{pt}$ (iOS) interactive touch geometry with $8\text{dp}$ minimum separation.
+- **Navigation Topologies:** Bottom Navigation Bar, Modal Bottom Sheets, and Swipe-to-Dismiss gesture physics.
+- **Offline-First Resilience:** Local-first reactive databases (WatermelonDB, PowerSync, SQLite) with optimistic offline mutations.
+
+### Touch Target Geometry Invariant:
+
+$$\text{Width}_{\text{touch}} \ge 48\text{dp}, \quad \text{Height}_{\text{touch}} \ge 48\text{dp}, \quad \text{Spacing} \ge 8\text{dp}$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Thumb-Zone Priority):** Place primary actions (FABs, CTAs, Navigation) in the bottom $40\%$ of the screen for natural one-handed reachability.
+2. **Rule of Thumb 2 (Safe Area Insets):** Always respect hardware notches, home indicator bars, and dynamic islands via `safe-area-inset-*` CSS variables or SafeAreaView.
+3. **Rule of Thumb 3 (Instant Offline Feedback):** When offline, display immediate optimistic UI state with subtle sync status indicators; never show a full-screen blocking error.
+4. **Rule of Thumb 4 (Haptic Feedback):** Provide subtle tactile haptic feedback on destructive actions or critical state confirmations.
+
+## Completion Gate & Verification
+Before concluding mobile design review:
+- [ ] All touch targets meet minimum $48\text{dp}$ / $44\text{pt}$ geometry
+- [ ] Safe area insets handled across notches and gesture bars
+- [ ] Offline state transitions verified with optimistic UI

@@ -44,3 +44,4 @@
 | ADR-031 | ADR-031: AI Agents, Loops, Resilience & MCP Tooling Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-032 | ADR-032: Engineering, Coding & Quality Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-033 | ADR-033: Backend, Data, Cloud & Security Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-034 | ADR-034: Frontend, UI/UX & Web Domain SOTA Hardening | Sim | 9/9 | CONSOLIDADA | - | ARCHIVED_OK |

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-27T02:45:54.484001+00:00",
+    "generated_at": "2026-08-27T02:49:40.675445+00:00",
     "omission_rate": "0.00%",
     "total_assets": 82,
     "persistence_target": ".github/governance/"
@@ -667,18 +667,18 @@
       "name": "artifacts-builder",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder",
-      "primary_sha256": "4e1608e5b47d18341fe3273858aadc125506ff4218efaaac3d7b88c82bfc812e",
+      "primary_sha256": "c5816eb431a1834364cd0a9f5038d4943efcf72380ebb62a5a392f10618a2992",
       "total_files": 3,
-      "total_bytes": 12204,
-      "total_tokens": 3032,
+      "total_bytes": 14432,
+      "total_tokens": 3589,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "4e1608e5b47d18341fe3273858aadc125506ff4218efaaac3d7b88c82bfc812e",
-          "bytes": 11671,
-          "tokens": 2901
+          "sha256": "c5816eb431a1834364cd0a9f5038d4943efcf72380ebb62a5a392f10618a2992",
+          "bytes": 13899,
+          "tokens": 3458
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/artifacts-builder/examples/artifacts-builder-example.md",
@@ -1779,18 +1779,18 @@
       "name": "mobile-design",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design",
-      "primary_sha256": "716fae14950911665190e7c04e7f2e0e4426184892494ae3430156739e734729",
+      "primary_sha256": "6a22f9f011a82e910035f5594f1f04d6465ac4735935be46221154374118a68b",
       "total_files": 3,
-      "total_bytes": 12750,
-      "total_tokens": 3167,
+      "total_bytes": 14832,
+      "total_tokens": 3688,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "716fae14950911665190e7c04e7f2e0e4426184892494ae3430156739e734729",
-          "bytes": 12316,
-          "tokens": 3060
+          "sha256": "6a22f9f011a82e910035f5594f1f04d6465ac4735935be46221154374118a68b",
+          "bytes": 14398,
+          "tokens": 3581
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/mobile-design/examples/mobile-design-example.md",
@@ -2122,18 +2122,18 @@
       "name": "react-best-practices",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices",
-      "primary_sha256": "526647dfd74f35b9d0702f44ba9de19730c18bb831f7d935be1076fbbdc9c1c0",
+      "primary_sha256": "11a11afa5cba9276709196fc130bb65aaef1f79f071e001cf1cc676ad4df31b5",
       "total_files": 3,
-      "total_bytes": 14588,
-      "total_tokens": 3627,
+      "total_bytes": 17095,
+      "total_tokens": 4243,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "526647dfd74f35b9d0702f44ba9de19730c18bb831f7d935be1076fbbdc9c1c0",
-          "bytes": 14131,
-          "tokens": 3514
+          "sha256": "11a11afa5cba9276709196fc130bb65aaef1f79f071e001cf1cc676ad4df31b5",
+          "bytes": 16638,
+          "tokens": 4130
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/react-best-practices/examples/react-best-practices-example.md",
@@ -2505,18 +2505,18 @@
       "name": "seo-optimizer",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer",
-      "primary_sha256": "8800fb74d9cfd236afd9913248717e8d3331a4da8b477344b55881ad7a0c1bab",
+      "primary_sha256": "121bb1de476d20e688acd71eea921f372bcb44876cdae65ca185d960f1a5af82",
       "total_files": 3,
-      "total_bytes": 17350,
-      "total_tokens": 4316,
+      "total_bytes": 19668,
+      "total_tokens": 4896,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "8800fb74d9cfd236afd9913248717e8d3331a4da8b477344b55881ad7a0c1bab",
-          "bytes": 16914,
-          "tokens": 4209
+          "sha256": "121bb1de476d20e688acd71eea921f372bcb44876cdae65ca185d960f1a5af82",
+          "bytes": 19232,
+          "tokens": 4789
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/seo-optimizer/examples/seo-optimizer-example.md",
@@ -3083,18 +3083,18 @@
       "name": "ui-ux-pro-max",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max",
-      "primary_sha256": "b566e4c1b368a5c686ef1051c9630bc82be758cea9af5862a289cd6d46069e8c",
+      "primary_sha256": "9dbf8021f8c54b041a3fb33288cb546bb8197f058de0f3535026f1da574fa187",
       "total_files": 4,
-      "total_bytes": 13144,
-      "total_tokens": 3089,
+      "total_bytes": 14959,
+      "total_tokens": 3543,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "b566e4c1b368a5c686ef1051c9630bc82be758cea9af5862a289cd6d46069e8c",
-          "bytes": 9424,
-          "tokens": 2164
+          "sha256": "9dbf8021f8c54b041a3fb33288cb546bb8197f058de0f3535026f1da574fa187",
+          "bytes": 11239,
+          "tokens": 2618
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ui-ux-pro-max/examples/ui-ux-pro-max-example.md",
@@ -3127,18 +3127,18 @@
       "name": "ux-researcher-designer",
       "category": "config_skill",
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer",
-      "primary_sha256": "49b2eed7515b872989fdbe4e4eb0fd09c6a329860ed6f8c9107ccd58b515a3c4",
+      "primary_sha256": "08e0e22017b22723334502bd113ae4c35b08ad584234566fc72c80514f956646",
       "total_files": 3,
-      "total_bytes": 14495,
-      "total_tokens": 3602,
+      "total_bytes": 16732,
+      "total_tokens": 4161,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer/SKILL.md",
           "relpath": "SKILL.md",
-          "sha256": "49b2eed7515b872989fdbe4e4eb0fd09c6a329860ed6f8c9107ccd58b515a3c4",
-          "bytes": 13927,
-          "tokens": 3464
+          "sha256": "08e0e22017b22723334502bd113ae4c35b08ad584234566fc72c80514f956646",
+          "bytes": 16164,
+          "tokens": 4023
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/ux-researcher-designer/examples/ux-researcher-designer-example.md",

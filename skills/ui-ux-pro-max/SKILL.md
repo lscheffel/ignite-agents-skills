@@ -189,6 +189,31 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Accessibility & Contrast:** WCAG 2.2 AAA compliance, Relative Luminance mathematics ($C_{\text{ratio}} \ge 7:1$), and APCA (Accessible Perceptual Contrast Algorithm).
+- **Modern Layout Engines:** CSS Grid Level 2 (Subgrid), Container Queries (`@container`), and CSS Anchor Positioning.
+- **Design Tokens & Systems:** HSL tailored palettes, 8pt spatial grid, fluid typography with `clamp()`, and glassmorphism backdrop filters.
+- **Micro-Interactions & Motion:** View Transitions API, CSS scroll-driven animations, and reduced-motion media queries (`prefers-reduced-motion: reduce`).
+
+### WCAG 2.2 Luminance & Contrast Formula:
+
+$$\text{Contrast Ratio} = \frac{L_1 + 0.05}{L_2 + 0.05} \quad \text{where } L_1 > L_2$$
+
+| Compliance Level | Normal Text ($<18\text{pt}$) | Large Text ($\ge 18\text{pt}$ / $24\text{px}$) | UI Components / Icons |
+|:---|:---:|:---:|:---:|
+| **WCAG AA** | $\ge 4.5:1$ | $\ge 3.0:1$ | $\ge 3.0:1$ |
+| **WCAG AAA (Enhanced SOTA)** | $\ge 7.0:1$ | $\ge 4.5:1$ | $\ge 4.5:1$ |
+
+### Fluid Typography Clamp Equation:
+`font-size: clamp(1rem, 0.75rem + 1.25vw, 1.75rem);`
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (WCAG 2.2 Contrast Mandate):** Body text must achieve at least $4.5:1$ (AA) and preferably $7.0:1$ (AAA) against its direct background color.
+2. **Rule of Thumb 2 (Reduced Motion Invariant):** All CSS animations and smooth scrolls must provide a zero-animation fallback under `@media (prefers-reduced-motion: reduce)`.
+3. **Rule of Thumb 3 (Subgrid Alignment):** Card lists and form rows with multi-column alignment must use CSS Subgrid to prevent visual misalignment.
+4. **Rule of Thumb 4 (Keyboard Navigability):** All interactive elements must have visible, high-contrast focus rings (`:focus-visible`).
+
 ## Completion Gate
 
 A tarefa associada à skill `ui-ux-pro-max` só pode ser declarada concluída quando:

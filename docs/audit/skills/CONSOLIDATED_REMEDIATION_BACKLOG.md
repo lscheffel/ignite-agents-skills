@@ -1,7 +1,7 @@
 # Consolidated Skill Remediation & ADR Backlog
 
 > **Gerado em:** 2026-08-26 | **Auditor:** `skill-audit-bulletin` (v5.1.0 Dual-Axis Engine)  
-> **Total de Skills Auditadas:** 60 | **Média Geral:** **85.4 / 100**
+> **Total de Skills Auditadas:** 60 | **Média Geral:** **85.7 / 100**
 
 ---
 
@@ -12,8 +12,8 @@
 | **Grau S (Diamond - Benchmark >=97.0)** | 1 | 1.7% |
 | **Grau A+ (Platinum - Ultra-High >=93.0)** | 7 | 11.7% |
 | **Grau A (Gold - Production Ready >=90.0)** | 5 | 8.3% |
-| **Grau B (Silver - Elevatable >=80.0)** | 40 | 66.7% |
-| **Grau C/F (Débitos Estruturais <80.0)** | 7 | 11.7% |
+| **Grau B (Silver - Elevatable >=80.0)** | 41 | 68.3% |
+| **Grau C/F (Débitos Estruturais <80.0)** | 6 | 10.0% |
 
 ---
 
@@ -41,8 +41,8 @@ _Nenhum débito crítico P0 detectado! O catálogo possui 100% de conformidade o
 - [ ] [`api-design`](../../skills/api-design) (Score 94.3): Integração contínua em novos workflows e subagentes especializados.
 - [ ] [`architecture-review`](../../skills/architecture-review) (Score 93.4): Oportunidade de expansão de cenários avançados de borda.
 - [ ] [`architecture-review`](../../skills/architecture-review) (Score 93.4): Integração contínua em novos workflows e subagentes especializados.
-- [ ] [`artifacts-builder`](../../skills/artifacts-builder) (Score 79.7): Expandir biblioteca de templates/exemplos (Poderia se beneficiar de subpastas dedicadas com templates e exemplos executáveis adicionais.)
-- [ ] [`artifacts-builder`](../../skills/artifacts-builder) (Score 79.7): Expandir vocabulário técnico com referências a padrões RFC/OWASP/Clean Architecture.
+- [ ] [`artifacts-builder`](../../skills/artifacts-builder) (Score 84.1): Expandir biblioteca de templates/exemplos (Poderia se beneficiar de subpastas dedicadas com templates e exemplos executáveis adicionais.)
+- [ ] [`artifacts-builder`](../../skills/artifacts-builder) (Score 84.1): Expandir vocabulário técnico com referências a padrões RFC/OWASP/Clean Architecture.
 - [ ] [`brainstorming`](../../skills/brainstorming) (Score 96.4): Oportunidade de expansão de cenários avançados de borda.
 - [ ] [`brainstorming`](../../skills/brainstorming) (Score 96.4): Expandir vocabulário técnico com referências a padrões RFC/OWASP/Clean Architecture.
 - [ ] [`cap`](../../skills/cap) (Score 86.5): Oportunidade de expansão de cenários avançados de borda.
@@ -74,6 +74,7 @@ _Nenhum débito crítico P0 detectado! O catálogo possui 100% de conformidade o
 | [`governance`](../../skills/governance) | `v2.0.0` | **B** | **89.8** | 98.5 | 84.0 | `AUGMENT_SOTA` |
 | [`release`](../../skills/release) | `v2.0.0` | **B** | **88.2** | 94.5 | 84.0 | `AUGMENT_SOTA` |
 | [`security-review`](../../skills/security-review) | `v1.0.0` | **B** | **87.7** | 95.5 | 82.5 | `AUGMENT_SOTA` |
+| [`ux-researcher-designer`](../../skills/ux-researcher-designer) | `v1.0.0` | **B** | **87.3** | 90.0 | 85.5 | `AUGMENT_SOTA` |
 | [`adr-archive`](../../skills/adr-archive) | `v3.0.0` | **B** | **87.1** | 98.5 | 79.5 | `AUGMENT_SOTA` |
 | [`repo-bootstrap`](../../skills/repo-bootstrap) | `v2.0.0` | **B** | **86.8** | 100.0 | 78.0 | `AUGMENT_SOTA` |
 | [`technical-documentation`](../../skills/technical-documentation) | `v2.1.0` | **B** | **86.8** | 100.0 | 78.0 | `AUGMENT_SOTA` |
@@ -82,14 +83,18 @@ _Nenhum débito crítico P0 detectado! O catálogo possui 100% de conformidade o
 | [`ddd`](../../skills/ddd) | `v2.0.0` | **B** | **86.2** | 98.5 | 78.0 | `AUGMENT_SOTA` |
 | [`deployment`](../../skills/deployment) | `v1.0.0` | **B** | **86.2** | 94.0 | 81.0 | `AUGMENT_SOTA` |
 | [`clean-code`](../../skills/clean-code) | `v1.0.0` | **B** | **85.9** | 95.5 | 79.5 | `AUGMENT_SOTA` |
+| [`mobile-design`](../../skills/mobile-design) | `v1.0.0` | **B** | **85.3** | 94.0 | 79.5 | `AUGMENT_SOTA` |
 | [`performance-optimization`](../../skills/performance-optimization) | `v1.0.0` | **B** | **85.3** | 94.0 | 79.5 | `AUGMENT_SOTA` |
 | [`prompt-engineering`](../../skills/prompt-engineering) | `v2.0.0` | **B** | **85.3** | 98.5 | 76.5 | `AUGMENT_SOTA` |
 | [`refactoring`](../../skills/refactoring) | `v2.0.0` | **B** | **84.6** | 94.5 | 78.0 | `AUGMENT_SOTA` |
 | [`resilient-execution`](../../skills/resilient-execution) | `v1.0.0` | **B** | **84.5** | 83.0 | 85.5 | `AUGMENT_SOTA` |
 | [`circuit-breaker`](../../skills/circuit-breaker) | `v1.0.0` | **B** | **84.4** | 94.0 | 78.0 | `AUGMENT_SOTA` |
 | [`dispatching-parallel-agents`](../../skills/dispatching-parallel-agents) | `v1.0.0` | **B** | **84.4** | 94.0 | 78.0 | `AUGMENT_SOTA` |
+| [`react-best-practices`](../../skills/react-best-practices) | `v1.0.0` | **B** | **84.4** | 94.0 | 78.0 | `AUGMENT_SOTA` |
+| [`seo-optimizer`](../../skills/seo-optimizer) | `v1.0.0` | **B** | **84.4** | 94.0 | 78.0 | `AUGMENT_SOTA` |
 | [`test-driven-development`](../../skills/test-driven-development) | `v1.0.0` | **B** | **84.4** | 94.0 | 78.0 | `AUGMENT_SOTA` |
 | [`git-workflow`](../../skills/git-workflow) | `v1.0.0` | **B** | **84.2** | 89.0 | 81.0 | `AUGMENT_SOTA` |
+| [`artifacts-builder`](../../skills/artifacts-builder) | `v1.0.0` | **B** | **84.1** | 95.5 | 76.5 | `AUGMENT_SOTA` |
 | [`mcp-builder`](../../skills/mcp-builder) | `v1.0.0` | **B** | **84.1** | 95.5 | 76.5 | `AUGMENT_SOTA` |
 | [`changelog-generator`](../../skills/changelog-generator) | `v1.0.0` | **B** | **84.0** | 88.5 | 81.0 | `AUGMENT_SOTA` |
 | [`context7-mcp`](../../skills/context7-mcp) | `v1.0.0` | **B** | **83.5** | 85.0 | 82.5 | `AUGMENT_SOTA` |
@@ -98,21 +103,16 @@ _Nenhum débito crítico P0 detectado! O catálogo possui 100% de conformidade o
 | [`implementation`](../../skills/implementation) | `v2.2.1` | **B** | **82.5** | 91.5 | 76.5 | `AUGMENT_SOTA` |
 | [`database-architecture`](../../skills/database-architecture) | `v2.0.0` | **B** | **82.1** | 87.5 | 78.5 | `AUGMENT_SOTA` |
 | [`skill-discovery`](../../skills/skill-discovery) | `v3.0.0` | **B** | **82.1** | 78.5 | 84.5 | `AUGMENT_SOTA` |
-| [`ux-researcher-designer`](../../skills/ux-researcher-designer) | `v1.0.0` | **B** | **82.0** | 79.0 | 84.0 | `AUGMENT_SOTA` |
 | [`code-review`](../../skills/code-review) | `v5.0.0` | **B** | **81.7** | 91.0 | 75.5 | `AUGMENT_SOTA` |
 | [`code-review-lite`](../../skills/code-review-lite) | `v5.0.0-alias` | **B** | **81.5** | 84.5 | 79.5 | `AUGMENT_SOTA` |
 | [`xlsx-processing`](../../skills/xlsx-processing) | `v1.0.0` | **B** | **81.5** | 84.5 | 79.5 | `AUGMENT_SOTA` |
 | [`product-spec-engineering`](../../skills/product-spec-engineering) | `v1.0.0` | **B** | **81.4** | 86.5 | 78.0 | `AUGMENT_SOTA` |
 | [`content-research-writer`](../../skills/content-research-writer) | `v1.0.0` | **B** | **81.2** | 86.0 | 78.0 | `AUGMENT_SOTA` |
 | [`testing-mastery`](../../skills/testing-mastery) | `v1.0.0` | **B** | **81.2** | 87.5 | 77.0 | `AUGMENT_SOTA` |
-| [`mobile-design`](../../skills/mobile-design) | `v1.0.0` | **B** | **80.9** | 83.0 | 79.5 | `AUGMENT_SOTA` |
 | [`docx-processing`](../../skills/docx-processing) | `v1.0.0` | **B** | **80.6** | 84.5 | 78.0 | `AUGMENT_SOTA` |
 | [`subagent-driven-development`](../../skills/subagent-driven-development) | `v1.0.0` | **B** | **80.6** | 84.5 | 78.0 | `AUGMENT_SOTA` |
-| [`react-best-practices`](../../skills/react-best-practices) | `v1.0.0` | **B** | **80.0** | 83.0 | 78.0 | `AUGMENT_SOTA` |
-| [`seo-optimizer`](../../skills/seo-optimizer) | `v1.0.0` | **B** | **80.0** | 83.0 | 78.0 | `AUGMENT_SOTA` |
 | [`verification-before-completion`](../../skills/verification-before-completion) | `v1.0.0` | **B** | **80.0** | 83.0 | 78.0 | `AUGMENT_SOTA` |
 | [`find-skills`](../../skills/find-skills) | `v1.0.0` | **C** | **79.8** | 87.0 | 75.0 | `REMEDIATE_DEBT` |
-| [`artifacts-builder`](../../skills/artifacts-builder) | `v1.0.0` | **C** | **79.7** | 84.5 | 76.5 | `REMEDIATE_DEBT` |
 | [`pdf-processing`](../../skills/pdf-processing) | `v1.0.0` | **C** | **79.7** | 84.5 | 76.5 | `REMEDIATE_DEBT` |
 | [`content-creator`](../../skills/content-creator) | `v1.0.0` | **C** | **79.1** | 83.0 | 76.5 | `REMEDIATE_DEBT` |
 | [`email-composer`](../../skills/email-composer) | `v1.0.0` | **C** | **79.1** | 83.0 | 76.5 | `REMEDIATE_DEBT` |

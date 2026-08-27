@@ -31,6 +31,16 @@ metadata:
 
 # Artifacts Builder
 
+## When to Use
+
+### Use when:
+- Creating standalone single-file HTML/CSS/JS applications, prototypes, or visual calculators
+- Building interactive demos that must execute in a browser without a build step or npm
+- Visualizing complex state machines, charts, or algorithms interactively
+
+### Do not use when:
+- Building enterprise multi-page web applications with server-side routing (use Next.js / Vite)
+
 ## Overview
 
 Generate self-contained, production-quality HTML/CSS/JS artifacts that run in any modern browser without a build step. Each artifact is a single file (or minimal file set) containing everything needed for an interactive demo, prototype, data visualization, or utility tool. Emphasis on progressive enhancement, responsive design, and clean code.
@@ -348,3 +358,35 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Single-File Architecture:** Fully self-contained HTML/CSS/JS bundles executable locally without build tools or npm dependencies.
+- **Security & Sandboxing:** Strict Content Security Policy (CSP), zero external unsafe scripts, and local `iframe` isolation.
+- **Modern Web APIs:** Native Web Components, Canvas 2D / WebGL rendering, CSS Grid & Custom Properties.
+- **Reactive State Without Frameworks:** Lightweight Pub/Sub state machines and Proxy-based reactive data binding.
+
+### Vanilla Reactive State Binding Pattern:
+
+```javascript
+const state = new Proxy({ count: 0 }, {
+  set(target, key, value) {
+    target[key] = value;
+    document.querySelectorAll(`[data-bind="${key}"]`).forEach(el => el.textContent = value);
+    return true;
+  }
+});
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Zero-Build Invariant):** The artifact must execute instantly by double-clicking the `.html` file in any modern browser without requiring `npm install` or local servers.
+2. **Rule of Thumb 2 (Sandboxed Security):** Never load external third-party CDN scripts in artifacts; embed styles and scripts inline to guarantee portability and security.
+3. **Rule of Thumb 3 (Responsive Fit):** The artifact must fluidly scale from mobile viewport ($360\text{px}$) to ultra-wide desktop ($2560\text{px}$).
+4. **Rule of Thumb 4 (Rich Aesthetics):** Always use dark mode palettes, vibrant accent gradients, and micro-animations; plain default styling is strictly prohibited.
+
+## Completion Gate & Verification
+Before declaring artifact deliverable complete:
+- [ ] Single HTML file opens and executes cleanly in modern browsers
+- [ ] Zero external insecure script CDNs; CSS/JS self-contained
+- [ ] Responsive layout scales smoothly across mobile and desktop viewports

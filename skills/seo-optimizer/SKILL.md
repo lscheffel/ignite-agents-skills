@@ -31,6 +31,16 @@ metadata:
 
 # SEO Optimizer
 
+## When to Use
+
+### Use when:
+- Implementing technical SEO audits, JSON-LD Schema.org markup, and meta tags
+- Optimizing Core Web Vitals (LCP, INP, CLS) and page indexability
+- Setting up Open Graph social preview cards and XML sitemaps
+
+### Do not use when:
+- Internal authenticated intranets or private dashboards closed to web crawlers
+
 ## Overview
 
 Optimize websites for search engine visibility through technical SEO, on-page optimization, structured data implementation, and Core Web Vitals performance tuning. This skill covers crawlability, indexability, meta tag strategy, Schema.org markup, sitemap generation, canonical URL management, internationalization (hreflang), and performance optimization for Google's ranking signals.
@@ -473,6 +483,38 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Structured Data:** Schema.org JSON-LD `@graph` architectures (SoftwareApplication, TechArticle, Organization, BreadcrumbList).
+- **Core Web Vitals (CWV):** Largest Contentful Paint (LCP $\le 2.5\text{s}$), Interaction to Next Paint (INP $\le 200\text{ms}$), Cumulative Layout Shift (CLS $\le 0.1$).
+- **Canonical & Crawlability:** Self-referential canonical URLs, automated XML sitemaps, robots.txt directives, and hreflang localization.
+- **Social Graph Optimization:** Open Graph (`og:image`, `og:title`) and Twitter Cards (`summary_large_image`).
+
+### Schema.org JSON-LD Technical Specification:
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Ignite Agents Skills",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+  ]
+}
+</script>
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Zero CLS on Images & Fonts):** All `<img>` tags must specify explicit `width` and `height` attributes and use `font-display: swap` to prevent layout shifts.
+2. **Rule of Thumb 2 (Single H1 Tag):** Every web page must contain exactly one `<h1>` tag matching the primary search intent.
+3. **Rule of Thumb 3 (Valid Structured Data):** Validate all JSON-LD payloads against Google Rich Results Test; zero schema syntax errors allowed.
+4. **Rule of Thumb 4 (Meta Description Quality):** Meta descriptions must be between 120 and 160 characters, providing an actionable call to action.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -481,3 +523,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding SEO optimization:
+- [ ] JSON-LD structured data validates against Google Rich Results Test
+- [ ] Core Web Vitals meet targets (LCP $\le 2.5\text{s}$, INP $\le 200\text{ms}$, CLS $\le 0.1$)
+- [ ] Unique title and meta descriptions configured for all target routes

@@ -4,7 +4,7 @@
   "total_skills": 60,
   "audited_skills": 60,
   "pending_skills": 0,
-  "average_score": 85.4,
+  "average_score": 85.7,
   "entries": {
     "adr-archive": {
       "skill": "adr-archive",
@@ -115,13 +115,13 @@
       "path": "skills/artifacts-builder",
       "version": "1.0.0",
       "last_audited": "2026-08-26",
-      "grade": "C",
+      "grade": "B",
       "previous_score": "N/A",
-      "current_score": 79.7,
-      "physical_score": 84.5,
+      "current_score": 84.1,
+      "physical_score": 95.5,
       "cognitive_score": 76.5,
-      "status": "REMEDIATE_DEBT",
-      "action": "REMEDIATE_DEBT"
+      "status": "AUGMENT_SOTA",
+      "action": "AUGMENT_SOTA"
     },
     "brainstorming": {
       "skill": "brainstorming",
@@ -429,8 +429,8 @@
       "last_audited": "2026-08-26",
       "grade": "B",
       "previous_score": "N/A",
-      "current_score": 80.9,
-      "physical_score": 83.0,
+      "current_score": 85.3,
+      "physical_score": 94.0,
       "cognitive_score": 79.5,
       "status": "AUGMENT_SOTA",
       "action": "AUGMENT_SOTA"
@@ -520,8 +520,8 @@
       "last_audited": "2026-08-26",
       "grade": "B",
       "previous_score": "N/A",
-      "current_score": 80.0,
-      "physical_score": 83.0,
+      "current_score": 84.4,
+      "physical_score": 94.0,
       "cognitive_score": 78.0,
       "status": "AUGMENT_SOTA",
       "action": "AUGMENT_SOTA"
@@ -598,8 +598,8 @@
       "last_audited": "2026-08-26",
       "grade": "B",
       "previous_score": "N/A",
-      "current_score": 80.0,
-      "physical_score": 83.0,
+      "current_score": 84.4,
+      "physical_score": 94.0,
       "cognitive_score": 78.0,
       "status": "AUGMENT_SOTA",
       "action": "AUGMENT_SOTA"
@@ -728,9 +728,9 @@
       "last_audited": "2026-08-26",
       "grade": "B",
       "previous_score": "N/A",
-      "current_score": 82.0,
-      "physical_score": 79.0,
-      "cognitive_score": 84.0,
+      "current_score": 87.3,
+      "physical_score": 90.0,
+      "cognitive_score": 85.5,
       "status": "AUGMENT_SOTA",
       "action": "AUGMENT_SOTA"
     },
