@@ -735,12 +735,12 @@ wb.save(&#x27;output.xlsx&#x27;)</code></pre>
     G --&gt;|Não| E
     G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
 <h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
-<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Premature Execution Without Context</strong></td><td>🔴 Critical</td><td>Context hallucination and destructive refactoring</td><td>Activate <code>cap</code> to acquire minimal evidence before editing.</td></tr><tr><td><strong>Omission of Validation Checklists</strong></td><td>🟡 Medium</td><td>Delivering artifacts with syntax inconsistencies</td><td>Rigorously execute the checklist step-by-step before handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
 <h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
 <ul>
-<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
-<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
-<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+<li><strong>Restricted / Read-Only Environment:</strong> If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.</li>
+<li><strong>Specification Conflict:</strong> If contradictions emerge between user intent and the SSOT (<code>AGENTS.md</code>), halt and present trade-off options.</li>
+<li><strong>Context Exhaustion / Timeout:</strong> For massive tasks, decompose into atomic sub-batches utilizing <code>subagent-driven-development</code>.</li>
 </ul>
 <h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
 <ul>
@@ -772,11 +772,11 @@ wb.save(&#x27;output.xlsx&#x27;)</code></pre>
 </ul>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
-<li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
-<li>[ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.</li>
-<li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
-<li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
-<li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+<li>[ ] All prerequisites and target files inspected before modification.</li>
+<li>[ ] Procedure strictly adheres to specialization rules and best practices.</li>
+<li>[ ] Security, typing, and architectural style guidelines preserved.</li>
+<li>[ ] Unit tests or validation commands executed successfully.</li>
+<li>[ ] Final deliverable verified against the completion gate.</li>
 </ul>
 <h2 id="completion-gate--verification">Completion Gate & Verification</h2>
 <p>Before concluding spreadsheet generation:</p>

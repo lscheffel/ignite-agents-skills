@@ -31,88 +31,88 @@ metadata:
 Unified Git operations, commit styling, worktree management, and branch completion workflows.
 
 
-## Sub-Domain / Component: `git`
+## Domain Architecture: Git Operations
 
 # Git
 
-Padrões e workflows para versionamento com Git.
+Standards and workflows for version control with Git.
 
-## Quando Usar
+## When to Use
 
-### Use quando:
-- Precisa criar commits com mensagens padronizadas
-- Precisa decidir entre merge, rebase ou cherry-pick
-- Precisa resolver conflitos de merge
-- Precisa configurar branching strategy para equipe
-- Precisa fazer release via Git Flow
+### Use when:
+- Need to create commits with standardized messages (Conventional Commits)
+- Need to decide between merge, rebase, or cherry-pick
+- Need to resolve merge conflicts deterministically
+- Need to configure branching strategy for a team
+- Need to manage releases via Git Flow or Trunk-Based workflows
 
-### Não use quando:
-- Trabalhando em repositório somente leitura
-- Precisa de versionamento sem Git (ex: SVN)
-- Trabalhando com monorepo que usa outro sistema
+### Do not use when:
+- Working in a read-only repository
+- Using non-Git version control systems (e.g., SVN, Mercurial)
+- Working in a repository managed by non-Git source control
 
-### Skills relacionadas:
-- `governance` — para processos de branch protection e CODEOWNERS
-- `release` — para versionamento semântico e tags
-- `repo-bootstrap` — para configurar .gitignore e gitignore.io
+### Related Skills:
+- `governance` — for branch protection rules and CODEOWNERS
+- `release` — for semantic versioning and release tags
+- `repo-bootstrap` — for configuring .gitignore and gitignore.io templates
 
 ## Decision Tree
 
 ```mermaid
 graph TD
-    A[Preciso de Git?] -->|Criar commit| B[Conventional Commits]
-    A -->|Criar branch| C[Qual tipo?]
-    C -->|Nova feature| D[feature/nome-curto]
+    A[Need Git Operation?] -->|Create commit| B[Conventional Commits]
+    A -->|Create branch| C[What type?]
+    C -->|New feature| D[feature/nome-curto]
     C -->|Bug fix| E[fix/nome-curto]
-    C -->|Hotfix produção| F[hotfix/nome-curto]
-    A -->|Integrar branch| G[Merge ou Rebase?]
-    G -->|Precisa preservar histórico| H[Merge]
-    G -->|Precisa histórico limpo| I[Rebase]
-    G -->|Branch compartilhado| J[Merge - NUNCA rebase]
-    G -->|Branch local| K[Rebase]
-    A -->|Resolver conflito| L[Conflito de Merge]
-    L -->|Arquivo binário| M[Git merge -X theirs/mine]
-    L -->|Arquivo texto| N[Editar manualmente]
+    C -->|Production hotfix| F[hotfix/nome-curto]
+    A -->|Integrate branch| G[Merge or Rebase?]
+    G -->|Need full history| H[Merge]
+    G -->|Need clean linear history| I[Rebase]
+    G -->|Shared remote branch| J[Merge - NEVER rebase]
+    G -->|Local private branch| K[Rebase]
+    A -->|Resolve conflict| L[Merge Conflict]
+    L -->|Binary file conflict| M[Git merge -X theirs/mine]
+    L -->|Text file conflict| N[Edit markers manually]
 ```
 
 ## Workflow
 
-### Fase 1: Criar Commit Convencional
+### Phase 1: Create Conventional Commit
 
-1. Stageie os arquivos relevantes:
+1. Stage the relevant files:
    ```bash
    git add src/services/user.ts src/controllers/user.ts
    ```
-2. Verifique o status:
+2. Verify working tree status:
    ```bash
    git status
    ```
-3. Crie o commit:
+3. Create the commit:
    ```bash
    git commit -m "feat(user): add email validation to registration"
    ```
-4. **Checkpoint**: Verifique o commit no log:
+4. **Checkpoint**: Verify the commit in git log:
    ```bash
    git log -1 --pretty=format:"%s"
-   # Deve mostrar: feat(user): add email validation to registration
+   # Should display: feat(user): add email validation to registration
    ```
 
-### Fase 2: Resolver Conflito de Merge
+### Fase 2: Resolver Merge Conflict
 
 1. Identifique arquivos conflitantes:
    ```bash
    git status
-   # Arquivos com "both modified" são conflitantes
+   # Files marked "both modified" are in conflict
    ```
 2. Abra o arquivo e localize marcadores:
    ```
    <<<<<<< HEAD
    código da branch atual
    =======
-   código da branch que está mergeando
+   code from the incoming branch
    >>>>>>> branch-name
    ```
-3. Edite manualmente para resolver:
+3. Edit manually to resolve conflicts:
    - Mantenha código correto
    - Remova marcadores de conflito
 4. Stageie o arquivo resolvido:
@@ -132,7 +132,7 @@ graph TD
 
 ### Fase 3: Fazer Release via Git Flow
 
-1. Certifique-se que está em develop:
+1. Ensure you are on the develop branch:
    ```bash
    git checkout develop
    git pull origin develop
@@ -148,12 +148,12 @@ graph TD
    # Atualize package.json manualmente
    ```
 4. Atualize CHANGELOG.md
-5. Commit das mudanças:
+5. Commit release preparation changes:
    ```bash
    git add .
    git commit -m "chore(release): prepare v1.2.0"
    ```
-6. Merge para main:
+6. Merge into main:
    ```bash
    git checkout main
    git merge --no-ff release/v1.2.0
@@ -162,7 +162,7 @@ graph TD
    ```bash
    git tag -a v1.2.0 -m "Release v1.2.0"
    ```
-8. Merge de volta para develop:
+8. Merge back into develop:
    ```bash
    git checkout develop
    git merge --no-ff release/v1.2.0
@@ -171,7 +171,7 @@ graph TD
    ```bash
    git branch -d release/v1.2.0
    ```
-10. **Checkpoint**: Push com tags:
+10. **Checkpoint**: Push commits with tags:
     ```bash
     git push origin main --tags
     git push origin develop
@@ -187,9 +187,9 @@ graph TD
    ```bash
    git rebase -i HEAD~3
    ```
-3. No editor, escolha ação para cada commit:
+3. In the editor, choose the rebase action for each commit:
    - `pick` — manter commit
-   - `squash` — unir com commit anterior
+   - `squash` — combine with the previous commit
    - `fixup` — unir sem mensagem
    - `reword` — editar mensagem
    - `drop` — remover commit
@@ -219,14 +219,14 @@ chore: manutenção
 
 ### Branching Strategies
 
-#### Git Flow (recomendado para releases agendadas)
+#### Git Flow (recommended for scheduled milestone releases)
 - `main`: código em produção
 - `develop`: branch de integração
 - `feature/*`: novas features
 - `release/*`: preparação de release
 - `hotfix/*`: correções urgentes
 
-#### Trunk-Based (recomendado para CI/CD contínuo)
+#### Trunk-Based (recommended for continuous integration and delivery)
 - `main`: trunk sempre deployável
 - `feature/*`: branches curtas (< 1 dia)
 - Commits pequenos e frequentes
@@ -236,16 +236,16 @@ chore: manutenção
 | Ação | Merge | Rebase |
 |------|-------|--------|
 | Preserva histórico | ✅ | ❌ |
-| Histórico linear | ❌ | ✅ |
-| Seguro para shared | ✅ | ❌ |
-| Branch compartilhado | ✅ | ❌ |
+| Linear history | ❌ | ✅ |
+| Safe for shared branch | ✅ | ❌ |
+| Shared remote branch | ✅ | ❌ |
 
 ## Templates
 
 ### commit-message.md
 Localização: `templates/commit-message.md`
 
-Template para mensagens de commit padronizadas.
+Template for standardized commit messages.
 
 **Uso:**
 ```bash
@@ -256,7 +256,7 @@ cat templates/commit-message.md
 ### branch-naming.md
 Localização: `templates/branch-naming.md`
 
-Convenção de nomes para branches.
+Naming conventions for branches.
 
 **Uso:**
 ```bash
@@ -267,11 +267,11 @@ git checkout -b feature/user-authentication
 ### pr-description.md
 Localização: `templates/pr-description.md`
 
-Template para descrição de Pull Request.
+Template for Pull Request descriptions.
 
 **Uso:**
 ```bash
-# Copie para usar como base
+# Copy to use as a baseline
 cp templates/pr-description.md .github/PULL_REQUEST_TEMPLATE.md
 ```
 
@@ -279,10 +279,10 @@ cp templates/pr-description.md .github/PULL_REQUEST_TEMPLATE.md
 
 ### 🔴 Crítico
 
-#### Force push em branch compartilhado
-**O que é:** Usar `git push --force` em branch que outros desenvolvedores estão usando.
-**Por que é ruim:** Destrói histórico que outros desenvolvedores dependem, causando perda de trabalho.
-**Como evitar:** Use `git push --force-with-lease` ou nunca force push em branches compartilhados.
+#### Force push to shared branch
+**What it is:** Using `git push --force` on branches shared with other developers.
+**Why it is bad:** Overwrites upstream commit history, causing unrecoverable data loss for collaborators.
+**How to avoid:** Use `git push --force-with-lease` and enforce branch protection on shared branches.
 **Exemplo:**
 ```
 # ❌ ERRADO
@@ -294,9 +294,9 @@ git push --force-with-lease origin feature/user-auth
 git merge origin/main  # preserva histórico
 ```
 
-#### Commit com segredos/credenciais
-**O que é:** Commitar arquivos contendo senhas, tokens ou credenciais.
-**Por que é ruim:** Exposição de credenciais no histórico do Git, impossível remover completamente.
+#### Committing secrets or credentials
+**What it is:** Committing files containing passwords, API tokens, or credentials.
+**Why it is bad:** Leaks credentials into permanent git history, necessitating credential revocation.
 **Como evitar:** Use .env, .gitignore, e git-secrets.
 **Exemplo:**
 ```
@@ -313,9 +313,9 @@ git commit -m "feat: add config"
 ### 🟡 Médio
 
 #### Mensagem de commit vaga
-**O que é:** Mensagens genéricas como "fix bug" ou "update code".
-**Por que é ruim:** Dificulta busca no histórico e gera documentação ruim.
-**Como evitar:** Use Conventional Commits com escopo e descrição clara.
+**What it is:** Using generic messages such as 'fix bug', 'wip', or 'update code'.
+**Why it is bad:** Degrades git log traceability, bisect debugging, and changelog generation.
+**How to avoid:** Follow Conventional Commits with concise scope and descriptive summaries.
 **Exemplo:**
 ```
 # ❌ ERRADO
@@ -326,9 +326,9 @@ git commit -m "fix(auth): handle expired JWT token"
 ```
 
 #### Branch sem PR
-**O que é:** Trabalhar diretamente em main sem Pull Request.
-**Por que é ruim:** Nenhuma revisão de código, histórico de decisões perdido.
-**Como evitar:** Sempre crie PR, mesmo para mudanças pequenas.
+**What it is:** Pushing direct commits to main without peer review or automated CI verification.
+**Why it is bad:** Bypasses review gates and increases deployment breakage risks.
+**How to avoid:** Always open a Pull Request and require automated CI status checks.
 **Exemplo:**
 ```
 # ❌ ERRADO
@@ -345,9 +345,9 @@ gh pr create --title "Quick fix" --body "Descrição"
 
 ### 🟢 Baixo
 
-#### Commit grande com múltiplas mudanças
-**O que é:** Commitar vários arquivos com mudanças não relacionadas.
-**Por que é ruim:** Dificulta rollback seletivo e revisão de código.
+#### Giant commits with multi-topic changes
+**What it is:** Bundling unrelated refactorings, feature changes, and formatting in one commit.
+**Why it is bad:** Impairs atomic rollbacks and makes PR review cognitive load unmanageable.
 **Como evitar:** Commits atômicos, um conceito por commit.
 **Exemplo:**
 ```
@@ -371,26 +371,26 @@ git commit -m "docs: update user flow"
 - [ ] Testes passam (`npm test`)
 - [ ] Lint passa (`npm run lint`)
 - [ ] Mensagem de commit segue Conventional Commits
-- [ ] Arquivo .env não está no stage
+- [ ] .env and secret files excluded from staging
 
 ### Checklist Pré-Merge
-- [ ] Branch está atualizada com main
-- [ ] Todos os testes passam
+- [ ] Branch rebased and updated against main
+- [ ] All unit and integration tests pass
 - [ ] Coverage ≥ 80%
 - [ ] PR tem descrição completa
-- [ ] Pelo menos 1 aprovação
+- [ ] At least 1 approving peer review received
 
 ### Checklist Pré-Release
 - [ ] CHANGELOG.md atualizado
 - [ ] Versão bumpado em package.json
-- [ ] Todos os testes E2E passam
+- [ ] All CI/CD and E2E checks pass
 - [ ] Build de produção funciona
-- [ ] Tag criada com semantic versioning
+- [ ] Tag created using semantic versioning
 
 ## Edge Cases
 
-### Submodule com conflito
-**Situação:** Conflito em repositório que usa submodules.
+### Submodule conflict
+**Situation:** Conflict in repository utilizing git submodules.
 **Solução:** Atualize o submodule separadamente, depois resolva o conflito.
 **Exceção:** Se o submodule é externo, considere usar subtree.
 
@@ -401,13 +401,13 @@ git add path/to/submodule
 git commit -m "chore: update submodule"
 ```
 
-### Rebase com arquivo binário conflito
+### Rebase with binary file conflict
 **Situação:** Conflito em arquivo binário durante rebase.
-**Solução:** Use merge strategy para binários.
+**Solution:** Use checkout merge strategy for binary assets (`git checkout --ours/--theirs`).
 **Exceção:** Se o binário é gerado, remova e regenere.
 
 ```bash
-# Resolver conflito em binário
+# Resolve conflict em binário
 git checkout --ours path/to/file.bin
 git add path/to/file.bin
 git rebase --continue
@@ -415,13 +415,13 @@ git rebase --continue
 
 ### Detached HEAD
 **Situação:** Git checkout em commit específico, ficando em estado detached HEAD.
-**Solução:** Crie branch para trabalhar ou retorne ao branch anterior.
-**Exceção:** Se for só para inspecionar, não há problema.
+**Solution:** Create a tracking branch or return to previous branch state.
+**Exception:** If inspecting read-only state, detached HEAD is acceptable.
 
 ```bash
 # Sair do detached HEAD
 git checkout main
-# ou criar branch
+# or create new branch
 git switch -c temp-branch
 ```
 
@@ -429,9 +429,9 @@ git switch -c temp-branch
 
 - [Conventional Commits](https://www.conventionalcommits.org/)
 - [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
-- `governance` — para branch protection e CODEOWNERS
-- `release` — para versionamento semântico
-- `repo-bootstrap` — para .gitignore patterns
+- `governance` — for branch protection and CODEOWNERS
+- `release` — for semantic versioning
+- `repo-bootstrap` — for .gitignore patterns
 
 ---
 
@@ -1254,8 +1254,8 @@ main / master ──────────────────────
 - **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate
 
-A tarefa associada à skill `git-workflow` só pode ser declarada concluída quando:
-1. Todas as verificações do checklist operacional foram atendidas.
-2. O resultado foi validado deterministamente através de evidências de execução.
-3. Não restam pendências estruturais, placeholders ou erros não tratados.
+The task associated with the skill `git-workflow` can only be declared complete when:
+1. All checks in the operational verification checklist have been satisfied.
+2. The deliverable has been deterministically validated through execution evidence.
+3. No structural debt, unresolved placeholders, or unhandled errors remain.
 

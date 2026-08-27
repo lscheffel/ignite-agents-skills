@@ -240,9 +240,9 @@ Generates technical documentation from in-depth analysis of the actual codebase 
 
 ## Edge Cases & Failure Modes
 
-- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
-- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
-- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+- **Restricted / Read-Only Environment:** If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.
+- **Specification Conflict:** If contradictions emerge between user intent and the SSOT (`AGENTS.md`), halt and present trade-off options.
+- **Context Exhaustion / Timeout:** For massive tasks, decompose into atomic sub-batches utilizing `subagent-driven-development`.
 
 
 
@@ -276,8 +276,8 @@ Generates technical documentation from in-depth analysis of the actual codebase 
 - **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate
 
-A tarefa associada à skill `technical-documentation` só pode ser declarada concluída quando:
-1. Todas as verificações do checklist operacional foram atendidas.
-2. O resultado foi validado deterministamente através de evidências de execução.
-3. Não restam pendências estruturais, placeholders ou erros não tratados.
+The task associated with the skill `technical-documentation` can only be declared complete when:
+1. All checks in the operational verification checklist have been satisfied.
+2. The deliverable has been deterministically validated through execution evidence.
+3. No structural debt, unresolved placeholders, or unhandled errors remain.
 

@@ -105,8 +105,8 @@ Structured planning converts vague requirements into approved, documented implem
 - reverse-engineering-specs
 
 ## ⚠️ Token Optimization (Skip Consolidated ADRs)
-Quando você precisar varrer as ADRs do repositório para obter contexto, faça **PRIMEIRO** a leitura do `docs/adr/ADR-INDEX.md` ou um `grep` no frontmatter das ADRs. 
-Você está **PROIBIDO** de ler o conteúdo completo (via `view_file` ou `cat`) de qualquer arquivo que possua a tag `implementation_status: CONSOLIDADA` no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.
+When scanning repository ADRs for context, **FIRST** read `docs/adr/ADR-INDEX.md` or grep the YAML frontmatter of ADRs. 
+You are **STRICTLY FORBIDDEN** from reading the full content (via `view_file` or `cat`) of any file with `implementation_status: CONSOLIDADA` in its YAML frontmatter. Apply a summary 'SKIP' to these files, as their content is historical and immutable. Only perform deep inspection if explicitly requested by the user for an audit, or if the active task specifically modifies that architecture.
 
 ## Condições de Ativação
 
@@ -188,16 +188,16 @@ For each approach, include:
 
 ## Fallback e Governança (ADR-002)
 
-**ATENÇÃO:** O planejamento deve idealmente ser derivado de uma ADR aprovada e refletido no Roadmap.
+**IMPORTANT:** Planning must ideally derive from an approved ADR and be reflected in the project Roadmap.
 Se o repositório já segue o padrão de governança de ADRs (`docs/adr/`), **NÃO** crie arquivos isolados.
-1. **Fallback**: Se a feature solicitada é complexa e não possui ADR, acione a skill `adr-generator` antes de prosseguir.
+1. **Fallback**: If the requested feature is complex and lacks an ADR, trigger the `adr-generator` skill before proceeding.
 2. Salve o plano detalhado no formato `docs/adr/ADR-XXX-PI.md` (Implementation Plan).
-3. **Roadmap**: Exija o preenchimento ou atualização do Roadmap do projeto (via `roadmap-update` ou atualizando o arquivo de roadmap aplicável) para refletir o planejamento recém-criado.
+3. **Roadmap**: Require filling or updating the project Roadmap (via `roadmap-update` or by modifying the applicable roadmap file) to reflect newly created plans.
 
 Se o repositório for legado (Fallback silencioso), salve provisoriamente o plano em `docs/plans/YYYY-MM-DD-<feature>.md`.
 
 **STOP — Do NOT proceed to Phase 5 until:**
-- [ ] Plan document is written and saved (preferencialmente atrelado a uma ADR)
+- [ ] Plan document is written and saved (ideally linked to an approved ADR)
 - [ ] Every task has file paths, steps, and verification
 - [ ] User has explicitly approved the plan (said "yes", "approved", "go ahead", etc.)
 - [ ] Roadmap atualizado (se aplicável)
@@ -360,24 +360,24 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Context:** If working in an isolated worktree, it should have been created via the `superpowers:using-git-worktrees` skill at execution time.
 
 ## ⚠️ Token Optimization (Skip Consolidated ADRs)
-Quando você precisar varrer as ADRs do repositório para obter contexto, faça **PRIMEIRO** a leitura do `docs/adr/ADR-INDEX.md` ou um `grep` no frontmatter das ADRs. 
-Você está **PROIBIDO** de ler o conteúdo completo (via `view_file` ou `cat`) de qualquer arquivo que possua a tag `implementation_status: CONSOLIDADA` no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.
+When scanning repository ADRs for context, **FIRST** read `docs/adr/ADR-INDEX.md` or grep the YAML frontmatter of ADRs. 
+You are **STRICTLY FORBIDDEN** from reading the full content (via `view_file` or `cat`) of any file with `implementation_status: CONSOLIDADA` in its YAML frontmatter. Apply a summary 'SKIP' to these files, as their content is historical and immutable. Only perform deep inspection if explicitly requested by the user for an audit, or if the active task specifically modifies that architecture.
 
 ## Fallback e Governança (ADR-002)
 
-**ATENÇÃO:** Planos de implementação (PI) devem idealmente derivar de uma ADR aprovada.
+**IMPORTANT:** Implementation Plans (PI) must ideally derive from an approved ADR.
 Se o repositório já segue o padrão de governança de ADRs (`docs/adr/`), **NÃO** crie arquivos isolados.
-1. Se não houver ADR para a feature solicitada, acione o **Fallback**: peça para o usuário gerar a ADR (usando a skill `adr-generator`) antes de detalhar o plano, a menos que seja uma tarefa trivial.
+1. If no ADR exists for the requested feature, trigger the **Fallback**: prompt the user to generate an ADR (using the `adr-generator` skill) before detailing the plan, unless it is a trivial task.
 2. Ao gerar o plano, escreva-o em `docs/adr/ADR-XXX-PI.md` (Implementation Plan).
-3. Exija o uso e atualização do arquivo `docs/adr/ADR-XXX-TODO.md` para rastrear as tarefas criadas no PI. (Não use formatos antigos como `task-card`).
+3. Require using and updating `docs/adr/ADR-XXX-TODO.md` to track tasks created in the PI (do not use legacy formats like `task-card`).
 
 <HARD-GATE: UNIFIED-TODO>
-**É TERMINANTEMENTE PROIBIDO** criar múltiplos arquivos TODO para a mesma ADR (ex: `ADR-XXX-P2-TODO.md` ou `ADR-XXX-Fase2-TODO.md`). O formato da Quadra exige mapeamento 1:1 rigoroso. 
-Se uma ADR tiver múltiplas fases, mapeie TODAS ELAS em um único arquivo `ADR-XXX-TODO.md` usando cabeçalhos markdown (`## Fase 1`, `## Fase 2`). 
-Se o escopo da ADR for gigantesco a ponto de inviabilizar um único TODO, oriente o usuário a desmembrar a própria ADR-mãe em sub-ADRs independentes (ex: `ADR-008-A`, `ADR-008-B`), cada qual com sua própria Quadra.
+**IT IS STRICTLY FORBIDDEN** to create multiple TODO files for the same ADR (e.g. `ADR-XXX-P2-TODO.md`). The Decision Set format requires strict 1:1 mapping. 
+If an ADR contains multiple phases, map ALL OF THEM within a single `ADR-XXX-TODO.md` file using markdown section headers (`## Phase 1`, `## Phase 2`). 
+If the scope of the ADR is too massive for a single TODO, guide the user to decompose the parent ADR into independent sub-ADRs (e.g. `ADR-008-A`, `ADR-008-B`), each with its own Decision Set.
 </HARD-GATE>
 
-Se o repositório for legado e não possuir governança de ADRs (Fallback silencioso), salve provisoriamente em: `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md` e ignore o `todo`.
+If the repository is legacy and lacks ADR governance (silent fallback), save provisionally to: `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md` and ignore the `todo` file.
 
 ## Scope Check
 
@@ -2408,17 +2408,17 @@ Use a clear, scannable format. Tables work well for roadmap items. Use text stat
 
 | Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
 |:---|:---:|:---|:---|
-| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
-| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Premature Execution Without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Activate `cap` to acquire minimal evidence before editing. |
+| **Omission of Validation Checklists** | 🟡 Medium | Delivering artifacts with syntax inconsistencies | Rigorously execute the checklist step-by-step before handoff. |
 | **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
 
 
 
 ## Edge Cases & Failure Modes
 
-- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
-- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
-- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+- **Restricted / Read-Only Environment:** If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.
+- **Specification Conflict:** If contradictions emerge between user intent and the SSOT (`AGENTS.md`), halt and present trade-off options.
+- **Context Exhaustion / Timeout:** For massive tasks, decompose into atomic sub-batches utilizing `subagent-driven-development`.
 
 
 

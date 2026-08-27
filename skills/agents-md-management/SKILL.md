@@ -236,7 +236,7 @@ Project changed → detect change → suggest update → update AGENTS.md
 
 # ✅ CORRECT
 ## Overview
-Sistema CRM para gerenciamento de clientes e vendas.
+CRM system for customer and sales management.
 ```
 
 #### Wrong Template for Context
@@ -638,10 +638,10 @@ After refactoring, verify:
 
 ## Completion Gate
 
-A tarefa associada à skill `agents-md-management` só pode ser declarada concluída quando:
-1. Todas as verificações do checklist operacional foram atendidas.
-2. O resultado foi validado deterministamente através de evidências de execução.
-3. Não restam pendências estruturais, placeholders ou erros não tratados.
+The task associated with the skill `agents-md-management` can only be declared complete when:
+1. All checks in the operational verification checklist have been satisfied.
+2. The deliverable has been deterministically validated through execution evidence.
+3. No structural debt, unresolved placeholders, or unhandled errors remain.
 
 
 

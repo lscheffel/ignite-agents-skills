@@ -92,7 +92,7 @@ expect(element).toBeVisible();
 
 
 ```typescript
-// Usar MSW para mockar API
+// Use MSW to mock API
 import { setupServer } from 'msw/node';
 const server = setupServer(
   rest.get('/api/users', (req, res, ctx) => {

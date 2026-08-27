@@ -54,12 +54,12 @@ Before concluding code review:
 - [ ] No hardcoded secrets or unvalidated inputs
 - [ ] Regression test included for any bug fix
 
-> 💡 **Nota de Arquitetura (ADR-024):** Esta skill opera como alias canônico e rápido do motor consolidado [`code-review`](../code-review/SKILL.md) configurado no modo `mode: lite`.
+> 💡 **Architecture Note (ADR-024):** This skill operates as a canonical, rapid alias of the consolidated `code-review` engine.
 
 ## Execução Rápida (30-90 segundos)
 
-Ao receber solicitações de revisão iterativa, inspeção pré-commit ou vibe-coding:
-1. Ative o motor `code-review` com diretriz `mode: lite`.
+When receiving requests for iterative review, pre-commit inspection, or rapid code sanity checks:
+1. Activate the `code-review` engine with the directive `mode: lite`.
 2. Analise o delta de diff recente (`git diff`).
 3. Avalie regressões lógicas, segurança imediata (OWASP Top 10) e cobertura de testes.
 4. Retorne feedback direto e conciso sem o overhead do protocolo multi-agente.
@@ -353,17 +353,17 @@ graph TD
 
 | Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
 |:---|:---:|:---|:---|
-| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
-| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Premature Execution Without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Activate `cap` to acquire minimal evidence before editing. |
+| **Omission of Validation Checklists** | 🟡 Medium | Delivering artifacts with syntax inconsistencies | Rigorously execute the checklist step-by-step before handoff. |
 | **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
 
 
 
 ## Edge Cases & Failure Modes
 
-- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
-- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
-- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+- **Restricted / Read-Only Environment:** If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.
+- **Specification Conflict:** If contradictions emerge between user intent and the SSOT (`AGENTS.md`), halt and present trade-off options.
+- **Context Exhaustion / Timeout:** For massive tasks, decompose into atomic sub-batches utilizing `subagent-driven-development`.
 
 
 
@@ -391,9 +391,9 @@ $$N_{\text{lines}} \le 200 \quad \text{and} \quad \text{FilesModified} \le 5 \qu
 - **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Operational Verification Checklist
 
-- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
-- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
-- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
-- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
-- [ ] O artefato final foi inspecionado contra o completion gate.
+- [ ] All prerequisites and target files inspected before modification.
+- [ ] Procedure strictly adheres to specialization rules and best practices.
+- [ ] Security, typing, and architectural style guidelines preserved.
+- [ ] Unit tests or validation commands executed successfully.
+- [ ] Final deliverable verified against the completion gate.
 

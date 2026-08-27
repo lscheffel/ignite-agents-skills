@@ -41,7 +41,7 @@
 | [`docx-processing`](../../../skills/docx-processing) | `1.0.0` | 2026-08-27 | **S** | N/A | **97.9/100** | 97.0/100 | 98.5/100 | ADOPT_AS_IS |
 | [`email-composer`](../../../skills/email-composer) | `1.0.0` | 2026-08-27 | **S** | N/A | **97.3/100** | 95.5/100 | 98.5/100 | ADOPT_AS_IS |
 | [`find-skills`](../../../skills/find-skills) | `1.0.0` | 2026-08-27 | **A+** | N/A | **95.7/100** | 91.5/100 | 98.5/100 | ADOPT_AS_IS |
-| [`git-workflow`](../../../skills/git-workflow) | `1.0.0` | 2026-08-27 | **A+** | N/A | **95.3/100** | 90.5/100 | 98.5/100 | ADOPT_AS_IS |
+| [`git-workflow`](../../../skills/git-workflow) | `1.0.0` | 2026-08-27 | **A+** | N/A | **96.9/100** | 94.5/100 | 98.5/100 | ADOPT_AS_IS |
 | [`governance`](../../../skills/governance) | `2.0.0` | 2026-08-27 | **S** | N/A | **98.5/100** | 98.5/100 | 98.5/100 | ADOPT_AS_IS |
 | [`implementation`](../../../skills/implementation) | `2.2.1` | 2026-08-27 | **A+** | N/A | **95.7/100** | 91.5/100 | 98.5/100 | ADOPT_AS_IS |
 | [`llm-as-judge`](../../../skills/llm-as-judge) | `1.0.0` | 2026-08-27 | **S** | N/A | **97.3/100** | 95.5/100 | 98.5/100 | ADOPT_AS_IS |

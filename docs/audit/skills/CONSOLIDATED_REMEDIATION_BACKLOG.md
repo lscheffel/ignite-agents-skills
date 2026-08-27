@@ -97,6 +97,7 @@ _Nenhum débito crítico P0 detectado! O catálogo possui 100% de conformidade o
 | [`subagent-driven-development`](../../skills/subagent-driven-development) | `v1.0.0` | **S** | **97.3** | 95.5 | 98.5 | `ADOPT_AS_IS` |
 | [`test-driven-development`](../../skills/test-driven-development) | `v1.0.0` | **S** | **97.3** | 95.5 | 98.5 | `ADOPT_AS_IS` |
 | [`verification-before-completion`](../../skills/verification-before-completion) | `v1.0.0` | **S** | **97.3** | 95.5 | 98.5 | `ADOPT_AS_IS` |
+| [`git-workflow`](../../skills/git-workflow) | `v1.0.0` | **A+** | **96.9** | 94.5 | 98.5 | `ADOPT_AS_IS` |
 | [`refactoring`](../../skills/refactoring) | `v2.0.0` | **A+** | **96.9** | 94.5 | 98.5 | `ADOPT_AS_IS` |
 | [`systematic-debugging`](../../skills/systematic-debugging) | `v1.0.0` | **A+** | **96.7** | 94.0 | 98.5 | `ADOPT_AS_IS` |
 | [`brainstorming`](../../skills/brainstorming) | `v2.1.0` | **A+** | **96.4** | 100.0 | 94.0 | `ADOPT_AS_IS` |
@@ -109,7 +110,6 @@ _Nenhum débito crítico P0 detectado! O catálogo possui 100% de conformidade o
 | [`php-laravel-ecosystem`](../../skills/php-laravel-ecosystem) | `v1.0.0` | **A+** | **95.7** | 91.5 | 98.5 | `ADOPT_AS_IS` |
 | [`ux-researcher-designer`](../../skills/ux-researcher-designer) | `v1.0.0` | **A+** | **95.7** | 91.5 | 98.5 | `ADOPT_AS_IS` |
 | [`writing-skills`](../../skills/writing-skills) | `v1.0.0` | **A+** | **95.7** | 91.5 | 98.5 | `ADOPT_AS_IS` |
-| [`git-workflow`](../../skills/git-workflow) | `v1.0.0` | **A+** | **95.3** | 90.5 | 98.5 | `ADOPT_AS_IS` |
 | [`ui-ux-pro-max`](../../skills/ui-ux-pro-max) | `v3.0.0` | **A+** | **94.9** | 98.5 | 92.5 | `ADOPT_AS_IS` |
 | [`testing-mastery`](../../skills/testing-mastery) | `v1.0.0` | **A+** | **94.7** | 89.0 | 98.5 | `ADOPT_AS_IS` |
 | [`product-spec-engineering`](../../skills/product-spec-engineering) | `v1.0.0` | **A+** | **94.3** | 88.0 | 98.5 | `ADOPT_AS_IS` |

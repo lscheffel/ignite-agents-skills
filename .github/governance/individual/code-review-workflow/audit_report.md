@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-workflow` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `027deda5f44a357ae27672f23ce007bce762a67550138d0e346119c5997b9cac` | **Score Global:** | `91.3 / 100` |
+| **Hash SHA-256:** | `45bd42389a329ccd5ce2be8eac396c34e6fc556e4cc3637a1a3559f630405608` | **Score Global:** | `91.3 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 8.5 | [OK] | Frontmatter válido com delimitadores formais e tipagem de metadados. |
 | **D2. Determinismo Semântico** | 8.8 | [OK] | Condições de ativação claras com boa especificidade semântica. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~4082 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~4060 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |

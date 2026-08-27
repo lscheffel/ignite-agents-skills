@@ -429,8 +429,8 @@ Technical terms: Order (Pedido), Item (Item)"
 - **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Completion Gate
 
-A tarefa associada à skill `prompt-engineering` só pode ser declarada concluída quando:
-1. Todas as verificações do checklist operacional foram atendidas.
-2. O resultado foi validado deterministamente através de evidências de execução.
-3. Não restam pendências estruturais, placeholders ou erros não tratados.
+The task associated with the skill `prompt-engineering` can only be declared complete when:
+1. All checks in the operational verification checklist have been satisfied.
+2. The deliverable has been deterministically validated through execution evidence.
+3. No structural debt, unresolved placeholders, or unhandled errors remain.
 

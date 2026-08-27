@@ -487,7 +487,7 @@
 <li>reverse-engineering-specs</li>
 </ul>
 <h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
-<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
+<p>When scanning repository ADRs for context, <strong>FIRST</strong> read <code>docs/adr/ADR-INDEX.md</code> or grep the YAML frontmatter of ADRs. You are <strong>STRICTLY FORBIDDEN</strong> from reading the full content (via <code>view_file</code> or <code>cat</code>) of any file with <code>implementation_status: CONSOLIDADA</code> in its YAML frontmatter. Apply a summary 'SKIP' to these files, as their content is historical and immutable. Only perform deep inspection if explicitly requested by the user for an audit, or if the active task specifically modifies that architecture.</p>
 <h2 id="condies-de-ativao">Condições de Ativação</h2>
 <h2 id="phase-3-approach-design">Phase 3: Approach Design</h2>
 <p><strong>Goal:</strong> Propose 2-3 concrete approaches with trade-offs and a clear recommendation.</p>
@@ -532,16 +532,16 @@
 <h3 id="plan-quality-checklist">Plan Quality Checklist</h3>
 <div class="table-wrapper"><table><tr><th>Criterion</th><th>Check</th></tr><tr><td>Every task has exact file paths</td><td>No "somewhere in src/"</td></tr><tr><td>Every task has a verification command</td><td>No "eyeball it"</td></tr><tr><td>Tasks are ordered by dependency</td><td>No forward references</td></tr><tr><td>Tasks are 2-5 minutes each</td><td>No "implement the whole module"</td></tr><tr><td>TDD steps are explicit</td><td>RED-GREEN-REFACTOR per task</td></tr></table></div>
 <h2 id="fallback-e-governana-adr-002">Fallback e Governança (ADR-002)</h2>
-<p><strong>ATENÇÃO:</strong> O planejamento deve idealmente ser derivado de uma ADR aprovada e refletido no Roadmap. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
+<p><strong>IMPORTANT:</strong> Planning must ideally derive from an approved ADR and be reflected in the project Roadmap. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
 <ol>
-<li><strong>Fallback</strong>: Se a feature solicitada é complexa e não possui ADR, acione a skill <code>adr-generator</code> antes de prosseguir.</li>
+<li><strong>Fallback</strong>: If the requested feature is complex and lacks an ADR, trigger the <code>adr-generator</code> skill before proceeding.</li>
 <li>Salve o plano detalhado no formato <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan).</li>
-<li><strong>Roadmap</strong>: Exija o preenchimento ou atualização do Roadmap do projeto (via <code>roadmap-update</code> ou atualizando o arquivo de roadmap aplicável) para refletir o planejamento recém-criado.</li>
+<li><strong>Roadmap</strong>: Require filling or updating the project Roadmap (via <code>roadmap-update</code> or by modifying the applicable roadmap file) to reflect newly created plans.</li>
 </ol>
 <p>Se o repositório for legado (Fallback silencioso), salve provisoriamente o plano em <code>docs/plans/YYYY-MM-DD-<feature>.md</code>.</p>
 <p><strong>STOP — Do NOT proceed to Phase 5 until:</strong></p>
 <ul>
-<li>[ ] Plan document is written and saved (preferencialmente atrelado a uma ADR)</li>
+<li>[ ] Plan document is written and saved (ideally linked to an approved ADR)</li>
 <li>[ ] Every task has file paths, steps, and verification</li>
 <li>[ ] User has explicitly approved the plan (said "yes", "approved", "go ahead", etc.)</li>
 <li>[ ] Roadmap atualizado (se aplicável)</li>
@@ -631,16 +631,16 @@ Invoking task-management skill to begin tracked execution.</code></pre>
 <p><strong>Announce at start:</strong> "I'm using the writing-plans skill to create the implementation plan."</p>
 <p><strong>Context:</strong> If working in an isolated worktree, it should have been created via the <code>superpowers:using-git-worktrees</code> skill at execution time.</p>
 <h2 id="-token-optimization-skip-consolidated-adrs">⚠️ Token Optimization (Skip Consolidated ADRs)</h2>
-<p>Quando você precisar varrer as ADRs do repositório para obter contexto, faça <strong>PRIMEIRO</strong> a leitura do <code>docs/adr/ADR-INDEX.md</code> ou um <code>grep</code> no frontmatter das ADRs. Você está <strong>PROIBIDO</strong> de ler o conteúdo completo (via <code>view_file</code> ou <code>cat</code>) de qualquer arquivo que possua a tag <code>implementation_status: CONSOLIDADA</code> no seu frontmatter YAML. Aplique o 'SKIP' sumário a esses arquivos, pois o conteúdo é passado e estático. Só faça a leitura profunda caso o usuário solicite especificamente uma auditoria, ou se a tarefa atual exigir a modificação daquela exata arquitetura.</p>
+<p>When scanning repository ADRs for context, <strong>FIRST</strong> read <code>docs/adr/ADR-INDEX.md</code> or grep the YAML frontmatter of ADRs. You are <strong>STRICTLY FORBIDDEN</strong> from reading the full content (via <code>view_file</code> or <code>cat</code>) of any file with <code>implementation_status: CONSOLIDADA</code> in its YAML frontmatter. Apply a summary 'SKIP' to these files, as their content is historical and immutable. Only perform deep inspection if explicitly requested by the user for an audit, or if the active task specifically modifies that architecture.</p>
 <h2 id="fallback-e-governana-adr-002">Fallback e Governança (ADR-002)</h2>
-<p><strong>ATENÇÃO:</strong> Planos de implementação (PI) devem idealmente derivar de uma ADR aprovada. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
+<p><strong>IMPORTANT:</strong> Implementation Plans (PI) must ideally derive from an approved ADR. Se o repositório já segue o padrão de governança de ADRs (<code>docs/adr/</code>), <strong>NÃO</strong> crie arquivos isolados.</p>
 <ol>
-<li>Se não houver ADR para a feature solicitada, acione o <strong>Fallback</strong>: peça para o usuário gerar a ADR (usando a skill <code>adr-generator</code>) antes de detalhar o plano, a menos que seja uma tarefa trivial.</li>
+<li>If no ADR exists for the requested feature, trigger the <strong>Fallback</strong>: prompt the user to generate an ADR (using the <code>adr-generator</code> skill) before detailing the plan, unless it is a trivial task.</li>
 <li>Ao gerar o plano, escreva-o em <code>docs/adr/ADR-XXX-PI.md</code> (Implementation Plan).</li>
-<li>Exija o uso e atualização do arquivo <code>docs/adr/ADR-XXX-TODO.md</code> para rastrear as tarefas criadas no PI. (Não use formatos antigos como <code>task-card</code>).</li>
+<li>Require using and updating <code>docs/adr/ADR-XXX-TODO.md</code> to track tasks created in the PI (do not use legacy formats like <code>task-card</code>).</li>
 </ol>
-<p><HARD-GATE: UNIFIED-TODO> <strong>É TERMINANTEMENTE PROIBIDO</strong> criar múltiplos arquivos TODO para a mesma ADR (ex: <code>ADR-XXX-P2-TODO.md</code> ou <code>ADR-XXX-Fase2-TODO.md</code>). O formato da Quadra exige mapeamento 1:1 rigoroso. Se uma ADR tiver múltiplas fases, mapeie TODAS ELAS em um único arquivo <code>ADR-XXX-TODO.md</code> usando cabeçalhos markdown (<code>## Fase 1</code>, <code>## Fase 2</code>). Se o escopo da ADR for gigantesco a ponto de inviabilizar um único TODO, oriente o usuário a desmembrar a própria ADR-mãe em sub-ADRs independentes (ex: <code>ADR-008-A</code>, <code>ADR-008-B</code>), cada qual com sua própria Quadra. </HARD-GATE></p>
-<p>Se o repositório for legado e não possuir governança de ADRs (Fallback silencioso), salve provisoriamente em: <code>docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md</code> e ignore o <code>todo</code>.</p>
+<p><HARD-GATE: UNIFIED-TODO> <strong>IT IS STRICTLY FORBIDDEN</strong> to create multiple TODO files for the same ADR (e.g. <code>ADR-XXX-P2-TODO.md</code>). The Decision Set format requires strict 1:1 mapping. If an ADR contains multiple phases, map ALL OF THEM within a single <code>ADR-XXX-TODO.md</code> file using markdown section headers (<code>## Phase 1</code>, <code>## Phase 2</code>). If the scope of the ADR is too massive for a single TODO, guide the user to decompose the parent ADR into independent sub-ADRs (e.g. <code>ADR-008-A</code>, <code>ADR-008-B</code>), each with its own Decision Set. </HARD-GATE></p>
+<p>If the repository is legacy and lacks ADR governance (silent fallback), save provisionally to: <code>docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md</code> and ignore the <code>todo</code> file.</p>
 <h2 id="scope-check">Scope Check</h2>
 <p>If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.</p>
 <h2 id="file-structure">File Structure</h2>
@@ -2109,12 +2109,12 @@ Later: Mobile workflows (DAU lift)</code></pre>
 <li>If the user asks to add something, always ask what comes off or moves. Roadmaps are zero-sum against capacity.</li>
 </ul>
 <h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
-<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Premature Execution Without Context</strong></td><td>🔴 Critical</td><td>Context hallucination and destructive refactoring</td><td>Activate <code>cap</code> to acquire minimal evidence before editing.</td></tr><tr><td><strong>Omission of Validation Checklists</strong></td><td>🟡 Medium</td><td>Delivering artifacts with syntax inconsistencies</td><td>Rigorously execute the checklist step-by-step before handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
 <h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
 <ul>
-<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
-<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
-<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+<li><strong>Restricted / Read-Only Environment:</strong> If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.</li>
+<li><strong>Specification Conflict:</strong> If contradictions emerge between user intent and the SSOT (<code>AGENTS.md</code>), halt and present trade-off options.</li>
+<li><strong>Context Exhaustion / Timeout:</strong> For massive tasks, decompose into atomic sub-batches utilizing <code>subagent-driven-development</code>.</li>
 </ul>
 <h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
 <ul>

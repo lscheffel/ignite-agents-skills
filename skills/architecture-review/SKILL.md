@@ -478,10 +478,10 @@ mkdir -p test/legacy && touch test/legacy/user-characterization.test.ts
 
 ## Completion Gate
 
-A tarefa associada à skill `architecture-review` só pode ser declarada concluída quando:
-1. Todas as verificações do checklist operacional foram atendidas.
-2. O resultado foi validado deterministamente através de evidências de execução.
-3. Não restam pendências estruturais, placeholders ou erros não tratados.
+The task associated with the skill `architecture-review` can only be declared complete when:
+1. All checks in the operational verification checklist have been satisfied.
+2. The deliverable has been deterministically validated through execution evidence.
+3. No structural debt, unresolved placeholders, or unhandled errors remain.
 
 
 

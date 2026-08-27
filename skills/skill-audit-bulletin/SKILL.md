@@ -305,12 +305,12 @@ Present the user with explicit next steps:
 
 ```text
 ================================================================================
-🎯 DECISION GATE: PRÓXIMOS PASSOS PARA ESTA SKILL
+🎯 DECISION GATE: NEXT STEPS FOR THIS SKILL
 ================================================================================
-[1] Criar ADR para Refatoração / Evolução via /adr-generator
+[1] Create ADR for Refactoring / Evolution via /adr-generator
     (Formaliza o Decision Set: ADR, Blueprint, TODO e Implementation Plan)
 [2] Aplicar correções estruturais no ato (Hotfix imediato de metadados e formato)
-[3] Adotar como está e encerrar auditoria
+[3] Adopt as-is and conclude audit
 ================================================================================
 ```
 
@@ -320,17 +320,17 @@ Present the user with explicit next steps:
 
 | Anti-Pattern | Severidade | Impacto Negativo | Mitigação Canônica |
 |:---|:---:|:---|:---|
-| **Execução Prematura sem Contexto** | 🔴 Critical | Alucinação de contexto e refatoração destrutiva | Ativar a skill `cap` para adquirir evidências mínimas antes de editar. |
-| **Omissão de Checklists de Validação** | 🟡 Medium | Entrega de artefatos com inconsistências sintáticas | Executar rigorosamente o checklist passo a passo antes do handoff. |
+| **Premature Execution Without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Activate `cap` to acquire minimal evidence before editing. |
+| **Omission of Validation Checklists** | 🟡 Medium | Delivering artifacts with syntax inconsistencies | Rigorously execute the checklist step-by-step before handoff. |
 | **Falta de Documentação de Decisões** | 🟢 Low | Perda de rastreabilidade técnica e drift arquitetural | Registrar trade-offs relevantes via skill `adr-generator`. |
 
 
 
 ## Edge Cases & Failure Modes
 
-- **Ambiente Restrito / Read-Only:** Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.
-- **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
-- **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
+- **Restricted / Read-Only Environment:** If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.
+- **Specification Conflict:** If contradictions emerge between user intent and the SSOT (`AGENTS.md`), halt and present trade-off options.
+- **Context Exhaustion / Timeout:** For massive tasks, decompose into atomic sub-batches utilizing `subagent-driven-development`.
 
 
 
@@ -362,9 +362,9 @@ Present the user with explicit next steps:
 - **Rule of Thumb 9 (Verification Gate Invariant):** Never declare completion without automated test execution evidence and zero compiler/linter warnings.
 ## Operational Verification Checklist
 
-- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
-- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
-- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
-- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
-- [ ] O artefato final foi inspecionado contra o completion gate.
+- [ ] All prerequisites and target files inspected before modification.
+- [ ] Procedure strictly adheres to specialization rules and best practices.
+- [ ] Security, typing, and architectural style guidelines preserved.
+- [ ] Unit tests or validation commands executed successfully.
+- [ ] Final deliverable verified against the completion gate.
 

@@ -474,7 +474,7 @@ await page.waitForSelector(&#x27;[data-testid=&quot;element&quot;]&#x27;, { stat
 expect(element).toBeVisible();</code></pre>
 <h3 id="test-with-external-io">Test with External I/O</h3>
 <p><strong>Situation:</strong> Test makes a real call to an external API. <strong>Solution:</strong> Use a mock server (MSW, nock) or fixtures. <strong>Exception:</strong> Contract tests may need real I/O.</p>
-<pre data-lang="typescript"><code>// Usar MSW para mockar API
+<pre data-lang="typescript"><code>// Use MSW to mock API
 import { setupServer } from &#x27;msw/node&#x27;;
 const server = setupServer(
   rest.get(&#x27;/api/users&#x27;, (req, res, ctx) =&gt; {

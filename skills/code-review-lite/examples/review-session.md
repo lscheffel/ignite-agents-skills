@@ -1,6 +1,6 @@
 # Example: Code Review Lite Session
 
-> Exemplo de uso da skill `code-review-lite` para uma feature típica
+> Example usage of the `code-review-lite` skill for a typical feature
 
 ---
 

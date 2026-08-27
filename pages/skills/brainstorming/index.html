@@ -638,9 +638,9 @@ Handoff to `agent-planning-execution` for work breakdown decomposition.</code></
 <div class="table-wrapper"><table><tr><th>Canonical Skill</th><th>Phase</th><th>Integration Role</th></tr><tr><td><code>technical-documentation</code></td><td>Phase 1 & 5</td><td>Ingests <code>STATE.md</code> and repository pillars; updates persistent memory.</td></tr><tr><td><code>ux-researcher-designer</code></td><td>Phase 2</td><td>Provides user persona and journey insights for frontend features.</td></tr><tr><td><code>adr-generator</code></td><td>Phase 3 & 5</td><td>Converts selected architectural trade-offs into formal MADR decision sets.</td></tr><tr><td><code>agent-planning-execution</code></td><td>Phase 5</td><td>Receives approved design and creates the work breakdown structure (WBS).</td></tr><tr><td><code>implementation</code></td><td>Post-Design</td><td>Executes the planned tasks with test-driven verification.</td></tr></table></div>
 <h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
 <ul>
-<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
-<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
-<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+<li><strong>Restricted / Read-Only Environment:</strong> If the filesystem or sandbox is write-locked, report the constraint immediately with evidence and generate changes as a markdown diff patch.</li>
+<li><strong>Specification Conflict:</strong> If contradictions emerge between user intent and the SSOT (<code>AGENTS.md</code>), halt and present trade-off options.</li>
+<li><strong>Context Exhaustion / Timeout:</strong> For massive tasks, decompose into atomic sub-batches utilizing <code>subagent-driven-development</code>.</li>
 </ul>
 <h2 id="double-diamond-divergenceconvergence-engine--ambiguity-metrics-sota">Double Diamond Divergence/Convergence Engine & Ambiguity Metrics (SOTA)</h2>
 <p>Brainstorming follows the <strong>Double Diamond Protocol</strong> adapted for Autonomous Agentic Ideation:</p>
@@ -676,18 +676,18 @@ Handoff to `agent-planning-execution` for work breakdown decomposition.</code></
 </ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
-<li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
-<li>[ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.</li>
-<li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
-<li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
-<li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+<li>[ ] All prerequisites and target files inspected before modification.</li>
+<li>[ ] Procedure strictly adheres to specialization rules and best practices.</li>
+<li>[ ] Security, typing, and architectural style guidelines preserved.</li>
+<li>[ ] Unit tests or validation commands executed successfully.</li>
+<li>[ ] Final deliverable verified against the completion gate.</li>
 </ul>
 <h2 id="completion-gate">Completion Gate</h2>
-<p>A tarefa associada à skill <code>brainstorming</code> só pode ser declarada concluída quando:</p>
+<p>The task associated with the skill <code>brainstorming</code> can only be declared complete when:</p>
 <ol>
-<li>Todas as verificações do checklist operacional foram atendidas.</li>
-<li>O resultado foi validado deterministamente através de evidências de execução.</li>
-<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+<li>All checks in the operational verification checklist have been satisfied.</li>
+<li>The deliverable has been deterministically validated through execution evidence.</li>
+<li>No structural debt, unresolved placeholders, or unhandled errors remain.</li>
 </ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

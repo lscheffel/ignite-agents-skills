@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T03:17:22.256347+00:00",
+    "generated_at": "2026-08-27T03:38:01.957393+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -599,6 +599,11 @@
     },
     {
       "source": "agent-development",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-development",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -834,6 +839,11 @@
     },
     {
       "source": "artifacts-builder",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -1004,6 +1014,11 @@
     },
     {
       "source": "circuit-breaker",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
       "target": "release",
       "relationship": "references_skill"
     },
@@ -1134,6 +1149,11 @@
     },
     {
       "source": "code-review-lite",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review-lite",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -1214,6 +1234,11 @@
     },
     {
       "source": "content-creator",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-creator",
       "target": "seo-optimizer",
       "relationship": "references_skill"
     },
@@ -1264,6 +1289,11 @@
     },
     {
       "source": "content-research-writer",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "content-research-writer",
       "target": "seo-optimizer",
       "relationship": "references_skill"
     },
@@ -1290,6 +1320,11 @@
     {
       "source": "context7-mcp",
       "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "context7-mcp",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -1379,6 +1414,11 @@
     },
     {
       "source": "deployment",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "deployment",
       "target": "release",
       "relationship": "references_skill"
     },
@@ -1420,6 +1460,11 @@
     {
       "source": "dispatching-parallel-agents",
       "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "dispatching-parallel-agents",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -1479,6 +1524,11 @@
     },
     {
       "source": "docx-processing",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "docx-processing",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -1534,6 +1584,11 @@
     },
     {
       "source": "email-composer",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "email-composer",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -1570,6 +1625,11 @@
     {
       "source": "find-skills",
       "target": "react-best-practices",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "find-skills",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -1759,6 +1819,11 @@
     },
     {
       "source": "llm-as-judge",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "llm-as-judge",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -1800,6 +1865,11 @@
     {
       "source": "mcp-builder",
       "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp-builder",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -1855,6 +1925,11 @@
     {
       "source": "mobile-design",
       "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mobile-design",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -1944,6 +2019,11 @@
     },
     {
       "source": "pdf-processing",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "pdf-processing",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -1980,6 +2060,11 @@
     {
       "source": "performance-optimization",
       "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "performance-optimization",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -2030,6 +2115,11 @@
     {
       "source": "php-laravel-ecosystem",
       "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "php-laravel-ecosystem",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -2164,6 +2254,11 @@
     },
     {
       "source": "react-best-practices",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "react-best-practices",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -2264,6 +2359,11 @@
     },
     {
       "source": "resilient-execution",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "resilient-execution",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -2305,6 +2405,11 @@
     {
       "source": "security-review",
       "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "security-review",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -2355,6 +2460,11 @@
     {
       "source": "seo-optimizer",
       "target": "performance-optimization",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "seo-optimizer",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -2545,6 +2655,11 @@
     {
       "source": "subagent-driven-development",
       "target": "observability",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {
@@ -2819,6 +2934,11 @@
     },
     {
       "source": "ux-researcher-designer",
+      "target": "refactoring",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "ux-researcher-designer",
       "target": "subagent-driven-development",
       "relationship": "references_skill"
     },
@@ -2955,6 +3075,11 @@
     {
       "source": "xlsx-processing",
       "target": "pdf-processing",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "xlsx-processing",
+      "target": "refactoring",
       "relationship": "references_skill"
     },
     {

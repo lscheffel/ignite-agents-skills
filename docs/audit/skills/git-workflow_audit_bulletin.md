@@ -2,7 +2,7 @@
 
 **Audit Date:** 2026-08-27  
 **Auditor Engine:** `skill-audit-bulletin` (v5.1.0 — SOTA Dual-Axis & Ledger Edition)  
-**Overall Grade:** **A+ (Platinum)** — **95.3 / 100**  
+**Overall Grade:** **A+ (Platinum)** — **96.9 / 100**  
 **One-Line Verdict:** *Ultra-High Quality Grade. High cognitive density, robust boundaries, and production-ready.*  
 **Recommended Action:** **ADOPT_AS_IS**
 
@@ -12,9 +12,9 @@
 
 | Axis | Score | Grade | Status |
 |:---|:---:|:---:|:---:|
-| **Axis 1: Physical Structural & Governance** | **90.5 / 100** | **A+** | ✅ PASSED |
+| **Axis 1: Physical Structural & Governance** | **94.5 / 100** | **A+** | ✅ PASSED |
 | **Axis 2: Domain SOTA & Cognitive Efficacy** | **98.5 / 100** | **A+** | ✅ PASSED |
-| **Combined 2D Score** | **95.3 / 100** | **A+** | 🏆 SOTA BENCHMARK |
+| **Combined 2D Score** | **96.9 / 100** | **A+** | 🏆 SOTA BENCHMARK |
 
 - **Strongest Point:** Cobertura aprofundada com arquitetura modular (2 artefatos de apoio).
 - **Weakest Point:** Oportunidade de expansão de cenários avançados de borda.
@@ -28,8 +28,8 @@
 | Dimension | Weight | Score | Evaluation & Evidence |
 |:---|:---:|:---:|:---|
 | **1. Semantic Triggering** | 20% | **18.5 / 20.0** | 8 triggers definidos, descrição com 71 caracteres, tags: 2. |
-| **2. Applicability & Boundaries** | 10% | **6.0 / 10.0** | Seção 'When to Use': ✓ | 'Do Not Use When': ✗. |
-| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 6000 palavras, 4 arquivos modulares de apoio, workflow formal presente. |
+| **2. Applicability & Boundaries** | 10% | **10.0 / 10.0** | Seção 'When to Use': ✓ | 'Do Not Use When': ✓. |
+| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 6074 palavras, 4 arquivos modulares de apoio, workflow formal presente. |
 | **4. Technical Accuracy** | 15% | **15.0 / 15.0** | 136 blocos de código/comandos, zero placeholders genéricos: ✓. |
 | **5. Universality & Portability** | 10% | **6.0 / 10.0** | Zero caminhos absolutos de hosts externos, portabilidade POSIX/AST universal. |
 | **6. Maintainability & SemVer** | 10% | **10.0 / 10.0** | SemVer v1.0.0 (✓), 3 related_skills, taxonomia de riscos (✓). |
@@ -44,7 +44,7 @@
 |:---|:---:|:---:|:---|
 | **1. Domain SOTA & Best Practices** | 30% | **30.0 / 30.0** | Aderência a padrões industriais SOTA comprovada por 16 marcadores conceituais de engenharia de software. |
 | **2. Heuristic Depth & Edge Cases** | 25% | **25.0 / 25.0** | 17 regras heurísticas explícitas, seção de Edge Cases presente. |
-| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 9758 tokens com alta proporção sinal-ruído e linguagem imperativa. |
+| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 9888 tokens com alta proporção sinal-ruído e linguagem imperativa. |
 | **4. Strategic Alignment & SWOT** | 20% | **18.5 / 20.0** | Acoplamento sinérgico com 3 skills complementares no catálogo. |
 
 ---
@@ -67,5 +67,5 @@
 
 ## 5. Veredito Final & Próximos Passos
 
-A skill [`skills/git-workflow`](../../../skills/git-workflow) foi **Classificada como Grau A+ (95.3 / 100)**.  
+A skill [`skills/git-workflow`](../../../skills/git-workflow) foi **Classificada como Grau A+ (96.9 / 100)**.  
 Status de Adoção: **ADOPT_AS_IS**.

@@ -2,7 +2,7 @@
 
 ## Contexto
 
-API REST simples para gerenciamento de tarefas usando Flask e SQLAlchemy.
+Simple REST API for task management using Flask and SQLAlchemy.
 
 ## Estrutura
 

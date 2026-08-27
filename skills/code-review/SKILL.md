@@ -411,11 +411,11 @@ graph TD
 
 ## Operational Verification Checklist
 
-- [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
-- [ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.
-- [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
-- [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
-- [ ] O artefato final foi inspecionado contra o completion gate.
+- [ ] All prerequisites and target files inspected before modification.
+- [ ] Procedure strictly adheres to specialization rules and best practices.
+- [ ] Security, typing, and architectural style guidelines preserved.
+- [ ] Unit tests or validation commands executed successfully.
+- [ ] Final deliverable verified against the completion gate.
 
 
 ## Completion Gate & Verification

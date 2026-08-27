@@ -436,80 +436,80 @@
 <p>metadata: author: Antigravity Architecture / Refactored provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="git-workflow--version-control-hub">Git Workflow & Version Control Hub</h1>
 <p>Unified Git operations, commit styling, worktree management, and branch completion workflows.</p>
-<h2 id="sub-domain--component-git">Sub-Domain / Component: <code>git</code></h2>
+<h2 id="domain-architecture-git-operations">Domain Architecture: Git Operations</h2>
 <h1 id="git">Git</h1>
-<p>Padrões e workflows para versionamento com Git.</p>
-<h2 id="quando-usar">Quando Usar</h2>
-<h3 id="use-quando">Use quando:</h3>
+<p>Standards and workflows for version control with Git.</p>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
 <ul>
-<li>Precisa criar commits com mensagens padronizadas</li>
-<li>Precisa decidir entre merge, rebase ou cherry-pick</li>
-<li>Precisa resolver conflitos de merge</li>
-<li>Precisa configurar branching strategy para equipe</li>
-<li>Precisa fazer release via Git Flow</li>
+<li>Need to create commits with standardized messages (Conventional Commits)</li>
+<li>Need to decide between merge, rebase, or cherry-pick</li>
+<li>Need to resolve merge conflicts deterministically</li>
+<li>Need to configure branching strategy for a team</li>
+<li>Need to manage releases via Git Flow or Trunk-Based workflows</li>
 </ul>
-<h3 id="no-use-quando">Não use quando:</h3>
+<h3 id="do-not-use-when">Do not use when:</h3>
 <ul>
-<li>Trabalhando em repositório somente leitura</li>
-<li>Precisa de versionamento sem Git (ex: SVN)</li>
-<li>Trabalhando com monorepo que usa outro sistema</li>
+<li>Working in a read-only repository</li>
+<li>Using non-Git version control systems (e.g., SVN, Mercurial)</li>
+<li>Working in a repository managed by non-Git source control</li>
 </ul>
-<h3 id="skills-relacionadas">Skills relacionadas:</h3>
+<h3 id="related-skills">Related Skills:</h3>
 <ul>
-<li><code>governance</code> — para processos de branch protection e CODEOWNERS</li>
-<li><code>release</code> — para versionamento semântico e tags</li>
-<li><code>repo-bootstrap</code> — para configurar .gitignore e gitignore.io</li>
+<li><code>governance</code> — for branch protection rules and CODEOWNERS</li>
+<li><code>release</code> — for semantic versioning and release tags</li>
+<li><code>repo-bootstrap</code> — for configuring .gitignore and gitignore.io templates</li>
 </ul>
 <h2 id="decision-tree">Decision Tree</h2>
 <pre data-lang="mermaid"><code>graph TD
-    A[Preciso de Git?] --&gt;|Criar commit| B[Conventional Commits]
-    A --&gt;|Criar branch| C[Qual tipo?]
-    C --&gt;|Nova feature| D[feature/nome-curto]
+    A[Need Git Operation?] --&gt;|Create commit| B[Conventional Commits]
+    A --&gt;|Create branch| C[What type?]
+    C --&gt;|New feature| D[feature/nome-curto]
     C --&gt;|Bug fix| E[fix/nome-curto]
-    C --&gt;|Hotfix produção| F[hotfix/nome-curto]
-    A --&gt;|Integrar branch| G[Merge ou Rebase?]
-    G --&gt;|Precisa preservar histórico| H[Merge]
-    G --&gt;|Precisa histórico limpo| I[Rebase]
-    G --&gt;|Branch compartilhado| J[Merge - NUNCA rebase]
-    G --&gt;|Branch local| K[Rebase]
-    A --&gt;|Resolver conflito| L[Conflito de Merge]
-    L --&gt;|Arquivo binário| M[Git merge -X theirs/mine]
-    L --&gt;|Arquivo texto| N[Editar manualmente]</code></pre>
+    C --&gt;|Production hotfix| F[hotfix/nome-curto]
+    A --&gt;|Integrate branch| G[Merge or Rebase?]
+    G --&gt;|Need full history| H[Merge]
+    G --&gt;|Need clean linear history| I[Rebase]
+    G --&gt;|Shared remote branch| J[Merge - NEVER rebase]
+    G --&gt;|Local private branch| K[Rebase]
+    A --&gt;|Resolve conflict| L[Merge Conflict]
+    L --&gt;|Binary file conflict| M[Git merge -X theirs/mine]
+    L --&gt;|Text file conflict| N[Edit markers manually]</code></pre>
 <h2 id="workflow">Workflow</h2>
-<h3 id="fase-1-criar-commit-convencional">Fase 1: Criar Commit Convencional</h3>
+<h3 id="phase-1-create-conventional-commit">Phase 1: Create Conventional Commit</h3>
 <ol>
-<li>Stageie os arquivos relevantes:</li>
+<li>Stage the relevant files:</li>
 </ol>
 <pre data-lang="bash"><code>   git add src/services/user.ts src/controllers/user.ts</code></pre>
 <ol>
-<li>Verifique o status:</li>
+<li>Verify working tree status:</li>
 </ol>
 <pre data-lang="bash"><code>   git status</code></pre>
 <ol>
-<li>Crie o commit:</li>
+<li>Create the commit:</li>
 </ol>
 <pre data-lang="bash"><code>   git commit -m &quot;feat(user): add email validation to registration&quot;</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Verifique o commit no log:</li>
+<li><strong>Checkpoint</strong>: Verify the commit in git log:</li>
 </ol>
 <pre data-lang="bash"><code>   git log -1 --pretty=format:&quot;%s&quot;
-   # Deve mostrar: feat(user): add email validation to registration</code></pre>
-<h3 id="fase-2-resolver-conflito-de-merge">Fase 2: Resolver Conflito de Merge</h3>
+   # Should display: feat(user): add email validation to registration</code></pre>
+<h3 id="fase-2-resolver-merge-conflict">Fase 2: Resolver Merge Conflict</h3>
 <ol>
 <li>Identifique arquivos conflitantes:</li>
 </ol>
 <pre data-lang="bash"><code>   git status
-   # Arquivos com &quot;both modified&quot; são conflitantes</code></pre>
+   # Files marked &quot;both modified&quot; are in conflict</code></pre>
 <ol>
 <li>Abra o arquivo e localize marcadores:</li>
 </ol>
 <pre><code>   &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
    código da branch atual
    =======
-   código da branch que está mergeando
+   code from the incoming branch
    &gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name</code></pre>
 <ol>
-<li>Edite manualmente para resolver:</li>
+<li>Edit manually to resolve conflicts:</li>
 </ol>
 <ul>
 <li>Mantenha código correto</li>
@@ -531,7 +531,7 @@
 <pre data-lang="bash"><code>   npm test &amp;&amp; npm run lint</code></pre>
 <h3 id="fase-3-fazer-release-via-git-flow">Fase 3: Fazer Release via Git Flow</h3>
 <ol>
-<li>Certifique-se que está em develop:</li>
+<li>Ensure you are on the develop branch:</li>
 </ol>
 <pre data-lang="bash"><code>   git checkout develop
    git pull origin develop</code></pre>
@@ -547,12 +547,12 @@
    # Atualize package.json manualmente</code></pre>
 <ol>
 <li>Atualize CHANGELOG.md</li>
-<li>Commit das mudanças:</li>
+<li>Commit release preparation changes:</li>
 </ol>
 <pre data-lang="bash"><code>   git add .
    git commit -m &quot;chore(release): prepare v1.2.0&quot;</code></pre>
 <ol>
-<li>Merge para main:</li>
+<li>Merge into main:</li>
 </ol>
 <pre data-lang="bash"><code>   git checkout main
    git merge --no-ff release/v1.2.0</code></pre>
@@ -561,7 +561,7 @@
 </ol>
 <pre data-lang="bash"><code>   git tag -a v1.2.0 -m &quot;Release v1.2.0&quot;</code></pre>
 <ol>
-<li>Merge de volta para develop:</li>
+<li>Merge back into develop:</li>
 </ol>
 <pre data-lang="bash"><code>   git checkout develop
    git merge --no-ff release/v1.2.0</code></pre>
@@ -570,7 +570,7 @@
 </ol>
 <pre data-lang="bash"><code>   git branch -d release/v1.2.0</code></pre>
 <ol>
-<li><strong>Checkpoint</strong>: Push com tags:</li>
+<li><strong>Checkpoint</strong>: Push commits with tags:</li>
 </ol>
 <pre data-lang="bash"><code>    git push origin main --tags
     git push origin develop</code></pre>
@@ -584,11 +584,11 @@
 </ol>
 <pre data-lang="bash"><code>   git rebase -i HEAD~3</code></pre>
 <ol>
-<li>No editor, escolha ação para cada commit:</li>
+<li>In the editor, choose the rebase action for each commit:</li>
 </ol>
 <ul>
 <li><code>pick</code> — manter commit</li>
-<li><code>squash</code> — unir com commit anterior</li>
+<li><code>squash</code> — combine with the previous commit</li>
 <li><code>fixup</code> — unir sem mensagem</li>
 <li><code>reword</code> — editar mensagem</li>
 <li><code>drop</code> — remover commit</li>
@@ -611,7 +611,7 @@ perf: performance
 test: testes
 chore: manutenção</code></pre>
 <h3 id="branching-strategies">Branching Strategies</h3>
-<h4 id="git-flow-recomendado-para-releases-agendadas">Git Flow (recomendado para releases agendadas)</h4>
+<h4 id="git-flow-recommended-for-scheduled-milestone-releases">Git Flow (recommended for scheduled milestone releases)</h4>
 <ul>
 <li><code>main</code>: código em produção</li>
 <li><code>develop</code>: branch de integração</li>
@@ -619,37 +619,37 @@ chore: manutenção</code></pre>
 <li><code>release/*</code>: preparação de release</li>
 <li><code>hotfix/*</code>: correções urgentes</li>
 </ul>
-<h4 id="trunk-based-recomendado-para-cicd-contnuo">Trunk-Based (recomendado para CI/CD contínuo)</h4>
+<h4 id="trunk-based-recommended-for-continuous-integration-and-delivery">Trunk-Based (recommended for continuous integration and delivery)</h4>
 <ul>
 <li><code>main</code>: trunk sempre deployável</li>
 <li><code>feature/*</code>: branches curtas (< 1 dia)</li>
 <li>Commits pequenos e frequentes</li>
 </ul>
 <h3 id="merge-vs-rebase">Merge vs Rebase</h3>
-<div class="table-wrapper"><table><tr><th>Ação</th><th>Merge</th><th>Rebase</th></tr><tr><td>Preserva histórico</td><td>✅</td><td>❌</td></tr><tr><td>Histórico linear</td><td>❌</td><td>✅</td></tr><tr><td>Seguro para shared</td><td>✅</td><td>❌</td></tr><tr><td>Branch compartilhado</td><td>✅</td><td>❌</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Ação</th><th>Merge</th><th>Rebase</th></tr><tr><td>Preserva histórico</td><td>✅</td><td>❌</td></tr><tr><td>Linear history</td><td>❌</td><td>✅</td></tr><tr><td>Safe for shared branch</td><td>✅</td><td>❌</td></tr><tr><td>Shared remote branch</td><td>✅</td><td>❌</td></tr></table></div>
 <h2 id="templates">Templates</h2>
 <h3 id="commit-messagemd">commit-message.md</h3>
 <p>Localização: <code>templates/commit-message.md</code></p>
-<p>Template para mensagens de commit padronizadas.</p>
+<p>Template for standardized commit messages.</p>
 <p><strong>Uso:</strong></p>
 <pre data-lang="bash"><code># Consulte antes de criar commit
 cat templates/commit-message.md</code></pre>
 <h3 id="branch-namingmd">branch-naming.md</h3>
 <p>Localização: <code>templates/branch-naming.md</code></p>
-<p>Convenção de nomes para branches.</p>
+<p>Naming conventions for branches.</p>
 <p><strong>Uso:</strong></p>
 <pre data-lang="bash"><code># Crie branch seguindo convenção
 git checkout -b feature/user-authentication</code></pre>
 <h3 id="pr-descriptionmd">pr-description.md</h3>
 <p>Localização: <code>templates/pr-description.md</code></p>
-<p>Template para descrição de Pull Request.</p>
+<p>Template for Pull Request descriptions.</p>
 <p><strong>Uso:</strong></p>
-<pre data-lang="bash"><code># Copie para usar como base
+<pre data-lang="bash"><code># Copy to use as a baseline
 cp templates/pr-description.md .github/PULL_REQUEST_TEMPLATE.md</code></pre>
 <h2 id="anti-patterns">Anti-patterns</h2>
 <h3 id="-crtico">🔴 Crítico</h3>
-<h4 id="force-push-em-branch-compartilhado">Force push em branch compartilhado</h4>
-<p><strong>O que é:</strong> Usar <code>git push --force</code> em branch que outros desenvolvedores estão usando. <strong>Por que é ruim:</strong> Destrói histórico que outros desenvolvedores dependem, causando perda de trabalho. <strong>Como evitar:</strong> Use <code>git push --force-with-lease</code> ou nunca force push em branches compartilhados. <strong>Exemplo:</strong></p>
+<h4 id="force-push-to-shared-branch">Force push to shared branch</h4>
+<p><strong>What it is:</strong> Using <code>git push --force</code> on branches shared with other developers. <strong>Why it is bad:</strong> Overwrites upstream commit history, causing unrecoverable data loss for collaborators. <strong>How to avoid:</strong> Use <code>git push --force-with-lease</code> and enforce branch protection on shared branches. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 git push --force origin feature/user-auth
 
@@ -657,8 +657,8 @@ git push --force origin feature/user-auth
 git push --force-with-lease origin feature/user-auth
 # ou
 git merge origin/main  # preserva histórico</code></pre>
-<h4 id="commit-com-segredoscredenciais">Commit com segredos/credenciais</h4>
-<p><strong>O que é:</strong> Commitar arquivos contendo senhas, tokens ou credenciais. <strong>Por que é ruim:</strong> Exposição de credenciais no histórico do Git, impossível remover completamente. <strong>Como evitar:</strong> Use .env, .gitignore, e git-secrets. <strong>Exemplo:</strong></p>
+<h4 id="committing-secrets-or-credentials">Committing secrets or credentials</h4>
+<p><strong>What it is:</strong> Committing files containing passwords, API tokens, or credentials. <strong>Why it is bad:</strong> Leaks credentials into permanent git history, necessitating credential revocation. <strong>Como evitar:</strong> Use .env, .gitignore, e git-secrets. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 git add .env
 git commit -m &quot;feat: add config&quot;
@@ -669,14 +669,14 @@ git add .env
 git commit -m &quot;feat: add config&quot;</code></pre>
 <h3 id="-mdio">🟡 Médio</h3>
 <h4 id="mensagem-de-commit-vaga">Mensagem de commit vaga</h4>
-<p><strong>O que é:</strong> Mensagens genéricas como "fix bug" ou "update code". <strong>Por que é ruim:</strong> Dificulta busca no histórico e gera documentação ruim. <strong>Como evitar:</strong> Use Conventional Commits com escopo e descrição clara. <strong>Exemplo:</strong></p>
+<p><strong>What it is:</strong> Using generic messages such as 'fix bug', 'wip', or 'update code'. <strong>Why it is bad:</strong> Degrades git log traceability, bisect debugging, and changelog generation. <strong>How to avoid:</strong> Follow Conventional Commits with concise scope and descriptive summaries. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 git commit -m &quot;fix&quot;
 
 # ✅ CORRETO
 git commit -m &quot;fix(auth): handle expired JWT token&quot;</code></pre>
 <h4 id="branch-sem-pr">Branch sem PR</h4>
-<p><strong>O que é:</strong> Trabalhar diretamente em main sem Pull Request. <strong>Por que é ruim:</strong> Nenhuma revisão de código, histórico de decisões perdido. <strong>Como evitar:</strong> Sempre crie PR, mesmo para mudanças pequenas. <strong>Exemplo:</strong></p>
+<p><strong>What it is:</strong> Pushing direct commits to main without peer review or automated CI verification. <strong>Why it is bad:</strong> Bypasses review gates and increases deployment breakage risks. <strong>How to avoid:</strong> Always open a Pull Request and require automated CI status checks. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 git checkout main
 git add .
@@ -688,8 +688,8 @@ git add .
 git commit -m &quot;feat: quick fix&quot;
 gh pr create --title &quot;Quick fix&quot; --body &quot;Descrição&quot;</code></pre>
 <h3 id="-baixo">🟢 Baixo</h3>
-<h4 id="commit-grande-com-mltiplas-mudanas">Commit grande com múltiplas mudanças</h4>
-<p><strong>O que é:</strong> Commitar vários arquivos com mudanças não relacionadas. <strong>Por que é ruim:</strong> Dificulta rollback seletivo e revisão de código. <strong>Como evitar:</strong> Commits atômicos, um conceito por commit. <strong>Exemplo:</strong></p>
+<h4 id="giant-commits-with-multi-topic-changes">Giant commits with multi-topic changes</h4>
+<p><strong>What it is:</strong> Bundling unrelated refactorings, feature changes, and formatting in one commit. <strong>Why it is bad:</strong> Impairs atomic rollbacks and makes PR review cognitive load unmanageable. <strong>Como evitar:</strong> Commits atômicos, um conceito por commit. <strong>Exemplo:</strong></p>
 <pre><code># ❌ ERRADO
 git add .
 git commit -m &quot;feat: add user and fix login and update docs&quot;
@@ -708,50 +708,50 @@ git commit -m &quot;docs: update user flow&quot;</code></pre>
 <li>[ ] Testes passam (<code>npm test</code>)</li>
 <li>[ ] Lint passa (<code>npm run lint</code>)</li>
 <li>[ ] Mensagem de commit segue Conventional Commits</li>
-<li>[ ] Arquivo .env não está no stage</li>
+<li>[ ] .env and secret files excluded from staging</li>
 </ul>
 <h3 id="checklist-pr-merge">Checklist Pré-Merge</h3>
 <ul>
-<li>[ ] Branch está atualizada com main</li>
-<li>[ ] Todos os testes passam</li>
+<li>[ ] Branch rebased and updated against main</li>
+<li>[ ] All unit and integration tests pass</li>
 <li>[ ] Coverage ≥ 80%</li>
 <li>[ ] PR tem descrição completa</li>
-<li>[ ] Pelo menos 1 aprovação</li>
+<li>[ ] At least 1 approving peer review received</li>
 </ul>
 <h3 id="checklist-pr-release">Checklist Pré-Release</h3>
 <ul>
 <li>[ ] CHANGELOG.md atualizado</li>
 <li>[ ] Versão bumpado em package.json</li>
-<li>[ ] Todos os testes E2E passam</li>
+<li>[ ] All CI/CD and E2E checks pass</li>
 <li>[ ] Build de produção funciona</li>
-<li>[ ] Tag criada com semantic versioning</li>
+<li>[ ] Tag created using semantic versioning</li>
 </ul>
 <h2 id="edge-cases">Edge Cases</h2>
-<h3 id="submodule-com-conflito">Submodule com conflito</h3>
-<p><strong>Situação:</strong> Conflito em repositório que usa submodules. <strong>Solução:</strong> Atualize o submodule separadamente, depois resolva o conflito. <strong>Exceção:</strong> Se o submodule é externo, considere usar subtree.</p>
+<h3 id="submodule-conflict">Submodule conflict</h3>
+<p><strong>Situation:</strong> Conflict in repository utilizing git submodules. <strong>Solução:</strong> Atualize o submodule separadamente, depois resolva o conflito. <strong>Exceção:</strong> Se o submodule é externo, considere usar subtree.</p>
 <pre data-lang="bash"><code># Atualizar submodule
 git submodule update --remote --merge
 git add path/to/submodule
 git commit -m &quot;chore: update submodule&quot;</code></pre>
-<h3 id="rebase-com-arquivo-binrio-conflito">Rebase com arquivo binário conflito</h3>
-<p><strong>Situação:</strong> Conflito em arquivo binário durante rebase. <strong>Solução:</strong> Use merge strategy para binários. <strong>Exceção:</strong> Se o binário é gerado, remova e regenere.</p>
-<pre data-lang="bash"><code># Resolver conflito em binário
+<h3 id="rebase-with-binary-file-conflict">Rebase with binary file conflict</h3>
+<p><strong>Situação:</strong> Conflito em arquivo binário durante rebase. <strong>Solution:</strong> Use checkout merge strategy for binary assets (<code>git checkout --ours/--theirs</code>). <strong>Exceção:</strong> Se o binário é gerado, remova e regenere.</p>
+<pre data-lang="bash"><code># Resolve conflict em binário
 git checkout --ours path/to/file.bin
 git add path/to/file.bin
 git rebase --continue</code></pre>
 <h3 id="detached-head">Detached HEAD</h3>
-<p><strong>Situação:</strong> Git checkout em commit específico, ficando em estado detached HEAD. <strong>Solução:</strong> Crie branch para trabalhar ou retorne ao branch anterior. <strong>Exceção:</strong> Se for só para inspecionar, não há problema.</p>
+<p><strong>Situação:</strong> Git checkout em commit específico, ficando em estado detached HEAD. <strong>Solution:</strong> Create a tracking branch or return to previous branch state. <strong>Exception:</strong> If inspecting read-only state, detached HEAD is acceptable.</p>
 <pre data-lang="bash"><code># Sair do detached HEAD
 git checkout main
-# ou criar branch
+# or create new branch
 git switch -c temp-branch</code></pre>
 <h2 id="referncias">Referências</h2>
 <ul>
 <li><a href="https://www.conventionalcommits.org/">Conventional Commits</a></li>
 <li><a href="https://nvie.com/posts/a-successful-git-branching-model/">Git Flow</a></li>
-<li><code>governance</code> — para branch protection e CODEOWNERS</li>
-<li><code>release</code> — para versionamento semântico</li>
-<li><code>repo-bootstrap</code> — para .gitignore patterns</li>
+<li><code>governance</code> — for branch protection and CODEOWNERS</li>
+<li><code>release</code> — for semantic versioning</li>
+<li><code>repo-bootstrap</code> — for .gitignore patterns</li>
 </ul>
 <hr>
 <h2 id="sub-domain--component-git-commit-helper">Sub-Domain / Component: <code>git-commit-helper</code></h2>
@@ -1187,11 +1187,11 @@ git log --oneline -5</code></pre>
 <li><strong>Rule of Thumb 9 (Verification Gate Invariant):</strong> Never declare completion without automated test execution evidence and zero compiler/linter warnings.</li>
 </ul>
 <h2 id="completion-gate">Completion Gate</h2>
-<p>A tarefa associada à skill <code>git-workflow</code> só pode ser declarada concluída quando:</p>
+<p>The task associated with the skill <code>git-workflow</code> can only be declared complete when:</p>
 <ol>
-<li>Todas as verificações do checklist operacional foram atendidas.</li>
-<li>O resultado foi validado deterministamente através de evidências de execução.</li>
-<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+<li>All checks in the operational verification checklist have been satisfied.</li>
+<li>The deliverable has been deterministically validated through execution evidence.</li>
+<li>No structural debt, unresolved placeholders, or unhandled errors remain.</li>
 </ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

@@ -44,7 +44,7 @@
 |:---|:---:|:---:|:---|
 | **1. Domain SOTA & Best Practices** | 30% | **30.0 / 30.0** | Aderência a padrões industriais SOTA comprovada por 16 marcadores conceituais de engenharia de software. |
 | **2. Heuristic Depth & Edge Cases** | 25% | **25.0 / 25.0** | 21 regras heurísticas explícitas, seção de Edge Cases presente. |
-| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 7823 tokens com alta proporção sinal-ruído e linguagem imperativa. |
+| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 7822 tokens com alta proporção sinal-ruído e linguagem imperativa. |
 | **4. Strategic Alignment & SWOT** | 20% | **18.5 / 20.0** | Acoplamento sinérgico com 3 skills complementares no catálogo. |
 
 ---
