@@ -1,15 +1,2 @@
-# Changelog Entry Template
-
-## [Unreleased]
-
-### Added
+# Changelog Entry Template### Added
 - {new feature}
-
-### Changed
-- {existing change}
-
-### Fixed
-- {bug fixed}
-
-### Security
-- {vulnerability fixed}

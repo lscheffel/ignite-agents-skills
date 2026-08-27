@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-27T02:20:23.235861+00:00",
+    "generated_at": "2026-08-27T02:21:30.381814+00:00",
     "omission_rate": "0.00%",
     "total_assets": 82,
     "persistence_target": ".github/governance/"
@@ -2059,8 +2059,8 @@
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering",
       "primary_sha256": "890e4557a56fdb4bd04f109744fcd0ec1d5b07449e9a69c5d5d5004adf4ba700",
       "total_files": 7,
-      "total_bytes": 11051,
-      "total_tokens": 2732,
+      "total_bytes": 10986,
+      "total_tokens": 2730,
       "audit_status": "completed",
       "files": [
         {
@@ -2101,9 +2101,9 @@
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/templates/prompt-evaluation.md",
           "relpath": "templates/prompt-evaluation.md",
-          "sha256": "6b672ec56c80777f9504463181dc4fc0b2bc28771ab7691362e12c393421000f",
-          "bytes": 397,
-          "tokens": 84
+          "sha256": "8f66e27d2b608112233ec026d8d12c147566ac39e2443d78c1478fbf8a74d072",
+          "bytes": 332,
+          "tokens": 82
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/prompt-engineering/templates/prompt-simple.md",
@@ -2233,8 +2233,8 @@
       "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release",
       "primary_sha256": "34582d3c4ac9ab1f1e7cc0cda91ba776f808bbfd3a179528d72867e227aa48a0",
       "total_files": 9,
-      "total_bytes": 12669,
-      "total_tokens": 3149,
+      "total_bytes": 12653,
+      "total_tokens": 3145,
       "audit_status": "completed",
       "files": [
         {
@@ -2275,9 +2275,9 @@
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/templates/changelog-entry.md",
           "relpath": "templates/changelog-entry.md",
-          "sha256": "1ca2a1b6e2722c07b713a777e5b3bfa0c6b55d3af9402f9de5bed393183943f8",
-          "bytes": 52,
-          "tokens": 13
+          "sha256": "c8e072986578455791a7b32e92479a51501f94d519a7f1e4ea2c57aca6abd2c6",
+          "bytes": 36,
+          "tokens": 9
         },
         {
           "path": "/home/loupan/projetosVS/ignite-agents-skills/skills/release/templates/release-checklist.md",
