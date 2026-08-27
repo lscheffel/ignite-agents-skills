@@ -7,6 +7,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/adr-architecture-elevation-example.md",
         "references/amplification-patterns.md",
@@ -17,7 +18,6 @@
         "scripts/comparative_matrix.py",
         "scripts/reconstruct_problem.py",
         "scripts/run_elevation.py",
-        "SKILL.md",
         "templates/adr-architecture-elevation-template.md"
       ]
     },
@@ -28,6 +28,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/ADR-997-TODO.md",
         "examples/ADR-998-TODO.md",
@@ -36,7 +37,6 @@
         "examples/archive-workflow.md",
         "references/domain-standards.md",
         "scripts/audit.py",
-        "SKILL.md",
         "templates/adr-archive-template.md",
         "templates/archive-checklist.md",
         "templates/audit-report.md",
@@ -50,23 +50,23 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
+        "examples/README.md",
         "examples/adr-generator-example.md",
         "examples/database-choice.md",
         "examples/quadra/ADR-001-BP.md",
-        "examples/quadra/ADR-001.md",
         "examples/quadra/ADR-001-PI.md",
         "examples/quadra/ADR-001-TODO.md",
-        "examples/README.md",
+        "examples/quadra/ADR-001.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/adr-bp.md",
         "templates/adr-emergency.md",
         "templates/adr-generator-template.md",
-        "templates/adr.md",
         "templates/adr-pi.md",
         "templates/adr-simple.md",
-        "templates/adr-todo.md"
+        "templates/adr-todo.md",
+        "templates/adr.md"
       ]
     },
     {
@@ -76,10 +76,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/agent-development-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/agent-development-template.md"
       ]
     },
@@ -90,6 +90,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "checklists/post-execution.md",
         "checklists/pre-flight.md",
@@ -97,7 +98,6 @@
         "examples/fan-out-fan-in.md",
         "examples/multi-agent-decomposition.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/agent-orchestration-template.md",
         "templates/agent-role-card.md",
         "templates/handoff-protocol.md",
@@ -111,10 +111,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/agent-planning-execution-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/agent-planning-execution-template.md"
       ]
     },
@@ -125,10 +125,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/agents-md-management-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/agents-md-management-template.md"
       ]
     },
@@ -139,13 +139,13 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/api-design-example.md",
         "examples/error-handling-contract.md",
         "examples/python-flask-rest.md",
         "examples/rest-crud-spec.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/api-design-template.md",
         "templates/api-versioning.md",
         "templates/endpoint-spec.md",
@@ -159,11 +159,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/architecture-review-example.md",
         "examples/god-class-refactor.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/architecture-review-report.md",
         "templates/architecture-review-template.md",
         "templates/tech-debt-item.md"
@@ -176,10 +176,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/artifacts-builder-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/artifacts-builder-template.md"
       ]
     },
@@ -190,6 +190,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/brainstorming-example.md",
         "references/domain-standards.md",
@@ -198,7 +199,6 @@
         "scripts/server.cjs",
         "scripts/start-server.sh",
         "scripts/stop-server.sh",
-        "SKILL.md",
         "spec-document-reviewer-prompt.md",
         "templates/brainstorming-template.md",
         "visual-companion.md"
@@ -211,10 +211,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/cap-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/cap-template.md"
       ]
     },
@@ -225,10 +225,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/changelog-generator-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/changelog-generator-template.md"
       ]
     },
@@ -239,10 +239,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/circuit-breaker-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/circuit-breaker-template.md"
       ]
     },
@@ -253,10 +253,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/clean-code-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/clean-code-template.md"
       ]
     },
@@ -267,10 +267,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/code-review-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/code-review-template.md"
       ]
     },
@@ -281,11 +281,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/code-review-lite-example.md",
         "examples/review-session.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/code-review-lite-template.md",
         "templates/review-checklist.md"
       ]
@@ -297,10 +297,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/code-review-workflow-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/code-review-workflow-template.md"
       ]
     },
@@ -311,10 +311,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/content-creator-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/content-creator-template.md"
       ]
     },
@@ -325,10 +325,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/content-research-writer-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/content-research-writer-template.md"
       ]
     },
@@ -339,10 +339,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/context7-mcp-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/context7-mcp-template.md"
       ]
     },
@@ -353,12 +353,12 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/database-architecture-example.md",
         "references/domain-standards.md",
         "references/patterns-and-migrations.md",
         "scripts/generate_erd.py",
-        "SKILL.md",
         "templates/database-architecture-template.md",
         "templates/migration-template.sql"
       ]
@@ -370,11 +370,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/ddd-example.md",
         "examples/order-modeling.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/aggregate-root.ts",
         "templates/ddd-template.md",
         "templates/domain-event.ts",
@@ -391,10 +391,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/deployment-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/deployment-template.md"
       ]
     },
@@ -405,10 +405,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/dispatching-parallel-agents-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/dispatching-parallel-agents-template.md"
       ]
     },
@@ -419,10 +419,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/docx-processing-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/docx-processing-template.md"
       ]
     },
@@ -433,10 +433,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/email-composer-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/email-composer-template.md"
       ]
     },
@@ -447,10 +447,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/find-skills-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/find-skills-template.md"
       ]
     },
@@ -461,10 +461,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/git-workflow-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/git-workflow-template.md"
       ]
     },
@@ -475,11 +475,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/branch-protection.md",
         "examples/governance-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/codeowners",
         "templates/governance-template.md",
         "templates/issue-template.md",
@@ -493,6 +493,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "checklists/post-execution.md",
         "checklists/pre-execution.md",
@@ -500,7 +501,6 @@
         "examples/implementation-example.md",
         "examples/simple-change.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/change-plan.md",
         "templates/execution-contract.md",
         "templates/execution-report.md",
@@ -516,10 +516,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/llm-as-judge-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/llm-as-judge-template.md"
       ]
     },
@@ -530,10 +530,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/mcp-builder-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/mcp-builder-template.md"
       ]
     },
@@ -544,10 +544,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/mobile-design-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/mobile-design-template.md"
       ]
     },
@@ -558,6 +558,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/observability-implementation.md",
         "checklists/operational-checklist.md",
         "examples/express-logging.ts",
@@ -565,7 +566,6 @@
         "examples/prometheus-metrics.ts",
         "examples/tracing-setup.ts",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/alert-rules.md",
         "templates/logging-spec.md",
         "templates/metrics-sla.md",
@@ -579,10 +579,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/pdf-processing-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/pdf-processing-template.md"
       ]
     },
@@ -593,11 +593,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/performance-optimization-example.md",
         "performance-budgets.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/performance-optimization-template.md"
       ]
     },
@@ -608,10 +608,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/php-laravel-ecosystem-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/php-laravel-ecosystem-template.md"
       ]
     },
@@ -622,10 +622,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/product-spec-engineering-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/product-spec-engineering-template.md"
       ]
     },
@@ -636,11 +636,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/prompt-engineering-example.md",
         "examples/refactoring-prompt.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/prompt-complex.md",
         "templates/prompt-engineering-template.md",
         "templates/prompt-evaluation.md",
@@ -654,10 +654,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/react-best-practices-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/react-best-practices-template.md"
       ]
     },
@@ -668,12 +668,12 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/extract-method.ts",
         "examples/refactoring-example.md",
         "examples/strangler-fig.ts",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/legacy-migration.md",
         "templates/refactoring-catalog.md",
         "templates/refactoring-template.md",
@@ -687,13 +687,13 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "checklists/post-release.md",
         "checklists/pre-release.md",
         "examples/release-example.md",
         "examples/release-process.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/changelog-entry.md",
         "templates/release-checklist.md",
         "templates/release-template.md",
@@ -707,17 +707,17 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/bootstrap-example.md",
         "examples/repo-bootstrap-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/AGENTS.md",
-        "templates/ci.yml",
         "templates/CONTRIBUTING.md",
         "templates/README.md",
-        "templates/repo-bootstrap-template.md",
-        "templates/SECURITY.md"
+        "templates/SECURITY.md",
+        "templates/ci.yml",
+        "templates/repo-bootstrap-template.md"
       ]
     },
     {
@@ -727,10 +727,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/resilient-execution-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/resilient-execution-template.md"
       ]
     },
@@ -741,13 +741,13 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/crypto-validation.md",
         "examples/dependency-audit.md",
         "examples/security-review-example.md",
         "owasp-checklist.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/security-checklist.md",
         "templates/security-review-template.md",
         "templates/threat-model.md",
@@ -761,10 +761,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/seo-optimizer-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/seo-optimizer-template.md"
       ]
     },
@@ -775,12 +775,12 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/git-audit.md",
         "examples/skill-audit-bulletin-example.md",
         "references/domain-standards.md",
         "scripts/update_audit_ledger.py",
-        "SKILL.md",
         "templates/audit-bulletin.md",
         "templates/skill-audit-bulletin-template.md"
       ]
@@ -792,16 +792,16 @@
       "tags": [],
       "related_skills": [],
       "files": [
-        "checklists/operational-checklist.md",
-        "examples/skill-creator-example.md",
         "LICENSE",
         "LICENSE.txt",
+        "SKILL.md",
+        "checklists/operational-checklist.md",
+        "examples/skill-creator-example.md",
         "local.patch",
         "references/domain-standards.md",
         "scripts/init_skill.py",
         "scripts/package_skill.py",
         "scripts/quick_validate.py",
-        "SKILL.md",
         "templates/skill-creator-template.md"
       ]
     },
@@ -812,11 +812,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/skill-discovery-example.md",
         "references/domain-standards.md",
         "scripts/discovery.py",
-        "SKILL.md",
         "templates/skill-discovery-template.md"
       ]
     },
@@ -827,6 +827,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "code-quality-reviewer-prompt.md",
         "examples/subagent-driven-development-example.md",
@@ -835,7 +836,6 @@
         "scripts/review-package",
         "scripts/sdd-workspace",
         "scripts/task-brief",
-        "SKILL.md",
         "spec-reviewer-prompt.md",
         "task-reviewer-prompt.md",
         "templates/subagent-driven-development-template.md"
@@ -848,16 +848,16 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "CREATION-LOG.md",
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "condition-based-waiting-example.ts",
         "condition-based-waiting.md",
-        "CREATION-LOG.md",
         "defense-in-depth.md",
         "examples/systematic-debugging-example.md",
         "find-polluter.sh",
         "references/domain-standards.md",
         "root-cause-tracing.md",
-        "SKILL.md",
         "templates/systematic-debugging-template.md",
         "test-academic.md",
         "test-pressure-1.md",
@@ -872,10 +872,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/technical-documentation-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/agents.template.md",
         "templates/changelog.template.md",
         "templates/gemini.template.md",
@@ -893,10 +893,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/test-driven-development-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/test-driven-development-template.md",
         "testing-anti-patterns.md"
       ]
@@ -908,10 +908,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/testing-mastery-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/testing-mastery-template.md"
       ]
     },
@@ -922,11 +922,11 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/ui-ux-pro-max-example.md",
         "references/design-tokens-and-palettes.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/ui-ux-pro-max-template.md"
       ]
     },
@@ -937,10 +937,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/ux-researcher-designer-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/ux-researcher-designer-template.md"
       ]
     },
@@ -951,10 +951,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/verification-before-completion-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/verification-before-completion-template.md"
       ]
     },
@@ -965,6 +965,7 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "anthropic-best-practices.md",
         "checklists/operational-checklist.md",
         "examples/CLAUDE_MD_TESTING.md",
@@ -973,7 +974,6 @@
         "persuasion-principles.md",
         "references/domain-standards.md",
         "render-graphs.js",
-        "SKILL.md",
         "templates/writing-skills-template.md",
         "testing-skills-with-subagents.md"
       ]
@@ -985,10 +985,10 @@
       "tags": [],
       "related_skills": [],
       "files": [
+        "SKILL.md",
         "checklists/operational-checklist.md",
         "examples/xlsx-processing-example.md",
         "references/domain-standards.md",
-        "SKILL.md",
         "templates/xlsx-processing-template.md"
       ]
     }
