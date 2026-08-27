@@ -2,7 +2,7 @@
 
 > Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode e governança contínua para agentes autônomos.
 
-[![Version](https://img.shields.io/badge/version-v2.5.0-blue.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.6.0-blue.svg)](./CHANGELOG.md)
 [![Skills](https://img.shields.io/badge/skills-60%20SOTA-success.svg)](./skills/index.json)
 [![Assets](https://img.shields.io/badge/assets-82%20active-success.svg)](./.github/governance/AUDIT_MASTER_INDEX.md)
 [![Audit Score](https://img.shields.io/badge/audit%20score-91.10%2F100-brightgreen.svg)](./.github/governance/COMPLIANCE_SCORECARD.csv)

@@ -4,6 +4,17 @@
 
 ---
 
+## Release v2.6.0 (2026-08-26) — Esteira de Tradução NIM & Ledger de Auditoria SOTA
+
+### 🌟 Destaques da Versão (Highlights)
+
+- **Pipeline de Detecção e Tradução Automática (NVIDIA NIM - ADR-026):** Integração no hook de pré-commit e CI (`validate-skills.yml`) com modelos `nemotron-3.5-30B`, `llama-3.1-8B` e `riva-translate`. Protege YAML Frontmatter, blocos de código e tags XML com cache SQLite SHA-256 (33.15% de economia de tokens).
+- **Integração do Continuous Skill Audit Ledger no Pré-Commit:** Sincronização automática de `docs/audit/skills/SKILL_AUDIT_LEDGER.md` e `JSON` como 5º gate de governança ininterrupta.
+- **Boletim de Auditoria Dual-Axis para `/cap` (Score 97.8 / Grau S):** Laudo canônico em `docs/audit/skills/cap_audit_bulletin.md` com análise SWOT e validação dos 8 níveis de evidência de menor custo.
+- **Boletim Arquitetural SOTA Pós-Fusão:** Laudo executivo publicado em `docs/audit/ECOSYSTEM_SOTA_ARCHITECTURAL_BULLETIN.md`.
+
+---
+
 ## Release v2.5.0 (2026-08-26) — Unificação SOTA do Ecossistema de Skills
 
 ### 🌟 Destaques da Versão (Highlights)

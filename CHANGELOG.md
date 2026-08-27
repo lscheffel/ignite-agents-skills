@@ -4,6 +4,19 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 
+## [2.6.0] - 2026-08-26
+
+### Added
+- **Pipeline de Detecção e Tradução Automática (NVIDIA NIM - ADR-026):**
+  - Integração no hook de pré-commit (`.githooks/pre-commit`) e CI (`validate-skills.yml`) com suporte a modelos `nemotron-3.5-30B`, `llama-3.1-8B` e `riva-translate`.
+  - Preservação estrita de YAML frontmatter, blocos de código e tags XML com cache SQLite SHA-256.
+- **Integração do Continuous Skill Audit Ledger no Pré-Commit:**
+  - Sincronização automática de `docs/audit/skills/SKILL_AUDIT_LEDGER.md` e `JSON` como último gate de governança.
+- **Boletim de Auditoria Dual-Axis para `/cap` (Score 97.8 / Grau S):**
+  - Laudo em `docs/audit/skills/cap_audit_bulletin.md` com análise SWOT e validação dos 8 níveis de evidência de menor custo.
+- **Boletim Arquitetural SOTA & Governança Pós-Fusão:**
+  - Laudo executivo detalhado em `docs/audit/ECOSYSTEM_SOTA_ARCHITECTURAL_BULLETIN.md`.
+
 ## [2.5.0] - 2026-08-26
 
 ### Added

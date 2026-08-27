@@ -11,11 +11,11 @@
 - **Caminho Canônico:** `/home/loupan/projetosVS/ignite-agents-skills`
 - **Última Atualização:** 2026-08-26
 - **Branch Ativa:** `master`
-- **Versão:** `v2.5.0`
+- **Versão:** `v2.6.0`
 - **Total de Ativos Monitorados:** 82 ativos (60 Config Skills, 11 Plugin Skills, 3 Built-in Skills, 8 MCP Servers)
 - **Baseline de Qualidade:** Score Global Médio de **91.10 / 100** (100% de aprovação)
-- **Status do Catálogo:** 60 Skills SOTA em `skills/` + `skills/index.json` sincronizado
-- **Status da Arquitetura RAG:** SOTA Neural, Federado & Hierárquico Multi-Asset (ADR-021 a ADR-026 consolidadas)
+- **Status do Catálogo:** 60 Skills SOTA em `skills/` + `skills/index.json` sincronizado + Continuous Audit Ledger ativo
+- **Status da Arquitetura RAG & Tradução:** SOTA Neural, Federado, Hierárquico Multi-Asset & Auto-Tradução NIM (ADR-021 a ADR-026)
 - **Suíte de Testes:** 100% Aprovada (42/42 testes em `scripts/tests/`)
 - **Páginas HTML:** 100% Compiladas em `pages/` para deploy em GitHub Pages
 
