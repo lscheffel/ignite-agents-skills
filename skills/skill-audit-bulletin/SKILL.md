@@ -40,7 +40,7 @@ Audits agent skills through an advanced **Dual-Axis Evaluation Engine**:
 1. **Axis 1 (Physical / Structural & Governance)**: 8 dimensions evaluating metadata, SemVer, triggers, templates, boundaries, and operational risk.
 2. **Axis 2 (Metaphysical / Domain SOTA & Cognitive Efficacy)**: 4 dimensions evaluating whether the skill's substantive knowledge represents true State-of-the-Art industry best practices, heuristic depth, SWOT analysis, and operational elegance.
 
-Automatically synchronizes and persists results into the **Continuous Skill Audit Ledger** at [`docs/audit/skills/SKILL_AUDIT_LEDGER.md`](file:///home/loupan/.gemini/config/skills/docs/audit/skills/SKILL_AUDIT_LEDGER.md) and concludes with an interactive **ADR Decision Gate** linking directly to `adr-generator`.
+Automatically synchronizes and persists results into the **Continuous Skill Audit Ledger** at [`docs/audit/skills/SKILL_AUDIT_LEDGER.md`](file:///home/loupan/projetosVS/ignite-agents-skills/docs/audit/skills/SKILL_AUDIT_LEDGER.md) and concludes with an interactive **ADR Decision Gate** linking directly to `adr-generator`.
 
 ---
 
@@ -283,7 +283,7 @@ At the conclusion of each skill audit, the auditor **MUST** persist and update t
 
 ```bash
 # Global canonical execution
-python3 ~/.gemini/config/skills/skill-audit-bulletin/scripts/update_audit_ledger.py \
+python3 skills/skill-audit-bulletin/scripts/update_audit_ledger.py \
   --skill <skill-name> \
   --version <version> \
   --grade <grade> \

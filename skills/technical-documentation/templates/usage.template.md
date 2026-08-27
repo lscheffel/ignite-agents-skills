@@ -36,13 +36,13 @@ sequenceDiagram
 ### 2.2 Governance and ADR Audit
 ```bash
 # Run silent ADR audit (cost 0 tokens)
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .
+python3 skills/adr-archive/scripts/audit.py .
 
 # Archive completed ADR and generate Evidence Record (ER.md)
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive {{ADR_ID}}
+python3 skills/adr-archive/scripts/audit.py . --archive {{ADR_ID}}
 
 # Register incidental technical debt
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt \
+python3 skills/adr-archive/scripts/audit.py . --register-debt \
   --severity HIGH \
   --domain {{DOMAIN}} \
   --desc "{{DESCRIPTION}}" \

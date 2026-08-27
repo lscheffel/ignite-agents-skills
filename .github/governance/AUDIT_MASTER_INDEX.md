@@ -6,7 +6,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 
 ## 1. Sumário Executivo de Conformidade
 
-* **Data de Execução:** 2026-08-27 14:04:26 UTC
+* **Data de Execução:** 2026-08-27 16:48:00 UTC
 * **Total de Ativos Auditados:** 82 (100.00% de cobertura, 0.00% omissão)
 * **Score Global Médio do Ecossistema:** **90.4 / 100**
 * **Distribuição de Status:**
@@ -21,11 +21,11 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | Ativo ID | Categoria | Hash SHA-256 (Prefix) | Score Global | Status | Risco STRIDE | RICE Score |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
 | `adr-architecture-elevation` | config_skill | `35e117f9d900...` | **87.7** | APROVADA | Baixo | `5.7` |
-| `adr-archive` | config_skill | `ad7f3a35332e...` | **87.7** | APROVADA | Baixo | `5.7` |
+| `adr-archive` | config_skill | `b8d304cb74cc...` | **87.7** | APROVADA | Baixo | `5.7` |
 | `adr-generator` | config_skill | `b4d45c7b0931...` | **90.1** | APROVADA | Baixo | `5.7` |
 | `agent-development` | config_skill | `bd1634e50acd...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `agent-orchestration` | config_skill | `2818acd0a929...` | **92.0** | APROVADA | Baixo | `5.7` |
-| `agent-planning-execution` | config_skill | `4455a4b7edae...` | **87.6** | APROVADA | Baixo | `5.7` |
+| `agent-planning-execution` | config_skill | `f5126f9ca244...` | **87.6** | APROVADA | Baixo | `5.7` |
 | `agents-md-management` | config_skill | `01fa31997426...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `api-design` | config_skill | `07fe7ad710dc...` | **90.1** | APROVADA | Baixo | `5.7` |
 | `architecture-review` | config_skill | `510edb3b8ef9...` | **92.0** | APROVADA | Baixo | `5.7` |
@@ -50,7 +50,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `find-skills` | config_skill | `c33c73046591...` | **91.3** | APROVADA | Baixo | `5.7` |
 | `git-workflow` | config_skill | `37c93e90cffc...` | **87.6** | APROVADA | Baixo | `5.7` |
 | `governance` | config_skill | `3631727ea074...` | **92.0** | APROVADA | Baixo | `5.7` |
-| `implementation` | config_skill | `6aa446233adb...` | **90.1** | APROVADA | Baixo | `5.7` |
+| `implementation` | config_skill | `7ea22f8500d2...` | **90.1** | APROVADA | Baixo | `5.7` |
 | `llm-as-judge` | config_skill | `2222c2991830...` | **89.5** | APROVADA | Baixo | `5.7` |
 | `mcp-builder` | config_skill | `60b2ae004f19...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `mobile-design` | config_skill | `d8417badc98a...` | **92.0** | APROVADA | Baixo | `5.7` |
@@ -67,8 +67,8 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `resilient-execution` | config_skill | `44afa629bd9c...` | **89.5** | APROVADA | Baixo | `5.7` |
 | `security-review` | config_skill | `101436534d1f...` | **88.1** | APROVADA | Baixo | `5.7` |
 | `seo-optimizer` | config_skill | `7d4bc7a89ff3...` | **92.0** | APROVADA | Baixo | `5.7` |
-| `skill-audit-bulletin` | config_skill | `f6472b4e73ef...` | **89.7** | APROVADA | Baixo | `5.7` |
-| `skill-creator` | config_skill | `1b5ae9306eb9...` | **89.7** | APROVADA | Baixo | `5.7` |
+| `skill-audit-bulletin` | config_skill | `ec679211f2ef...` | **89.7** | APROVADA | Baixo | `5.7` |
+| `skill-creator` | config_skill | `69463d056c74...` | **89.7** | APROVADA | Baixo | `5.7` |
 | `skill-discovery` | config_skill | `4df3da54c613...` | **91.7** | APROVADA | Baixo | `5.7` |
 | `subagent-driven-development` | config_skill | `e41fcd9dd8c7...` | **87.2** | APROVADA | Baixo | `5.7` |
 | `systematic-debugging` | config_skill | `2d02499e4673...` | **90.4** | APROVADA | Baixo | `5.7` |

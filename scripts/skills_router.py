@@ -22,7 +22,7 @@ def load_env_cascade():
     Carrega variáveis de ambiente em cascata sem dependências externas:
     1. os.environ existente (processo / shell / mcp_config.json)
     2. CWD/.env (escopo do projeto cliente que executa o MCP/CLI)
-    3. WORKSPACE_DIR/.env (/home/loupan/.gemini/config/skills/.env - escopo do repositório MCP)
+    3. WORKSPACE_DIR/.env (/home/loupan/projetosVS/ignite-agents-skills/.env - escopo do repositório MCP)
     4. ~/.gemini/.env ou ~/.config/antigravity/.env (escopo global do usuário)
     """
     candidates = [
@@ -318,7 +318,6 @@ def neural_cross_encoder_rerank(query, candidates, top_k=3, api_key=None, conn=N
 
 WORKSPACE_SKILL_CANDIDATE_DIRS = [
     ".gemini/skills",
-    ".gemini/config/skills",
     ".kilo/skills",
     ".kilocode/skills",
     ".claude/skills",
@@ -336,7 +335,7 @@ class WorkspaceScopeResolver:
     @staticmethod
     def find_workspace_skills_dir(cwd=None):
         base_dir = os.path.abspath(cwd or os.getcwd())
-        global_canonical = os.path.abspath(os.path.expanduser("~/.gemini/config/skills"))
+        global_canonical = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         
         repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         # Não considerar o próprio diretório global canônico ou o próprio repo de skills como workspace local

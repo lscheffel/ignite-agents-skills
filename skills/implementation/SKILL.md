@@ -147,7 +147,7 @@ The incremental execution model. The loop attempts to consume the PI (Implementa
 - Big Bang is strictly prohibited
 - **Scope Isolation & Tech Debt Offloading:** It is strictly forbidden to perform peripheral refactoring or alter files outside the scope of the current ADR/TODO/PI. Any opportunity for improvement, indirect coupling, or legacy code found during execution **MUST** be registered via the Janitor's CLI:
   ```bash
-  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"
+  python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"
   ```
 
 ### Change Lifecycle
@@ -225,7 +225,7 @@ For each task in the DAG order (derived from PI or TODO, if Legacy):
 6. Execute continuous validation (Workflow 5)
 7. **Scope Isolation:** If during execution peripheral refactoring or files outside the scope are detected:
    - Register the incidental debt via CLI:
-     `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"`
+     `python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"`
    - **DO NOT** alter peripheral code in the current task.
 8. If validation passes:
    - Update affected documentation
@@ -306,7 +306,7 @@ You (agent) are **STRICLY PROHIBITED** from creating, editing, or mocking any fi
 1. You must **physically touch** the `TODO.md` (or `*-PI.md`) file and mark completed tasks with `- [x]` or `✅`.
 2. After finalizing all markings, **DO NOT** create the ER manually. Instead, execute the archival and generation algorithmically:
    ```bash
-   python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX
+   python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX
    ```
    *The script will verify tasks, auto-generate the `ADR-XXX-ER.md` with all evidence, metrics, and tables in the root, and move the Triad of work to `docs/adr/archive/`.*
 

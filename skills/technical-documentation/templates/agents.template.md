@@ -20,7 +20,7 @@ You are acting as a SOTA (State of the Art) Software Engineer. Your deliverables
 - **Prohibition of Drive-by Refactorings:** If during the execution of a task you find deprecated code or an opportunity for improvement outside the current contract, **DO NOT** alter the code in the same PR/commit.
 - **Debt Registration:** Immediately register the debt in the official registry:
   ```bash
-  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"
+  python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"
   ```
 
 ### 2.3 Documental Reconciliation Pattern
@@ -32,9 +32,9 @@ You are acting as a SOTA (State of the Art) Software Engineer. Your deliverables
 
 | Action | Command |
 |---|---|
-| **Audit & Synchronization** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .` |
-| **Archiving of ADR & ER** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive <ADR_ID>` |
-| **Technical Debt Registration** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt ...` |
+| **Audit & Synchronization** | `python3 skills/adr-archive/scripts/audit.py .` |
+| **Archiving of ADR & ER** | `python3 skills/adr-archive/scripts/audit.py . --archive <ADR_ID>` |
+| **Technical Debt Registration** | `python3 skills/adr-archive/scripts/audit.py . --register-debt ...` |
 | **Documental Reconciliation** | Invoke the `technical-documentation` skill |
 
 ---

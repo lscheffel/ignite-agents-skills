@@ -151,7 +151,7 @@ Run the scaffolding script:
 
 ```bash
 # Workspace Local execution
-python3 ~/.gemini/config/skills/skill-creator/scripts/init_skill.py <skill-name> --path <output-directory>
+python3 skills/skill-creator/scripts/init_skill.py <skill-name> --path <output-directory>
 
 # In-repo execution
 python3 scripts/init_skill.py <skill-name> --path .
@@ -170,10 +170,10 @@ Validate the created skill against schema and naming constraints:
 
 ```bash
 # Validate skill structure
-python3 ~/.gemini/config/skills/skill-creator/scripts/quick_validate.py <path/to/skill-folder>
+python3 skills/skill-creator/scripts/quick_validate.py <path/to/skill-folder>
 
 # Package into distributable zip
-python3 ~/.gemini/config/skills/skill-creator/scripts/package_skill.py <path/to/skill-folder> [dist_dir]
+python3 skills/skill-creator/scripts/package_skill.py <path/to/skill-folder> [dist_dir]
 ```
 
 ### Step 6: Audit Gating with `skill-audit-bulletin`

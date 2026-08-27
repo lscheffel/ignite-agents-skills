@@ -112,7 +112,7 @@ The Janitor automatically reconciles and cleans `docs/governance/tech-debt-regis
 1. **Auto-Resolution:** When an ADR linked via `mitigation_ref` has its `ER.md` generated, `audit.py` automatically updates the debt's status to `RESOLVED` and records the resolution timestamp.
 2. **Atomic Registration (`--register-debt`):** Allows agents during implementation to register out-of-scope discoveries without drive-by refactoring:
    ```bash
-   python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"
+   python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"
    ```
 3. **Garbage Collection of Tokens (`--prune-debts`):** Moves `RESOLVED` and obsolete debts from the active registry to `docs/governance/archive/tech-debt-archive.json`. This keeps the active registry microscopically small (< 1KB), preventing context dilution.
 
@@ -123,7 +123,7 @@ The Janitor automatically reconciles and cleans `docs/governance/tech-debt-regis
 ### Phase 1: Diagnostic Sweep
 Run the native auditor against the target repository root:
 ```bash
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .
+python3 skills/adr-archive/scripts/audit.py .
 ```
 - The script runs in milliseconds, parses all ADRs/TODOs, synchronizes tech debts, generates `docs/adr/ADR-INDEX.md`, and writes a detailed audit report to `docs/reports/adr-archive-report-*.md`.
 
@@ -134,7 +134,7 @@ Inspect the CLI stdout and report flags:
 - **Condition:** All checklist items in `ADR-XXX-TODO.md` (or `ADR-XXX-PI.md`) are marked `[x]` or `✅`.
 - **Action:** Execute automated archival and ER emission:
   ```bash
-  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX
+  python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX
   ```
 - **Checkpoint:** `docs/adr/ADR-XXX-ER.md` created in root, working files moved to `docs/adr/archive/`, index updated.
 
@@ -142,7 +142,7 @@ Inspect the CLI stdout and report flags:
 - **Condition:** An ADR was archived in `docs/adr/archive/` but lacks its implementation certificate (`ER.md`) in root.
 - **Action:** Trigger algorithmic ER generation:
   ```bash
-  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX
+  python3 skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX
   ```
   *(Never create or edit `*-ER.md` files manually — see Anti-patterns).*
 
@@ -157,13 +157,13 @@ Inspect the CLI stdout and report flags:
 - **Condition:** An approved ADR needs to be deferred to a future cycle without triggering tech debt alerts.
 - **Action:**
   ```bash
-  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --freeze ADR-XXX
+  python3 skills/adr-archive/scripts/audit.py . --freeze ADR-XXX
   ```
 
 ### Phase 3: Token Garbage Collection (Tech Debts)
 When resolved technical debts accumulate in the active registry:
 ```bash
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --prune-debts
+python3 skills/adr-archive/scripts/audit.py . --prune-debts
 ```
 - **Checkpoint:** Active `tech-debt-registry.json` contains only open/in-progress items.
 
@@ -182,13 +182,13 @@ The script `audit.py` provides a complete CLI interface:
 
 | Operation | Command | Description |
 |---|---|---|
-| **Audit & Sync** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .` | Audits ADRs, syncs debt statuses, generates ADR-INDEX and report. |
-| **Archive ADR** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX` | Validates completion, creates `ER.md`, moves files to archive. |
-| **Generate ER** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX` | Emits missing `ER.md` from archived or root Decision Set. |
-| **Freeze ADR** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --freeze ADR-XXX` | Moves unexecuted ADR to `docs/adr/frozen/` and updates status. |
-| **Register Debt** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity <S> --domain <D> --desc "<T>"` | Appends new technical debt atomically. |
-| **Prune Debts** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --prune-debts` | Archives resolved debts to keep active registry token-efficient. |
-| **Verify Tests** | `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX --verify-test "npm test"` | Runs test command before allowing archival. |
+| **Audit & Sync** | `python3 skills/adr-archive/scripts/audit.py .` | Audits ADRs, syncs debt statuses, generates ADR-INDEX and report. |
+| **Archive ADR** | `python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX` | Validates completion, creates `ER.md`, moves files to archive. |
+| **Generate ER** | `python3 skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX` | Emits missing `ER.md` from archived or root Decision Set. |
+| **Freeze ADR** | `python3 skills/adr-archive/scripts/audit.py . --freeze ADR-XXX` | Moves unexecuted ADR to `docs/adr/frozen/` and updates status. |
+| **Register Debt** | `python3 skills/adr-archive/scripts/audit.py . --register-debt --severity <S> --domain <D> --desc "<T>"` | Appends new technical debt atomically. |
+| **Prune Debts** | `python3 skills/adr-archive/scripts/audit.py . --prune-debts` | Archives resolved debts to keep active registry token-efficient. |
+| **Verify Tests** | `python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX --verify-test "npm test"` | Runs test command before allowing archival. |
 
 ---
 

@@ -819,7 +819,7 @@ When conditions are met, suggest switching to the `subagent-driven-development` 
 
 <HARD-GATE>
 Do NOT skip any verification step. Do NOT proceed past a checkpoint without user approval. Do NOT deviate from the approved plan without discussion.
-**ER.md GENERATION BAN**: You are STRICTLY PROHIBITED from creating or generating `*ER.md` (Execution Report) files. For ADR implementations, you must only check the boxes in the `TODO.md` file and run the audit tool (`python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .`), which is the exclusive gatekeeper authorized to generate ERs.
+**ER.md GENERATION BAN**: You are STRICTLY PROHIBITED from creating or generating `*ER.md` (Execution Report) files. For ADR implementations, you must only check the boxes in the `TODO.md` file and run the audit tool (`python3 skills/adr-archive/scripts/audit.py .`), which is the exclusive gatekeeper authorized to generate ERs.
 </HARD-GATE>
 
 If you catch yourself thinking:
@@ -896,7 +896,7 @@ The plan execution is complete when:
 3. Full test suite passes
 4. Final checkpoint report presented to user
 5. User confirms the plan is complete
-6. **FINAL STEP (For ADR-based plans):** You MUST run `python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .`, read the generated audit report from `docs/reports`, and present its verdict (success or pending debts) to the user.
+6. **FINAL STEP (For ADR-based plans):** You MUST run `python3 skills/adr-archive/scripts/audit.py .`, read the generated audit report from `docs/reports`, and present its verdict (success or pending debts) to the user.
 
 ---
 
