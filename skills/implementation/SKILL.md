@@ -365,6 +365,24 @@ Execute after completing all implementation. Validates tasks, build, quality, te
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Execution Governance:** Agent Skills SDLC lifecycle, Atomic Change Transactions, and Continuous Verification.
+- **State Preservation:** Step-by-step state hydration with rollback checkpoints.
+- **Governance Handoff:** Direct integration with `adr-generator` Decision Sets and `adr-archive` Evidence Records.
+- **Zero Drift Principle:** Strict compliance with approved Implementation Plans (`*-PI.md`) and Task Backlogs (`*-TODO.md`).
+
+### Atomic Change Transaction Invariant:
+Every code modification must follow the ACID-like cycle:
+
+$$\text{Snapshot State} \longrightarrow \text{Apply Edit} \longrightarrow \text{Run Tests} \longrightarrow \begin{cases} \text{Commit (if Pass)} \\ \text{Rollback (if Fail)} \end{cases}$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Plan Fidelity):** Follow the approved Implementation Plan step-by-step; never make unplanned architectural modifications.
+2. **Rule of Thumb 2 (Verification Before Mark Done):** Never mark a task `[x]` in TODO.md until automated test execution verifies success.
+3. **Rule of Thumb 3 (Incremental Commits):** Commit logically coherent chunks with descriptive conventional commit messages.
+4. **Rule of Thumb 4 (Evidence Record Generation):** Upon completing implementation, generate the canonical Evidence Record (`*-ER.md`) certifying all deliverables.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

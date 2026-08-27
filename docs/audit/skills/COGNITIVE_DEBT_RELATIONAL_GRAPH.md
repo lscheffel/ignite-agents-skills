@@ -10,7 +10,13 @@
 
 ## 1. Executive Summary
 
-Following the completion of **Etapa 1** (Universal Structural & Metadata Hardening via Tier II ADR-027, ADR-028, and ADR-029) and **Batch 1 (Core Architecture & Governance)** via ADR-030, and **Batch 2 (AI Agents, Loops, Resilience & MCP Tooling)** via ADR-031, the catalog has progressed to **84.6/100 Average Score** with 0 skills in Grade F or C.
+Following the completion of:
+- **Etapa 1:** Universal Structural & Metadata Hardening (ADR-027, ADR-028, ADR-029).
+- **Batch 1:** Core Architecture & Governance (ADR-030).
+- **Batch 2:** AI Agents, Loops, Resilience & MCP Tooling (ADR-031).
+- **Batch 3:** Engineering, Coding & Quality (ADR-032).
+
+The catalog has progressed to **84.9/100 Average Score** with 26 skills elevated to Grade B+ / A / S and 0 failures.
 
 ---
 
@@ -41,7 +47,7 @@ graph TD
         MCPB[mcp-builder]
     end
 
-    subgraph "Batch 3: Engineering, Coding & Quality (ACTIVE)"
+    subgraph "Batch 3: Engineering, Coding & Quality (CONSOLIDATED - ADR-032)"
         CC[clean-code]
         CR[code-review]
         CRL[code-review-lite]
@@ -53,50 +59,62 @@ graph TD
         IMPL[implementation]
     end
 
+    subgraph "Batch 4: Backend, Data, Cloud & Security (ACTIVE)"
+        DA[database-architecture]
+        APID[api-design]
+        DDD[ddd]
+        DEP[deployment]
+        OBS[observability]
+        SEC[security-review]
+        PERF[performance-optimization]
+        PHP[php-laravel-ecosystem]
+    end
+
     style AG fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style BS fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style AMM fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style APE fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style AD fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style AO fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
+    style OBS fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
+    style APID fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
 ```
 
 ---
 
-## 3. Batch 2: AI Agents, Loops, Resilience & MCP Tooling (Consolidated — ADR-031)
+## 3. Batch 3: Engineering, Coding & Quality (Consolidated — ADR-032)
 
 | Skill | Final Score | Grade | Status | Key SOTA Invariants Injected |
 |:---|:---:|:---:|:---:|:---|
-| **`agent-planning-execution`** | **93.5** | **A+ (Platinum)** | ✅ CONSOLIDATED | Critical Path Length equation ($L_{\text{crit}}$), HTN decomposition, dynamic plan adaptation. |
-| **`agent-development`** | **92.9** | **A (Gold)** | ✅ CONSOLIDATED | Mathematical ReAct loop convergence bound ($N_{\text{max}} \le 25$), tool schemas, stateful memory compaction. |
-| **`agent-orchestration`** | **92.5** | **A (Gold)** | ✅ CONSOLIDATED | Multi-Agent DAG acyclic topology algebra ($\text{Cycle}(G) = \emptyset$), CloudEvents v1.0.2 envelopes. |
-| **`resilient-execution`** | **84.5** | **B (Silver)** | ✅ CONSOLIDATED | 4-Tier Degradation Ladder, self-healing recovery, state checkpointing. |
-| **`dispatching-parallel-agents`** | **84.4** | **B (Silver)** | ✅ CONSOLIDATED | Dynamic token budget partitioning formula ($B_{\text{subagent}}$), strict file ownership isolation. |
-| **`circuit-breaker`** | **84.4** | **B (Silver)** | ✅ CONSOLIDATED | 3-State FSM (Closed/Open/Half-Open), Full Jitter exponential backoff, error categorization. |
-| **`mcp-builder`** | **84.1** | **B (Silver)** | ✅ CONSOLIDATED | Stdio stream clean stderr logging, JSON-RPC 2.0 transport schemas, 30s timeout. |
-| **`context7-mcp`** | **83.5** | **B (Silver)** | ✅ CONSOLIDATED | Two-phase retrieval protocol (`resolve-library-id` $\to$ `query-docs`), full question rule. |
-| **`subagent-driven-development`** | **80.6** | **B (Silver)** | ✅ CONSOLIDATED | Subagent single responsibility isolation, JSON return contracts, CAP context injection. |
+| **`clean-code`** | **85.9** | **B (Silver)** | ✅ CONSOLIDATED | Thomas McCabe Cyclomatic Complexity ($CC \le 10$), Sonar Cognitive Complexity, guard clause priority. |
+| **`refactoring`** | **84.6** | **B (Silver)** | ✅ CONSOLIDATED | Martin Fowler's Refactoring catalog, Strangler Fig, Branch by Abstraction. |
+| **`test-driven-development`** | **84.4** | **B (Silver)** | ✅ CONSOLIDATED | Kent Beck RED-GREEN-REFACTOR cycle invariants, Mutation Score ($MS \ge 0.85$). |
+| **`code-review-workflow`** | **82.6** | **B (Silver)** | ✅ CONSOLIDATED | Multi-Round Review FSM, SLA timeouts, merge quorum gates. |
+| **`systematic-debugging`** | **82.6** | **B (Silver)** | ✅ CONSOLIDATED | Scientific Debugging Method, Git Bisect search algebra ($O(\log N)$), RCA 5-Whys. |
+| **`implementation`** | **82.5** | **B (Silver)** | ✅ CONSOLIDATED | Atomic Change Transaction protocol, step-by-step state hydration, Evidence Record handoffs. |
+| **`code-review`** | **81.7** | **B (Silver)** | ✅ CONSOLIDATED | Google Engineering Practices 3-Tier severity taxonomy (P1/P2/P3), AST diff inspection. |
+| **`code-review-lite`** | **81.5** | **B (Silver)** | ✅ CONSOLIDATED | PR Fast-Path algebra ($N_{\text{lines}} \le 200$), diff containment. |
+| **`testing-mastery`** | **81.2** | **B (Silver)** | ✅ CONSOLIDATED | Mike Cohn Test Pyramid ratio algebra ($70/20/10$), property-based testing. |
 
 ---
 
-## 4. Batch 3: Engineering, Coding & Quality — Deep Cognitive Audit & Debt Mapping
+## 4. Batch 4: Backend, Data, Cloud & Security — Cognitive Audit & Debt Mapping
 
-### 4.1 Cognitive Debt Analysis (Batch 3)
+### 4.1 Cognitive Debt Analysis (Batch 4)
 
 | Skill | Current Score | Grade | Cognitive Domain Gap | Proposed SOTA Remediation |
 |:---|:---:|:---:|:---|:---|
-| **`clean-code`** | **81.5** | **B** | Lacks formal Cyclomatic Complexity ($CC \le 10$) and Cognitive Complexity bounds. | Ingest Thomas McCabe Cyclomatic Complexity algebra and Sonar Cognitive Complexity rubrics. |
-| **`code-review`** | **77.3** | **C** | Lacks structured 3-tier severity taxonomy and automated AST diff inspection heuristics. | Ingest Google Engineering Practices Code Review Rubric and conventional review comments. |
-| **`code-review-lite`** | **80.6** | **B** | Lacks fast-path token-budgeted review bounds ($N_{\text{lines}} \le 200$). | Ingest Lightweight PR triage algebra and diff-scope containment heuristics. |
-| **`code-review-workflow`** | **78.2** | **C** | Lacks multi-round reviewer consensus state machine. | Ingest FSM for review states (Requested $\to$ Reviewing $\to$ Changes Requested $\to$ Approved $\to$ Merged). |
-| **`refactoring`** | **84.6** | **B** | Lacks Strangler Fig pattern and Branch by Abstraction mathematical risk models. | Ingest Martin Fowler's Refactoring catalog with characterization test invariance. |
-| **`systematic-debugging`** | **78.2** | **C** | 4-phase investigation is textual without formal hypothesis testing tree and bisect algebra. | Ingest Scientific Debugging Method, Git Bisect automation, and Root Cause Analysis (RCA) 5-Whys. |
-| **`test-driven-development`** | **80.0** | **B** | Lacks strict RED-GREEN-REFACTOR cycle enforcement and mutation testing scores ($MS \ge 0.85$). | Ingest Kent Beck TDD invariants, mutation score calculation, and zero-production-without-test rule. |
-| **`testing-mastery`** | **81.2** | **B** | Lacks Test Pyramid distribution formulas ($70/20/10$ Unit/Integration/E2E). | Ingest Mike Cohn Test Pyramid ratio algebra and property-based testing principles. |
-| **`implementation`** | **82.5** | **B** | Lacks rollback execution attestation and step-by-step state hydration. | Ingest Atomic Change Transaction protocol and Evidence Record handoff gates. |
+| **`database-architecture`** | **76.2** | **C** | Lacks formal Relational Normalization (3NF/BCNF), ACID vs BASE invariants, and Index Selectivity formulas. | Ingest Codd's Normal Forms, B-Tree index selectivity math ($\text{Selectivity} = \frac{D}{N}$), and migration rollback safety. |
+| **`api-design`** | **92.5** | **A** | Missing formal RFC 7807 (Problem Details for HTTP APIs) and Idempotency Key protocols (IETF draft). | Ingest RFC 7807 error schema and idempotency key caching invariants. |
+| **`ddd`** | **86.2** | **B** | Aggregate root boundary rules are qualitative without transactional boundary invariance. | Ingest Evans/Vernon Aggregate Root invariants (1 transaction per aggregate) and Domain Event envelope schemas. |
+| **`deployment`** | **80.9** | **B** | Lacks Blue-Green, Canary analysis formulas ($\text{ErrorRate}_{\text{canary}} \le \text{Threshold}$), and zero-downtime database migration gates. | Ingest Canary routing algebra, Kubernetes deployment manifests, and Expand-Contract database migration protocol. |
+| **`observability`** | **90.7** | **A** | Missing OpenTelemetry semantic conventions and Google SRE Golden Signals. | Ingest OpenTelemetry GenAI span conventions and RED (Rate, Errors, Duration) / USE metrics. |
+| **`security-review`** | **83.3** | **B** | Missing OWASP Top 10 (2021) and OWASP API Security Top 10 (2023) threat modeling matrices. | Ingest STRIDE threat modeling algebra and CVSS v3.1 calculation rubrics. |
+| **`performance-optimization`** | **80.0** | **B** | Lacks Amdahl's Law and Little's Law formulas ($L = \lambda W$) for concurrency and latency budgets. | Ingest Little's Law, Critical Rendering Path optimization, and database connection pool tuning algebra. |
+| **`php-laravel-ecosystem`** | **85.2** | **B** | Lacks Laravel 11/12 SOTA architecture (Pint, Pest v3, Octane, Livewire v3). | Ingest modern Laravel architecture rules, Pest test architecture, and Octane concurrency safety. |
 
 ---
 
-## 5. Next Planned Tier II ADR (ADR-032)
+## 5. Next Planned Tier II ADR (ADR-033)
 
-- **ADR-032:** *Engineering, Coding & Quality Domain SOTA Hardening (McCabe Complexity, Scientific Debugging, TDD Mutation Scores & Test Pyramid Algebra)*
+- **ADR-033:** *Backend, Data, Cloud & Security Domain SOTA Hardening (RFC 7807, B-Tree Index Math, STRIDE Threat Modeling, Little's Law & OpenTelemetry)*

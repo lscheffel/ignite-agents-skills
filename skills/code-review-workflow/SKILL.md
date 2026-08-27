@@ -27,6 +27,17 @@ metadata:
 
 # Code Review Request & Response Workflow
 
+## When to Use
+
+### Use when:
+- Orchestrating multi-party review lifecycles and PR approvals
+- Managing review SLAs, code owners, and consensus transitions
+- Enforcing branch protection and merge gating rules
+
+### Do not use when:
+- Performing the individual code inspection itself (use `code-review` instead)
+- Sole author committing directly to personal experimental branches
+
 Structured workflow for requesting, conducting, and receiving code reviews.
 
 
@@ -380,6 +391,32 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Workflow Orchestration:** GitHub Flow, GitLab Flow, and Trunk-Based Development review lifecycles.
+- **Review Finite State Machine (FSM):** Structured transitions from Draft $\to$ In Review $\to$ Approved $\to$ Merged.
+- **SLA Management:** Explicit turnaround targets and stale PR warning notifications ($T_{\text{stale}} \ge 48\text{h}$).
+- **Audit Trails:** Cryptographic PR merge signatures and linked issue tracking.
+
+### Code Review Finite State Machine:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> InReview: Ready for Review (PR Opened)
+    InReview --> ChangesRequested: P1/P2 Issues Found
+    ChangesRequested --> InReview: Author Pushes Fixes
+    InReview --> Approved: All P1/P2 Resolved + LGTM
+    Approved --> Merged: CI Green + Rebase/Squash
+    Merged --> [*]
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Minimum Reviewer Quorum):** At least 1 designated code owner must approve before branch merge protection allows merge.
+2. **Rule of Thumb 2 (Re-review on Push):** Any new commit pushed to an approved PR automatically resets approval if diff touches core logic.
+3. **Rule of Thumb 3 (Resolving Conversations):** Only the reviewer who opened a discussion thread (or the designated lead) should mark it as resolved.
+4. **Rule of Thumb 4 (Clean Branch State):** PR must be rebased on latest master and pass all branch protection checks before merge.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -388,3 +425,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before declaring review workflow complete:
+- [ ] Required reviewer quorum satisfied with LGTM
+- [ ] Clean branch rebase verified against upstream master
+- [ ] Zero unresolved P1/P2 conversation threads

@@ -30,6 +30,17 @@ metadata:
 
 # Systematic Debugging
 
+## When to Use
+
+### Use when:
+- Investigating non-trivial bugs, crashes, race conditions, or test regressions
+- Executing root cause analysis (RCA) on production incidents
+- Bisecting historical regressions across large commit ranges
+
+### Do not use when:
+- Trivial syntax errors or typos with obvious compiler error messages
+- Routine feature development without an active defect or anomaly
+
 ## Overview
 
 Debugging is investigation, not experimentation. This skill enforces a rigorous 4-phase process — root cause investigation, pattern analysis, hypothesis testing, and architecture questioning — that prevents shotgun debugging and ensures every fix is understood before it is applied.
@@ -340,3 +351,33 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Scientific Debugging Framework:** Andreas Zeller's Why Programs Fail (Scientific Method applied to software debugging).
+- **Search & Bisection Algebra:** Binary search across git history ($O(\log N)$) via `git bisect`.
+- **Root Cause Analysis (RCA):** 5-Whys Tree, Ishikawa (Fishbone) diagrams, and Fault Tree Analysis (FTA).
+- **Anti-Pattern Elimination:** Strict prohibition of shotgun debugging, speculation without evidence, and cosmetic patches.
+
+### Scientific Debugging Search Complexity:
+
+$$\text{Steps}_{\text{bisect}} \le \lceil \log_2(N_{\text{commits}}) \rceil$$
+
+### 4-Phase Scientific Hypothesis Protocol:
+1. **Phase 1 (Reproduce):** Build a deterministic, minimal reproducible example (automated test script).
+2. **Phase 2 (Hypothesize):** Formulate a single, falsifiable hypothesis explaining the root cause.
+3. **Phase 3 (Experiment):** Execute a targeted experiment or bisect step to prove or disprove the hypothesis.
+4. **Phase 4 (Fix & Guard):** Apply minimal root-cause fix and add a permanent regression test.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (No Code Change Without Failing Test):** You cannot claim a bug is fixed until you write a test that fails before the fix and passes after.
+2. **Rule of Thumb 2 (Single Variable Rule):** Change only ONE variable per experiment during debugging.
+3. **Rule of Thumb 3 (Root Cause vs Symptom):** Fixing a `NullPointerException` with `if (x != null)` is a symptom fix; investigate *why* `x` was null.
+4. **Rule of Thumb 4 (Explain the Fix):** If you cannot explain *why* the fix works, you do not understand the bug yet.
+
+## Completion Gate & Verification
+Before concluding debugging investigation:
+- [ ] Minimal reproduction script created and verified failing
+- [ ] Root cause verified through falsifiable hypothesis testing
+- [ ] Fix applied and permanent regression test passes with green build

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T02:38:39.725218+00:00",
+    "generated_at": "2026-08-27T02:41:29.333437+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -1040,6 +1040,11 @@
     {
       "source": "code-review",
       "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "code-review",
+      "target": "code-review-lite",
       "relationship": "references_skill"
     },
     {

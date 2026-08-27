@@ -845,3 +845,21 @@ A task associated with the `testing-mastery` skill can only be declared complete
 1. All checks on the operational checklist have been met.
 2. The result has been validated deterministically through execution evidence.
 3. There are no outstanding structural issues, placeholders, or unresolved errors.
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Testing Architecture:** Mike Cohn Test Pyramid, Testing Trophy (Kent C. Dodds), and Test Honeycomb.
+- **Advanced Testing Paradigms:** Property-Based Testing (Hypothesis/QuickCheck), Contract Testing (Pact), and Chaos Engineering.
+- **Test Doubles Taxonomy:** Gerard Meszaros' xUnit Patterns (Dummy, Stub, Spy, Mock, Fake).
+- **Deterministic Fixtures:** Object Mother and Test Data Builder patterns.
+
+### Mike Cohn Test Pyramid Ratio Algebra:
+
+$$\frac{N_{\text{unit}}}{N_{\text{total}}} \approx 0.70, \quad \frac{N_{\text{integration}}}{N_{\text{total}}} \approx 0.20, \quad \frac{N_{\text{e2e}}}{N_{\text{total}}} \approx 0.10$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Pyramid Distribution Rule):** The vast majority (70%) of tests must be fast, isolated unit tests.
+2. **Rule of Thumb 2 (Don't Mock What You Don't Own):** Only write test doubles for your own domain interfaces; wrap external libraries in adapters.
+3. **Rule of Thumb 3 (Test Behavior, Not Implementation):** Assert on observable outputs and state transitions, not private internal methods.
+4. **Rule of Thumb 4 (Deterministic Isolation):** Tests must never depend on execution order or share mutable global state (Hermetic Tests).

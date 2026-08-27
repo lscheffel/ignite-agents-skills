@@ -42,3 +42,4 @@
 | ADR-029 | Modular Multi-Asset Scaffolding & Edge Cases Baseline across Skills | Não | 0/4 | IN_PROGRESS | - | IN_PROGRESS |
 | ADR-030 | ADR-030: Core Architecture & Governance Domain SOTA Hardening | Sim | 10/10 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-031 | ADR-031: AI Agents, Loops, Resilience & MCP Tooling Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-032 | ADR-032: Engineering, Coding & Quality Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |

@@ -30,6 +30,16 @@ metadata:
 
 # Clean Code
 
+## When to Use
+
+### Use when:
+- Writing new code or reviewing existing code against SOLID and Clean Code standards
+- Reducing cognitive and cyclomatic complexity ($CC \le 10$)
+- Standardizing naming conventions, function hygiene, and error handling
+
+### Do not use when:
+- Low-level kernel drivers or extreme performance-critical inner loops where abstraction is prohibited
+
 ## Overview
 
 Apply clean code principles to produce readable, maintainable, and testable software. This skill covers SOLID principles, DRY application, code smell identification, refactoring patterns, naming conventions, error handling, and complexity management. Based on the works of Robert C. Martin, Martin Fowler, and Kent Beck.
@@ -390,3 +400,36 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Complexity Metrics:** Thomas McCabe's Cyclomatic Complexity ($CC$), SonarSource Cognitive Complexity, and Halstead Volume.
+- **Design Principles:** SOLID (Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, Dependency Inversion), DRY, KISS, and YAGNI.
+- **Naming Conventions:** Intent-revealing names, domain-driven terminology, pronounceable identifiers (PEP 8, Google Style Guides).
+- **Function Hygiene:** Single Level of Abstraction Principle (SLAP), command-query separation (CQS), and maximum parameter count $\le 3$.
+
+### Cyclomatic Complexity Formula & Quality Gates:
+
+$$CC = E - N + 2P$$
+
+Where $E$ is edges, $N$ is nodes, and $P$ is connected components in the control flow graph.
+
+| Metric | Target / Threshold | Action when Breached |
+|:---|:---:|:---|
+| **Cyclomatic Complexity ($CC$)** | $\le 10$ per function | Mandatory refactoring / function extraction. |
+| **Cognitive Complexity** | $\le 15$ per function | Flatten nested conditionals via guard clauses. |
+| **Function Length** | $\le 30$ lines | Extract coherent sub-routines (SLAP). |
+| **Parameter Count** | $\le 3$ params | Encapsulate into Parameter Object or Options Dict. |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Guard Clause Priority):** Always exit early with guard clauses to minimize indentation depth ($Depth \le 2$).
+2. **Rule of Thumb 2 (Side-Effect Free Queries):** Functions that return values must never mutate external state (Command-Query Separation).
+3. **Rule of Thumb 3 (Zero Magic Literals):** Every constant, timeout, or magic number must be defined as an exported named constant.
+4. **Rule of Thumb 4 (Intent-Revealing Naming):** Variable names must state *why* it exists and *what* it represents without requiring inline comments.
+
+## Completion Gate & Verification
+Before concluding Clean Code audit:
+- [ ] Cyclomatic complexity verified $\le 10$ per function
+- [ ] Zero magic literals or undocumented constants
+- [ ] Single Level of Abstraction Principle (SLAP) respected

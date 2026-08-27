@@ -32,6 +32,17 @@ metadata:
 
 # Unified Code Review Engine (v5.0.0)
 
+## When to Use
+
+### Use when:
+- Conducting comprehensive code reviews on Pull Requests or feature branches
+- Auditing code changes for security, performance, architecture, and correctness
+- Providing structured feedback with severity classification (P1/P2/P3)
+
+### Do not use when:
+- Triage of micro-diffs under 50 lines (use `code-review-lite` instead)
+- Automated linting that can be handled by standard CI linters (ESLint/Prettier)
+
 This unified engine operates in two interchangeable modes of intensity:
 
 
@@ -367,6 +378,27 @@ graph TD
 | **Early Execution without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Enable the `cap` skill to acquire minimal evidence before editing. |
 | **Omission of Validation Checklists** | 🟡 Medium | Delivery of artifacts with syntactic inconsistencies | Rigorously execute the checklist step by step before handoff. |
 | **Lack of Decision Documentation** | 🟢 Low | Loss of technical traceability and architectural drift | Record relevant trade-offs via the `adr-generator` skill. |- **Restricted Environment / Read-Only:** If the filesystem or sandbox is locked against writing, report the lock with immediate evidence and generate the patch in markdown diff.
+## Domain SOTA & Industry Engineering Standards
+
+- **Code Review Frameworks:** Google Engineering Practices (eng-practices), Conventional Comments, and Chromium Review Guidelines.
+- **Review Taxonomy:** 3-Tier Severity Badges (`P1: Blocker`, `P2: Major`, `P3: Polish`).
+- **AST Inspection:** Automated AST linting, architectural layer violation checks, and security vulnerability scanning.
+- **Psychological Safety & Tone:** Objective, blame-free feedback focusing on code behavior and architectural alignment.
+
+### 3-Tier Severity Taxonomy Matrix:
+
+| Severity Badge | Definition | Action Required | Blocking? |
+|:---|:---|:---|:---:|
+| **`🔴 P1: BLOCKER`** | Correctness bug, security vulnerability, data corruption risk, breaking API change. | Must fix before merge. | **YES** |
+| **`🟡 P2: MAJOR`** | Code smell, architectural violation, missing tests, performance degradation. | Must resolve or record as tech debt. | **YES** |
+| **`🟢 P3: POLISH`** | Naming suggestion, minor style polish, non-blocking optimization. | Author's discretion. | **NO** |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Review Size Bound):** Diff size should not exceed 400 lines of code per review to avoid reviewer fatigue ($T_{\text{review}} \le 60\text{min}$).
+2. **Rule of Thumb 2 (Actionable Feedback):** Every critique must explain *why* the current code is suboptimal and provide a concrete suggestion or code example.
+3. **Rule of Thumb 3 (Test Coverage Verification):** Every PR adding business logic must include corresponding unit and integration tests.
+4. **Rule of Thumb 4 (Conventional Prefixes):** Review comments should use conventional prefixes: `p1-blocker:`, `p2-major:`, `p3-polish:`, `question:`, `nit:`.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -374,3 +406,10 @@ graph TD
 - [ ] As diretrizes de segurança, tipagem e estilo foram preservadas.
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
+
+
+## Completion Gate & Verification
+Before concluding code review:
+- [ ] All P1 Blockers resolved or blocking merge
+- [ ] All P2 Major issues either resolved or recorded in Tech Debt Registry
+- [ ] Test coverage verified with green CI build

@@ -29,7 +29,7 @@
 |:---|:---:|:---:|:---|
 | **1. Semantic Triggering** | 20% | **15.5 / 20.0** | 8 triggers definidos, descrição com 0 caracteres, tags: 6. |
 | **2. Applicability & Boundaries** | 10% | **10.0 / 10.0** | Seção 'When to Use': ✓ | 'Do Not Use When': ✓. |
-| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 2335 palavras, 9 arquivos modulares de apoio, workflow formal presente. |
+| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 2504 palavras, 9 arquivos modulares de apoio, workflow formal presente. |
 | **4. Technical Accuracy** | 15% | **11.0 / 15.0** | 8 blocos de código/comandos, zero placeholders genéricos: ✗. |
 | **5. Universality & Portability** | 10% | **10.0 / 10.0** | Zero caminhos absolutos de hosts externos, portabilidade POSIX/AST universal. |
 | **6. Maintainability & SemVer** | 10% | **10.0 / 10.0** | SemVer v2.2.1 (✓), 6 related_skills, taxonomia de riscos (✓). |
@@ -44,7 +44,7 @@
 |:---|:---:|:---:|:---|
 | **1. Domain SOTA & Best Practices** | 30% | **21.0 / 30.0** | Aderência a padrões industriais SOTA comprovada por 2 marcadores conceituais de engenharia de software. |
 | **2. Heuristic Depth & Edge Cases** | 25% | **12.0 / 25.0** | 0 regras heurísticas explícitas, seção de Edge Cases presente. |
-| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 4224 tokens com alta proporção sinal-ruído e linguagem imperativa. |
+| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 4573 tokens com alta proporção sinal-ruído e linguagem imperativa. |
 | **4. Strategic Alignment & SWOT** | 20% | **18.5 / 20.0** | Acoplamento sinérgico com 6 skills complementares no catálogo. |
 
 ---

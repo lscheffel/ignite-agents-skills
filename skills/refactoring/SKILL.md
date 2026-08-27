@@ -371,6 +371,24 @@ function processPayment(order) {
 - `testing` — to create safety net
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Refactoring Foundations:** Martin Fowler's Refactoring Catalog (2nd Edition) and Joshua Kerievsky's Refactoring to Patterns.
+- **Architecture Migration Patterns:** Strangler Fig Pattern, Branch by Abstraction, and Parallel Run verification.
+- **Safety Invariant:** Characterization Tests (Golden Master Tests) established BEFORE modifying code.
+- **Small Steps:** Micro-commits with continuous green test suite.
+
+### Refactoring Risk & Invariance Model:
+A refactoring step $R$ preserves observable behavior $B$:
+
+$$B(f(x)) \equiv B(f'(x)) \quad \forall x \in \text{Inputs}$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Separate Refactoring from Features):** Never combine structural refactoring with new feature implementation in the same commit.
+2. **Rule of Thumb 2 (Test Coverage Prerequisite):** Never refactor legacy code without establishing characterization tests first.
+3. **Rule of Thumb 3 (Extract Before Modify):** When dealing with large monolithic functions, extract small helper methods before altering behavior.
+4. **Rule of Thumb 4 (Revert on Red):** If tests fail during a refactoring step and the fix is not obvious in 2 minutes, revert immediately and take smaller steps.
+
 ## Completion Gate
 
 A tarefa associada à skill `refactoring` só pode ser declarada concluída quando:

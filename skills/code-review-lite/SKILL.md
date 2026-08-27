@@ -342,6 +342,24 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Triage Paradigms:** Fast-Path Pull Request Triage, Lightweight Linting, and Micro-Diff Reviews.
+- **Scope Containment:** High-velocity verification for small, low-risk patches ($N_{\text{lines}} \le 200$).
+- **Automated Pre-Checks:** CI gate green verification before starting human review.
+- **Fast Turnaround:** SLA target for review turnaround $\le 4$ hours.
+
+### Fast-Path Review Criteria:
+A Pull Request qualifies for Lite Review if:
+
+$$N_{\text{lines}} \le 200 \quad \text{and} \quad \text{FilesModified} \le 5 \quad \text{and} \quad \text{BreakingChanges} = \text{False}$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Fast-Path Escalation):** If a Lite Review reveals hidden architectural complexity or migration risk, immediately escalate to full `code-review`.
+2. **Rule of Thumb 2 (Automated Test Pass Invariant):** Never approve a Lite Review if CI pipeline or automated tests have failing status.
+3. **Rule of Thumb 3 (Focus on Correctness):** Focus exclusively on logic correctness, security, and test coverage; avoid bike-shedding on personal style preferences.
+4. **Rule of Thumb 4 (Single-Pass Approval):** If only minor non-blocking nits remain, approve the PR and trust the author to apply them before merging.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

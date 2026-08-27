@@ -30,6 +30,16 @@ metadata:
 
 # Test-Driven Development
 
+## When to Use
+
+### Use when:
+- Implementing any new feature, algorithm, domain logic, or bugfix
+- Enforcing strict RED-GREEN-REFACTOR cycles with rapid feedback
+- Building high-confidence test suites with high mutation scores ($MS \ge 0.85$)
+
+### Do not use when:
+- Throwaway visual spike prototypes where code will be discarded entirely
+
 ## Overview
 
 TDD enforces the RED-GREEN-REFACTOR cycle as an unbreakable discipline: write a failing test, make it pass with minimal code, then clean up. This skill prevents untested production code from ever existing and ensures every line of implementation is driven by a verified requirement.
@@ -331,3 +341,30 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **TDD Foundations:** Kent Beck's Test-Driven Development By Example, Martin Fowler's Mocks Aren't Stubs.
+- **Rhythm & Cadence:** Strict RED-GREEN-REFACTOR cycle with sub-minute iteration loops.
+- **Test Quality Verification:** Mutation Testing Score ($MS \ge 0.85$) and Code Coverage.
+- **Transformation Priority Premise (TPP):** Robert C. Martin's TPP transformations from specific to general.
+
+### Mutation Testing Score Formula:
+
+$$MS = \frac{M_{\text{killed}}}{M_{\text{total}} - M_{\text{equivalent}}} \ge 0.85 \quad (85\%)$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Three Laws of TDD):**
+   - You may not write production code until you have written a failing unit test.
+   - You may not write more of a unit test than is sufficient to fail.
+   - You may not write more production code than is sufficient to pass the failing test.
+2. **Rule of Thumb 2 (Fake It Till You Make It):** In the Green phase, write the simplest code that passes (even returning hardcoded literals) to verify test harness.
+3. **Rule of Thumb 3 (Refactor on Green Only):** Clean code and eliminate duplication ONLY when all tests are green.
+4. **Rule of Thumb 4 (Fast Test Execution):** Unit test suite must execute in $<5$ seconds to maintain rapid feedback loop.
+
+## Completion Gate & Verification
+Before concluding TDD cycle:
+- [ ] Red phase test failure verified before production code written
+- [ ] Green phase test pass verified with minimal code
+- [ ] Refactor phase completed with all tests remaining green
