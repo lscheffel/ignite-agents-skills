@@ -3,22 +3,19 @@ name: context7-mcp
 version: 1.0.0
 description: This skill should be used when the user asks about libraries, frameworks,
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  API references, or needs code examples. Activates for setup questions, code generation
-  involving libraries, or mentions of specific frameworks like React, Vue, Next.js,
-  Prisma, Supabase, etc.
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - context7-mcp
-  - context7-docs
-  - fetch-library-docs
-  - framework-documentation
-  - consultar-documentacao
-  - buscar-docs-biblioteca
-  - mcp-context7
-  - query-docs
+- context7-mcp
+- context7-docs
+- fetch-library-docs
+- framework-documentation
+- consultar-documentacao
+- buscar-docs-biblioteca
+- mcp-context7
+- query-docs
 tags:
 - context7-mcp
 - domain-stack
@@ -29,6 +26,7 @@ metadata:
   license: MIT
   last_audited: '2026-08-05'
 ---
+
 
 # Context7 Mcp
 

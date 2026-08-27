@@ -4,6 +4,21 @@
 
 ---
 
+## Release v3.0.1 (2026-08-27) — Pipeline Integrity & YAML Schema Hardening 🛡️
+
+### 🌟 Destaques da Versão (Highlights)
+
+- **YAML Frontmatter Schema Hardening (18 Skills):**
+  - Padronização sintática e blindagem contra erros de parsing em 18 skills do catálogo (`related_skills` e `triggers` estritamente formatados como listas canônicas).
+- **Regeneração Determinística do Registry Remoto (`skills/index.json`):**
+  - Expansão estrutural do `index.json` incluindo mapeamento recursivo completo de sub-ativos modulares (`templates/`, `examples/`, `checklists/`, `references/`) com 100% de paridade com o filesystem.
+- **Indexação RAG Vetorial Hierárquica Massiva (ADR-025):**
+  - Vetorização e ingestão completa de **5.834 chunks** e **82 ativos** no SQLite3 (`data/skills_rag_db/skills_rag.sqlite3`) com tempo de busca sub-milissegundo.
+- **Validação E2E 100% Green de Governança:**
+  - Aprovação unânime no `audit_engine.py` (82/82 ativos), `validate-skill.sh` (60/60 skills), `unittest` (42/42 testes) e recompilação do Web Hub (`pages/build.py`).
+
+---
+
 ## Release v3.0.0 (2026-08-27) — SOTA Ultra-High Quality Diamond Release 💎
 
 ### 🌟 Destaques da Versão (Highlights)

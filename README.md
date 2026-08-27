@@ -2,7 +2,7 @@
 
 > Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode, motor de auditoria contínua em 8 dimensões e deploy atômico multi-target para agentes autônomos.
 
-[![Version](https://img.shields.io/badge/version-v3.0.0-blue.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v3.0.1-blue.svg)](./CHANGELOG.md)
 [![Skills](https://img.shields.io/badge/skills-60%20SOTA%20Elite-success.svg)](./skills/index.json)
 [![Catalog Grade](https://img.shields.io/badge/catalog%20grade-100%25%20A%2B%2FS%20Diamond-brightgreen.svg)](./docs/audit/skills/SKILL_AUDIT_LEDGER.md)
 [![Audit Score](https://img.shields.io/badge/audit%20score-96.60%2F100-brightgreen.svg)](./docs/audit/skills/SKILL_AUDIT_LEDGER.md)
@@ -15,7 +15,7 @@
 
 O **ignite-agents-skills** é uma plataforma 4-em-1 para agentes de inteligência artificial aplicados à engenharia de software de alta performance:
 
-1. **Registry Remoto de Skills (v3.0.0):** Manifesto canônico `skills/index.json` compatível com o padrão [Agent Skills](https://agentskills.io) para **Kilo Code**, **OpenCode**, **Gemini CLI**, **Antigravity** e clientes HTTP.
+1. **Registry Remoto de Skills (v3.0.1):** Manifesto canônico `skills/index.json` compatível com o padrão [Agent Skills](https://agentskills.io) para **Kilo Code**, **OpenCode**, **Gemini CLI**, **Antigravity** e clientes HTTP.
 2. **Motor Semântico & Servidor MCP:** Servidor MCP stdio nativo (`skills-rag-mcp`), RAG vetorial com busca híbrida BM25 + embeddings, e CLI Router para descoberta inteligente de especializações.
 3. **Motor de Auditoria Forense Dual-Axis (8 Dimensões SOTA):** Sistema contínuo de auditoria física e cognitiva com persistência em ledgers (`SKILL_AUDIT_LEDGER.md` / `.json`), garantindo 100% das 60 skills em Grade A+ (Platinum $\ge 93.0$) e Grade S (Diamond $\ge 97.0$).
 4. **Hub de Documentação GitHub Pages & Deploy Atômico Multi-Target:** Geração dinâmica de páginas HTML para todas as 60 skills e deploy sincronizado com purge de órfãos em 6 diretórios de runtime (`~/.gemini/config/skills`, `~/.kilo/skills`, etc.).

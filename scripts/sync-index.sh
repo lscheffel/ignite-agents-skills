@@ -1,109 +1,103 @@
 #!/usr/bin/env bash
-# Auto-generate skills/index.json from filesystem.
-# Scans skills/*/SKILL.md, extracts frontmatter, lists all files.
-# Uso: ./scripts/sync-index.sh
-#
-# This script is idempotent — running it multiple times produces the same output.
+# Auto-generate skills/index.json from filesystem with strict YAML frontmatter parsing.
+# Usage: ./scripts/sync-index.sh
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SKILLS_DIR="$REPO_ROOT/skills"
-INDEX_JSON="$SKILLS_DIR/index.json"
 
-if ! command -v jq &> /dev/null; then
-  echo "ERRO: jq não encontrado. Instale com: sudo apt install jq" >&2
-  exit 1
-fi
+python3 -c "
+import os, sys, json, yaml, re
 
-# Start building the index
-skills_array="[]"
-skill_count=0
+repo_root = sys.argv[1]
+skills_dir = os.path.join(repo_root, 'skills')
+index_json_path = os.path.join(skills_dir, 'index.json')
+readme_path = os.path.join(repo_root, 'README.md')
 
-for skill_dir in "$SKILLS_DIR"/*/; do
-  [ -d "$skill_dir" ] || continue
-  skill_md="$skill_dir/SKILL.md"
-  [ -f "$skill_md" ] || continue
+# Read version from README.md
+index_version = '3.0.0'
+if os.path.exists(readme_path):
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        rm_text = f.read()
+    m = re.search(r'version-v(\d+\.\d+\.\d+)', rm_text)
+    if not m:
+        m = re.search(r'^\*\*v(\d+\.\d+\.\d+)', rm_text, re.MULTILINE)
+    if m:
+        index_version = m.group(1)
 
-  skill_name=$(basename "$skill_dir")
+skills_list = []
+skill_dirs = sorted([d for d in os.listdir(skills_dir) if os.path.isdir(os.path.join(skills_dir, d)) and not d.startswith('.')])
 
-  # Extract frontmatter fields from SKILL.md
-  frontmatter_name=$(sed -n '/^name:/p' "$skill_md" | head -1 | sed 's/^name:[[:space:]]*//')
-  frontmatter_desc=$(sed -n '/^description:/p' "$skill_md" | head -1 | sed 's/^description:[[:space:]]*//')
-  frontmatter_version=$(sed -n '/^version:/p' "$skill_md" | head -1 | sed 's/^version:[[:space:]]*//')
-  frontmatter_tags=$(sed -n '/^tags:/p' "$skill_md" | head -1 | sed 's/^tags:[[:space:]]*//')
-  frontmatter_related=$(sed -n '/^related_skills:/p' "$skill_md" | head -1 | sed 's/^related_skills:[[:space:]]*//')
+for sname in skill_dirs:
+    sdir = os.path.join(skills_dir, sname)
+    skill_md = os.path.join(sdir, 'SKILL.md')
+    if not os.path.isfile(skill_md):
+        continue
 
-  # Use frontmatter name if present, otherwise use directory name
-  name="${frontmatter_name:-$skill_name}"
-  version="${frontmatter_version:-2.0.0}"
-  description="${frontmatter_desc:-}"
+    with open(skill_md, 'r', encoding='utf-8') as f:
+        content = f.read()
 
-  # Parse tags from YAML array format: [tag1, tag2, tag3]
-  if [[ "$frontmatter_tags" == \[*\] ]]; then
-    tags_json=$(echo "$frontmatter_tags" | sed 's/\[//;s/\]//' | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed 's/^"//;s/"$//' | jq -R . | jq -s .)
-  else
-    tags_json="[]"
-  fi
+    parts = content.split('---', 2)
+    if len(parts) < 3:
+        print(f'⚠️ Warning: {sname} missing frontmatter delimiters', file=sys.stderr)
+        continue
 
-  # Parse related_skills from YAML array format
-  if [[ "$frontmatter_related" == \[*\] ]]; then
-    related_json=$(echo "$frontmatter_related" | sed 's/\[//;s/\]//' | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed 's/^"//;s/"$//' | jq -R . | jq -s .)
-  else
-    related_json="[]"
-  fi
+    fm = yaml.safe_load(parts[1]) or {}
+    name = fm.get('name', sname)
+    version = str(fm.get('version', '2.0.0'))
+    description = str(fm.get('description', '')).strip()
+    
+    tags = fm.get('tags', [])
+    if isinstance(tags, str):
+        tags = [t.strip() for t in tags.strip('[]').split(',') if t.strip()]
+    elif not isinstance(tags, list):
+        tags = []
 
-  # Collect all files (excluding __pycache__, .pyc, .DS_Store)
-  files_json="[]"
-  while IFS= read -r -d '' file; do
-    rel_path="${file#$skill_dir}"
-    files_json=$(echo "$files_json" | jq --arg f "$rel_path" '. + [$f]')
-  done < <(find "$skill_dir" -type f -not -path "*/__pycache__/*" -not -name "*.pyc" -not -name ".DS_Store" -print0 | sort -z)
+    related_skills = fm.get('related_skills', [])
+    if isinstance(related_skills, str):
+        related_skills = [r.strip() for r in related_skills.strip('[]').split(',') if r.strip()]
+    elif not isinstance(related_skills, list):
+        related_skills = []
 
-  # Build skill entry
-  entry=$(jq -n \
-    --arg name "$name" \
-    --arg version "$version" \
-    --arg description "$description" \
-    --argjson tags "$tags_json" \
-    --argjson related_skills "$related_json" \
-    --argjson files "$files_json" \
-    '{name: $name, version: $version, description: $description, tags: $tags, related_skills: $related_skills, files: $files}')
+    # Collect files
+    files = []
+    for root, _, filenames in os.walk(sdir):
+        for fname in sorted(filenames):
+            if '__pycache__' in root or fname.endswith('.pyc') or fname == '.DS_Store':
+                continue
+            full_f = os.path.join(root, fname)
+            rel_f = os.path.relpath(full_f, sdir)
+            files.append(rel_f)
+    files.sort()
 
-  skills_array=$(echo "$skills_array" | jq --argjson entry "$entry" '. + [$entry]')
-  skill_count=$((skill_count + 1))
-  echo "  ✓ $name"
-done
-
-# Sort skills by name for deterministic output
-skills_array=$(echo "$skills_array" | jq 'sort_by(.name)')
-
-# Build final index.json
-# Read version from README.md (supports **vX.Y.Z or version-vX.Y.Z)
-index_version=$(grep -oP 'version-v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1 || true)
-if [ -z "$index_version" ]; then
-  index_version=$(grep -oP '^\*\*v\K[0-9]+\.[0-9]+\.[0-9]+' "$REPO_ROOT/README.md" | head -1 || true)
-fi
-if [ -z "$index_version" ]; then
-  index_version="2.5.0"
-fi
-
-jq -n \
-  --argjson skills "$skills_array" \
-  --arg version "$index_version" \
-  --arg schema_version "2.0.0" \
-  --arg description "Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. ($skill_count skills)" \
-  '{
-    skills: $skills,
-    version: $version,
-    schema_version: $schema_version,
-    description: $description,
-    validation: {
-      min_lines_per_skill: 150,
-      required_sections: ["Quando Usar", "Workflow", "Anti-patterns", "Checklists", "Edge Cases"],
-      required_fields: ["name", "description", "version", "tags", "related_skills"]
+    entry = {
+        'name': name,
+        'version': version,
+        'description': description,
+        'tags': tags,
+        'related_skills': related_skills,
+        'files': files
     }
-  }' > "$INDEX_JSON"
+    skills_list.append(entry)
+    print(f'  ✓ {name}')
 
-echo
-echo "✅ Index gerado: $skill_count skills → $INDEX_JSON"
+skills_list.sort(key=lambda x: x['name'])
+
+final_data = {
+    'skills': skills_list,
+    'version': index_version,
+    'schema_version': '2.0.0',
+    'description': f'Registro centralizado de skills ultra-high quality grade para agentes compatíveis com o padrão Agent Skills. Hospedado como GitHub Pages. ({len(skills_list)} skills)',
+    'validation': {
+        'min_lines_per_skill': 150,
+        'required_sections': ['Quando Usar', 'Workflow', 'Anti-patterns', 'Checklists', 'Edge Cases'],
+        'required_fields': ['name', 'description', 'version', 'tags', 'related_skills']
+    }
+}
+
+with open(index_json_path, 'w', encoding='utf-8') as f:
+    json.dump(final_data, f, indent=2, ensure_ascii=False)
+    f.write('\n')
+
+print(f'\n✅ Index gerado: {len(skills_list)} skills → {index_json_path}')
+" "$REPO_ROOT"

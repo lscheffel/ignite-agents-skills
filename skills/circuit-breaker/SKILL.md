@@ -3,21 +3,19 @@ name: circuit-breaker
 version: 1.0.0
 description: Use when running autonomous loops, repeated operations, or when detecting
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  stagnation patterns - enforces rate limits, protects configuration files, manages
-  recovery with cooldown periods, and prevents infinite loops during autonomous development
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - circuit-breaker
-  - infinite-loop-prevention
-  - cooldown-rate-limit
-  - safe-agent-loop
-  - disjuntor-de-execucao
-  - prevencao-loop-infinito
-  - limite-de-taxa
-  - autonomous-safety
+- circuit-breaker
+- infinite-loop-prevention
+- cooldown-rate-limit
+- safe-agent-loop
+- disjuntor-de-execucao
+- prevencao-loop-infinito
+- limite-de-taxa
+- autonomous-safety
 tags:
 - circuit-breaker
 - domain-stack
@@ -26,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Circuit Breaker
 

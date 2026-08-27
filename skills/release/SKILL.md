@@ -3,21 +3,19 @@ name: release
 version: 2.0.0
 description: Guide for release management and versioning. Defines release process,
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  changelog, tag, deploy, and rollback. Use when preparing releases, publishing packages,
-  or managing semantic versioning.
+- cap
+- implementation
+- technical-documentation
 domain: core-governance
 triggers:
-  - release
-  - release-management
-  - publish-package
-  - tag-and-deploy
-  - gerenciamento-de-release
-  - publicar-versao
-  - processo-de-lancamento
-  - rollback-plan
+- release
+- release-management
+- publish-package
+- tag-and-deploy
+- gerenciamento-de-release
+- publicar-versao
+- processo-de-lancamento
+- rollback-plan
 tags:
 - release
 - versioning
@@ -29,6 +27,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Release
 

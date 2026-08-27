@@ -1,21 +1,21 @@
 ---
 name: llm-as-judge
 version: 1.0.0
-description: 'Use when validating subjective quality criteria that cannot be deterministically
+description: Use when validating subjective quality criteria that cannot be deterministically
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - llm-as-judge
-  - evaluate-quality
-  - subjective-evaluation
-  - llm-rubric
-  - avaliar-com-llm
-  - avaliacao-subjetiva
-  - rubrica-de-qualidade
-  - prompt-evaluation
+- llm-as-judge
+- evaluate-quality
+- subjective-evaluation
+- llm-rubric
+- avaliar-com-llm
+- avaliacao-subjetiva
+- rubrica-de-qualidade
+- prompt-evaluation
 tags:
 - llm-as-judge
 - domain-stack
@@ -24,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # LLM-as-Judge
 

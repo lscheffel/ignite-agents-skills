@@ -3,23 +3,19 @@ name: dispatching-parallel-agents
 version: 1.0.0
 description: Use when a task has multiple independent subtasks that can be executed
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  concurrently by separate agents. Triggers when decomposed work has 2+ subtasks with
-  no data dependencies, when subtasks operate on different files or codebase sections,
-  when serial execution time would be significantly longer than parallel, or when
-  independent analyses or deliverables need concurrent generation.
+- cap
+- implementation
+- technical-documentation
 domain: agentic-workflow
 triggers:
-  - dispatching-parallel-agents
-  - parallel-agents
-  - concurrent-subtasks
-  - fan-out
-  - disparo-de-agentes-paralelos
-  - subagentes-concorrentes
-  - execucao-paralela
-  - task-fanout
+- dispatching-parallel-agents
+- parallel-agents
+- concurrent-subtasks
+- fan-out
+- disparo-de-agentes-paralelos
+- subagentes-concorrentes
+- execucao-paralela
+- task-fanout
 tags:
 - dispatching-parallel-agents
 - agentic-workflow
@@ -28,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Dispatching Parallel Agents
 

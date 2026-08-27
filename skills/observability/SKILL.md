@@ -3,21 +3,19 @@ name: observability
 version: 2.0.0
 description: Comprehensive guide to system observability in production. Defines standards
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  for structured logging, metrics, distributed tracing, and alerting. Use when configuring
-  monitoring, investigating incidents, or implementing observability in microservices.
+- cap
+- implementation
+- technical-documentation
 domain: architecture-systems
 triggers:
-  - observability
-  - metrics-logging-tracing
-  - prometheus-grafana
-  - opentelemetry
-  - observabilidade
-  - configurar-metricas
-  - logs-estruturados
-  - tracing-distribuido
+- observability
+- metrics-logging-tracing
+- prometheus-grafana
+- opentelemetry
+- observabilidade
+- configurar-metricas
+- logs-estruturados
+- tracing-distribuido
 tags:
 - observability
 - logging
@@ -29,6 +27,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Observability
 

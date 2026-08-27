@@ -3,20 +3,19 @@ name: git-workflow
 version: 1.0.0
 description: Unified Git operations, commit styling, worktree management, and branch
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  completion workflows.
+- cap
+- implementation
+- technical-documentation
 domain: agentic-workflow
 triggers:
-  - git-workflow
-  - git-branching
-  - git-commits
-  - worktree-management
-  - fluxo-git
-  - gerenciar-branches
-  - padrao-de-commits
-  - git-worktree
+- git-workflow
+- git-branching
+- git-commits
+- worktree-management
+- fluxo-git
+- gerenciar-branches
+- padrao-de-commits
+- git-worktree
 tags:
 - git-workflow
 - agentic-workflow
@@ -25,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Git Workflow & Version Control Hub
 

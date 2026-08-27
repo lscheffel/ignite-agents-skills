@@ -3,22 +3,19 @@ name: changelog-generator
 version: 1.0.0
 description: Automatically creates user-facing changelogs from git commits by analyzing
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  commit history, categorizing changes, and transforming technical commits into clear,
-  customer-friendly release notes. Turns hours of manual changelog writing into minutes
-  of automated generation.
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - changelog-generator
-  - generate-changelog
-  - release-notes
-  - git-changelog
-  - gerar-changelog
-  - criar-notas-de-versao
-  - historico-de-mudancas
-  - release-log
+- changelog-generator
+- generate-changelog
+- release-notes
+- git-changelog
+- gerar-changelog
+- criar-notas-de-versao
+- historico-de-mudancas
+- release-log
 tags:
 - changelog-generator
 - domain-stack
@@ -33,6 +30,7 @@ metadata:
   license: MIT
   last_audited: '2026-08-05'
 ---
+
 
 # Changelog Generator
 

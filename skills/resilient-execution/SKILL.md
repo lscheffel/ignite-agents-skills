@@ -3,21 +3,19 @@ name: resilient-execution
 version: 1.0.0
 description: Use when a task fails, an approach does not work, when encountering errors
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  during implementation, or when tempted to say "I cannot do this" - ensures retry
-  with at least 3 genuinely different approaches before escalating
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - resilient-execution
-  - retry-strategies
-  - fallback-execution
-  - error-recovery
-  - execucao-resiliente
-  - recuperacao-de-falhas
-  - estrategias-de-retry
-  - resilience-patterns
+- resilient-execution
+- retry-strategies
+- fallback-execution
+- error-recovery
+- execucao-resiliente
+- recuperacao-de-falhas
+- estrategias-de-retry
+- resilience-patterns
 tags:
 - resilient-execution
 - domain-stack
@@ -26,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Resilient Execution
 

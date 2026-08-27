@@ -4,30 +4,25 @@
 | :---: | :--- | :--- | :---: | :---: | :---: |
 | **P1** | `adr-architecture-elevation` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `adr-archive` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P1** | `agent-planning-execution` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
+| **P1** | `agent-planning-execution` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `brainstorming` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P1** | `changelog-generator` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `circuit-breaker` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `code-review` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `code-review-lite` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
+| **P1** | `circuit-breaker` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `code-review-workflow` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P1** | `context7-mcp` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `dispatching-parallel-agents` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `find-skills` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `git-workflow` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `llm-as-judge` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `observability` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `php-laravel-ecosystem` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
+| **P1** | `dispatching-parallel-agents` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `git-workflow` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `llm-as-judge` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `observability` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `php-laravel-ecosystem` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `product-spec-engineering` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P1** | `release` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `resilient-execution` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
+| **P1** | `release` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `resilient-execution` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `security-review` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `skill-audit-bulletin` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `skill-creator` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
-| **P1** | `subagent-driven-development` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `testing-mastery` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `verification-before-completion` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
-| **P1** | `writing-skills` | Padronização Estrita de Contrato YAML Frontmatter & Tipagem | D1 | `5.7` | Baixa |
+| **P1** | `subagent-driven-development` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `testing-mastery` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `verification-before-completion` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P1** | `writing-skills` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `builtin__agy-customizations` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P1** | `builtin__permissioned-github` | Incorporação de Suíte de Testes e Fixtures de Regressão | D7 | `5.7` | Baixa |
 | **P1** | `plugin__Google.securecoder.securecoder__determine_threat_model` | Incorporação de Suíte de Testes e Fixtures de Regressão | D7 | `3.8` | Baixa |
@@ -47,14 +42,19 @@
 | **P2** | `architecture-review` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `artifacts-builder` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `cap` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P2** | `changelog-generator` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `clean-code` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P2** | `code-review` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P2** | `code-review-lite` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `content-creator` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `content-research-writer` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P2** | `context7-mcp` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `database-architecture` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `ddd` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `deployment` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `docx-processing` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `email-composer` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
+| **P2** | `find-skills` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `governance` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `implementation` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `mcp-builder` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |

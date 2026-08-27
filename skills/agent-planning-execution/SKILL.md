@@ -3,20 +3,19 @@ name: agent-planning-execution
 version: 1.0.0
 description: Comprehensive planning, roadmap management, task decomposition, and plan
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  execution hub.
+- cap
+- implementation
+- technical-documentation
 domain: agentic-workflow
 triggers:
-  - agent-planning-execution
-  - plan-execution
-  - roadmap-planning
-  - task-plan
-  - planejamento-de-agente
-  - execucao-de-plano
-  - criar-roadmap
-  - executar-tarefas
+- agent-planning-execution
+- plan-execution
+- roadmap-planning
+- task-plan
+- planejamento-de-agente
+- execucao-de-plano
+- criar-roadmap
+- executar-tarefas
 tags:
 - agent-planning-execution
 - agentic-workflow
@@ -25,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Agent Planning & Execution Hub
 

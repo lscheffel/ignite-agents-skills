@@ -3,20 +3,19 @@ name: php-laravel-ecosystem
 version: 1.0.0
 description: Specialized development guidelines and best practices for PHP and the
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  Laravel framework.
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - php-laravel-ecosystem
-  - laravel-patterns
-  - eloquent-orm
-  - artisan-commands
-  - ecossistema-php-laravel
-  - boas-praticas-laravel
-  - padroes-php
-  - laravel-architecture
+- php-laravel-ecosystem
+- laravel-patterns
+- eloquent-orm
+- artisan-commands
+- ecossistema-php-laravel
+- boas-praticas-laravel
+- padroes-php
+- laravel-architecture
 tags:
 - php-laravel-ecosystem
 - domain-stack
@@ -25,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # PHP & Laravel Development Ecosystem
 

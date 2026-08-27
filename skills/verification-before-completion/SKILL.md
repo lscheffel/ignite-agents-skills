@@ -3,21 +3,19 @@ name: verification-before-completion
 version: 1.0.0
 description: Use before claiming any task is complete, any feature works, or any bug
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  is fixed - enforces fresh verification evidence through a 5-step HARD-GATE protocol
-  that prevents false completion claims
+- cap
+- implementation
+- technical-documentation
 domain: engineering-quality
 triggers:
-  - verification-before-completion
-  - verify-task-complete
-  - 5-step-hard-gate
-  - fresh-evidence
-  - verificacao-antes-de-concluir
-  - portao-de-verificacao
-  - evidencia-de-conclusao
-  - hard-gate
+- verification-before-completion
+- verify-task-complete
+- 5-step-hard-gate
+- fresh-evidence
+- verificacao-antes-de-concluir
+- portao-de-verificacao
+- evidencia-de-conclusao
+- hard-gate
 tags:
 - verification-before-completion
 - engineering-quality
@@ -26,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Verification Before Completion
 

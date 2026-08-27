@@ -11,14 +11,14 @@
 - **Caminho Canônico:** `/home/loupan/projetosVS/ignite-agents-skills`
 - **Última Atualização:** 2026-08-27
 - **Branch Ativa:** `master`
-- **Versão:** `v3.0.0`
+- **Versão:** `v3.0.1`
 - **Total de Skills:** 60 Skills SOTA Elite em `skills/`
 - **Baseline de Qualidade:** Score Global Médio de **96.60 / 100** (100% Grade A+ / Grade S Diamond)
   - **Grade S (Diamond $\ge 97.0$):** 39 skills (65.0% do catálogo)
   - **Grade A+ (Platinum $93.0 - 96.9$):** 21 skills (35.0% do catálogo)
   - **Grade A / B / C / F ($< 93.0$):** 0 skills (100% dos débitos cognitivos eliminados)
 - **Status do Catálogo:** `skills/index.json` sincronizado + Continuous Audit Ledger ativo (`docs/audit/skills/SKILL_AUDIT_LEDGER.md`)
-- **Status da Arquitetura RAG & Tradução:** SOTA Neural, Federado, Hierárquico Multi-Asset & Auto-Tradução NIM (ADR-001 a ADR-036)
+- **Status da Arquitetura RAG & Tradução:** SOTA Neural, Federado, Hierárquico Multi-Asset (5.834 Chunks Vetorizados em `skills_rag.sqlite3`) & Auto-Tradução NIM (ADR-001 a ADR-036)
 - **Suíte de Testes:** 100% Aprovada (42/42 testes em `scripts/tests/`)
 - **Páginas HTML:** 100% Compiladas em `pages/` para deploy em GitHub Pages
 - **Deploy Multi-Target:** Sincronização atômica ativa em 6 runtimes locais (`~/.gemini/config/skills`, `~/.kilo/skills`, etc.)

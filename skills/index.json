@@ -4,8 +4,24 @@
       "name": "adr-architecture-elevation",
       "version": "1.0.0",
       "description": "Independent Architecture Adversarial Review, Design Space Exploration and Decision Set Amplification. Reconstructs problems from first principles, challenges ADR Decision Sets (ADR/BP/PI/TODO), explores architectural alternatives, conducts comparative matrix evaluation, amplifies winning solutions and produces hardened, certified Decision Sets.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "architecture",
+        "adr",
+        "adversarial-review",
+        "design-space",
+        "decision-set",
+        "amplification",
+        "governance",
+        "sota"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "adr-archive",
+        "architecture-review",
+        "systematic-debugging",
+        "implementation",
+        "governance"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -25,8 +41,23 @@
       "name": "adr-archive",
       "version": "3.0.0",
       "description": "Automates the archiving, auditing, and lifecycle governance of Architecture Decision Records (ADRs) and the structured Tech Debt Registry. Silently parses TODO/PI completion, auto-generates canonical Evidence Records (ER.md), moves executed Decision Sets (ADR, BP, TODO, PI) to archive while keeping ER certificates visible in the root, manages frozen ADRs, and prunes resolved technical debts for maximum token efficiency.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "architecture",
+        "adr",
+        "cleanup",
+        "governance",
+        "archive",
+        "tech-debt",
+        "gatekeeper",
+        "evidence-record"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "implementation",
+        "technical-documentation",
+        "governance",
+        "architecture-review"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -46,9 +77,22 @@
     {
       "name": "adr-generator",
       "version": "3.1.1",
-      "description": "",
-      "tags": [],
-      "related_skills": [],
+      "description": "Creates and governs Architecture Decision Records (ADRs) and the associated Decision Set (Blueprint, TODO, Implementation Plan). Generates standardized MADR-style artifacts with diagnosis, context, decision, alternatives, consequences, and status. Consumes registered technical debts to create corrective ADRs. Use whenever the user mentions ADR, architectural decision, \"I need to record this decision,\" chooses between competing technologies/ approaches, relevant technical trade-offs, or requests to plan/document an architectural change before coding. Also use to review, replace, or repair existing ADR governance retroactively.",
+      "tags": [
+        "architecture",
+        "decisions",
+        "adr",
+        "documentation",
+        "governance",
+        "tech-debt"
+      ],
+      "related_skills": [
+        "technical-documentation",
+        "architecture-review",
+        "adr-archive",
+        "implementation",
+        "agent-planning-execution"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -72,9 +116,16 @@
     {
       "name": "agent-development",
       "version": "1.0.0",
-      "description": "'Use when building AI agents — tool use patterns, memory management, planning strategies, multi-agent coordination, evaluation, and safety guardrails.'",
-      "tags": [],
-      "related_skills": [],
+      "description": "Use when building AI agents — tool use patterns, memory management, planning strategies, multi-agent coordination, evaluation, and safety guardrails.",
+      "tags": [
+        "agent-development",
+        "agentic-workflow"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -87,8 +138,17 @@
       "name": "agent-orchestration",
       "version": "2.0.0",
       "description": "Orchestrates multiple AI agents for complex tasks. Covers task decomposition, model routing, I/O contract handoff, fan-out/fan-in parallelism, and multi-agent coordination. Use when needing to coordinate multiple agents, define roles, manage handoffs, or optimize parallel execution.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "orchestration",
+        "agents",
+        "multi-agent",
+        "coordination"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -108,8 +168,15 @@
       "name": "agent-planning-execution",
       "version": "1.0.0",
       "description": "Comprehensive planning, roadmap management, task decomposition, and plan",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "agent-planning-execution",
+        "agentic-workflow"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -122,8 +189,15 @@
       "name": "agents-md-management",
       "version": "1.0.0",
       "description": "Management, refactoring, and generation of AGENTS.md files for agentic repositories.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "agents-md-management",
+        "core-governance"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -136,8 +210,18 @@
       "name": "api-design",
       "version": "2.0.0",
       "description": "Comprehensive guide to designing robust, consistent, and scalable RESTful and GraphQL APIs. Define standards for endpoints, versioning, error contracts, pagination, and idempotence. Use when designing new APIs, reviewing existing contracts, or standardizing interface design practices.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "api",
+        "rest",
+        "graphql",
+        "endpoints",
+        "versioning"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -156,8 +240,21 @@
       "name": "architecture-review",
       "version": "2.1.0",
       "description": "Performs architectural code reviews, detecting violations of SOLID principles, architectural patterns (Clean Architecture, Hexagonal, DDD), and structural code smells. Use when the user requests an architecture review, structure analysis, or design evaluation.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "architecture",
+        "solid",
+        "review",
+        "clean-architecture",
+        "code-smells"
+      ],
+      "related_skills": [
+        "ddd",
+        "adr-generator",
+        "clean-code",
+        "refactoring",
+        "testing-mastery",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -172,8 +269,11 @@
     {
       "name": "artifacts-builder",
       "version": "1.0.0",
-      "description": "'Use when the user needs standalone HTML/CSS/JS artifacts — interactive",
-      "tags": [],
+      "description": "Use when the user needs standalone HTML/CSS/JS artifacts — interactive related_skills: - cap - implementation - technical-documentation demos, prototypes, single-file applications, or visual tools that run independently in a browser. Triggers: user says \"artifact\", \"demo\", \"prototype\", \"single-file app\", \"HTML tool\", \"interactive widget\", \"standalone page\", building something that runs in a browser without a build step.",
+      "tags": [
+        "artifacts-builder",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -187,8 +287,22 @@
       "name": "brainstorming",
       "version": "2.1.0",
       "description": "Structured collaborative ideation and design exploration engine. Transforms vague requirements and ideas into validated, documented designs before planning and implementation.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "brainstorming",
+        "ideation",
+        "design",
+        "requirements",
+        "planning",
+        "governance"
+      ],
+      "related_skills": [
+        "agent-planning-execution",
+        "product-spec-engineering",
+        "adr-generator",
+        "architecture-review",
+        "ux-researcher-designer",
+        "implementation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -208,8 +322,21 @@
       "name": "cap",
       "version": "3.0.0",
       "description": "Minimal Context Bootstrap for AI Coding Agents. Acquire only the repository knowledge strictly required to execute the supplied task. Optimize for minimal token consumption, deterministic discovery, and early execution.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "cap",
+        "context",
+        "bootstrap",
+        "token-optimization",
+        "core-governance",
+        "ripgrep"
+      ],
+      "related_skills": [
+        "implementation",
+        "agent-planning-execution",
+        "systematic-debugging",
+        "clean-code",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -222,8 +349,15 @@
       "name": "changelog-generator",
       "version": "1.0.0",
       "description": "Automatically creates user-facing changelogs from git commits by analyzing",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "changelog-generator",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -236,8 +370,15 @@
       "name": "circuit-breaker",
       "version": "1.0.0",
       "description": "Use when running autonomous loops, repeated operations, or when detecting",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "circuit-breaker",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -249,8 +390,11 @@
     {
       "name": "clean-code",
       "version": "1.0.0",
-      "description": "'Use when the user needs code quality review, refactoring guidance, SOLID",
-      "tags": [],
+      "description": "Use when the user needs code quality review, refactoring guidance, SOLID related_skills: - cap - implementation - technical-documentation principles application, or help identifying and fixing code smells. Triggers: code smell detection, refactoring planning, naming convention review, complexity reduction, DRY analysis, error handling improvement.",
+      "tags": [
+        "clean-code",
+        "engineering-quality"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -264,8 +408,20 @@
       "name": "code-review",
       "version": "5.0.0",
       "description": "Unified code review engine supporting fast iterative review (mode: lite) and rigorous multi-agent consensus verification (mode: full).",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "code-review",
+        "governance",
+        "security",
+        "autonomous-agents",
+        "fast-feedback",
+        "audit",
+        "compliance"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -278,8 +434,17 @@
       "name": "code-review-lite",
       "version": "5.0.0-alias",
       "description": "Lightweight code review optimized for AI-first and vibe-coding workflows. Delegates directly to unified code-review (mode: lite).",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "code-review-lite",
+        "engineering-quality",
+        "vibe-coding",
+        "fast-feedback"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -294,8 +459,15 @@
       "name": "code-review-workflow",
       "version": "1.0.0",
       "description": "Structured workflow for requesting, conducting, and receiving code reviews.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "code-review-workflow",
+        "engineering-quality"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -307,8 +479,11 @@
     {
       "name": "content-creator",
       "version": "1.0.0",
-      "description": "'Use when the user needs marketing copy, social media content, brand",
-      "tags": [],
+      "description": "Use when the user needs marketing copy, social media content, brand related_skills: - cap - implementation - technical-documentation voice development, ad copy, newsletters, or persuasive writing for business audiences. Trigger conditions: social media post drafting, email campaign copy, landing page text, ad copy creation, brand voice definition, content calendar planning, headline writing, A/B test copy variations, newsletter composition.",
+      "tags": [
+        "content-creator",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -321,8 +496,11 @@
     {
       "name": "content-research-writer",
       "version": "1.0.0",
-      "description": "'Use when the user needs research methodology, long-form content creation,",
-      "tags": [],
+      "description": "Use when the user needs research methodology, long-form content creation, related_skills: - cap - implementation - technical-documentation academic-style citations, fact-checking, or evidence-based writing with proper source attribution. Trigger conditions: whitepaper drafting, research article writing, source evaluation, citation management, fact-checking protocol, case study creation, evidence-based argumentation.",
+      "tags": [
+        "content-research-writer",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -336,8 +514,15 @@
       "name": "context7-mcp",
       "version": "1.0.0",
       "description": "This skill should be used when the user asks about libraries, frameworks,",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "context7-mcp",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -350,8 +535,19 @@
       "name": "database-architecture",
       "version": "2.0.0",
       "description": "Unified database modeling, schema design, migrations, and performance optimization.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "database-architecture",
+        "schema-design",
+        "sql",
+        "migrations",
+        "performance",
+        "data-modeling"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -367,8 +563,18 @@
       "name": "ddd",
       "version": "2.0.0",
       "description": "Guide to Domain-Driven Design (DDD) modeling. Defines guidelines for Entities, Value Objects, Aggregates, Repositories, Domain Events, Domain Services, and Bounded Contexts. Use when modeling rich domains, refactoring anemic entities, or structuring bounded contexts.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "ddd",
+        "domain-driven-design",
+        "modeling",
+        "aggregates",
+        "events"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -387,8 +593,11 @@
     {
       "name": "deployment",
       "version": "1.0.0",
-      "description": "'Use when setting up CI/CD pipelines, creating deployment configurations,",
-      "tags": [],
+      "description": "Use when setting up CI/CD pipelines, creating deployment configurations, related_skills: - cap - implementation - technical-documentation generating deploy checklists, or configuring infrastructure. Triggers: new project needs deployment, migrating CI/CD provider, adding staging/production environments, automating release process, setting up monitoring for deploys.",
+      "tags": [
+        "deployment",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -402,8 +611,15 @@
       "name": "dispatching-parallel-agents",
       "version": "1.0.0",
       "description": "Use when a task has multiple independent subtasks that can be executed",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "dispatching-parallel-agents",
+        "agentic-workflow"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -415,8 +631,11 @@
     {
       "name": "docx-processing",
       "version": "1.0.0",
-      "description": "'Use when the user needs Word document generation, template filling,",
-      "tags": [],
+      "description": "Use when the user needs Word document generation, template filling, related_skills: - cap - implementation - technical-documentation formatting, mail merge, or DOCX manipulation using python-docx or docxtpl. Trigger conditions: generate Word documents programmatically, fill document templates with data, apply formatting (headings, tables, images, headers/footers), perform mail merge operations, convert DOCX to PDF, manage document styles.",
+      "tags": [
+        "docx-processing",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -429,8 +648,11 @@
     {
       "name": "email-composer",
       "version": "1.0.0",
-      "description": "'Use when the user needs professional email drafting, tone adjustment,",
-      "tags": [],
+      "description": "Use when the user needs professional email drafting, tone adjustment, related_skills: - cap - implementation - technical-documentation template creation, or communication strategy for business correspondence. Trigger conditions: draft professional email, adjust email tone, create email template, write cold outreach, compose follow-up, draft escalation email, write apology email, craft meeting request, compose status update, plan email communication strategy.",
+      "tags": [
+        "email-composer",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -444,8 +666,15 @@
       "name": "find-skills",
       "version": "1.0.0",
       "description": "Helps users discover and install agent skills when they ask questions",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "find-skills",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -458,8 +687,15 @@
       "name": "git-workflow",
       "version": "1.0.0",
       "description": "Unified Git operations, commit styling, worktree management, and branch",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "git-workflow",
+        "agentic-workflow"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -472,8 +708,18 @@
       "name": "governance",
       "version": "2.0.0",
       "description": "Define governance guidelines for repositories and teams. Covers review, approval, branching strategy, semantic versioning, and issue/PR management processes. Use when defining team processes, implementing governance-as-code, or standardizing development workflows.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "governance",
+        "branching",
+        "code-review",
+        "process",
+        "team"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -489,9 +735,23 @@
     {
       "name": "implementation",
       "version": "2.2.1",
-      "description": "",
-      "tags": [],
-      "related_skills": [],
+      "description": "Executes previously planned changes in a governed and incremental manner, closing the SDLC cycle based on Agent Skills.",
+      "tags": [
+        "implementation",
+        "execution",
+        "artifact-driven",
+        "sdlc",
+        "governance",
+        "tech-debt"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "adr-archive",
+        "agent-planning-execution",
+        "testing-mastery",
+        "git-workflow",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -512,9 +772,16 @@
     {
       "name": "llm-as-judge",
       "version": "1.0.0",
-      "description": "'Use when validating subjective quality criteria that cannot be deterministically",
-      "tags": [],
-      "related_skills": [],
+      "description": "Use when validating subjective quality criteria that cannot be deterministically",
+      "tags": [
+        "llm-as-judge",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -526,8 +793,11 @@
     {
       "name": "mcp-builder",
       "version": "1.0.0",
-      "description": "'Use when the user needs to build MCP (Model Context Protocol) servers",
-      "tags": [],
+      "description": "Use when the user needs to build MCP (Model Context Protocol) servers related_skills: - cap - implementation - technical-documentation — tool definitions, resource management, prompt templates, transport layers, and client integration. Triggers: user says \"MCP\", \"MCP server\", \"model context protocol\", building tools for AI clients, creating AI integrations.",
+      "tags": [
+        "mcp-builder",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -540,8 +810,11 @@
     {
       "name": "mobile-design",
       "version": "1.0.0",
-      "description": "'Use when the user needs mobile app design and development patterns for",
-      "tags": [],
+      "description": "Use when the user needs mobile app design and development patterns for related_skills: - cap - implementation - technical-documentation React Native, Flutter, or SwiftUI — including platform HIG compliance, gestures, and offline-first architecture. Triggers: user says \"mobile\", \"iOS\", \"Android\", \"React Native\", \"Flutter\", \"SwiftUI\", \"app design\", \"mobile navigation\", \"touch targets\", \"offline-first\".",
+      "tags": [
+        "mobile-design",
+        "frontend-ux"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -555,8 +828,18 @@
       "name": "observability",
       "version": "2.0.0",
       "description": "Comprehensive guide to system observability in production. Defines standards",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "observability",
+        "logging",
+        "metrics",
+        "tracing",
+        "alerting"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/observability-implementation.md",
@@ -575,8 +858,11 @@
     {
       "name": "pdf-processing",
       "version": "1.0.0",
-      "description": "'Use when the user needs PDF generation, manipulation, form filling,",
-      "tags": [],
+      "description": "Use when the user needs PDF generation, manipulation, form filling, related_skills: - cap - implementation - technical-documentation table extraction, OCR, merging, splitting, watermarking, or metadata handling. Trigger conditions: generate PDF reports, extract text or tables from PDFs, fill PDF forms programmatically, merge or split PDF files, add watermarks, OCR scanned documents, read or write PDF metadata, convert HTML to PDF.",
+      "tags": [
+        "pdf-processing",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -589,8 +875,11 @@
     {
       "name": "performance-optimization",
       "version": "1.0.0",
-      "description": "'Use when optimizing application performance, reducing load times, improving",
-      "tags": [],
+      "description": "Use when optimizing application performance, reducing load times, improving related_skills: - cap - implementation - technical-documentation database queries, meeting performance budgets, or diagnosing bottlenecks in web applications or APIs. Triggers: slow page loads, poor Web Vitals, database timeouts, large bundle size, user-reported sluggishness, scaling preparation.",
+      "tags": [
+        "performance-optimization",
+        "engineering-quality"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -605,8 +894,15 @@
       "name": "php-laravel-ecosystem",
       "version": "1.0.0",
       "description": "Specialized development guidelines and best practices for PHP and the",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "php-laravel-ecosystem",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -619,8 +915,15 @@
       "name": "product-spec-engineering",
       "version": "1.0.0",
       "description": "PRD generation, technical spec writing, and reverse engineering requirements.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "product-spec-engineering",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -633,8 +936,18 @@
       "name": "prompt-engineering",
       "version": "2.0.0",
       "description": "Guidelines for effective prompt engineering with AI agents. Covers prompt structure, few-shot, chain-of-thought, role prompting, constraints, and advanced techniques. Use when creating prompts for AI agents, optimizing interactions, or training teams in AI.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "prompts",
+        "llm",
+        "ai",
+        "techniques",
+        "agents"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -650,8 +963,11 @@
     {
       "name": "react-best-practices",
       "version": "1.0.0",
-      "description": "'Use when the user needs React-specific patterns — hooks, component composition,",
-      "tags": [],
+      "description": "Use when the user needs React-specific patterns — hooks, component composition, related_skills: - cap - implementation - technical-documentation Server Components, error boundaries, rendering optimization, and testing strategies. Triggers: hooks design, component composition, Server vs Client component decision, error boundary placement, context optimization, rendering performance.",
+      "tags": [
+        "react-best-practices",
+        "frontend-ux"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -665,8 +981,18 @@
       "name": "refactoring",
       "version": "2.0.0",
       "description": "Comprehensive guide to safe and incremental refactoring. Covers techniques for extraction, Strangler Fig, Branch by Abstraction, testing before refactoring, and legacy migration. Use when refactoring code, improving existing structure, or migrating legacy systems.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "refactoring",
+        "code-quality",
+        "legacy",
+        "strangler-fig",
+        "testing"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -684,8 +1010,18 @@
       "name": "release",
       "version": "2.0.0",
       "description": "Guide for release management and versioning. Defines release process,",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "release",
+        "versioning",
+        "changelog",
+        "deploy",
+        "rollback"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -703,8 +1039,14 @@
     {
       "name": "repo-bootstrap",
       "version": "2.0.0",
-      "description": "'Generates an initial repository structure with governance files: README.md,",
-      "tags": [],
+      "description": "Generates an initial repository structure with governance files: README.md, related_skills: - cap - implementation - technical-documentation AGENTS.md, CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE, docs/ directory, and CI/CD examples. Use when initializing a new repository or standardizing project structure.",
+      "tags": [
+        "repository",
+        "scaffolding",
+        "boilerplate",
+        "governance",
+        "ci-cd"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -724,8 +1066,15 @@
       "name": "resilient-execution",
       "version": "1.0.0",
       "description": "Use when a task fails, an approach does not work, when encountering errors",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "resilient-execution",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -737,8 +1086,11 @@
     {
       "name": "security-review",
       "version": "1.0.0",
-      "description": "'Use when reviewing code for security vulnerabilities, implementing authentication",
-      "tags": [],
+      "description": "Use when reviewing code for security vulnerabilities, implementing authentication related_skills: - cap - implementation - technical-documentation or authorization, handling user input, managing secrets, or auditing dependencies for known CVEs. Triggers: auth implementation, input handling, secrets management, dependency audit, pre-deployment security check, OWASP compliance review.",
+      "tags": [
+        "security-review",
+        "engineering-quality"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -757,8 +1109,11 @@
     {
       "name": "seo-optimizer",
       "version": "1.0.0",
-      "description": "'Use when the user needs technical SEO audits, meta tag optimization,",
-      "tags": [],
+      "description": "Use when the user needs technical SEO audits, meta tag optimization, related_skills: - cap - implementation - technical-documentation structured data markup, Core Web Vitals improvement, or search engine visibility enhancement. Trigger conditions: site audit request, meta tag review, Schema.org implementation, page speed optimization, indexability issues, sitemap or robots.txt configuration, hreflang setup, Open Graph or Twitter Card tags, rich snippet eligibility.",
+      "tags": [
+        "seo-optimizer",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -772,8 +1127,24 @@
       "name": "skill-audit-bulletin",
       "version": "5.1.0",
       "description": "Comprehensive Dual-Axis (Structural & Domain SOTA) audit framework for AI agent skills. Evaluates physical metadata/governance alongside metaphysical domain efficacy, best practices, SWOT analysis, and provides direct ADR generation handoff gates with continuous ledger persistence in docs/audit/skills/.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "skill-audit",
+        "governance",
+        "sota",
+        "dual-axis",
+        "quality-assurance",
+        "swot-analysis",
+        "adr-handoff",
+        "audit-ledger"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "adr-archive",
+        "skill-creator",
+        "skill-discovery",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -789,8 +1160,21 @@
       "name": "skill-creator",
       "version": "2.0.0",
       "description": "End-to-end framework and scaffolding engine for creating, testing, validating, and packaging autonomous AI agent skills with progressive disclosure, deterministic frontmatter, and bundled resources.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "skill-creator",
+        "skills",
+        "scaffolding",
+        "packaging",
+        "agent-customization",
+        "governance"
+      ],
+      "related_skills": [
+        "skill-audit-bulletin",
+        "skill-discovery",
+        "writing-skills",
+        "technical-documentation",
+        "repo-bootstrap"
+      ],
       "files": [
         "LICENSE",
         "LICENSE.txt",
@@ -808,9 +1192,19 @@
     {
       "name": "skill-discovery",
       "version": "3.0.0",
-      "description": "\"Single authoritative router and dynamic discovery engine for all canonical skills in the repository.\"",
-      "tags": [],
-      "related_skills": [],
+      "description": "Single authoritative router and dynamic discovery engine for all canonical skills in the repository.",
+      "tags": [
+        "skill-discovery",
+        "core-governance",
+        "router",
+        "dynamic-indexing",
+        "schema-validation"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -824,8 +1218,15 @@
       "name": "subagent-driven-development",
       "version": "1.0.0",
       "description": "Use when executing multi-task plans where each task can be implemented",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "subagent-driven-development",
+        "agentic-workflow"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -844,8 +1245,11 @@
     {
       "name": "systematic-debugging",
       "version": "1.0.0",
-      "description": "'Use when encountering bugs, unexpected behavior, test failures, or errors",
-      "tags": [],
+      "description": "Use when encountering bugs, unexpected behavior, test failures, or errors related_skills: - cap - implementation - technical-documentation during development. Enforces a rigorous 4-phase investigation process that prevents shotgun debugging. Triggers: test failure, runtime error, unexpected behavior, production incident, performance regression.",
+      "tags": [
+        "systematic-debugging",
+        "engineering-quality"
+      ],
       "related_skills": [],
       "files": [
         "CREATION-LOG.md",
@@ -869,8 +1273,23 @@
       "name": "technical-documentation",
       "version": "2.1.0",
       "description": "Technical documentation generation, architectural diagrams, and comprehensive SOTA documentation reconciliation across all 6 canonical repository pillars (README, CHANGELOG, USAGE, RELEASE-NOTES, STATE, AGENTS/GEMINI).",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "technical-documentation",
+        "documentation",
+        "reconciliation",
+        "governance",
+        "sota",
+        "agent-memory"
+      ],
+      "related_skills": [
+        "adr-generator",
+        "adr-archive",
+        "implementation",
+        "governance",
+        "architecture-review",
+        "changelog-generator",
+        "release"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -889,8 +1308,11 @@
     {
       "name": "test-driven-development",
       "version": "1.0.0",
-      "description": "'Use when writing any new code, adding features, or fixing bugs that",
-      "tags": [],
+      "description": "Use when writing any new code, adding features, or fixing bugs that related_skills: - cap - implementation - technical-documentation require code changes. Enforces strict RED-GREEN-REFACTOR cycle with no production code without a failing test first. Triggers: new feature implementation, bug fix, refactoring existing code, adding behavior to existing modules.",
+      "tags": [
+        "test-driven-development",
+        "engineering-quality"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -905,8 +1327,15 @@
       "name": "testing-mastery",
       "version": "1.0.0",
       "description": "Unified testing framework covering unit, integration, acceptance, webapp,",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "testing-mastery",
+        "engineering-quality"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -919,8 +1348,23 @@
       "name": "ui-ux-pro-max",
       "version": "3.0.0",
       "description": "Authoritative UI/UX visual engine, design tokens, component architecture, responsive design, WCAG accessibility, and aesthetic heuristics.",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "ui-ux-pro-max",
+        "frontend-ux",
+        "design-tokens",
+        "web-design",
+        "accessibility",
+        "styling",
+        "dark-mode",
+        "glassmorphism"
+      ],
+      "related_skills": [
+        "artifacts-builder",
+        "mobile-design",
+        "ux-researcher-designer",
+        "clean-code",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -933,8 +1377,11 @@
     {
       "name": "ux-researcher-designer",
       "version": "1.0.0",
-      "description": "'Use when the user needs user research methodologies, persona development,",
-      "tags": [],
+      "description": "Use when the user needs user research methodologies, persona development, related_skills: - cap - implementation - technical-documentation journey mapping, usability testing plans, or information architecture analysis. Triggers: user says \"user research\", \"persona\", \"journey map\", \"usability test\", \"card sort\", \"heuristic evaluation\", \"information architecture\", \"user interview\", understanding user behavior.",
+      "tags": [
+        "ux-researcher-designer",
+        "frontend-ux"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",
@@ -948,8 +1395,15 @@
       "name": "verification-before-completion",
       "version": "1.0.0",
       "description": "Use before claiming any task is complete, any feature works, or any bug",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "verification-before-completion",
+        "engineering-quality"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "checklists/operational-checklist.md",
@@ -962,8 +1416,15 @@
       "name": "writing-skills",
       "version": "1.0.0",
       "description": "Use when creating new skills, commands, or agent definitions for Claude",
-      "tags": [],
-      "related_skills": [],
+      "tags": [
+        "writing-skills",
+        "domain-stack"
+      ],
+      "related_skills": [
+        "cap",
+        "implementation",
+        "technical-documentation"
+      ],
       "files": [
         "SKILL.md",
         "anthropic-best-practices.md",
@@ -981,8 +1442,11 @@
     {
       "name": "xlsx-processing",
       "version": "1.0.0",
-      "description": "'Use when the user needs Excel file manipulation — reading, writing,",
-      "tags": [],
+      "description": "Use when the user needs Excel file manipulation — reading, writing, related_skills: - cap - implementation - technical-documentation formulas, charts, conditional formatting, data validation, pivot tables, or large file handling. Trigger conditions: create Excel reports programmatically, read spreadsheet data, add formulas or charts, apply conditional formatting, perform data validation, generate pivot tables, handle CSV import/export, process large datasets in Excel format.",
+      "tags": [
+        "xlsx-processing",
+        "domain-stack"
+      ],
       "related_skills": [],
       "files": [
         "SKILL.md",

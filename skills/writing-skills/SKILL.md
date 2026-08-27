@@ -3,20 +3,19 @@ name: writing-skills
 version: 1.0.0
 description: Use when creating new skills, commands, or agent definitions for Claude
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  Code, including writing SKILL.md files, defining triggers, and testing skill behavior
+- cap
+- implementation
+- technical-documentation
 domain: domain-stack
 triggers:
-  - writing-skills
-  - write-agent-skill
-  - claude-code-skills
-  - skill-prompting
-  - escrever-skills
-  - criar-instrucoes-de-agente
-  - formatacao-de-skills
-  - skill-authoring
+- writing-skills
+- write-agent-skill
+- claude-code-skills
+- skill-prompting
+- escrever-skills
+- criar-instrucoes-de-agente
+- formatacao-de-skills
+- skill-authoring
 tags:
 - writing-skills
 - domain-stack
@@ -25,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Writing Skills
 

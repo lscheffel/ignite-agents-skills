@@ -4,6 +4,21 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/).
 
+## [3.0.1] - 2026-08-27
+
+### Fixed
+- **YAML Frontmatter Schema Hardening (18 Skills):**
+  - Correção e padronização sintática de campos `related_skills` e `triggers` em 18 skills (`agent-planning-execution`, `changelog-generator`, `circuit-breaker`, `code-review-lite`, `code-review`, `context7-mcp`, `dispatching-parallel-agents`, `find-skills`, `git-workflow`, `llm-as-judge`, `observability`, `php-laravel-ecosystem`, `release`, `resilient-execution`, `subagent-driven-development`, `testing-mastery`, `verification-before-completion`, `writing-skills`).
+  - Erradicação de quebras de linha e concatenações anômalas no parsing determinístico.
+
+### Changed
+- **Sincronização & Expansão do Registry (`skills/index.json`):**
+  - Regeneração determinística do catálogo com inclusão de metadados enriquecidos e inventário modular de sub-ativos (`templates/`, `examples/`, `checklists/`, `references/`).
+- **Indexação RAG Vetorial Semântica (ADR-025):**
+  - Atualização do banco vetorial `data/skills_rag_db/skills_rag.sqlite3` com 5.834 chunks hierárquicos ingeridos e 82 ativos indexados com zero falhas.
+- **Recompilação de Páginas Estáticas do Web Hub:**
+  - Reconstrução completa das páginas do GitHub Pages em `pages/` via `pages/build.py`.
+
 ## [3.0.0] - 2026-08-27
 
 ### Added

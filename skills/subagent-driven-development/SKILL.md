@@ -3,23 +3,19 @@ name: subagent-driven-development
 version: 1.0.0
 description: Use when executing multi-task plans where each task can be implemented
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  independently by a subagent. Triggers when a plan has 3+ independent tasks, when
-  speed of execution is important, when tasks have clear acceptance criteria suitable
-  for delegation, or when two-stage review gates (spec compliance and code quality)
-  are needed for iterative fix cycles.
+- cap
+- implementation
+- technical-documentation
 domain: agentic-workflow
 triggers:
-  - subagent-driven-development
-  - multi-task-delegation
-  - subagent-execution
-  - two-stage-review
-  - desenvolvimento-com-subagentes
-  - delegar-para-subagentes
-  - revisao-em-duas-etapas
-  - subagent-loops
+- subagent-driven-development
+- multi-task-delegation
+- subagent-execution
+- two-stage-review
+- desenvolvimento-com-subagentes
+- delegar-para-subagentes
+- revisao-em-duas-etapas
+- subagent-loops
 tags:
 - subagent-driven-development
 - agentic-workflow
@@ -28,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Subagent-Driven Development
 

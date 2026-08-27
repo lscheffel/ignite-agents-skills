@@ -187,8 +187,14 @@ def extract_metadata(asset, files, main_skill_content, all_code_content):
                     meta["tags"] = parsed_fm.get("tags", [])
                     if "metadata" in parsed_fm and isinstance(parsed_fm["metadata"], dict):
                         meta["author"] = parsed_fm["metadata"].get("author", meta["author"])
-            except:
-                pass
+                else:
+                    meta["yaml_error"] = "Frontmatter não é um mapeamento/dicionário YAML válido."
+            except Exception as e:
+                meta["yaml_error"] = str(e)
+        else:
+            if "---" in main_skill_content:
+                meta["yaml_error"] = "Delimitadores '---' de frontmatter malformados no SKILL.md."
+
                 
     if asset["category"] == "mcp_server":
         meta["version"] = "v2.1.0"
@@ -407,7 +413,11 @@ def analyze_asset_forensics(asset, files, main_skill_content, all_code_content, 
             d1_status = "OK"
             d1_findings = "Schemas MCP presentes com validação de payload JSON."
     else:
-        if meta["has_frontmatter"]:
+        if meta.get("yaml_error"):
+            d1_score = 0.0
+            d1_status = "CRIT"
+            d1_findings = f"Erro fatal de sintaxe YAML no frontmatter: {meta['yaml_error']}"
+        elif meta["has_frontmatter"]:
             desc_len = len(meta["description"])
             if desc_len > 80:
                 d1_score = 9.5
@@ -422,7 +432,7 @@ def analyze_asset_forensics(asset, files, main_skill_content, all_code_content, 
                 d1_status = "WARN"
                 d1_findings = "Frontmatter presente mas com descrição contratual concisa."
         else:
-            d1_score = 6.5
+            d1_score = 5.0
             d1_status = "WARN"
             d1_findings = "Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md."
 
@@ -1148,5 +1158,11 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
     print(f"Total Artifacts Persisted in: {DEST_DIR}")
     print("="*80)
 
+    crit_yaml_errors = [a["id"] for a in assets if all_forensics[a["id"]]["dim_scores"]["D1"][1] == "CRIT"]
+    if crit_yaml_errors:
+        print(f"\n❌ ERRO CRÍTICO: {len(crit_yaml_errors)} ativo(s) com erro fatal de YAML/contrato D1: {crit_yaml_errors}", file=sys.stderr)
+        sys.exit(1)
+
 if __name__ == "__main__":
     main()
+

@@ -3,20 +3,19 @@ name: testing-mastery
 version: 1.0.0
 description: Unified testing framework covering unit, integration, acceptance, webapp,
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
-  and strategy testing.
+- cap
+- implementation
+- technical-documentation
 domain: engineering-quality
 triggers:
-  - testing-mastery
-  - testing-strategy
-  - integration-tests
-  - e2e-testing
-  - maestria-em-testes
-  - estrategia-de-testes
-  - testes-de-integracao
-  - testes-ponta-a-ponta
+- testing-mastery
+- testing-strategy
+- integration-tests
+- e2e-testing
+- maestria-em-testes
+- estrategia-de-testes
+- testes-de-integracao
+- testes-ponta-a-ponta
 tags:
 - testing-mastery
 - engineering-quality
@@ -25,6 +24,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-05'
 ---
+
 
 # Testing Mastery & Quality Assurance Hub
 

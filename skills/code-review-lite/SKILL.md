@@ -1,21 +1,22 @@
 ---
 name: code-review-lite
 version: 5.0.0-alias
-description: Lightweight code review optimized for AI-first and vibe-coding workflows. Delegates directly to unified code-review (mode: lite).
+description: 'Lightweight code review optimized for AI-first and vibe-coding workflows. Delegates directly to unified code-review
+  (mode: lite).'
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
+- cap
+- implementation
+- technical-documentation
 domain: engineering-quality
 triggers:
-  - code-review-lite
-  - quick-code-review
-  - fast-pr-check
-  - diff-review
-  - revisao-rapida-codigo
-  - revisao-lite
-  - analisar-diff
-  - lightweight-review
+- code-review-lite
+- quick-code-review
+- fast-pr-check
+- diff-review
+- revisao-rapida-codigo
+- revisao-lite
+- analisar-diff
+- lightweight-review
 tags:
 - code-review-lite
 - engineering-quality
@@ -26,6 +27,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-24'
 ---
+
 
 # Code Review Lite (Unified Alias)
 

@@ -1,21 +1,22 @@
 ---
 name: code-review
 version: 5.0.0
-description: Unified code review engine supporting fast iterative review (mode: lite) and rigorous multi-agent consensus verification (mode: full).
+description: 'Unified code review engine supporting fast iterative review (mode: lite) and rigorous multi-agent consensus
+  verification (mode: full).'
 related_skills:
-  - cap
-  - implementation
-  - technical-documentation
+- cap
+- implementation
+- technical-documentation
 domain: engineering-quality
 triggers:
-  - code-review
-  - review-pr
-  - code-audit
-  - pull-request-review
-  - revisao-de-codigo
-  - analisar-pr
-  - auditoria-de-codigo
-  - pr-review
+- code-review
+- review-pr
+- code-audit
+- pull-request-review
+- revisao-de-codigo
+- analisar-pr
+- auditoria-de-codigo
+- pr-review
 tags:
 - code-review
 - governance
@@ -29,6 +30,7 @@ metadata:
   provenance: internal
   last_audited: '2026-08-24'
 ---
+
 
 # Unified Code Review Engine (v5.0.0)
 
