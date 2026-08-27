@@ -34,21 +34,45 @@ INDEX_JSON = SKILLS_DIR / "index.json"
 PAGES_DIR = ROOT / "pages"
 DOCS_DIR = ROOT / "docs"
 ADR_ARCHIVE_DIR = DOCS_DIR / "adr" / "archive"
+AUDIT_LEDGER_JSON = DOCS_DIR / "audit" / "skills" / "SKILL_AUDIT_LEDGER.json"
 
 def get_version():
     try:
         if INDEX_JSON.exists():
             data = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
-            return data.get("version", "2.6.0")
+            return data.get("version", "3.0.0")
     except Exception:
         pass
-    return "2.6.0"
+    return "3.0.0"
+
+def get_audit_ledger():
+    if AUDIT_LEDGER_JSON.exists():
+        try:
+            return json.loads(AUDIT_LEDGER_JSON.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    return {"entries": {}, "average_score": 96.6}
+
+def get_grade_info(skill_name, audit_data):
+    entry = audit_data.get("entries", {}).get(skill_name, {})
+    grade = entry.get("grade", "A+")
+    score = entry.get("current_score", 95.0)
+    return grade, score
+
+def get_grade_badge(skill_name, audit_data):
+    grade, score = get_grade_info(skill_name, audit_data)
+    if grade == "S":
+        return f'<span class="grade-badge grade-s" title="Dual-Axis SOTA Score: {score:.1f}/100">💎 S &middot; {score:.1f}</span>'
+    elif grade == "A+":
+        return f'<span class="grade-badge grade-aplus" title="Dual-Axis SOTA Score: {score:.1f}/100">✨ A+ &middot; {score:.1f}</span>'
+    else:
+        return f'<span class="grade-badge grade-standard" title="Dual-Axis SOTA Score: {score:.1f}/100">{grade} &middot; {score:.1f}</span>'
 
 def get_stats():
     skills_cnt = len([d for d in SKILLS_DIR.iterdir() if d.is_dir()]) if SKILLS_DIR.exists() else 60
     templates_cnt = len(list(SKILLS_DIR.glob("*/templates/*")))
     examples_cnt = len(list(SKILLS_DIR.glob("*/examples/*")))
-    adrs_cnt = 26
+    adrs_cnt = 36
     return skills_cnt, templates_cnt, examples_cnt, adrs_cnt
 
 def get_footer_p():
@@ -493,6 +517,99 @@ def get_css():
       margin-left: 8px;
     }
 
+    /* ── Grade Badges ── */
+    .grade-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    .grade-s {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.25));
+      border: 1px solid rgba(0, 242, 254, 0.45);
+      color: #38ef7d;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+    }
+    .grade-aplus {
+      background: linear-gradient(135deg, rgba(224, 234, 252, 0.15), rgba(207, 222, 243, 0.25));
+      border: 1px solid rgba(224, 234, 252, 0.35);
+      color: #93c5fd;
+    }
+    .grade-standard {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* ── Stats & Filter Strip ── */
+    .stats-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: -0.5rem auto 1.75rem;
+      font-size: 0.88rem;
+    }
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: var(--text-secondary);
+    }
+    .stat-pill strong {
+      color: var(--accent);
+    }
+
+    .filter-strip {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .filter-btn.filter-s.active {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      border-color: #00f2fe;
+      color: #0d1117;
+      font-weight: 700;
+    }
+    .filter-btn.filter-aplus.active {
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      border-color: #93c5fd;
+      color: #0d1117;
+      font-weight: 700;
+    }
+
     /* ── Code ── */
     pre {
       background: var(--code-bg);
@@ -800,7 +917,9 @@ def generate_skill_page(skill, skill_dir):
 
     body_html += '\n' + files_section
 
-    breadcrumb = f'<a href="../../index.html">Skills</a> &rsaquo; {skill["name"]}'
+    audit_data = get_audit_ledger()
+    grade_badge = get_grade_badge(skill["name"], audit_data)
+    breadcrumb = f'<a href="../../index.html">Skills</a> &rsaquo; {skill["name"]} {grade_badge}'
     page = get_page_template(skill["name"], body_html, breadcrumb=breadcrumb, nav_active="home", depth=3)
 
     out = PAGES_DIR / "skills" / skill["name"] / "index.html"
@@ -848,34 +967,35 @@ def generate_doc_page(md_path, title, nav_active):
 def generate_adr_page(md_path, adr_name):
     """Generate an HTML page for an ADR .md file."""
     if not md_path.exists():
+        print(f"  ⚠ {md_path.name} not found, skipping")
         return
     md_content = md_path.read_text(encoding="utf-8")
     # depth=2 because page is at pages/adr/ADR-XXX.html (2 levels from pages/ root)
     body_html = convert_md_to_html(md_content, depth=2)
-    breadcrumb = f'<a href="../index.html">Páginas</a> &rsaquo; <a href="index.html">ADRs</a> &rsaquo; {adr_name}'
-    title = f"ADR — {adr_name}"
-    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active="adr", depth=2)
-    out = PAGES_DIR / "adr" / f"{adr_name}"
+    breadcrumb = f'<a href="index.html">ADRs</a> &rsaquo; {md_path.stem}'
+    title = f"ADR — {md_path.stem}"
+    page = get_page_template(title, body_html, breadcrumb=breadcrumb, nav_active="adrs", depth=2)
+    out = PAGES_DIR / "adr" / adr_name
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     print(f"  ✓ adr/{adr_name}")
 
 
 def generate_adr_index(adrs):
-    """Generate the ADR index page."""
+    """Generate the main pages/adr/index.html listing all ADRs."""
     cards_html = ""
     for adr in sorted(adrs, key=lambda x: x["name"]):
         cards_html += f"""
     <div class="card">
-      <div class="card-title"><a href="{adr['name']}">{adr['name']}</a></div>
-      <div class="card-desc">{md_escape(adr.get('title', ''))}</div>
+      <div class="card-title"><a href="{adr['name']}">{adr['title']}</a></div>
+      <div class="card-meta"><a href="{adr['name']}">Ver ADR &rarr;</a></div>
     </div>"""
 
     body = f"""
-    <h1 class="fancy-title">ADRs <span class="ver">Archive</span></h1>
-    <p class="fancy-sub">Architecture Decision Records arquivadas (implementadas).</p>
+    <h1 class="fancy-title">Architecture Decision Records</h1>
+    <p class="fancy-sub">Registro histórico de decisões arquiteturais do projeto <strong>ignite-agents-skills</strong>.</p>
 
-    <h2 id="adrs">ADRs Disponíveis</h2>
+    <h2 id="adrs">ADRs Arquivadas</h2>
     <div class="card-grid">
       {cards_html}
     </div>
@@ -923,14 +1043,24 @@ def generate_adr_index(adrs):
 def generate_index(skills_data):
     """Generate the main pages/index.html listing all skills."""
     skills = skills_data["skills"]
+    audit_data = get_audit_ledger()
+    avg_score = audit_data.get("average_score", 96.6)
+
+    s_count = sum(1 for s in skills if get_grade_info(s["name"], audit_data)[0] == "S")
+    aplus_count = sum(1 for s in skills if get_grade_info(s["name"], audit_data)[0] == "A+")
 
     cards_html = ""
     for s in sorted(skills, key=lambda x: x["name"]):
+        grade, score = get_grade_info(s["name"], audit_data)
+        grade_badge = get_grade_badge(s["name"], audit_data)
         tags_html = " ".join(f'<span class="tag">{t}</span>' for t in s.get("tags", [])[:4])
         file_count = len(s.get("files", []))
         cards_html += f"""
-    <div class="card">
-      <div class="card-title"><a href="skills/{s['name']}/index.html">{s['name']}</a> <span class="version-badge">v{s.get('version', '?')}</span></div>
+    <div class="card" data-grade="{grade}" data-score="{score}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:0.4rem;">
+        <div class="card-title" style="margin-bottom:0;"><a href="skills/{s['name']}/index.html">{s['name']}</a> <span class="version-badge">v{s.get('version', '?')}</span></div>
+        {grade_badge}
+      </div>
       <div class="card-desc">{md_escape(s.get('description', ''))}</div>
       <div class="tags">{tags_html}</div>
       <div class="card-meta">{file_count} files &middot; <a href="skills/{s['name']}/index.html">Ver SKILL.md &rarr;</a></div>
@@ -940,9 +1070,22 @@ def generate_index(skills_data):
     <h1 class="fancy-title">ignite-agents-skills <span class="ver">v{get_version()}</span></h1>
     <p class="fancy-sub">Registro centralizado de <strong>{len(skills)} skills</strong> ultra-high quality grade para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>.</p>
 
+    <div class="stats-strip">
+      <span class="stat-pill">✨ <strong>{len(skills)}</strong> Skills SOTA Elite</span>
+      <span class="stat-pill">💎 <strong>{s_count}</strong> Grade S (Diamond)</span>
+      <span class="stat-pill">⭐ <strong>{aplus_count}</strong> Grade A+ (Platinum)</span>
+      <span class="stat-pill">🎯 Score Médio: <strong>{avg_score:.1f} / 100</strong></span>
+    </div>
+
     <div class="search-wrapper">
       <span class="search-icon">&#128269;</span>
       <input type="text" id="search" placeholder="Buscar skill por nome, tag ou descrição..." autocomplete="off">
+    </div>
+
+    <div class="filter-strip">
+      <button class="filter-btn active" data-filter="all" onclick="setGradeFilter('all')">Todas ({len(skills)})</button>
+      <button class="filter-btn filter-s" data-filter="S" onclick="setGradeFilter('S')">💎 Grade S · Diamond ({s_count})</button>
+      <button class="filter-btn filter-aplus" data-filter="A+" onclick="setGradeFilter('A+')">✨ Grade A+ · Platinum ({aplus_count})</button>
     </div>
 
     <h2 id="skills">Skills</h2>

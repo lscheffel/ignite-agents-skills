@@ -178,6 +178,99 @@
       margin-left: 8px;
     }
 
+    /* ── Grade Badges ── */
+    .grade-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    .grade-s {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(79, 172, 254, 0.25));
+      border: 1px solid rgba(0, 242, 254, 0.45);
+      color: #38ef7d;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+    }
+    .grade-aplus {
+      background: linear-gradient(135deg, rgba(224, 234, 252, 0.15), rgba(207, 222, 243, 0.25));
+      border: 1px solid rgba(224, 234, 252, 0.35);
+      color: #93c5fd;
+    }
+    .grade-standard {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* ── Stats & Filter Strip ── */
+    .stats-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: -0.5rem auto 1.75rem;
+      font-size: 0.88rem;
+    }
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: var(--text-secondary);
+    }
+    .stat-pill strong {
+      color: var(--accent);
+    }
+
+    .filter-strip {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .filter-btn.filter-s.active {
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      border-color: #00f2fe;
+      color: #0d1117;
+      font-weight: 700;
+    }
+    .filter-btn.filter-aplus.active {
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      border-color: #93c5fd;
+      color: #0d1117;
+      font-weight: 700;
+    }
+
     /* ── Code ── */
     pre {
       background: var(--code-bg);
@@ -441,7 +534,7 @@ cp templates/ci.yml .github/workflows/</code></pre>
 <p>Repo ready for development with all governance files in place.</p>
   </div>
   <footer>
-    <p><strong>ignite-agents-skills</strong> v3.0.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>
+    <p><strong>ignite-agents-skills</strong> v3.0.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 36 ADRs</p>
     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
   </footer>
 </body>
