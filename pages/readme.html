@@ -411,27 +411,30 @@
   </nav>
   <div class="content">
     <h1 id="ignite-agents-skills--sota-skills-ecosystem--agent-governance">ignite-agents-skills — SOTA Skills Ecosystem & Agent Governance</h1>
-<blockquote>Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode e governança contínua para agentes autônomos.</blockquote>
-<p><a href="./CHANGELOG.md"><img src="https://img.shields.io/badge/version-v2.6.0-blue.svg" alt="Version" style="max-width:100%;border-radius:8px;"></a> <a href="./skills/index.json"><img src="https://img.shields.io/badge/skills-60%20SOTA-success.svg" alt="Skills" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/governance/AUDIT_MASTER_INDEX.md"><img src="https://img.shields.io/badge/assets-82%20active-success.svg" alt="Assets" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/governance/COMPLIANCE_SCORECARD.csv"><img src="https://img.shields.io/badge/audit%20score-91.10%2F100-brightgreen.svg" alt="Audit Score" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/workflows/validate-skills.yml"><img src="https://img.shields.io/badge/governance-CI%20Passing-success.svg" alt="Governance CI" style="max-width:100%;border-radius:8px;"></a> <a href="adr/index.html"><img src="https://img.shields.io/badge/architecture-ADR--001%20a%20ADR--026-purple.svg" alt="Architecture" style="max-width:100%;border-radius:8px;"></a></p>
+<blockquote>Plataforma centralizada de skills de engenharia de software SOTA (State of the Art), roteamento semântico vetorial, servidor MCP dedicado, registry remoto para Kilo/OpenCode, motor de auditoria contínua em 8 dimensões e deploy atômico multi-target para agentes autônomos.</blockquote>
+<p><a href="./CHANGELOG.md"><img src="https://img.shields.io/badge/version-v3.0.0-blue.svg" alt="Version" style="max-width:100%;border-radius:8px;"></a> <a href="./skills/index.json"><img src="https://img.shields.io/badge/skills-60%20SOTA%20Elite-success.svg" alt="Skills" style="max-width:100%;border-radius:8px;"></a> <a href="skills/audit/skills/SKILL_AUDIT_LEDGER.html"><img src="https://img.shields.io/badge/catalog%20grade-100%25%20A%2B%2FS%20Diamond-brightgreen.svg" alt="Catalog Grade" style="max-width:100%;border-radius:8px;"></a> <a href="skills/audit/skills/SKILL_AUDIT_LEDGER.html"><img src="https://img.shields.io/badge/audit%20score-96.60%2F100-brightgreen.svg" alt="Audit Score" style="max-width:100%;border-radius:8px;"></a> <a href="./.github/workflows/validate-skills.yml"><img src="https://img.shields.io/badge/governance-CI%20Passing-success.svg" alt="Governance CI" style="max-width:100%;border-radius:8px;"></a> <a href="adr/ADR-INDEX.html"><img src="https://img.shields.io/badge/architecture-ADR--001%20a%20ADR--036-purple.svg" alt="Architecture" style="max-width:100%;border-radius:8px;"></a></p>
 <hr>
 <h2 id="1-viso-geral--arquitetura">1. Visão Geral & Arquitetura</h2>
-<p>O <strong>ignite-agents-skills</strong> é uma plataforma 3-em-1 para agentes de inteligência artificial aplicados à engenharia de software de alta performance:</p>
+<p>O <strong>ignite-agents-skills</strong> é uma plataforma 4-em-1 para agentes de inteligência artificial aplicados à engenharia de software de alta performance:</p>
 <ol>
-<li><strong>Registry Remoto de Skills:</strong> Manifesto canônico <code>skills/index.json</code> compatível com o padrão <a href="https://agentskills.io">Agent Skills</a> para <strong>Kilo Code</strong>, <strong>OpenCode</strong> e clientes HTTP.</li>
-<li><strong>Motor Semântico & Servidor MCP:</strong> Servidor MCP stdio nativo (<code>skills-rag-mcp</code>), RAG vetorial com busca híbrida BM25/embeddings, e CLI Router para descoberta inteligente de especializações.</li>
-<li><strong>Hub de Documentação GitHub Pages:</strong> Geração dinâmica de páginas HTML para todas as 60 skills e histórico completo de ADRs.</li>
+<li><strong>Registry Remoto de Skills (v3.0.0):</strong> Manifesto canônico <code>skills/index.json</code> compatível com o padrão <a href="https://agentskills.io">Agent Skills</a> para <strong>Kilo Code</strong>, <strong>OpenCode</strong>, <strong>Gemini CLI</strong>, <strong>Antigravity</strong> e clientes HTTP.</li>
+<li><strong>Motor Semântico & Servidor MCP:</strong> Servidor MCP stdio nativo (<code>skills-rag-mcp</code>), RAG vetorial com busca híbrida BM25 + embeddings, e CLI Router para descoberta inteligente de especializações.</li>
+<li><strong>Motor de Auditoria Forense Dual-Axis (8 Dimensões SOTA):</strong> Sistema contínuo de auditoria física e cognitiva com persistência em ledgers (<code>SKILL_AUDIT_LEDGER.md</code> / <code>.json</code>), garantindo 100% das 60 skills em Grade A+ (Platinum $\ge 93.0$) e Grade S (Diamond $\ge 97.0$).</li>
+<li><strong>Hub de Documentação GitHub Pages & Deploy Atômico Multi-Target:</strong> Geração dinâmica de páginas HTML para todas as 60 skills e deploy sincronizado com purge de órfãos em 6 diretórios de runtime (<code>~/.gemini/config/skills</code>, <code>~/.kilo/skills</code>, etc.).</li>
 </ol>
 <pre data-lang="mermaid"><code>graph TD
     A[Usuário / Agente de IA] --&gt;|JSON-RPC Stdio| B[Servidor MCP: scripts/skills_mcp_server.py]
     A --&gt;|CLI Discovery| C[CLI Router: scripts/skills_router.py]
     A --&gt;|HTTP / Kilo Fetch| D[Registry: skills/index.json]
     A --&gt;|Web Browser| E[GitHub Pages: pages/index.html]
+    A --&gt;|Continuous Audit| F[Audit Engine: scripts/batch_skill_auditor.py]
 
-    subgraph &quot;Camada de Descoberta &amp; RAG Vetorial (ADR-021 a ADR-025)&quot;
-        B --&gt; F[Banco Vetorial: data/skills_rag_db/skills_rag.sqlite3]
-        C --&gt; F
-        D --&gt; G[skills/index.json]
-        E --&gt; H[pages/index.html &amp; pages/skills/]
+    subgraph &quot;Camada de Descoberta &amp; RAG Vetorial (ADR-021 a ADR-036)&quot;
+        B --&gt; G[Banco Vetorial: data/skills_rag_db/skills_rag.sqlite3]
+        C --&gt; G
+        D --&gt; H[skills/index.json]
+        E --&gt; I[pages/index.html &amp; pages/skills/]
+        F --&gt; J[docs/audit/skills/SKILL_AUDIT_LEDGER.md]
     end</code></pre>
 <hr>
 <h2 id="2-estrutura-do-repositrio">2. Estrutura do Repositório</h2>
@@ -460,88 +463,28 @@
 │   ├── skills_rag_indexer.py           # Motor de Indexação Vetorial / FTS5
 │   ├── skills_router.py                # CLI Router para busca semântica
 │   ├── audit_engine.py                 # Motor de Auditoria Forense SOTA (8 Dimensões)
-│   ├── translate_catalog_nim.py        # Tradutor de catálogo via NVIDIA NIM
+│   ├── batch_skill_auditor.py          # Motor de Auditoria Dual-Axis em Lote
+│   ├── elevate_catalog_to_sota_aplus.py# Motor de Elevação Contínua para Grade A+/S
+│   ├── translate_catalog_nim.py        # Tradutor de catálogo via NVIDIA NIM (ADR-026)
+│   ├── sync_runtime.py                 # Motor de Deploy Atômico Multi-Target
 │   └── tests/                          # Suíte de testes automatizados (42 testes)
 ├── pages/                              # Motor de Documentação Web
 │   ├── build.py                        # Gerador de HTML estático
 │   └── ...                             # Templates e artefatos renderizados
 ├── docs/                               # Governança e Arquitetura
-│   ├── adr/                            # ADR-001 a ADR-026 (ativas + archive)
-│   └── audit/                          # Ledgers de auditoria
+│   ├── adr/                            # ADR-001 a ADR-036 (ativas + archive)
+│   └── audit/                          # Ledgers de auditoria e grafos relacionais
 └── data/                               # Banco SQLite vetorial e especificações</code></pre>
 <hr>
 <h2 id="3-catlogo-das-60-skills-por-categoria">3. Catálogo das 60 Skills por Categoria</h2>
-<div class="table-wrapper"><table><tr><th>Categoria</th><th>Skills</th></tr><tr><td><strong>Architecture & Modeling</strong></td><td><code>adr-architecture-elevation</code>, <code>architecture-review</code>, <code>database-architecture</code>, <code>ddd</code></td></tr><tr><td><strong>Documentation & Decision Records</strong></td><td><code>adr-generator</code>, <code>adr-archive</code>, <code>technical-documentation</code>, <code>changelog-generator</code></td></tr><tr><td><strong>Governance & Repository</strong></td><td><code>governance</code>, <code>repo-bootstrap</code>, <code>agents-md-management</code>, <code>skill-audit-bulletin</code></td></tr><tr><td><strong>Planning & Execution</strong></td><td><code>agent-planning-execution</code>, <code>product-spec-engineering</code>, <code>implementation</code></td></tr><tr><td><strong>Code Quality & Refactoring</strong></td><td><code>clean-code</code>, <code>refactoring</code>, <code>code-review</code>, <code>code-review-lite</code>, <code>code-review-workflow</code></td></tr><tr><td><strong>Testing & Verification</strong></td><td><code>testing-mastery</code>, <code>test-driven-development</code>, <code>verification-before-completion</code>, <code>systematic-debugging</code></td></tr><tr><td><strong>Security & Auditing</strong></td><td><code>security-review</code>, <code>circuit-breaker</code>, <code>resilient-execution</code></td></tr><tr><td><strong>AI, Prompting & Evaluation</strong></td><td><code>prompt-engineering</code>, <code>llm-as-judge</code>, <code>agent-development</code>, <code>context7-mcp</code></td></tr><tr><td><strong>Multi-Agent & Orchestration</strong></td><td><code>agent-orchestration</code>, <code>subagent-driven-development</code>, <code>dispatching-parallel-agents</code>, <code>cap</code></td></tr><tr><td><strong>API & Backend Frameworks</strong></td><td><code>api-design</code>, <code>php-laravel-ecosystem</code></td></tr><tr><td><strong>Frontend & UI/UX</strong></td><td><code>ui-ux-pro-max</code>, <code>react-best-practices</code>, <code>artifacts-builder</code>, <code>mobile-design</code>, <code>ux-researcher-designer</code></td></tr><tr><td><strong>Operations & Infrastructure</strong></td><td><code>observability</code>, <code>deployment</code>, <code>performance-optimization</code></td></tr><tr><td><strong>Git & Release Management</strong></td><td><code>git-workflow</code>, <code>release</code></td></tr><tr><td><strong>Tools & Extension Authoring</strong></td><td><code>mcp-builder</code>, <code>skill-creator</code>, <code>skill-discovery</code>, <code>writing-skills</code></td></tr><tr><td><strong>Content & Document Processing</strong></td><td><code>content-creator</code>, <code>content-research-writer</code>, <code>email-composer</code>, <code>seo-optimizer</code>, <code>docx-processing</code>, <code>pdf-processing</code>, <code>xlsx-processing</code>, <code>brainstorming</code></td></tr></table></div>
+<p>Todas as 60 skills operam no padrão <strong>Agent Skills Standard v1.0.0</strong>, com YAML frontmatter padronizado, triggers bilíngues, árvores de decisão visuais (Mermaid), tabelas de anti-patterns graduadas, seções de edge cases e failure modes, e suporte modular completo com templates, exemplos e checklists.</p>
+<div class="table-wrapper"><table><tr><th>Categoria</th><th>Skills</th><th>Destaques</th></tr><tr><td><strong>Core Architecture & Governance</strong></td><td><code>adr-architecture-elevation</code>, <code>adr-archive</code>, <code>adr-generator</code>, <code>architecture-review</code>, <code>governance</code>, <code>repo-bootstrap</code>, <code>technical-documentation</code>, <code>skill-audit-bulletin</code>, <code>skill-creator</code>, <code>writing-skills</code></td><td>Gestão de ADRs (MADR 3.0), auditoria forense contínua, governança de tech debt.</td></tr><tr><td><strong>AI Agents, Loops & Tooling</strong></td><td><code>agent-development</code>, <code>agent-orchestration</code>, <code>agent-planning-execution</code>, <code>agents-md-management</code>, <code>subagent-driven-development</code>, <code>dispatching-parallel-agents</code>, <code>context7-mcp</code>, <code>mcp-builder</code>, <code>llm-as-judge</code>, <code>skill-discovery</code>, <code>find-skills</code></td><td>Orquestração de subagentes, MCP Stdio, roteamento semântico, BPE token optimization.</td></tr><tr><td><strong>Engineering, Coding & Quality</strong></td><td><code>clean-code</code>, <code>code-review</code>, <code>code-review-lite</code>, <code>code-review-workflow</code>, <code>refactoring</code>, <code>systematic-debugging</code>, <code>test-driven-development</code>, <code>testing-mastery</code>, <code>implementation</code>, <code>verification-before-completion</code></td><td>TDD rigoroso, análise AST, erradicação de bugs, code review com SLO de diff.</td></tr><tr><td><strong>Backend, Data, Cloud & Security</strong></td><td><code>api-design</code>, <code>database-architecture</code>, <code>ddd</code>, <code>deployment</code>, <code>observability</code>, <code>security-review</code>, <code>resilient-execution</code>, <code>circuit-breaker</code>, <code>php-laravel-ecosystem</code>, <code>git-workflow</code>, <code>release</code></td><td>REST/GraphQL idempotente, OpenTelemetry, Circuit Breakers, OWASP Top 10, SemVer.</td></tr><tr><td><strong>Frontend, UI/UX & Web</strong></td><td><code>artifacts-builder</code>, <code>mobile-design</code>, <code>react-best-practices</code>, <code>seo-optimizer</code>, <code>ui-ux-pro-max</code>, <code>ux-researcher-designer</code></td><td>WCAG 2.2 AAA, Next.js Server Actions, Design Tokens, Core Web Vitals.</td></tr><tr><td><strong>Product, Content & Documents</strong></td><td><code>brainstorming</code>, <code>content-creator</code>, <code>content-research-writer</code>, <code>docx-processing</code>, <code>email-composer</code>, <code>pdf-processing</code>, <code>product-spec-engineering</code>, <code>prompt-engineering</code>, <code>xlsx-processing</code>, <code>changelog-generator</code></td><td>Engenharia de PRDs, OCR de PDFs, streaming XLSX, Chain-of-Density prompts.</td></tr></table></div>
 <hr>
-<h2 id="4-como-usar">4. Como Usar</h2>
-<h3 id="a-no-kilo-code-vs-code">A. No Kilo Code (VS Code)</h3>
-<p>No Kilo Code: <strong>Kilo Settings → Comportamento do Agente → Habilidades → URLs de Habilidades</strong>, adicione:</p>
-<pre data-lang="text"><code>https://lscheffel.github.io/ignite-agents-skills/skills/</code></pre>
-<p>Ou no seu <code>kilo.json</code>:</p>
-<pre data-lang="json"><code>{
-  &quot;skills&quot;: {
-    &quot;urls&quot;: [
-      &quot;https://lscheffel.github.io/ignite-agents-skills/skills/&quot;
-    ]
-  }
-}</code></pre>
-<h3 id="b-como-servidor-mcp-skills-rag-mcp">B. Como Servidor MCP (<code>skills-rag-mcp</code>)</h3>
-<p>Adicione o servidor MCP ao seu arquivo <code>mcp_config.json</code> ou configuração de IDE:</p>
-<pre data-lang="json"><code>{
-  &quot;mcpServers&quot;: {
-    &quot;skills-rag-mcp&quot;: {
-      &quot;command&quot;: &quot;python3&quot;,
-      &quot;args&quot;: [
-        &quot;/caminho/para/ignite-agents-skills/scripts/skills_mcp_server.py&quot;
-      ],
-      &quot;env&quot;: {
-        &quot;SKILLS_WORKSPACE_DIR&quot;: &quot;/caminho/para/ignite-agents-skills&quot;
-      }
-    }
-  }
-}</code></pre>
-<p><strong>Ferramentas expostas pelo MCP:</strong></p>
-<ul>
-<li><code>search_skills</code>: Busca semântica híbrida (vetorial + BM25).</li>
-<li><code>route_task</code>: Roteamento inteligente de tarefas para a skill ideal.</li>
-<li><code>get_skill_details</code>: Detalhes completos, templates e instruções de uma skill.</li>
-<li><code>list_skills_catalog</code>: Catálogo completo com filtros de categoria.</li>
-<li><code>bootstrap_agent_instructions</code>: Provisionamento de <code>AGENTS.md</code> e stubs.</li>
-<li><code>get_rag_telemetry</code>: Métricas de latência, footprint de tokens e cache hits.</li>
-<li><code>inspect_rag_index</code>: Auditoria da integridade do banco semântico.</li>
-</ul>
-<h3 id="c-via-cli-router">C. Via CLI Router</h3>
-<pre data-lang="bash"><code># Busca semântica rápida no terminal
-python3 scripts/skills_router.py &quot;preciso modelar banco de dados relacional e índices&quot; --top-k 3</code></pre>
+<h2 id="4-matriz-de-comandos-de-governana">4. Matriz de Comandos de Governança</h2>
+<div class="table-wrapper"><table><tr><th>Operação</th><th>Comando Oficial</th></tr><tr><td><strong>Sincronizar <code>skills/index.json</code></strong></td><td><code>./scripts/sync-index.sh</code></td></tr><tr><td><strong>Validar <code>skills/index.json</code></strong></td><td><code>./scripts/validate-index.sh</code></td></tr><tr><td><strong>Auditoria Dual-Axis em Lote</strong></td><td><code>python3 scripts/batch_skill_auditor.py</code></td></tr><tr><td><strong>Auditoria Forense SOTA (8 Dimensões)</strong></td><td><code>python3 scripts/audit_engine.py</code></td></tr><tr><td><strong>Ingestão & Vetorização RAG</strong></td><td><code>python3 scripts/skills_rag_indexer.py</code></td></tr><tr><td><strong>Roteamento Semântico CLI</strong></td><td><code>python3 scripts/skills_router.py "<consulta>"</code></td></tr><tr><td><strong>Servidor MCP Stdio</strong></td><td><code>python3 scripts/skills_mcp_server.py</code></td></tr><tr><td><strong>Suíte de Testes Automatizados</strong></td><td><code>python3 -m unittest discover -s scripts/tests -p "test_*.py"</code></td></tr><tr><td><strong>Compilar Páginas HTML do Site</strong></td><td><code>python3 pages/build.py</code></td></tr><tr><td><strong>Janitor de Arquivamento de ADRs</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></td></tr><tr><td><strong>Deploy & Sincronização de Runtimes (Purge)</strong></td><td><code>python3 scripts/sync_runtime.py --deploy</code></td></tr><tr><td><strong>Auditoria de Drift de Runtimes</strong></td><td><code>python3 scripts/sync_runtime.py --status</code></td></tr></table></div>
 <hr>
-<h2 id="5-comandos-de-manuteno-e-governana">5. Comandos de Manutenção e Governança</h2>
-<pre data-lang="bash"><code># 1. Sincronizar o skills/index.json
-./scripts/sync-index.sh
-
-# 2. Validar integridade do skills/index.json
-./scripts/validate-index.sh
-
-# 3. Validar qualidade de todas as skills
-for s in skills/*/; do [ -f &quot;$s/SKILL.md&quot; ] &amp;&amp; bash scripts/validate-skill.sh &quot;$s&quot;; done
-
-# 4. Executar o motor de auditoria forense SOTA (8 dimensões)
-python3 scripts/audit_engine.py
-
-# 5. Re-indexar banco vetorial RAG
-python3 scripts/skills_rag_indexer.py
-
-# 6. Rodar a suíte de testes automatizados
-python3 -m unittest discover -s scripts/tests -p &quot;test_*.py&quot;
-
-# 7. Compilar as páginas HTML de documentação
-python3 pages/build.py</code></pre>
-<hr>
-<h2 id="6-histrico-de-decises-arquiteturais-adrs">6. Histórico de Decisões Arquiteturais (ADRs)</h2>
-<div class="table-wrapper"><table><tr><th>ADR</th><th>Título</th><th>Status</th></tr><tr><td><strong>ADR-001 a ADR-015</strong></td><td>Fundação do Registry Kilo, Ultra-High Quality Grade, Workflows de CI/CD, Geração de Páginas HTML Dinâmicas</td><td>Implementado (Archive)</td></tr><tr><td><strong>ADR-021</strong></td><td>Dual-Engine Neural Rerank com GPU NVIDIA e Cutoff Gate</td><td>Implementado</td></tr><tr><td><strong>ADR-022</strong></td><td>RAG SOTA Quad Optimizations: Embeddings 2048-dim, Cache Rerank, Chunks Focalizados</td><td>Implementado</td></tr><tr><td><strong>ADR-023</strong></td><td>Federated Multi-Scope RAG com Descoberta em 12 Convenções de Agentes</td><td>Implementado</td></tr><tr><td><strong>ADR-024</strong></td><td>Consolidação RICE: Telemetria de Runtime no MCP e Lazy Loading de Referências</td><td>Implementado</td></tr><tr><td><strong>ADR-025</strong></td><td>Hierarchical Multi-Asset Ingestion com Damping e Parent Linking</td><td>Implementado</td></tr><tr><td><strong>ADR-026</strong></td><td>Automação SSOT de Instruções via <code>bootstrap_agent_instructions</code></td><td>Implementado</td></tr></table></div>
-<p>Veja o catálogo completo em <a href="adr/index.html">docs/adr/INDEX.md</a>.</p>
-<hr>
-<h2 id="7-licena">7. Licença</h2>
-<p>Distribuído sob licença MIT. Veja <a href="./LICENSE">LICENSE</a> para mais detalhes.</p>
+<h2 id="5-licena">5. Licença</h2>
+<p>Este repositório é distribuído sob a licença <a href="./LICENSE">MIT</a>.</p>
   </div>
   <footer>
     <p><strong>ignite-agents-skills</strong> v2.6.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 26 ADRs</p>

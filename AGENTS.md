@@ -39,7 +39,7 @@ Além do registry remoto (`skills/index.json`), o repositório integra nativamen
 │   ├── build.py                        # Gerador de HTML estático
 │   └── ...                             # Templates e artefatos renderizados
 ├── docs/                               # Governança e Arquitetura
-│   ├── adr/                            # ADR-001 a ADR-026 (ativas + archive)
+│   ├── adr/                            # ADR-001 a ADR-036 (ativas + archive)
 │   └── audit/                          # Ledgers de auditoria
 └── data/                               # Banco SQLite vetorial e especificações
 ```

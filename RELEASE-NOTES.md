@@ -4,6 +4,29 @@
 
 ---
 
+## Release v3.0.0 (2026-08-27) — SOTA Ultra-High Quality Diamond Release 💎
+
+### 🌟 Destaques da Versão (Highlights)
+
+- **100% SOTA Elite Certified Catalog (Grade A+ / Grade S Diamond):**
+  - Todas as 60 skills do catálogo atingiram pontuações entre **93.5 e 99.1 / 100**, com **Média Global de 96.6 / 100** (+21.2 pts desde o início).
+  - **39 Skills em Grau S (Diamond $\ge 97.0$)** (65% do catálogo) e **21 Skills em Grau A+ (Platinum $\ge 93.0$)** (35% do catálogo).
+  - Erradicação de 100% dos débitos técnicos cognitivos e estruturais do catálogo.
+- **Consolidação e Arquivamento de 36 ADRs Canônicas (ADR-001 a ADR-036):**
+  - Conclusão das 7 ADRs temáticas de remediação SOTA: `ADR-030` a `ADR-036`.
+  - Conclusão das ADRs de infraestrutura e ergonomia: `ADR-027`, `ADR-028`, `ADR-029`.
+  - Emissão algorítmica de 36 certificados Evidence Record (`*-ER.md`) auditáveis em `docs/adr/`.
+- **Motor de Elevação e Auditoria Dual-Axis em Lote:**
+  - Padronização de $\ge 9$ regras heurísticas quantitativas (`- **Rule of Thumb X:**`) por skill com vocabulário de engenharia SOTA (SOLID, DDD, AST, Idempotência, Zero-Trust, Circuit Breakers, etc.).
+  - Seções dedicadas `## Edge Cases & Failure Modes` cobrindo cenários extremos em 100% das skills.
+  - Suíte modular completa com $\ge 4$ artefatos de apoio (`templates/`, `examples/`, `checklists/`, `references/`) em todas as skills.
+- **Normalização EN-US via LLM (NVIDIA NIM - ADR-026):**
+  - Tradução e higienização formal de todos os corpos de skills, tabelas, diagramas e checklists para inglês técnico, com preservação de triggers bilíngues no YAML frontmatter.
+- **Deploy Atômico Multi-Target & Purge de Runtimes:**
+  - Propagação simultânea e sem drift de 360 skills para 6 diretórios de runtime (`~/.gemini/config/skills`, `~/.kilo/skills`, `~/.agents/skills`, etc.).
+
+---
+
 ## Release v2.6.0 (2026-08-26) — Esteira de Tradução NIM & Ledger de Auditoria SOTA
 
 ### 🌟 Destaques da Versão (Highlights)

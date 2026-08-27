@@ -205,11 +205,20 @@ bash scripts/validate-skill.sh skills/nome-da-skill
 # Janitor de arquivamento de ADRs
 ./scripts/archive-adrs.sh
 
+# Auditoria Dual-Axis em lote (todas as 60 skills)
+python3 scripts/batch_skill_auditor.py
+
 # Auditoria forense SOTA (8 dimensões)
 python3 scripts/audit_engine.py
 
 # Re-indexação do banco vetorial RAG
 python3 scripts/skills_rag_indexer.py
+
+# Tradução de catálogo via NVIDIA NIM (ADR-026)
+python3 scripts/translate_catalog_nim.py
+
+# Deploy e sincronização atômica de runtimes (6 targets)
+python3 scripts/sync_runtime.py --deploy
 
 # Testes automatizados do ecossistema
 python3 -m unittest discover -s scripts/tests -p "test_*.py"
