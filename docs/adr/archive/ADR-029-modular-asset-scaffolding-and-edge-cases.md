@@ -1,3 +1,7 @@
+---
+implementation_status: CONSOLIDADA
+---
+
 # ADR-029: Modular Multi-Asset Scaffolding & Edge Cases Baseline across Skills
 
 ## Status

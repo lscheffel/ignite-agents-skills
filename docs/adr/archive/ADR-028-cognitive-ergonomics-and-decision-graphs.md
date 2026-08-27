@@ -1,3 +1,7 @@
+---
+implementation_status: CONSOLIDADA
+---
+
 # ADR-028: Visual Cognitive Ergonomics, Decision Graphs & Actionable Checklists
 
 ## Status

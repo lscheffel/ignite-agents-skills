@@ -1,3 +1,7 @@
+---
+implementation_status: CONSOLIDADA
+---
+
 # ADR-027: Multilingual Semantic Trigger & Governance Metadata Hardening across Catalog Skills
 
 ## Status

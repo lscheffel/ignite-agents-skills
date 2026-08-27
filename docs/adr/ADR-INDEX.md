@@ -34,12 +34,12 @@
 | ADR-024 | Otimização de Context Budget via Lazy Loading, Unificação do Motor de Code Review e Telemetria de Runtime no MCP | Sim | 22/22 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-025 | Ingestão Hierárquica Multi-Asset de Skills (Skill Bundles: Root, References, Templates e Scripts com Parent Linking e Damping Ponderado) | Sim | 17/17 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-026 | Catálogo Canônico Unificado em Inglês (EN-US) via NVIDIA NIM para Eficiência de Tokens (BPE) e Alinhamento Semântico no Reranker Neural | Sim | 27/27 | CONSOLIDADA | - | ARCHIVED_OK |
-| ADR-027 | ADR-027: Multilingual Semantic Trigger & Governance Metadata Hardening across Catalog Skills | Não | 0/5 | PENDENTE | - | IN_PROGRESS |
-| ADR-027 | Multilingual Semantic Trigger & Governance Metadata Hardening across Catalog Skills | Não | 0/5 | IN_PROGRESS | - | IN_PROGRESS |
-| ADR-028 | ADR-028: Visual Cognitive Ergonomics, Decision Graphs & Actionable Checklists | Não | 0/4 | PENDENTE | - | IN_PROGRESS |
-| ADR-028 | Visual Cognitive Ergonomics, Decision Graphs & Actionable Checklists Unification | Não | 0/4 | IN_PROGRESS | - | IN_PROGRESS |
-| ADR-029 | ADR-029: Modular Multi-Asset Scaffolding & Edge Cases Baseline across Skills | Não | 0/4 | PENDENTE | - | IN_PROGRESS |
-| ADR-029 | Modular Multi-Asset Scaffolding & Edge Cases Baseline across Skills | Não | 0/4 | IN_PROGRESS | - | IN_PROGRESS |
+| ADR-027 | ADR-027: Multilingual Semantic Trigger & Governance Metadata Hardening across Catalog Skills | Sim | 5/5 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-027 | Multilingual Semantic Trigger & Governance Metadata Hardening across Catalog Skills | Sim | 5/5 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-028 | ADR-028: Visual Cognitive Ergonomics, Decision Graphs & Actionable Checklists | Sim | 4/4 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-028 | Visual Cognitive Ergonomics, Decision Graphs & Actionable Checklists Unification | Sim | 4/4 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-029 | ADR-029: Modular Multi-Asset Scaffolding & Edge Cases Baseline across Skills | Sim | 4/4 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-029 | Modular Multi-Asset Scaffolding & Edge Cases Baseline across Skills | Sim | 4/4 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-030 | ADR-030: Core Architecture & Governance Domain SOTA Hardening | Sim | 10/10 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-031 | ADR-031: AI Agents, Loops, Resilience & MCP Tooling Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-032 | ADR-032: Engineering, Coding & Quality Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
