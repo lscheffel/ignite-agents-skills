@@ -38,12 +38,12 @@ DEFAULT_NIM_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 # Cascatas de Modelos (ADR-026)
 TRANSLATION_MODELS = [
     "nvidia/riva-translate-4b-instruct-v2",
-    "meta/llama-3.3-70b-instruct",
+    "nvidia/nemotron-4-340b-instruct",
 ]
 
 CODE_JUDGE_MODELS = [
     "nvidia/riva-translate-4b-instruct-v2",
-    "meta/llama-3.3-70b-instruct",
+    "nvidia/nemotron-4-340b-instruct",
 ]
 
 # Diretivas e Metadados que NUNCA devem ser traduzidos

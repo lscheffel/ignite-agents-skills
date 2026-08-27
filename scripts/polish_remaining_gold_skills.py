@@ -1,14 +1,6 @@
-#!/usr/bin/env python3
-"""
-scripts/polish_remaining_gold_skills.py — Injects When to Use, Anti-patterns, and Gates to achieve 100% Grade A+/S
-"""
-
-from pathlib import Path
-
 SKILL_POLISH_DATA = {
-    "code-review-lite": """
+"code-review-lite": """
 ## When to Use
-
 ### Use when:
 - Conducting fast, lightweight peer reviews on PRs with small diffs (<200 lines)
 - Checking for obvious bugs, regression risks, and naming inconsistencies
