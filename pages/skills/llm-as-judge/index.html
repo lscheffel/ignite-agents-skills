@@ -417,7 +417,7 @@
 <li>implementation</li>
 <li>technical-documentation</li>
 </ul>
-<p>tested — applies LLM-based evaluation with structured rubrics for tone, aesthetics, UX feel, documentation quality, and code readability. Triggers: documentation quality check, error message tone review, UX copy evaluation, code readability assessment, design aesthetic review.' domain: domain-stack triggers:</p>
+<p>domain: domain-stack triggers:</p>
 <ul>
 <li>llm-as-judge</li>
 <li>evaluate-quality</li>
@@ -444,7 +444,7 @@
 <h3 id="decision-table-llm-as-judge-vs-deterministic-tests">Decision Table: LLM-as-Judge vs Deterministic Tests</h3>
 <div class="table-wrapper"><table><tr><th>Criterion Type</th><th>Method</th><th>Example</th></tr><tr><td><strong>Objective, measurable</strong></td><td>Deterministic test</td><td>"Response time < 200ms"</td></tr><tr><td><strong>Structural, verifiable</strong></td><td>Deterministic test</td><td>"Returns valid JSON"</td></tr><tr><td><strong>Subjective, qualitative</strong></td><td>LLM-as-judge</td><td>"Error messages are friendly and helpful"</td></tr><tr><td><strong>Aesthetic, perceptual</strong></td><td>LLM-as-judge</td><td>"UI feels clean and modern"</td></tr><tr><td><strong>Linguistic, tonal</strong></td><td>LLM-as-judge</td><td>"Documentation is clear for beginners"</td></tr><tr><td><strong>Holistic, experiential</strong></td><td>LLM-as-judge</td><td>"The onboarding flow feels intuitive"</td></tr></table></div>
 <p><strong>Rule of thumb:</strong> If you can write a boolean assertion, use a deterministic test. If evaluation requires judgment, use LLM-as-judge.</p>
-<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until:</h3>
+<h3 id="stop--do-not-proceed-to-phase-2-until">STOP — Do NOT proceed to Phase 2 until</h3>
 <ul>
 <li>[ ] Confirmed that criteria are genuinely subjective</li>
 <li>[ ] Deterministic testing has been ruled out</li>
@@ -464,7 +464,7 @@
 <div class="table-wrapper"><table><tr><th>Dimension</th><th>Weight</th><th>Scale</th><th>Anchor: 1</th><th>Anchor: 5</th><th>Anchor: 10</th></tr><tr><td>[Name]</td><td>0.X</td><td>1-10</td><td>[Worst case]</td><td>[Adequate]</td><td>[Excellent]</td></tr></table></div>
 <h3 id="threshold-selection-table">Threshold Selection Table</h3>
 <div class="table-wrapper"><table><tr><th>Quality Level</th><th>Threshold</th><th>Use For</th></tr><tr><td>Minimum viable</td><td>5.0</td><td>Internal docs, draft content</td></tr><tr><td>Production quality</td><td>7.0</td><td>User-facing content, public APIs</td></tr><tr><td>Excellence</td><td>8.5</td><td>Marketing, critical UX flows</td></tr></table></div>
-<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until:</h3>
+<h3 id="stop--do-not-proceed-to-phase-3-until">STOP — Do NOT proceed to Phase 3 until</h3>
 <ul>
 <li>[ ] 3-5 dimensions are defined with clear descriptions</li>
 <li>[ ] Weights sum to exactly 1.0</li>
@@ -519,7 +519,7 @@ related_skills:
     &quot;Use more conversational language in the introduction&quot;
   ]
 }</code></pre>
-<h3 id="stop--do-not-proceed-to-phase-4-until">STOP — Do NOT proceed to Phase 4 until:</h3>
+<h3 id="stop--do-not-proceed-to-phase-4-until">STOP — Do NOT proceed to Phase 4 until</h3>
 <ul>
 <li>[ ] Artifact has been submitted with full rubric</li>
 <li>[ ] Each dimension has been scored independently</li>
@@ -531,7 +531,7 @@ related_skills:
 <p><strong>Goal:</strong> Act on the evaluation results.</p>
 <h3 id="result-action-table">Result Action Table</h3>
 <div class="table-wrapper"><table><tr><th>Result</th><th>Action</th><th>Max Iterations</th></tr><tr><td><strong>Pass</strong> (score >= threshold)</td><td>Accept the artifact, proceed</td><td>Done</td></tr><tr><td><strong>Marginal fail</strong> (within 1 point)</td><td>Apply suggestions, re-evaluate once</td><td>1</td></tr><tr><td><strong>Clear fail</strong> (> 1 point below)</td><td>Significant revision, apply all suggestions</td><td>2</td></tr><tr><td><strong>Repeated fail</strong> (3+ attempts)</td><td>Escalate — rubric or approach may need adjustment</td><td>Escalate</td></tr></table></div>
-<h3 id="stop--evaluation-complete-when">STOP — Evaluation complete when:</h3>
+<h3 id="stop--evaluation-complete-when">STOP — Evaluation complete when</h3>
 <ul>
 <li>[ ] Artifact passes threshold, OR</li>
 <li>[ ] 3 iterations completed and escalation decision made</li>

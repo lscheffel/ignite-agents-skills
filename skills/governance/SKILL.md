@@ -405,3 +405,28 @@ A tarefa associada à skill `governance` só pode ser declarada concluída quand
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Machine-Readable Governance-as-Code & Multi-Runtime Contracts (SOTA)
+
+Repository policies are formalized as JSON Schema contracts in `.github/governance/agent-policies.json`.
+
+### Automated Agent Compliance Validation:
+Before pushing or merging, agents verify compliance against the 4 immutable pillars:
+1. **Branch Isolation:** Changes committed only to `feature/*`, `fix/*`, or `adr-*`. Direct commits to `master`/`main` are blocked.
+2. **Conventional Commits:** Enforced pattern `^(feat|fix|docs|refactor|test|chore)\([a-z0-9_-]+\): .+`.
+3. **Pre-Commit Audit Gate:** `python3 scripts/audit_engine.py` must return exit code `0`.
+4. **Bilingual Trigger Invariance:** Skill frontmatter must contain at least 8 triggers (minimum 4 EN + 4 PT-BR).
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Governance-as-Code Standards:** Machine-readable policies (`.github/governance/agent-policies.json`), OPA/Rego and JSON Schema compliance.
+- **Branching & Release Strategy:** Trunk-Based Development with Short-Lived Feature Branches and Semantic Versioning (SemVer 2.0.0).
+- **Conventional Commits Specification:** Compliance with Conventional Commits v1.0.0 for automated changelog generation.
+- **Supply Chain Security:** SLSA (Supply-chain Levels for Software Artifacts) framework alignment and cryptographically attested gates.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Branch Isolation Rule):** Direct commits to protected branches (`master`/`main`/`gh-pages`) are strictly rejected.
+2. **Rule of Thumb 2 (Conventional Commit Strictness):** All commit messages must strictly adhere to the type/scope contract.
+3. **Rule of Thumb 3 (Pre-Commit Zero-Warning Mandate):** Commits are blocked if the 8-Dimension SOTA Audit Engine reports critical violations.
+4. **Rule of Thumb 4 (Runtime SSOT Parity):** Post-commit hooks must synchronize the canonical skills repository with local agent runtimes.

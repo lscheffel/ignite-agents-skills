@@ -281,3 +281,46 @@ A tarefa associada à skill `adr-architecture-elevation` só pode ser declarada 
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Architectural Reversibility Algebra & Blast Radius Index (SOTA)
+
+Every architecture decision evaluated under this skill must be quantified using the **Blast Radius Index ($BR$)**:
+
+$$BR = (N_{\text{dependents}} \times 1.5) + (R_{\text{data}} \times 2.0) + (H_{\text{rollback}} \times 0.5)$$
+
+### Reversibility Scoring Rubric:
+- **$N_{\text{dependents}}$**: Number of downstream modules, packages, or services consuming this interface directly.
+- **$R_{\text{data}}$ (Data Migration Risk)**:
+  - `0`: Stateless or ephemeral cache change.
+  - `1`: Additive non-breaking schema evolution.
+  - `2`: State migration required with dual-write phase.
+  - `3`: Destructive database rewrite / irreversible event schema change.
+- **$H_{\text{rollback}}$**: Estimated engineer-hours required to safely restore the prior system state.
+
+```text
+ELEVATION DECISION GATE:
+- If BR < 3.0: Classified as Low Blast Radius (One-Way Door is NOT present). Fast-track elevation.
+- If 3.0 <= BR < 7.0: Standard Architectural Decision. Requires 8-phase comparative evaluation matrix.
+- If BR >= 7.0: CRITICAL Blast Radius (High Irreversibility). Mandatory Multi-Agent Adversarial Challenge (Red Team / Blue Team).
+```
+
+### Multi-Agent Red Team / Blue Team Adversarial Protocol
+When $BR \ge 7.0$, spawn an isolated challenger agent:
+1. **Blue Team Prompt:** *"Defend Decision Set against failure modes, performance regressions under 10x scale, and maintainability bounds."*
+2. **Red Team Prompt:** *"Act as an adversarial principal architect. Find minimum 3 structural flaws, hidden couplings, or catastrophic rollback failure modes in this Decision Set."*
+
+## Domain SOTA & Industry Engineering Standards
+
+This skill adheres strictly to international architecture standards and software engineering best practices:
+- **Architecture Evaluation Standard:** ISO/IEC/IEEE 42010 (Systems and software engineering — Architecture description).
+- **Security & Threat Invariants:** Compliance with OWASP Top 10 API Security Risks and RFC 7519 / RFC 6749 identity federation protocols.
+- **SOLID & Clean Architecture Adherence:** Explicit verification of Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.
+- **Transactional & Event Semantics:** Formal enforcement of ACID guarantees for synchronous state transitions and Idempotency keys (RFC 7231) for asynchronous Event-Driven Architectures.
+- **Domain-Driven Design (DDD):** Verification of Bounded Context boundaries, Aggregate roots, and anti-corruption layers.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Reversibility Invariant):** If a decision cannot be reversed within $H_{\text{rollback}} \le 2$ hours without data loss, it is a One-Way Door and MUST undergo independent adversarial review.
+2. **Rule of Thumb 2 (Blast Radius Containment):** If $N_{\text{dependents}} \ge 3$, the interface must introduce an Anti-Corruption Layer (ACL) to shield legacy consumers.
+3. **Rule of Thumb 3 (State Migration Idempotency):** Every database migration script must be strictly idempotent and re-runnable with zero data drift.
+4. **Rule of Thumb 4 (Cognitive Budget Limit):** The architectural decision payload must maintain a Signal-to-Noise Ratio (SNR) $> 0.85$, removing speculative fluff.

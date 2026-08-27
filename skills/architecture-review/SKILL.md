@@ -483,3 +483,36 @@ A tarefa associada à skill `architecture-review` só pode ser declarada conclu�
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Architectural Fitness Functions & Distance Metrics (SOTA)
+
+Evaluate architectural structural health using **Robert C. Martin's Package Coupling Metrics**:
+
+1. **Afferent Coupling ($C_a$):** Number of external packages depending on this package.
+2. **Efferent Coupling ($C_e$):** Number of external packages this package depends upon.
+3. **Instability ($I$):** $I = \frac{C_e}{C_a + C_e} \quad (I \in [0, 1])$
+4. **Abstractness ($A$):** $A = \frac{N_{\text{abstract}}}{N_{\text{total}}} \quad (A \in [0, 1])$
+5. **Normalized Distance from the Main Sequence ($D$):**
+
+$$D = |A + I - 1| \quad (D \in [0, 1])$$
+
+### Fitness Gate Criteria:
+- **$D \le 0.3$ (Optimal):** Package is in the balanced zone between abstractness and stability.
+- **$0.3 < D \le 0.7$ (Tolerated):** Monitored tech debt.
+- **$D > 0.7$ (Architectural Violation):**
+  - If $A \to 0$ and $I \to 0$: **Zone of Pain** (Rigid, highly depended-on concrete code). Must extract interfaces.
+  - If $A \to 1$ and $I \to 1$: **Zone of Uselessness** (Abstract code with no dependents). Must prune or consolidate.
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Coupling & Cohesion Standards:** Robert C. Martin's Package Metric Suite (Instability $I$, Abstractness $A$, Normalized Distance $D$).
+- **Clean & Hexagonal Architecture:** Ports & Adapters separation, Domain isolation from infrastructure, Dependency Rule compliance.
+- **SOLID Principles:** Strict enforcement of SRP, OCP, LSP, ISP, and DIP across class and module hierarchies.
+- **ACID & Distributed Systems Semantics:** Evaluation of CAP theorem trade-offs, transactional boundaries, and eventual consistency models.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Main Sequence Invariant):** Any module with distance $D = |A + I - 1| > 0.7$ fails the architectural gate.
+2. **Rule of Thumb 2 (Dependency Direction Rule):** Dependencies must point inwards towards Domain entities; inner layers must have zero awareness of outer frameworks.
+3. **Rule of Thumb 3 (Cyclic Dependency Ban):** Cyclic package imports are categorized as Critical Anti-Patterns (`🔴 Cyclic Dependency Graph`) requiring immediate extraction of interfaces.
+4. **Rule of Thumb 4 (Interface Segregation Threshold):** Interfaces with $>7$ public methods must be segregated into role-specific client interfaces.

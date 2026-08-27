@@ -643,3 +643,31 @@ A tarefa associada à skill `agents-md-management` só pode ser declarada conclu
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Multi-Runtime SSOT Drift Detection & Synchronization Matrix (SOTA)
+
+Maintains real-time synchronization between the repository's Single Source of Truth (`AGENTS.md`) and runtime-specific instruction layers:
+
+| SSOT Pillar | Canonical Source | Derivative Target | Drift Detection Mechanism |
+|:---|:---|:---|:---|
+| **Repository Governance** | `AGENTS.md` | `GEMINI.md` | SHA-256 header hash validation in pre-commit |
+| **Skill Registry** | `skills/index.json` | `pages/index.html` | `scripts/validate-index.sh` checksum comparison |
+| **Agent Policies** | `.github/governance/agent-policies.json` | `scripts/audit_engine.py` | JSON Schema validation gate |
+| **Multi-Target Runtimes** | `skills/` (Source) | `~/.gemini/config/skills` | `scripts/sync_runtime.py --status` drift check |
+
+### Automated Prompt Drift Remediation:
+When `AGENTS.md` is updated, derivative instruction files (`GEMINI.md`) must be reconciled immediately to prevent hallucinated or obsolete operating boundaries.
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Single Source of Truth (SSOT) Architecture:** Centralized governance in `AGENTS.md` with deterministic compilation to downstream instruction files (`GEMINI.md`).
+- **Autonomous Agent Instruction Design:** Prompt engineering best practices, role boundary containment, and instruction hierarchy principles.
+- **JSON Schema & Index Integrity:** Strict validation of `skills/index.json` against actual filesystem skill bundles.
+- **Drift Detection Algorithms:** Continuous SHA-256 header hash reconciliation across multi-agent workspace roots.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Precedence Invariant):** `AGENTS.md` rules take strict precedence over default model training weights.
+2. **Rule of Thumb 2 (Zero Hallucination Gate):** Skill descriptions in `index.json` must exactly match frontmatter definitions in `SKILL.md`.
+3. **Rule of Thumb 3 (Runtime Synchronization Gate):** Any change in `AGENTS.md` must trigger immediate synchronization of `GEMINI.md`.
+4. **Rule of Thumb 4 (Modular Scaffolding Rule):** Complex skills must expose `templates/` and `examples/` subfolders for deterministic execution.

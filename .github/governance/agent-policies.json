@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "1.0.0",
+  "name": "Ignite SOTA Agent Governance Policy",
+  "enforcement_level": "STRICT_BLOCK",
+  "protected_branches": [
+    "master",
+    "main",
+    "gh-pages"
+  ],
+  "commit_standards": {
+    "require_conventional_commits": true,
+    "pre_commit_audit_gate": true,
+    "require_evidence_record_on_adr_closure": true,
+    "require_bilingual_triggers": true
+  },
+  "runtime_sync": {
+    "sync_targets": [
+      "/home/loupan/.gemini/config/skills",
+      "/home/loupan/.cache/kilo/skills",
+      "/home/loupan/.kilo/skills",
+      "/home/loupan/.agents/skills",
+      "/home/loupan/.copilot/skills",
+      "/home/loupan/.lingma/skills"
+    ],
+    "purge_unmanaged_skills_only": true,
+    "protect_governance_artifacts": true
+  },
+  "cognitive_fitness_gates": {
+    "max_layer_distance_d": 0.7,
+    "min_ambiguity_reduction_gate": 0.15,
+    "min_catalog_grade": "A",
+    "target_catalog_grade": "S"
+  }
+}

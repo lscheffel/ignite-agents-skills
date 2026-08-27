@@ -636,6 +636,36 @@
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="cryptographic-commit-binding--archival-lifecycle-sota">Cryptographic Commit Binding & Archival Lifecycle (SOTA)</h2>
+<h3 id="cryptographic-evidence-record-attestation-block">Cryptographic Evidence Record Attestation Block</h3>
+<p>The Janitor auto-generates the canonical <code>ADR-XXX-ER.md</code> using cryptographic commit binding:</p>
+<pre data-lang="markdown"><code>## Cryptographic Execution Attestation
+- **Certifying Commit SHA:** `&lt;git-rev-parse-HEAD&gt;`
+- **Git Tree Signature:** `&lt;git-rev-parse-HEAD^{tree}&gt;`
+- **Validation Exit Code:** `0 (ALL_PASS)`
+- **Ledger Score Pre/Post:** `84.0/100 -&gt; 96.5/100 (+12.5 pts)`
+- **Auditor Signature:** `Antigravity Governance Gatekeeper / SOTA Engine v3.0`</code></pre>
+<h3 id="soft-tombstoning-pruning-lifecycle">Soft-Tombstoning Pruning Lifecycle</h3>
+<p>When executing <code>--prune-debts</code>:</p>
+<ol>
+<li>Resolved debts are marked with <code>tombstone: true</code> and <code>archived_at: <ISO-DATE></code> in <code>tech-debt-registry.json</code>.</li>
+<li>After 30 days of tombstoning, the Janitor moves the payload permanently to <code>docs/governance/tech-debt-archive.json</code>.</li>
+<li>Ensures zero token bloat in active agent prompts while maintaining an immutable compliance trail.</li>
+</ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Lifecycle Governance Standard:</strong> MADR 3.0.0 (Markdown Architecture Decision Records) combined with ISO 9001 quality audit trails.</li>
+<li><strong>Audit & Cryptographic Attestation:</strong> SHA-256 tree hashing and RFC 3161 cryptographic timestamping alignment.</li>
+<li><strong>Technical Debt Taxonomy:</strong> Categorization based on Martin Fowler's Technical Debt Quadrant (Prudent/Deliberate vs Reckless/Inadvertent).</li>
+<li><strong>Clean Architecture Preservation:</strong> Automated verification that archived ADRs leave zero orphan dependencies in active production modules.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Zero-Unchecked Invariant):</strong> An ADR cannot be archived if any task in <code>*-TODO.md</code> remains unchecked (<code>- [ ]</code>).</li>
+<li><strong>Rule of Thumb 2 (Evidence Record Binding):</strong> Every archival operation MUST emit a corresponding <code>*-ER.md</code> artifact in the <code>docs/adr/</code> root before moving working files.</li>
+<li><strong>Rule of Thumb 3 (Soft Tombstoning Grace Period):</strong> Mitigated technical debts remain tombstoned for 30 days before permanent garbage collection.</li>
+<li><strong>Rule of Thumb 4 (Clean Root Guarantee):</strong> Active working directory must exclusively contain currently executing ADRs and completed ER certificates.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

@@ -300,6 +300,43 @@ If you catch yourself rationalizing:
 
 
 
+## Double Diamond Divergence/Convergence Engine & Ambiguity Metrics (SOTA)
+
+Brainstorming follows the **Double Diamond Protocol** adapted for Autonomous Agentic Ideation:
+
+```mermaid
+graph LR
+    subgraph "Diamond 1: Problem Space"
+        D1A[Discover: Socratic Inquiry] --> D1B[Define: Core Problem Invariants]
+    end
+    subgraph "Diamond 2: Solution Space"
+        D2A[Develop: 2-3 Architectural Options] --> D2B[Deliver: Validated Design Spec]
+    end
+    D1B --> D2A
+```
+
+### Ambiguity Reduction Equation ($A_{\text{score}}$):
+
+$$A_{\text{score}} = \frac{\text{Unresolved Core Invariants} + \text{Unspecified Non-Goals}}{\text{Total Identified Problem Dimensions}}$$
+
+### Stage-Gate Transitions:
+- **Phase 1 to Phase 2 (Discover $\to$ Define):** Permitted only after memory inspection is complete.
+- **Phase 3 to Phase 4 (Develop $\to$ Deliver):** Strictly locked until $A_{\text{score}} \le 0.15$.
+- **Phase 5 (Handoff):** Produces `docs/plans/PLAN-XXX.md` and hands off deterministically to `agent-planning-execution` or `adr-generator`.
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Design Exploration Framework:** Double Diamond Design Model (British Design Council) adapted for Autonomous AI Agents.
+- **Socratic Method & First Principles:** Systematic inquiry challenging assumptions and establishing irreducible physical invariants.
+- **Architecture Trade-Off Analysis:** Comparative matrix scoring based on ATAM (Architecture Tradeoff Analysis Method).
+- **OWASP & Privacy by Design:** Early identification of security trust boundaries during initial concept definition.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Single Question Invariant):** Ask exactly ONE clarifying question per turn to prevent cognitive overload.
+2. **Rule of Thumb 2 (Multi-Option Mandate):** Always present 2 to 3 distinct architectural alternatives with concrete pros/cons.
+3. **Rule of Thumb 3 (Ambiguity Reduction Gate):** Do not transition to detailed design until Ambiguity Score $A_{\text{score}} \le 0.15$.
+4. **Rule of Thumb 4 (Section-by-Section Review):** Present proposed designs incrementally to gather early user consensus.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

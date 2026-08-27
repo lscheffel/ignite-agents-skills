@@ -488,28 +488,11 @@
 <ul>
 <li>👉 <a href="./references/patterns-and-migrations.md">references/patterns-and-migrations.md</a></li>
 </ul>
-<h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
-<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
-<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
-<ul>
-<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
-<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
-<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
-</ul>
-<h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
-<ul>
-<li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
-<li>[ ] O procedimento seguiu estritamente as regras e boas práticas da especialização.</li>
-<li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
-<li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
-<li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
-</ul>
-<h2 id="completion-gate">Completion Gate</h2>
-<p>A tarefa associada à skill <code>database-architecture</code> só pode ser declarada concluída quando:</p>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severity</th><th>Negative Impact</th><th>Canonical Mitigation</th></tr><tr><td><strong>Early Execution without Context</strong></td><td>🔴 Critical</td><td>Context hallucination and destructive refactoring</td><td>Enable the <code>cap</code> skill to acquire minimal evidence before editing.</td></tr><tr><td><strong>Omission of Validation Checklists</strong></td><td>🟡 Medium</td><td>Delivery of artifacts with syntactic inconsistencies</td><td>Rigorously execute the checklist step by step before handoff.</td></tr><tr><td><strong>Lack of Decision Documentation</strong></td><td>🟢 Low</td><td>Loss of technical traceability and architectural drift</td><td>Record relevant trade-offs via the <code>adr-generator</code> skill.</td></tr></table></div>
 <ol>
-<li>Todas as verificações do checklist operacional foram atendidas.</li>
-<li>O resultado foi validado deterministamente através de evidências de execução.</li>
-<li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
+<li>All operational checklist checks have been met.</li>
+<li>The result has been validated deterministically through execution evidence.</li>
+<li>There are no outstanding structural issues, placeholders, or unresolved errors.</li>
 </ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

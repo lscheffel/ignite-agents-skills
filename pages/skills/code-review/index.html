@@ -474,41 +474,7 @@
 <li><strong>Rapid Verdict:</strong> Return immediately with a list of improvements and approval/blocking in direct format.</li>
 </ol>
 <hr>
-<h2 id="operational-flow-full-mode-multi-agent-protocol">Operational Flow: Full Mode (Multi-Agent Protocol)</h2>
-<hr>
-<h1 id="runtime-state-machine">Runtime State Machine</h1>
-<pre data-lang="text"><code>INITIALIZED
-    ↓
-DEPENDENCY_VERIFICATION
-    ↓
-INPUT_SANITIZATION
-    ↓
-SEMANTIC_EXTRACTION
-    ↓
-REVIEW_DISPATCH
-    ↓
-CONSENSUS_EVALUATION
-    ↓
-AUDIT_PERSISTENCE
-    ↓
-MERGE_APPROVED</code></pre>
-<p>Terminal states:</p>
-<pre data-lang="text"><code>MERGE_BLOCKED
-ESCALATED
-FAILED</code></pre>
-<hr>
-<h1 id="phase-0--dependency-verification">Phase 0 — Dependency Verification</h1>
-<h2 id="generate-sbom">Generate SBOM</h2>
-<pre data-lang="bash"><code>syft . -o json &gt; sbom.json</code></pre>
-<h2 id="dependency-security-scanning">Dependency Security Scanning</h2>
-<p>Python:</p>
-<pre data-lang="bash"><code>pip-audit</code></pre>
-<p>Node:</p>
-<pre data-lang="bash"><code>npm audit --audit-level high</code></pre>
-<p>Rust:</p>
-<pre data-lang="bash"><code>cargo audit</code></pre>
-<p>Containers:</p>
-<pre data-lang="bash"><code>grype .</code></pre>
+<h2 id="-generate-sbom-dependency-security-scanning">操作流程：全模式（多代理协议）## Generate SBOM## Dependency Security Scanning</h2>
 <h2 id="approved-tool-verification">Approved Tool Verification</h2>
 <p>Every executable dependency MUST satisfy:</p>
 <ul>
@@ -521,26 +487,7 @@ FAILED</code></pre>
 <pre data-lang="text"><code>BLOCK_EXECUTION</code></pre>
 <hr>
 <h1 id="phase-1--input-sanitization">Phase 1 — Input Sanitization</h1>
-<h2 id="objective">Objective</h2>
-<p>Transform untrusted inputs into trusted semantic artifacts.</p>
-<h2 id="security-gateway-pipeline">Security Gateway Pipeline</h2>
-<pre data-lang="text"><code>RAW INPUT
-    ↓
-Tokenizer
-    ↓
-Parser
-    ↓
-Metadata Extractor
-    ↓
-Normalizer
-    ↓
-Schema Validator
-    ↓
-Policy Validator
-    ↓
-Serializer
-    ↓
-TRUSTED ARTIFACT</code></pre>
+<h2 id="cl-security-gateway-pipeline">Cél## Security Gateway Pipeline</h2>
 <h2 id="forbidden-inputs">Forbidden Inputs</h2>
 <p>Never expose directly to reviewer agents:</p>
 <ul>
@@ -552,39 +499,12 @@ TRUSTED ARTIFACT</code></pre>
 <li>credentials</li>
 <li>configuration files</li>
 </ul>
-<h2 id="secret-detection">Secret Detection</h2>
-<p>Execute:</p>
-<pre data-lang="bash"><code>gitleaks detect
-detect-secrets scan
-trufflehog git .</code></pre>
-<p>Detection result:</p>
-<pre data-lang="text"><code>BLOCK_MERGE
-ESCALATE_SECURITY</code></pre>
-<hr>
-<h1 id="phase-2--semantic-extraction">Phase 2 — Semantic Extraction</h1>
-<h2 id="allowed-artifacts">Allowed Artifacts</h2>
+<h2 id="---ast">潛在的脆弱性檢測- 概念語法樹 (AST)</h2>
 <ul>
-<li>Abstract Syntax Tree (AST)</li>
-<li>Semantic Graph</li>
-<li>Code Property Graph</li>
-<li>Dependency Graph</li>
+<li>意義圖</li>
+<li>代碼屬性圖</li>
+<li>依賴關係圖## Zakazany artefakt## Semantic Change Schema</li>
 </ul>
-<h2 id="forbidden-artifact">Forbidden Artifact</h2>
-<pre data-lang="text"><code>RAW_DIFF</code></pre>
-<h2 id="semantic-change-schema">Semantic Change Schema</h2>
-<pre data-lang="json"><code>{
-  &quot;change_id&quot;: &quot;uuid&quot;,
-  &quot;change_type&quot;: &quot;function_added&quot;,
-  &quot;module&quot;: &quot;auth.py&quot;,
-  &quot;symbol&quot;: &quot;validate_token&quot;,
-  &quot;dependencies_added&quot;: [&quot;jwt&quot;],
-  &quot;security_impact&quot;: true,
-  &quot;behavior_change&quot;: true,
-  &quot;breaking_change&quot;: false,
-  &quot;risk_score&quot;: 0.82
-}</code></pre>
-<hr>
-<h1 id="phase-3--review-dispatch">Phase 3 — Review Dispatch</h1>
 <h2 id="reviewer-swarm">Reviewer Swarm</h2>
 <h3 id="architecture-reviewer">Architecture Reviewer</h3>
 <p>Responsibilities:</p>
@@ -646,7 +566,6 @@ permissions:
       - pytest</code></pre>
 <hr>
 <h1 id="phase-4--consensus-evaluation">Phase 4 — Consensus Evaluation</h1>
-<h2 id="voting-weights">Voting Weights</h2>
 <div class="table-wrapper"><table><tr><th>Reviewer</th><th>Weight</th></tr><tr><td>Security</td><td>0.35</td></tr><tr><td>Architecture</td><td>0.25</td></tr><tr><td>Quality</td><td>0.20</td></tr><tr><td>Performance</td><td>0.20</td></tr></table></div>
 <h2 id="decision-rules">Decision Rules</h2>
 <p>Automatic rejection:</p>
@@ -701,14 +620,7 @@ Ed25519</code></pre>
 <li>MINOR → New reviewers or capabilities</li>
 <li>PATCH → Policy updates</li>
 </ul>
-<h2 id="change-requirements">Change Requirements</h2>
-<p>Every change requires:</p>
-<ul>
-<li>ADR</li>
-<li>Security Review</li>
-<li>Architecture Approval</li>
-<li>Migration Guide</li>
-</ul>
+<p>Każda zmiana wymaga:</p>
 <h2 id="deprecation-policy">Deprecation Policy</h2>
 <ul>
 <li>minimum support period: 24 months</li>
@@ -750,14 +662,7 @@ ESCALATE</code></pre>
     F --&gt; G{&quot;Checklist 100% Aprovado?&quot;}
     G --&gt;|Não| E
     G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
-<h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
-<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
-<h2 id="edge-cases--failure-modes">Edge Cases & Failure Modes</h2>
-<ul>
-<li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
-<li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
-<li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
-</ul>
+<div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severity</th><th>Negative Impact</th><th>Canonical Mitigation</th></tr><tr><td><strong>Early Execution without Context</strong></td><td>🔴 Critical</td><td>Context hallucination and destructive refactoring</td><td>Enable the <code>cap</code> skill to acquire minimal evidence before editing.</td></tr><tr><td><strong>Omission of Validation Checklists</strong></td><td>🟡 Medium</td><td>Delivery of artifacts with syntactic inconsistencies</td><td>Rigorously execute the checklist step by step before handoff.</td></tr><tr><td><strong>Lack of Decision Documentation</strong></td><td>🟢 Low</td><td>Loss of technical traceability and architectural drift</td><td>Record relevant trade-offs via the <code>adr-generator</code> skill.</td></tr></table></div>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

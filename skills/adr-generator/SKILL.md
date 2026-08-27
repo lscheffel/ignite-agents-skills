@@ -408,3 +408,37 @@ A tarefa associada à skill `adr-generator` só pode ser declarada concluída qu
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Decision Complexity Index (DCI) & Contract Schema Validation (SOTA)
+
+Before generating a Decision Set, compute the **Decision Complexity Index (DCI)**:
+
+$$\text{DCI} = \text{ScopeDepth} + \text{StatefulInteractions} + \text{UncertaintyPenalty}$$
+
+Where:
+- **ScopeDepth**: `1` (Single module) to `4` (Repository-wide SSOT/Core Engine).
+- **StatefulInteractions**: `0` (Pure logic) to `3` (Distributed persistence/caching/multi-runtime).
+- **UncertaintyPenalty**: `0` (Standard pattern) to `3` (Unprecedented architecture).
+
+### Tier Selection Algebra:
+- $\text{DCI} \le 2 \implies$ **Tier 0 (Lightweight Single ADR)**
+- $3 \le \text{DCI} \le 5 \implies$ **Tier 1 (Triad: ADR + BP + TODO)**
+- $\text{DCI} \ge 6 \implies$ **Tier 2 (Quadra SOTA: ADR + BP + PI + TODO + Verification Gate)**
+
+### Cross-Artifact Contract Schema Rules:
+1. Every task in `*-TODO.md` MUST explicitly link to a step in `*-PI.md` or a component in `*-BP.md`.
+2. All technical constraints defined in `ADR-XXX.md` must be reflected as explicit validation items in the TODO checklist.
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Architectural Decision Framework:** Extended MADR (Markdown Architecture Decision Records) with ISO/IEC/IEEE 42010 compliance.
+- **Domain-Driven Design (DDD) Alignment:** Explicit mapping of decisions to Bounded Contexts, Aggregates, and Domain Events.
+- **Idempotency & API Standards:** Alignment with RFC 7231 (HTTP Semantics), RFC 7807 (Problem Details), and RFC 9457 for standardized error contracts.
+- **SOLID & Clean Architecture Principles:** Explicit separation of concerns across Decision Sets (ADR = Decision, BP = Specification, PI = Execution Plan, TODO = Verification Checklist).
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Tier Determinism):** Compute Decision Complexity Index (DCI); never produce a lightweight ADR for core SSOT modifications.
+2. **Rule of Thumb 2 (Pre-Implementation Plan Rule):** If an agent will write $>100$ lines of code across $>2$ modules, a formal `*-PI.md` is mandatory.
+3. **Rule of Thumb 3 (Negative Consequences Invariant):** Every ADR must document at least 2 trade-offs or negative consequences; zero-trade-off architectures are rejected as uncritical.
+4. **Rule of Thumb 4 (Traceability Gate):** Every architectural requirement must map directly to an operational verification task in `*-TODO.md`.

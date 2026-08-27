@@ -745,6 +745,30 @@ git tag v1.2.0-rollback-20240115</code></pre>
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="machine-readable-governance-as-code--multi-runtime-contracts-sota">Machine-Readable Governance-as-Code & Multi-Runtime Contracts (SOTA)</h2>
+<p>Repository policies are formalized as JSON Schema contracts in <code>.github/governance/agent-policies.json</code>.</p>
+<h3 id="automated-agent-compliance-validation">Automated Agent Compliance Validation:</h3>
+<p>Before pushing or merging, agents verify compliance against the 4 immutable pillars:</p>
+<ol>
+<li><strong>Branch Isolation:</strong> Changes committed only to <code>feature/<em></code>, <code>fix/</em></code>, or <code>adr-*</code>. Direct commits to <code>master</code>/<code>main</code> are blocked.</li>
+<li><strong>Conventional Commits:</strong> Enforced pattern <code>^(feat|fix|docs|refactor|test|chore)\([a-z0-9_-]+\): .+</code>.</li>
+<li><strong>Pre-Commit Audit Gate:</strong> <code>python3 scripts/audit_engine.py</code> must return exit code <code>0</code>.</li>
+<li><strong>Bilingual Trigger Invariance:</strong> Skill frontmatter must contain at least 8 triggers (minimum 4 EN + 4 PT-BR).</li>
+</ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Governance-as-Code Standards:</strong> Machine-readable policies (<code>.github/governance/agent-policies.json</code>), OPA/Rego and JSON Schema compliance.</li>
+<li><strong>Branching & Release Strategy:</strong> Trunk-Based Development with Short-Lived Feature Branches and Semantic Versioning (SemVer 2.0.0).</li>
+<li><strong>Conventional Commits Specification:</strong> Compliance with Conventional Commits v1.0.0 for automated changelog generation.</li>
+<li><strong>Supply Chain Security:</strong> SLSA (Supply-chain Levels for Software Artifacts) framework alignment and cryptographically attested gates.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Branch Isolation Rule):</strong> Direct commits to protected branches (<code>master</code>/<code>main</code>/<code>gh-pages</code>) are strictly rejected.</li>
+<li><strong>Rule of Thumb 2 (Conventional Commit Strictness):</strong> All commit messages must strictly adhere to the type/scope contract.</li>
+<li><strong>Rule of Thumb 3 (Pre-Commit Zero-Warning Mandate):</strong> Commits are blocked if the 8-Dimension SOTA Audit Engine reports critical violations.</li>
+<li><strong>Rule of Thumb 4 (Runtime SSOT Parity):</strong> Post-commit hooks must synchronize the canonical skills repository with local agent runtimes.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

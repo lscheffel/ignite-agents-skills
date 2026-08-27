@@ -885,6 +885,25 @@ React dashboard for real-time analytics visualization.
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="multi-runtime-ssot-drift-detection--synchronization-matrix-sota">Multi-Runtime SSOT Drift Detection & Synchronization Matrix (SOTA)</h2>
+<p>Maintains real-time synchronization between the repository's Single Source of Truth (<code>AGENTS.md</code>) and runtime-specific instruction layers:</p>
+<div class="table-wrapper"><table><tr><th>SSOT Pillar</th><th>Canonical Source</th><th>Derivative Target</th><th>Drift Detection Mechanism</th></tr><tr><td><strong>Repository Governance</strong></td><td><code>AGENTS.md</code></td><td><code>GEMINI.md</code></td><td>SHA-256 header hash validation in pre-commit</td></tr><tr><td><strong>Skill Registry</strong></td><td><code>skills/index.json</code></td><td><code>pages/index.html</code></td><td><code>scripts/validate-index.sh</code> checksum comparison</td></tr><tr><td><strong>Agent Policies</strong></td><td><code>.github/governance/agent-policies.json</code></td><td><code>scripts/audit_engine.py</code></td><td>JSON Schema validation gate</td></tr><tr><td><strong>Multi-Target Runtimes</strong></td><td><code>skills/</code> (Source)</td><td><code>~/.gemini/config/skills</code></td><td><code>scripts/sync_runtime.py --status</code> drift check</td></tr></table></div>
+<h3 id="automated-prompt-drift-remediation">Automated Prompt Drift Remediation:</h3>
+<p>When <code>AGENTS.md</code> is updated, derivative instruction files (<code>GEMINI.md</code>) must be reconciled immediately to prevent hallucinated or obsolete operating boundaries.</p>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Single Source of Truth (SSOT) Architecture:</strong> Centralized governance in <code>AGENTS.md</code> with deterministic compilation to downstream instruction files (<code>GEMINI.md</code>).</li>
+<li><strong>Autonomous Agent Instruction Design:</strong> Prompt engineering best practices, role boundary containment, and instruction hierarchy principles.</li>
+<li><strong>JSON Schema & Index Integrity:</strong> Strict validation of <code>skills/index.json</code> against actual filesystem skill bundles.</li>
+<li><strong>Drift Detection Algorithms:</strong> Continuous SHA-256 header hash reconciliation across multi-agent workspace roots.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Precedence Invariant):</strong> <code>AGENTS.md</code> rules take strict precedence over default model training weights.</li>
+<li><strong>Rule of Thumb 2 (Zero Hallucination Gate):</strong> Skill descriptions in <code>index.json</code> must exactly match frontmatter definitions in <code>SKILL.md</code>.</li>
+<li><strong>Rule of Thumb 3 (Runtime Synchronization Gate):</strong> Any change in <code>AGENTS.md</code> must trigger immediate synchronization of <code>GEMINI.md</code>.</li>
+<li><strong>Rule of Thumb 4 (Modular Scaffolding Rule):</strong> Complex skills must expose <code>templates/</code> and <code>examples/</code> subfolders for deterministic execution.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

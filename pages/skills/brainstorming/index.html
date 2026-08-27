@@ -642,6 +642,38 @@ Handoff to `agent-planning-execution` for work breakdown decomposition.</code></
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="double-diamond-divergenceconvergence-engine--ambiguity-metrics-sota">Double Diamond Divergence/Convergence Engine & Ambiguity Metrics (SOTA)</h2>
+<p>Brainstorming follows the <strong>Double Diamond Protocol</strong> adapted for Autonomous Agentic Ideation:</p>
+<pre data-lang="mermaid"><code>graph LR
+    subgraph &quot;Diamond 1: Problem Space&quot;
+        D1A[Discover: Socratic Inquiry] --&gt; D1B[Define: Core Problem Invariants]
+    end
+    subgraph &quot;Diamond 2: Solution Space&quot;
+        D2A[Develop: 2-3 Architectural Options] --&gt; D2B[Deliver: Validated Design Spec]
+    end
+    D1B --&gt; D2A</code></pre>
+<h3 id="ambiguity-reduction-equation-atextscore">Ambiguity Reduction Equation ($A_{\text{score}}$):</h3>
+<p>$$A_{\text{score}} = \frac{\text{Unresolved Core Invariants} + \text{Unspecified Non-Goals}}{\text{Total Identified Problem Dimensions}}$$</p>
+<h3 id="stage-gate-transitions">Stage-Gate Transitions:</h3>
+<ul>
+<li><strong>Phase 1 to Phase 2 (Discover $\to$ Define):</strong> Permitted only after memory inspection is complete.</li>
+<li><strong>Phase 3 to Phase 4 (Develop $\to$ Deliver):</strong> Strictly locked until $A_{\text{score}} \le 0.15$.</li>
+<li><strong>Phase 5 (Handoff):</strong> Produces <code>docs/plans/PLAN-XXX.md</code> and hands off deterministically to <code>agent-planning-execution</code> or <code>adr-generator</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Design Exploration Framework:</strong> Double Diamond Design Model (British Design Council) adapted for Autonomous AI Agents.</li>
+<li><strong>Socratic Method & First Principles:</strong> Systematic inquiry challenging assumptions and establishing irreducible physical invariants.</li>
+<li><strong>Architecture Trade-Off Analysis:</strong> Comparative matrix scoring based on ATAM (Architecture Tradeoff Analysis Method).</li>
+<li><strong>OWASP & Privacy by Design:</strong> Early identification of security trust boundaries during initial concept definition.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Single Question Invariant):</strong> Ask exactly ONE clarifying question per turn to prevent cognitive overload.</li>
+<li><strong>Rule of Thumb 2 (Multi-Option Mandate):</strong> Always present 2 to 3 distinct architectural alternatives with concrete pros/cons.</li>
+<li><strong>Rule of Thumb 3 (Ambiguity Reduction Gate):</strong> Do not transition to detailed design until Ambiguity Score $A_{\text{score}} \le 0.15$.</li>
+<li><strong>Rule of Thumb 4 (Section-by-Section Review):</strong> Present proposed designs incrementally to gather early user consensus.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

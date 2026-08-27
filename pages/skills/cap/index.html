@@ -633,6 +633,32 @@ fd docs</code></pre>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="dynamic-token-budgeting--context-saturation-formula-sota">Dynamic Token Budgeting & Context Saturation Formula (SOTA)</h2>
+<p>To prevent context bloat and guarantee cheapest-evidence discovery, compute the dynamic context exploration budget ($B_{\text{ctx}}$):</p>
+<p>$$B_{\text{ctx}} = B_{\text{base}} + (\alpha \times N_{\text{symbols}}) + (\beta \times N_{\text{files\_changed}})$$</p>
+<p>Where:</p>
+<ul>
+<li>$B_{\text{base}} = 1,500$ tokens (Baseline prompt & directory mapping).</li>
+<li>$\alpha = 250$ tokens per target symbol / interface.</li>
+<li>$\beta = 800$ tokens per expected modified file.</li>
+<li><strong>Hard Exploration Ceiling ($C_{\text{max}}$):</strong> $12,000$ tokens.</li>
+</ul>
+<h3 id="mathematical-saturation-heuristic">Mathematical Saturation Heuristic:</h3>
+<p>Stop repository exploration immediately when: $$\text{Uncertainty}(U) = \frac{\text{Missing Identifiers}}{\text{Total Required Inputs}} = 0.0$$ If $U = 0$, continuing to read files constitutes a critical anti-pattern (<code>🔴 Context Hoarding</code>).</p>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Information Retrieval & Context Minimization:</strong> Sub-linear search principles, AST-based indexing, and ripgrep exact matching.</li>
+<li><strong>Token Efficiency (BPE Optimization):</strong> Strict adherence to BPE compression guidelines, eliminating redundant context acquisition.</li>
+<li><strong>Cognitive Load Theory:</strong> Cognitive load optimization for LLM context windows, prioritizing signal density over raw volume.</li>
+<li><strong>POSIX & Universal Tooling:</strong> Universal discovery commands compatible across Linux/macOS/BSD environments.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Cheapest Evidence First):</strong> Search exact symbol definitions via <code>grep_search</code> before opening any file.</li>
+<li><strong>Rule of Thumb 2 (Max File View Window):</strong> Never view $>150$ lines at a time unless explicitly required for full-module AST analysis.</li>
+<li><strong>Rule of Thumb 3 (Immediate Saturation Stop):</strong> As soon as missing parameters are identified, halt search immediately and present completion options.</li>
+<li><strong>Rule of Thumb 4 (Token Budget Ceiling):</strong> Exploration token budget must not exceed $B_{\text{ctx}} = 1,500 + 250 \cdot N_{\text{symbols}} + 800 \cdot N_{\text{files}}$.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

@@ -263,3 +263,37 @@ A tarefa associada à skill `adr-archive` só pode ser declarada concluída quan
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Cryptographic Commit Binding & Archival Lifecycle (SOTA)
+
+### Cryptographic Evidence Record Attestation Block
+The Janitor auto-generates the canonical `ADR-XXX-ER.md` using cryptographic commit binding:
+
+```markdown
+## Cryptographic Execution Attestation
+- **Certifying Commit SHA:** `<git-rev-parse-HEAD>`
+- **Git Tree Signature:** `<git-rev-parse-HEAD^{tree}>`
+- **Validation Exit Code:** `0 (ALL_PASS)`
+- **Ledger Score Pre/Post:** `84.0/100 -> 96.5/100 (+12.5 pts)`
+- **Auditor Signature:** `Antigravity Governance Gatekeeper / SOTA Engine v3.0`
+```
+
+### Soft-Tombstoning Pruning Lifecycle
+When executing `--prune-debts`:
+1. Resolved debts are marked with `tombstone: true` and `archived_at: <ISO-DATE>` in `tech-debt-registry.json`.
+2. After 30 days of tombstoning, the Janitor moves the payload permanently to `docs/governance/tech-debt-archive.json`.
+3. Ensures zero token bloat in active agent prompts while maintaining an immutable compliance trail.
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Lifecycle Governance Standard:** MADR 3.0.0 (Markdown Architecture Decision Records) combined with ISO 9001 quality audit trails.
+- **Audit & Cryptographic Attestation:** SHA-256 tree hashing and RFC 3161 cryptographic timestamping alignment.
+- **Technical Debt Taxonomy:** Categorization based on Martin Fowler's Technical Debt Quadrant (Prudent/Deliberate vs Reckless/Inadvertent).
+- **Clean Architecture Preservation:** Automated verification that archived ADRs leave zero orphan dependencies in active production modules.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Zero-Unchecked Invariant):** An ADR cannot be archived if any task in `*-TODO.md` remains unchecked (`- [ ]`).
+2. **Rule of Thumb 2 (Evidence Record Binding):** Every archival operation MUST emit a corresponding `*-ER.md` artifact in the `docs/adr/` root before moving working files.
+3. **Rule of Thumb 3 (Soft Tombstoning Grace Period):** Mitigated technical debts remain tombstoned for 30 days before permanent garbage collection.
+4. **Rule of Thumb 4 (Clean Root Guarantee):** Active working directory must exclusively contain currently executing ADRs and completed ER certificates.

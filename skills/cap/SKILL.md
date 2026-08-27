@@ -261,3 +261,34 @@ Once Context Saturation is reached, **do not begin implementation automatically*
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Dynamic Token Budgeting & Context Saturation Formula (SOTA)
+
+To prevent context bloat and guarantee cheapest-evidence discovery, compute the dynamic context exploration budget ($B_{\text{ctx}}$):
+
+$$B_{\text{ctx}} = B_{\text{base}} + (\alpha \times N_{\text{symbols}}) + (\beta \times N_{\text{files\_changed}})$$
+
+Where:
+- $B_{\text{base}} = 1,500$ tokens (Baseline prompt & directory mapping).
+- $\alpha = 250$ tokens per target symbol / interface.
+- $\beta = 800$ tokens per expected modified file.
+- **Hard Exploration Ceiling ($C_{\text{max}}$):** $12,000$ tokens.
+
+### Mathematical Saturation Heuristic:
+Stop repository exploration immediately when:
+$$\text{Uncertainty}(U) = \frac{\text{Missing Identifiers}}{\text{Total Required Inputs}} = 0.0$$
+If $U = 0$, continuing to read files constitutes a critical anti-pattern (`🔴 Context Hoarding`).
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Information Retrieval & Context Minimization:** Sub-linear search principles, AST-based indexing, and ripgrep exact matching.
+- **Token Efficiency (BPE Optimization):** Strict adherence to BPE compression guidelines, eliminating redundant context acquisition.
+- **Cognitive Load Theory:** Cognitive load optimization for LLM context windows, prioritizing signal density over raw volume.
+- **POSIX & Universal Tooling:** Universal discovery commands compatible across Linux/macOS/BSD environments.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Cheapest Evidence First):** Search exact symbol definitions via `grep_search` before opening any file.
+2. **Rule of Thumb 2 (Max File View Window):** Never view $>150$ lines at a time unless explicitly required for full-module AST analysis.
+3. **Rule of Thumb 3 (Immediate Saturation Stop):** As soon as missing parameters are identified, halt search immediately and present completion options.
+4. **Rule of Thumb 4 (Token Budget Ceiling):** Exploration token budget must not exceed $B_{\text{ctx}} = 1,500 + 250 \cdot N_{\text{symbols}} + 800 \cdot N_{\text{files}}$.

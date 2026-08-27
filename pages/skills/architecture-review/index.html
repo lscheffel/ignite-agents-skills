@@ -823,6 +823,38 @@ mkdir -p test/legacy &amp;&amp; touch test/legacy/user-characterization.test.ts<
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="architectural-fitness-functions--distance-metrics-sota">Architectural Fitness Functions & Distance Metrics (SOTA)</h2>
+<p>Evaluate architectural structural health using <strong>Robert C. Martin's Package Coupling Metrics</strong>:</p>
+<ol>
+<li><strong>Afferent Coupling ($C_a$):</strong> Number of external packages depending on this package.</li>
+<li><strong>Efferent Coupling ($C_e$):</strong> Number of external packages this package depends upon.</li>
+<li><strong>Instability ($I$):</strong> $I = \frac{C_e}{C_a + C_e} \quad (I \in [0, 1])$</li>
+<li><strong>Abstractness ($A$):</strong> $A = \frac{N_{\text{abstract}}}{N_{\text{total}}} \quad (A \in [0, 1])$</li>
+<li><strong>Normalized Distance from the Main Sequence ($D$):</strong></li>
+</ol>
+<p>$$D = |A + I - 1| \quad (D \in [0, 1])$$</p>
+<h3 id="fitness-gate-criteria">Fitness Gate Criteria:</h3>
+<ul>
+<li><strong>$D \le 0.3$ (Optimal):</strong> Package is in the balanced zone between abstractness and stability.</li>
+<li><strong>$0.3 < D \le 0.7$ (Tolerated):</strong> Monitored tech debt.</li>
+<li><strong>$D > 0.7$ (Architectural Violation):</strong></li>
+<li>If $A \to 0$ and $I \to 0$: <strong>Zone of Pain</strong> (Rigid, highly depended-on concrete code). Must extract interfaces.</li>
+<li>If $A \to 1$ and $I \to 1$: <strong>Zone of Uselessness</strong> (Abstract code with no dependents). Must prune or consolidate.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Coupling & Cohesion Standards:</strong> Robert C. Martin's Package Metric Suite (Instability $I$, Abstractness $A$, Normalized Distance $D$).</li>
+<li><strong>Clean & Hexagonal Architecture:</strong> Ports & Adapters separation, Domain isolation from infrastructure, Dependency Rule compliance.</li>
+<li><strong>SOLID Principles:</strong> Strict enforcement of SRP, OCP, LSP, ISP, and DIP across class and module hierarchies.</li>
+<li><strong>ACID & Distributed Systems Semantics:</strong> Evaluation of CAP theorem trade-offs, transactional boundaries, and eventual consistency models.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Main Sequence Invariant):</strong> Any module with distance $D = |A + I - 1| > 0.7$ fails the architectural gate.</li>
+<li><strong>Rule of Thumb 2 (Dependency Direction Rule):</strong> Dependencies must point inwards towards Domain entities; inner layers must have zero awareness of outer frameworks.</li>
+<li><strong>Rule of Thumb 3 (Cyclic Dependency Ban):</strong> Cyclic package imports are categorized as Critical Anti-Patterns (<code>🔴 Cyclic Dependency Graph</code>) requiring immediate extraction of interfaces.</li>
+<li><strong>Rule of Thumb 4 (Interface Segregation Threshold):</strong> Interfaces with $>7$ public methods must be segregated into role-specific client interfaces.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

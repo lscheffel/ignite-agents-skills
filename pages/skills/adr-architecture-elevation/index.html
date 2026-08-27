@@ -631,6 +631,45 @@ Operational Requirements (SLOs, SLAs, observability, recovery)</code></pre>
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="architectural-reversibility-algebra--blast-radius-index-sota">Architectural Reversibility Algebra & Blast Radius Index (SOTA)</h2>
+<p>Every architecture decision evaluated under this skill must be quantified using the <strong>Blast Radius Index ($BR$)</strong>:</p>
+<p>$$BR = (N_{\text{dependents}} \times 1.5) + (R_{\text{data}} \times 2.0) + (H_{\text{rollback}} \times 0.5)$$</p>
+<h3 id="reversibility-scoring-rubric">Reversibility Scoring Rubric:</h3>
+<ul>
+<li><strong>$N_{\text{dependents}}$</strong>: Number of downstream modules, packages, or services consuming this interface directly.</li>
+<li><strong>$R_{\text{data}}$ (Data Migration Risk)</strong>:</li>
+<li><code>0</code>: Stateless or ephemeral cache change.</li>
+<li><code>1</code>: Additive non-breaking schema evolution.</li>
+<li><code>2</code>: State migration required with dual-write phase.</li>
+<li><code>3</code>: Destructive database rewrite / irreversible event schema change.</li>
+<li><strong>$H_{\text{rollback}}$</strong>: Estimated engineer-hours required to safely restore the prior system state.</li>
+</ul>
+<pre data-lang="text"><code>ELEVATION DECISION GATE:
+- If BR &lt; 3.0: Classified as Low Blast Radius (One-Way Door is NOT present). Fast-track elevation.
+- If 3.0 &lt;= BR &lt; 7.0: Standard Architectural Decision. Requires 8-phase comparative evaluation matrix.
+- If BR &gt;= 7.0: CRITICAL Blast Radius (High Irreversibility). Mandatory Multi-Agent Adversarial Challenge (Red Team / Blue Team).</code></pre>
+<h3 id="multi-agent-red-team--blue-team-adversarial-protocol">Multi-Agent Red Team / Blue Team Adversarial Protocol</h3>
+<p>When $BR \ge 7.0$, spawn an isolated challenger agent:</p>
+<ol>
+<li><strong>Blue Team Prompt:</strong> <em>"Defend Decision Set against failure modes, performance regressions under 10x scale, and maintainability bounds."</em></li>
+<li><strong>Red Team Prompt:</strong> <em>"Act as an adversarial principal architect. Find minimum 3 structural flaws, hidden couplings, or catastrophic rollback failure modes in this Decision Set."</em></li>
+</ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<p>This skill adheres strictly to international architecture standards and software engineering best practices:</p>
+<ul>
+<li><strong>Architecture Evaluation Standard:</strong> ISO/IEC/IEEE 42010 (Systems and software engineering — Architecture description).</li>
+<li><strong>Security & Threat Invariants:</strong> Compliance with OWASP Top 10 API Security Risks and RFC 7519 / RFC 6749 identity federation protocols.</li>
+<li><strong>SOLID & Clean Architecture Adherence:</strong> Explicit verification of Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.</li>
+<li><strong>Transactional & Event Semantics:</strong> Formal enforcement of ACID guarantees for synchronous state transitions and Idempotency keys (RFC 7231) for asynchronous Event-Driven Architectures.</li>
+<li><strong>Domain-Driven Design (DDD):</strong> Verification of Bounded Context boundaries, Aggregate roots, and anti-corruption layers.</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Reversibility Invariant):</strong> If a decision cannot be reversed within $H_{\text{rollback}} \le 2$ hours without data loss, it is a One-Way Door and MUST undergo independent adversarial review.</li>
+<li><strong>Rule of Thumb 2 (Blast Radius Containment):</strong> If $N_{\text{dependents}} \ge 3$, the interface must introduce an Anti-Corruption Layer (ACL) to shield legacy consumers.</li>
+<li><strong>Rule of Thumb 3 (State Migration Idempotency):</strong> Every database migration script must be strictly idempotent and re-runnable with zero data drift.</li>
+<li><strong>Rule of Thumb 4 (Cognitive Budget Limit):</strong> The architectural decision payload must maintain a Signal-to-Noise Ratio (SNR) $> 0.85$, removing speculative fluff.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

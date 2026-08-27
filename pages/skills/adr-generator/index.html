@@ -748,6 +748,40 @@ Describe the chosen solution.
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="decision-complexity-index-dci--contract-schema-validation-sota">Decision Complexity Index (DCI) & Contract Schema Validation (SOTA)</h2>
+<p>Before generating a Decision Set, compute the <strong>Decision Complexity Index (DCI)</strong>:</p>
+<p>$$\text{DCI} = \text{ScopeDepth} + \text{StatefulInteractions} + \text{UncertaintyPenalty}$$</p>
+<p>Where:</p>
+<ul>
+<li><strong>ScopeDepth</strong>: <code>1</code> (Single module) to <code>4</code> (Repository-wide SSOT/Core Engine).</li>
+<li><strong>StatefulInteractions</strong>: <code>0</code> (Pure logic) to <code>3</code> (Distributed persistence/caching/multi-runtime).</li>
+<li><strong>UncertaintyPenalty</strong>: <code>0</code> (Standard pattern) to <code>3</code> (Unprecedented architecture).</li>
+</ul>
+<h3 id="tier-selection-algebra">Tier Selection Algebra:</h3>
+<ul>
+<li>$\text{DCI} \le 2 \implies$ <strong>Tier 0 (Lightweight Single ADR)</strong></li>
+<li>$3 \le \text{DCI} \le 5 \implies$ <strong>Tier 1 (Triad: ADR + BP + TODO)</strong></li>
+<li>$\text{DCI} \ge 6 \implies$ <strong>Tier 2 (Quadra SOTA: ADR + BP + PI + TODO + Verification Gate)</strong></li>
+</ul>
+<h3 id="cross-artifact-contract-schema-rules">Cross-Artifact Contract Schema Rules:</h3>
+<ol>
+<li>Every task in <code><em>-TODO.md</code> MUST explicitly link to a step in <code></em>-PI.md</code> or a component in <code>*-BP.md</code>.</li>
+<li>All technical constraints defined in <code>ADR-XXX.md</code> must be reflected as explicit validation items in the TODO checklist.</li>
+</ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Architectural Decision Framework:</strong> Extended MADR (Markdown Architecture Decision Records) with ISO/IEC/IEEE 42010 compliance.</li>
+<li><strong>Domain-Driven Design (DDD) Alignment:</strong> Explicit mapping of decisions to Bounded Contexts, Aggregates, and Domain Events.</li>
+<li><strong>Idempotency & API Standards:</strong> Alignment with RFC 7231 (HTTP Semantics), RFC 7807 (Problem Details), and RFC 9457 for standardized error contracts.</li>
+<li><strong>SOLID & Clean Architecture Principles:</strong> Explicit separation of concerns across Decision Sets (ADR = Decision, BP = Specification, PI = Execution Plan, TODO = Verification Checklist).</li>
+</ul>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Tier Determinism):</strong> Compute Decision Complexity Index (DCI); never produce a lightweight ADR for core SSOT modifications.</li>
+<li><strong>Rule of Thumb 2 (Pre-Implementation Plan Rule):</strong> If an agent will write $>100$ lines of code across $>2$ modules, a formal <code>*-PI.md</code> is mandatory.</li>
+<li><strong>Rule of Thumb 3 (Negative Consequences Invariant):</strong> Every ADR must document at least 2 trade-offs or negative consequences; zero-trade-off architectures are rejected as uncritical.</li>
+<li><strong>Rule of Thumb 4 (Traceability Gate):</strong> Every architectural requirement must map directly to an operational verification task in <code>*-TODO.md</code>.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">
