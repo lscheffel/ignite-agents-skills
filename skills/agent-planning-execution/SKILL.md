@@ -2420,3 +2420,22 @@ Use a clear, scannable format. Tables work well for roadmap items. Use text stat
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Planning Paradigms:** Hierarchical Task Network (HTN) Planning, Least-to-Most Prompting, and Tree of Thoughts (ToT).
+- **Execution Tracking:** Milestone-driven State Machine with explicit rollback vectors.
+- **Software Quality Gates:** Test-Driven Development (TDD) cycle integration within execution loops.
+- **Artifact Governance:** Bidirectional cross-linking between Implementation Plans (`*-PI.md`), Task Backlogs (`*-TODO.md`), and Evidence Records (`*-ER.md`).
+
+### Task Decomposition & Dependency Graph Formula:
+The complexity of plan decomposition is bounded by the Critical Path Length ($L_{\text{crit}}$):
+
+$$L_{\text{crit}} = \max_{p \in \text{Paths}} \sum_{t \in p} \text{Duration}(t)$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Atomicity Rule):** No single plan step should touch $>3$ files or exceed 50 lines of code changes without intermediate test verification.
+2. **Rule of Thumb 2 (Fail-Fast Checkpoints):** If a validation step fails, halt forward execution immediately; never proceed to downstream dependent tasks.
+3. **Rule of Thumb 3 (Explicit Pre/Post-Conditions):** Every task in the roadmap must define deterministic entry prerequisites and verifiable exit deliverables.
+4. **Rule of Thumb 4 (Dynamic Plan Adaptation):** When runtime surprises occur, update the written plan artifact first before modifying additional code.

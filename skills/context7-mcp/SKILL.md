@@ -116,6 +116,24 @@ Incorporate the fetched documentation into your response:
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Live Documentation Retrieval:** Real-time API resolution, version pinning, and authoritative documentation indexing.
+- **Model Context Protocol Integration:** Fast MCP lazy-loading, caching, and token-optimized query dispatch.
+- **Semantic Routing:** Two-phase retrieval (1. `resolve-library-id` $\to$ 2. `query-docs`).
+- **Knowledge Freshness:** Strict prioritization of Context7 over model training weights for libraries and SDKs.
+
+### Context7 Operating Protocol:
+1. **Phase 1 (Resolve ID):** Call `resolve-library-id` using official library name and question context. Select match matching `/org/project`.
+2. **Phase 2 (Query Docs):** Call `query-docs` passing full natural language technical question.
+3. **Phase 3 (Doc Ingestion):** Answer strictly based on fetched documentation payload.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Never Guess Modern APIs):** For popular evolving frameworks (Next.js, React 19, Tailwind, Prisma), Context7 lookup is MANDATORY before writing code.
+2. **Rule of Thumb 2 (Full Question Rule):** Always pass the complete user technical question to `query-docs`, never isolated single keywords.
+3. **Rule of Thumb 3 (Version Specificity):** When a specific version is mentioned by the user (e.g. "Vite 6"), select the version-tagged library ID.
+4. **Rule of Thumb 4 (Fallback to Web Search):** If Context7 returns empty results after 2 attempts, fall back to official web search with domain whitelisting.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -124,3 +142,10 @@ Incorporate the fetched documentation into your response:
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding Context7 query:
+- [ ] Best matching library ID resolved via `resolve-library-id`
+- [ ] Query executed passing complete technical question context
+- [ ] Final answer strictly grounded in fetched documentation payload

@@ -29,6 +29,17 @@ metadata:
 
 # Circuit Breaker
 
+## When to Use
+
+### Use when:
+- Protecting LLM API calls and external services against cascading failure
+- Preventing runaway retry loops during rate limiting (HTTP 429) or outages (HTTP 5xx)
+- Implementing graceful degradation with fallback tiers
+
+### Do not use when:
+- Handling expected validation errors (HTTP 400/422) that should fail immediately
+- In-memory deterministic functions with no external I/O dependencies
+
 ## Overview
 
 The circuit-breaker skill is a safety mechanism that prevents infinite loops, resource exhaustion, and accidental destruction during autonomous development. It operates at the **loop level** (complementing `resilient-execution` which operates at the **task level**). Without circuit-breaker protection, autonomous loops can waste hours on stagnant problems, exhaust API limits, or accidentally destroy configuration files. This skill enforces hard boundaries that keep autonomous operations productive and safe.
@@ -331,6 +342,32 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Resilience Design Pattern:** Michael Nygard's Circuit Breaker (Release It!) and Martin Fowler's Fault Tolerance models.
+- **Finite State Machine (FSM):** 3-State deterministic transitions (Closed $\leftrightarrow$ Open $\leftrightarrow$ Half-Open).
+- **Backoff Algebra:** Full Jitter Exponential Backoff (AWS Architecture Guidelines / Decoupled Systems).
+- **Health Telemetry:** Rolling window failure rate monitoring with Prometheus-compatible error counters.
+
+### Circuit Breaker State Transition Matrix:
+
+| Current State | Event | Next State | Action / Side Effect |
+|:---|:---|:---|:---|
+| **CLOSED** | Consecutive Failures $\ge 5$ | **OPEN** | Trip breaker, reject calls immediately with fast-fail. |
+| **OPEN** | Cooldown Period ($T_{\text{cool}} \ge 60\text{s}$) Elapsed | **HALF-OPEN** | Allow probe request ($N_{\text{probe}} = 1$) to test backend. |
+| **HALF-OPEN** | Probe Request Succeeded | **CLOSED** | Reset failure counter to 0, restore normal traffic. |
+| **HALF-OPEN** | Probe Request Failed | **OPEN** | Reset cooldown timer with doubled backoff ceiling. |
+
+### Exponential Backoff with Full Jitter Equation:
+
+$$T_{\text{sleep}} = \text{Uniform}(0, \min(T_{\text{max}}, T_{\text{base}} \times 2^k))$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Fast-Fail Rule):** When in OPEN state, reject downstream calls instantly without attempting network I/O.
+2. **Rule of Thumb 2 (Error Classification):** 4xx client errors (e.g. 400 Bad Request) must NOT trip the circuit breaker; only 5xx, timeouts, and network exceptions trip the breaker.
+3. **Rule of Thumb 3 (Half-Open Safety):** During HALF-OPEN state, strictly limit concurrency to 1 probe request.
+4. **Rule of Thumb 4 (Fallback Mandate):** Every breaker-protected invocation must provide a deterministic degraded fallback response.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -339,3 +376,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding circuit breaker integration:
+- [ ] 3-state transitions verified via unit tests (Closed -> Open -> Half-Open -> Closed)
+- [ ] Full jitter exponential backoff verified under synthetic failure
+- [ ] Structured fallback payload emitted during OPEN state

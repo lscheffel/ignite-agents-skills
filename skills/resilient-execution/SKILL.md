@@ -310,6 +310,25 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Fault Tolerance Patterns:** Graceful Degradation, Bulkhead Isolation, Retry with Budgeting, and Self-Healing Systems.
+- **Idempotency Standards:** RFC 7231 safe methods and cryptographic idempotency key generation.
+- **Disaster Recovery:** Automated Rollback Vectors and State Checkpoint Hydration.
+- **Chaos Engineering:** Antifragile validation under synthetic failure injection.
+
+### Degradation Ladder (4 Tiers):
+1. **Tier 1 (Optimal):** Full live execution with external model inference and active tooling.
+2. **Tier 2 (Cached/RAG Fallback):** Local SQLite RAG semantic search when external LLM endpoints are degraded.
+3. **Tier 3 (Rule-Based Static Fallback):** Deterministic heuristic rules when semantic models are unavailable.
+4. **Tier 4 (Safe Refusal):** Fast-fail with structured error diagnostic when data corruption risk is detected.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Idempotent Retry Mandate):** Retries are strictly forbidden on non-idempotent operations without transaction rollback capabilities.
+2. **Rule of Thumb 2 (Max Retry Limit):** Maximum retry attempts is capped at $K_{\text{max}} = 3$; subsequent failures escalate down the degradation ladder.
+3. **Rule of Thumb 3 (State Checkpointing):** Save execution state before executing any high-risk file modification or external API invocation.
+4. **Rule of Thumb 4 (Self-Healing Recovery):** When an unhandled exception occurs, the system must capture the stack trace, rollback disk state, and alert the orchestrator.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

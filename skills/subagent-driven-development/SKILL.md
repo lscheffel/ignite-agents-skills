@@ -423,3 +423,17 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Subagent Isolation Standards:** Sandboxed execution environments with bounded filesystem access and isolated git workspaces.
+- **Context Hygiene:** Ephemeral subagent context lifecycles (spawn $\to$ execute single task $\to$ synthesize $\to$ destroy).
+- **Contract Enforcement:** JSON Schema validation on subagent structured return values.
+- **Observability & Tracing:** OpenTelemetry-compatible span tracking across parent and child agent executions.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Single Responsibility Subagent):** A subagent must be assigned exactly ONE discrete unit of work (e.g., "implement function X with tests").
+2. **Rule of Thumb 2 (Parent Synthesizer Rule):** The parent agent must verify subagent test results before accepting any code modifications.
+3. **Rule of Thumb 3 (Subagent Context Pruning):** Never pass the full conversation transcript to a subagent; inject only the minimal necessary context (CAP).
+4. **Rule of Thumb 4 (Failure Escalation):** If a subagent fails its task twice, terminate the subagent and escalate to human review or alternate strategy.

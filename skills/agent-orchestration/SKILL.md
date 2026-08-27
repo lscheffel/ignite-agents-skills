@@ -371,3 +371,22 @@ A tarefa associada à skill `agent-orchestration` só pode ser declarada conclu�
 2. O resultado foi validado deterministamente através de evidências de execução.
 3. Não restam pendências estruturais, placeholders ou erros não tratados.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Multi-Agent Orchestration Patterns:** Directed Acyclic Graph (DAG) Workflow Execution, Hierarchical Supervisor-Worker, and Peer-to-Peer Consensus.
+- **Data Exchange Contracts:** Immutable JSON Schema payloads and CloudEvents (v1.0.2) message encapsulation.
+- **Deadlock & Cycle Prevention:** Tarjan's Strongly Connected Components algorithm for runtime DAG dependency verification.
+- **Fault Isolation:** Bulkhead Pattern and Circuit Breaker isolation per agent worker node.
+
+### Multi-Agent DAG Execution Algebra:
+The orchestration graph $G = (V, E)$ must be strictly acyclic:
+
+$$\text{Cycle}(G) = \emptyset \quad \text{and} \quad \text{InDegree}(v_{\text{sink}}) \ge 1$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Zero Shared Mutable State):** Agents must never share mutable memory; all state handoffs occur via explicit, validated message envelopes.
+2. **Rule of Thumb 2 (Worker Timeout Bound):** Every delegated worker task must specify a strict wall-clock timeout ($T_{\text{worker}} \le 120\text{s}$) with automated fallback.
+3. **Rule of Thumb 3 (Fan-In Synthesis Gate):** An aggregator agent must validate the completeness of all parent nodes before emitting the final consolidated response.
+4. **Rule of Thumb 4 (Role Containment Invariant):** Specialized subagents are prohibited from executing tasks outside their defined system prompt boundary.

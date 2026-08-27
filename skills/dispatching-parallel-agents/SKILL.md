@@ -31,6 +31,18 @@ metadata:
 
 # Dispatching Parallel Agents
 
+## When to Use
+
+### Use when:
+- 2+ independent tasks have zero shared dependencies and touch disjoint files
+- Batch processing multiple distinct issues, features, or modules in parallel
+- Running exploratory prototypes concurrently under strict time budgets
+
+### Do not use when:
+- Tasks have sequential dependencies where step B depends on output of step A
+- Multiple subagents need to modify the exact same files or shared global state
+- The system is operating near API rate limits (use sequential ReAct loop instead)
+
 ## Overview
 
 This skill coordinates multiple agents working concurrently on independent subtasks to reduce total execution time while maintaining correctness. It provides strict rules for identifying safe parallelization opportunities, writing focused agent prompts, and integrating results without conflicts. The key constraint is that no two agents may modify the same file.
@@ -391,3 +403,27 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Concurrency & Parallelism Models:** Actor Model, Fork-Join Parallelism, and Work-Stealing Pool architectures.
+- **Resource Budgeting:** Mathematical Token Partitioning across concurrent execution threads.
+- **Merge & Conflict Resolution:** Three-way merge algorithms and deterministic AST reconciliation.
+- **Rate Limiting & Throttling:** Token Bucket algorithm for API request pacing under concurrent agent load.
+
+### Dynamic Token Budget Partitioning Formula:
+
+$$B_{\text{subagent}}^{(i)} = \frac{B_{\text{total}} - B_{\text{orchestrator}}}{M} \times W_i \quad \text{where} \quad \sum_{i=1}^M W_i = 1.0$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (File Partitioning Invariant):** Two parallel subagents MUST NEVER be assigned to modify the same file concurrently (Strict File Ownership Isolation).
+2. **Rule of Thumb 2 (Concurrency Limit):** Maximum concurrent active subagents is bounded by $M_{\text{max}} = 5$ to prevent API throttling and lock contention.
+3. **Rule of Thumb 3 (Join Synchronization Gate):** The orchestrator must block on `Promise.all` / `gather` until all dispatched subagents report completion or timeout.
+4. **Rule of Thumb 4 (Deterministic Conflict Resolution):** If merge conflicts arise, the orchestrator triggers an isolated resolution agent with AST diff context.
+
+## Completion Gate & Verification
+Before declaring parallel dispatching complete:
+- [ ] All subagent result envelopes received and schema-validated
+- [ ] AST diff reconciliation executed with zero syntax errors
+- [ ] Consolidated test suite executed with exit code 0

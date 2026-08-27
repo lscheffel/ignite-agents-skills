@@ -30,6 +30,17 @@ metadata:
 
 # MCP Builder
 
+## When to Use
+
+### Use when:
+- Building custom Model Context Protocol (MCP) servers (Stdio or SSE)
+- Exposing tools, resources, and prompt templates to AI coding assistants
+- Creating integrations between external APIs/databases and agent runtimes
+
+### Do not use when:
+- Standard CLI tools or direct scripts are sufficient without agent protocol binding
+- Building purely monolithic web applications without MCP client requirements
+
 ## Overview
 
 Build production-quality MCP (Model Context Protocol) servers that expose tools, resources, and prompts to AI clients. This skill covers the full development lifecycle: tool definition, resource management, prompt templates, transport configuration (stdio, SSE), error handling, security hardening, testing, and client integration.
@@ -460,6 +471,31 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Protocol Specification:** Model Context Protocol (MCP 2024-11-05 Specification) and JSON-RPC 2.0.
+- **Transport Architectures:** Stdio Stream Transport (POSIX stdin/stdout) and Server-Sent Events (SSE) with HTTP POST.
+- **Schema & Validation:** JSON Schema Draft-07 for tool parameters and resource URI templates.
+- **Security & Authorization:** Tool execution sandboxing, input sanitization, and path traversal prevention.
+
+### Stdio JSON-RPC 2.0 Transport Protocol Architecture:
+
+```text
+Client (Antigravity/Kilo)                       MCP Server (Stdio)
+       │                                                │
+       │─── JSON-RPC 2.0 Request ("tools/list") ───────>│
+       │<── JSON-RPC 2.0 Result (Tool Definitions) ─────│
+       │                                                │
+       │─── JSON-RPC 2.0 Request ("tools/call") ───────>│
+       │<── JSON-RPC 2.0 Result (Execution Payload) ────│
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Stdio Cleanliness Invariant):** An MCP Stdio server MUST NEVER print debug strings or raw text to `stdout`; all logging must use `stderr` to prevent JSON-RPC parsing crashes.
+2. **Rule of Thumb 2 (Strict Tool Typing):** Every tool schema must specify `type: "object"`, `properties`, and `required` arrays.
+3. **Rule of Thumb 3 (Backpressure & Timeout):** Async tool handlers must complete within 30 seconds or return a structured JSON-RPC timeout error.
+4. **Rule of Thumb 4 (Atomic Tool Returns):** Return values must follow the canonical `{ content: [{ type: "text", text: "..." }], isError: false }` format.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -468,3 +504,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before declaring MCP server production-ready:
+- [ ] Stdio protocol tests pass with zero `stdout` contamination
+- [ ] Tool parameters validate against JSON Schema Draft-07
+- [ ] Error responses conform to JSON-RPC 2.0 format with `isError: true`

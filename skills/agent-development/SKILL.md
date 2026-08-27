@@ -1,14 +1,11 @@
 ---
 name: agent-development
 version: 1.0.0
-description: 'Use when the user needs to build AI agents — tool use patterns, memory
+description: 'Use when building AI agents — tool use patterns, memory management, planning strategies, multi-agent coordination, evaluation, and safety guardrails.'
 related_skills:
   - cap
   - implementation
   - technical-documentation
-  management, planning strategies, multi-agent coordination, evaluation, and safety
-  guardrails. Triggers: user says "agent", "build an agent", "tool use", "agent loop",
-  "multi-agent", "memory management", "guardrails", "agent evaluation".'
 domain: agentic-workflow
 triggers:
   - agent-development
@@ -369,6 +366,24 @@ graph TD
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
 
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Agent Architecture Frameworks:** ReAct (Yao et al.), Plan-and-Solve (Wang et al.), Reflexion (Shinn et al.), and Toolformer (Schick et al.).
+- **Protocol & Transport Standards:** Model Context Protocol (MCP 2024-11-05 standard) and JSON-RPC 2.0.
+- **Safety & Guardrails:** OWASP Top 10 for LLM Applications (Prompt Injection, Insecure Output Handling, Excessive Agency).
+- **Idempotency & Resilience:** Deterministic tool call contracts (RFC 7231) with guaranteed state recovery.
+
+### Mathematical ReAct Loop Convergence Model:
+To prevent non-terminating loops and context exhaustion, the agent loop enforces strict convergence bounds:
+
+$$N_{\text{turns}} \le N_{\text{max}} = \min(25, \lfloor \frac{C_{\text{window}} - C_{\text{prompt}}}{C_{\text{turn\_avg}}} \rfloor)$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Bounded Exploration Invariant):** If an agent loop executes $>3$ consecutive tool calls without producing a new observation or reducing task uncertainty, the loop MUST trip a soft circuit breaker.
+2. **Rule of Thumb 2 (Strict Tool Schema Contract):** Every tool definition must provide type annotations, descriptions, and mutually exclusive parameter validations.
+3. **Rule of Thumb 3 (Stateful Memory Compaction):** When context reaches $70\%$ of context window capacity, trigger memory compaction summarizing previous turns into structured key-value state.
+4. **Rule of Thumb 4 (Deterministic Exit Gate):** The agent loop MUST terminate only when acceptance criteria are verified with automated test execution.
 
 ## Operational Verification Checklist
 

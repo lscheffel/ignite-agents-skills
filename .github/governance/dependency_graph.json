@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T02:30:41.553119+00:00",
+    "generated_at": "2026-08-27T02:38:39.725218+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -669,6 +669,11 @@
     },
     {
       "source": "agent-planning-execution",
+      "target": "governance",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "agent-planning-execution",
       "target": "implementation",
       "relationship": "references_skill"
     },
@@ -960,6 +965,11 @@
     {
       "source": "circuit-breaker",
       "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "circuit-breaker",
+      "target": "release",
       "relationship": "references_skill"
     },
     {
@@ -2375,6 +2385,11 @@
     {
       "source": "subagent-driven-development",
       "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "subagent-driven-development",
+      "target": "observability",
       "relationship": "references_skill"
     },
     {

@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/context7-mcp` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `58a89335e8b7c0a8c006f2c9b2645d99e683c49ab9305e697e79aa5d16b31e0a` | **Score Global:** | `85.3 / 100` |
+| **Hash SHA-256:** | `db2f68cd4eaebff2189bdc73f8898041882f38ae7ba6df24e7ec56c8e3d14480` | **Score Global:** | `85.6 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,9 +22,9 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
 | **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
-| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~1315 tokens totais), permitindo injeção com overhead mínimo. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~1761 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
-| **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
+| **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
 | **D7. Testes & Observabilidade** | 8.8 | [OK] | Templates canônicos e exemplos de verificação comportamental incluídos. |
 | **D8. Conformidade & Lifecycle** | 8.0 | [WARN] | Compatível funcionalmente, porém necessita padronização estrita de metadados SemVer. |
