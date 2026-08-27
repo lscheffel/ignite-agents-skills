@@ -6,7 +6,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 
 ## 1. Sumário Executivo de Conformidade
 
-* **Data de Execução:** 2026-08-27 02:41:36 UTC
+* **Data de Execução:** 2026-08-27 02:46:04 UTC
 * **Total de Ativos Auditados:** 82 (100.00% de cobertura, 0.00% omissão)
 * **Score Global Médio do Ecossistema:** **89.9 / 100**
 * **Distribuição de Status:**
@@ -27,7 +27,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `agent-orchestration` | config_skill | `b00a2ec31a9b...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `agent-planning-execution` | config_skill | `4066b4e5f3c8...` | **81.9** | APROVADA | Baixo | `5.7` |
 | `agents-md-management` | config_skill | `683fe9bee867...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `api-design` | config_skill | `38cf97fe4b7a...` | **92.0** | APROVADA | Baixo | `5.7` |
+| `api-design` | config_skill | `101af080a89c...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `architecture-review` | config_skill | `a2e23c7e2357...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `artifacts-builder` | config_skill | `4e1608e5b47d...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `brainstorming` | config_skill | `2db84d9b7663...` | **87.7** | APROVADA | Baixo | `5.7` |
@@ -41,9 +41,9 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `content-creator` | config_skill | `69394ac099bd...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `content-research-writer` | config_skill | `6247453e954d...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `context7-mcp` | config_skill | `db2f68cd4eae...` | **85.6** | APROVADA | Baixo | `5.7` |
-| `database-architecture` | config_skill | `3d33129e4f2b...` | **93.5** | APROVADA | Baixo | `5.7` |
-| `ddd` | config_skill | `08165cc6956d...` | **91.7** | APROVADA | Baixo | `5.7` |
-| `deployment` | config_skill | `22c55411b79f...` | **93.8** | APROVADA | Baixo | `5.7` |
+| `database-architecture` | config_skill | `2f7687aabf0f...` | **93.5** | APROVADA | Baixo | `5.7` |
+| `ddd` | config_skill | `1ccd76c6caae...` | **91.7** | APROVADA | Baixo | `5.7` |
+| `deployment` | config_skill | `44b45c85ab07...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `dispatching-parallel-agents` | config_skill | `720fcfd2810d...` | **85.6** | APROVADA | Baixo | `5.7` |
 | `docx-processing` | config_skill | `18f0edb119c2...` | **91.9** | APROVADA | Baixo | `5.7` |
 | `email-composer` | config_skill | `c4665396d54d...` | **92.8** | APROVADA | Baixo | `5.7` |
@@ -54,10 +54,10 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `llm-as-judge` | config_skill | `f237d3eb1ba5...` | **85.6** | APROVADA | Baixo | `5.7` |
 | `mcp-builder` | config_skill | `0d009fcfbbb0...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `mobile-design` | config_skill | `716fae149509...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `observability` | config_skill | `2e5a500321fc...` | **83.4** | APROVADA | Baixo | `5.7` |
+| `observability` | config_skill | `3969217b9c49...` | **83.4** | APROVADA | Baixo | `5.7` |
 | `pdf-processing` | config_skill | `6a95d8bda183...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `performance-optimization` | config_skill | `5594f10827bd...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `php-laravel-ecosystem` | config_skill | `98c3bb8414a6...` | **81.9** | APROVADA | Baixo | `5.7` |
+| `performance-optimization` | config_skill | `d0377b10b1e3...` | **92.0** | APROVADA | Baixo | `5.7` |
+| `php-laravel-ecosystem` | config_skill | `ce7791fe8731...` | **81.9** | APROVADA | Baixo | `5.7` |
 | `product-spec-engineering` | config_skill | `09a3f79922f6...` | **89.5** | APROVADA | Baixo | `5.7` |
 | `prompt-engineering` | config_skill | `890e4557a56f...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `react-best-practices` | config_skill | `526647dfd74f...` | **93.8** | APROVADA | Baixo | `5.7` |
@@ -65,7 +65,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `release` | config_skill | `34582d3c4ac9...` | **85.6** | APROVADA | Baixo | `5.7` |
 | `repo-bootstrap` | config_skill | `e5f62d210024...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `resilient-execution` | config_skill | `f8edd144d863...` | **85.6** | APROVADA | Baixo | `5.7` |
-| `security-review` | config_skill | `65ef2da5c8cb...` | **90.1** | APROVADA | Baixo | `5.7` |
+| `security-review` | config_skill | `a4d322d29c8d...` | **90.1** | APROVADA | Baixo | `5.7` |
 | `seo-optimizer` | config_skill | `8800fb74d9cf...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `skill-audit-bulletin` | config_skill | `d930e384bd6b...` | **90.7** | APROVADA | Baixo | `5.7` |
 | `skill-creator` | config_skill | `1a1682fd82b9...` | **89.7** | APROVADA | Baixo | `5.7` |

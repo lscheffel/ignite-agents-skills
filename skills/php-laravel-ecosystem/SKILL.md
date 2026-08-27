@@ -1467,6 +1467,34 @@ Use `mcp__context7__resolve-library-id` then `mcp__context7__query-docs` for up-
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Modern Architecture:** Laravel 11/12 streamlined application structure, action-oriented controllers, and form request validation.
+- **High-Performance Runtimes:** Laravel Octane (Swoole / RoadRunner) with strict state persistence and memory leak prevention.
+- **Testing Architecture:** Pest v3 Testing Framework with architectural testing (`arch()->expect('App\Models')->toOnlyBeUsedIn(...)`).
+- **Code Standards:** Laravel Pint (PHP-CS-Fixer preset) and PHPStan / Larastan Level 8+ static analysis.
+
+### Laravel Octane Concurrency Safety Invariant:
+Octane keeps the application in memory across requests. Superglobals and singletons must never store request-specific state:
+
+```php
+// ❌ WRONG (Memory leak / Data bleed across users):
+class OrderService {
+    public static array $currentUserOrders = [];
+}
+
+// ✅ CORRECT (Scoped request lifecycle):
+class OrderService {
+    public function __construct(private readonly OrderRepository $orders) {}
+}
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Strict Architectural Testing with Pest):** Use Pest Architecture Testing to enforce domain layering rules in CI.
+2. **Rule of Thumb 2 (Typed Properties & Enums):** All model attributes, DTOs, and method signatures must use native PHP 8.3+ types and backed Enums.
+3. **Rule of Thumb 3 (Queued Jobs for Heavy I/O):** Any operation involving emails, PDF generation, webhooks, or external APIs must be dispatched to Laravel Queue with exponential backoff.
+4. **Rule of Thumb 4 (Static Analysis Level 8):** Larastan static analysis must pass at Level 8 with zero baseline ignores.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -1475,3 +1503,10 @@ Use `mcp__context7__resolve-library-id` then `mcp__context7__query-docs` for up-
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding Laravel ecosystem implementation:
+- [ ] Pest test suite passes with architectural expectations verified
+- [ ] Laravel Pint formatting applied with zero style violations
+- [ ] Larastan static analysis passes at Level 8

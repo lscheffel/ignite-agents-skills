@@ -15,8 +15,9 @@ Following the completion of:
 - **Batch 1:** Core Architecture & Governance (ADR-030).
 - **Batch 2:** AI Agents, Loops, Resilience & MCP Tooling (ADR-031).
 - **Batch 3:** Engineering, Coding & Quality (ADR-032).
+- **Batch 4:** Backend, Data, Cloud & Security (ADR-033).
 
-The catalog has progressed to **84.9/100 Average Score** with 26 skills elevated to Grade B+ / A / S and 0 failures.
+The catalog has progressed to **85.4/100 Average Score** with 34 skills elevated to Grade B+ / A / S and 0 failures.
 
 ---
 
@@ -59,7 +60,7 @@ graph TD
         IMPL[implementation]
     end
 
-    subgraph "Batch 4: Backend, Data, Cloud & Security (ACTIVE)"
+    subgraph "Batch 4: Backend, Data, Cloud & Security (CONSOLIDATED - ADR-033)"
         DA[database-architecture]
         APID[api-design]
         DDD[ddd]
@@ -70,6 +71,15 @@ graph TD
         PHP[php-laravel-ecosystem]
     end
 
+    subgraph "Batch 5: Frontend, UI/UX & Web (ACTIVE)"
+        RBP[react-best-practices]
+        UIX[ui-ux-pro-max]
+        MOB[mobile-design]
+        SEO[seo-optimizer]
+        ART[artifacts-builder]
+        UXR[ux-researcher-designer]
+    end
+
     style AG fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style BS fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style AMM fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
@@ -78,43 +88,41 @@ graph TD
     style AO fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style OBS fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
     style APID fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
+    style UIX fill:#c8e6c9,stroke:#2e7d32,stroke-width:2px;
 ```
 
 ---
 
-## 3. Batch 3: Engineering, Coding & Quality (Consolidated — ADR-032)
+## 3. Batch 4: Backend, Data, Cloud & Security (Consolidated — ADR-033)
 
 | Skill | Final Score | Grade | Status | Key SOTA Invariants Injected |
 |:---|:---:|:---:|:---:|:---|
-| **`clean-code`** | **85.9** | **B (Silver)** | ✅ CONSOLIDATED | Thomas McCabe Cyclomatic Complexity ($CC \le 10$), Sonar Cognitive Complexity, guard clause priority. |
-| **`refactoring`** | **84.6** | **B (Silver)** | ✅ CONSOLIDATED | Martin Fowler's Refactoring catalog, Strangler Fig, Branch by Abstraction. |
-| **`test-driven-development`** | **84.4** | **B (Silver)** | ✅ CONSOLIDATED | Kent Beck RED-GREEN-REFACTOR cycle invariants, Mutation Score ($MS \ge 0.85$). |
-| **`code-review-workflow`** | **82.6** | **B (Silver)** | ✅ CONSOLIDATED | Multi-Round Review FSM, SLA timeouts, merge quorum gates. |
-| **`systematic-debugging`** | **82.6** | **B (Silver)** | ✅ CONSOLIDATED | Scientific Debugging Method, Git Bisect search algebra ($O(\log N)$), RCA 5-Whys. |
-| **`implementation`** | **82.5** | **B (Silver)** | ✅ CONSOLIDATED | Atomic Change Transaction protocol, step-by-step state hydration, Evidence Record handoffs. |
-| **`code-review`** | **81.7** | **B (Silver)** | ✅ CONSOLIDATED | Google Engineering Practices 3-Tier severity taxonomy (P1/P2/P3), AST diff inspection. |
-| **`code-review-lite`** | **81.5** | **B (Silver)** | ✅ CONSOLIDATED | PR Fast-Path algebra ($N_{\text{lines}} \le 200$), diff containment. |
-| **`testing-mastery`** | **81.2** | **B (Silver)** | ✅ CONSOLIDATED | Mike Cohn Test Pyramid ratio algebra ($70/20/10$), property-based testing. |
+| **`api-design`** | **94.3** | **A+ (Platinum)** | ✅ CONSOLIDATED | RFC 7807 Problem Details error schema, IETF Idempotency-Key protocol, cursor pagination. |
+| **`observability`** | **91.6** | **A (Gold)** | ✅ CONSOLIDATED | OpenTelemetry GenAI semantic conventions, Google SRE 4 Golden Signals, RED/USE metrics. |
+| **`security-review`** | **87.7** | **B (Silver)** | ✅ CONSOLIDATED | STRIDE threat modeling algebra, OWASP Top 10 (2021) / API Top 10 (2023), parameterized queries mandate. |
+| **`php-laravel-ecosystem`** | **86.4** | **B (Silver)** | ✅ CONSOLIDATED | Modern Laravel 11/12 SOTA architecture, Pest v3 architectural tests, Laravel Octane concurrency safety. |
+| **`deployment`** | **86.2** | **B (Silver)** | ✅ CONSOLIDATED | Canary deployment error rate gating ($\text{ErrorRate}_{\text{canary}} \le \text{Baseline} + \epsilon$), Kubernetes manifests, automated rollbacks. |
+| **`ddd`** | **86.2** | **B (Silver)** | ✅ CONSOLIDATED | Aggregate Root transactional boundary invariance (1 transaction per aggregate), Value Object immutability, Domain Events outbox pattern. |
+| **`performance-optimization`** | **85.3** | **B (Silver)** | ✅ CONSOLIDATED | Little's Law capacity planning ($L = \lambda W$), HikariCP connection pool sizing, cache dogpiling prevention. |
+| **`database-architecture`** | **82.1** | **B (Silver)** | ✅ CONSOLIDATED | B-Tree Index Selectivity math ($S_{\text{idx}} = D/N$), Codd's Normalization (3NF/BCNF), Expand-Contract zero-downtime migrations. |
 
 ---
 
-## 4. Batch 4: Backend, Data, Cloud & Security — Cognitive Audit & Debt Mapping
+## 4. Batch 5: Frontend, UI/UX & Web — Cognitive Audit & Debt Mapping
 
-### 4.1 Cognitive Debt Analysis (Batch 4)
+### 4.1 Cognitive Debt Analysis (Batch 5)
 
 | Skill | Current Score | Grade | Cognitive Domain Gap | Proposed SOTA Remediation |
 |:---|:---:|:---:|:---|:---|
-| **`database-architecture`** | **76.2** | **C** | Lacks formal Relational Normalization (3NF/BCNF), ACID vs BASE invariants, and Index Selectivity formulas. | Ingest Codd's Normal Forms, B-Tree index selectivity math ($\text{Selectivity} = \frac{D}{N}$), and migration rollback safety. |
-| **`api-design`** | **92.5** | **A** | Missing formal RFC 7807 (Problem Details for HTTP APIs) and Idempotency Key protocols (IETF draft). | Ingest RFC 7807 error schema and idempotency key caching invariants. |
-| **`ddd`** | **86.2** | **B** | Aggregate root boundary rules are qualitative without transactional boundary invariance. | Ingest Evans/Vernon Aggregate Root invariants (1 transaction per aggregate) and Domain Event envelope schemas. |
-| **`deployment`** | **80.9** | **B** | Lacks Blue-Green, Canary analysis formulas ($\text{ErrorRate}_{\text{canary}} \le \text{Threshold}$), and zero-downtime database migration gates. | Ingest Canary routing algebra, Kubernetes deployment manifests, and Expand-Contract database migration protocol. |
-| **`observability`** | **90.7** | **A** | Missing OpenTelemetry semantic conventions and Google SRE Golden Signals. | Ingest OpenTelemetry GenAI span conventions and RED (Rate, Errors, Duration) / USE metrics. |
-| **`security-review`** | **83.3** | **B** | Missing OWASP Top 10 (2021) and OWASP API Security Top 10 (2023) threat modeling matrices. | Ingest STRIDE threat modeling algebra and CVSS v3.1 calculation rubrics. |
-| **`performance-optimization`** | **80.0** | **B** | Lacks Amdahl's Law and Little's Law formulas ($L = \lambda W$) for concurrency and latency budgets. | Ingest Little's Law, Critical Rendering Path optimization, and database connection pool tuning algebra. |
-| **`php-laravel-ecosystem`** | **85.2** | **B** | Lacks Laravel 11/12 SOTA architecture (Pint, Pest v3, Octane, Livewire v3). | Ingest modern Laravel architecture rules, Pest test architecture, and Octane concurrency safety. |
+| **`react-best-practices`** | **80.0** | **B** | Lacks React 19 Server Components (RSC) vs Client Components boundary rules, Actions, and `use()` hook invariants. | Ingest React 19 Architecture, Compiler memoization invariants, and Server Actions security rules. |
+| **`ui-ux-pro-max`** | **94.3** | **A+** | Missing WCAG 2.2 AAA color contrast ratio math ($C_{\text{ratio}} \ge 7:1$) and fluid typography clamp formulas. | Ingest WCAG 2.2 contrast formulas, CSS Subgrid tokens, and Apple Human Interface Guidelines (HIG). |
+| **`mobile-design`** | **80.9** | **B** | Lacks touch target minimum size physics ($48 \times 48\text{dp}$ / $44 \times 44\text{pt}$) and gesture velocity thresholds. | Ingest Mobile HIG / Material Design 3 touch target geometry and offline-first sync protocols. |
+| **`seo-optimizer`** | **80.0** | **B** | Lacks JSON-LD Schema.org structured data schemas, Core Web Vitals (INP/LCP/CLS) budgets, and canonical URL invariants. | Ingest Google Search Central indexing guidelines, Schema.org Graph objects, and Open Graph / Twitter Card protocols. |
+| **`artifacts-builder`** | **79.7** | **C** | Lacks single-file self-contained bundling rules, Tailwind/Vanilla CSS sandboxing, and zero-external-script security invariants. | Ingest Standalone HTML/CSS/JS sandbox architecture, CSP compliance, and reactive state management without build steps. |
+| **`ux-researcher-designer`** | **82.0** | **B** | Lacks System Usability Scale (SUS) calculation formula ($\text{SUS} \ge 68$) and Nielsen Norman Group 10 Heuristics scoring. | Ingest SUS survey math, Norman Heuristics matrix, and Jobs-to-be-Done (JTBD) outcome-driven interview frameworks. |
 
 ---
 
-## 5. Next Planned Tier II ADR (ADR-033)
+## 5. Next Planned Tier II ADR (ADR-034)
 
-- **ADR-033:** *Backend, Data, Cloud & Security Domain SOTA Hardening (RFC 7807, B-Tree Index Math, STRIDE Threat Modeling, Little's Law & OpenTelemetry)*
+- **ADR-034:** *Frontend, UI/UX & Web Domain SOTA Hardening (React 19 RSC, WCAG 2.2 Math, Schema.org JSON-LD, System Usability Scale & Mobile Touch Geometry)*

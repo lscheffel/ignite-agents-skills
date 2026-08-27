@@ -30,6 +30,16 @@ metadata:
 
 # Performance Optimization
 
+## When to Use
+
+### Use when:
+- Diagnosing latency bottlenecks, throughput limits, or high CPU/memory consumption
+- Sizing concurrent thread/connection pools using Little's Law ($L = \lambda W$)
+- Optimizing Core Web Vitals (LCP, INP, CLS) and database query execution times
+
+### Do not use when:
+- Premature optimization of cold paths or trivial sub-millisecond routines
+
 ## Overview
 
 Systematically identify and resolve performance bottlenecks using measurement-driven methodology. This skill enforces a strict MEASURE-IDENTIFY-OPTIMIZE-VERIFY cycle, preventing premature optimization and speculation. Every optimization must produce measurable improvement or be reverted.
@@ -345,3 +355,29 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Queuing & Capacity Laws:** Little's Law ($L = \lambda W$) and Amdahl's Law for parallel scaling.
+- **Web Vitals (CWV):** Largest Contentful Paint (LCP $\le 2.5\text{s}$), Interaction to Next Paint (INP $\le 200\text{ms}$), Cumulative Layout Shift (CLS $\le 0.1$).
+- **Connection Pool Sizing:** HikariCP connection pool formula: $\text{PoolSize} = ((\text{Cores} \times 2) + \text{DiskSpindles})$.
+- **Memory & Cache Hierarchy:** Multi-tier caching (L1 In-Memory LRU $\to$ L2 Redis Cluster $\to$ L3 Persistent DB) with Cache-Aside pattern.
+
+### Little's Law Capacity Sizing Formula:
+
+$$L = \lambda \cdot W \implies \text{Concurrency} = \text{Throughput (RPS)} \times \text{Latency (Seconds)}$$
+
+*Example:* At 1,000 RPS with mean latency of $200\text{ms}$ ($0.2\text{s}$), the server must support $L = 1000 \times 0.2 = 200$ concurrent active threads/connections.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Eliminate N+1 Queries):** Never execute queries inside loops; use eager loading (`with()`, `include()`, `JOIN FETCH`) or batching (`DataLoader`).
+2. **Rule of Thumb 2 (Cache Stampede Prevention):** High-traffic cache keys must implement Probabilistic Early Expiration (XFetch) or Mutex locking to prevent cache dogpiling.
+3. **Rule of Thumb 3 (Measure Before Optimizing):** Never optimize based on intuition; always capture CPU/memory profiler snapshots (Flamegraphs / pprof) before and after changes.
+4. **Rule of Thumb 4 (Payload Compression):** Enable Brotli/Gzip compression for all text-based HTTP responses ($>1\text{KB}$).
+
+## Completion Gate & Verification
+Before concluding performance optimization:
+- [ ] Profiler baseline captured before and after changes
+- [ ] Latency reduction verified under synthetic benchmark load
+- [ ] Zero memory leaks or unbounded cache growth under stress test

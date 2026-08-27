@@ -58,7 +58,7 @@
 | **P2** | `mcp-builder` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `mobile-design` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `pdf-processing` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
-| **P2** | `performance-optimization` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
+| **P2** | `performance-optimization` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |
 | **P2** | `prompt-engineering` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `react-best-practices` | Hardening de Telemetria e Tracing Transacional | D5 | `5.7` | Baixa |
 | **P2** | `refactoring` | Context Budget Optimization & Lazy Loading de Referências | D3 | `5.7` | Baixa |

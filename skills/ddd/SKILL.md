@@ -589,6 +589,24 @@ class OrderService {
 - `architecture-review-kilo` — to validate adherence
 - `testing` — to test aggregates
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Strategic DDD:** Bounded Contexts, Context Mapping (Shared Kernel, Customer-Supplier, Anti-Corruption Layer - ACL).
+- **Tactical DDD:** Entities, Value Objects, Aggregates, Domain Services, Repositories, and Domain Events.
+- **Transactional Invariant:** Exactly ONE Aggregate Root modified per database transaction (Eric Evans / Vaughn Vernon).
+- **Event Messaging:** Outbox Pattern for guaranteed at-least-once domain event dispatch.
+
+### Aggregate Root Transaction Invariant:
+Modifying multiple aggregates in the same database transaction is an anti-pattern. Use Eventual Consistency:
+
+$$\text{Aggregate } A_1 \xrightarrow{\text{Mutate}} \text{Emit DomainEvent } E_1 \xrightarrow{\text{Outbox Async}} \text{Handler updates Aggregate } A_2$$
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Value Object Immutability):** Value Objects must be 100% immutable; equality is defined by structural attribute comparison, not identity ID.
+2. **Rule of Thumb 2 (No Anemic Domain Models):** Business logic and invariants MUST reside inside Entity/Aggregate methods, not leaked into procedural Service classes.
+3. **Rule of Thumb 3 (Transactional Boundary Rule):** If two entities must be updated transactionally with immediate consistency, they belong to the SAME Aggregate.
+4. **Rule of Thumb 4 (Anti-Corruption Layer):** Never allow external third-party DTOs or models to leak into domain core; translate via an explicit ACL Adapter.
+
 ## Completion Gate
 
 A tarefa associada à skill `ddd` só pode ser declarada concluída quando:

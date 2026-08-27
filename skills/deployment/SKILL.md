@@ -30,6 +30,16 @@ metadata:
 
 # Deployment
 
+## When to Use
+
+### Use when:
+- Creating or updating CI/CD deployment pipelines, container definitions, and manifests
+- Configuring Canary, Blue-Green, or Rolling update deployment strategies
+- Establishing automated health check probes and metric-driven rollback thresholds
+
+### Do not use when:
+- Local development sandbox testing without deployment infrastructure
+
 ## Overview
 
 Set up CI/CD pipelines and deployment configurations that automate the path from code to production. This skill detects the deployment target, generates pipeline config, creates pre/post-deploy checklists, and configures monitoring — producing a fully automated, rollback-ready deployment pipeline.
@@ -318,3 +328,30 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Deployment Strategies:** Blue-Green Switching, Canary Deployments, Rolling Updates, and Shadow Deployment.
+- **Cloud-Native Infrastructure:** Kubernetes Declarative Manifests, GitOps (ArgoCD/Flux), and Infrastructure-as-Code (Terraform/OpenTofu).
+- **Automated Rollback Vectors:** Prometheus/Datadog metric-driven rollback thresholds.
+- **Zero-Downtime Migrations:** Health checks (Liveness, Readiness, Startup probes) paired with pre-stop lifecycle hooks.
+
+### Canary Deployment Gating Formula:
+Canary traffic percentage $\alpha_{\text{canary}}$ scales progressively while error rates remain bounded:
+
+$$\text{ErrorRate}_{\text{canary}} \le \text{ErrorRate}_{\text{baseline}} + \epsilon \quad (\epsilon = 0.005)$$
+
+If $\text{ErrorRate}_{\text{canary}} > \text{Threshold}$, trigger automated instant rollback ($T_{\text{rollback}} \le 30\text{s}$).
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Readiness Probe Mandate):** Never send production traffic to a pod/container until its Readiness Probe explicitly returns HTTP 200.
+2. **Rule of Thumb 2 (Immutable Artifacts):** Build container images and binary packages ONCE; propagate the exact same immutable SHA through Staging and Production.
+3. **Rule of Thumb 3 (Database First Deployment):** Run database schema expansion BEFORE deploying application code; never deploy code that depends on unapplied migrations.
+4. **Rule of Thumb 4 (Fast Rollback Capability):** Every production deploy must have an automated one-click or zero-click rollback vector.
+
+## Completion Gate & Verification
+Before concluding deployment execution:
+- [ ] Immutable build artifact verified with green automated test suite
+- [ ] Liveness and Readiness probes configured and returning HTTP 200
+- [ ] Automated rollback vector tested and verified

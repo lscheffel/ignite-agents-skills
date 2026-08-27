@@ -450,6 +450,40 @@ X-RateLimit-Reset: 1623456789
 - `testing` — for contract testing
 - `governance` — for review processes
 
+## Domain SOTA & Industry Engineering Standards
+
+- **RESTful API Architecture:** Richardson Maturity Model (Level 0 to Level 3 HATEOAS) and Fielding REST constraints.
+- **Standardized Error Contracts:** RFC 7807 (Problem Details for HTTP APIs - `application/problem+json`).
+- **Idempotency & Safety:** RFC 7231 / RFC 9110 HTTP semantics and IETF Idempotency-Key Header specification.
+- **Pagination Standards:** Keyset / Cursor-Based Pagination vs Offset-Based ($O(1)$ vs $O(N)$ database scan).
+
+### RFC 7807 Problem Details Error Schema:
+
+```json
+{
+  "type": "https://api.example.com/errors/invalid-parameters",
+  "title": "Invalid Request Parameters",
+  "status": 422,
+  "detail": "The 'query' field cannot be empty.",
+  "instance": "/v1/search",
+  "invalid_params": [
+    {
+      "name": "query",
+      "reason": "Must be at least 3 characters long"
+    }
+  ]
+}
+```
+
+### Cursor Pagination URL Contract:
+`GET /v1/skills?limit=20&starting_after=skl_984fbc12`
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (RFC 7807 Mandate):** Never return ad-hoc error formats like `{ "error": "msg" }`; always return RFC 7807 compliant payloads with HTTP status matching payload status.
+2. **Rule of Thumb 2 (Idempotency Key for Mutating Calls):** All financial, payment, or state-creating `POST` endpoints must support `Idempotency-Key` headers with a 24-hour cache TTL.
+3. **Rule of Thumb 3 (Cursor Over Offset for Large Datasets):** For collections with $>10,000$ rows, offset pagination (`?page=100`) is prohibited; use keyset cursor pagination.
+4. **Rule of Thumb 4 (Semantic HTTP Verbs):** `GET`, `HEAD`, `OPTIONS` must remain strictly safe and idempotent; `PUT` and `DELETE` must be idempotent; `POST` and `PATCH` are non-idempotent.
+
 ## Completion Gate
 
 A tarefa associada à skill `api-design` só pode ser declarada concluída quando:

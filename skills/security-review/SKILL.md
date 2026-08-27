@@ -30,6 +30,16 @@ metadata:
 
 # Security Review
 
+## When to Use
+
+### Use when:
+- Auditing source code and infrastructure for vulnerabilities against OWASP Top 10
+- Conducting STRIDE threat modeling on new features, services, or APIs
+- Verifying cryptographic configurations, input sanitization, and authorization rules
+
+### Do not use when:
+- Routine non-security stylistic code formatting reviews
+
 ## Overview
 
 Systematically review code for security vulnerabilities, apply secure coding patterns, and ensure applications follow defense-in-depth principles. This skill covers the OWASP Top 10, authentication pattern selection, input validation, secrets management, dependency auditing, security headers, and threat modeling.
@@ -323,3 +333,26 @@ graph TD
 - **Conflito de Especificação:** Caso encontre contradições entre a intenção do usuário e o SSOT (`AGENTS.md`), interromper e sinalizar as opções com trade-offs.
 - **Timeout ou Exaustão de Contexto:** Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill `subagent-driven-development`.
 
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Threat Modeling:** STRIDE Framework (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege).
+- **Vulnerability Standards:** OWASP Top 10 (2021), OWASP API Security Top 10 (2023), and CWE Top 25.
+- **Severity Scoring:** Common Vulnerability Scoring System (CVSS v3.1).
+- **Cryptographic Standards:** NIST SP 800-57, TLS 1.3, Argon2id for password hashing, and AES-256-GCM for data at rest.
+
+### STRIDE Assessment Rubric:
+Every new service, endpoint, or architecture change must be evaluated against all 6 STRIDE dimensions.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Parameterized Queries Mandate):** String concatenation in SQL/NoSQL queries is strictly prohibited; all queries MUST use parameterized prepared statements.
+2. **Rule of Thumb 2 (Zero Hardcoded Secrets):** API keys, passwords, and tokens must never be committed to git; enforce pre-commit secret scanners (Gitleaks/TruffleHog).
+3. **Rule of Thumb 3 (Defense in Depth / Least Privilege):** API tokens and service accounts must be scoped with the minimal permissions required to execute their specific task.
+4. **Rule of Thumb 4 (Secure-by-Default Headers):** All web responses must include HSTS, CSP (`Content-Security-Policy`), `X-Content-Type-Options: nosniff`, and `X-Frame-Options: DENY`.
+
+## Completion Gate & Verification
+Before concluding security review:
+- [ ] All STRIDE threat vectors evaluated with mitigation strategies
+- [ ] Zero hardcoded secrets, SQL injection vulnerabilities, or insecure deserialization
+- [ ] CVSS v3.1 scores assigned to any identified vulnerabilities with remediation tickets

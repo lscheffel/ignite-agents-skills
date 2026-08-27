@@ -414,6 +414,28 @@ app.use((req, res, next) => {
 - `release` — for metrics of deploy
 - `governance` — for policies of retention
 
+## Domain SOTA & Industry Engineering Standards
+
+- **OpenTelemetry Standard:** Distributed Tracing (Spans, Trace IDs, Context Propagation) and GenAI Semantic Conventions.
+- **Google SRE Golden Signals:** Latency, Traffic, Errors, and Saturation.
+- **Monitoring Frameworks:** RED Method (Rate, Errors, Duration) for services and USE Method (Utilization, Saturation, Errors) for infrastructure.
+- **Structured Logging:** JSON log envelopes with unified trace/span correlation IDs (`trace_id`, `span_id`).
+
+### The 4 Golden Signals Architecture:
+
+| Signal | Metric Formulation | Alert Threshold / SLA |
+|:---|:---|:---|
+| **Latency** | $P_{95}$ and $P_{99}$ response duration | $P_{99} > 500\text{ms}$ for $>2\text{min}$. |
+| **Traffic** | Requests Per Second (RPS) $\lambda$ | Anomaly detection ($\pm 50\%$ vs historical baseline). |
+| **Errors** | Error rate ratio: $\frac{N_{\text{5xx}}}{N_{\text{total}}}$ | Error rate $> 1.0\%$ over 5-minute window. |
+| **Saturation** | CPU/Memory/Pool utilization: $\frac{U_{\text{used}}}{U_{\text{total}}}$ | Utilization $> 85\%$ sustained for $>5\text{min}$. |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Context Propagation Invariant):** All outbound HTTP/gRPC requests and background jobs must inject OpenTelemetry `traceparent` headers.
+2. **Rule of Thumb 2 (Zero Unstructured Logs):** Plain text `console.log` or `print()` statements are forbidden in production; all logs must be structured JSON.
+3. **Rule of Thumb 3 (High-Cardinality Hygiene):** Never use UUIDs, email addresses, or raw user inputs as Prometheus metric labels (avoid cardinality explosion).
+4. **Rule of Thumb 4 (Actionable Alerting):** Every PagerDuty/Slack alert must include a direct link to a Runbook with diagnosis steps.
+
 ## Completion Gate
 
 A tarefa associada à skill `observability` só pode ser declarada concluída quando:
