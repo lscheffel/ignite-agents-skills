@@ -34,7 +34,29 @@ INDEX_JSON = SKILLS_DIR / "index.json"
 PAGES_DIR = ROOT / "pages"
 DOCS_DIR = ROOT / "docs"
 ADR_ARCHIVE_DIR = DOCS_DIR / "adr" / "archive"
-THEME_VERSION = "2.3.0"
+
+def get_version():
+    try:
+        if INDEX_JSON.exists():
+            data = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
+            return data.get("version", "2.6.0")
+    except Exception:
+        pass
+    return "2.6.0"
+
+def get_stats():
+    skills_cnt = len([d for d in SKILLS_DIR.iterdir() if d.is_dir()]) if SKILLS_DIR.exists() else 60
+    templates_cnt = len(list(SKILLS_DIR.glob("*/templates/*")))
+    examples_cnt = len(list(SKILLS_DIR.glob("*/examples/*")))
+    adrs_cnt = 26
+    return skills_cnt, templates_cnt, examples_cnt, adrs_cnt
+
+def get_footer_p():
+    ver = get_version()
+    skills_cnt, templates_cnt, examples_cnt, adrs_cnt = get_stats()
+    return f"<strong>ignite-agents-skills</strong> v{ver} &mdash; {skills_cnt} skills &middot; {templates_cnt} templates &middot; {examples_cnt} examples &middot; {adrs_cnt} ADRs"
+
+THEME_VERSION = get_version()
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -723,10 +745,10 @@ def get_page_template(title, body_html, breadcrumb="", nav_active="", depth=1):
   <div class="content">
     {body_html}
   </div>
-<footer>
-     <p><strong>ignite-agents-skills</strong> v{THEME_VERSION} &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
-     <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
-   </footer>
+  <footer>
+    <p>{get_footer_p()}</p>
+    <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+  </footer>
 </body>
 </html>"""
 
@@ -915,8 +937,8 @@ def generate_index(skills_data):
     </div>"""
 
     body = f"""
-    <h1 class="fancy-title">ignite-agents-skills <span class="ver">v{THEME_VERSION}</span></h1>
-    <p class="fancy-sub">Registro centralizado de <strong>23 skills</strong> ultra-high quality grade para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>.</p>
+    <h1 class="fancy-title">ignite-agents-skills <span class="ver">v{get_version()}</span></h1>
+    <p class="fancy-sub">Registro centralizado de <strong>{len(skills)} skills</strong> ultra-high quality grade para agentes de IA compatíveis com o padrão <a href="https://agentskills.io">Agent Skills</a>.</p>
 
     <div class="search-wrapper">
       <span class="search-icon">&#128269;</span>
@@ -928,10 +950,10 @@ def generate_index(skills_data):
       {cards_html}
     </div>
 
-<footer style="margin-top:3rem">
-       <p><strong>ignite-agents-skills</strong> v{THEME_VERSION} &mdash; 23 skills &middot; 72 templates &middot; 18 examples &middot; 12 ADRs</p>
-       <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
-     </footer>
+    <footer style="margin-top:3rem">
+      <p>{get_footer_p()}</p>
+      <p style="margin-top:0.4rem"><a href="https://github.com/lscheffel/ignite-agents-skills">github.com/lscheffel/ignite-agents-skills</a></p>
+    </footer>
 
     <script>
     const searchInput = document.getElementById('search');
