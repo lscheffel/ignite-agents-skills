@@ -127,9 +127,42 @@ def update_ledger(
     for existing_name in list(entries.keys()):
         if existing_name not in discovered_skills:
             del entries[existing_name]
+
+    # 1.5 Scan docs/audit/skills/*_audit_bulletin.md to auto-populate from existing bulletins
+    now_str = datetime.date.today().isoformat()
+    for bfile in target_dir.glob("*_audit_bulletin.md"):
+        bname = bfile.stem.replace("_audit_bulletin", "")
+        if bname in entries:
+            try:
+                btext = bfile.read_text(encoding="utf-8")
+                m_grade = re.search(r"\*\*Overall Grade:\*\*\s*\*\*([SABCDFPENDING\+]+)", btext)
+                m_score = re.search(r"\*\*Combined 2D Score\*\*\s*\|\s*\*\*([\d\.]+)", btext)
+                if not m_score:
+                    m_score = re.search(r"\*\*Overall Grade:\*\*.*?([\d\.]+)\s*/\s*100", btext)
+                m_phys = re.search(r"\*\*Axis 1: Physical Structural & Governance\*\*\s*\|\s*\*\*([\d\.]+)", btext)
+                m_cogn = re.search(r"\*\*Axis 2: Domain SOTA & Cognitive Efficacy\*\*\s*\|\s*\*\*([\d\.]+)", btext)
+                m_action = re.search(r"\*\*Recommended Action:\*\*\s*\*\*([^\*\n]+)\*\*", btext)
+                m_date = re.search(r"\*\*Audit Date:\*\*\s*(\d{4}-\d{2}-\d{2})", btext)
+
+                if m_score:
+                    grade_val = m_grade.group(1).strip() if m_grade else "A"
+                    score_val = float(m_score.group(1))
+                    phys_val = float(m_phys.group(1)) if m_phys else score_val
+                    cogn_val = float(m_cogn.group(1)) if m_cogn else score_val
+                    action_val = m_action.group(1).strip() if m_action else "ADOPT_AS_IS"
+                    date_val = m_date.group(1) if m_date else now_str
+
+                    entries[bname]["grade"] = grade_val
+                    entries[bname]["current_score"] = score_val
+                    entries[bname]["physical_score"] = phys_val
+                    entries[bname]["cognitive_score"] = cogn_val
+                    entries[bname]["action"] = action_val
+                    entries[bname]["status"] = action_val
+                    entries[bname]["last_audited"] = date_val
+            except Exception as e:
+                pass
             
     # 2. If a specific skill audit is passed, update its record
-    now_str = datetime.date.today().isoformat()
     if target_skill:
         s_entry = entries.get(target_skill)
         if not s_entry:
