@@ -504,23 +504,37 @@
   </nav>
   <div class="content">
     <h1 id="deployment-operational-checklist">deployment Operational Checklist</h1>
-<h2 id="pre-execution-verification">Pre-Execution Verification</h2>
+<h2 id="phase-1-pre-execution-discovery--constraints">Phase 1: Pre-Execution Discovery & Constraints</h2>
 <ul>
-<li>[ ] Inspect all target files and requirements before taking action.</li>
-<li>[ ] Verify zero-trust boundaries and input schemas.</li>
-<li>[ ] Confirm baseline test suite is green.</li>
+<li>[ ] Inspect all target files, schemas, and specifications before modifying code.</li>
+<li>[ ] Verify that upstream and downstream dependencies in <strong>CI/CD Deployment Pipelines, Docker & Infrastructure as Code</strong> are identified.</li>
+<li>[ ] Confirm that existing baseline test suites run and pass cleanly (<code>exit code 0</code>).</li>
+<li>[ ] Validate zero-trust boundaries, input parameters, and non-functional requirements.</li>
 </ul>
-<h2 id="execution-standards">Execution Standards</h2>
+<hr>
+<h2 id="phase-2-domain-specific-implementation-standards">Phase 2: Domain-Specific Implementation Standards</h2>
 <ul>
-<li>[ ] Apply domain SOTA heuristics and patterns.</li>
-<li>[ ] Maintain semantic idempotency and clean architecture.</li>
-<li>[ ] Handle all identified edge cases and failure modes.</li>
+<li>[ ] Apply canonical design patterns specific to <strong>CI/CD Deployment Pipelines, Docker & Infrastructure as Code</strong>.</li>
+<li>[ ] Maintain strict type safety, explicit type annotations, and immutability where applicable.</li>
+<li>[ ] Implement deterministic error handling with structured, contextual exception types.</li>
+<li>[ ] Avoid any hidden mock values, stubbed returns, or unhandled promise/coroutine rejections.</li>
+<li>[ ] Ensure all log messages and telemetry events use structured formats.</li>
 </ul>
-<h2 id="completion-gate">Completion Gate</h2>
+<hr>
+<h2 id="phase-3-invariant-protection--edge-cases">Phase 3: Invariant Protection & Edge Cases</h2>
 <ul>
-<li>[ ] Run automated test suite with exit code 0.</li>
-<li>[ ] Verify zero linter/compiler warnings.</li>
-<li>[ ] Document execution evidence in walkthrough.</li>
+<li>[ ] Handle null, empty, unexpected, or malformed input payloads safely.</li>
+<li>[ ] Validate concurrent access safety and race-condition freedom under load.</li>
+<li>[ ] Ensure resource cleanup (close database handles, sockets, file descriptors) in <code>finally</code> blocks.</li>
+<li>[ ] Verify idempotency on retried operations.</li>
+</ul>
+<hr>
+<h2 id="phase-4-completion--verification-gate">Phase 4: Completion & Verification Gate</h2>
+<ul>
+<li>[ ] Run full automated test suite with 100% pass rate.</li>
+<li>[ ] Execute linter and static analysis tools with zero warnings.</li>
+<li>[ ] Confirm documentation and code comments accurately reflect actual implementation.</li>
+<li>[ ] Record verification evidence in walkthrough or execution report.</li>
 </ul>
   </div>
   <footer>

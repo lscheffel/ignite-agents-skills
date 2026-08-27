@@ -503,26 +503,47 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">architecture-review</a> &rsaquo; examples &rsaquo; god-class-refactor</div>
   </nav>
   <div class="content">
-    <h1 id="example-architecture-review">Example: Architecture Review</h1>
-<h2 id="problem">Problem</h2>
-<p>UserService with 500 lines, multiple responsibilities.</p>
-<h2 id="analysis">Analysis</h2>
-<pre><code># God Class detected
-- UserService has: createUser, validateUser, sendEmail, calculateDiscount, generateReport
-- SRP violated at multiple points</code></pre>
-<h2 id="solution">Solution</h2>
-<p>Break into:</p>
+    <h1 id="practical-example-refactoring-a-monolithic-god-class">Practical Example: Refactoring a Monolithic God Class</h1>
+<h2 id="1-problem-diagnosis">1. Problem Diagnosis</h2>
+<p>During an architectural review of the billing engine, the agent detected <code>OrderProcessorService</code>, a 1,400-line God Class violating the Single Responsibility Principle (SRP) by handling credit card charging, invoice PDF generation, email dispatch, and inventory allocation.</p>
+<pre><code>[ Antipattern: Monolithic God Class ]
+OrderProcessorService
+├── process_order()
+├── charge_credit_card()
+├── generate_invoice_pdf()
+├── send_customer_email()
+└── deduct_inventory_stock()</code></pre>
+<hr>
+<h2 id="2-refactored-clean-architecture">2. Refactored Clean Architecture</h2>
+<p>The agent decomposed the monolith into focused, decoupled Domain Services orchestrated via a lightweight Domain Event pipeline:</p>
+<pre data-lang="python"><code># Extracted Decoupled Domain Handlers
+class PaymentGatewayService:
+    def process_payment(self, order_id: str, amount_cents: int) -&gt; PaymentReceipt:
+        ...
+
+class InventoryService:
+    def reserve_stock(self, line_items: list[LineItem]) -&gt; StockReservation:
+        ...
+
+class InvoiceGenerationService:
+    def generate_pdf(self, order: Order, receipt: PaymentReceipt) -&gt; Path:
+        ...
+
+class OrderOrchestrationService:
+    def __init__(self, payment: PaymentGatewayService, inventory: InventoryService):
+        self.payment = payment
+        self.inventory = inventory
+
+    def complete_order(self, order: Order) -&gt; OrderResult:
+        stock = self.inventory.reserve_stock(order.items)
+        receipt = self.payment.process_payment(order.id, order.total_cents)
+        return OrderResult(order_id=order.id, status=&quot;CONFIRMED&quot;, receipt=receipt)</code></pre>
+<hr>
+<h2 id="3-verification--metrics">3. Verification & Metrics</h2>
 <ul>
-<li>UserService (create user)</li>
-<li>UserValidator (validation)</li>
-<li>EmailService (notification)</li>
-<li>PricingService (calculation)</li>
-</ul>
-<h2 id="result">Result</h2>
-<ul>
-<li>4 classes with single responsibility</li>
-<li>More focused tests</li>
-<li>Simplified maintenance</li>
+<li><strong>Cyclomatic Complexity:</strong> Reduced from 42 to 4 per class.</li>
+<li><strong>Unit Test Coverage:</strong> Increased from 45% to 98% with isolated test doubles.</li>
+<li><strong>Result:</strong> Fully modular and maintainable domain model.</li>
 </ul>
   </div>
   <footer>

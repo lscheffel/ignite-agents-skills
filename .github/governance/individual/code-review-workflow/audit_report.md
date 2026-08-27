@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/code-review-workflow` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `45bd42389a329ccd5ce2be8eac396c34e6fc556e4cc3637a1a3559f630405608` | **Score Global:** | `91.3 / 100` |
+| **Hash SHA-256:** | `45bd42389a329ccd5ce2be8eac396c34e6fc556e4cc3637a1a3559f630405608` | **Score Global:** | `89.5 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 8.5 | [OK] | Frontmatter válido com delimitadores formais e tipagem de metadados. |
 | **D2. Determinismo Semântico** | 8.8 | [OK] | Condições de ativação claras com boa especificidade semântica. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~4060 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~5934 tokens); templates e referências devem usar lazy loading. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Zero dependências externas rígidas; alta portabilidade e modularidade. |
@@ -33,16 +33,16 @@
 
 ### 3. Falhas Encontradas & Análise Forense de Código
 
-#### 3.1 Hardening de Telemetria e Tracing Transacional
+#### 3.1 Context Budget Optimization & Lazy Loading de Referências
 * **Severidade:** Baixa
-* **Impacto:** Padronização de correlação de spans (trace_id) e métricas operacionais.
+* **Impacto:** Redução do footprint de tokens injetados no System Prompt inicial.
 * **Trecho Atual (Linhas 1-15):**
 ```yaml
-// Execução direta sem emissão de telemetria estruturada
+// Footprint estático atual do pacote: ~5934 tokens
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-// Injeção de hook de telemetria com trace_id, latência e status de execução
+// Particionamento de referências e exemplos em pasta references/ sob demanda via view_file
 ```
 
 ---

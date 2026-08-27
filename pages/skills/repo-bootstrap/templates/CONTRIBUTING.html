@@ -503,27 +503,40 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">repo-bootstrap</a> &rsaquo; templates &rsaquo; CONTRIBUTING</div>
   </nav>
   <div class="content">
-    <h1 id="contributing-template">Contributing Template</h1>
-<h2 id="how-to-contribute">How to Contribute</h2>
-<ol>
-<li>Fork the repository</li>
-<li>Create branch: <code>git checkout -b feature/your-feature</code></li>
-<li>Commit: <code>git commit -m "feat: your change"</code></li>
-<li>Push: <code>git push origin feature/your-feature</code></li>
-<li>Open Pull Request</li>
-</ol>
-<h2 id="guidelines">Guidelines</h2>
+    <h1 id="contributing-guidelines">Contributing Guidelines</h1>
+<p>Thank you for your interest in contributing to this project! To maintain the highest standards of code quality, security, and developer experience, please adhere to the following workflow:</p>
+<hr>
+<h2 id="1-code-of-conduct--ground-rules">1. Code of Conduct & Ground Rules</h2>
 <ul>
-<li>Use Conventional Commits</li>
-<li>Maintain coverage ≥ 80%</li>
-<li>Lint passes: <code>npm run lint</code></li>
-<li>Tests pass: <code>npm test</code></li>
+<li>Treat all contributors and users with respect and professional courtesy.</li>
+<li>Ensure all contributions follow the Single Source of Truth (SSOT) defined in <code>AGENTS.md</code>.</li>
+<li>No code changes may be merged without accompanying automated tests.</li>
 </ul>
-<h2 id="code-review">Code Review</h2>
+<hr>
+<h2 id="2-development-workflow--git-etiquette">2. Development Workflow & Git Etiquette</h2>
+<ol>
+<li><strong>Fork or Branch:</strong> Create a feature branch following the naming convention:</li>
+</ol>
 <ul>
-<li>At least 1 approval</li>
-<li>CI green</li>
-<li>No conflicts</li>
+<li><code>feature/<feature-name></code></li>
+<li><code>fix/<bugfix-name></code></li>
+<li><code>docs/<doc-update></code></li>
+</ul>
+<ol>
+<li><strong>Follow TDD:</strong> Write failing unit tests demonstrating the requirement or bug before implementing production code.</li>
+<li><strong>Commit Messages:</strong> Follow Conventional Commits:</li>
+</ol>
+<ul>
+<li><code>feat(scope): add new feature</code></li>
+<li><code>fix(scope): resolve bug</code></li>
+<li><code>docs(scope): update documentation</code></li>
+</ul>
+<hr>
+<h2 id="3-pull-request--quality-gates">3. Pull Request & Quality Gates</h2>
+<ul>
+<li>Run all automated linters and unit tests locally before submitting a PR.</li>
+<li>Ensure CI/CD checks pass with 100% success rate.</li>
+<li>Request reviews from repository maintainers and resolve all actionable comments.</li>
 </ul>
   </div>
   <footer>

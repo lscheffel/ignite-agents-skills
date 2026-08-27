@@ -503,15 +503,33 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-archive</a> &rsaquo; examples &rsaquo; ADR-998-TODO</div>
   </nav>
   <div class="content">
-    <hr>
-<p>id: ADR-998-TODO type: todo title: Execution - Blocked ---</p>
-<h1 id="todo-test-998">TODO: Test 998</h1>
-<h2 id="task-table">Task Table</h2>
-<div class="table-wrapper"><table><tr><th>ID</th><th>Task</th><th>Status</th></tr><tr><td>A1.1</td><td>Task 1</td><td>✔️</td></tr><tr><td>A1.2</td><td>Refactoring Task</td><td>❌</td></tr><tr><td>A1.3</td><td>Depends on previous</td><td>⏸️</td></tr></table></div>
-<h2 id="checkpoints">Checkpoints</h2>
+    <h1 id="adr-998-execution--completion-checklist-sample-todo">ADR-998 Execution & Completion Checklist (Sample TODO)</h1>
+<h2 id="metadata">Metadata</h2>
 <ul>
-<li>[x] Check 1</li>
-<li>[ ] Check 2</li>
+<li><strong>Target ADR:</strong> <code>ADR-998: Streaming Telemetry IPC Protocol</code></li>
+<li><strong>Lead Agent:</strong> <code>implementation</code></li>
+<li><strong>Verification Authority:</strong> <code>adr-archive</code></li>
+</ul>
+<hr>
+<h2 id="phase-1-ipc-pipe-protocol--serialization">Phase 1: IPC Pipe Protocol & Serialization</h2>
+<ul>
+<li>[x] Define binary serialization schema using Protobuf/MessagePack.</li>
+<li>[x] Implement non-blocking Stdio IPC stream reader.</li>
+<li>[x] Add automated test verifying sub-millisecond packet transmission.</li>
+</ul>
+<hr>
+<h2 id="phase-2-fault-tolerance--reconnection-loops">Phase 2: Fault Tolerance & Reconnection Loops</h2>
+<ul>
+<li>[x] Implement exponential backoff reconnection handler for dropped streams.</li>
+<li>[x] Add backpressure queue with memory-bounded ring buffer.</li>
+<li>[x] Validate zero dropped packets during network partition simulation.</li>
+</ul>
+<hr>
+<h2 id="phase-3-completion-gate--archival-sign-off">Phase 3: Completion Gate & Archival Sign-off</h2>
+<ul>
+<li>[x] Confirm all 24 unit and integration tests pass with 0 warnings.</li>
+<li>[x] Issue canonical Evidence Record (<code>ADR-998-ER.md</code>).</li>
+<li>[x] Relocate working artifacts to <code>docs/adr/archive/ADR-998/</code>.</li>
 </ul>
   </div>
   <footer>

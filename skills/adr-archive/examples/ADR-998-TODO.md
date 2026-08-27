@@ -1,18 +1,27 @@
+# ADR-998 Execution & Completion Checklist (Sample TODO)
+
+## Metadata
+- **Target ADR:** `ADR-998: Streaming Telemetry IPC Protocol`
+- **Lead Agent:** `implementation`
+- **Verification Authority:** `adr-archive`
+
 ---
-id: ADR-998-TODO
-type: todo
-title: Execution - Blocked
+
+## Phase 1: IPC Pipe Protocol & Serialization
+- [x] Define binary serialization schema using Protobuf/MessagePack.
+- [x] Implement non-blocking Stdio IPC stream reader.
+- [x] Add automated test verifying sub-millisecond packet transmission.
+
 ---
 
-# TODO: Test 998
+## Phase 2: Fault Tolerance & Reconnection Loops
+- [x] Implement exponential backoff reconnection handler for dropped streams.
+- [x] Add backpressure queue with memory-bounded ring buffer.
+- [x] Validate zero dropped packets during network partition simulation.
 
-## Task Table
-| ID | Task | Status |
-|---|---|---|
-| A1.1 | Task 1 | ✔️ |
-| A1.2 | Refactoring Task | ❌ |
-| A1.3 | Depends on previous | ⏸️ |
+---
 
-## Checkpoints
-- [x] Check 1
-- [ ] Check 2
+## Phase 3: Completion Gate & Archival Sign-off
+- [x] Confirm all 24 unit and integration tests pass with 0 warnings.
+- [x] Issue canonical Evidence Record (`ADR-998-ER.md`).
+- [x] Relocate working artifacts to `docs/adr/archive/ADR-998/`.

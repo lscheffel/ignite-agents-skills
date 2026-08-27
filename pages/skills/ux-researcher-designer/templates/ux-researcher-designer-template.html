@@ -503,10 +503,59 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">ux-researcher-designer</a> &rsaquo; templates &rsaquo; ux-researcher-designer-template</div>
   </nav>
   <div class="content">
-    <h1 id="-canonical--ux-researcher-designer-objective--execution-date-yyyy-mm-dd">Шаблон Canonical — ux-researcher-designer## Objective- <strong>Execution Date:</strong> YYYY-MM-DD</h1>
+    <h1 id="production-implementation-template-ux-researcher-designer">Production Implementation Template: ux-researcher-designer</h1>
+<h2 id="domain--purpose">Domain & Purpose</h2>
 <ul>
-<li><strong>Executor:</strong> Specialized Agent (ux-researcher-designer)</li>
-<li><strong>Scope:</strong> Target Module / Component## Artifact Content <!-- Insert generated artifact according to the canonical skill procedure --></li>
+<li><strong>Target Domain:</strong> UX Research, User Journey Mapping & Usability Testing</li>
+<li><strong>Core Focus:</strong> user personas, journey mapping, heuristic evaluation, usability testing, information architecture</li>
+<li><strong>Artifact Type:</strong> Production-ready actionable specification and implementation template.</li>
+</ul>
+<hr>
+<h2 id="1-user-persona-profile">1. User Persona Profile</h2>
+<p>Define the contextual boundaries, primary objectives, and strict non-functional constraints for this execution.</p>
+<pre data-lang="yaml"><code>context:
+  module_name: &quot;&lt;target-component&gt;&quot;
+  version: &quot;1.0.0&quot;
+  execution_mode: &quot;strict&quot;
+  invariants:
+    - &quot;Zero regressions against existing baseline test suite&quot;
+    - &quot;Strict type compliance and schema validation&quot;
+    - &quot;Complete decoupling from external infrastructure&quot;</code></pre>
+<hr>
+<h2 id="2-journey-map--pain-points">2. Journey Map & Pain Points</h2>
+<p>Detailed technical specification, schema structure, or contract definitions.</p>
+<pre data-lang="python"><code># Canonical typed specification template
+from dataclasses import dataclass
+from typing import List, Dict, Optional, Any
+
+@dataclass(frozen=True)
+class ExecutionConfig:
+    component_id: str
+    enabled_features: List[str]
+    timeout_ms: int = 5000
+    retry_limit: int = 3
+    parameters: Optional[Dict[str, Any]] = None
+
+def validate_configuration(config: ExecutionConfig) -&gt; bool:
+    &quot;&quot;&quot;Validate configuration integrity against domain invariants.&quot;&quot;&quot;
+    if not config.component_id.strip():
+        raise ValueError(&quot;component_id cannot be empty&quot;)
+    if config.timeout_ms &lt;= 0:
+        raise ValueError(&quot;timeout_ms must be positive&quot;)
+    return True</code></pre>
+<hr>
+<h2 id="3-usability-test-protocol">3. Usability Test Protocol</h2>
+<p>Operational execution rules, transformation pipeline, and state transitions.</p>
+<div class="table-wrapper"><table><tr><th>Step</th><th>Action</th><th>Expected Output</th><th>Verification Mechanism</th></tr><tr><td><strong>01</strong></td><td>Input Validation & Schema Sanitization</td><td>Clean verified payload</td><td>Schema validator (exit code 0)</td></tr><tr><td><strong>02</strong></td><td>Core Domain Execution / Transform</td><td>Immutable state transition</td><td>Unit test assertion</td></tr><tr><td><strong>03</strong></td><td>Error Boundary & Exception Handling</td><td>Graceful fallback / retry</td><td>Failure injection test</td></tr><tr><td><strong>04</strong></td><td>Telemetry & Evidence Recording</td><td>Structured log trace</td><td>Audit ledger persistence</td></tr></table></div>
+<hr>
+<h2 id="4-design-recommendations">4. Design Recommendations</h2>
+<p>Final verification gates that must be satisfied before declaring completion.</p>
+<pre data-lang="bash"><code># Verification test execution command
+$ python3 -m unittest discover -s tests -p &quot;test_*.py&quot;</code></pre>
+<ul>
+<li>[ ] All automated tests pass with 0 failures and 0 errors.</li>
+<li>[ ] Code strictly follows Clean Architecture and SOLID principles.</li>
+<li>[ ] No temporary placeholders, TODO comments, or hardcoded mock values remain.</li>
 </ul>
   </div>
   <footer>

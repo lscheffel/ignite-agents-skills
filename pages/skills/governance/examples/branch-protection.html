@@ -503,29 +503,41 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">governance</a> &rsaquo; examples &rsaquo; branch-protection</div>
   </nav>
   <div class="content">
-    <h1 id="example-branch-protection-configuration">Example: Branch Protection Configuration</h1>
-<h2 id="before">Before</h2>
+    <h1 id="branch-protection--cicd-governance-rules">Branch Protection & CI/CD Governance Rules</h1>
+<h2 id="1-overview--policy-enforcement">1. Overview & Policy Enforcement</h2>
+<p>To ensure zero regressions and maintain the integrity of production branches, the following branch protection rules are enforced via GitHub API and CI/CD policies.</p>
+<hr>
+<h2 id="2-production-master--main-protection-rules">2. Production (<code>master</code> / <code>main</code>) Protection Rules</h2>
 <ul>
-<li>Direct push to main</li>
-<li>No mandatory review</li>
-<li>CI optional</li>
+<li><strong>Require Pull Request Reviews:</strong> Minimum of 1 approving review from Code Owners before merge.</li>
+<li><strong>Require Status Checks to Pass:</strong></li>
+<li><code>lint-and-format</code>: Static analysis with zero warnings.</li>
+<li><code>unit-tests</code>: 100% test pass rate across supported matrix.</li>
+<li><code>sota-audit-engine</code>: 8-Dimension forensic audit pass.</li>
+<li><strong>Require Linear History:</strong> Enforce squash merge or rebase merge (no merge commits in trunk).</li>
+<li><strong>Include Administrators:</strong> Enforce protection rules strictly on repository administrators.</li>
+<li><strong>Do Not Allow Force Pushes:</strong> Force pushing directly to production branches is permanently blocked.</li>
 </ul>
-<h2 id="after">After</h2>
-<pre data-lang="yaml"><code># .github/branch-protection.yml
-branches:
-  - name: main
-    protection:
-      required_pull_request_reviews:
-        required_approving_review_count: 1
-      required_status_checks:
-        strict: true
-      restrictions: null</code></pre>
-<h2 id="result">Result</h2>
-<ul>
-<li>0 direct pushes to main</li>
-<li>100% of PRs reviewed</li>
-<li>CI mandatory</li>
-</ul>
+<hr>
+<h2 id="3-automation-setup-script-github-cli">3. Automation Setup Script (GitHub CLI)</h2>
+<pre data-lang="bash"><code>#!/usr/bin/env bash
+set -euo pipefail
+
+gh api --method PUT /repos/:owner/:repo/branches/master/protection \
+  --input - &lt;&lt;EOF
+{
+  &quot;required_status_checks&quot;: {
+    &quot;strict&quot;: true,
+    &quot;contexts&quot;: [&quot;unit-tests&quot;, &quot;sota-audit-engine&quot;]
+  },
+  &quot;enforce_admins&quot;: true,
+  &quot;required_pull_request_reviews&quot;: {
+    &quot;required_approving_review_count&quot;: 1,
+    &quot;dismiss_stale_reviews&quot;: true
+  },
+  &quot;restrictions&quot;: null
+}
+EOF</code></pre>
   </div>
   <footer>
     <p><strong>ignite-agents-skills</strong> v3.0.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 36 ADRs</p>

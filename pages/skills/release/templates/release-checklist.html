@@ -503,28 +503,37 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">release</a> &rsaquo; templates &rsaquo; release-checklist</div>
   </nav>
   <div class="content">
-    <h1 id="release-checklist-template">Release Checklist Template</h1>
-<h2 id="pre-release">Pre-Release</h2>
+    <h1 id="production-release-governance-checklist">Production Release Governance Checklist</h1>
+<h2 id="phase-1-pre-release-invariants--quality-gates">Phase 1: Pre-Release Invariants & Quality Gates</h2>
 <ul>
-<li>[ ] CHANGELOG.md updated</li>
-<li>[ ] Version bumped</li>
-<li>[ ] Tests pass</li>
-<li>[ ] Lint passes</li>
-<li>[ ] Build functions</li>
-<li>[ ] Security scan</li>
+<li>[ ] Ensure all feature branches are merged cleanly into <code>master</code> / release branch.</li>
+<li>[ ] Run full automated test suite (<code>python3 -m unittest discover</code>) with 100% passing tests.</li>
+<li>[ ] Execute linter, static analysis, and type checker with zero errors and zero warnings.</li>
+<li>[ ] Verify that all Architecture Decision Records (ADRs) have corresponding Evidence Records.</li>
+<li>[ ] Confirm no active high-severity technical debts remain in the registry.</li>
 </ul>
-<h2 id="publication">Publication</h2>
+<hr>
+<h2 id="phase-2-documentation--version-reconciliation">Phase 2: Documentation & Version Reconciliation</h2>
 <ul>
-<li>[ ] Tag created</li>
-<li>[ ] npm publish</li>
-<li>[ ] Docker push</li>
-<li>[ ] GitHub Release</li>
+<li>[ ] Update version strings across all canonical pillars (<code>package.json</code>, <code>index.json</code>, <code>README.md</code>).</li>
+<li>[ ] Generate comprehensive entry in <code>CHANGELOG.md</code> following Keep a Changelog standards.</li>
+<li>[ ] Draft detailed <code>RELEASE-NOTES.md</code> highlighting key changes, metrics, and breaking changes.</li>
+<li>[ ] Rebuild static documentation portal (<code>python3 pages/build.py</code>) with latest metadata.</li>
 </ul>
-<h2 id="post-release">Post-Release</h2>
+<hr>
+<h2 id="phase-3-tagging-deployment--multi-target-sync">Phase 3: Tagging, Deployment & Multi-Target Sync</h2>
 <ul>
-<li>[ ] Users notified</li>
-<li>[ ] Documentation updated</li>
-<li>[ ] Version for dev incremented</li>
+<li>[ ] Create annotated and signed Git tag (<code>git tag -a vX.Y.Z -m "release: vX.Y.Z"</code>).</li>
+<li>[ ] Push branch and tags to remote repository (<code>git push origin master --tags</code>).</li>
+<li>[ ] Execute multi-target runtime synchronization engine (<code>python3 scripts/sync_runtime.py --deploy</code>).</li>
+<li>[ ] Verify GitHub Actions release workflow passes and deploys to production / GitHub Pages.</li>
+</ul>
+<hr>
+<h2 id="phase-4-post-release-verification--monitoring">Phase 4: Post-Release Verification & Monitoring</h2>
+<ul>
+<li>[ ] Verify live production endpoints and asset CDN caches.</li>
+<li>[ ] Monitor telemetry, error logs, and performance metrics for regression anomalies.</li>
+<li>[ ] Announce release to stakeholders and update roadmap milestones.</li>
 </ul>
   </div>
   <footer>

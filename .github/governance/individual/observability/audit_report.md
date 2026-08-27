@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/observability` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `cb6e2b8cdf120e45ab1191a140832c99070fe6bb57f391ca242772b957a3823d` | **Score Global:** | `83.4 / 100` |
+| **Hash SHA-256:** | `cb6e2b8cdf120e45ab1191a140832c99070fe6bb57f391ca242772b957a3823d` | **Score Global:** | `81.4 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
 | **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
-| **D3. Economia de Tokens** | 7.8 | [WARN] | Footprint elevado (~7950 tokens); templates e referências devem usar lazy loading. |
+| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~10148 tokens); risco de saturação precoce da janela de contexto. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 8.8 | [OK] | Módulo auto-contido com sub-rotinas utilitárias isoladas em scripts/. |

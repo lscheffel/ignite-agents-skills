@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T04:24:09.047963+00:00",
+    "generated_at": "2026-08-27T04:36:22.682044+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -594,11 +594,6 @@
     },
     {
       "source": "agent-development",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "agent-development",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -689,11 +684,6 @@
     },
     {
       "source": "agent-planning-execution",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "agent-planning-execution",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -754,11 +744,6 @@
     },
     {
       "source": "agents-md-management",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "agents-md-management",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -804,6 +789,11 @@
     },
     {
       "source": "architecture-review",
+      "target": "implementation",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "architecture-review",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -824,17 +814,17 @@
     },
     {
       "source": "artifacts-builder",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "artifacts-builder",
       "target": "implementation",
       "relationship": "references_skill"
     },
     {
       "source": "artifacts-builder",
       "target": "mobile-design",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "artifacts-builder",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -939,11 +929,6 @@
     },
     {
       "source": "cap",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "cap",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -974,11 +959,6 @@
     },
     {
       "source": "changelog-generator",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "changelog-generator",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -1005,11 +985,6 @@
     {
       "source": "circuit-breaker",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "circuit-breaker",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1055,11 +1030,6 @@
     {
       "source": "clean-code",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "clean-code",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1110,11 +1080,6 @@
     {
       "source": "code-review",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "code-review",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1184,11 +1149,6 @@
     },
     {
       "source": "code-review-workflow",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "code-review-workflow",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -1225,11 +1185,6 @@
     {
       "source": "content-creator",
       "target": "llm-as-judge",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "content-creator",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1284,11 +1239,6 @@
     },
     {
       "source": "content-research-writer",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "content-research-writer",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -1315,11 +1265,6 @@
     {
       "source": "context7-mcp",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "context7-mcp",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1459,11 +1404,6 @@
     },
     {
       "source": "dispatching-parallel-agents",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "dispatching-parallel-agents",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -1510,11 +1450,6 @@
     {
       "source": "docx-processing",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "docx-processing",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1574,11 +1509,6 @@
     },
     {
       "source": "email-composer",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "email-composer",
       "target": "pdf-processing",
       "relationship": "references_skill"
     },
@@ -1615,11 +1545,6 @@
     {
       "source": "find-skills",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "find-skills",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1665,11 +1590,6 @@
     {
       "source": "git-workflow",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "git-workflow",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1814,11 +1734,6 @@
     },
     {
       "source": "llm-as-judge",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "llm-as-judge",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -1860,11 +1775,6 @@
     {
       "source": "mcp-builder",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "mcp-builder",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -1915,11 +1825,6 @@
     {
       "source": "mobile-design",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "mobile-design",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2014,11 +1919,6 @@
     },
     {
       "source": "pdf-processing",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "pdf-processing",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -2055,11 +1955,6 @@
     {
       "source": "performance-optimization",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "performance-optimization",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2105,11 +2000,6 @@
     {
       "source": "php-laravel-ecosystem",
       "target": "mcp-builder",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "php-laravel-ecosystem",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2170,11 +2060,6 @@
     {
       "source": "product-spec-engineering",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "product-spec-engineering",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2240,11 +2125,6 @@
     {
       "source": "react-best-practices",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "react-best-practices",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2354,11 +2234,6 @@
     },
     {
       "source": "resilient-execution",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "resilient-execution",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -2450,11 +2325,6 @@
     {
       "source": "seo-optimizer",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "seo-optimizer",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2789,11 +2659,6 @@
     },
     {
       "source": "test-driven-development",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "test-driven-development",
       "target": "refactoring",
       "relationship": "references_skill"
     },
@@ -2839,11 +2704,6 @@
     },
     {
       "source": "testing-mastery",
-      "target": "observability",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "testing-mastery",
       "target": "performance-optimization",
       "relationship": "references_skill"
     },
@@ -2884,12 +2744,12 @@
     },
     {
       "source": "ui-ux-pro-max",
-      "target": "mobile-design",
+      "target": "implementation",
       "relationship": "references_skill"
     },
     {
       "source": "ui-ux-pro-max",
-      "target": "observability",
+      "target": "mobile-design",
       "relationship": "references_skill"
     },
     {
@@ -2925,11 +2785,6 @@
     {
       "source": "ux-researcher-designer",
       "target": "mobile-design",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "ux-researcher-designer",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -2970,11 +2825,6 @@
     {
       "source": "verification-before-completion",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "verification-before-completion",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {
@@ -3065,11 +2915,6 @@
     {
       "source": "xlsx-processing",
       "target": "implementation",
-      "relationship": "references_skill"
-    },
-    {
-      "source": "xlsx-processing",
-      "target": "observability",
       "relationship": "references_skill"
     },
     {

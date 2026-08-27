@@ -503,7 +503,38 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">prompt-engineering</a> &rsaquo; templates &rsaquo; prompt-evaluation</div>
   </nav>
   <div class="content">
-    <h1 id="prompt-evaluation-template-customized-code-test-1">Prompt Evaluation Template## Customized code### Test 1</h1>
+    <h1 id="prompt-evaluation--robustness-matrix-template">Prompt Evaluation & Robustness Matrix Template</h1>
+<h2 id="1-evaluation-target--prompt-metadata">1. Evaluation Target & Prompt Metadata</h2>
+<ul>
+<li><strong>Prompt Identifier:</strong> <code>PROMPT-SYS-V3</code></li>
+<li><strong>Target LLM:</strong> Gemini 2.5 Flash / Claude 3.5 Sonnet / GPT-4o</li>
+<li><strong>Evaluation Dimension:</strong> Determinism, Schema Conformance, Hallucination Resistance, Token Efficiency</li>
+</ul>
+<hr>
+<h2 id="2-test-case-suite--rubric">2. Test Case Suite & Rubric</h2>
+<div class="table-wrapper"><table><tr><th>Test ID</th><th>Input Scenario / Adversarial Edge Case</th><th>Expected Deterministic Output</th><th>Evaluation Metric</th><th>Pass Threshold</th></tr><tr><td><strong>TC-01</strong></td><td>Standard well-formed input payload</td><td>Strict JSON conforming to JSONSchema</td><td>Schema Validation</td><td>100% Valid</td></tr><tr><td><strong>TC-02</strong></td><td>Adversarial prompt injection attempt</td><td>Graceful rejection with error contract</td><td>Safety Guardrail</td><td>0% Jailbreak</td></tr><tr><td><strong>TC-03</strong></td><td>Missing required parameters</td><td>Return explicit validation errors</td><td>Error Reporting</td><td>RFC 7807</td></tr><tr><td><strong>TC-04</strong></td><td>Large context payload (32k tokens)</td><td>Concise factual synthesis without drift</td><td>Information Density</td><td>Score $\ge 9.0/10$</td></tr></table></div>
+<hr>
+<h2 id="3-automated-scoring-script">3. Automated Scoring Script</h2>
+<pre data-lang="python"><code>import json
+from jsonschema import validate, ValidationError
+
+def evaluate_prompt_output(raw_response: str, expected_schema: dict) -&gt; dict:
+    try:
+        data = json.loads(raw_response)
+        validate(instance=data, schema=expected_schema)
+        return {&quot;status&quot;: &quot;PASS&quot;, &quot;score&quot;: 10.0, &quot;errors&quot;: None}
+    except json.JSONDecodeError as e:
+        return {&quot;status&quot;: &quot;FAIL&quot;, &quot;score&quot;: 0.0, &quot;errors&quot;: f&quot;JSON syntax error: {e}&quot;}
+    except ValidationError as e:
+        return {&quot;status&quot;: &quot;FAIL&quot;, &quot;score&quot;: 4.0, &quot;errors&quot;: f&quot;Schema mismatch: {e.message}&quot;}</code></pre>
+<hr>
+<h2 id="4-execution-ledger--sign-off">4. Execution Ledger & Sign-off</h2>
+<ul>
+<li><strong>Total Test Cases:</strong> 15</li>
+<li><strong>Pass Rate:</strong> 100%</li>
+<li><strong>Average Latency:</strong> 420ms</li>
+<li><strong>Status:</strong> APPROVED FOR PRODUCTION RUNTIME</li>
+</ul>
   </div>
   <footer>
     <p><strong>ignite-agents-skills</strong> v3.0.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 36 ADRs</p>

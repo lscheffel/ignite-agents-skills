@@ -503,19 +503,34 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-archive</a> &rsaquo; examples &rsaquo; ADR-997-TODO</div>
   </nav>
   <div class="content">
-    <hr>
-<p>id: ADR-997-TODO type: todo title: Execution - False Positive Architecture ---</p>
-<h1 id="todo-test-997">TODO: Test 997</h1>
-<blockquote>Status: ⬜ PENDING</blockquote>
-<h2 id="task-table">Task Table</h2>
-<div class="table-wrapper"><table><tr><th>ID</th><th>Task</th><th>Status</th></tr><tr><td>A1.1</td><td>Task 1</td><td>✅</td></tr><tr><td>A1.2</td><td>Task 2</td><td>✅</td></tr></table></div>
-<h2 id="checkpoints">Checkpoints</h2>
+    <h1 id="adr-997-execution--completion-checklist-sample-todo">ADR-997 Execution & Completion Checklist (Sample TODO)</h1>
+<h2 id="metadata">Metadata</h2>
 <ul>
-<li>[x] Check 1</li>
-<li>[x] Check 2</li>
+<li><strong>Target ADR:</strong> <code>ADR-997: In-Memory Fast Cache Layer</code></li>
+<li><strong>Lead Agent:</strong> <code>implementation</code></li>
+<li><strong>Verification Authority:</strong> <code>adr-archive</code></li>
 </ul>
-<h2 id="summary">Summary</h2>
-<div class="table-wrapper"><table><tr><th>Phase</th><th>Status</th></tr><tr><td>Phase A</td><td>⬜</td></tr></table></div>
+<hr>
+<h2 id="phase-1-core-scaffolding--contract-verification">Phase 1: Core Scaffolding & Contract Verification</h2>
+<ul>
+<li>[x] Create cache protocol interface in <code>src/cache/protocol.py</code>.</li>
+<li>[x] Implement TTL expiration heap data structure with zero memory leaks.</li>
+<li>[x] Add unit test suite validating $O(1)$ eviction performance under 10,000 keys.</li>
+</ul>
+<hr>
+<h2 id="phase-2-integration--concurrency-hardening">Phase 2: Integration & Concurrency Hardening</h2>
+<ul>
+<li>[x] Integrate cache layer with primary storage provider.</li>
+<li>[x] Execute concurrent stress harness simulating 100 simultaneous workers.</li>
+<li>[x] Verify telemetry metrics and hit-rate logging.</li>
+</ul>
+<hr>
+<h2 id="phase-3-completion-gate--archival-sign-off">Phase 3: Completion Gate & Archival Sign-off</h2>
+<ul>
+<li>[x] Run full test suite with exit code 0 (<code>pytest tests/</code>).</li>
+<li>[x] Issue canonical Evidence Record (<code>ADR-997-ER.md</code>).</li>
+<li>[x] Move Decision Set to archive directory.</li>
+</ul>
   </div>
   <footer>
     <p><strong>ignite-agents-skills</strong> v3.0.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 36 ADRs</p>

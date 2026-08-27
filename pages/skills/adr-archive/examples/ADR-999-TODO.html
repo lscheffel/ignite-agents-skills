@@ -503,15 +503,33 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-archive</a> &rsaquo; examples &rsaquo; ADR-999-TODO</div>
   </nav>
   <div class="content">
-    <hr>
-<p>id: ADR-999-TODO type: todo title: Partial Execution ---</p>
-<h1 id="todo-test-999">TODO: Test 999</h1>
-<h2 id="task-table">Task Table</h2>
-<div class="table-wrapper"><table><tr><th>ID</th><th>Task</th><th>Status</th></tr><tr><td>A1.1</td><td>Task 1</td><td>✅</td></tr><tr><td>A1.2</td><td>Pending Refactoring Task</td><td>🔄</td></tr></table></div>
-<h2 id="checkpoints">Checkpoints</h2>
+    <h1 id="adr-999-execution--completion-checklist-sample-todo">ADR-999 Execution & Completion Checklist (Sample TODO)</h1>
+<h2 id="metadata">Metadata</h2>
 <ul>
-<li>[x] Check 1</li>
-<li>[ ] Check 2</li>
+<li><strong>Target ADR:</strong> <code>ADR-999: Automated Security Gate Linter</code></li>
+<li><strong>Lead Agent:</strong> <code>implementation</code></li>
+<li><strong>Verification Authority:</strong> <code>adr-archive</code></li>
+</ul>
+<hr>
+<h2 id="phase-1-ast-rule-engine--pattern-matchers">Phase 1: AST Rule Engine & Pattern Matchers</h2>
+<ul>
+<li>[x] Create AST visitor for Python detecting dangerous <code>eval()</code> and raw SQL.</li>
+<li>[x] Implement vulnerability classification rubric matching OWASP standards.</li>
+<li>[x] Add unit tests covering 50 common code vulnerability patterns.</li>
+</ul>
+<hr>
+<h2 id="phase-2-pre-commit-integration--performance">Phase 2: Pre-Commit Integration & Performance</h2>
+<ul>
+<li>[x] Integrate AST linter into pre-commit hook script.</li>
+<li>[x] Benchmark execution speed ensuring scans complete in $< 100\text{ms}$.</li>
+<li>[x] Verify zero false positives against standard codebase test fixtures.</li>
+</ul>
+<hr>
+<h2 id="phase-3-completion-gate--archival-sign-off">Phase 3: Completion Gate & Archival Sign-off</h2>
+<ul>
+<li>[x] All 18 verification checks passed with exit code 0.</li>
+<li>[x] Emit canonical Evidence Record (<code>ADR-999-ER.md</code>).</li>
+<li>[x] Prune resolved technical debts and archive working artifacts.</li>
 </ul>
   </div>
   <footer>

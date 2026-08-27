@@ -503,13 +503,40 @@
     <div class="nav-breadcrumb"><a href="../../../index.html">Skills</a> &rsaquo; <a href="../index.html">adr-generator</a> &rsaquo; examples &rsaquo; README</div>
   </nav>
   <div class="content">
-    <h1 id="examples--usage-guide">Examples — Usage Guide</h1>
-<p>This directory contains two sets of examples with different purposes. They are not interchangeable — each serves a specific audience and tier.</p>
-<h2 id="quadra--few-shot-mandatory-tiers-2-and-3"><code>quadra/</code> — Few-Shot Mandatory (Tiers 2 and 3)</h2>
-<p><code>ADR-001.md</code>, <code>ADR-001-BP.md</code>, <code>ADR-001-TODO.md</code>, <code>ADR-001-PI.md</code> form a <strong>complete and realistic Quadra</strong> (JWT authentication). The SKILL.md instructs the agent to read this directory before generating a PI (<code>adr-pi.md</code>) in Tiers 2/3, precisely because these files are the Enterprise, SOTA — concise, concrete, and placeholder-free reference quality.</p>
-<p><strong>Maintenance Rule:</strong> Any critical anti-pattern defined in the SKILL.md must also be respected here. A few-shot example that violates its own critical rule teaches the agent to violate it as well — this is exactly what happened with the absence of "Alternatives Considered" in <code>ADR-001.md</code> before v3.0.0 (see Audit Note in SKILL.md).</p>
-<h2 id="database-choicemd--didactic-example-tiers-01"><code>database-choice.md</code> — Didactic Example (Tiers 0/1)</h2>
-<p>A simpler and more explanatory example, designed for humans understanding the concept of ADR for the first time or for small-scope decisions (Tier 0/1). It does not follow the complete frontmatter of governance artifacts — it is intentionally lighter.</p>
+    <h1 id="adr-generator-reference-examples-catalog">ADR Generator Reference Examples Catalog</h1>
+<p>This directory provides canonical, battle-tested reference implementations demonstrating how to structure, challenge, and govern Architectural Decision Records (ADRs) using the <strong>MADR v3.0</strong> standard.</p>
+<hr>
+<h2 id="1-catalog-of-reference-examples">1. Catalog of Reference Examples</h2>
+<ol>
+<li><strong><code>adr-generator-example.md</code>:</strong> </li>
+</ol>
+<ul>
+<li>Complete end-to-end scenario demonstrating how an AI coding agent processes technical trade-offs.</li>
+<li>Evaluates competing architectural alternatives (e.g. SQLite WAL vs Kafka).</li>
+<li>Synthesizes a hardened Decision Set: ADR, Blueprint (BP), Implementation Plan (PI), and Completion Checklist (TODO).</li>
+</ul>
+<ol>
+<li><strong><code>adr-blueprint-sample.md</code>:</strong> </li>
+</ol>
+<ul>
+<li>Sample Architectural Blueprint (BP) incorporating C4 component diagrams and Mermaid state machines.</li>
+<li>Decoupled interface boundary definitions and typed data contracts.</li>
+</ul>
+<ol>
+<li><strong><code>adr-implementation-plan-sample.md</code>:</strong> </li>
+</ol>
+<ul>
+<li>Sample Phased Implementation Plan (PI) with quantitative milestones and dependency ordering.</li>
+<li>Granular verification gates for deterministic completion.</li>
+</ul>
+<hr>
+<h2 id="2-best-practices--decision-governance">2. Best Practices & Decision Governance</h2>
+<ul>
+<li>Every ADR must explicitly articulate <strong>Negative Consequences</strong> and trade-offs alongside positive drivers.</li>
+<li>All Decision Sets must maintain 1-to-1 traceability with implementation tasks in <code>TODO.md</code>.</li>
+<li>Upon successful implementation, use <code>adr-archive</code> to certify the decision with an Evidence Record (<code>ER.md</code>).</li>
+<li>Never merge an unverified architectural change without a corresponding ADR when structural trade-offs exist.</li>
+</ul>
   </div>
   <footer>
     <p><strong>ignite-agents-skills</strong> v3.0.0 &mdash; 60 skills &middot; 121 templates &middot; 90 examples &middot; 36 ADRs</p>
