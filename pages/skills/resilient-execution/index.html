@@ -596,6 +596,27 @@ Attempt 3: Use GraphQL endpoint instead of REST
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Fault Tolerance Patterns:</strong> Graceful Degradation, Bulkhead Isolation, Retry with Budgeting, and Self-Healing Systems.</li>
+<li><strong>Idempotency Standards:</strong> RFC 7231 safe methods and cryptographic idempotency key generation.</li>
+<li><strong>Disaster Recovery:</strong> Automated Rollback Vectors and State Checkpoint Hydration.</li>
+<li><strong>Chaos Engineering:</strong> Antifragile validation under synthetic failure injection.</li>
+</ul>
+<h3 id="degradation-ladder-4-tiers">Degradation Ladder (4 Tiers):</h3>
+<ol>
+<li><strong>Tier 1 (Optimal):</strong> Full live execution with external model inference and active tooling.</li>
+<li><strong>Tier 2 (Cached/RAG Fallback):</strong> Local SQLite RAG semantic search when external LLM endpoints are degraded.</li>
+<li><strong>Tier 3 (Rule-Based Static Fallback):</strong> Deterministic heuristic rules when semantic models are unavailable.</li>
+<li><strong>Tier 4 (Safe Refusal):</strong> Fast-fail with structured error diagnostic when data corruption risk is detected.</li>
+</ol>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Idempotent Retry Mandate):</strong> Retries are strictly forbidden on non-idempotent operations without transaction rollback capabilities.</li>
+<li><strong>Rule of Thumb 2 (Max Retry Limit):</strong> Maximum retry attempts is capped at $K_{\text{max}} = 3$; subsequent failures escalate down the degradation ladder.</li>
+<li><strong>Rule of Thumb 3 (State Checkpointing):</strong> Save execution state before executing any high-risk file modification or external API invocation.</li>
+<li><strong>Rule of Thumb 4 (Self-Healing Recovery):</strong> When an unhandled exception occurs, the system must capture the stack trace, rollback disk state, and alert the orchestrator.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

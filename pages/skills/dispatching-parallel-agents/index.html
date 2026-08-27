@@ -435,6 +435,19 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="dispatching-parallel-agents">Dispatching Parallel Agents</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>2+ independent tasks have zero shared dependencies and touch disjoint files</li>
+<li>Batch processing multiple distinct issues, features, or modules in parallel</li>
+<li>Running exploratory prototypes concurrently under strict time budgets</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Tasks have sequential dependencies where step B depends on output of step A</li>
+<li>Multiple subagents need to modify the exact same files or shared global state</li>
+<li>The system is operating near API rate limits (use sequential ReAct loop instead)</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>This skill coordinates multiple agents working concurrently on independent subtasks to reduce total execution time while maintaining correctness. It provides strict rules for identifying safe parallelization opportunities, writing focused agent prompts, and integrating results without conflicts. The key constraint is that no two agents may modify the same file.</p>
 <p><strong>Announce at start:</strong> "I'm using the dispatching-parallel-agents skill to run [N] independent tasks concurrently."</p>
@@ -636,6 +649,29 @@ AGENT 3 - OpenAPI Spec:
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Concurrency & Parallelism Models:</strong> Actor Model, Fork-Join Parallelism, and Work-Stealing Pool architectures.</li>
+<li><strong>Resource Budgeting:</strong> Mathematical Token Partitioning across concurrent execution threads.</li>
+<li><strong>Merge & Conflict Resolution:</strong> Three-way merge algorithms and deterministic AST reconciliation.</li>
+<li><strong>Rate Limiting & Throttling:</strong> Token Bucket algorithm for API request pacing under concurrent agent load.</li>
+</ul>
+<h3 id="dynamic-token-budget-partitioning-formula">Dynamic Token Budget Partitioning Formula:</h3>
+<p>$$B_{\text{subagent}}^{(i)} = \frac{B_{\text{total}} - B_{\text{orchestrator}}}{M} \times W_i \quad \text{where} \quad \sum_{i=1}^M W_i = 1.0$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (File Partitioning Invariant):</strong> Two parallel subagents MUST NEVER be assigned to modify the same file concurrently (Strict File Ownership Isolation).</li>
+<li><strong>Rule of Thumb 2 (Concurrency Limit):</strong> Maximum concurrent active subagents is bounded by $M_{\text{max}} = 5$ to prevent API throttling and lock contention.</li>
+<li><strong>Rule of Thumb 3 (Join Synchronization Gate):</strong> The orchestrator must block on <code>Promise.all</code> / <code>gather</code> until all dispatched subagents report completion or timeout.</li>
+<li><strong>Rule of Thumb 4 (Deterministic Conflict Resolution):</strong> If merge conflicts arise, the orchestrator triggers an isolated resolution agent with AST diff context.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring parallel dispatching complete:</p>
+<ul>
+<li>[ ] All subagent result envelopes received and schema-validated</li>
+<li>[ ] AST diff reconciliation executed with zero syntax errors</li>
+<li>[ ] Consolidated test suite executed with exit code 0</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

@@ -496,6 +496,26 @@
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Live Documentation Retrieval:</strong> Real-time API resolution, version pinning, and authoritative documentation indexing.</li>
+<li><strong>Model Context Protocol Integration:</strong> Fast MCP lazy-loading, caching, and token-optimized query dispatch.</li>
+<li><strong>Semantic Routing:</strong> Two-phase retrieval (1. <code>resolve-library-id</code> $\to$ 2. <code>query-docs</code>).</li>
+<li><strong>Knowledge Freshness:</strong> Strict prioritization of Context7 over model training weights for libraries and SDKs.</li>
+</ul>
+<h3 id="context7-operating-protocol">Context7 Operating Protocol:</h3>
+<ol>
+<li><strong>Phase 1 (Resolve ID):</strong> Call <code>resolve-library-id</code> using official library name and question context. Select match matching <code>/org/project</code>.</li>
+<li><strong>Phase 2 (Query Docs):</strong> Call <code>query-docs</code> passing full natural language technical question.</li>
+<li><strong>Phase 3 (Doc Ingestion):</strong> Answer strictly based on fetched documentation payload.</li>
+</ol>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Never Guess Modern APIs):</strong> For popular evolving frameworks (Next.js, React 19, Tailwind, Prisma), Context7 lookup is MANDATORY before writing code.</li>
+<li><strong>Rule of Thumb 2 (Full Question Rule):</strong> Always pass the complete user technical question to <code>query-docs</code>, never isolated single keywords.</li>
+<li><strong>Rule of Thumb 3 (Version Specificity):</strong> When a specific version is mentioned by the user (e.g. "Vite 6"), select the version-tagged library ID.</li>
+<li><strong>Rule of Thumb 4 (Fallback to Web Search):</strong> If Context7 returns empty results after 2 attempts, fall back to official web search with domain whitelisting.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -503,6 +523,13 @@
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding Context7 query:</p>
+<ul>
+<li>[ ] Best matching library ID resolved via <code>resolve-library-id</code></li>
+<li>[ ] Query executed passing complete technical question context</li>
+<li>[ ] Final answer strictly grounded in fetched documentation payload</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

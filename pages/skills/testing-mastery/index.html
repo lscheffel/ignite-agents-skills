@@ -929,6 +929,22 @@ test(&#x27;page has no accessibility violations&#x27;, async ({ page }) =&gt; {
 <li>The result has been validated deterministically through execution evidence.</li>
 <li>There are no outstanding structural issues, placeholders, or unresolved errors.</li>
 </ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Testing Architecture:</strong> Mike Cohn Test Pyramid, Testing Trophy (Kent C. Dodds), and Test Honeycomb.</li>
+<li><strong>Advanced Testing Paradigms:</strong> Property-Based Testing (Hypothesis/QuickCheck), Contract Testing (Pact), and Chaos Engineering.</li>
+<li><strong>Test Doubles Taxonomy:</strong> Gerard Meszaros' xUnit Patterns (Dummy, Stub, Spy, Mock, Fake).</li>
+<li><strong>Deterministic Fixtures:</strong> Object Mother and Test Data Builder patterns.</li>
+</ul>
+<h3 id="mike-cohn-test-pyramid-ratio-algebra">Mike Cohn Test Pyramid Ratio Algebra:</h3>
+<p>$$\frac{N_{\text{unit}}}{N_{\text{total}}} \approx 0.70, \quad \frac{N_{\text{integration}}}{N_{\text{total}}} \approx 0.20, \quad \frac{N_{\text{e2e}}}{N_{\text{total}}} \approx 0.10$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Pyramid Distribution Rule):</strong> The vast majority (70%) of tests must be fast, isolated unit tests.</li>
+<li><strong>Rule of Thumb 2 (Don't Mock What You Don't Own):</strong> Only write test doubles for your own domain interfaces; wrap external libraries in adapters.</li>
+<li><strong>Rule of Thumb 3 (Test Behavior, Not Implementation):</strong> Assert on observable outputs and state transitions, not private internal methods.</li>
+<li><strong>Rule of Thumb 4 (Deterministic Isolation):</strong> Tests must never depend on execution order or share mutable global state (Hermetic Tests).</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="pdf-processing">PDF Processing</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Extracting text, tables, and form fields from PDF documents programmatically</li>
+<li>Generating ISO 19005 compliant PDF/A archival reports and certificates</li>
+<li>Running OCR fallback pipelines on scanned image-only PDF files</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Simple plain text or Markdown document generation without PDF styling requirements</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Generate, manipulate, and extract data from PDF documents. This skill covers the Python PDF ecosystem: pypdf for merging/splitting/metadata, pdfplumber for text and table extraction, reportlab for generation, pytesseract for OCR, and strategies for form filling, watermarking, and complex document assembly.</p>
 <p>Apply this skill whenever PDFs need to be created, parsed, transformed, or combined through code.</p>
@@ -731,6 +742,24 @@ with open(&#x27;updated.pdf&#x27;, &#x27;wb&#x27;) as f:
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Archival Standards:</strong> ISO 19005 (PDF/A-1b, PDF/A-2b) for long-term digital document preservation.</li>
+<li><strong>Spatial Table Extraction:</strong> Vector bounding box analysis (PDFPlumber, Tabula) and layout-aware text extraction.</li>
+<li><strong>OCR Fallback Pipeline:</strong> Tesseract OCR (v5.x) preprocessing (deskew, binarization, DPI scaling to 300 DPI).</li>
+<li><strong>Security & Metadata:</strong> PDF metadata stripping (exif), encryption (AES-256), and digital signature verification.</li>
+</ul>
+<h3 id="spatial-extraction-vs-ocr-fallback-pipeline">Spatial Extraction vs OCR Fallback Pipeline:</h3>
+<pre data-lang="text"><code>Input PDF ──&gt; Native Text Layer Present?
+                 ├── YES ──&gt; Spatial Vector Extraction (PDFPlumber) ──&gt; Structured Data
+                 └── NO  ──&gt; Render Page to Image (300 DPI) ──&gt; Tesseract OCR ──&gt; Text</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Check Native Text First):</strong> Always check for native vector font glyphs before invoking expensive OCR engines.</li>
+<li><strong>Rule of Thumb 2 (DPI Scaling for OCR):</strong> Scanned PDF pages must be rasterized at exactly 300 DPI with grayscale binarization before OCR processing.</li>
+<li><strong>Rule of Thumb 3 (PDF/A Archival Output):</strong> Generated business reports, invoices, and certificates must be saved in PDF/A compliant format with embedded fonts.</li>
+<li><strong>Rule of Thumb 4 (Sanitize Metadata):</strong> Strip author paths, printer IDs, and sensitive metadata before distributing generated PDF files.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -738,6 +767,13 @@ with open(&#x27;updated.pdf&#x27;, &#x27;wb&#x27;) as f:
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding PDF processing:</p>
+<ul>
+<li>[ ] Native vector text extracted without rasterization if text layer is present</li>
+<li>[ ] Generated PDFs validated for PDF/A compliance and font embedding</li>
+<li>[ ] Sensitive author metadata stripped from generated outputs</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

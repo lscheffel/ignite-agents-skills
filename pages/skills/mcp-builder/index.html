@@ -435,6 +435,18 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="mcp-builder">MCP Builder</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Building custom Model Context Protocol (MCP) servers (Stdio or SSE)</li>
+<li>Exposing tools, resources, and prompt templates to AI coding assistants</li>
+<li>Creating integrations between external APIs/databases and agent runtimes</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Standard CLI tools or direct scripts are sufficient without agent protocol binding</li>
+<li>Building purely monolithic web applications without MCP client requirements</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Build production-quality MCP (Model Context Protocol) servers that expose tools, resources, and prompts to AI clients. This skill covers the full development lifecycle: tool definition, resource management, prompt templates, transport configuration (stdio, SSE), error handling, security hardening, testing, and client integration.</p>
 <h2 id="phase-1-design">Phase 1: Design</h2>
@@ -732,6 +744,28 @@ describe(&#x27;MCP Server&#x27;, () =&gt; {
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Protocol Specification:</strong> Model Context Protocol (MCP 2024-11-05 Specification) and JSON-RPC 2.0.</li>
+<li><strong>Transport Architectures:</strong> Stdio Stream Transport (POSIX stdin/stdout) and Server-Sent Events (SSE) with HTTP POST.</li>
+<li><strong>Schema & Validation:</strong> JSON Schema Draft-07 for tool parameters and resource URI templates.</li>
+<li><strong>Security & Authorization:</strong> Tool execution sandboxing, input sanitization, and path traversal prevention.</li>
+</ul>
+<h3 id="stdio-json-rpc-20-transport-protocol-architecture">Stdio JSON-RPC 2.0 Transport Protocol Architecture:</h3>
+<pre data-lang="text"><code>Client (Antigravity/Kilo)                       MCP Server (Stdio)
+       │                                                │
+       │─── JSON-RPC 2.0 Request (&quot;tools/list&quot;) ───────&gt;│
+       │&lt;── JSON-RPC 2.0 Result (Tool Definitions) ─────│
+       │                                                │
+       │─── JSON-RPC 2.0 Request (&quot;tools/call&quot;) ───────&gt;│
+       │&lt;── JSON-RPC 2.0 Result (Execution Payload) ────│</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Stdio Cleanliness Invariant):</strong> An MCP Stdio server MUST NEVER print debug strings or raw text to <code>stdout</code>; all logging must use <code>stderr</code> to prevent JSON-RPC parsing crashes.</li>
+<li><strong>Rule of Thumb 2 (Strict Tool Typing):</strong> Every tool schema must specify <code>type: "object"</code>, <code>properties</code>, and <code>required</code> arrays.</li>
+<li><strong>Rule of Thumb 3 (Backpressure & Timeout):</strong> Async tool handlers must complete within 30 seconds or return a structured JSON-RPC timeout error.</li>
+<li><strong>Rule of Thumb 4 (Atomic Tool Returns):</strong> Return values must follow the canonical <code>{ content: [{ type: "text", text: "..." }], isError: false }</code> format.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -739,6 +773,13 @@ describe(&#x27;MCP Server&#x27;, () =&gt; {
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring MCP server production-ready:</p>
+<ul>
+<li>[ ] Stdio protocol tests pass with zero <code>stdout</code> contamination</li>
+<li>[ ] Tool parameters validate against JSON Schema Draft-07</li>
+<li>[ ] Error responses conform to JSON-RPC 2.0 format with <code>isError: true</code></li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

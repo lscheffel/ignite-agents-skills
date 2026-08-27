@@ -29,6 +29,16 @@ metadata:
 
 # Verification Before Completion
 
+## When to Use
+
+### Use when:
+- Concluding any technical task, bug fix, refactoring, or feature implementation
+- Executing automated test suites and validation scripts before declaring completion
+- Generating cryptographic Evidence Records (ER) and verification logs
+
+### Do not use when:
+- Exploratory brainstorming or early-stage conceptual research
+
 ## Overview
 
 The verification-before-completion skill is the terminal checkpoint for every task in the toolkit. It enforces a strict 5-step protocol that requires running fresh verification commands, reading their full output, and confirming results match the completion claim. Without this skill, agents make unverified claims that lead to broken code in production — with it, every completion claim is backed by evidence.
@@ -293,6 +303,30 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Zero-Unverified-Deliverable Invariant:** Never declare any task complete without executing and verifying actual test/validation commands.
+- **Exit Code Verification:** Explicit assertion that validation commands exit with code `0 (ALL_PASS)`.
+- **Evidence-Based Walkthroughs:** Document concrete proof of execution (diffs, test output logs, metrics) in `walkthrough.md`.
+- **Pre-Commit Enforcement:** Automated pre-commit git hooks running test suites and audit engines before allowing commits.
+
+### Verification State Machine:
+
+```mermaid
+graph LR
+    A[Code Changes Made] --> B[Run Automated Tests]
+    B -->|Tests Pass Code 0| C[Generate Evidence Record]
+    B -->|Tests Fail| D[Systematic Debugging & Fix]
+    D --> B
+    C --> E[Declare Task Completed]
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Evidence Before Assertion):** Do not claim a bug is fixed or a feature works without showing the exact terminal command output demonstrating success.
+2. **Rule of Thumb 2 (Zero Warnings on Build):** Deliverables must build with zero compiler/linter warnings on strict settings.
+3. **Rule of Thumb 3 (Check Clean Git Tree):** Confirm `git status` shows only expected modified files before concluding.
+4. **Rule of Thumb 4 (Automated Regression Check):** Run the entire test suite (`python3 -m unittest discover`) rather than only testing the isolated modified file.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -301,3 +335,10 @@ graph TD
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before declaring task completed:
+- [ ] All automated unit and integration tests execute with exit code 0
+- [ ] Terminal output evidence captured and verified
+- [ ] Git working tree verified clean without unintended modified files

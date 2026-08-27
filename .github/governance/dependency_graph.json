@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T02:53:50.365118+00:00",
+    "generated_at": "2026-08-27T02:57:53.457821+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -2094,6 +2094,11 @@
     },
     {
       "source": "repo-bootstrap",
+      "target": "deployment",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "repo-bootstrap",
       "target": "governance",
       "relationship": "references_skill"
     },
@@ -2675,6 +2680,11 @@
     {
       "source": "verification-before-completion",
       "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "verification-before-completion",
+      "target": "brainstorming",
       "relationship": "references_skill"
     },
     {

@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="llm-as-judge">LLM-as-Judge</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Establishing automated LLM evaluation benchmarks and model grading</li>
+<li>Evaluating conversational outputs against 1-5 rubrics with CoT justifications</li>
+<li>Measuring Cohen's Kappa ($\kappa \ge 0.70$) agreement between model and human evaluators</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Deterministic unit tests with exact binary assertion matching</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Some quality criteria are inherently subjective — tone of voice, visual aesthetics, UX feel, documentation clarity, code readability. These cannot be verified by deterministic tests. The LLM-as-judge pattern provides structured, repeatable evaluation using an LLM reviewer with defined rubrics, ensuring subjective quality is measured consistently.</p>
 <p><strong>Announce at start:</strong> "I'm using the llm-as-judge skill to evaluate subjective quality."</p>
@@ -618,6 +629,32 @@ Threshold: 7.5</code></pre>
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Evaluation Frameworks:</strong> G-Eval (GPT-4 evaluation with CoT), MT-Bench, and AlpacaEval 2.0.</li>
+<li><strong>Statistical Reliability:</strong> Cohen's Kappa ($\kappa \ge 0.70$) and Fleiss' Kappa for inter-annotator agreement.</li>
+<li><strong>Bias Mitigation:</strong> Position Bias calibration (swapped pair scoring), Verbosity Bias normalization, and Self-Enhancement bias prevention.</li>
+<li><strong>Grading Scales:</strong> Explicit 1-to-5 Rubric scales with distinct anchor definitions for each score.</li>
+</ul>
+<h3 id="cohens-kappa-inter-annotator-agreement-formula">Cohen's Kappa Inter-Annotator Agreement Formula:</h3>
+<p>$$\kappa = rac{P_o - P_e}{1 - P_e} \ge 0.70$$</p>
+<p>Where $P_o$ is relative observed agreement and $P_e$ is hypothetical chance agreement probability.</p>
+<h3 id="pairwise-position-bias-normalization-formula">Pairwise Position Bias Normalization Formula:</h3>
+<p>$$	ext{FinalScore}(A, B) = rac{	ext{Judge}(A 	ext{ first}, B 	ext{ second}) + 	ext{Judge}(B 	ext{ first}, A 	ext{ second})}{2}$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Symmetric Pairwise Evaluation):</strong> Always run pairwise comparisons twice with candidate order swapped to eliminate first-position bias.</li>
+<li><strong>Rule of Thumb 2 (Chain-of-Thought Evaluation):</strong> The judge LLM must output its step-by-step reasoning <em>before</em> emitting the final numerical score.</li>
+<li><strong>Rule of Thumb 3 (Rubric Anchor Points):</strong> Never ask for a score of 1-5 without providing explicit, unambiguous definitions for what constitutes a 1, 3, and 5.</li>
+<li><strong>Rule of Thumb 4 (Reference Ground Truth):</strong> Provide the golden reference output whenever evaluating factual correctness.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding LLM judge evaluation:</p>
+<ul>
+<li>[ ] Symmetric pairwise evaluation executed to eliminate position bias</li>
+<li>[ ] Step-by-step reasoning emitted before numerical score</li>
+<li>[ ] Inter-annotator agreement ($\kappa \ge 0.70$) verified across evaluation sample</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

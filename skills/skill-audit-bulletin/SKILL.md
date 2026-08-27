@@ -334,6 +334,28 @@ Present the user with explicit next steps:
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Dual-Axis Audit Methodology:** Structural & Metadata Quality (Axis 1) coupled with Domain SOTA Depth (Axis 2).
+- **Master Ledger Synchronization:** Continuous tracking in `SKILL_AUDIT_LEDGER.md` with SHA-256 fingerprinting.
+- **Automated ADR Triggers:** Automatic ADR escalation whenever a skill scores $<80/100$ or exhibits critical cognitive debt.
+- **Continuous Drift Detection:** Real-time variance tracking across multi-batch remediation cycles.
+
+### Scoring Grade Calibration Matrix:
+
+| Score Range | Grade | Classification | Action Gate |
+|:---|:---:|:---|:---|
+| **$\ge 95.0$** | **S (Diamond)** | Exceptional / Industry Benchmark | Lock as canonical reference template. |
+| **$90.0 - 94.9$** | **A+ / A (Platinum/Gold)** | Production SOTA Grade | Certified for mission-critical workflows. |
+| **$80.0 - 89.9$** | **B+ / B (Silver)** | Standard Production Grade | Solid; eligible for iterative polish. |
+| **$< 80.0$** | **C / F (Bronze/Fail)** | Sub-Standard / Deficient | Automatic ADR remediation trigger. |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Dual-Axis Verification):** Never score a skill based solely on word count or file size; verify both structural compliance and domain-specific depth.
+2. **Rule of Thumb 2 (Immediate ADR Escalation):** If any skill falls below 80.0 points, generate a remediation task in the active ADR backlog immediately.
+3. **Rule of Thumb 3 (Ledger Immutability):** Keep historical audit scores transparently logged with commit timestamps in `SKILL_AUDIT_LEDGER.md`.
+4. **Rule of Thumb 4 (Cross-Skill Consistency):** Audit companion skills jointly to guarantee unified terminology and non-contradictory workflows.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

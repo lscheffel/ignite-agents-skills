@@ -326,6 +326,33 @@ packages/
 - `documentation` — for documentation standards
 - `git` — for .gitignore
 
+## Domain SOTA & Industry Engineering Standards
+
+- **6-Pillar Repository Governance:** `README.md`, `USAGE.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, and `LICENSE`.
+- **Agent Governance Standard:** Canonical `AGENTS.md` and `GEMINI.md` anchoring Single Source of Truth (SSOT).
+- **CI/CD & Automation Scaffolding:** GitHub Actions workflows for automated linting, testing, and multi-runtime skill deployment.
+- **Git Hooks Automation:** Husky / standalone `.git/hooks/` pre-commit and post-commit verification scripts.
+
+### Repository Governance File Hierarchy:
+
+```text
+.
+├── AGENTS.md                 # SSOT Governance rules for AI coding agents
+├── README.md                 # Project elevator pitch & overview
+├── USAGE.md                  # Comprehensive developer & agent usage guide
+├── CHANGELOG.md              # Keep a Changelog (v1.1.0) release ledger
+├── CONTRIBUTING.md           # Contribution guidelines & PR etiquette
+├── CODE_OF_CONDUCT.md       # Contributor Covenant Code of Conduct
+├── SECURITY.md               # Vulnerability reporting & security policy
+└── LICENSE                   # Open-source license (MIT/Apache-2.0)
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (SSOT Governance Invariant):** Every repository must contain an `AGENTS.md` specifying canonical tool use, architecture, and constraints.
+2. **Rule of Thumb 2 (Security Policy Mandate):** Provide a clear `SECURITY.md` with private vulnerability disclosure instructions before public release.
+3. **Rule of Thumb 3 (Deterministic Bootstrap Script):** Provide a single bootstrap command (`./scripts/bootstrap.sh` or `npm run setup`) that installs all dependencies and hooks.
+4. **Rule of Thumb 4 (Consistent License):** Explicitly declare the open-source license in both `LICENSE` and `README.md`.
+
 ## Completion Gate
 
 A tarefa associada à skill `repo-bootstrap` só pode ser declarada concluída quando:

@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="xlsx-processing">XLSX Processing</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Generating complex multi-sheet Excel spreadsheets with formulas and conditional formatting</li>
+<li>Processing large tabular datasets ($>10,000$ rows) via streaming memory mode (<code>read_only=True</code>)</li>
+<li>Applying data validation dropdowns, column auto-sizing, and formula injection defenses</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Simple lightweight CSV dumps without formula or styling requirements</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Manipulate Excel files programmatically using openpyxl for rich formatting and pandas for data analysis. This skill covers reading/writing spreadsheets, formulas, charts, conditional formatting, data validation, pivot table generation, CSV import/export, and strategies for handling large files.</p>
 <p>Apply this skill whenever Excel files need to be created, read, transformed, or enriched through code rather than manual editing.</p>
@@ -731,6 +742,29 @@ wb.save(&#x27;output.xlsx&#x27;)</code></pre>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Streaming Memory Bounds:</strong> OpenPyXL Read-Only / Write-Only streaming mode (<code>read_only=True</code>, <code>write_only=True</code>) for large datasets.</li>
+<li><strong>Formula & Syntax Engine:</strong> OpenPyXL Formula syntax trees, dynamic named ranges, and formula caching (<code>data_only=True</code>).</li>
+<li><strong>Data Validation & Styling:</strong> Cell data validation dropdowns, conditional formatting rules, and column auto-fit sizing.</li>
+<li><strong>Type Safety & Sanitization:</strong> Strict CSV/XLSX formula injection prevention (sanitize leading <code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>).</li>
+</ul>
+<h3 id="streaming-memory-algebra">Streaming Memory Algebra:</h3>
+<p>For worksheets exceeding 10,000 rows, memory consumption must remain bounded:</p>
+<p>$$	ext{Memory}(	ext{Stream}) = O(1) \quad 	ext{vs} \quad 	ext{Memory}(	ext{DOM}) = O(N_{	ext{rows}} 	imes N_{	ext{cols}})$$</p>
+<h3 id="formula-injection-sanitization-pattern">Formula Injection Sanitization Pattern:</h3>
+<pre data-lang="python"><code>def sanitize_cell(value: str) -&gt; str:
+    if isinstance(value, str) and value.startswith((&#x27;=&#x27;, &#x27;+&#x27;, &#x27;-&#x27;, &#x27;@&#x27;, &#x27;	&#x27;, &#x27;
+&#x27;)):
+        return &quot;&#x27;&quot; + value
+    return value</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Stream on Large Datasets):</strong> Any spreadsheet with $>10,000$ rows MUST be processed using OpenPyXL <code>read_only=True</code> streaming mode.</li>
+<li><strong>Rule of Thumb 2 (Formula Injection Defense):</strong> All user-supplied spreadsheet cell values must be sanitized to prevent CSV/Excel Formula Injection attacks.</li>
+<li><strong>Rule of Thumb 3 (Data Only for Analysis):</strong> When reading spreadsheets for mathematical data analysis, use <code>data_only=True</code> to retrieve cached computed values.</li>
+<li><strong>Rule of Thumb 4 (Auto-Fit Column Widths):</strong> Generated spreadsheets must calculate maximum character length per column and apply proportional widths.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -738,6 +772,13 @@ wb.save(&#x27;output.xlsx&#x27;)</code></pre>
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding spreadsheet generation:</p>
+<ul>
+<li>[ ] Large files ($>10,000$ rows) processed using memory streaming</li>
+<li>[ ] All user-supplied inputs sanitized against formula injection (<code>=</code>, <code>+</code>, <code>-</code>, <code>@</code>)</li>
+<li>[ ] Column widths auto-fitted and formulas validated</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

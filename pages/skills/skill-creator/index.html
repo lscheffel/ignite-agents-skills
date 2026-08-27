@@ -614,6 +614,26 @@ python3 ~/.gemini/config/skills/skill-creator/scripts/package_skill.py &lt;path/
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Directory Layout & Modular Assets:</strong> Canonical skill tree (<code>SKILL.md</code>, <code>scripts/</code>, <code>references/</code>, <code>resources/</code>).</li>
+<li><strong>Token Budget Allocation:</strong> Frontmatter $\le 150$, When to Use $\le 200$, Core Workflow $\le 1,500$, Standards $\le 1,200$, Gate $\le 400$ tokens.</li>
+<li><strong>Automated Validation:</strong> Schema verification via <code>validate-skill.sh</code> and index synchronization via <code>sync-index.sh</code>.</li>
+<li><strong>Deterministic Scaffolding:</strong> CLI scaffolding engine generating test cases and documentation simultaneously.</li>
+</ul>
+<h3 id="canonical-skill-structure-tree">Canonical Skill Structure Tree:</h3>
+<pre data-lang="text"><code>skills/{skill-name}/
+├── SKILL.md                 # Primary instruction payload (≤4,000 tokens)
+├── scripts/                 # Deterministic helper scripts &amp; tools
+├── references/              # Deep domain reference documentation
+└── resources/               # Templates, configs, and boilerplate assets</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Validate on Creation):</strong> Immediately run <code>bash scripts/validate-skill.sh skills/{skill-name}</code> after scaffolding.</li>
+<li><strong>Rule of Thumb 2 (Unique Routing Intent):</strong> The <code>description</code> field must contain distinct trigger keywords that prevent semantic collisions in vector RAG routing.</li>
+<li><strong>Rule of Thumb 3 (Deterministic Code Execution):</strong> Wrap complex computational tasks or multi-step transforms in dedicated Python/Bash scripts under <code>scripts/</code>.</li>
+<li><strong>Rule of Thumb 4 (Automatic Index Sync):</strong> Always invoke <code>./scripts/sync-index.sh</code> after creating or deleting any skill.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>skill-creator</code> só pode ser declarada concluída quando:</p>
 <ol>

@@ -719,6 +719,26 @@ Technical terms: Order (Pedido), Item (Item)&quot;</code></pre>
 <li><code>vibe-coding</code> — for AI-guided development</li>
 <li><a href="https://www.promptingguide.org/">Prompt Engineering Guide</a></li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Prompt Optimization Paradigms:</strong> Chain-of-Density (CoD), Few-Shot Chain-of-Thought (CoT), Tree of Thoughts (ToT), and DSPy Declarative Signatures.</li>
+<li><strong>Security & Delimiters:</strong> XML/Markdown boundary tags (<code><context></code>, <code><instruction></code>, <code><schema></code>) preventing prompt injection.</li>
+<li><strong>Context Compaction:</strong> High signal-to-noise ratio prompt compaction eliminating conversational fluff.</li>
+<li><strong>Output Determinism:</strong> Strict JSON Schema generation and constrained decoding formats.</li>
+</ul>
+<h3 id="chain-of-density-cod-stepwise-compression">Chain-of-Density (CoD) Stepwise Compression:</h3>
+<ol>
+<li><strong>Step 1 (Draft):</strong> Generate initial summary capturing main points.</li>
+<li><strong>Step 2 (Identify Missing Entities):</strong> Identify 1-3 critical missing domain entities.</li>
+<li><strong>Step 3 (Fuse & Condense):</strong> Re-write summary retaining exact word count while infusing missing entities.</li>
+</ol>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (XML Tag Delimitation):</strong> Always encapsulate untrusted user inputs or retrieved documents within explicit XML tags (<code><user_data>...</user_data></code>).</li>
+<li><strong>Rule of Thumb 2 (Few-Shot Exemplar Rule):</strong> When asking for complex structured output, provide at least 2 diverse few-shot input/output examples.</li>
+<li><strong>Rule of Thumb 3 (Positive Constraints Over Negative):</strong> Instruct the model on <em>what to do</em> rather than what <em>not</em> to do (e.g., "Output JSON only" vs "Do not output prose").</li>
+<li><strong>Rule of Thumb 4 (Role & Target Persona):</strong> Clearly declare the persona, expertise domain, and operational constraints at the start of system prompts.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>prompt-engineering</code> só pode ser declarada concluída quando:</p>
 <ol>

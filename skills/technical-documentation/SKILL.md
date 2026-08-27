@@ -246,6 +246,30 @@ Generates technical documentation from in-depth analysis of the actual codebase 
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **6-Pillar SSOT Reconciliation:** Simultaneous synchronization across `README.md`, `USAGE.md`, `CHANGELOG.md`, `RELEASE-NOTES.md`, `STATE.md`, and `AGENTS.md`.
+- **Architectural Visualization:** Mermaid.js diagrams (C4 component, Sequence, Entity-Relationship, Flowcharts).
+- **Documentation Testing:** Automated Markdown linting, link checking, and code block syntax verification.
+- **Living Documentation:** Continuous documentation updates integrated into the definition of done for all features.
+
+### 6-Pillar SSOT Documentation Matrix:
+
+| Pillar | File Target | Content Responsibility |
+|:---|:---|:---|
+| **Overview** | `README.md` | Executive summary, badges, key features, and quickstart. |
+| **Usage** | `USAGE.md` | Step-by-step developer and agent workflows with code samples. |
+| **Changelog** | `CHANGELOG.md` | Chronological release history (Keep a Changelog v1.1.0). |
+| **Release Notes** | `RELEASE-NOTES.md` | High-impact release summaries, migration guides, and breaking changes. |
+| **Governance** | `AGENTS.md` / `GEMINI.md` | Agent instructions, SSOT architecture, and execution constraints. |
+| **Architecture** | `docs/adr/` & `docs/audit/` | Architecture Decision Records and audit ledgers. |
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Reconciliation Mandate):** When adding or modifying a feature, update all 6 canonical documentation pillars simultaneously.
+2. **Rule of Thumb 2 (Mermaid Diagram Invariant):** Complex multi-agent or system architectures must include a rendered Mermaid diagram.
+3. **Rule of Thumb 3 (Zero Broken Links):** All relative file and section links must be verified; zero 404 broken links allowed.
+4. **Rule of Thumb 4 (Tested Code Samples):** All code snippets in documentation must be syntax-valid and tested against the active codebase.
+
 ## Completion Gate
 
 A tarefa associada à skill `technical-documentation` só pode ser declarada concluída quando:

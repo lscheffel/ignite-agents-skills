@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="artifacts-builder">Artifacts Builder</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Creating standalone single-file HTML/CSS/JS applications, prototypes, or visual calculators</li>
+<li>Building interactive demos that must execute in a browser without a build step or npm</li>
+<li>Visualizing complex state machines, charts, or algorithms interactively</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Building enterprise multi-page web applications with server-side routing (use Next.js / Vite)</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Generate self-contained, production-quality HTML/CSS/JS artifacts that run in any modern browser without a build step. Each artifact is a single file (or minimal file set) containing everything needed for an interactive demo, prototype, data visualization, or utility tool. Emphasis on progressive enhancement, responsive design, and clean code.</p>
 <h2 id="phase-1-scope-definition">Phase 1: Scope Definition</h2>
@@ -630,6 +641,35 @@ if (CSS.supports(&#x27;backdrop-filter&#x27;, &#x27;blur(10px)&#x27;)) {
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Single-File Architecture:</strong> Fully self-contained HTML/CSS/JS bundles executable locally without build tools or npm dependencies.</li>
+<li><strong>Security & Sandboxing:</strong> Strict Content Security Policy (CSP), zero external unsafe scripts, and local <code>iframe</code> isolation.</li>
+<li><strong>Modern Web APIs:</strong> Native Web Components, Canvas 2D / WebGL rendering, CSS Grid & Custom Properties.</li>
+<li><strong>Reactive State Without Frameworks:</strong> Lightweight Pub/Sub state machines and Proxy-based reactive data binding.</li>
+</ul>
+<h3 id="vanilla-reactive-state-binding-pattern">Vanilla Reactive State Binding Pattern:</h3>
+<pre data-lang="javascript"><code>const state = new Proxy({ count: 0 }, {
+  set(target, key, value) {
+    target[key] = value;
+    document.querySelectorAll(`[data-bind=&quot;${key}&quot;]`).forEach(el =&gt; el.textContent = value);
+    return true;
+  }
+});</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Zero-Build Invariant):</strong> The artifact must execute instantly by double-clicking the <code>.html</code> file in any modern browser without requiring <code>npm install</code> or local servers.</li>
+<li><strong>Rule of Thumb 2 (Sandboxed Security):</strong> Never load external third-party CDN scripts in artifacts; embed styles and scripts inline to guarantee portability and security.</li>
+<li><strong>Rule of Thumb 3 (Responsive Fit):</strong> The artifact must fluidly scale from mobile viewport ($360\text{px}$) to ultra-wide desktop ($2560\text{px}$).</li>
+<li><strong>Rule of Thumb 4 (Rich Aesthetics):</strong> Always use dark mode palettes, vibrant accent gradients, and micro-animations; plain default styling is strictly prohibited.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring artifact deliverable complete:</p>
+<ul>
+<li>[ ] Single HTML file opens and executes cleanly in modern browsers</li>
+<li>[ ] Zero external insecure script CDNs; CSS/JS self-contained</li>
+<li>[ ] Responsive layout scales smoothly across mobile and desktop viewports</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

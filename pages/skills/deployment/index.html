@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="deployment">Deployment</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Creating or updating CI/CD deployment pipelines, container definitions, and manifests</li>
+<li>Configuring Canary, Blue-Green, or Rolling update deployment strategies</li>
+<li>Establishing automated health check probes and metric-driven rollback thresholds</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Local development sandbox testing without deployment infrastructure</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Set up CI/CD pipelines and deployment configurations that automate the path from code to production. This skill detects the deployment target, generates pipeline config, creates pre/post-deploy checklists, and configures monitoring — producing a fully automated, rollback-ready deployment pipeline.</p>
 <p><strong>Announce at start:</strong> "I am using the deployment skill to set up the deployment pipeline."</p>
@@ -627,6 +638,31 @@ deploy-production:
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Deployment Strategies:</strong> Blue-Green Switching, Canary Deployments, Rolling Updates, and Shadow Deployment.</li>
+<li><strong>Cloud-Native Infrastructure:</strong> Kubernetes Declarative Manifests, GitOps (ArgoCD/Flux), and Infrastructure-as-Code (Terraform/OpenTofu).</li>
+<li><strong>Automated Rollback Vectors:</strong> Prometheus/Datadog metric-driven rollback thresholds.</li>
+<li><strong>Zero-Downtime Migrations:</strong> Health checks (Liveness, Readiness, Startup probes) paired with pre-stop lifecycle hooks.</li>
+</ul>
+<h3 id="canary-deployment-gating-formula">Canary Deployment Gating Formula:</h3>
+<p>Canary traffic percentage $\alpha_{\text{canary}}$ scales progressively while error rates remain bounded:</p>
+<p>$$\text{ErrorRate}_{\text{canary}} \le \text{ErrorRate}_{\text{baseline}} + \epsilon \quad (\epsilon = 0.005)$$</p>
+<p>If $\text{ErrorRate}_{\text{canary}} > \text{Threshold}$, trigger automated instant rollback ($T_{\text{rollback}} \le 30\text{s}$).</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Readiness Probe Mandate):</strong> Never send production traffic to a pod/container until its Readiness Probe explicitly returns HTTP 200.</li>
+<li><strong>Rule of Thumb 2 (Immutable Artifacts):</strong> Build container images and binary packages ONCE; propagate the exact same immutable SHA through Staging and Production.</li>
+<li><strong>Rule of Thumb 3 (Database First Deployment):</strong> Run database schema expansion BEFORE deploying application code; never deploy code that depends on unapplied migrations.</li>
+<li><strong>Rule of Thumb 4 (Fast Rollback Capability):</strong> Every production deploy must have an automated one-click or zero-click rollback vector.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding deployment execution:</p>
+<ul>
+<li>[ ] Immutable build artifact verified with green automated test suite</li>
+<li>[ ] Liveness and Readiness probes configured and returning HTTP 200</li>
+<li>[ ] Automated rollback vector tested and verified</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

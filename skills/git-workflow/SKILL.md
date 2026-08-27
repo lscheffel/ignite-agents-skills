@@ -1227,6 +1227,27 @@ Confirm the base branch is in the expected state.
 
 **RIGID** — Follow this process exactly. Every phase must be completed in order. Do NOT skip verification. Do NOT merge without user confirmation. Do NOT assume a merge strategy. Do NOT delete branches without asking.
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Trunk-Based Development:** Short-lived feature branches ($T_{	ext{branch}} \le 24	ext{h}$), continuous integration, and atomic merges.
+- **Commit Disciplines:** Conventional Commits (v1.0.0) format with scope and descriptive summaries.
+- **Branch Naming Conventions:** `feature/*`, `fix/*`, `docs/*`, `adr-XXX/*`, and `chore/*`.
+- **Security & Integrity:** GPG/SSH signed commits and rebase-first history hygiene (`git pull --rebase`).
+
+### Git Branching & Merge Strategy:
+
+```text
+main / master ─────────────────────────────────────────────────► (Deployable SSOT)
+   │                                              ▲
+   └──► feature/short-lived-branch (≤24h) ────────┘ (Squash / Rebase Merge)
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Short-Lived Branches):** Feature branches must not live longer than 24 hours without merging or rebasing onto trunk.
+2. **Rule of Thumb 2 (Atomic Commits):** Each commit must represent a single, self-contained logical change that builds and passes all tests.
+3. **Rule of Thumb 3 (Never Force Push Trunk):** Force pushing (`git push --force`) to `master` or `main` is strictly prohibited.
+4. **Rule of Thumb 4 (Descriptive Commit Messages):** Follow `type(scope): summary` format; never use vague messages like "fix bug" or "updates".
+
 ## Completion Gate
 
 A tarefa associada à skill `git-workflow` só pode ser declarada concluída quando:

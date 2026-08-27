@@ -411,13 +411,13 @@
   </nav>
   <div class="content">
     <hr>
-<p>name: agent-development version: 1.0.0 description: 'Use when the user needs to build AI agents — tool use patterns, memory related_skills:</p>
+<p>name: agent-development version: 1.0.0 description: 'Use when building AI agents — tool use patterns, memory management, planning strategies, multi-agent coordination, evaluation, and safety guardrails.' related_skills:</p>
 <ul>
 <li>cap</li>
 <li>implementation</li>
 <li>technical-documentation</li>
 </ul>
-<p>management, planning strategies, multi-agent coordination, evaluation, and safety guardrails. Triggers: user says "agent", "build an agent", "tool use", "agent loop", "multi-agent", "memory management", "guardrails", "agent evaluation".' domain: agentic-workflow triggers:</p>
+<p>domain: agentic-workflow triggers:</p>
 <ul>
 <li>agent-development</li>
 <li>build-agent</li>
@@ -630,6 +630,23 @@ Action: respond with order details</code></pre>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Agent Architecture Frameworks:</strong> ReAct (Yao et al.), Plan-and-Solve (Wang et al.), Reflexion (Shinn et al.), and Toolformer (Schick et al.).</li>
+<li><strong>Protocol & Transport Standards:</strong> Model Context Protocol (MCP 2024-11-05 standard) and JSON-RPC 2.0.</li>
+<li><strong>Safety & Guardrails:</strong> OWASP Top 10 for LLM Applications (Prompt Injection, Insecure Output Handling, Excessive Agency).</li>
+<li><strong>Idempotency & Resilience:</strong> Deterministic tool call contracts (RFC 7231) with guaranteed state recovery.</li>
+</ul>
+<h3 id="mathematical-react-loop-convergence-model">Mathematical ReAct Loop Convergence Model:</h3>
+<p>To prevent non-terminating loops and context exhaustion, the agent loop enforces strict convergence bounds:</p>
+<p>$$N_{\text{turns}} \le N_{\text{max}} = \min(25, \lfloor \frac{C_{\text{window}} - C_{\text{prompt}}}{C_{\text{turn\_avg}}} \rfloor)$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Bounded Exploration Invariant):</strong> If an agent loop executes $>3$ consecutive tool calls without producing a new observation or reducing task uncertainty, the loop MUST trip a soft circuit breaker.</li>
+<li><strong>Rule of Thumb 2 (Strict Tool Schema Contract):</strong> Every tool definition must provide type annotations, descriptions, and mutually exclusive parameter validations.</li>
+<li><strong>Rule of Thumb 3 (Stateful Memory Compaction):</strong> When context reaches $70\%$ of context window capacity, trigger memory compaction summarizing previous turns into structured key-value state.</li>
+<li><strong>Rule of Thumb 4 (Deterministic Exit Gate):</strong> The agent loop MUST terminate only when acceptance criteria are verified with automated test execution.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

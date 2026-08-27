@@ -871,6 +871,27 @@ caller&#x27;s identity, so I can ensure only authorized users access the system.
     G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
 <h2 id="anti-patterns--operational-guardrails">Anti-Patterns & Operational Guardrails</h2>
 <div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severidade</th><th>Impacto Negativo</th><th>Mitigação Canônica</th></tr><tr><td><strong>Execução Prematura sem Contexto</strong></td><td>🔴 Critical</td><td>Alucinação de contexto e refatoração destrutiva</td><td>Ativar a skill <code>cap</code> para adquirir evidências mínimas antes de editar.</td></tr><tr><td><strong>Omissão de Checklists de Validação</strong></td><td>🟡 Medium</td><td>Entrega de artefatos com inconsistências sintáticas</td><td>Executar rigorosamente o checklist passo a passo antes do handoff.</td></tr><tr><td><strong>Falta de Documentação de Decisões</strong></td><td>🟢 Low</td><td>Perda de rastreabilidade técnica e drift arquitetural</td><td>Registrar trade-offs relevantes via skill <code>adr-generator</code>.</td></tr></table></div>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Behavior-Driven Development (BDD):</strong> Gherkin Syntax (Given-When-Then) for executable acceptance criteria.</li>
+<li><strong>Product Prioritization Frameworks:</strong> Kano Model (Must-be, One-dimensional, Attractive), MoSCoW, and RICE Scoring.</li>
+<li><strong>User Story Quality Standards:</strong> INVEST Criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable).</li>
+<li><strong>Specification Formats:</strong> Product Requirement Documents (PRD), RFC/Technical Specs, and Decision Records.</li>
+</ul>
+<h3 id="kano-model-feature-classification-matrix">Kano Model Feature Classification Matrix:</h3>
+<div class="table-wrapper"><table><tr><th>Category</th><th>Customer Satisfaction Dynamic</th><th>Engineering Mandate</th></tr><tr><td><strong>Must-Be (Baseline)</strong></td><td>Absence causes extreme dissatisfaction; presence taken for granted.</td><td>Non-negotiable P0; absolute prerequisite.</td></tr><tr><td><strong>Performance (Linear)</strong></td><td>Satisfaction scales proportionally with capability (e.g. speed, latency).</td><td>Core competitive differentiator.</td></tr><tr><td><strong>Delighters (Attractive)</strong></td><td>Absence causes no dissatisfaction; presence triggers unexpected delight.</td><td>High-ROI innovation features.</td></tr></table></div>
+<h3 id="gherkin-bdd-acceptance-criteria-contract">Gherkin BDD Acceptance Criteria Contract:</h3>
+<pre data-lang="gherkin"><code>Scenario: Agent queries skills by domain intention
+  Given the dedicated Skills RAG database is synchronized
+  When the agent calls `route_task` with query &quot;implement circuit breaker&quot;
+  Then the system returns `circuit-breaker` as top match with confidence &gt;= 0.85</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Zero Ambiguous Acceptance Criteria):</strong> Acceptance criteria must never use subjective terms like "fast", "user-friendly", or "secure" without exact quantitative thresholds.</li>
+<li><strong>Rule of Thumb 2 (INVEST Rule):</strong> No single user story should exceed 3 days of implementation effort; split complex stories vertically through the architectural stack.</li>
+<li><strong>Rule of Thumb 3 (Non-Functional Requirements Mandate):</strong> Every PRD must define NFRs for Latency ($P_{95}$), Availability SLA, and Concurrent Load.</li>
+<li><strong>Rule of Thumb 4 (Traceability Invariant):</strong> Every engineering task in <code>*-TODO.md</code> must trace back to a specific requirement in the PRD or ADR.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

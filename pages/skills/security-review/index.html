@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="security-review">Security Review</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Auditing source code and infrastructure for vulnerabilities against OWASP Top 10</li>
+<li>Conducting STRIDE threat modeling on new features, services, or APIs</li>
+<li>Verifying cryptographic configurations, input sanitization, and authorization rules</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Routine non-security stylistic code formatting reviews</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Systematically review code for security vulnerabilities, apply secure coding patterns, and ensure applications follow defense-in-depth principles. This skill covers the OWASP Top 10, authentication pattern selection, input validation, secrets management, dependency auditing, security headers, and threat modeling.</p>
 <p><strong>Announce at start:</strong> "I'm using the security-review skill to assess security posture."</p>
@@ -584,6 +595,29 @@ cargo audit</code></pre>
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Threat Modeling:</strong> STRIDE Framework (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege).</li>
+<li><strong>Vulnerability Standards:</strong> OWASP Top 10 (2021), OWASP API Security Top 10 (2023), and CWE Top 25.</li>
+<li><strong>Severity Scoring:</strong> Common Vulnerability Scoring System (CVSS v3.1).</li>
+<li><strong>Cryptographic Standards:</strong> NIST SP 800-57, TLS 1.3, Argon2id for password hashing, and AES-256-GCM for data at rest.</li>
+</ul>
+<h3 id="stride-assessment-rubric">STRIDE Assessment Rubric:</h3>
+<p>Every new service, endpoint, or architecture change must be evaluated against all 6 STRIDE dimensions.</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Parameterized Queries Mandate):</strong> String concatenation in SQL/NoSQL queries is strictly prohibited; all queries MUST use parameterized prepared statements.</li>
+<li><strong>Rule of Thumb 2 (Zero Hardcoded Secrets):</strong> API keys, passwords, and tokens must never be committed to git; enforce pre-commit secret scanners (Gitleaks/TruffleHog).</li>
+<li><strong>Rule of Thumb 3 (Defense in Depth / Least Privilege):</strong> API tokens and service accounts must be scoped with the minimal permissions required to execute their specific task.</li>
+<li><strong>Rule of Thumb 4 (Secure-by-Default Headers):</strong> All web responses must include HSTS, CSP (<code>Content-Security-Policy</code>), <code>X-Content-Type-Options: nosniff</code>, and <code>X-Frame-Options: DENY</code>.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding security review:</p>
+<ul>
+<li>[ ] All STRIDE threat vectors evaluated with mitigation strategies</li>
+<li>[ ] Zero hardcoded secrets, SQL injection vulnerabilities, or insecure deserialization</li>
+<li>[ ] CVSS v3.1 scores assigned to any identified vulnerabilities with remediation tickets</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

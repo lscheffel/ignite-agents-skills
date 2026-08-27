@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="clean-code">Clean Code</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Writing new code or reviewing existing code against SOLID and Clean Code standards</li>
+<li>Reducing cognitive and cyclomatic complexity ($CC \le 10$)</li>
+<li>Standardizing naming conventions, function hygiene, and error handling</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Low-level kernel drivers or extreme performance-critical inner loops where abstraction is prohibited</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Apply clean code principles to produce readable, maintainable, and testable software. This skill covers SOLID principles, DRY application, code smell identification, refactoring patterns, naming conventions, error handling, and complexity management. Based on the works of Robert C. Martin, Martin Fowler, and Kent Beck.</p>
 <p><strong>Announce at start:</strong> "I'm using the clean-code skill to improve code quality."</p>
@@ -626,6 +637,31 @@ function parseConfig(raw: string): Result&lt;Config, ParseError&gt; {
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Complexity Metrics:</strong> Thomas McCabe's Cyclomatic Complexity ($CC$), SonarSource Cognitive Complexity, and Halstead Volume.</li>
+<li><strong>Design Principles:</strong> SOLID (Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, Dependency Inversion), DRY, KISS, and YAGNI.</li>
+<li><strong>Naming Conventions:</strong> Intent-revealing names, domain-driven terminology, pronounceable identifiers (PEP 8, Google Style Guides).</li>
+<li><strong>Function Hygiene:</strong> Single Level of Abstraction Principle (SLAP), command-query separation (CQS), and maximum parameter count $\le 3$.</li>
+</ul>
+<h3 id="cyclomatic-complexity-formula--quality-gates">Cyclomatic Complexity Formula & Quality Gates:</h3>
+<p>$$CC = E - N + 2P$$</p>
+<p>Where $E$ is edges, $N$ is nodes, and $P$ is connected components in the control flow graph.</p>
+<div class="table-wrapper"><table><tr><th>Metric</th><th>Target / Threshold</th><th>Action when Breached</th></tr><tr><td><strong>Cyclomatic Complexity ($CC$)</strong></td><td>$\le 10$ per function</td><td>Mandatory refactoring / function extraction.</td></tr><tr><td><strong>Cognitive Complexity</strong></td><td>$\le 15$ per function</td><td>Flatten nested conditionals via guard clauses.</td></tr><tr><td><strong>Function Length</strong></td><td>$\le 30$ lines</td><td>Extract coherent sub-routines (SLAP).</td></tr><tr><td><strong>Parameter Count</strong></td><td>$\le 3$ params</td><td>Encapsulate into Parameter Object or Options Dict.</td></tr></table></div>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Guard Clause Priority):</strong> Always exit early with guard clauses to minimize indentation depth ($Depth \le 2$).</li>
+<li><strong>Rule of Thumb 2 (Side-Effect Free Queries):</strong> Functions that return values must never mutate external state (Command-Query Separation).</li>
+<li><strong>Rule of Thumb 3 (Zero Magic Literals):</strong> Every constant, timeout, or magic number must be defined as an exported named constant.</li>
+<li><strong>Rule of Thumb 4 (Intent-Revealing Naming):</strong> Variable names must state <em>why</em> it exists and <em>what</em> it represents without requiring inline comments.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding Clean Code audit:</p>
+<ul>
+<li>[ ] Cyclomatic complexity verified $\le 10$ per function</li>
+<li>[ ] Zero magic literals or undocumented constants</li>
+<li>[ ] Single Level of Abstraction Principle (SLAP) respected</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

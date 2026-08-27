@@ -46,3 +46,4 @@
 | ADR-033 | ADR-033: Backend, Data, Cloud & Security Domain SOTA Hardening | Sim | 11/11 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-034 | ADR-034: Frontend, UI/UX & Web Domain SOTA Hardening | Sim | 9/9 | CONSOLIDADA | - | ARCHIVED_OK |
 | ADR-035 | ADR-035: Product, Content & Document Processing Domain SOTA Hardening | Sim | 13/13 | CONSOLIDADA | - | ARCHIVED_OK |
+| ADR-036 | ADR-036: Meta-Skills, Bootstrapping & SDLC Lifecycle Domain SOTA Hardening | Sim | 13/13 | CONSOLIDADA | - | ARCHIVED_OK |

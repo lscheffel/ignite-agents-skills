@@ -2,7 +2,7 @@
 
 **Audit Date:** 2026-08-26  
 **Auditor Engine:** `skill-audit-bulletin` (v5.1.0 — SOTA Dual-Axis & Ledger Edition)  
-**Overall Grade:** **B (Silver)** — **88.2 / 100**  
+**Overall Grade:** **B (Silver)** — **89.8 / 100**  
 **One-Line Verdict:** *Solid foundation with minor improvement opportunities in triggers or visual ergonomics.*  
 **Recommended Action:** **AUGMENT_SOTA**
 
@@ -12,9 +12,9 @@
 
 | Axis | Score | Grade | Status |
 |:---|:---:|:---:|:---:|
-| **Axis 1: Physical Structural & Governance** | **94.5 / 100** | **B** | ✅ PASSED |
+| **Axis 1: Physical Structural & Governance** | **98.5 / 100** | **B** | ✅ PASSED |
 | **Axis 2: Domain SOTA & Cognitive Efficacy** | **84.0 / 100** | **B** | ✅ PASSED |
-| **Combined 2D Score** | **88.2 / 100** | **B** | 🏆 CONFORMING |
+| **Combined 2D Score** | **89.8 / 100** | **B** | 🏆 CONFORMING |
 
 - **Strongest Point:** Cobertura aprofundada com arquitetura modular (6 artefatos de apoio).
 - **Weakest Point:** Oportunidade de expansão de cenários avançados de borda.
@@ -28,9 +28,9 @@
 | Dimension | Weight | Score | Evaluation & Evidence |
 |:---|:---:|:---:|:---|
 | **1. Semantic Triggering** | 20% | **18.5 / 20.0** | 8 triggers definidos, descrição com 69 caracteres, tags: 5. |
-| **2. Applicability & Boundaries** | 10% | **6.0 / 10.0** | Seção 'When to Use': ✗ | 'Do Not Use When': ✓. |
-| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 1324 palavras, 6 arquivos modulares de apoio, workflow formal presente. |
-| **4. Technical Accuracy** | 15% | **15.0 / 15.0** | 56 blocos de código/comandos, zero placeholders genéricos: ✓. |
+| **2. Applicability & Boundaries** | 10% | **10.0 / 10.0** | Seção 'When to Use': ✓ | 'Do Not Use When': ✓. |
+| **3. Depth & Coverage** | 15% | **15.0 / 15.0** | Extensão de 1562 palavras, 6 arquivos modulares de apoio, workflow formal presente. |
+| **4. Technical Accuracy** | 15% | **15.0 / 15.0** | 58 blocos de código/comandos, zero placeholders genéricos: ✓. |
 | **5. Universality & Portability** | 10% | **10.0 / 10.0** | Zero caminhos absolutos de hosts externos, portabilidade POSIX/AST universal. |
 | **6. Maintainability & SemVer** | 10% | **10.0 / 10.0** | SemVer v2.0.0 (✓), 3 related_skills, taxonomia de riscos (✓). |
 | **7. Executor Ergonomics** | 10% | **10.0 / 10.0** | Diagrama Mermaid: ✓ | Checklists acionáveis: ✓. |
@@ -44,7 +44,7 @@
 |:---|:---:|:---:|:---|
 | **1. Domain SOTA & Best Practices** | 30% | **21.0 / 30.0** | Aderência a padrões industriais SOTA comprovada por 2 marcadores conceituais de engenharia de software. |
 | **2. Heuristic Depth & Edge Cases** | 25% | **19.5 / 25.0** | 5 regras heurísticas explícitas, seção de Edge Cases presente. |
-| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 2340 tokens com alta proporção sinal-ruído e linguagem imperativa. |
+| **3. Cognitive Load & Efficiency** | 25% | **25.0 / 25.0** | Densidade de 2766 tokens com alta proporção sinal-ruído e linguagem imperativa. |
 | **4. Strategic Alignment & SWOT** | 20% | **18.5 / 20.0** | Acoplamento sinérgico com 3 skills complementares no catálogo. |
 
 ---
@@ -66,5 +66,5 @@
 
 ## 5. Veredito Final & Próximos Passos
 
-A skill [`skills/release`](../../../skills/release) foi **Classificada como Grau B (88.2 / 100)**.  
+A skill [`skills/release`](../../../skills/release) foi **Classificada como Grau B (89.8 / 100)**.  
 Status de Adoção: **AUGMENT_SOTA**.

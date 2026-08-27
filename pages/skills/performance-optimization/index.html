@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="performance-optimization">Performance Optimization</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Diagnosing latency bottlenecks, throughput limits, or high CPU/memory consumption</li>
+<li>Sizing concurrent thread/connection pools using Little's Law ($L = \lambda W$)</li>
+<li>Optimizing Core Web Vitals (LCP, INP, CLS) and database query execution times</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Premature optimization of cold paths or trivial sub-millisecond routines</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Systematically identify and resolve performance bottlenecks using measurement-driven methodology. This skill enforces a strict MEASURE-IDENTIFY-OPTIMIZE-VERIFY cycle, preventing premature optimization and speculation. Every optimization must produce measurable improvement or be reverted.</p>
 <p><strong>Announce at start:</strong> "I'm using the performance-optimization skill to diagnose and resolve bottlenecks."</p>
@@ -591,6 +602,30 @@ ORDER BY seq_scan DESC;</code></pre>
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Queuing & Capacity Laws:</strong> Little's Law ($L = \lambda W$) and Amdahl's Law for parallel scaling.</li>
+<li><strong>Web Vitals (CWV):</strong> Largest Contentful Paint (LCP $\le 2.5\text{s}$), Interaction to Next Paint (INP $\le 200\text{ms}$), Cumulative Layout Shift (CLS $\le 0.1$).</li>
+<li><strong>Connection Pool Sizing:</strong> HikariCP connection pool formula: $\text{PoolSize} = ((\text{Cores} \times 2) + \text{DiskSpindles})$.</li>
+<li><strong>Memory & Cache Hierarchy:</strong> Multi-tier caching (L1 In-Memory LRU $\to$ L2 Redis Cluster $\to$ L3 Persistent DB) with Cache-Aside pattern.</li>
+</ul>
+<h3 id="littles-law-capacity-sizing-formula">Little's Law Capacity Sizing Formula:</h3>
+<p>$$L = \lambda \cdot W \implies \text{Concurrency} = \text{Throughput (RPS)} \times \text{Latency (Seconds)}$$</p>
+<p><em>Example:</em> At 1,000 RPS with mean latency of $200\text{ms}$ ($0.2\text{s}$), the server must support $L = 1000 \times 0.2 = 200$ concurrent active threads/connections.</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Eliminate N+1 Queries):</strong> Never execute queries inside loops; use eager loading (<code>with()</code>, <code>include()</code>, <code>JOIN FETCH</code>) or batching (<code>DataLoader</code>).</li>
+<li><strong>Rule of Thumb 2 (Cache Stampede Prevention):</strong> High-traffic cache keys must implement Probabilistic Early Expiration (XFetch) or Mutex locking to prevent cache dogpiling.</li>
+<li><strong>Rule of Thumb 3 (Measure Before Optimizing):</strong> Never optimize based on intuition; always capture CPU/memory profiler snapshots (Flamegraphs / pprof) before and after changes.</li>
+<li><strong>Rule of Thumb 4 (Payload Compression):</strong> Enable Brotli/Gzip compression for all text-based HTTP responses ($>1\text{KB}$).</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding performance optimization:</p>
+<ul>
+<li>[ ] Profiler baseline captured before and after changes</li>
+<li>[ ] Latency reduction verified under synthetic benchmark load</li>
+<li>[ ] Zero memory leaks or unbounded cache growth under stress test</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

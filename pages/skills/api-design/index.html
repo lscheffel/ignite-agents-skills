@@ -778,6 +778,36 @@ X-RateLimit-Reset: 1623456789</code></pre>
 <li><code>testing</code> — for contract testing</li>
 <li><code>governance</code> — for review processes</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>RESTful API Architecture:</strong> Richardson Maturity Model (Level 0 to Level 3 HATEOAS) and Fielding REST constraints.</li>
+<li><strong>Standardized Error Contracts:</strong> RFC 7807 (Problem Details for HTTP APIs - <code>application/problem+json</code>).</li>
+<li><strong>Idempotency & Safety:</strong> RFC 7231 / RFC 9110 HTTP semantics and IETF Idempotency-Key Header specification.</li>
+<li><strong>Pagination Standards:</strong> Keyset / Cursor-Based Pagination vs Offset-Based ($O(1)$ vs $O(N)$ database scan).</li>
+</ul>
+<h3 id="rfc-7807-problem-details-error-schema">RFC 7807 Problem Details Error Schema:</h3>
+<pre data-lang="json"><code>{
+  &quot;type&quot;: &quot;https://api.example.com/errors/invalid-parameters&quot;,
+  &quot;title&quot;: &quot;Invalid Request Parameters&quot;,
+  &quot;status&quot;: 422,
+  &quot;detail&quot;: &quot;The &#x27;query&#x27; field cannot be empty.&quot;,
+  &quot;instance&quot;: &quot;/v1/search&quot;,
+  &quot;invalid_params&quot;: [
+    {
+      &quot;name&quot;: &quot;query&quot;,
+      &quot;reason&quot;: &quot;Must be at least 3 characters long&quot;
+    }
+  ]
+}</code></pre>
+<h3 id="cursor-pagination-url-contract">Cursor Pagination URL Contract:</h3>
+<p><code>GET /v1/skills?limit=20&starting_after=skl_984fbc12</code></p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (RFC 7807 Mandate):</strong> Never return ad-hoc error formats like <code>{ "error": "msg" }</code>; always return RFC 7807 compliant payloads with HTTP status matching payload status.</li>
+<li><strong>Rule of Thumb 2 (Idempotency Key for Mutating Calls):</strong> All financial, payment, or state-creating <code>POST</code> endpoints must support <code>Idempotency-Key</code> headers with a 24-hour cache TTL.</li>
+<li><strong>Rule of Thumb 3 (Cursor Over Offset for Large Datasets):</strong> For collections with $>10,000$ rows, offset pagination (<code>?page=100</code>) is prohibited; use keyset cursor pagination.</li>
+<li><strong>Rule of Thumb 4 (Semantic HTTP Verbs):</strong> <code>GET</code>, <code>HEAD</code>, <code>OPTIONS</code> must remain strictly safe and idempotent; <code>PUT</code> and <code>DELETE</code> must be idempotent; <code>POST</code> and <code>PATCH</code> are non-idempotent.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>api-design</code> só pode ser declarada concluída quando:</p>
 <ol>

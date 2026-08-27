@@ -574,6 +574,32 @@ STOP — present for review.
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Specification Standard:</strong> Agent Skills Standard (v1.0.0) compliant with Kilo Code, OpenCode, Gemini CLI, and Antigravity.</li>
+<li><strong>Progressive Disclosure:</strong> Minimal essential instructions in <code>SKILL.md</code> with deep domain offload into <code>references/</code> and <code>scripts/</code>.</li>
+<li><strong>Typed Frontmatter:</strong> Strict YAML Frontmatter schema (<code>name</code>, <code>description</code>, <code>version</code>, <code>tags</code>, <code>related_skills</code>).</li>
+<li><strong>Instruction Density & Tone:</strong> High-density, active-voice imperative guidance; zero conversational fluff.</li>
+</ul>
+<h3 id="agent-skills-frontmatter-formal-schema">Agent Skills Frontmatter Formal Schema:</h3>
+<pre data-lang="yaml"><code>---
+name: &quot;kebab-case-skill-name&quot;
+description: &quot;High-density functional summary for semantic routing (&lt;200 chars)&quot;
+version: &quot;1.0.0&quot;
+tags:
+  - &quot;category&quot;
+  - &quot;domain&quot;
+related_skills:
+  - &quot;companion-skill-1&quot;
+  - &quot;companion-skill-2&quot;
+---</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Imperative Command Voice):</strong> Write instructions as direct commands ("Execute", "Validate", "Inject") rather than passive descriptions ("The agent should execute").</li>
+<li><strong>Rule of Thumb 2 (Token Ceiling Constraint):</strong> Keep <code>SKILL.md</code> under 4,000 tokens; move detailed tables, background theory, or heavy code snippets into <code>references/</code> or companion scripts.</li>
+<li><strong>Rule of Thumb 3 (Explicit Negative Triggers):</strong> Always include an explicit "Do not use when" section under <code>## When to Use</code> to prevent false-positive agent routing.</li>
+<li><strong>Rule of Thumb 4 (Executable Verification Gate):</strong> Every skill must end with a concrete, checkable <code>## Completion Gate & Verification</code> checklist.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

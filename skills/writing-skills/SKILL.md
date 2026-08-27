@@ -301,6 +301,35 @@ graph TD
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Specification Standard:** Agent Skills Standard (v1.0.0) compliant with Kilo Code, OpenCode, Gemini CLI, and Antigravity.
+- **Progressive Disclosure:** Minimal essential instructions in `SKILL.md` with deep domain offload into `references/` and `scripts/`.
+- **Typed Frontmatter:** Strict YAML Frontmatter schema (`name`, `description`, `version`, `tags`, `related_skills`).
+- **Instruction Density & Tone:** High-density, active-voice imperative guidance; zero conversational fluff.
+
+### Agent Skills Frontmatter Formal Schema:
+
+```yaml
+---
+name: "kebab-case-skill-name"
+description: "High-density functional summary for semantic routing (<200 chars)"
+version: "1.0.0"
+tags:
+  - "category"
+  - "domain"
+related_skills:
+  - "companion-skill-1"
+  - "companion-skill-2"
+---
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Imperative Command Voice):** Write instructions as direct commands ("Execute", "Validate", "Inject") rather than passive descriptions ("The agent should execute").
+2. **Rule of Thumb 2 (Token Ceiling Constraint):** Keep `SKILL.md` under 4,000 tokens; move detailed tables, background theory, or heavy code snippets into `references/` or companion scripts.
+3. **Rule of Thumb 3 (Explicit Negative Triggers):** Always include an explicit "Do not use when" section under `## When to Use` to prevent false-positive agent routing.
+4. **Rule of Thumb 4 (Executable Verification Gate):** Every skill must end with a concrete, checkable `## Completion Gate & Verification` checklist.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.

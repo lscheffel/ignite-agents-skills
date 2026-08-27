@@ -32,6 +32,16 @@ metadata:
 
 # Release
 
+## When to Use
+
+### Use when:
+- Tagging and publishing production releases according to Semantic Versioning (SemVer 2.0.0)
+- Generating cryptographically signed artifacts with SLSA Level 3 provenance
+- Creating GitHub Releases with automated checksum manifests (`SHA256SUMS`)
+
+### Do not use when:
+- Local experimental development or unverified scratch builds
+
 Guide for release management and versioning.
 
 ## Deterministic Execution Rules
@@ -396,6 +406,30 @@ git merge hotfix/critical-bug
 - [Semantic Versioning](https://semver.org/)
 - `git` — for tags and branching
 - `governance` — for approval process
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Supply Chain Security:** Supply-chain Levels for Software Artifacts (SLSA Level 3) compliance and provenance attestation.
+- **Cryptographic Asset Signing:** GPG commit signing and Cosign / Sigstore keyless container & binary signing.
+- **Release Automation:** Semantic Release, GitHub Releases with automated asset uploads and SHA-256 checksum manifests.
+- **Rollback Preparedness:** Automated canary releases, fast rollback triggers, and immutable release tags.
+
+### Release Pipeline Flow:
+
+```mermaid
+graph LR
+    A[SemVer Bump Trigger] --> B[Generate Changelog]
+    B --> C[Run Full Test Suite]
+    C --> D[Sign Git Tag GPG]
+    D --> E[Generate SHA-256 Checksums]
+    E --> F[Publish GitHub Release & Deploy]
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Cryptographic Checksums):** Every released binary or archive MUST be accompanied by an official `SHA256SUMS` manifest.
+2. **Rule of Thumb 2 (Immutable Release Tags):** Never delete, move, or overwrite an existing release tag in git.
+3. **Rule of Thumb 3 (Release Verification Checklist):** Release manager or agent must verify all CI checks are green before tagging.
+4. **Rule of Thumb 4 (SLSA Provenance):** Generate machine-readable build provenance attestations for all production distribution artifacts.
 
 ## Completion Gate
 

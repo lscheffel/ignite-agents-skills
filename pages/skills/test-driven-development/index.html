@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="test-driven-development">Test-Driven Development</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Implementing any new feature, algorithm, domain logic, or bugfix</li>
+<li>Enforcing strict RED-GREEN-REFACTOR cycles with rapid feedback</li>
+<li>Building high-confidence test suites with high mutation scores ($MS \ge 0.85$)</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Throwaway visual spike prototypes where code will be discarded entirely</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>TDD enforces the RED-GREEN-REFACTOR cycle as an unbreakable discipline: write a failing test, make it pass with minimal code, then clean up. This skill prevents untested production code from ever existing and ensures every line of implementation is driven by a verified requirement.</p>
 <p><strong>Announce at start:</strong> "I'm using the test-driven-development skill with the RED-GREEN-REFACTOR cycle."</p>
@@ -607,6 +618,36 @@ Cycle 2 - Behavior 2:
 <li><strong>Ambiente Restrito / Read-Only:</strong> Se o filesystem ou sandbox estiver bloqueado contra escrita, reportar o bloqueio com evidência imediata e gerar o patch em markdown diff.</li>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
+</ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>TDD Foundations:</strong> Kent Beck's Test-Driven Development By Example, Martin Fowler's Mocks Aren't Stubs.</li>
+<li><strong>Rhythm & Cadence:</strong> Strict RED-GREEN-REFACTOR cycle with sub-minute iteration loops.</li>
+<li><strong>Test Quality Verification:</strong> Mutation Testing Score ($MS \ge 0.85$) and Code Coverage.</li>
+<li><strong>Transformation Priority Premise (TPP):</strong> Robert C. Martin's TPP transformations from specific to general.</li>
+</ul>
+<h3 id="mutation-testing-score-formula">Mutation Testing Score Formula:</h3>
+<p>$$MS = \frac{M_{\text{killed}}}{M_{\text{total}} - M_{\text{equivalent}}} \ge 0.85 \quad (85\%)$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Three Laws of TDD):</strong></li>
+</ol>
+<ul>
+<li>You may not write production code until you have written a failing unit test.</li>
+<li>You may not write more of a unit test than is sufficient to fail.</li>
+<li>You may not write more production code than is sufficient to pass the failing test.</li>
+</ul>
+<ol>
+<li><strong>Rule of Thumb 2 (Fake It Till You Make It):</strong> In the Green phase, write the simplest code that passes (even returning hardcoded literals) to verify test harness.</li>
+<li><strong>Rule of Thumb 3 (Refactor on Green Only):</strong> Clean code and eliminate duplication ONLY when all tests are green.</li>
+<li><strong>Rule of Thumb 4 (Fast Test Execution):</strong> Unit test suite must execute in $<5$ seconds to maintain rapid feedback loop.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding TDD cycle:</p>
+<ul>
+<li>[ ] Red phase test failure verified before production code written</li>
+<li>[ ] Green phase test pass verified with minimal code</li>
+<li>[ ] Refactor phase completed with all tests remaining green</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

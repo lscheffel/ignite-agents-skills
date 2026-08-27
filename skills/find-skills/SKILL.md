@@ -201,6 +201,29 @@ npx skills init my-xyz-skill
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Lexical Search Engines:** SQLite FTS5 with BM25 ranking, Porter stemmer, and unicode61 tokenizer.
+- **Query Expansion:** Automatic synonym expansion, kebab-case splitting, and tag matching.
+- **Fuzzy Search Ladders:** Exact Match $	o$ Prefix Match (`prefix*`) $	o$ Trigram/Levenshtein Fuzzy Match.
+- **Zero-Latency Invariants:** In-memory caching for sub-millisecond CLI routing lookups.
+
+### Search Fallback Ladder:
+
+```text
+Query ──> Exact Match in index.json?
+             ├── YES ──> Return Skill (Rank #1)
+             └── NO  ──> SQLite FTS5 BM25 Search
+                            ├── MATCH ──> Return Ranked Results
+                            └── NO MATCH ──> Trigram Fuzzy Match Fallback
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Prefix Tokenization):** In FTS5 queries, always append `*` to the final search token to enable instant prefix matching.
+2. **Rule of Thumb 2 (Clean CLI Output):** Format CLI search results with clear name, version, and 1-line description highlights.
+3. **Rule of Thumb 3 (Instant Cache Invalidation):** Re-index SQLite FTS5 immediately upon detecting file modification events in `skills/`.
+4. **Rule of Thumb 4 (Tag Weighting):** Assign $2	imes$ relevance weighting to matches found within the frontmatter `tags` list.
+
 ## Operational Verification Checklist
 
 - [ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.
@@ -209,3 +232,10 @@ npx skills init my-xyz-skill
 - [ ] Os testes unitários ou comandos de validação foram executados com sucesso.
 - [ ] O artefato final foi inspecionado contra o completion gate.
 
+
+
+## Completion Gate & Verification
+Before concluding skill search:
+- [ ] Relevant skills retrieved with name, version, and concise summary
+- [ ] Sub-millisecond lookup latency achieved via local SQLite index
+- [ ] Exact match or fuzzy match fallback clearly identified

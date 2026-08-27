@@ -439,6 +439,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-24' ---</p>
 <h1 id="database-architecture--schema-design-v200">Database Architecture & Schema Design (v2.0.0)</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Designing relational or NoSQL database schemas, entities, and relationships</li>
+<li>Optimizing indexing strategies ($S_{\text{idx}} \ge 0.15$), query performance, and connection pools</li>
+<li>Planning zero-downtime database migrations via the Expand-Contract pattern</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>In-memory data structures or simple JSON file storage without database engine</li>
+</ul>
 <blockquote>💡 <strong>Lazy Loading of References:</strong> This document contains contracts, decision-making heuristics, and central modeling rules. To consult complete DDL templates, partitioning scripts, and an exhaustive catalog of anti-patterns, execute <code>view_file</code> on <a href="./references/patterns-and-migrations.md"><code>references/patterns-and-migrations.md</code></a>.</blockquote>
 <hr>
 <h2 id="1-decision-tree-for-modeling--storage">1. Decision Tree for Modeling & Storage</h2>
@@ -494,6 +505,37 @@
 <li>The result has been validated deterministically through execution evidence.</li>
 <li>There are no outstanding structural issues, placeholders, or unresolved errors.</li>
 </ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Relational Normalization:</strong> Edgar F. Codd's Normal Forms (1NF, 2NF, 3NF, Boyce-Codd BCNF) and pragmatic de-normalization.</li>
+<li><strong>ACID Transaction Isolation Levels:</strong> ANSI/ISO SQL-92 (Read Uncommitted, Read Committed, Repeatable Read, Serializable) and MVCC internals.</li>
+<li><strong>Index Engineering:</strong> B-Tree, Hash, GIN, GiST, and BRIN index mechanics with selectivity math.</li>
+<li><strong>Zero-Downtime Schema Migrations:</strong> Expand-Contract (Parallel Run) Pattern for zero lock contention.</li>
+</ul>
+<h3 id="b-tree-index-selectivity-formula">B-Tree Index Selectivity Formula:</h3>
+<p>$$S_{\text{idx}} = \frac{D_{\text{distinct}}}{N_{\text{total}}} \in (0, 1]$$</p>
+<div class="table-wrapper"><table><tr><th>Metric / Threshold</th><th>Recommendation</th></tr><tr><td><strong>$S_{\text{idx}} \ge 0.15$ ($15\%+$ distinct)</strong></td><td>Create standard B-Tree index.</td></tr><tr><td><strong>$0.01 \le S_{\text{idx}} < 0.15$</strong></td><td>Evaluate Composite or Partial / Filtered Index (<code>WHERE active = true</code>).</td></tr><tr><td><strong>$S_{\text{idx}} < 0.01$ ($<1\%$ distinct / Boolean)</strong></td><td>Do NOT index with B-Tree; use Bitmap or evaluate table scan efficiency.</td></tr></table></div>
+<h3 id="expand-contract-migration-lifecycle">Expand-Contract Migration Lifecycle:</h3>
+<ol>
+<li><strong>Phase 1 (Expand):</strong> Add new column/table as nullable. Deploy code writing to BOTH old and new locations.</li>
+<li><strong>Phase 2 (Backfill):</strong> Run asynchronous batch backfill script in small chunks ($N_{\text{chunk}} = 1000$).</li>
+<li><strong>Phase 3 (Switch):</strong> Deploy code reading exclusively from new location.</li>
+<li><strong>Phase 4 (Contract):</strong> Remove old column/table safely after 30-day soak period.</li>
+</ol>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Zero Table Locks in Production):</strong> Never execute blocking <code>ALTER TABLE ADD COLUMN NOT NULL DEFAULT ...</code> without PostgreSQL 11+ metadata-only optimizations or Expand-Contract pattern.</li>
+<li><strong>Rule of Thumb 2 (Foreign Key Indexing):</strong> Every foreign key column MUST be indexed to prevent full table scans during parent cascade deletes.</li>
+<li><strong>Rule of Thumb 3 (Query Optimization SLA):</strong> Any OLTP query taking $>50\text{ms}$ must be analyzed with <code>EXPLAIN (ANALYZE, BUFFERS)</code> to eliminate Seq Scans on large tables.</li>
+<li><strong>Rule of Thumb 4 (Idempotent Migrations):</strong> Migration scripts must be deterministic and provide verifiable down/rollback vectors.</li>
+</ol>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring database architecture change complete:</p>
+<ul>
+<li>[ ] Schema normalized to 3NF/BCNF (or documented de-normalization rationale)</li>
+<li>[ ] Index selectivity calculated and verified with <code>EXPLAIN ANALYZE</code></li>
+<li>[ ] Idempotent migration with reversible rollback vector verified</li>
+</ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/projetosVS/ignite-agents-skills/skills/writing-skills` | **Versão:** | `v1.0.0` |
-| **Hash SHA-256:** | `bc78041603c215f6fdddb9d9985b8e4bc423379911bdf3ab6ceced23c4365f87` | **Score Global:** | `80.2 / 100` |
+| **Hash SHA-256:** | `76c0785225d14ad3c494f0928a2afed892721e7b5bf1a8d9b6fc880dc6d91555` | **Score Global:** | `80.2 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 6.5 | [WARN] | Ausência de bloco YAML frontmatter estrito na raiz do SKILL.md. |
 | **D2. Determinismo Semântico** | 7.5 | [WARN] | Triggers implícitos; recomendada adição de regex e palavras-chave de gatilho estruturadas. |
-| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~12875 tokens); risco de saturação precoce da janela de contexto. |
+| **D3. Economia de Tokens** | 6.5 | [WARN] | Footprint massivo (~13267 tokens); risco de saturação precoce da janela de contexto. |
 | **D4. Segurança & Ameaças** | 8.8 | [OK] | Operações com efeitos colaterais (I/O) contidas sob sandboxing do runtime Antigravity. |
 | **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
 | **D6. Acoplamento & Grafo** | 8.8 | [OK] | Módulo auto-contido com sub-rotinas utilitárias isoladas em scripts/. |

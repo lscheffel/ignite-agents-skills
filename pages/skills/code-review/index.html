@@ -440,6 +440,18 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-24' ---</p>
 <h1 id="unified-code-review-engine-v500">Unified Code Review Engine (v5.0.0)</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Conducting comprehensive code reviews on Pull Requests or feature branches</li>
+<li>Auditing code changes for security, performance, architecture, and correctness</li>
+<li>Providing structured feedback with severity classification (P1/P2/P3)</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Triage of micro-diffs under 50 lines (use <code>code-review-lite</code> instead)</li>
+<li>Automated linting that can be handled by standard CI linters (ESLint/Prettier)</li>
+</ul>
 <p>This unified engine operates in two interchangeable modes of intensity:</p>
 <pre><code>                                  UNIFIED CODE REVIEW ENGINE
                                                 │
@@ -663,6 +675,22 @@ ESCALATE</code></pre>
     G --&gt;|Não| E
     G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
 <div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severity</th><th>Negative Impact</th><th>Canonical Mitigation</th></tr><tr><td><strong>Early Execution without Context</strong></td><td>🔴 Critical</td><td>Context hallucination and destructive refactoring</td><td>Enable the <code>cap</code> skill to acquire minimal evidence before editing.</td></tr><tr><td><strong>Omission of Validation Checklists</strong></td><td>🟡 Medium</td><td>Delivery of artifacts with syntactic inconsistencies</td><td>Rigorously execute the checklist step by step before handoff.</td></tr><tr><td><strong>Lack of Decision Documentation</strong></td><td>🟢 Low</td><td>Loss of technical traceability and architectural drift</td><td>Record relevant trade-offs via the <code>adr-generator</code> skill.</td></tr></table></div>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Code Review Frameworks:</strong> Google Engineering Practices (eng-practices), Conventional Comments, and Chromium Review Guidelines.</li>
+<li><strong>Review Taxonomy:</strong> 3-Tier Severity Badges (<code>P1: Blocker</code>, <code>P2: Major</code>, <code>P3: Polish</code>).</li>
+<li><strong>AST Inspection:</strong> Automated AST linting, architectural layer violation checks, and security vulnerability scanning.</li>
+<li><strong>Psychological Safety & Tone:</strong> Objective, blame-free feedback focusing on code behavior and architectural alignment.</li>
+</ul>
+<h3 id="3-tier-severity-taxonomy-matrix">3-Tier Severity Taxonomy Matrix:</h3>
+<div class="table-wrapper"><table><tr><th>Severity Badge</th><th>Definition</th><th>Action Required</th><th>Blocking?</th></tr><tr><td><strong><code>🔴 P1: BLOCKER</code></strong></td><td>Correctness bug, security vulnerability, data corruption risk, breaking API change.</td><td>Must fix before merge.</td><td><strong>YES</strong></td></tr><tr><td><strong><code>🟡 P2: MAJOR</code></strong></td><td>Code smell, architectural violation, missing tests, performance degradation.</td><td>Must resolve or record as tech debt.</td><td><strong>YES</strong></td></tr><tr><td><strong><code>🟢 P3: POLISH</code></strong></td><td>Naming suggestion, minor style polish, non-blocking optimization.</td><td>Author's discretion.</td><td><strong>NO</strong></td></tr></table></div>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Review Size Bound):</strong> Diff size should not exceed 400 lines of code per review to avoid reviewer fatigue ($T_{\text{review}} \le 60\text{min}$).</li>
+<li><strong>Rule of Thumb 2 (Actionable Feedback):</strong> Every critique must explain <em>why</em> the current code is suboptimal and provide a concrete suggestion or code example.</li>
+<li><strong>Rule of Thumb 3 (Test Coverage Verification):</strong> Every PR adding business logic must include corresponding unit and integration tests.</li>
+<li><strong>Rule of Thumb 4 (Conventional Prefixes):</strong> Review comments should use conventional prefixes: <code>p1-blocker:</code>, <code>p2-major:</code>, <code>p3-polish:</code>, <code>question:</code>, <code>nit:</code>.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -670,6 +698,13 @@ ESCALATE</code></pre>
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding code review:</p>
+<ul>
+<li>[ ] All P1 Blockers resolved or blocking merge</li>
+<li>[ ] All P2 Major issues either resolved or recorded in Tech Debt Registry</li>
+<li>[ ] Test coverage verified with green CI build</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

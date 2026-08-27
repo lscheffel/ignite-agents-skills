@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="email-composer">Email Composer</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Drafting executive emails, project status updates, and stakeholder proposals</li>
+<li>Formatting messages according to the Bottom Line Up Front (BLUF) hierarchy</li>
+<li>Optimizing subject lines for mobile open rates ($N_{	ext{chars}} \le 50$)</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Real-time chat messages (Slack/Discord) or long-form documentation</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Draft clear, effective professional emails with appropriate tone, structure, and purpose. This skill covers business correspondence, cold outreach, follow-ups, escalations, apologies, negotiations, internal communications, and stakeholder updates. Includes tone calibration, cultural sensitivity, and templates for common business scenarios.</p>
 <p>Apply this skill whenever professional email communication needs to be drafted, refined, or strategized.</p>
@@ -708,6 +719,26 @@ Examples:
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Executive Communication:</strong> Bottom Line Up Front (BLUF), Minto Pyramid Principle, and MECE (Mutually Exclusive, Collectively Exhaustive).</li>
+<li><strong>Subject Line Geometry:</strong> Character length $\le 50$ characters, front-loaded action verbs, and clear urgency tags (<code>[Action Required]</code>, <code>[FYI]</code>).</li>
+<li><strong>Email Deliverability & Hygiene:</strong> Plain-text formatting fallback, spam trigger avoidance, and clear unsubscribe/signature blocks.</li>
+<li><strong>Tone Modulation:</strong> Formal executive, collaborative peer, empathetic customer service, and firm escalation ladders.</li>
+</ul>
+<h3 id="bluf-bottom-line-up-front-structure">BLUF (Bottom Line Up Front) Structure:</h3>
+<ol>
+<li><strong>Line 1 (The Ask / Conclusion):</strong> State the exact action requested and deadline.</li>
+<li><strong>Body (Context / Bulleted Data):</strong> Present 2-3 concise supporting facts or options.</li>
+<li><strong>Closing (Next Steps):</strong> Explicit confirmation of ownership and next checkpoint.</li>
+</ol>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (50-Character Subject Line Bound):</strong> Subject lines must not exceed 50 characters to prevent mobile client truncation.</li>
+<li><strong>Rule of Thumb 2 (Three-Sentence Rule for Simple Requests):</strong> If an email requires a single decision, constrain the message to $\le 3$ concise sentences.</li>
+<li><strong>Rule of Thumb 3 (Explicit Ownership):</strong> State clearly <em>who</em> is responsible for <em>what</em> by <em>when</em> (<code>@Person: Action by Date</code>).</li>
+<li><strong>Rule of Thumb 4 (No Passive Aggression):</strong> Maintain professional, direct, and collaborative tone even during escalations.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -715,6 +746,13 @@ Examples:
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding email draft:</p>
+<ul>
+<li>[ ] Subject line constrained to $\le 50$ characters with urgency tag</li>
+<li>[ ] BLUF ask placed on the very first line of the email body</li>
+<li>[ ] Explicit ownership and deadlines assigned for all next steps</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

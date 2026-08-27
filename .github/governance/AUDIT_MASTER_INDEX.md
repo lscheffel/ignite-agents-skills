@@ -6,7 +6,7 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 
 ## 1. Sumário Executivo de Conformidade
 
-* **Data de Execução:** 2026-08-27 02:53:58 UTC
+* **Data de Execução:** 2026-08-27 02:58:01 UTC
 * **Total de Ativos Auditados:** 82 (100.00% de cobertura, 0.00% omissão)
 * **Score Global Médio do Ecossistema:** **89.9 / 100**
 * **Distribuição de Status:**
@@ -47,8 +47,8 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `dispatching-parallel-agents` | config_skill | `720fcfd2810d...` | **85.6** | APROVADA | Baixo | `5.7` |
 | `docx-processing` | config_skill | `99e5629e04ff...` | **91.9** | APROVADA | Baixo | `5.7` |
 | `email-composer` | config_skill | `698e738929c5...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `find-skills` | config_skill | `7cd345234b73...` | **84.6** | APROVADA | Baixo | `5.7` |
-| `git-workflow` | config_skill | `2474222300a2...` | **83.8** | APROVADA | Baixo | `5.7` |
+| `find-skills` | config_skill | `688b4cd3d34b...` | **85.6** | APROVADA | Baixo | `5.7` |
+| `git-workflow` | config_skill | `e6fa116f1c19...` | **83.8** | APROVADA | Baixo | `5.7` |
 | `governance` | config_skill | `90425bde763d...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `implementation` | config_skill | `da5ed67bcc5b...` | **90.1** | APROVADA | Baixo | `5.7` |
 | `llm-as-judge` | config_skill | `5585b2df2d29...` | **85.6** | APROVADA | Baixo | `5.7` |
@@ -62,23 +62,23 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `prompt-engineering` | config_skill | `a5508136ea09...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `react-best-practices` | config_skill | `11a11afa5cba...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `refactoring` | config_skill | `cb7d52afa4e1...` | **92.4** | APROVADA | Baixo | `5.7` |
-| `release` | config_skill | `34582d3c4ac9...` | **85.6** | APROVADA | Baixo | `5.7` |
-| `repo-bootstrap` | config_skill | `e5f62d210024...` | **92.8** | APROVADA | Baixo | `5.7` |
+| `release` | config_skill | `707ab6dc07be...` | **85.6** | APROVADA | Baixo | `5.7` |
+| `repo-bootstrap` | config_skill | `5dbc95866001...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `resilient-execution` | config_skill | `f8edd144d863...` | **85.6** | APROVADA | Baixo | `5.7` |
 | `security-review` | config_skill | `a4d322d29c8d...` | **90.1** | APROVADA | Baixo | `5.7` |
 | `seo-optimizer` | config_skill | `121bb1de476d...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `skill-audit-bulletin` | config_skill | `d930e384bd6b...` | **90.7** | APROVADA | Baixo | `5.7` |
-| `skill-creator` | config_skill | `1a1682fd82b9...` | **89.7** | APROVADA | Baixo | `5.7` |
-| `skill-discovery` | config_skill | `31ba42306e59...` | **93.5** | APROVADA | Baixo | `5.7` |
+| `skill-audit-bulletin` | config_skill | `a1fbe36bf602...` | **90.7** | APROVADA | Baixo | `5.7` |
+| `skill-creator` | config_skill | `1aaa23437ea8...` | **89.7** | APROVADA | Baixo | `5.7` |
+| `skill-discovery` | config_skill | `93e2a017b44b...` | **93.5** | APROVADA | Baixo | `5.7` |
 | `subagent-driven-development` | config_skill | `ca2a9b5311d3...` | **81.4** | APROVADA | Baixo | `5.7` |
 | `systematic-debugging` | config_skill | `e5e04b58c36f...` | **90.4** | APROVADA | Baixo | `5.7` |
-| `technical-documentation` | config_skill | `2b778fe3c96e...` | **92.0** | APROVADA | Baixo | `5.7` |
+| `technical-documentation` | config_skill | `aac80010b462...` | **92.0** | APROVADA | Baixo | `5.7` |
 | `test-driven-development` | config_skill | `89fdd9d9d20b...` | **92.8** | APROVADA | Baixo | `5.7` |
 | `testing-mastery` | config_skill | `a621b497020f...` | **84.5** | APROVADA | Baixo | `5.7` |
 | `ui-ux-pro-max` | config_skill | `9dbf8021f8c5...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `ux-researcher-designer` | config_skill | `08e0e22017b2...` | **93.8** | APROVADA | Baixo | `5.7` |
-| `verification-before-completion` | config_skill | `c76d8e6c342f...` | **85.6** | APROVADA | Baixo | `5.7` |
-| `writing-skills` | config_skill | `bc78041603c2...` | **80.2** | APROVADA | Baixo | `5.7` |
+| `verification-before-completion` | config_skill | `84674f7eff9a...` | **85.6** | APROVADA | Baixo | `5.7` |
+| `writing-skills` | config_skill | `76c0785225d1...` | **80.2** | APROVADA | Baixo | `5.7` |
 | `xlsx-processing` | config_skill | `e5bde27c1bf5...` | **93.8** | APROVADA | Baixo | `5.7` |
 | `plugin__Google.securecoder.securecoder__create_security_implementation_plan` | plugin_skill | `c011415cac17...` | **92.3** | APROVADA | Baixo | `3.8` |
 | `plugin__Google.securecoder.securecoder__determine_threat_model` | plugin_skill | `b5c3caf7bf77...` | **88.6** | APROVADA | Baixo | `3.8` |

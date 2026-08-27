@@ -435,6 +435,18 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="circuit-breaker">Circuit Breaker</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Protecting LLM API calls and external services against cascading failure</li>
+<li>Preventing runaway retry loops during rate limiting (HTTP 429) or outages (HTTP 5xx)</li>
+<li>Implementing graceful degradation with fallback tiers</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Handling expected validation errors (HTTP 400/422) that should fail immediately</li>
+<li>In-memory deterministic functions with no external I/O dependencies</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>The circuit-breaker skill is a safety mechanism that prevents infinite loops, resource exhaustion, and accidental destruction during autonomous development. It operates at the <strong>loop level</strong> (complementing <code>resilient-execution</code> which operates at the <strong>task level</strong>). Without circuit-breaker protection, autonomous loops can waste hours on stagnant problems, exhaust API limits, or accidentally destroy configuration files. This skill enforces hard boundaries that keep autonomous operations productive and safe.</p>
 <p><strong>Announce at start:</strong> "Circuit breaker is active — monitoring for stagnation, rate limits, and file protection."</p>
@@ -573,6 +585,24 @@
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Resilience Design Pattern:</strong> Michael Nygard's Circuit Breaker (Release It!) and Martin Fowler's Fault Tolerance models.</li>
+<li><strong>Finite State Machine (FSM):</strong> 3-State deterministic transitions (Closed $\leftrightarrow$ Open $\leftrightarrow$ Half-Open).</li>
+<li><strong>Backoff Algebra:</strong> Full Jitter Exponential Backoff (AWS Architecture Guidelines / Decoupled Systems).</li>
+<li><strong>Health Telemetry:</strong> Rolling window failure rate monitoring with Prometheus-compatible error counters.</li>
+</ul>
+<h3 id="circuit-breaker-state-transition-matrix">Circuit Breaker State Transition Matrix:</h3>
+<div class="table-wrapper"><table><tr><th>Current State</th><th>Event</th><th>Next State</th><th>Action / Side Effect</th></tr><tr><td><strong>CLOSED</strong></td><td>Consecutive Failures $\ge 5$</td><td><strong>OPEN</strong></td><td>Trip breaker, reject calls immediately with fast-fail.</td></tr><tr><td><strong>OPEN</strong></td><td>Cooldown Period ($T_{\text{cool}} \ge 60\text{s}$) Elapsed</td><td><strong>HALF-OPEN</strong></td><td>Allow probe request ($N_{\text{probe}} = 1$) to test backend.</td></tr><tr><td><strong>HALF-OPEN</strong></td><td>Probe Request Succeeded</td><td><strong>CLOSED</strong></td><td>Reset failure counter to 0, restore normal traffic.</td></tr><tr><td><strong>HALF-OPEN</strong></td><td>Probe Request Failed</td><td><strong>OPEN</strong></td><td>Reset cooldown timer with doubled backoff ceiling.</td></tr></table></div>
+<h3 id="exponential-backoff-with-full-jitter-equation">Exponential Backoff with Full Jitter Equation:</h3>
+<p>$$T_{\text{sleep}} = \text{Uniform}(0, \min(T_{\text{max}}, T_{\text{base}} \times 2^k))$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Fast-Fail Rule):</strong> When in OPEN state, reject downstream calls instantly without attempting network I/O.</li>
+<li><strong>Rule of Thumb 2 (Error Classification):</strong> 4xx client errors (e.g. 400 Bad Request) must NOT trip the circuit breaker; only 5xx, timeouts, and network exceptions trip the breaker.</li>
+<li><strong>Rule of Thumb 3 (Half-Open Safety):</strong> During HALF-OPEN state, strictly limit concurrency to 1 probe request.</li>
+<li><strong>Rule of Thumb 4 (Fallback Mandate):</strong> Every breaker-protected invocation must provide a deterministic degraded fallback response.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -580,6 +610,13 @@
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding circuit breaker integration:</p>
+<ul>
+<li>[ ] 3-state transitions verified via unit tests (Closed -> Open -> Half-Open -> Closed)</li>
+<li>[ ] Full jitter exponential backoff verified under synthetic failure</li>
+<li>[ ] Structured fallback payload emitted during OPEN state</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

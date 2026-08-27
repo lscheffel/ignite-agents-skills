@@ -583,6 +583,25 @@
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Accessibility & Contrast:</strong> WCAG 2.2 AAA compliance, Relative Luminance mathematics ($C_{\text{ratio}} \ge 7:1$), and APCA (Accessible Perceptual Contrast Algorithm).</li>
+<li><strong>Modern Layout Engines:</strong> CSS Grid Level 2 (Subgrid), Container Queries (<code>@container</code>), and CSS Anchor Positioning.</li>
+<li><strong>Design Tokens & Systems:</strong> HSL tailored palettes, 8pt spatial grid, fluid typography with <code>clamp()</code>, and glassmorphism backdrop filters.</li>
+<li><strong>Micro-Interactions & Motion:</strong> View Transitions API, CSS scroll-driven animations, and reduced-motion media queries (<code>prefers-reduced-motion: reduce</code>).</li>
+</ul>
+<h3 id="wcag-22-luminance--contrast-formula">WCAG 2.2 Luminance & Contrast Formula:</h3>
+<p>$$\text{Contrast Ratio} = \frac{L_1 + 0.05}{L_2 + 0.05} \quad \text{where } L_1 > L_2$$</p>
+<div class="table-wrapper"><table><tr><th>Compliance Level</th><th>Normal Text ($<18\text{pt}$)</th><th>Large Text ($\ge 18\text{pt}$ / $24\text{px}$)</th><th>UI Components / Icons</th></tr><tr><td><strong>WCAG AA</strong></td><td>$\ge 4.5:1$</td><td>$\ge 3.0:1$</td><td>$\ge 3.0:1$</td></tr><tr><td><strong>WCAG AAA (Enhanced SOTA)</strong></td><td>$\ge 7.0:1$</td><td>$\ge 4.5:1$</td><td>$\ge 4.5:1$</td></tr></table></div>
+<h3 id="fluid-typography-clamp-equation">Fluid Typography Clamp Equation:</h3>
+<p><code>font-size: clamp(1rem, 0.75rem + 1.25vw, 1.75rem);</code></p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (WCAG 2.2 Contrast Mandate):</strong> Body text must achieve at least $4.5:1$ (AA) and preferably $7.0:1$ (AAA) against its direct background color.</li>
+<li><strong>Rule of Thumb 2 (Reduced Motion Invariant):</strong> All CSS animations and smooth scrolls must provide a zero-animation fallback under <code>@media (prefers-reduced-motion: reduce)</code>.</li>
+<li><strong>Rule of Thumb 3 (Subgrid Alignment):</strong> Card lists and form rows with multi-column alignment must use CSS Subgrid to prevent visual misalignment.</li>
+<li><strong>Rule of Thumb 4 (Keyboard Navigability):</strong> All interactive elements must have visible, high-contrast focus rings (<code>:focus-visible</code>).</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>ui-ux-pro-max</code> só pode ser declarada concluída quando:</p>
 <ol>

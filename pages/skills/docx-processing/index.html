@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="docx-processing">DOCX Processing</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Programmatically generating Word documents (.docx) from structured data templates</li>
+<li>Performing mail-merge operations and filling document tables dynamically</li>
+<li>Modifying OOXML paragraph styles, headers, footers, and table layouts</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Unstyled plain text files or raw Markdown documentation</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>Generate, manipulate, and template Word documents programmatically. This skill covers python-docx for direct document creation, docxtpl for Jinja2-based template filling, formatting control (headings, tables, images, headers/footers), mail merge operations, style management, and conversion strategies.</p>
 <p>Apply this skill whenever Word documents need to be created, populated, or transformed through code rather than manual editing.</p>
@@ -735,6 +746,26 @@ def safe_generate_document(template_path, context, output_path):
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Document Object Model (DOM):</strong> Open Packaging Conventions (OPC), Office Open XML (OOXML - ECMA-376), and AST manipulation.</li>
+<li><strong>Template Engines:</strong> <code>docxtpl</code> Jinja2-style document template rendering with mail-merge safety.</li>
+<li><strong>Style Inheritance & Layout:</strong> Native Word styles, table formatting with explicit column widths, and header/footer relationships.</li>
+<li><strong>Safety & Portability:</strong> XML entity protection, namespace isolation, and clean font embedding.</li>
+</ul>
+<h3 id="document-generation-protocol">Document Generation Protocol:</h3>
+<ol>
+<li>Load base corporate template containing pre-configured styles (<code>Heading 1</code>, <code>Table Grid</code>).</li>
+<li>Populate template context dictionary validating all keys against JSON Schema.</li>
+<li>Render document and verify all table columns have explicit percentage/point widths.</li>
+</ol>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Template-Driven Generation):</strong> Never construct complex DOCX files programmatically from scratch; use pre-styled <code>.docx</code> templates via <code>docxtpl</code>.</li>
+<li><strong>Rule of Thumb 2 (Explicit Table Widths):</strong> All table cells and columns must specify explicit widths to prevent Word rendering collapses.</li>
+<li><strong>Rule of Thumb 3 (Namespace Isolation):</strong> When modifying raw XML parts, preserve all original OOXML schema namespaces (<code>w:</code>, <code>r:</code>, <code>m:</code>).</li>
+<li><strong>Rule of Thumb 4 (Zero Broken Placeholders):</strong> Validate that all template variables <code>{{ key }}</code> are resolved before saving the final <code>.docx</code> artifact.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -742,6 +773,13 @@ def safe_generate_document(template_path, context, output_path):
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding Word document generation:</p>
+<ul>
+<li>[ ] All template placeholder variables <code>{{ key }}</code> successfully resolved</li>
+<li>[ ] Explicit column widths defined for all table grids</li>
+<li>[ ] Output opens cleanly in Microsoft Word and LibreOffice without XML errors</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

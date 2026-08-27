@@ -659,6 +659,30 @@
 <li><code>documentation</code> — for documentation standards</li>
 <li><code>git</code> — for .gitignore</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>6-Pillar Repository Governance:</strong> <code>README.md</code>, <code>USAGE.md</code>, <code>CHANGELOG.md</code>, <code>CONTRIBUTING.md</code>, <code>CODE_OF_CONDUCT.md</code>, <code>SECURITY.md</code>, and <code>LICENSE</code>.</li>
+<li><strong>Agent Governance Standard:</strong> Canonical <code>AGENTS.md</code> and <code>GEMINI.md</code> anchoring Single Source of Truth (SSOT).</li>
+<li><strong>CI/CD & Automation Scaffolding:</strong> GitHub Actions workflows for automated linting, testing, and multi-runtime skill deployment.</li>
+<li><strong>Git Hooks Automation:</strong> Husky / standalone <code>.git/hooks/</code> pre-commit and post-commit verification scripts.</li>
+</ul>
+<h3 id="repository-governance-file-hierarchy">Repository Governance File Hierarchy:</h3>
+<pre data-lang="text"><code>.
+├── AGENTS.md                 # SSOT Governance rules for AI coding agents
+├── README.md                 # Project elevator pitch &amp; overview
+├── USAGE.md                  # Comprehensive developer &amp; agent usage guide
+├── CHANGELOG.md              # Keep a Changelog (v1.1.0) release ledger
+├── CONTRIBUTING.md           # Contribution guidelines &amp; PR etiquette
+├── CODE_OF_CONDUCT.md       # Contributor Covenant Code of Conduct
+├── SECURITY.md               # Vulnerability reporting &amp; security policy
+└── LICENSE                   # Open-source license (MIT/Apache-2.0)</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (SSOT Governance Invariant):</strong> Every repository must contain an <code>AGENTS.md</code> specifying canonical tool use, architecture, and constraints.</li>
+<li><strong>Rule of Thumb 2 (Security Policy Mandate):</strong> Provide a clear <code>SECURITY.md</code> with private vulnerability disclosure instructions before public release.</li>
+<li><strong>Rule of Thumb 3 (Deterministic Bootstrap Script):</strong> Provide a single bootstrap command (<code>./scripts/bootstrap.sh</code> or <code>npm run setup</code>) that installs all dependencies and hooks.</li>
+<li><strong>Rule of Thumb 4 (Consistent License):</strong> Explicitly declare the open-source license in both <code>LICENSE</code> and <code>README.md</code>.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>repo-bootstrap</code> só pode ser declarada concluída quando:</p>
 <ol>

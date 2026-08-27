@@ -113,3 +113,23 @@ graph TD
 | **Early Execution without Context** | 🔴 Critical | Context hallucination and destructive refactoring | Enable the `cap` skill to acquire minimal evidence before editing. |
 | **Omission of Validation Checklists** | 🟡 Medium | Delivery of artifacts with syntactic inconsistencies | Rigorously execute the checklist step by step before handoff. |
 | **Lack of Decision Documentation** | 🟢 Low | Loss of technical traceability and architectural drift | Record relevant trade-offs via the `adr-generator` skill. |- **Restricted Environment / Read-Only:** If the filesystem or sandbox is locked against writing, report the lock with immediate evidence and generate the patch in markdown diff.- [ ] All prerequisites and target files were inspected before modification. - [ ] The procedure strictly followed the rules and best practices of the specialization. - [ ] Security, typing, and style guidelines were preserved. - [ ] Unit tests or validation commands were successfully executed. - [ ] The final artifact was inspected against the completion gate.
+
+
+## Domain SOTA & Industry Engineering Standards
+
+- **Hybrid Retrieval:** Reciprocal Rank Fusion (RRF) combining BM25 keyword matching and vector cosine similarity.
+- **Local RAG Architecture:** SQLite3 + FTS5 full-text indexing + local ChromaDB / SQLite vector embeddings.
+- **Confidence Calibration:** Dynamic routing thresholds with confidence score cutoffs ($	ext{Threshold} \ge 0.75$).
+- **Tool Protocol Integration:** MCP stdio tool server exposing `route_task` and `search_skills`.
+
+### Reciprocal Rank Fusion (RRF) Mathematical Formula:
+
+$$	ext{RRF\_Score}(d) = rac{1}{60 + r_{	ext{BM25}}(d)} + rac{1}{60 + r_{	ext{Vector}}(d)}$$
+
+Where $r_{	ext{BM25}}(d)$ and $r_{	ext{Vector}}(d)$ are the 1-indexed ranks from the lexical and vector retrievers.
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Hybrid Query Invariant):** Always fuse keyword search with vector semantic search to capture both exact token matches and conceptual intents.
+2. **Rule of Thumb 2 (Sub-100ms Response Bound):** Skill routing must execute in under 100ms using local embedded databases (SQLite/FTS5).
+3. **Rule of Thumb 3 (Top-K Routing Limit):** Return at most 3 most relevant skills for complex tasks to prevent agent context pollution.
+4. **Rule of Thumb 4 (Confidence Gating):** If no skill meets the $0.75$ confidence cutoff, return an empty set rather than hallucinating irrelevant skills.

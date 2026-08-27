@@ -692,6 +692,23 @@ else:
 <li>O resultado foi validado deterministamente através de evidências de execução.</li>
 <li>Não restam pendências estruturais, placeholders ou erros não tratados.</li>
 </ol>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Multi-Agent Orchestration Patterns:</strong> Directed Acyclic Graph (DAG) Workflow Execution, Hierarchical Supervisor-Worker, and Peer-to-Peer Consensus.</li>
+<li><strong>Data Exchange Contracts:</strong> Immutable JSON Schema payloads and CloudEvents (v1.0.2) message encapsulation.</li>
+<li><strong>Deadlock & Cycle Prevention:</strong> Tarjan's Strongly Connected Components algorithm for runtime DAG dependency verification.</li>
+<li><strong>Fault Isolation:</strong> Bulkhead Pattern and Circuit Breaker isolation per agent worker node.</li>
+</ul>
+<h3 id="multi-agent-dag-execution-algebra">Multi-Agent DAG Execution Algebra:</h3>
+<p>The orchestration graph $G = (V, E)$ must be strictly acyclic:</p>
+<p>$$\text{Cycle}(G) = \emptyset \quad \text{and} \quad \text{InDegree}(v_{\text{sink}}) \ge 1$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Zero Shared Mutable State):</strong> Agents must never share mutable memory; all state handoffs occur via explicit, validated message envelopes.</li>
+<li><strong>Rule of Thumb 2 (Worker Timeout Bound):</strong> Every delegated worker task must specify a strict wall-clock timeout ($T_{\text{worker}} \le 120\text{s}$) with automated fallback.</li>
+<li><strong>Rule of Thumb 3 (Fan-In Synthesis Gate):</strong> An aggregator agent must validate the completeness of all parent nodes before emitting the final consolidated response.</li>
+<li><strong>Rule of Thumb 4 (Role Containment Invariant):</strong> Specialized subagents are prohibited from executing tasks outside their defined system prompt boundary.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

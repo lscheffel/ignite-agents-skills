@@ -681,6 +681,23 @@ function processPayment(order) {
 <li><code>ddd</code> — to model domain during refactoring</li>
 <li><code>testing</code> — to create safety net</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Refactoring Foundations:</strong> Martin Fowler's Refactoring Catalog (2nd Edition) and Joshua Kerievsky's Refactoring to Patterns.</li>
+<li><strong>Architecture Migration Patterns:</strong> Strangler Fig Pattern, Branch by Abstraction, and Parallel Run verification.</li>
+<li><strong>Safety Invariant:</strong> Characterization Tests (Golden Master Tests) established BEFORE modifying code.</li>
+<li><strong>Small Steps:</strong> Micro-commits with continuous green test suite.</li>
+</ul>
+<h3 id="refactoring-risk--invariance-model">Refactoring Risk & Invariance Model:</h3>
+<p>A refactoring step $R$ preserves observable behavior $B$:</p>
+<p>$$B(f(x)) \equiv B(f'(x)) \quad \forall x \in \text{Inputs}$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Separate Refactoring from Features):</strong> Never combine structural refactoring with new feature implementation in the same commit.</li>
+<li><strong>Rule of Thumb 2 (Test Coverage Prerequisite):</strong> Never refactor legacy code without establishing characterization tests first.</li>
+<li><strong>Rule of Thumb 3 (Extract Before Modify):</strong> When dealing with large monolithic functions, extract small helper methods before altering behavior.</li>
+<li><strong>Rule of Thumb 4 (Revert on Red):</strong> If tests fail during a refactoring step and the fix is not obvious in 2 minutes, revert immediately and take smaller steps.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>refactoring</code> só pode ser declarada concluída quando:</p>
 <ol>

@@ -717,6 +717,23 @@
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Execution Governance:</strong> Agent Skills SDLC lifecycle, Atomic Change Transactions, and Continuous Verification.</li>
+<li><strong>State Preservation:</strong> Step-by-step state hydration with rollback checkpoints.</li>
+<li><strong>Governance Handoff:</strong> Direct integration with <code>adr-generator</code> Decision Sets and <code>adr-archive</code> Evidence Records.</li>
+<li><strong>Zero Drift Principle:</strong> Strict compliance with approved Implementation Plans (<code><em>-PI.md</code>) and Task Backlogs (<code></em>-TODO.md</code>).</li>
+</ul>
+<h3 id="atomic-change-transaction-invariant">Atomic Change Transaction Invariant:</h3>
+<p>Every code modification must follow the ACID-like cycle:</p>
+<p>$$\text{Snapshot State} \longrightarrow \text{Apply Edit} \longrightarrow \text{Run Tests} \longrightarrow \begin{cases} \text{Commit (if Pass)} \\ \text{Rollback (if Fail)} \end{cases}$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Plan Fidelity):</strong> Follow the approved Implementation Plan step-by-step; never make unplanned architectural modifications.</li>
+<li><strong>Rule of Thumb 2 (Verification Before Mark Done):</strong> Never mark a task <code>[x]</code> in TODO.md until automated test execution verifies success.</li>
+<li><strong>Rule of Thumb 3 (Incremental Commits):</strong> Commit logically coherent chunks with descriptive conventional commit messages.</li>
+<li><strong>Rule of Thumb 4 (Evidence Record Generation):</strong> Upon completing implementation, generate the canonical Evidence Record (<code>*-ER.md</code>) certifying all deliverables.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

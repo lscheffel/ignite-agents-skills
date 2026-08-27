@@ -480,6 +480,23 @@
     G --&gt;|Não| E
     G --&gt;|Sim| H[&quot;Completion Gate: Entrega do Artefato Certificado&quot;]</code></pre>
 <div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Severity</th><th>Negative Impact</th><th>Canonical Mitigation</th></tr><tr><td><strong>Early Execution without Context</strong></td><td>🔴 Critical</td><td>Context hallucination and destructive refactoring</td><td>Enable the <code>cap</code> skill to acquire minimal evidence before editing.</td></tr><tr><td><strong>Omission of Validation Checklists</strong></td><td>🟡 Medium</td><td>Delivery of artifacts with syntactic inconsistencies</td><td>Rigorously execute the checklist step by step before handoff.</td></tr><tr><td><strong>Lack of Decision Documentation</strong></td><td>🟢 Low</td><td>Loss of technical traceability and architectural drift</td><td>Record relevant trade-offs via the <code>adr-generator</code> skill.</td></tr></table></div>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Hybrid Retrieval:</strong> Reciprocal Rank Fusion (RRF) combining BM25 keyword matching and vector cosine similarity.</li>
+<li><strong>Local RAG Architecture:</strong> SQLite3 + FTS5 full-text indexing + local ChromaDB / SQLite vector embeddings.</li>
+<li><strong>Confidence Calibration:</strong> Dynamic routing thresholds with confidence score cutoffs ($	ext{Threshold} \ge 0.75$).</li>
+<li><strong>Tool Protocol Integration:</strong> MCP stdio tool server exposing <code>route_task</code> and <code>search_skills</code>.</li>
+</ul>
+<h3 id="reciprocal-rank-fusion-rrf-mathematical-formula">Reciprocal Rank Fusion (RRF) Mathematical Formula:</h3>
+<p>$$	ext{RRF\_Score}(d) = rac{1}{60 + r_{	ext{BM25}}(d)} + rac{1}{60 + r_{	ext{Vector}}(d)}$$</p>
+<p>Where $r_{	ext{BM25}}(d)$ and $r_{	ext{Vector}}(d)$ are the 1-indexed ranks from the lexical and vector retrievers.</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Hybrid Query Invariant):</strong> Always fuse keyword search with vector semantic search to capture both exact token matches and conceptual intents.</li>
+<li><strong>Rule of Thumb 2 (Sub-100ms Response Bound):</strong> Skill routing must execute in under 100ms using local embedded databases (SQLite/FTS5).</li>
+<li><strong>Rule of Thumb 3 (Top-K Routing Limit):</strong> Return at most 3 most relevant skills for complex tasks to prevent agent context pollution.</li>
+<li><strong>Rule of Thumb 4 (Confidence Gating):</strong> If no skill meets the $0.75$ confidence cutoff, return an empty set rather than hallucinating irrelevant skills.</li>
+</ol>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>
 <ul class="file-list">

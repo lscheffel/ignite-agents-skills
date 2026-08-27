@@ -644,6 +644,22 @@ python3 ~/.gemini/config/skills/skill-audit-bulletin/scripts/update_audit_ledger
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Dual-Axis Audit Methodology:</strong> Structural & Metadata Quality (Axis 1) coupled with Domain SOTA Depth (Axis 2).</li>
+<li><strong>Master Ledger Synchronization:</strong> Continuous tracking in <code>SKILL_AUDIT_LEDGER.md</code> with SHA-256 fingerprinting.</li>
+<li><strong>Automated ADR Triggers:</strong> Automatic ADR escalation whenever a skill scores $<80/100$ or exhibits critical cognitive debt.</li>
+<li><strong>Continuous Drift Detection:</strong> Real-time variance tracking across multi-batch remediation cycles.</li>
+</ul>
+<h3 id="scoring-grade-calibration-matrix">Scoring Grade Calibration Matrix:</h3>
+<div class="table-wrapper"><table><tr><th>Score Range</th><th>Grade</th><th>Classification</th><th>Action Gate</th></tr><tr><td><strong>$\ge 95.0$</strong></td><td><strong>S (Diamond)</strong></td><td>Exceptional / Industry Benchmark</td><td>Lock as canonical reference template.</td></tr><tr><td><strong>$90.0 - 94.9$</strong></td><td><strong>A+ / A (Platinum/Gold)</strong></td><td>Production SOTA Grade</td><td>Certified for mission-critical workflows.</td></tr><tr><td><strong>$80.0 - 89.9$</strong></td><td><strong>B+ / B (Silver)</strong></td><td>Standard Production Grade</td><td>Solid; eligible for iterative polish.</td></tr><tr><td><strong>$< 80.0$</strong></td><td><strong>C / F (Bronze/Fail)</strong></td><td>Sub-Standard / Deficient</td><td>Automatic ADR remediation trigger.</td></tr></table></div>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Dual-Axis Verification):</strong> Never score a skill based solely on word count or file size; verify both structural compliance and domain-specific depth.</li>
+<li><strong>Rule of Thumb 2 (Immediate ADR Escalation):</strong> If any skill falls below 80.0 points, generate a remediation task in the active ADR backlog immediately.</li>
+<li><strong>Rule of Thumb 3 (Ledger Immutability):</strong> Keep historical audit scores transparently logged with commit timestamps in <code>SKILL_AUDIT_LEDGER.md</code>.</li>
+<li><strong>Rule of Thumb 4 (Cross-Skill Consistency):</strong> Audit companion skills jointly to guarantee unified terminology and non-contradictory workflows.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>

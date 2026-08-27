@@ -524,6 +524,22 @@ guidelines from CHANGELOG_STYLE.md</code></pre>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Specification Standards:</strong> Keep a Changelog (v1.1.0) and Semantic Versioning (SemVer v2.0.0).</li>
+<li><strong>Commit Parsing Standards:</strong> Conventional Commits (v1.0.0) format (<code>feat</code>, <code>fix</code>, <code>docs</code>, <code>refactor</code>, <code>perf</code>, <code>test</code>, <code>chore</code>).</li>
+<li><strong>Release Categorization:</strong> Automatic grouping into <code>Added</code>, <code>Changed</code>, <code>Deprecated</code>, <code>Removed</code>, <code>Fixed</code>, and <code>Security</code>.</li>
+<li><strong>Breaking Change Semantics:</strong> Automatic Major bump detection on <code>BREAKING CHANGE:</code> or <code>!</code> commit syntax.</li>
+</ul>
+<h3 id="semver-200-automated-bump-decision-matrix">SemVer 2.0.0 Automated Bump Decision Matrix:</h3>
+<div class="table-wrapper"><table><tr><th>Commit Types in Release Range</th><th>SemVer Bump</th><th>Example Version Transition</th></tr><tr><td>Any commit with <code>BREAKING CHANGE:</code> or <code>type!:</code></td><td><strong>MAJOR</strong></td><td><code>1.4.2</code> $	o$ <code>2.0.0</code></td></tr><tr><td>Contains <code>feat:</code> commits with zero breaking changes</td><td><strong>MINOR</strong></td><td><code>1.4.2</code> $	o$ <code>1.5.0</code></td></tr><tr><td>Only <code>fix:</code>, <code>perf:</code>, <code>refactor:</code> commits</td><td><strong>PATCH</strong></td><td><code>1.4.2</code> $	o$ <code>1.4.3</code></td></tr></table></div>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Keep a Changelog Conformity):</strong> All changelog outputs must strictly follow the Keep a Changelog format with dated ISO headers (<code>## [1.5.0] - 2026-08-26</code>).</li>
+<li><strong>Rule of Thumb 2 (Human-Centric Summaries):</strong> Transform technical git commit messages into clear, user-facing descriptions of what changed.</li>
+<li><strong>Rule of Thumb 3 (Unreleased Section):</strong> Always maintain an active <code>## [Unreleased]</code> section at the top of <code>CHANGELOG.md</code> for in-progress changes.</li>
+<li><strong>Rule of Thumb 4 (PR & Issue Linkage):</strong> Include clickable links to corresponding pull requests, issues, and commit SHAs for full traceability.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -531,6 +547,13 @@ guidelines from CHANGELOG_STYLE.md</code></pre>
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before concluding changelog generation:</p>
+<ul>
+<li>[ ] Keep a Changelog categories (<code>Added</code>, <code>Changed</code>, <code>Fixed</code>, etc.) respected</li>
+<li>[ ] SemVer bump calculated accurately based on commit types</li>
+<li>[ ] Clickable links included for PRs, issues, and commit SHAs</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

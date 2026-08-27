@@ -438,6 +438,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="release">Release</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Tagging and publishing production releases according to Semantic Versioning (SemVer 2.0.0)</li>
+<li>Generating cryptographically signed artifacts with SLSA Level 3 provenance</li>
+<li>Creating GitHub Releases with automated checksum manifests (<code>SHA256SUMS</code>)</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Local experimental development or unverified scratch builds</li>
+</ul>
 <p>Guide for release management and versioning.</p>
 <h2 id="deterministic-execution-rules">Deterministic Execution Rules</h2>
 <blockquote>[!IMPORTANT]
@@ -734,6 +745,27 @@ git merge hotfix/critical-bug</code></pre>
 <li><code>git</code> — for tags and branching</li>
 <li><code>governance</code> — for approval process</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Supply Chain Security:</strong> Supply-chain Levels for Software Artifacts (SLSA Level 3) compliance and provenance attestation.</li>
+<li><strong>Cryptographic Asset Signing:</strong> GPG commit signing and Cosign / Sigstore keyless container & binary signing.</li>
+<li><strong>Release Automation:</strong> Semantic Release, GitHub Releases with automated asset uploads and SHA-256 checksum manifests.</li>
+<li><strong>Rollback Preparedness:</strong> Automated canary releases, fast rollback triggers, and immutable release tags.</li>
+</ul>
+<h3 id="release-pipeline-flow">Release Pipeline Flow:</h3>
+<pre data-lang="mermaid"><code>graph LR
+    A[SemVer Bump Trigger] --&gt; B[Generate Changelog]
+    B --&gt; C[Run Full Test Suite]
+    C --&gt; D[Sign Git Tag GPG]
+    D --&gt; E[Generate SHA-256 Checksums]
+    E --&gt; F[Publish GitHub Release &amp; Deploy]</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Cryptographic Checksums):</strong> Every released binary or archive MUST be accompanied by an official <code>SHA256SUMS</code> manifest.</li>
+<li><strong>Rule of Thumb 2 (Immutable Release Tags):</strong> Never delete, move, or overwrite an existing release tag in git.</li>
+<li><strong>Rule of Thumb 3 (Release Verification Checklist):</strong> Release manager or agent must verify all CI checks are green before tagging.</li>
+<li><strong>Rule of Thumb 4 (SLSA Provenance):</strong> Generate machine-readable build provenance attestations for all production distribution artifacts.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>release</code> só pode ser declarada concluída quando:</p>
 <ol>

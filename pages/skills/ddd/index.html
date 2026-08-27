@@ -888,6 +888,23 @@ class OrderService {
 <li><code>architecture-review-kilo</code> — to validate adherence</li>
 <li><code>testing</code> — to test aggregates</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Strategic DDD:</strong> Bounded Contexts, Context Mapping (Shared Kernel, Customer-Supplier, Anti-Corruption Layer - ACL).</li>
+<li><strong>Tactical DDD:</strong> Entities, Value Objects, Aggregates, Domain Services, Repositories, and Domain Events.</li>
+<li><strong>Transactional Invariant:</strong> Exactly ONE Aggregate Root modified per database transaction (Eric Evans / Vaughn Vernon).</li>
+<li><strong>Event Messaging:</strong> Outbox Pattern for guaranteed at-least-once domain event dispatch.</li>
+</ul>
+<h3 id="aggregate-root-transaction-invariant">Aggregate Root Transaction Invariant:</h3>
+<p>Modifying multiple aggregates in the same database transaction is an anti-pattern. Use Eventual Consistency:</p>
+<p>$$\text{Aggregate } A_1 \xrightarrow{\text{Mutate}} \text{Emit DomainEvent } E_1 \xrightarrow{\text{Outbox Async}} \text{Handler updates Aggregate } A_2$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Value Object Immutability):</strong> Value Objects must be 100% immutable; equality is defined by structural attribute comparison, not identity ID.</li>
+<li><strong>Rule of Thumb 2 (No Anemic Domain Models):</strong> Business logic and invariants MUST reside inside Entity/Aggregate methods, not leaked into procedural Service classes.</li>
+<li><strong>Rule of Thumb 3 (Transactional Boundary Rule):</strong> If two entities must be updated transactionally with immediate consistency, they belong to the SAME Aggregate.</li>
+<li><strong>Rule of Thumb 4 (Anti-Corruption Layer):</strong> Never allow external third-party DTOs or models to leak into domain core; translate via an explicit ACL Adapter.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>ddd</code> só pode ser declarada concluída quando:</p>
 <ol>

@@ -435,6 +435,17 @@
 </ul>
 <p>metadata: author: Antigravity Refactored Architecture provenance: internal last_audited: '2026-08-05' ---</p>
 <h1 id="verification-before-completion">Verification Before Completion</h1>
+<h2 id="when-to-use">When to Use</h2>
+<h3 id="use-when">Use when:</h3>
+<ul>
+<li>Concluding any technical task, bug fix, refactoring, or feature implementation</li>
+<li>Executing automated test suites and validation scripts before declaring completion</li>
+<li>Generating cryptographic Evidence Records (ER) and verification logs</li>
+</ul>
+<h3 id="do-not-use-when">Do not use when:</h3>
+<ul>
+<li>Exploratory brainstorming or early-stage conceptual research</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>The verification-before-completion skill is the terminal checkpoint for every task in the toolkit. It enforces a strict 5-step protocol that requires running fresh verification commands, reading their full output, and confirming results match the completion claim. Without this skill, agents make unverified claims that lead to broken code in production — with it, every completion claim is backed by evidence.</p>
 <hr>
@@ -538,6 +549,27 @@ Completion claim: [specific claim, e.g., &quot;Feature X is implemented and all 
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Zero-Unverified-Deliverable Invariant:</strong> Never declare any task complete without executing and verifying actual test/validation commands.</li>
+<li><strong>Exit Code Verification:</strong> Explicit assertion that validation commands exit with code <code>0 (ALL_PASS)</code>.</li>
+<li><strong>Evidence-Based Walkthroughs:</strong> Document concrete proof of execution (diffs, test output logs, metrics) in <code>walkthrough.md</code>.</li>
+<li><strong>Pre-Commit Enforcement:</strong> Automated pre-commit git hooks running test suites and audit engines before allowing commits.</li>
+</ul>
+<h3 id="verification-state-machine">Verification State Machine:</h3>
+<pre data-lang="mermaid"><code>graph LR
+    A[Code Changes Made] --&gt; B[Run Automated Tests]
+    B --&gt;|Tests Pass Code 0| C[Generate Evidence Record]
+    B --&gt;|Tests Fail| D[Systematic Debugging &amp; Fix]
+    D --&gt; B
+    C --&gt; E[Declare Task Completed]</code></pre>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Evidence Before Assertion):</strong> Do not claim a bug is fixed or a feature works without showing the exact terminal command output demonstrating success.</li>
+<li><strong>Rule of Thumb 2 (Zero Warnings on Build):</strong> Deliverables must build with zero compiler/linter warnings on strict settings.</li>
+<li><strong>Rule of Thumb 3 (Check Clean Git Tree):</strong> Confirm <code>git status</code> shows only expected modified files before concluding.</li>
+<li><strong>Rule of Thumb 4 (Automated Regression Check):</strong> Run the entire test suite (<code>python3 -m unittest discover</code>) rather than only testing the isolated modified file.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
@@ -545,6 +577,13 @@ Completion claim: [specific claim, e.g., &quot;Feature X is implemented and all 
 <li>[ ] As diretrizes de segurança, tipagem e estilo foram preservadas.</li>
 <li>[ ] Os testes unitários ou comandos de validação foram executados com sucesso.</li>
 <li>[ ] O artefato final foi inspecionado contra o completion gate.</li>
+</ul>
+<h2 id="completion-gate--verification">Completion Gate & Verification</h2>
+<p>Before declaring task completed:</p>
+<ul>
+<li>[ ] All automated unit and integration tests execute with exit code 0</li>
+<li>[ ] Terminal output evidence captured and verified</li>
+<li>[ ] Git working tree verified clean without unintended modified files</li>
 </ul>
 <h2 id="files">Arquivos</h2>
 <h3>Templates</h3>

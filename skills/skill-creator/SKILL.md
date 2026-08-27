@@ -239,6 +239,28 @@ Before publishing, audit the skill using `skill-audit-bulletin` to ensure it rea
 
 
 
+## Domain SOTA & Industry Engineering Standards
+
+- **Directory Layout & Modular Assets:** Canonical skill tree (`SKILL.md`, `scripts/`, `references/`, `resources/`).
+- **Token Budget Allocation:** Frontmatter $\le 150$, When to Use $\le 200$, Core Workflow $\le 1,500$, Standards $\le 1,200$, Gate $\le 400$ tokens.
+- **Automated Validation:** Schema verification via `validate-skill.sh` and index synchronization via `sync-index.sh`.
+- **Deterministic Scaffolding:** CLI scaffolding engine generating test cases and documentation simultaneously.
+
+### Canonical Skill Structure Tree:
+```text
+skills/{skill-name}/
+├── SKILL.md                 # Primary instruction payload (≤4,000 tokens)
+├── scripts/                 # Deterministic helper scripts & tools
+├── references/              # Deep domain reference documentation
+└── resources/               # Templates, configs, and boilerplate assets
+```
+
+### Exhaustive Heuristic Decision Rules:
+1. **Rule of Thumb 1 (Validate on Creation):** Immediately run `bash scripts/validate-skill.sh skills/{skill-name}` after scaffolding.
+2. **Rule of Thumb 2 (Unique Routing Intent):** The `description` field must contain distinct trigger keywords that prevent semantic collisions in vector RAG routing.
+3. **Rule of Thumb 3 (Deterministic Code Execution):** Wrap complex computational tasks or multi-step transforms in dedicated Python/Bash scripts under `scripts/`.
+4. **Rule of Thumb 4 (Automatic Index Sync):** Always invoke `./scripts/sync-index.sh` after creating or deleting any skill.
+
 ## Completion Gate
 
 A tarefa associada à skill `skill-creator` só pode ser declarada concluída quando:

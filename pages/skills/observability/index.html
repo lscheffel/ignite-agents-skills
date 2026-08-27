@@ -737,6 +737,22 @@ app.use((req, res, next) =&gt; {
 <li><code>release</code> — for metrics of deploy</li>
 <li><code>governance</code> — for policies of retention</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>OpenTelemetry Standard:</strong> Distributed Tracing (Spans, Trace IDs, Context Propagation) and GenAI Semantic Conventions.</li>
+<li><strong>Google SRE Golden Signals:</strong> Latency, Traffic, Errors, and Saturation.</li>
+<li><strong>Monitoring Frameworks:</strong> RED Method (Rate, Errors, Duration) for services and USE Method (Utilization, Saturation, Errors) for infrastructure.</li>
+<li><strong>Structured Logging:</strong> JSON log envelopes with unified trace/span correlation IDs (<code>trace_id</code>, <code>span_id</code>).</li>
+</ul>
+<h3 id="the-4-golden-signals-architecture">The 4 Golden Signals Architecture:</h3>
+<div class="table-wrapper"><table><tr><th>Signal</th><th>Metric Formulation</th><th>Alert Threshold / SLA</th></tr><tr><td><strong>Latency</strong></td><td>$P_{95}$ and $P_{99}$ response duration</td><td>$P_{99} > 500\text{ms}$ for $>2\text{min}$.</td></tr><tr><td><strong>Traffic</strong></td><td>Requests Per Second (RPS) $\lambda$</td><td>Anomaly detection ($\pm 50\%$ vs historical baseline).</td></tr><tr><td><strong>Errors</strong></td><td>Error rate ratio: $\frac{N_{\text{5xx}}}{N_{\text{total}}}$</td><td>Error rate $> 1.0\%$ over 5-minute window.</td></tr><tr><td><strong>Saturation</strong></td><td>CPU/Memory/Pool utilization: $\frac{U_{\text{used}}}{U_{\text{total}}}$</td><td>Utilization $> 85\%$ sustained for $>5\text{min}$.</td></tr></table></div>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Context Propagation Invariant):</strong> All outbound HTTP/gRPC requests and background jobs must inject OpenTelemetry <code>traceparent</code> headers.</li>
+<li><strong>Rule of Thumb 2 (Zero Unstructured Logs):</strong> Plain text <code>console.log</code> or <code>print()</code> statements are forbidden in production; all logs must be structured JSON.</li>
+<li><strong>Rule of Thumb 3 (High-Cardinality Hygiene):</strong> Never use UUIDs, email addresses, or raw user inputs as Prometheus metric labels (avoid cardinality explosion).</li>
+<li><strong>Rule of Thumb 4 (Actionable Alerting):</strong> Every PagerDuty/Slack alert must include a direct link to a Runbook with diagnosis steps.</li>
+</ol>
 <h2 id="completion-gate">Completion Gate</h2>
 <p>A tarefa associada à skill <code>observability</code> só pode ser declarada concluída quando:</p>
 <ol>

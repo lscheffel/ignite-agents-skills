@@ -659,6 +659,23 @@ Do not move blindly.</code></pre>
 <li><strong>Conflito de Especificação:</strong> Caso encontre contradições entre a intenção do usuário e o SSOT (<code>AGENTS.md</code>), interromper e sinalizar as opções com trade-offs.</li>
 <li><strong>Timeout ou Exaustão de Contexto:</strong> Em tarefas volumosas, decompor em sub-lotes atômicos utilizando a skill <code>subagent-driven-development</code>.</li>
 </ul>
+<h2 id="domain-sota--industry-engineering-standards">Domain SOTA & Industry Engineering Standards</h2>
+<ul>
+<li><strong>Triage Paradigms:</strong> Fast-Path Pull Request Triage, Lightweight Linting, and Micro-Diff Reviews.</li>
+<li><strong>Scope Containment:</strong> High-velocity verification for small, low-risk patches ($N_{\text{lines}} \le 200$).</li>
+<li><strong>Automated Pre-Checks:</strong> CI gate green verification before starting human review.</li>
+<li><strong>Fast Turnaround:</strong> SLA target for review turnaround $\le 4$ hours.</li>
+</ul>
+<h3 id="fast-path-review-criteria">Fast-Path Review Criteria:</h3>
+<p>A Pull Request qualifies for Lite Review if:</p>
+<p>$$N_{\text{lines}} \le 200 \quad \text{and} \quad \text{FilesModified} \le 5 \quad \text{and} \quad \text{BreakingChanges} = \text{False}$$</p>
+<h3 id="exhaustive-heuristic-decision-rules">Exhaustive Heuristic Decision Rules:</h3>
+<ol>
+<li><strong>Rule of Thumb 1 (Fast-Path Escalation):</strong> If a Lite Review reveals hidden architectural complexity or migration risk, immediately escalate to full <code>code-review</code>.</li>
+<li><strong>Rule of Thumb 2 (Automated Test Pass Invariant):</strong> Never approve a Lite Review if CI pipeline or automated tests have failing status.</li>
+<li><strong>Rule of Thumb 3 (Focus on Correctness):</strong> Focus exclusively on logic correctness, security, and test coverage; avoid bike-shedding on personal style preferences.</li>
+<li><strong>Rule of Thumb 4 (Single-Pass Approval):</strong> If only minor non-blocking nits remain, approve the PR and trust the author to apply them before merging.</li>
+</ol>
 <h2 id="operational-verification-checklist">Operational Verification Checklist</h2>
 <ul>
 <li>[ ] Todos os pré-requisitos e arquivos-alvo foram inspecionados antes da modificação.</li>
