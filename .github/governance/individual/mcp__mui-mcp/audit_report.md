@@ -3,7 +3,7 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp` | **Versão:** | `v2.1.0` |
-| **Hash SHA-256:** | `4102a3ee196b27afcb57399f2a6879551f781c1e1f2ebb32dbc7adb50749ac32` | **Score Global:** | `91.9 / 100` |
+| **Hash SHA-256:** | `4102a3ee196b27afcb57399f2a6879551f781c1e1f2ebb32dbc7adb50749ac32` | **Score Global:** | `91.1 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
@@ -22,7 +22,7 @@
 | :--- | :---: | :---: | :--- |
 | **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 3 endpoints com tipagem e campos required definidos. |
 | **D2. Determinismo Semântico** | 9.2 | [OK] | Mapeamento determinístico de endpoints MCP baseado em assinaturas de ferramentas explícitas. |
-| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~1122 tokens totais), permitindo injeção com overhead mínimo. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~2063 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Isolamento via protocolo padrão MCP (JSON-RPC) com desacoplamento de transporte. |

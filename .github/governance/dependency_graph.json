@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-27T16:47:27.161042+00:00",
+    "generated_at": "2026-08-29T13:19:38.646493+00:00",
     "total_nodes": 82
   },
   "nodes": [
@@ -3104,7 +3104,7 @@
     },
     {
       "source": "mcp__skills-rag-mcp",
-      "target": "adr-generator",
+      "target": "database-architecture",
       "relationship": "references_skill"
     },
     {
@@ -3114,7 +3114,7 @@
     },
     {
       "source": "mcp__skills-rag-mcp",
-      "target": "plugin__modern-web-guidance-plugin__chrome-extensions",
+      "target": "test-driven-development",
       "relationship": "references_skill"
     }
   ]

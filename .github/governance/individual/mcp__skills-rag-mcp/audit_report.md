@@ -3,15 +3,15 @@
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
 | **Caminho:** | `/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp` | **Versão:** | `v2.1.0` |
-| **Hash SHA-256:** | `d3a1894bb0b10773fac2d84bb2cf89a8c5efb838339b9120f466b8d00bcd8c82` | **Score Global:** | `91.9 / 100` |
+| **Hash SHA-256:** | `18fd2695f862238f18c49fe78fe9afae5c69e8748fa5786cff3e32b62fd50fd8` | **Score Global:** | `91.9 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Servidor MCP skills-rag-mcp expondo 4 ferramentas com interfaces tipadas JSON-RPC.
+* **Descrição Funcional:** Servidor MCP skills-rag-mcp expondo 7 ferramentas com interfaces tipadas JSON-RPC.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
-* **Payload Médio (Retorno):** `~2545 bytes / ~629 tokens`
+* **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** External I/O
 
 ---
@@ -20,9 +20,9 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 4 endpoints com tipagem e campos required definidos. |
+| **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 7 endpoints com tipagem e campos required definidos. |
 | **D2. Determinismo Semântico** | 9.2 | [OK] | Mapeamento determinístico de endpoints MCP baseado em assinaturas de ferramentas explícitas. |
-| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~629 tokens totais), permitindo injeção com overhead mínimo. |
+| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~1096 tokens totais), permitindo injeção com overhead mínimo. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Isolamento via protocolo padrão MCP (JSON-RPC) com desacoplamento de transporte. |

@@ -1,0 +1,67 @@
+# .ragignore — padrões ignorados na ingestão de diretórios/repos (estilo gitignore)
+# Lido de <rag_root>/.ragignore; ingest_repo também considera o .gitignore/.ragignore do alvo.
+
+# Secrets / env
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+# VCS
+.git/
+.hg/
+.svn/
+.kilo/
+
+# Dependências / ambientes virtuais
+node_modules/
+.venv/
+venv/
+env/
+~/
+__pycache__/
+*.pyc
+
+# Caches / build
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+build/
+dist/
+target/
+out/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# Logs / temporários
+*.log
+tmp/
+temp/
+*.old
+*.bck
+tests/
+
+# Binários não textuais (não ingeríveis como texto)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.ico
+*.webp
+*.avif
+*.mp4
+*.mp3
+*.wav
+*.ogg
+*.mov
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z

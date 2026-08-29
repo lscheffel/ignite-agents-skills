@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-27T16:47:25.968301+00:00",
+    "generated_at": "2026-08-29T13:19:38.103131+00:00",
     "omission_rate": "0.00%",
     "total_assets": 82,
     "persistence_target": ".github/governance/"
@@ -5109,9 +5109,9 @@
       "category": "mcp_server",
       "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib",
       "primary_sha256": "aa30d195355353491d619efbc863da7060ec8f40a7bbd179b4dea2662ec54709",
-      "total_files": 13,
-      "total_bytes": 4684,
-      "total_tokens": 1158,
+      "total_files": 15,
+      "total_bytes": 5642,
+      "total_tokens": 1395,
       "audit_status": "completed",
       "files": [
         {
@@ -5143,11 +5143,25 @@
           "tokens": 98
         },
         {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_dir.json",
+          "relpath": "ingest_dir.json",
+          "sha256": "480142615ae34cee937fb9c0b1a3414a1a24a7de94111b1224b0fd20981287c5",
+          "bytes": 496,
+          "tokens": 123
+        },
+        {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_file.json",
           "relpath": "ingest_file.json",
-          "sha256": "39909deb49c33675e80d16ff1ed85bbd46481045615bd548251d3da72e4b9d84",
-          "bytes": 376,
-          "tokens": 93
+          "sha256": "532567fc64d51a7d9b8efb6b33336db9db0fa677b9fea391214cc402dfd5839a",
+          "bytes": 396,
+          "tokens": 98
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_repo.json",
+          "relpath": "ingest_repo.json",
+          "sha256": "8b35ba4197428fae17e3be976039759240abfa6ff118ec93a35961e34c3ce892",
+          "bytes": 442,
+          "tokens": 109
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/inspect_chunk.json",
@@ -5217,8 +5231,8 @@
       "path": "/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp",
       "primary_sha256": "4102a3ee196b27afcb57399f2a6879551f781c1e1f2ebb32dbc7adb50749ac32",
       "total_files": 3,
-      "total_bytes": 4494,
-      "total_tokens": 1122,
+      "total_bytes": 8256,
+      "total_tokens": 2063,
       "audit_status": "completed",
       "files": [
         {
@@ -5238,12 +5252,12 @@
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/mui-mcp/useMuiDocs.json",
           "relpath": "useMuiDocs.json",
-          "sha256": "734072d18b80e9d8a3efc5ed10af12b6c942e4f3a117a83fc20ef1c6ffca84e8",
-          "bytes": 2103,
-          "tokens": 525
+          "sha256": "da8cc88965a92f1f65ae208b0cecebef918f1a9300b96f4ea8cbb0a5bfe3aa6e",
+          "bytes": 5865,
+          "tokens": 1466
         }
       ],
-      "global_score": 91.9,
+      "global_score": 91.1,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -5753,18 +5767,39 @@
       "name": "skills-rag-mcp",
       "category": "mcp_server",
       "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp",
-      "primary_sha256": "d3a1894bb0b10773fac2d84bb2cf89a8c5efb838339b9120f466b8d00bcd8c82",
-      "total_files": 5,
-      "total_bytes": 2545,
-      "total_tokens": 629,
+      "primary_sha256": "18fd2695f862238f18c49fe78fe9afae5c69e8748fa5786cff3e32b62fd50fd8",
+      "total_files": 8,
+      "total_bytes": 4443,
+      "total_tokens": 1096,
       "audit_status": "completed",
       "files": [
         {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/bootstrap_agent_instructions.json",
+          "relpath": "bootstrap_agent_instructions.json",
+          "sha256": "18fd2695f862238f18c49fe78fe9afae5c69e8748fa5786cff3e32b62fd50fd8",
+          "bytes": 389,
+          "tokens": 96
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/get_rag_telemetry.json",
+          "relpath": "get_rag_telemetry.json",
+          "sha256": "a6b63892a3e89dded2326ece41d20fd9db1b52763918063df3c21ade01bd0f61",
+          "bytes": 192,
+          "tokens": 47
+        },
+        {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/get_skill_details.json",
           "relpath": "get_skill_details.json",
-          "sha256": "d3a1894bb0b10773fac2d84bb2cf89a8c5efb838339b9120f466b8d00bcd8c82",
-          "bytes": 353,
+          "sha256": "fae58d74349abca3385d7fc04a60c103fcfd587ece9f4e1f78ce0566e61b5b66",
+          "bytes": 352,
           "tokens": 87
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/inspect_rag_index.json",
+          "relpath": "inspect_rag_index.json",
+          "sha256": "337ad95151fd90204252a715396bcc793ce0d58f424ba877a6cf29308f1638da",
+          "bytes": 1291,
+          "tokens": 318
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/instructions.md",
@@ -5776,16 +5811,16 @@
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/list_skills_catalog.json",
           "relpath": "list_skills_catalog.json",
-          "sha256": "699e6caa85e859bb9808c47c3d0a144041e08cc1ca446896d0b87b96791a8b0c",
-          "bytes": 340,
-          "tokens": 85
+          "sha256": "e0dd202d25ea1393e966df51c19305b3fb3e543b0acdfe176d405f35e66eb07d",
+          "bytes": 358,
+          "tokens": 89
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/route_task.json",
           "relpath": "route_task.json",
-          "sha256": "50070103220e8ba2cfb1bcdccc9755dd6b37d22cc5c791f21c89ab28e431cb9d",
-          "bytes": 437,
-          "tokens": 107
+          "sha256": "77e9b737b6b9e77d3347cde6b8d469ebc2f6c157defae3e9dfd0f43fc64287f5",
+          "bytes": 446,
+          "tokens": 109
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/skills-rag-mcp/search_skills.json",

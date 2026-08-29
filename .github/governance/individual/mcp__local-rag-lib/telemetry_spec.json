@@ -3,8 +3,8 @@
   "asset_name": "local-rag-lib",
   "category": "mcp_server",
   "telemetry_metrics": {
-    "schema_tokens": 579,
-    "prompt_overhead_tokens": 1158,
+    "schema_tokens": 600,
+    "prompt_overhead_tokens": 1395,
     "estimated_payload_return_bytes": 4096,
     "estimated_payload_return_tokens": 1024,
     "estimated_latency_ms": 320,
@@ -14,7 +14,7 @@
     "side_effects": "External I/O"
   },
   "cost_model": {
-    "cost_per_1k_invocations_usd": 0.1737,
+    "cost_per_1k_invocations_usd": 0.2092,
     "context_cache_efficiency": "N/A (Ultra-Lightweight)"
   },
   "governance_thresholds": {

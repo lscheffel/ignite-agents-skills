@@ -9,7 +9,7 @@
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Servidor MCP local-rag-lib expondo 13 ferramentas com interfaces tipadas JSON-RPC.
+* **Descrição Funcional:** Servidor MCP local-rag-lib expondo 15 ferramentas com interfaces tipadas JSON-RPC.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** External I/O
@@ -20,9 +20,9 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 13 endpoints com tipagem e campos required definidos. |
+| **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 15 endpoints com tipagem e campos required definidos. |
 | **D2. Determinismo Semântico** | 9.2 | [OK] | Mapeamento determinístico de endpoints MCP baseado em assinaturas de ferramentas explícitas. |
-| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~1158 tokens totais), permitindo injeção com overhead mínimo. |
+| **D3. Economia de Tokens** | 9.5 | [OK] | Footprint ultra-enxuto (~1395 tokens totais), permitindo injeção com overhead mínimo. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
 | **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Isolamento via protocolo padrão MCP (JSON-RPC) com desacoplamento de transporte. |

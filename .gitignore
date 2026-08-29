@@ -52,3 +52,4 @@ temp/
 *.tmp
 !skill-audit-bulletin/
 !.github/governance/
+tests/
