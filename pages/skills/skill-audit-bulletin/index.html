@@ -705,7 +705,7 @@
 <h2 id="6-continuous-skill-audit-ledger-persistence-docsauditskills">6. Continuous Skill Audit Ledger Persistence (<code>docs/audit/skills/</code>)</h2>
 <p>At the conclusion of each skill audit, the auditor <strong>MUST</strong> persist and update the repository ledger using the integrated ledger tool:</p>
 <pre data-lang="bash"><code># Global canonical execution
-python3 ~/.gemini/config/skills/skill-audit-bulletin/scripts/update_audit_ledger.py \
+python3 skills/skill-audit-bulletin/scripts/update_audit_ledger.py \
   --skill &lt;skill-name&gt; \
   --version &lt;version&gt; \
   --grade &lt;grade&gt; \

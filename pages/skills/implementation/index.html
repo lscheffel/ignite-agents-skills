@@ -632,7 +632,7 @@
 <li>Big Bang is strictly prohibited</li>
 <li><strong>Scope Isolation & Tech Debt Offloading:</strong> It is strictly forbidden to perform peripheral refactoring or alter files outside the scope of the current ADR/TODO/PI. Any opportunity for improvement, indirect coupling, or legacy code found during execution <strong>MUST</strong> be registered via the Janitor's CLI:</li>
 </ul>
-<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
+<pre data-lang="bash"><code>  python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
 <h3 id="change-lifecycle">Change Lifecycle</h3>
 <p>The formal model of a change's lifecycle:</p>
 <pre><code>ADR → Blueprint → TODO → PI → Execution Contract (Inter-ADR Validation) → Artifact Resolution
@@ -704,7 +704,7 @@
 <ul>
 <li>Register the incidental debt via CLI:</li>
 </ul>
-<p><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"</code></p>
+<p><code>python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain <DOMAIN> --desc "<DESCRIPTION>" --origin "implementation:ADR-XXX"</code></p>
 <ul>
 <li><strong>DO NOT</strong> alter peripheral code in the current task.</li>
 </ul>
@@ -775,7 +775,7 @@
 <li>You must <strong>physically touch</strong> the <code>TODO.md</code> (or <code>*-PI.md</code>) file and mark completed tasks with <code>- [x]</code> or <code>✅</code>.</li>
 <li>After finalizing all markings, <strong>DO NOT</strong> create the ER manually. Instead, execute the archival and generation algorithmically:</li>
 </ol>
-<pre data-lang="bash"><code>   python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
+<pre data-lang="bash"><code>   python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
 <p><em>The script will verify tasks, auto-generate the <code>ADR-XXX-ER.md</code> with all evidence, metrics, and tables in the root, and move the Triad of work to <code>docs/adr/archive/</code>.</em></p>
 <ol>
 <li>Read the terminal output and the generated report in <code>docs/reports/</code>. Present the final verdict and the consolidated Decision Set to the user.</li>

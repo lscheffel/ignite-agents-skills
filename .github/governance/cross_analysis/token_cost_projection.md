@@ -6,9 +6,9 @@ Análise forense de consumo de tokens, overhead de prompt framing e projeção d
 
 ## 1. Métricas Globais da Frota de Ativos
 
-* **Total de Ativos Auditados:** 82
-* **Volume Total de Tokens em Repouso:** `673,040 tokens`
-* **Média de Tokens por Ativo:** `8,207 tokens`
+* **Total de Ativos Auditados:** 83
+* **Volume Total de Tokens em Repouso:** `675,851 tokens`
+* **Média de Tokens por Ativo:** `8,142 tokens`
 * **Consumo de Schema Footprint Médio:** `~260 tokens / skill`
 * **Overhead Médio de Round-Trip:** `~750 tokens / invocação`
 

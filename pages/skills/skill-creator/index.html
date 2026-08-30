@@ -627,7 +627,7 @@ metadata:
 <h3 id="step-3-scaffold-directory-via-initskillpy">Step 3: Scaffold Directory via <code>init_skill.py</code></h3>
 <p>Run the scaffolding script:</p>
 <pre data-lang="bash"><code># Workspace Local execution
-python3 ~/.gemini/config/skills/skill-creator/scripts/init_skill.py &lt;skill-name&gt; --path &lt;output-directory&gt;
+python3 skills/skill-creator/scripts/init_skill.py &lt;skill-name&gt; --path &lt;output-directory&gt;
 
 # In-repo execution
 python3 scripts/init_skill.py &lt;skill-name&gt; --path .</code></pre>
@@ -642,10 +642,10 @@ python3 scripts/init_skill.py &lt;skill-name&gt; --path .</code></pre>
 <h3 id="step-5-automated-validation--packaging">Step 5: Automated Validation & Packaging</h3>
 <p>Validate the created skill against schema and naming constraints:</p>
 <pre data-lang="bash"><code># Validate skill structure
-python3 ~/.gemini/config/skills/skill-creator/scripts/quick_validate.py &lt;path/to/skill-folder&gt;
+python3 skills/skill-creator/scripts/quick_validate.py &lt;path/to/skill-folder&gt;
 
 # Package into distributable zip
-python3 ~/.gemini/config/skills/skill-creator/scripts/package_skill.py &lt;path/to/skill-folder&gt; [dist_dir]</code></pre>
+python3 skills/skill-creator/scripts/package_skill.py &lt;path/to/skill-folder&gt; [dist_dir]</code></pre>
 <h3 id="step-6-audit-gating-with-skill-audit-bulletin">Step 6: Audit Gating with <code>skill-audit-bulletin</code></h3>
 <p>Before publishing, audit the skill using <code>skill-audit-bulletin</code> to ensure it reaches <strong>Grade A (Score ≥ 85/100)</strong> across all 8 dimensions:</p>
 <ol>

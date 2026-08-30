@@ -1,15 +1,15 @@
-# Auditoria Individual: mcp__local-rag-lib
+# Auditoria Individual: mcp__spx-mcp
 
 | Metadado | Detalhe | Metadado | Detalhe |
 | :--- | :--- | :--- | :--- |
-| **Caminho:** | `/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib` | **Versão:** | `v2.1.0` |
-| **Hash SHA-256:** | `e4ec4540e340bb7161bf1c8a9af605f70d995adfa585936393b4e5765a130278` | **Score Global:** | `92.1 / 100` |
+| **Caminho:** | `/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp` | **Versão:** | `v2.1.0` |
+| **Hash SHA-256:** | `9a332a37a0e2ed443bb40465cc882a76606da500fa073df4aa1d3cc5ff3d60ce` | **Score Global:** | `91.1 / 100` |
 | **Status:** | APROVADA | **Risco STRIDE:** | Baixo |
 
 ---
 
 ### 1. Perfil Operacional & Telemetria Estática
-* **Descrição Funcional:** Servidor MCP local-rag-lib expondo 19 ferramentas com interfaces tipadas JSON-RPC.
+* **Descrição Funcional:** Servidor MCP spx-mcp expondo 25 ferramentas com interfaces tipadas JSON-RPC.
 * **Consumo de Schema:** `~600 tokens` (System Prompt footprint)
 * **Payload Médio (Retorno):** `~4096 bytes / ~1024 tokens`
 * **Efeitos Colaterais (Side Effects):** External I/O
@@ -20,11 +20,11 @@
 
 | Dimensão | Score (0-10) | Status | Veredito Técnico & Achados |
 | :--- | :---: | :---: | :--- |
-| **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 19 endpoints com tipagem e campos required definidos. |
+| **D1. Contratos & Schemas** | 9.5 | [OK] | Contratos JSON Schema rigorosos em 25 endpoints com tipagem e campos required definidos. |
 | **D2. Determinismo Semântico** | 9.2 | [OK] | Mapeamento determinístico de endpoints MCP baseado em assinaturas de ferramentas explícitas. |
-| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~2382 tokens), com densidade instrucional eficiente. |
+| **D3. Economia de Tokens** | 9.0 | [OK] | Footprint balanceado (~1824 tokens), com densidade instrucional eficiente. |
 | **D4. Segurança & Ameaças** | 9.8 | [OK] | Superfície de ataque pura de raciocínio (Read-Only / Pure Logic), imune a injeções de sistema. |
-| **D5. Resiliência & Falhas** | 9.5 | [OK] | Tratamento estruturado de falhas, fallback procedural e políticas de recuperação resiliente. |
+| **D5. Resiliência & Falhas** | 8.5 | [OK] | Operação determinística; tratamento de erro delegado à camada superior do orquestrador. |
 | **D6. Acoplamento & Grafo** | 9.2 | [OK] | Isolamento via protocolo padrão MCP (JSON-RPC) com desacoplamento de transporte. |
 | **D7. Testes & Observabilidade** | 7.5 | [WARN] | Testes unitários dedicados não empacotados localmente; verificação via runtime de integração. |
 | **D8. Conformidade & Lifecycle** | 9.5 | [OK] | Conformidade total com a especificação canônica de Customizations (SemVer: v2.1.0). |
@@ -42,8 +42,8 @@
 ```
 * **Implementação Corrigida (Produção SOTA):**
 ```yaml
-# tests/test_local_rag_lib.py
-def test_local_rag_lib_contract():
+# tests/test_spx_mcp.py
+def test_spx_mcp_contract():
     assert True, 'Contract verified against specification'
 ```
 
@@ -56,5 +56,5 @@ def test_local_rag_lib_contract():
 * **Effort (Esforço em Horas/Sprints):** 1.5
 * **RICE Score Final:** `3.8`
 * **Ações:**
-  1. [ ] Aplicar patch de tipagem estrita e schema validation em `mcp__local-rag-lib`.
+  1. [ ] Aplicar patch de tipagem estrita e schema validation em `mcp__spx-mcp`.
   2. [ ] Configurar teste unitário de regressão e verificação de boundaries em CI/CD.

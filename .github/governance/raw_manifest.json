@@ -1,9 +1,9 @@
 {
   "metadata": {
     "title": "SOTA Forensic Asset Manifest",
-    "generated_at": "2026-08-29T13:19:38.103131+00:00",
+    "generated_at": "2026-08-30T15:22:49.852547+00:00",
     "omission_rate": "0.00%",
-    "total_assets": 82,
+    "total_assets": 83,
     "persistence_target": ".github/governance/"
   },
   "assets": {
@@ -5108,119 +5108,147 @@
       "name": "local-rag-lib",
       "category": "mcp_server",
       "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib",
-      "primary_sha256": "aa30d195355353491d619efbc863da7060ec8f40a7bbd179b4dea2662ec54709",
-      "total_files": 15,
-      "total_bytes": 5642,
-      "total_tokens": 1395,
+      "primary_sha256": "e4ec4540e340bb7161bf1c8a9af605f70d995adfa585936393b4e5765a130278",
+      "total_files": 19,
+      "total_bytes": 9552,
+      "total_tokens": 2382,
       "audit_status": "completed",
       "files": [
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ask_documents.json",
           "relpath": "ask_documents.json",
-          "sha256": "aa30d195355353491d619efbc863da7060ec8f40a7bbd179b4dea2662ec54709",
-          "bytes": 449,
-          "tokens": 112
+          "sha256": "e4ec4540e340bb7161bf1c8a9af605f70d995adfa585936393b4e5765a130278",
+          "bytes": 709,
+          "tokens": 177
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/compare_documents.json",
           "relpath": "compare_documents.json",
-          "sha256": "469366d310c6273fb541b6d608cdc7f500269baf76991b6a35d3c9ff41fc0cc0",
-          "bytes": 573,
-          "tokens": 142
+          "sha256": "fa9e6dada6326ade3ac81b865b35fe2750491b023f954dfb02821ee4b13ded83",
+          "bytes": 621,
+          "tokens": 155
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/delete_document.json",
           "relpath": "delete_document.json",
-          "sha256": "a13c917dd506b3a33fdcb0d941ebd1ca1306b9b56c1026c13363a570be7a3369",
-          "bytes": 305,
-          "tokens": 75
+          "sha256": "ca0493d58ec4acb43ef38eaedbb816031dcd9da8b372a91cbce0a01dfdfe5bec",
+          "bytes": 340,
+          "tokens": 85
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/deploy_rag_governance.json",
+          "relpath": "deploy_rag_governance.json",
+          "sha256": "f3647f79ef7d14029775f19eba973b424d7015287ca8bda7e66c8a56f039128c",
+          "bytes": 1071,
+          "tokens": 267
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/hybrid_search.json",
           "relpath": "hybrid_search.json",
-          "sha256": "023fb55205df55e4f82024bc27bc74299c41b0aab8c490494fc591c58f074716",
-          "bytes": 397,
-          "tokens": 98
+          "sha256": "754957f7d632f0255f7a2cc469de3121c6861fc72fc1dfb4cef3e27408d9cbb0",
+          "bytes": 692,
+          "tokens": 173
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_dir.json",
           "relpath": "ingest_dir.json",
-          "sha256": "480142615ae34cee937fb9c0b1a3414a1a24a7de94111b1224b0fd20981287c5",
-          "bytes": 496,
-          "tokens": 123
+          "sha256": "49dd305941b6a317dca7addb9ad970fdc5853d9d816ce27d91cd84aa5e7f4664",
+          "bytes": 506,
+          "tokens": 126
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_file.json",
           "relpath": "ingest_file.json",
-          "sha256": "532567fc64d51a7d9b8efb6b33336db9db0fa677b9fea391214cc402dfd5839a",
-          "bytes": 396,
-          "tokens": 98
+          "sha256": "5bf34d36075b3d29de0c8ec018e75fa889711036238471eaead61eb0bdfc1f19",
+          "bytes": 459,
+          "tokens": 114
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/ingest_repo.json",
           "relpath": "ingest_repo.json",
-          "sha256": "8b35ba4197428fae17e3be976039759240abfa6ff118ec93a35961e34c3ce892",
-          "bytes": 442,
-          "tokens": 109
+          "sha256": "b7dfbe13c77742ef073a80e0480e6fc17f79a3f9810e21e33446c63726771017",
+          "bytes": 450,
+          "tokens": 112
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/inspect_chunk.json",
           "relpath": "inspect_chunk.json",
-          "sha256": "62f055b56dd6df5c000b1050d02457a2fb90a21c6097e56d57b60b2eb7301501",
-          "bytes": 281,
-          "tokens": 69
+          "sha256": "46965f94a02a124cf24a182d922e01da17accf2e22b8a4a545ce1ce644df486e",
+          "bytes": 308,
+          "tokens": 77
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/keyword_search.json",
           "relpath": "keyword_search.json",
-          "sha256": "5ec642746e0f5f04a93f6e7a3989242f62eb2b57bf52bb58920d108d105293ae",
-          "bytes": 331,
-          "tokens": 82
+          "sha256": "92f52f0ebb38148d142a41647fef0b68bbafb3cd94310b7ee375af5f47e6bc14",
+          "bytes": 452,
+          "tokens": 113
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/launch_dashboard.json",
+          "relpath": "launch_dashboard.json",
+          "sha256": "12aae5919013c799ca79d24db1f8c77da4e2f38e88d6e63fddb446a54f9f4a10",
+          "bytes": 864,
+          "tokens": 216
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/list_documents.json",
           "relpath": "list_documents.json",
-          "sha256": "035a55194d6892faaeea8bfb6a207592abe212a8eb42af312fb97c7af5e4bb70",
-          "bytes": 207,
-          "tokens": 51
+          "sha256": "d47d414c5eba2dd44623c4333a5d8e143d46aee0adaa4a97e2732e161a397239",
+          "bytes": 221,
+          "tokens": 55
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/metadata_search.json",
           "relpath": "metadata_search.json",
-          "sha256": "56c0c77711a4a807d0a2d9e21173dff3437cb73b9089e1e94439c5f03363558d",
-          "bytes": 465,
-          "tokens": 115
+          "sha256": "1fd9bc8779b30e31959c3c68ac8c2b2fa5b549cbeb9c26aab5c3a75155d2c2a8",
+          "bytes": 490,
+          "tokens": 122
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/pipeline_stats.json",
           "relpath": "pipeline_stats.json",
-          "sha256": "775da2a351f2c3a295a7b36a208917e401dbceb1a15da37525e9668e13ce78f5",
-          "bytes": 212,
-          "tokens": 52
+          "sha256": "4448fbed7dab43f8599d0660951379c23774cd51d5253a8b0426ccb1b540a5d8",
+          "bytes": 238,
+          "tokens": 59
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/prune_index.json",
+          "relpath": "prune_index.json",
+          "sha256": "2bb158212b976e345c25ec2e27340ae368c8d06b33dc94949d7a45173efcef6a",
+          "bytes": 346,
+          "tokens": 86
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/search_documents.json",
           "relpath": "search_documents.json",
-          "sha256": "6ba2960603138a5dc4f4015da2eb118a1bc09bf0baaac97e9c55f34b224a7b44",
-          "bytes": 385,
-          "tokens": 95
+          "sha256": "4be7f8212d0509bc92ccb86eaef422183eb02c4b484a67e1132ca6088664c8da",
+          "bytes": 526,
+          "tokens": 131
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/semantic_search.json",
           "relpath": "semantic_search.json",
-          "sha256": "e7489fb7afcdb77e0d52adbab60b0555a8eddf1fc24248293298b4f4d5db5092",
-          "bytes": 334,
-          "tokens": 83
+          "sha256": "8f3d022bad966217bb19f27d64fc1c37c7d75c1c4ceb9033ccba2efc21007f73",
+          "bytes": 448,
+          "tokens": 112
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/stop_dashboard.json",
+          "relpath": "stop_dashboard.json",
+          "sha256": "2ec005594749e928f3835196dd8c404d1503a51e05be42196650761ae2e4ab9a",
+          "bytes": 408,
+          "tokens": 102
         },
         {
           "path": "/home/loupan/.gemini/antigravity-ide/mcp/local-rag-lib/summarize_document.json",
           "relpath": "summarize_document.json",
-          "sha256": "0bf776a212823352682fea6a2783775693548eb169e7787bead8f9feac926e69",
-          "bytes": 369,
-          "tokens": 91
+          "sha256": "6f1a9ec9ea238239c4724a943be3160ab2c4d6cff46d08e4df31311bd5f0825a",
+          "bytes": 403,
+          "tokens": 100
         }
       ],
-      "global_score": 91.9,
+      "global_score": 92.1,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     },
@@ -5831,6 +5859,197 @@
         }
       ],
       "global_score": 91.9,
+      "status_label": "APROVADA",
+      "stride_risk": "Baixo"
+    },
+    "mcp__spx-mcp": {
+      "id": "mcp__spx-mcp",
+      "name": "spx-mcp",
+      "category": "mcp_server",
+      "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp",
+      "primary_sha256": "9a332a37a0e2ed443bb40465cc882a76606da500fa073df4aa1d3cc5ff3d60ce",
+      "total_files": 25,
+      "total_bytes": 7403,
+      "total_tokens": 1824,
+      "audit_status": "completed",
+      "files": [
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_ask_documents.json",
+          "relpath": "rag_ask_documents.json",
+          "sha256": "9a332a37a0e2ed443bb40465cc882a76606da500fa073df4aa1d3cc5ff3d60ce",
+          "bytes": 386,
+          "tokens": 95
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_compare_documents.json",
+          "relpath": "rag_compare_documents.json",
+          "sha256": "45ba5e8c5a6705df622b3f5655299c5da0359af92811dcd1374027f51c5aee58",
+          "bytes": 371,
+          "tokens": 91
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_delete_document.json",
+          "relpath": "rag_delete_document.json",
+          "sha256": "a522ae358b5217307716b0ed440a6119468e7b94b5fc8b593235dc92da043a36",
+          "bytes": 270,
+          "tokens": 67
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_hybrid_search.json",
+          "relpath": "rag_hybrid_search.json",
+          "sha256": "404e8b85b00ca167e45257189cad834d58fc29f5c967b283cf118fbb18b3425f",
+          "bytes": 372,
+          "tokens": 92
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_ingest_dir.json",
+          "relpath": "rag_ingest_dir.json",
+          "sha256": "d20e3d69a276bddd43a3bb27c90574dd4b532e17c1bd743a9ca7dfe5dc230877",
+          "bytes": 342,
+          "tokens": 84
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_ingest_file.json",
+          "relpath": "rag_ingest_file.json",
+          "sha256": "c8cfea9cb78ac5760bd78b6e06a6aca2ffc553a8e4f5f8d98080c4fe318f4dcb",
+          "bytes": 376,
+          "tokens": 93
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_ingest_repo.json",
+          "relpath": "rag_ingest_repo.json",
+          "sha256": "49c1b1719284fc543c9ad42b03646db4ea0a3d6d949c74930b68929c50dfaf0f",
+          "bytes": 327,
+          "tokens": 80
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_keyword_search.json",
+          "relpath": "rag_keyword_search.json",
+          "sha256": "0dd6353da6b964dd1aed53525b1068afbd8c40e73f8a14d0cc5594e4576aa1b0",
+          "bytes": 332,
+          "tokens": 82
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_prune_index.json",
+          "relpath": "rag_prune_index.json",
+          "sha256": "99f6857794aa9c1999753003c959b97d34f99bfc7ff40a5d8de8ff18a291a4c6",
+          "bytes": 277,
+          "tokens": 68
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_search_documents.json",
+          "relpath": "rag_search_documents.json",
+          "sha256": "7845122b91f1e53981f34dcf0c15f7b0bfda8118e4ffbc49375bed7244c7bca8",
+          "bytes": 344,
+          "tokens": 85
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_semantic_search.json",
+          "relpath": "rag_semantic_search.json",
+          "sha256": "6d63a31b9b11d393be307640fcf7aa98b1f400e7dbdcb17a2be531f27b8284be",
+          "bytes": 320,
+          "tokens": 80
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/rag_summarize.json",
+          "relpath": "rag_summarize.json",
+          "sha256": "cc8c19c09617f7898e4df072da8cb00088439f012cfa9b07056865942df6082b",
+          "bytes": 267,
+          "tokens": 66
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/skills_audit.json",
+          "relpath": "skills_audit.json",
+          "sha256": "03146909d77639551185c95fae8d0fd737991e2cb5b56c37f530e9d47f91590f",
+          "bytes": 279,
+          "tokens": 69
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/skills_get_payload.json",
+          "relpath": "skills_get_payload.json",
+          "sha256": "1c9fa811ae933a2fafa6966a6936c4e1657695e0f9a5b75dc0c42f77bb1d4211",
+          "bytes": 319,
+          "tokens": 79
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/skills_list_all.json",
+          "relpath": "skills_list_all.json",
+          "sha256": "5e7b7308adadc4c01cb2f1bb28eb1bb39b9ece268f8d3261b1d6562149a43df7",
+          "bytes": 165,
+          "tokens": 40
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/skills_route.json",
+          "relpath": "skills_route.json",
+          "sha256": "106ecb02f6c8901f3d1eb2048da10869af51bac254db2323e42f46a00befbcaf",
+          "bytes": 423,
+          "tokens": 103
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/skills_search.json",
+          "relpath": "skills_search.json",
+          "sha256": "b12fcca5fe6cb3e36fbbc3727cb90555cf6fdf79d7ee4f21b4b3a642ddf4d9a1",
+          "bytes": 356,
+          "tokens": 87
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_audit_workspace.json",
+          "relpath": "system_audit_workspace.json",
+          "sha256": "8d8e563d3d778e03271d34c311f5f52de353c180dfb210fd6bef6b6acdb9af4e",
+          "bytes": 268,
+          "tokens": 66
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_deploy_governance.json",
+          "relpath": "system_deploy_governance.json",
+          "sha256": "757963e3d004d2878f3ad84f325e30f6586c5dd7158f3d0d6c4be512415a5c51",
+          "bytes": 295,
+          "tokens": 72
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_health.json",
+          "relpath": "system_health.json",
+          "sha256": "5193154136f7012ee7bc5bee2b16d804d6ba3503e994b81274dee16034b5c797",
+          "bytes": 177,
+          "tokens": 44
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_inspect_chunk.json",
+          "relpath": "system_inspect_chunk.json",
+          "sha256": "5648f00b95cb312e1c127af7b122e92842ab4f206c641c2a53271025ade7d43c",
+          "bytes": 267,
+          "tokens": 66
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_launch_dashboard.json",
+          "relpath": "system_launch_dashboard.json",
+          "sha256": "0c50080fef80074decebd94c1cb447d366ec126a0b043b64082d9f4e68b91ea7",
+          "bytes": 259,
+          "tokens": 64
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_list_documents.json",
+          "relpath": "system_list_documents.json",
+          "sha256": "986fdea1d2c43661ecbb0a6a0b3894c11dadfc7d448243051039578ff84f128d",
+          "bytes": 177,
+          "tokens": 44
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_pipeline_stats.json",
+          "relpath": "system_pipeline_stats.json",
+          "sha256": "fb28f8c492d66ce723a1545bbbce352e8697bbc3fd274c460d7f9bdb5518c41b",
+          "bytes": 179,
+          "tokens": 44
+        },
+        {
+          "path": "/home/loupan/.gemini/antigravity-ide/mcp/spx-mcp/system_stop_dashboard.json",
+          "relpath": "system_stop_dashboard.json",
+          "sha256": "2e9bb33098d6ac25d11d7f6aa89cac295bad51d20976199204cb7354ef9d956a",
+          "bytes": 255,
+          "tokens": 63
+        }
+      ],
+      "global_score": 91.1,
       "status_label": "APROVADA",
       "stride_risk": "Baixo"
     }

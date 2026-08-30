@@ -1,16 +1,16 @@
 # SOTA Expanded Audit Master Index
 
-Este índice consolida o veredito formal de auditoria técnica para 100% dos ativos acionáveis (82 ativos) do ecossistema.
+Este índice consolida o veredito formal de auditoria técnica para 100% dos ativos acionáveis (83 ativos) do ecossistema.
 
 ---
 
 ## 1. Sumário Executivo de Conformidade
 
-* **Data de Execução:** 2026-08-29 13:19:52 UTC
-* **Total de Ativos Auditados:** 82 (100.00% de cobertura, 0.00% omissão)
+* **Data de Execução:** 2026-08-30 15:23:01 UTC
+* **Total de Ativos Auditados:** 83 (100.00% de cobertura, 0.00% omissão)
 * **Score Global Médio do Ecossistema:** **90.4 / 100**
 * **Distribuição de Status:**
-  - 🟢 **Aprovada:** 82 (100.0%)
+  - 🟢 **Aprovada:** 83 (100.0%)
   - 🟡 **Aviso:** 0 (0.0%)
   - 🔴 **Crítica:** 0 (0.0%)
 
@@ -97,11 +97,12 @@ Este índice consolida o veredito formal de auditoria técnica para 100% dos ati
 | `mcp__chrome-devtools-mcp` | mcp_server | `86a5db9d69b0...` | **91.9** | APROVADA | Baixo | `3.8` |
 | `mcp__context7` | mcp_server | `ffbbb87c191c...` | **91.9** | APROVADA | Baixo | `3.8` |
 | `mcp__github-mcp-server` | mcp_server | `a8fe7a08b72e...` | **91.1** | APROVADA | Baixo | `3.8` |
-| `mcp__local-rag-lib` | mcp_server | `aa30d1953553...` | **91.9** | APROVADA | Baixo | `3.8` |
+| `mcp__local-rag-lib` | mcp_server | `e4ec4540e340...` | **92.1** | APROVADA | Baixo | `3.8` |
 | `mcp__mui-mcp` | mcp_server | `4102a3ee196b...` | **91.1** | APROVADA | Baixo | `3.8` |
 | `mcp__notion-mcp-server` | mcp_server | `4c0d4b5587bf...` | **89.7** | APROVADA | Baixo | `3.8` |
 | `mcp__puter` | mcp_server | `a7180ce4607c...` | **87.3** | APROVADA | Baixo | `3.8` |
 | `mcp__skills-rag-mcp` | mcp_server | `18fd2695f862...` | **91.9** | APROVADA | Baixo | `3.8` |
+| `mcp__spx-mcp` | mcp_server | `9a332a37a0e2...` | **91.1** | APROVADA | Baixo | `3.8` |
 
 ---
 

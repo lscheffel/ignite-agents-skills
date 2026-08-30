@@ -1014,7 +1014,7 @@ Awaiting direction before proceeding.</code></pre>
 <div class="table-wrapper"><table><tr><th>Anti-Pattern</th><th>Why It Fails</th><th>Correct Approach</th></tr><tr><td>Implementing entire plan at once</td><td>No checkpoints, no quality gates</td><td>Batch-based execution with checkpoints</td></tr><tr><td>Skipping TDD because "it's simple"</td><td>Bugs accumulate, regressions appear</td><td>Every task uses TDD, no exceptions</td></tr><tr><td>Working around blockers silently</td><td>User unaware, wrong assumptions baked in</td><td>Stop and escalate blockers</td></tr><tr><td>Proceeding without approval after batch</td><td>Direction may have changed</td><td>Always checkpoint and wait</td></tr><tr><td>Deviating from the plan</td><td>Unauthorized changes, scope creep</td><td>Discuss changes before implementing</td></tr><tr><td>Running only new tests</td><td>Regressions go undetected</td><td>Full test suite at checkpoints</td></tr><tr><td>Marking tasks complete without verification</td><td>False progress, accumulated bugs</td><td>Verification is mandatory</td></tr><tr><td>Batches larger than 5 tasks</td><td>Hard to review, too much risk per batch</td><td>Keep batches small</td></tr><tr><td>Skipping checkpoint report</td><td>User loses visibility into progress</td><td>Always present full checkpoint</td></tr><tr><td>Not committing at batch boundaries</td><td>Huge diffs, hard to revert</td><td>Commit after each batch</td></tr></table></div>
 <hr>
 <h2 id="anti-rationalization-guards">Anti-Rationalization Guards</h2>
-<p><HARD-GATE> Do NOT skip any verification step. Do NOT proceed past a checkpoint without user approval. Do NOT deviate from the approved plan without discussion. <strong>ER.md GENERATION BAN</strong>: You are STRICTLY PROHIBITED from creating or generating <code>*ER.md</code> (Execution Report) files. For ADR implementations, you must only check the boxes in the <code>TODO.md</code> file and run the audit tool (<code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code>), which is the exclusive gatekeeper authorized to generate ERs. </HARD-GATE></p>
+<p><HARD-GATE> Do NOT skip any verification step. Do NOT proceed past a checkpoint without user approval. Do NOT deviate from the approved plan without discussion. <strong>ER.md GENERATION BAN</strong>: You are STRICTLY PROHIBITED from creating or generating <code>*ER.md</code> (Execution Report) files. For ADR implementations, you must only check the boxes in the <code>TODO.md</code> file and run the audit tool (<code>python3 skills/adr-archive/scripts/audit.py .</code>), which is the exclusive gatekeeper authorized to generate ERs. </HARD-GATE></p>
 <p>If you catch yourself thinking:</p>
 <ul>
 <li>"I know what comes next, I'll skip the checkpoint..." — No. Report and wait.</li>
@@ -1062,7 +1062,7 @@ Batch 2 (3 tasks):
 <li>Full test suite passes</li>
 <li>Final checkpoint report presented to user</li>
 <li>User confirms the plan is complete</li>
-<li><strong>FINAL STEP (For ADR-based plans):</strong> You MUST run <code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code>, read the generated audit report from <code>docs/reports</code>, and present its verdict (success or pending debts) to the user.</li>
+<li><strong>FINAL STEP (For ADR-based plans):</strong> You MUST run <code>python3 skills/adr-archive/scripts/audit.py .</code>, read the generated audit report from <code>docs/reports</code>, and present its verdict (success or pending debts) to the user.</li>
 </ol>
 <hr>
 <h2 id="skill-type">Skill Type</h2>

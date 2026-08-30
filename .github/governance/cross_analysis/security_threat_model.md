@@ -1,6 +1,6 @@
 # Cross-Analysis: Security Threat Model (STRIDE + OWASP Top 10 for LLMs)
 
-Este documento consolida a modelagem forense de ameaças cobrindo 100% dos 82 ativos acionáveis do ecossistema.
+Este documento consolida a modelagem forense de ameaças cobrindo 100% dos 83 ativos acionáveis do ecossistema.
 
 ---
 

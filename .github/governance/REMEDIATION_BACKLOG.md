@@ -84,6 +84,7 @@
 | **P2** | `mcp__local-rag-lib` | Incorporação de Suíte de Testes e Fixtures de Regressão | D7 | `3.8` | Baixa |
 | **P2** | `mcp__mui-mcp` | Incorporação de Suíte de Testes e Fixtures de Regressão | D7 | `3.8` | Baixa |
 | **P2** | `mcp__skills-rag-mcp` | Incorporação de Suíte de Testes e Fixtures de Regressão | D7 | `3.8` | Baixa |
+| **P2** | `mcp__spx-mcp` | Incorporação de Suíte de Testes e Fixtures de Regressão | D7 | `3.8` | Baixa |
 
 ---
 

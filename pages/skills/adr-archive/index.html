@@ -597,7 +597,7 @@
 <li><strong>Auto-Resolution:</strong> When an ADR linked via <code>mitigation_ref</code> has its <code>ER.md</code> generated, <code>audit.py</code> automatically updates the debt's status to <code>RESOLVED</code> and records the resolution timestamp.</li>
 <li><strong>Atomic Registration (<code>--register-debt</code>):</strong> Allows agents during implementation to register out-of-scope discoveries without drive-by refactoring:</li>
 </ol>
-<pre data-lang="bash"><code>   python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
+<pre data-lang="bash"><code>   python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
 <ol>
 <li><strong>Garbage Collection of Tokens (<code>--prune-debts</code>):</strong> Moves <code>RESOLVED</code> and obsolete debts from the active registry to <code>docs/governance/archive/tech-debt-archive.json</code>. This keeps the active registry microscopically small (< 1KB), preventing context dilution.</li>
 </ol>
@@ -605,7 +605,7 @@
 <h2 id="workflow-step-by-step-for-the-agent">Workflow (Step-by-Step for the Agent)</h2>
 <h3 id="phase-1-diagnostic-sweep">Phase 1: Diagnostic Sweep</h3>
 <p>Run the native auditor against the target repository root:</p>
-<pre data-lang="bash"><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></pre>
+<pre data-lang="bash"><code>python3 skills/adr-archive/scripts/audit.py .</code></pre>
 <ul>
 <li>The script runs in milliseconds, parses all ADRs/TODOs, synchronizes tech debts, generates <code>docs/adr/ADR-INDEX.md</code>, and writes a detailed audit report to <code>docs/reports/adr-archive-report-*.md</code>.</li>
 </ul>
@@ -616,7 +616,7 @@
 <li><strong>Condition:</strong> All checklist items in <code>ADR-XXX-TODO.md</code> (or <code>ADR-XXX-PI.md</code>) are marked <code>[x]</code> or <code>✅</code>.</li>
 <li><strong>Action:</strong> Execute automated archival and ER emission:</li>
 </ul>
-<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
+<pre data-lang="bash"><code>  python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></pre>
 <ul>
 <li><strong>Checkpoint:</strong> <code>docs/adr/ADR-XXX-ER.md</code> created in root, working files moved to <code>docs/adr/archive/</code>, index updated.</li>
 </ul>
@@ -625,7 +625,7 @@
 <li><strong>Condition:</strong> An ADR was archived in <code>docs/adr/archive/</code> but lacks its implementation certificate (<code>ER.md</code>) in root.</li>
 <li><strong>Action:</strong> Trigger algorithmic ER generation:</li>
 </ul>
-<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX</code></pre>
+<pre data-lang="bash"><code>  python3 skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX</code></pre>
 <p><em>(Never create or edit <code></em>-ER.md</code> files manually — see Anti-patterns).*</p>
 <h4 id="3-archivedmistakereturn-adr-xxx">3. <code>ARCHIVED_MISTAKE_RETURN: ADR-XXX</code></h4>
 <ul>
@@ -638,10 +638,10 @@
 <li><strong>Condition:</strong> An approved ADR needs to be deferred to a future cycle without triggering tech debt alerts.</li>
 <li><strong>Action:</strong></li>
 </ul>
-<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --freeze ADR-XXX</code></pre>
+<pre data-lang="bash"><code>  python3 skills/adr-archive/scripts/audit.py . --freeze ADR-XXX</code></pre>
 <h3 id="phase-3-token-garbage-collection-tech-debts">Phase 3: Token Garbage Collection (Tech Debts)</h3>
 <p>When resolved technical debts accumulate in the active registry:</p>
-<pre data-lang="bash"><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --prune-debts</code></pre>
+<pre data-lang="bash"><code>python3 skills/adr-archive/scripts/audit.py . --prune-debts</code></pre>
 <ul>
 <li><strong>Checkpoint:</strong> Active <code>tech-debt-registry.json</code> contains only open/in-progress items.</li>
 </ul>
@@ -658,7 +658,7 @@
 <hr>
 <h2 id="cli-reference--flags-matrix">CLI Reference & Flags Matrix</h2>
 <p>The script <code>audit.py</code> provides a complete CLI interface:</p>
-<div class="table-wrapper"><table><tr><th>Operation</th><th>Command</th><th>Description</th></tr><tr><td><strong>Audit & Sync</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></td><td>Audits ADRs, syncs debt statuses, generates ADR-INDEX and report.</td></tr><tr><td><strong>Archive ADR</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></td><td>Validates completion, creates <code>ER.md</code>, moves files to archive.</td></tr><tr><td><strong>Generate ER</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX</code></td><td>Emits missing <code>ER.md</code> from archived or root Decision Set.</td></tr><tr><td><strong>Freeze ADR</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --freeze ADR-XXX</code></td><td>Moves unexecuted ADR to <code>docs/adr/frozen/</code> and updates status.</td></tr><tr><td><strong>Register Debt</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity <S> --domain <D> --desc "<T>"</code></td><td>Appends new technical debt atomically.</td></tr><tr><td><strong>Prune Debts</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --prune-debts</code></td><td>Archives resolved debts to keep active registry token-efficient.</td></tr><tr><td><strong>Verify Tests</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive ADR-XXX --verify-test "npm test"</code></td><td>Runs test command before allowing archival.</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Operation</th><th>Command</th><th>Description</th></tr><tr><td><strong>Audit & Sync</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py .</code></td><td>Audits ADRs, syncs debt statuses, generates ADR-INDEX and report.</td></tr><tr><td><strong>Archive ADR</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX</code></td><td>Validates completion, creates <code>ER.md</code>, moves files to archive.</td></tr><tr><td><strong>Generate ER</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --generate-er ADR-XXX</code></td><td>Emits missing <code>ER.md</code> from archived or root Decision Set.</td></tr><tr><td><strong>Freeze ADR</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --freeze ADR-XXX</code></td><td>Moves unexecuted ADR to <code>docs/adr/frozen/</code> and updates status.</td></tr><tr><td><strong>Register Debt</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --register-debt --severity <S> --domain <D> --desc "<T>"</code></td><td>Appends new technical debt atomically.</td></tr><tr><td><strong>Prune Debts</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --prune-debts</code></td><td>Archives resolved debts to keep active registry token-efficient.</td></tr><tr><td><strong>Verify Tests</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --archive ADR-XXX --verify-test "npm test"</code></td><td>Runs test command before allowing archival.</td></tr></table></div>
 <hr>
 <h2 id="anti-patterns">Anti-patterns</h2>
 <h3 id="-critical">🔴 Critical</h3>

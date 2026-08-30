@@ -1,10 +1,10 @@
 {
-  "asset_id": "mcp__local-rag-lib",
-  "asset_name": "local-rag-lib",
+  "asset_id": "mcp__spx-mcp",
+  "asset_name": "spx-mcp",
   "category": "mcp_server",
   "telemetry_metrics": {
     "schema_tokens": 600,
-    "prompt_overhead_tokens": 2382,
+    "prompt_overhead_tokens": 1824,
     "estimated_payload_return_bytes": 4096,
     "estimated_payload_return_tokens": 1024,
     "estimated_latency_ms": 320,
@@ -14,7 +14,7 @@
     "side_effects": "External I/O"
   },
   "cost_model": {
-    "cost_per_1k_invocations_usd": 0.3573,
+    "cost_per_1k_invocations_usd": 0.2736,
     "context_cache_efficiency": "94%"
   },
   "governance_thresholds": {

@@ -528,13 +528,13 @@
 {{CMD_LINT}}</code></pre>
 <h3 id="22-governance-and-adr-audit">2.2 Governance and ADR Audit</h3>
 <pre data-lang="bash"><code># Run silent ADR audit (cost 0 tokens)
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .
+python3 skills/adr-archive/scripts/audit.py .
 
 # Archive completed ADR and generate Evidence Record (ER.md)
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive {{ADR_ID}}
+python3 skills/adr-archive/scripts/audit.py . --archive {{ADR_ID}}
 
 # Register incidental technical debt
-python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt \
+python3 skills/adr-archive/scripts/audit.py . --register-debt \
   --severity HIGH \
   --domain {{DOMAIN}} \
   --desc &quot;{{DESCRIPTION}}&quot; \

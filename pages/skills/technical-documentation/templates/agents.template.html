@@ -520,14 +520,14 @@
 <li><strong>Prohibition of Drive-by Refactorings:</strong> If during the execution of a task you find deprecated code or an opportunity for improvement outside the current contract, <strong>DO NOT</strong> alter the code in the same PR/commit.</li>
 <li><strong>Debt Registration:</strong> Immediately register the debt in the official registry:</li>
 </ul>
-<pre data-lang="bash"><code>  python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
+<pre data-lang="bash"><code>  python3 skills/adr-archive/scripts/audit.py . --register-debt --severity MEDIUM --domain &lt;DOMAIN&gt; --desc &quot;&lt;DESCRIPTION&gt;&quot; --origin &quot;implementation:ADR-XXX&quot;</code></pre>
 <h3 id="23-documental-reconciliation-pattern">2.3 Documental Reconciliation Pattern</h3>
 <ul>
 <li>When updating the documentation with the <code>technical-documentation</code> skill, keep all 6 pillars in sync: <code>README.md</code>, <code>CHANGELOG.md</code>, <code>USAGE.md</code>, <code>RELEASE-NOTES.md</code>, <code>STATE.md</code>, <code>AGENTS.md</code> / <code>GEMINI.md</code>.</li>
 </ul>
 <hr>
 <h2 id="3-important-commands">3. Important Commands</h2>
-<div class="table-wrapper"><table><tr><th>Action</th><th>Command</th></tr><tr><td><strong>Audit & Synchronization</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py .</code></td></tr><tr><td><strong>Archiving of ADR & ER</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --archive <ADR_ID></code></td></tr><tr><td><strong>Technical Debt Registration</strong></td><td><code>python3 ~/.gemini/config/skills/adr-archive/scripts/audit.py . --register-debt ...</code></td></tr><tr><td><strong>Documental Reconciliation</strong></td><td>Invoke the <code>technical-documentation</code> skill</td></tr></table></div>
+<div class="table-wrapper"><table><tr><th>Action</th><th>Command</th></tr><tr><td><strong>Audit & Synchronization</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py .</code></td></tr><tr><td><strong>Archiving of ADR & ER</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --archive <ADR_ID></code></td></tr><tr><td><strong>Technical Debt Registration</strong></td><td><code>python3 skills/adr-archive/scripts/audit.py . --register-debt ...</code></td></tr><tr><td><strong>Documental Reconciliation</strong></td><td>Invoke the <code>technical-documentation</code> skill</td></tr></table></div>
 <hr>
 <h2 id="4-code-structure-and-conventions">4. Code Structure and Conventions</h2>
 <ul>

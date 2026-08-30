@@ -10,7 +10,7 @@ Além do registry remoto (`skills/index.json`), o repositório integra nativamen
 
 ## 2. Estrutura do Projeto
 
-```
+```text
 .
 ├── LICENSE
 ├── README.md                           # Documentação principal
@@ -48,13 +48,19 @@ Além do registry remoto (`skills/index.json`), o repositório integra nativamen
 
 ## 3. Diretrizes de Execução para Agentes de IA
 
-### 3.1 Protocolo de Busca e Roteamento de Skills
+### 3.1 Protocolo Mandatório: RAG-First Autonomous Discovery (Pré-Voo de Código e Skills)
 
-Antes de responder ou executar qualquer tarefa técnica (planejamento, codificação, refatoração, documentação, testes):
+Antes de responder ou executar qualquer tarefa técnica (planejamento, criação de novas skills, codificação, refatoração, governança, documentação ou testes):
 
-1. Utilize o roteador semântico: `python3 scripts/skills_router.py "<intenção da tarefa>"` ou ferramentas do servidor MCP `skills-rag-mcp` (`route_task` / `search_skills`).
-2. Adote estritamente os padrões, regras, fluxos de decisão e checklists contidos na skill ativada.
-3. Declare no início da resposta a skill ativada quando aplicável.
+1. **Consulta Prévia Obrigatória ao MCP RAG:**
+   - Invoque as ferramentas do servidor MCP `local-rag-lib` (`hybrid_search`, `search_documents` ou `ask_documents`) para inspecionar os padrões existentes, contratos de API, convenções arquiteturais e ADRs ativas.
+   - Utilize o roteador semântico de skills: `python3 scripts/skills_router.py "<intenção da tarefa>"` ou MCP `skills-rag-mcp` (`route_task` / `search_skills`) para carregar o payload da skill canônica.
+2. **Cruzamento de Dados na Criação de Novas Skills (Cross-Validation de Padrões):**
+   - Antes de redigir qualquer nova skill em `skills/{skill-name}/SKILL.md`, execute `compare_documents` ou `hybrid_search` no `local-rag-lib` comparando a nova proposta com as 60 skills existentes.
+   - **Garantir Não-Duplicação:** Verificar se a intenção já não está coberta ou se deve ser uma especialização/extensão.
+   - **Herança de Padrões SOTA:** Extrair e alinhar taxonomias de `tags`, `related_skills`, convenções de frontmatter YAML, fluxos de decisão e tags de severidade de anti-patterns (`🔴 crítico`, `🟡 alerta`, `🟢 suave`).
+3. **Execução Pós-RAG:** Somente após recuperar, validar e cruzar os trechos relevantes na base de conhecimento, proceda com a edição, escrita ou refatoração dos arquivos.
+4. **Declaração de Contexto:** Declare explicitamente no início da resposta a skill e os padrões arquiteturais ativados.
 
 ### 3.2 Padrão de Qualidade Ultra-High Quality Grade (SOTA)
 
@@ -71,9 +77,9 @@ Antes de responder ou executar qualquer tarefa técnica (planejamento, codifica�
 | **Validar `skills/index.json`** | `./scripts/validate-index.sh` |
 | **Validar Qualidade de Skills** | `bash scripts/validate-skill.sh skills/{skill-name}` |
 | **Auditoria Forense SOTA (8 Dimensões)** | `python3 scripts/audit_engine.py` |
-| **Ingestão & Vetorização RAG** | `python3 scripts/skills_rag_indexer.py` |
+| **Ingestão & Vetorização RAG (skills-rag)** | `python3 scripts/skills_rag_indexer.py` |
 | **Roteamento Semântico CLI** | `python3 scripts/skills_router.py "<consulta>"` |
-| **Servidor MCP Stdio** | `python3 scripts/skills_mcp_server.py` |
+| **Servidor MCP Stdio (`skills-rag-mcp`)** | `python3 scripts/skills_mcp_server.py` |
 | **Suíte de Testes Automatizados** | `python3 -m unittest discover -s scripts/tests -p "test_*.py"` |
 | **Compilar Páginas HTML do Site** | `python3 pages/build.py` |
 | **Janitor de Arquivamento de ADRs** | `./scripts/archive-adrs.sh` |
@@ -99,37 +105,45 @@ Antes de responder ou executar qualquer tarefa técnica (planejamento, codifica�
 5. Executar `python3 pages/build.py`.
 6. Merge para `master` e deploy sincronizado para `gh-pages`.
 
-### MCPs e comandos disponíveis
+### MCPs e Ferramentas Disponíveis
 
-local-rag-lib
+#### `local-rag-lib` (Motor RAG Vetorial Semântico + Governança)
 
-1. semantic_search
-Realiza busca puramente vetorial/semântica no acervo documental.
-2. keyword_search
-Realiza busca léxica baseada em palavras-chave exatas usando BM25.
-3. hybrid_search
-Realiza busca híbrida (vetorial + BM25S + Nvidia Reranker) de alta precisão na base de conhecimento.
-4. search_documents
-Busca informações detalhadas nos documentos locais usando RAG híbrido. Compatível com a interface legada.
-5. metadata_search
-Filtra trechos de documentos por metadados específicos (ex: autor, título ou formato).
-6. compare_documents
-Executa pesquisas independentes e paralelas para duas obras/tópicos distintos (Query A e Query B) e consolida os resultados unificados sem diluição de contexto.
-7. summarize_document
-Extrai e compila os trechos fundamentais de um documento específico do acervo.
-8. list_documents
-Lista todos os arquivos e obras atualmente indexados e disponíveis na base de conhecimento corporativa.
-9. delete_document
-Remove um documento específico e todos os seus trechos da base vetorial e léxica.
-10. inspect_chunk
-Exibe o conteúdo textual e metadados de um chunk específico pelo seu identificador (ID).
-11. pipeline_stats
-Retorna dados de telemetria e contadores de saúde dos índices (total de arquivos, chunks e modelos ativos).
-12. ingest_file
-Processa e adiciona um arquivo local (PDF, EPUB, TXT, DOCX, MD e demais textos) à base de conhecimento.
-13. ingest_dir
-Ingere todos os arquivos suportados de um diretório no RAG, respeitando o .ragignore (estilo gitignore).
-14. ingest_repo
-Ingere um repositório inteiro no RAG (recursivo), respeitando .ragignore, .gitignore do repo e ignores padrão (VCS, deps, caches, binários).
-15. ask_documents
-Ask a question and generate a synthesized RAG answer using LLM inference.
+1. `hybrid_search`  
+   **MANDATÓRIO PARA PRÉ-VOO:** Busca híbrida de alta precisão (ChromaDB + BM25S + Nvidia Cross-Encoder Reranker). Descobre padrões existentes, utilitários reutilizáveis, contratos de ADR e precedentes arquiteturais.
+2. `search_documents`  
+   **MANDATÓRIO PARA DESCOBERTA:** Busca híbrida em todo o acervo indexado do workspace (arquivos de código, specs, ADRs e docs).
+3. `ask_documents`  
+   **MANDATÓRIO PARA RACIOCÍNIO ARQUITETURAL:** Síntese RAG via LLM (Nemotron 120B) para responder dúvidas arquiteturais complexas, cruzar regras multi-arquivo e checar conformidade.
+4. `compare_documents`  
+   **MANDATÓRIO PARA COMPARAÇÃO DE SKILLS/PROPOSTAS:** Pesquisas paralelas e independentes para dois tópicos (Query A e Query B) sem diluição vetorial, retornando contexto consolidado lado a lado.
+5. `metadata_search`  
+   Filtra trechos estritamente por metadados específicos (ex: `source`, `category`, `path`).
+6. `keyword_search`  
+   Busca léxica exata usando BM25 para tokens de código, constantes, identificadores e chaves YAML.
+7. `semantic_search`  
+   Busca vetorial pura baseada em embeddings densos para similaridade conceitual e arquitetural.
+8. `summarize_document`  
+   Extrai e compila os trechos fundamentais de um documento ou ADR específico.
+9. `list_documents`  
+   Lista todos os arquivos e especificações indexados no banco vetorial.
+10. `delete_document`  
+    Remove um documento específico e seus chunks das stores vetorial e léxica.
+11. `inspect_chunk`  
+    Inspeciona o conteúdo textual e metadados de um chunk específico por ID.
+12. `pipeline_stats`  
+    Retorna telemetria, contadores de saúde dos índices, modelos ativos e status do reranker.
+13. `ingest_file`  
+    Ingere e processa um arquivo local (código, MD, ADR, PDF, DOCX, TXT) com chunking e deduplicação.
+14. `ingest_dir`  
+    Ingere todos os arquivos de um diretório respeitando o `.ragignore`.
+15. `ingest_repo`  
+    Ingere recursivamente um repositório inteiro respeitando `.ragignore` e `.gitignore`.
+16. `deploy_rag_governance`  
+    **BOOTSTRAP & DEPLOY AUTOMÁTICO:** Onboarding de qualquer repositório — gera `.ragignore` SOTA, injeta o protocolo RAG-First em `AGENTS.md` e `GEMINI.md`, e dispara a ingestão completa do repositório no RAG.
+17. `launch_dashboard`  
+    **DASHBOARD WEB LOCAL DINÂMICA:** Inicia e vincula a Lite Dashboard (Glassmorphic / SOTA DevEx) ao workspace e banco vetorial ativo, retornando a URL de acesso no navegador sem requisições manuais de terminal.
+18. `stop_dashboard`  
+    **ENCERRAMENTO DE DASHBOARD:** Interrompe e encerra de forma limpa o servidor web da Dashboard local e libera a porta de escuta.
+19. `prune_index`  
+    **REGENERAÇÃO & EXPURGO DE ÍNDICE:** Audita o banco vetorial contra o estado atual do filesystem e regras do `.ragignore`, removendo do ChromaDB e BM25 arquivos deletados ou recém-ignorados.

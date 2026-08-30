@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Directed Dependency & Coupling Graph",
-    "generated_at": "2026-08-29T13:19:38.646493+00:00",
-    "total_nodes": 82
+    "generated_at": "2026-08-30T15:22:50.398335+00:00",
+    "total_nodes": 83
   },
   "nodes": [
     {
@@ -413,6 +413,11 @@
     {
       "id": "mcp__skills-rag-mcp",
       "name": "skills-rag-mcp",
+      "category": "mcp_server"
+    },
+    {
+      "id": "mcp__spx-mcp",
+      "name": "spx-mcp",
       "category": "mcp_server"
     }
   ],
@@ -3115,6 +3120,16 @@
     {
       "source": "mcp__skills-rag-mcp",
       "target": "test-driven-development",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp__spx-mcp",
+      "target": "adr-generator",
+      "relationship": "references_skill"
+    },
+    {
+      "source": "mcp__spx-mcp",
+      "target": "clean-code",
       "relationship": "references_skill"
     }
   ]
